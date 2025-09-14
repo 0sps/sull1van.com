@@ -139,20 +139,25 @@
 
 <!--  google looker studio embed-->
 <style>
-  html, body { height: 100%; } /* not strictly needed with vh, but good hygiene */
   .report-embed {
     width: 100%;
     max-width: 1200px;
     margin: 20px auto;
-    /* pick one of these heights */
-    height: 80vh;           /* fills 80% of the viewport */
-    /* or: height: 100vh;   /* full viewport height */
-    /* mobile-safe option: min-height: 100svh; */
   }
   .report-embed iframe {
+    display: block;
     width: 100%;
-    height: 100%;
     border: 0;
+    /* tall floor so the iframe itself doesn't scroll */
+    min-height: 1600px;     /* desktop default */
+  }
+
+  /* bump the floor for smaller screens */
+  @media (max-width: 1024px) {
+    .report-embed iframe { min-height: 2200px; }
+  }
+  @media (max-width: 600px) {
+    .report-embed iframe { min-height: 2800px; }
   }
 </style>
 
