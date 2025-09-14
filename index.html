@@ -148,16 +148,17 @@
     display: block;
     width: 100%;
     border: 0;
-    /* tall floor so the iframe itself doesn't scroll */
-    min-height: 1200px;     /* desktop default */
+    min-height: 1200px;   /* desktop default (fixes the '12…00px' typo) */
   }
 
-  /* bump the floor for smaller screens */
+  /* tablet-ish */
   @media (max-width: 1024px) {
-    .report-embed iframe { min-height: 2200px; }
+    .report-embed iframe { min-height: 1000px; }
   }
+
+  /* mobile: force 820px */
   @media (max-width: 600px) {
-    .report-embed iframe { min-height: 2800px; }
+    .report-embed iframe { min-height: 820px; }
   }
 </style>
 
