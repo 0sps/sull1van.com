@@ -135,17 +135,37 @@
     </style>
 </head>
 <body>
-<!-- Google Looker Studio Embed -->
-<div style="width:100%; max-width:1200px; margin:20px auto;">
-  <iframe 
-      width="100%" 
-      height="100%" 
-      src="https://lookerstudio.google.com/embed/reporting/73e61f50-7336-418d-9d10-60530b1371af/page/x8qXF" 
-      frameborder="0" 
-      style="border:0" 
-      allowfullscreen>
-  </iframe>
+
+
+<!--  google looker studio embed-->
+<style>
+  html, body { height: 100%; } /* not strictly needed with vh, but good hygiene */
+  .report-embed {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    /* pick one of these heights */
+    height: 80vh;           /* fills 80% of the viewport */
+    /* or: height: 100vh;   /* full viewport height */
+    /* mobile-safe option: min-height: 100svh; */
+  }
+  .report-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<div class="report-embed">
+  <iframe
+    src="https://lookerstudio.google.com/embed/reporting/73e61f50-7336-418d-9d10-60530b1371af/page/x8qXF"
+    loading="lazy"
+    allowfullscreen
+  ></iframe>
 </div>
+<!--  end google looker studio embed-->
+
+
     <h1>Stylish Text Generator</h1>
     <div class="container">
         <div class="text-area">
