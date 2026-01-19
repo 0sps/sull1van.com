@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<div>By <b>{{ site.author }}</b> on {{ page.date | date: "%d %b %Y" }}</div>
+
+{{ content }}
+
+<div>
+  {% if page.comments %}
+  <a href="{{ page.comments }}">Comments</a> |
+  {% endif %}
+  {% for tag in page.tags %}
+  <a href="{{ site.baseurl }}/tag/{{ tag | slugify }}.html">#{{ tag }}</a>{% unless forloop.last %} | {% endunless %}
+  {% endfor %}
+</div>

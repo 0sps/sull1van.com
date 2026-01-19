@@ -1,0 +1,39 @@
+# Site settings
+title: Your Name
+subtitle: On Technology, Mathematics, Etc.
+author: Your Name
+email: your-email@example.com
+description: Personal blog on technology, mathematics, and programming
+baseurl: "" # Leave empty for root domain
+url: "https://yourdomain.netlify.app"
+
+# Build settings
+markdown: kramdown
+kramdown:
+  auto_ids: true
+  syntax_highlighter_opts:
+    disable: true  # Disable syntax highlighting to match Susam's plain style
+
+# Permalink structure
+permalink: /:title.html
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - "Susam Pal.html"
+  - "Susam Pal_files"
+  - "Stack Overwriting Function - Susam Pal.html"
+  - "Stack Overwriting Function - Susam Pal_files"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Feed settings
+feed:
+  path: feed.xml
