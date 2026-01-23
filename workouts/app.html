@@ -84,13 +84,6 @@
             background-clip: text;
         }
 
-        .logo-tag {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
         .header-right {
             display: flex;
             align-items: center;
@@ -346,9 +339,7 @@
             gap: 6px;
         }
 
-        .warmup-toggle {
-            display: none;
-        }
+
 
         .warmup-btn {
             width: 28px;
@@ -439,16 +430,6 @@
         .btn-secondary:hover {
             border-color: var(--accent-primary);
             color: var(--text-primary);
-        }
-
-        .btn-danger {
-            background: transparent;
-            border: 1px solid #ff3d5a;
-            color: #ff3d5a;
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 61, 90, 0.1);
         }
 
         .btn-small {
@@ -886,30 +867,6 @@
             color: var(--success);
         }
 
-        .weight-unit-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.87rem;
-            color: var(--text-muted);
-        }
-
-        .unit-btn {
-            padding: 4px 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .unit-btn.active {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -996,7 +953,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="totalVolume">0</div>
-                <div class="stat-label">Volume (kg)</div>
+                <div class="stat-label">Volume (lbs)</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="currentStreak">0</div>
@@ -1361,12 +1318,7 @@
             else { icon.textContent = '!'; text.textContent = 'Sync Error'; }
         }
 
-        function setWeightUnit(unit) {
-            weightUnit = unit;
-            document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.unit === unit));
-            localStorage.setItem('ironlog_weight_unit', unit);
-            renderExercises();
-        }
+
 
         function formatDateForCSV(date) {
             const d = new Date(date);
@@ -1427,8 +1379,7 @@
 
         async function init() {
             if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
-            const savedUnit = localStorage.getItem('ironlog_weight_unit');
-            if (savedUnit) weightUnit = savedUnit;
+
             await loadFromFirebase();
             document.getElementById('loadingOverlay').style.display = 'none';
             updateCurrentDate();
@@ -1439,7 +1390,6 @@
             renderLibrary();
             updateStats();
             setupTabs();
-            document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.unit === weightUnit));
         }
 
         function updateCurrentDate() {
@@ -1473,12 +1423,19 @@
             container.innerHTML = workout.exercises.map((ex, idx) => {
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
+
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
             <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
-            <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
-                <div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${i === 0 ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
-                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`).join('')}</div></div>`;
+            <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => {
+                    const savedData = currentExerciseData[exerciseKey]?.[i] || {};
+                    const savedReps = savedData.reps || '';
+                    const savedWeight = savedData.weight || '';
+                    const isWarmup = savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0);
+
+                    return `<div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${isWarmup ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
+                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
+                }).join('')}</div></div>`;
             }).join('');
         }
 
@@ -1534,7 +1491,7 @@
             return log;
         }
 
-        function completeAndExport() { completeWorkout(true); }
+
 
 
         function renderRecentLogs() {
