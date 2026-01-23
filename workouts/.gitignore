@@ -1,0 +1,15 @@
+# Import scripts (one-time use only)
+import-admin.js
+import-to-firebase.js
+package.json
+package-lock.json
+node_modules/
+
+# Sensitive files - NEVER commit
+serviceAccount.json
+*.json
+!*.html
+
+# Data files
+WorkoutExport.csv
+*.csv
