@@ -1070,6 +1070,17 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="instructionsModal">
+        <div class="modal">
+            <h3 class="modal-title" id="instructionsModalTitle">INSTRUCTIONS</h3>
+            <div id="instructionsModalContent" style="white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;">
+            </div>
+            <div class="modal-actions"><button class="btn btn-secondary"
+                    onclick="closeInstructionsModal()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -1134,7 +1145,7 @@
             'seated-db-press': 'Seated Dumbbell Press',
             'cable-lateral-raise': 'Cable Lateral Raise',
             'db-lateral-raise': 'Dumbbell Lateral Raise',
-            'reverse-pec-deck': 'Machine Reverse Fly',
+            'machine-rear-delt-fly': 'Machine Rear Delt Fly',
             'face-pulls': 'Face Pull',
             'arnold-press': 'Arnold Press',
             'front-raise': 'Dumbbell Front Raise',
@@ -1186,7 +1197,7 @@
             { id: 'seated-db-press', name: 'Seated Dumbbell Shoulder Press', muscles: ['Anterior Delt', 'Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
             { id: 'cable-lateral-raise', name: 'Cable Lateral Raise', muscles: ['Lateral Delt'], category: 'Shoulders', equipment: 'Cable' },
             { id: 'db-lateral-raise', name: 'Dumbbell Lateral Raise', muscles: ['Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
-            { id: 'reverse-pec-deck', name: 'Reverse Pec Deck', muscles: ['Posterior Delt', 'Rhomboids'], category: 'Shoulders', equipment: 'Machine' },
+            { id: 'machine-rear-delt-fly', name: 'Machine Rear Delt Fly', muscles: ['Posterior Delt', 'Rhomboids'], category: 'Shoulders', equipment: 'Machine' },
             { id: 'face-pulls', name: 'Face Pulls', muscles: ['Posterior Delt', 'Traps'], category: 'Shoulders', equipment: 'Cable' },
             { id: 'arnold-press', name: 'Arnold Press', muscles: ['Anterior Delt', 'Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
             { id: 'front-raise', name: 'Front Raise', muscles: ['Anterior Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
@@ -1194,7 +1205,7 @@
             { id: 'lat-pulldown', name: 'Lat Pulldown', muscles: ['Lats'], category: 'Back', equipment: 'Cable' },
             { id: 'single-arm-db-row', name: 'Single Arm Dumbbell Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Dumbbells' },
             { id: 'barbell-row', name: 'Barbell Row', muscles: ['Lats', 'Rhomboids', 'Traps'], category: 'Back', equipment: 'Barbell' },
-            { id: 'chest-supported-row', name: 'Chest-Supported Dumbbell Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Dumbbells' },
+            { id: 'chest-supported-row', name: 'Chest-Supported Dumbbell Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Dumbbells', instructions: "set an incline bench to about 30 or 45 degrees. lie face down on the bench with your chest against the pad. your head should be hanging off the top edge.\n\ngrab a pair of dumbbells on the floor. let your arms hang straight down. row the dumbbells up toward your hips, squeezing your shoulder blades together at the top.\ndo not let your chest leave the pad. if you have to \"bounce\" your chest off the bench to get the weight up, it's too heavy." },
             { id: 'cable-row', name: 'Seated Cable Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Cable' },
             { id: 'barbell-shrug', name: 'Barbell Shrug', muscles: ['Upper Traps'], category: 'Traps', equipment: 'Barbell' },
             { id: 'db-shrug', name: 'Dumbbell Shrug', muscles: ['Upper Traps'], category: 'Traps', equipment: 'Dumbbells' },
@@ -1255,7 +1266,7 @@
             day5: {
                 name: 'PULL B', subtitle: 'Back Detail & Arms', exercises: [
                     { exerciseId: 'chest-supported-row', sets: 5, reps: '10-12', notes: 'ZERO lower back stress' },
-                    { exerciseId: 'reverse-pec-deck', sets: 5, reps: '15-20', notes: 'Rear delt and rotator cuff health' },
+                    { exerciseId: 'machine-rear-delt-fly', sets: 5, reps: '15-20', notes: 'Rear delt and rotator cuff health' },
                     { exerciseId: 'incline-db-curl', sets: 5, reps: '10-12', notes: 'Maximum stretch for bicep development' }
                 ]
             },
@@ -1443,7 +1454,7 @@
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
+            <div class="exercise-header"><div><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
                 <div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${i === 0 ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
@@ -1536,7 +1547,8 @@
             const date = new Date(log.date);
             let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
             log.exercises.forEach(ex => {
-                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
+                const exerciseId = ex.exerciseId;
+                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px; cursor: pointer;" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -1546,6 +1558,17 @@
         function closeExerciseModal() { document.getElementById('exerciseModal').classList.remove('active'); }
 
         function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
+
+        function closeInstructionsModal() { document.getElementById('instructionsModal').classList.remove('active'); }
+
+        function showInstructions(exerciseId) {
+            const exercise = exerciseDatabase.find(e => e.id === exerciseId);
+            if (exercise) {
+                document.getElementById('instructionsModalTitle').textContent = exercise.name.toUpperCase();
+                document.getElementById('instructionsModalContent').textContent = exercise.instructions || "No instructions given";
+                document.getElementById('instructionsModal').classList.add('active');
+            }
+        }
 
         function showExerciseHistory(exerciseName) {
             // Search through all workout logs to find the most recent occurrence of this exercise
@@ -1629,7 +1652,7 @@
             container.innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isRest = day === 'rest';
-                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold;">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.87rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
+                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.87rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
             }).join('');
         }
 
@@ -1649,7 +1672,7 @@
             const ex = exerciseDatabase.find(e => e.id === id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
-            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
+            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="margin-bottom: 16px;"><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
             document.getElementById('exerciseModal').classList.add('active');
         }
 
