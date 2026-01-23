@@ -759,6 +759,43 @@
             margin-top: 24px;
         }
 
+        .btn-history {
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            background: rgba(255, 187, 0, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-history:hover {
+            background: rgba(255, 187, 0, 0.2);
+            box-shadow: 0 0 10px rgba(255, 187, 0, 0.3);
+        }
+
+        .history-set {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-tertiary);
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .history-set.warmup {
+            border-left-color: var(--warning);
+        }
+
+        .history-date {
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
         .empty-state {
             text-align: center;
             padding: 40px;
@@ -989,6 +1026,15 @@
             <h3 class="modal-title" id="modalExerciseName"></h3>
             <div id="modalExerciseDetails"></div>
             <div class="modal-actions"><button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal">
+            <h3 class="modal-title" id="historyModalTitle">EXERCISE HISTORY</h3>
+            <div id="historyModalContent"></div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeHistoryModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1366,7 +1412,7 @@
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div>
+            <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <p style="font-size: 0.75rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
                 <div class="set-input-group"><span class="set-label">Set ${i + 1} <input type="checkbox" class="warmup-toggle" title="Warmup" data-exercise="${exerciseKey}" data-set="${i}" onchange="updateWarmup(this)" ${i === 0 ? 'checked' : ''}><span style="font-size:0.55rem;color:var(--warning);">W</span></span>
@@ -1466,6 +1512,65 @@
         }
 
         function closeExerciseModal() { document.getElementById('exerciseModal').classList.remove('active'); }
+
+        function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
+
+        function showExerciseHistory(exerciseName) {
+            // Search through all workout logs to find the most recent occurrence of this exercise
+            let mostRecentLog = null;
+            let mostRecentExercise = null;
+            let mostRecentDate = null;
+
+            // workoutLogs is already sorted by date descending, so first match is most recent
+            for (const log of workoutLogs) {
+                const exercise = log.exercises.find(ex =>
+                    ex.name.toLowerCase() === exerciseName.toLowerCase() ||
+                    ex.name.toLowerCase().includes(exerciseName.toLowerCase()) ||
+                    exerciseName.toLowerCase().includes(ex.name.toLowerCase())
+                );
+                if (exercise) {
+                    mostRecentLog = log;
+                    mostRecentExercise = exercise;
+                    mostRecentDate = new Date(log.date);
+                    break;
+                }
+            }
+
+            const modal = document.getElementById('historyModal');
+            const title = document.getElementById('historyModalTitle');
+            const content = document.getElementById('historyModalContent');
+
+            title.textContent = exerciseName.toUpperCase() + ' HISTORY';
+
+            if (!mostRecentExercise) {
+                content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>No history found for this exercise</p></div>`;
+            } else {
+                const dateStr = mostRecentDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
+                html += `<div style="margin-top: 12px;">`;
+
+                mostRecentExercise.sets.forEach((set, i) => {
+                    const weightLbs = displayWeight(set.weight);
+                    const warmupClass = set.isWarmup ? 'warmup' : '';
+                    const label = set.isWarmup ? 'WARM' : `SET ${i + 1}`;
+                    html += `<div class="history-set ${warmupClass}">
+                        <span>${label}</span>
+                        <span><strong>${weightLbs} lbs</strong> × ${set.reps} reps</span>
+                    </div>`;
+                });
+
+                html += `</div>`;
+                content.innerHTML = html;
+            }
+
+            modal.classList.add('active');
+        }
 
         function updateStats() {
             const totalWorkouts = workoutLogs.length;
