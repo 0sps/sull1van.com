@@ -30,6 +30,8 @@
         .logo h1 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 4px; background: var(--gradient-fire); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .logo-tag { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
         .header-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .user-info { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; color: var(--text-muted); }
+        .user-avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--accent-primary); }
         .sync-status { font-size: 0.7rem; padding: 6px 12px; border-radius: 2px; display: flex; align-items: center; gap: 6px; }
         .sync-status.synced { background: rgba(0, 255, 136, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 136, 0.3); }
         .sync-status.syncing { background: rgba(255, 187, 0, 0.1); color: var(--warning); border: 1px solid rgba(255, 187, 0, 0.3); }
@@ -159,6 +161,10 @@
                 <span class="logo-tag">Track. Lift. Grow.</span>
             </div>
             <div class="header-right">
+                <div class="user-info">
+                    <img class="user-avatar" id="userAvatar" src="" alt="User">
+                    <span id="userEmail"></span>
+                </div>
                 <div class="sync-status synced" id="syncStatus">
                     <span id="syncIcon">✓</span>
                     <span id="syncText">Synced</span>
@@ -265,12 +271,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
             authDomain: "workout-c7be0.firebaseapp.com",
@@ -280,12 +285,15 @@
             appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Make db available globally
+        const ALLOWED_EMAIL = "sspsful@gmail.com";
+
+        // Make Firebase functions available globally
         window.firebaseDb = db;
+        window.firebaseAuth = auth;
         window.firebaseCollection = collection;
         window.firebaseDoc = doc;
         window.firebaseGetDocs = getDocs;
@@ -293,34 +301,30 @@
         window.firebaseDeleteDoc = deleteDoc;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
+        window.firebaseSignOut = signOut;
 
-        // Signal that Firebase is ready
-        window.firebaseReady = true;
-        if (window.onFirebaseReady) window.onFirebaseReady();
+        // Check auth state
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== ALLOWED_EMAIL) {
+                window.location.href = 'index.html';
+            } else {
+                // User is authenticated
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userAvatar').src = user.photoURL || '';
+                window.currentUser = user;
+                window.firebaseReady = true;
+                if (window.onFirebaseReady) window.onFirebaseReady();
+            }
+        });
+
+        window.logout = async function() {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        }
     </script>
 
     <script>
-// Check authentication
-function checkAuth() {
-    const token = localStorage.getItem('ironlog_auth_token') || sessionStorage.getItem('ironlog_auth_token');
-    if (!token) {
-        window.location.href = 'index.html';
-        return false;
-    }
-    return true;
-}
-
-function logout() {
-    localStorage.removeItem('ironlog_auth_token');
-    localStorage.removeItem('ironlog_auth_hash');
-    sessionStorage.removeItem('ironlog_auth_token');
-    sessionStorage.removeItem('ironlog_auth_hash');
-    window.location.href = 'index.html';
-}
-
-if (!checkAuth()) throw new Error('Not authenticated');
-
-// EXERCISE NAME MAPPING - Exact CSV export names
+// EXERCISE NAME MAPPING
 const exerciseExportNames = {
     'incline-db-press': 'Dumbbell Incline Bench Press',
     'flat-db-press': 'Dumbbell Bench Press',
@@ -463,19 +467,13 @@ let currentExerciseData = {};
 let activeFilter = null;
 let weightUnit = 'kg';
 
-// Firebase sync functions
 async function loadFromFirebase() {
     try {
         updateSyncStatus('syncing');
-        const q = window.firebaseQuery(
-            window.firebaseCollection(window.firebaseDb, 'workouts'),
-            window.firebaseOrderBy('date', 'desc')
-        );
+        const q = window.firebaseQuery(window.firebaseCollection(window.firebaseDb, 'workouts'), window.firebaseOrderBy('date', 'desc'));
         const snapshot = await window.firebaseGetDocs(q);
         workoutLogs = [];
-        snapshot.forEach(doc => {
-            workoutLogs.push({ id: doc.id, ...doc.data() });
-        });
+        snapshot.forEach(doc => workoutLogs.push({ id: doc.id, ...doc.data() }));
         updateSyncStatus('synced');
         return true;
     } catch (error) {
@@ -488,10 +486,7 @@ async function loadFromFirebase() {
 async function saveToFirebase(log) {
     try {
         updateSyncStatus('syncing');
-        await window.firebaseSetDoc(
-            window.firebaseDoc(window.firebaseDb, 'workouts', log.id.toString()),
-            log
-        );
+        await window.firebaseSetDoc(window.firebaseDoc(window.firebaseDb, 'workouts', log.id.toString()), log);
         updateSyncStatus('synced');
         return true;
     } catch (error) {
@@ -504,9 +499,7 @@ async function saveToFirebase(log) {
 async function deleteFromFirebase(logId) {
     try {
         updateSyncStatus('syncing');
-        await window.firebaseDeleteDoc(
-            window.firebaseDoc(window.firebaseDb, 'workouts', logId.toString())
-        );
+        await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDb, 'workouts', logId.toString()));
         updateSyncStatus('synced');
         return true;
     } catch (error) {
@@ -533,7 +526,6 @@ function setWeightUnit(unit) {
     renderExercises();
 }
 
-// CSV EXPORT - EXACT FORMAT
 function formatDateForCSV(date) {
     const d = new Date(date);
     const pad = n => String(n).padStart(2, '0');
@@ -583,31 +575,17 @@ function downloadCSV(csv, filename) {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
 async function init() {
-    // Wait for Firebase
-    if (!window.firebaseReady) {
-        window.onFirebaseReady = init;
-        return;
-    }
-
-    // Load weight unit preference
+    if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
     const savedUnit = localStorage.getItem('ironlog_weight_unit');
     if (savedUnit) weightUnit = savedUnit;
-
-    // Load data from Firebase
     await loadFromFirebase();
-
-    // Hide loading overlay
     document.getElementById('loadingOverlay').style.display = 'none';
-
     updateCurrentDate();
     setTodaysWorkout();
     renderExercises();
@@ -651,21 +629,11 @@ function renderExercises() {
         const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
         const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
         return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header">
-                <div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div>
-                <span class="exercise-sets">${ex.sets} × ${ex.reps}</span>
-            </div>
+            <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div>
             <p style="font-size: 0.75rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({length: ex.sets}, (_, i) => `
-                <div class="set-input-group">
-                    <span class="set-label">Set ${i + 1} <input type="checkbox" class="warmup-toggle" title="Warmup" data-exercise="${exerciseKey}" data-set="${i}" onchange="updateWarmup(this)" ${i === 0 ? 'checked' : ''}><span style="font-size:0.55rem;color:var(--warning);">W</span></span>
-                    <div class="set-inputs">
-                        <input type="number" class="set-input" placeholder="${unitLabel}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)">
-                        <input type="number" class="set-input" placeholder="reps" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)">
-                    </div>
-                </div>`).join('')}
-            </div>
-        </div>`;
+                <div class="set-input-group"><span class="set-label">Set ${i + 1} <input type="checkbox" class="warmup-toggle" title="Warmup" data-exercise="${exerciseKey}" data-set="${i}" onchange="updateWarmup(this)" ${i === 0 ? 'checked' : ''}><span style="font-size:0.55rem;color:var(--warning);">W</span></span>
+                <div class="set-inputs"><input type="number" class="set-input" placeholder="${unitLabel}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="reps" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"></div></div>`).join('')}</div></div>`;
     }).join('');
 }
 
@@ -705,15 +673,10 @@ async function completeWorkout(shouldExport = false) {
         return { id: ex.exerciseId, name: exercise.name, sets };
     });
     const log = { id: Date.now(), date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit };
-    
-    // Save to Firebase
     await saveToFirebase(log);
     workoutLogs.unshift(log);
-    
     currentExerciseData = {};
-    renderExercises();
-    renderRecentLogs();
-    updateStats();
+    renderExercises(); renderRecentLogs(); updateStats();
     if (shouldExport) exportSingleWorkout(log);
     alert('💪 Workout logged and synced!');
     return log;
@@ -730,16 +693,7 @@ function renderRecentLogs() {
         const date = new Date(log.date);
         const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
         const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
-        return `<div class="log-entry">
-            <div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div>
-            <div class="log-workout-name">${log.workoutName}</div>
-            <div class="log-stats">${totalSets} sets • ${Math.round(totalVolume).toLocaleString()} ${log.weightUnit || 'kg'}</div>
-            <div class="log-actions">
-                <button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button>
-                <button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button>
-                <button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button>
-            </div>
-        </div>`;
+        return `<div class="log-entry"><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${Math.round(totalVolume).toLocaleString()} ${log.weightUnit || 'kg'}</div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button><button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button></div></div>`;
     }).join('');
 }
 
@@ -749,9 +703,7 @@ async function deleteLog(id) {
     if (confirm('Delete this log?')) {
         await deleteFromFirebase(id);
         workoutLogs = workoutLogs.filter(l => l.id.toString() !== id.toString());
-        renderRecentLogs();
-        renderFullHistory();
-        updateStats();
+        renderRecentLogs(); renderFullHistory(); updateStats();
     }
 }
 
@@ -761,10 +713,7 @@ function viewLogDetail(id) {
     const date = new Date(log.date);
     let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
     log.exercises.forEach(ex => {
-        html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-                ${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.65rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET '+(i+1)}</div><div>${set.weight}${log.weightUnit || 'kg'} × ${set.reps}</div></div>`).join('')}
-            </div></div>`;
+        html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.65rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET '+(i+1)}</div><div>${set.weight}${log.weightUnit || 'kg'} × ${set.reps}</div></div>`).join('')}</div></div>`;
     });
     document.getElementById('modalExerciseName').textContent = log.workoutName;
     document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -798,18 +747,7 @@ function renderPlanView() {
     container.innerHTML = days.map((day, idx) => {
         const workout = trainingPlan[day];
         const isRest = day === 'rest';
-        return `<div class="plan-day" id="plan-${day}">
-            <div class="plan-day-header" onclick="togglePlanDay('${day}')">
-                <div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day','')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div>
-                <span class="toggle-arrow">▼</span>
-            </div>
-            <div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' :
-                workout.exercises.map(ex => {
-                    const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
-                    return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold;">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`;
-                }).join('')}
-            </div>
-        </div>`;
+        return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day','')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold;">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
     }).join('');
 }
 
@@ -819,10 +757,7 @@ function renderLibrary() {
     const categories = [...new Set(exerciseDatabase.map(e => e.category))];
     document.getElementById('muscleFilter').innerHTML = `<span class="filter-chip ${!activeFilter ? 'active' : ''}" onclick="filterLibrary(null)">All</span>${categories.map(cat => `<span class="filter-chip ${activeFilter === cat ? 'active' : ''}" onclick="filterLibrary('${cat}')">${cat}</span>`).join('')}`;
     const searchTerm = document.getElementById('librarySearch')?.value?.toLowerCase() || '';
-    const filtered = exerciseDatabase.filter(ex => {
-        const matchesSearch = ex.name.toLowerCase().includes(searchTerm) || ex.muscles.some(m => m.toLowerCase().includes(searchTerm));
-        return matchesSearch && (!activeFilter || ex.category === activeFilter);
-    });
+    const filtered = exerciseDatabase.filter(ex => (ex.name.toLowerCase().includes(searchTerm) || ex.muscles.some(m => m.toLowerCase().includes(searchTerm))) && (!activeFilter || ex.category === activeFilter));
     document.getElementById('libraryGrid').innerHTML = filtered.map(ex => `<div class="library-exercise" onclick="showExerciseInfo('${ex.id}')"><h4 class="library-exercise-name">${ex.name}</h4><p class="library-exercise-muscles">${ex.muscles.join(' • ')}</p><span class="library-exercise-category">${ex.category}</span></div>`).join('');
 }
 
@@ -869,28 +804,22 @@ function setupTabs() {
 function renderFullHistory() {
     const container = document.getElementById('fullHistory');
     if (workoutLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`; return; }
-    container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-danger" onclick="clearAllLogs()">Clear All</button></div>` +
-        workoutLogs.map(log => {
-            const date = new Date(log.date);
-            const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
-            const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
-            return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${Math.round(totalVolume).toLocaleString()} ${log.weightUnit || 'kg'}</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button><button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button></div></div></div>`;
-        }).join('');
+    container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-danger" onclick="clearAllLogs()">Clear All</button></div>` + workoutLogs.map(log => {
+        const date = new Date(log.date);
+        const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
+        const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
+        return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${Math.round(totalVolume).toLocaleString()} ${log.weightUnit || 'kg'}</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button><button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button></div></div></div>`;
+    }).join('');
 }
 
 async function clearAllLogs() {
     if (confirm('Delete ALL workout logs?') && confirm('Really? This cannot be undone!')) {
-        for (const log of workoutLogs) {
-            await deleteFromFirebase(log.id);
-        }
+        for (const log of workoutLogs) await deleteFromFirebase(log.id);
         workoutLogs = [];
-        renderRecentLogs();
-        renderFullHistory();
-        updateStats();
+        renderRecentLogs(); renderFullHistory(); updateStats();
     }
 }
 
-// Initialize
 init();
     </script>
 </body>
