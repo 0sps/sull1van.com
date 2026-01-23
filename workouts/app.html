@@ -327,10 +327,33 @@
         }
 
         .warmup-toggle {
-            width: 14px;
-            height: 14px;
+            display: none;
+        }
+
+        .warmup-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            border: 2px solid var(--warning);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
             cursor: pointer;
-            accent-color: var(--warning);
+            transition: all 0.2s ease;
+            opacity: 0.4;
+        }
+
+        .warmup-btn.active {
+            background: rgba(255, 187, 0, 0.2);
+            color: var(--warning);
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(255, 187, 0, 0.5), 0 0 24px rgba(255, 187, 0, 0.3);
+            text-shadow: 0 0 8px rgba(255, 187, 0, 0.8);
+        }
+
+        .warmup-btn:hover {
+            opacity: 0.8;
         }
 
         .set-inputs {
@@ -1415,7 +1438,7 @@
             <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <p style="font-size: 0.75rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
-                <div class="set-input-group"><span class="set-label">Set ${i + 1} <input type="checkbox" class="warmup-toggle" title="Warmup" data-exercise="${exerciseKey}" data-set="${i}" onchange="updateWarmup(this)" ${i === 0 ? 'checked' : ''}><span style="font-size:0.55rem;color:var(--warning);">W</span></span>
+                <div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${i === 0 ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
                 <div class="set-inputs"><input type="number" class="set-input" placeholder="${unitLabel}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="reps" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"></div></div>`).join('')}</div></div>`;
             }).join('');
         }
@@ -1428,11 +1451,12 @@
             checkExerciseCompletion(key);
         }
 
-        function updateWarmup(checkbox) {
-            const key = checkbox.dataset.exercise, idx = parseInt(checkbox.dataset.set);
+        function toggleWarmup(btn) {
+            const key = btn.dataset.exercise, idx = parseInt(btn.dataset.set);
             if (!currentExerciseData[key]) currentExerciseData[key] = {};
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
-            currentExerciseData[key][idx].isWarmup = checkbox.checked;
+            btn.classList.toggle('active');
+            currentExerciseData[key][idx].isWarmup = btn.classList.contains('active');
         }
 
         function checkExerciseCompletion(key) {
