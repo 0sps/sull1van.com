@@ -294,6 +294,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
+            gap: 10px;
         }
 
         .exercise-name {
@@ -307,6 +308,8 @@
             color: var(--accent-secondary);
             background: rgba(255, 61, 0, 0.1);
             padding: 4px 12px;
+            width: 100%;
+            text-align: center;
         }
 
         .exercise-muscles {
@@ -817,6 +820,7 @@
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            width: 100%;
         }
 
         .btn-history:hover {
@@ -1003,7 +1007,7 @@
         <div id="workoutTab" class="tab-content">
             <div class="main-layout">
                 <div class="workout-area">
-                    <div class="section-card">
+                    <div class="section-card" id="workoutCard">
                         <div class="workout-header">
                             <div onclick="switchWorkout()" class="workout-title-link">
                                 <div class="workout-day-badge" id="workoutDayBadge">DAY 1</div>
@@ -1016,7 +1020,6 @@
                         <div id="exerciseList"></div>
                         <div class="complete-workout-section">
                             <button class="btn btn-primary" onclick="completeWorkout()">COMPLETE WORKOUT</button>
-                            <button class="btn btn-secondary" onclick="clearCurrentWorkout()">Clear</button>
                         </div>
                     </div>
                 </div>
@@ -1471,7 +1474,7 @@
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
+            <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
                 <div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${i === 0 ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
@@ -1532,7 +1535,7 @@
         }
 
         function completeAndExport() { completeWorkout(true); }
-        function clearCurrentWorkout() { if (confirm('Clear all data?')) { currentExerciseData = {}; renderExercises(); } }
+
 
         function renderRecentLogs() {
             const container = document.getElementById('recentLogs');
@@ -1704,10 +1707,28 @@
         function setupTabs() {
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+
+                    if (tabName === 'workout') {
+                        const todaysDay = dayToWorkout[new Date().getDay()];
+                        const workoutTab = document.getElementById('workoutTab');
+                        const isWorkoutTabVisible = workoutTab.style.display !== 'none';
+                        const isShowingToday = currentWorkoutDay === todaysDay;
+
+                        if (isWorkoutTabVisible && isShowingToday) {
+                            document.getElementById('workoutCard').scrollIntoView({ behavior: 'smooth' });
+                            return;
+                        }
+
+                        // Switch to today's workout if not showing it
+                        currentWorkoutDay = todaysDay;
+                        updateWorkoutDisplay();
+                    }
+
                     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
-                    const tabName = tab.dataset.tab;
+
                     if (tabName === 'workout') document.getElementById('workoutTab').style.display = 'block';
                     else if (tabName === 'plan') { document.getElementById('planTab').style.display = 'block'; document.getElementById('planTab').classList.add('active'); }
                     else if (tabName === 'library') { document.getElementById('libraryTab').style.display = 'block'; document.getElementById('libraryTab').classList.add('active'); }
