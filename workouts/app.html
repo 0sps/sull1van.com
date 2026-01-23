@@ -32,6 +32,7 @@
 
         body {
             font-family: 'Space Mono', monospace;
+            font-size: 17px;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
@@ -84,7 +85,7 @@
         }
 
         .logo-tag {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -101,7 +102,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
         }
 
@@ -113,7 +114,7 @@
         }
 
         .sync-status {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             padding: 6px 12px;
             border-radius: 2px;
             display: flex;
@@ -151,7 +152,7 @@
         }
 
         .current-date .date-full {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
         }
 
@@ -249,7 +250,7 @@
         }
 
         .workout-meta {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
             margin-top: 4px;
         }
@@ -293,21 +294,21 @@
         }
 
         .exercise-muscles {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             margin-bottom: 16px;
         }
 
         .sets-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
-        @media (max-width: 600px) {
-            .sets-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        #exerciseList {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
         }
 
         .set-input-group {
@@ -317,7 +318,7 @@
         }
 
         .set-label {
-            font-size: 0.65rem;
+            font-size: 0.89rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -340,7 +341,6 @@
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s ease;
             opacity: 0.4;
         }
 
@@ -362,14 +362,21 @@
         }
 
         .set-input {
-            width: 50%;
-            padding: 8px;
+            padding: 12px;
             background: var(--bg-primary);
             border: 1px solid var(--border);
             color: var(--text-primary);
             font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 1rem;
             text-align: center;
+        }
+
+        .set-input[data-type="reps"] {
+            width: 40%;
+        }
+
+        .set-input[data-type="weight"] {
+            width: 60%;
         }
 
         .set-input:focus {
@@ -379,8 +386,9 @@
         }
 
         .set-input::placeholder {
-            color: var(--text-muted);
-            font-size: 0.65rem;
+            color: #b0b0b5;
+            font-size: 0.89rem;
+            font-weight: 700;
         }
 
         .btn {
@@ -443,7 +451,7 @@
             border: 1px solid var(--border);
             color: var(--text-muted);
             padding: 6px 12px;
-            font-size: 0.7rem;
+            font-size: 0.82rem;
         }
 
         .btn-logout:hover {
@@ -482,7 +490,7 @@
         }
 
         .log-stats {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
         }
 
@@ -529,7 +537,7 @@
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -569,7 +577,7 @@
         }
 
         .library-exercise-muscles {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
         }
 
@@ -578,7 +586,7 @@
             padding: 2px 8px;
             background: rgba(255, 61, 0, 0.1);
             color: var(--accent-secondary);
-            font-size: 0.65rem;
+            font-size: 0.77rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 8px;
@@ -620,7 +628,7 @@
         }
 
         .plan-day-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.87rem;
             color: var(--text-muted);
         }
 
@@ -672,7 +680,7 @@
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -784,7 +792,7 @@
 
         .btn-history {
             padding: 4px 10px;
-            font-size: 0.65rem;
+            font-size: 0.77rem;
             background: rgba(255, 187, 0, 0.1);
             border: 1px solid var(--warning);
             color: var(--warning);
@@ -861,7 +869,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.75rem;
+            font-size: 0.87rem;
             color: var(--text-muted);
         }
 
@@ -871,7 +879,7 @@
             border: 1px solid var(--border);
             color: var(--text-secondary);
             font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -1218,44 +1226,44 @@
         const trainingPlan = {
             day1: {
                 name: 'PUSH A', subtitle: 'Upper Chest & Shoulder Width', exercises: [
-                    { exerciseId: 'incline-db-press', sets: 4, reps: '8-10', notes: 'Primary upper body mass builder' },
-                    { exerciseId: 'seated-db-press', sets: 4, reps: '8-10', notes: 'Builds shoulder mass' },
-                    { exerciseId: 'cable-lateral-raise', sets: 4, reps: '12-15', notes: 'CRITICAL: Creates shoulder width and V-taper' }
+                    { exerciseId: 'incline-db-press', sets: 5, reps: '8-10', notes: 'Primary upper body mass builder' },
+                    { exerciseId: 'seated-db-press', sets: 5, reps: '8-10', notes: 'Builds shoulder mass' },
+                    { exerciseId: 'cable-lateral-raise', sets: 5, reps: '12-15', notes: 'CRITICAL: Creates shoulder width and V-taper' }
                 ]
             },
             day2: {
                 name: 'PULL A', subtitle: 'Back Width & Power', exercises: [
-                    { exerciseId: 'pull-ups', sets: 4, reps: '8-10', notes: 'Best back width builder (or Lat Pulldown)' },
-                    { exerciseId: 'single-arm-db-row', sets: 4, reps: '8-10', notes: 'Explosive power, back thickness' },
-                    { exerciseId: 'barbell-shrug', sets: 4, reps: '10-15', notes: 'Builds "yoked" neck look' }
+                    { exerciseId: 'pull-ups', sets: 5, reps: '8-10', notes: 'Best back width builder (or Lat Pulldown)' },
+                    { exerciseId: 'single-arm-db-row', sets: 5, reps: '8-10', notes: 'Explosive power, back thickness' },
+                    { exerciseId: 'barbell-shrug', sets: 5, reps: '10-15', notes: 'Builds "yoked" neck look' }
                 ]
             },
             day3: {
                 name: 'LEGS A', subtitle: 'Quad & Glute Dominant', exercises: [
-                    { exerciseId: 'back-squat', sets: 4, reps: '6-10', notes: 'THE mass builder - FULL DEPTH' },
-                    { exerciseId: 'leg-extension', sets: 4, reps: '12-15', notes: 'Isolates quads for hypertrophy' },
-                    { exerciseId: 'standing-calf-raise', sets: 4, reps: '10-15', notes: 'Full stretch at bottom, pause at top' }
+                    { exerciseId: 'back-squat', sets: 5, reps: '6-10', notes: 'THE mass builder - FULL DEPTH' },
+                    { exerciseId: 'leg-extension', sets: 5, reps: '12-15', notes: 'Isolates quads for hypertrophy' },
+                    { exerciseId: 'standing-calf-raise', sets: 5, reps: '10-15', notes: 'Full stretch at bottom, pause at top' }
                 ]
             },
             day4: {
                 name: 'PUSH B', subtitle: 'Chest & Triceps', exercises: [
-                    { exerciseId: 'flat-db-press', sets: 4, reps: '8-12', notes: 'Primary chest mass builder' },
-                    { exerciseId: 'dips', sets: 4, reps: '8-12', notes: 'Lean forward for chest emphasis' },
-                    { exerciseId: 'overhead-cable-ext', sets: 4, reps: '10-15', notes: 'Direct tricep mass builder' }
+                    { exerciseId: 'flat-db-press', sets: 5, reps: '8-12', notes: 'Primary chest mass builder' },
+                    { exerciseId: 'dips', sets: 5, reps: '8-12', notes: 'Lean forward for chest emphasis' },
+                    { exerciseId: 'overhead-cable-ext', sets: 5, reps: '10-15', notes: 'Direct tricep mass builder' }
                 ]
             },
             day5: {
                 name: 'PULL B', subtitle: 'Back Detail & Arms', exercises: [
-                    { exerciseId: 'chest-supported-row', sets: 4, reps: '10-12', notes: 'ZERO lower back stress' },
-                    { exerciseId: 'reverse-pec-deck', sets: 4, reps: '15-20', notes: 'Rear delt and rotator cuff health' },
-                    { exerciseId: 'incline-db-curl', sets: 4, reps: '10-12', notes: 'Maximum stretch for bicep development' }
+                    { exerciseId: 'chest-supported-row', sets: 5, reps: '10-12', notes: 'ZERO lower back stress' },
+                    { exerciseId: 'reverse-pec-deck', sets: 5, reps: '15-20', notes: 'Rear delt and rotator cuff health' },
+                    { exerciseId: 'incline-db-curl', sets: 5, reps: '10-12', notes: 'Maximum stretch for bicep development' }
                 ]
             },
             day6: {
                 name: 'LEGS B', subtitle: 'Posterior Chain & Core', exercises: [
-                    { exerciseId: 'rdl', sets: 4, reps: '8-10', notes: 'Best hamstring builder' },
-                    { exerciseId: 'seated-leg-curl', sets: 4, reps: '10-15', notes: 'Squeeze at top, control eccentric' },
-                    { exerciseId: 'cable-crunch', sets: 4, reps: '12-15', notes: 'Best weighted ab exercise' }
+                    { exerciseId: 'rdl', sets: 5, reps: '8-10', notes: 'Best hamstring builder' },
+                    { exerciseId: 'seated-leg-curl', sets: 5, reps: '10-15', notes: 'Squeeze at top, control eccentric' },
+                    { exerciseId: 'cable-crunch', sets: 5, reps: '12-15', notes: 'Best weighted ab exercise' }
                 ]
             },
             rest: { name: 'REST DAY', subtitle: 'Recovery & Light Activity', exercises: [] }
@@ -1436,10 +1444,10 @@
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
             <div class="exercise-header"><div><h4 class="exercise-name">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;gap:8px;align-items:center;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
-            <p style="font-size: 0.75rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
+            <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => `
                 <div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${i === 0 ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
-                <div class="set-inputs"><input type="number" class="set-input" placeholder="${unitLabel}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="reps" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"></div></div>`).join('')}</div></div>`;
+                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`).join('')}</div></div>`;
             }).join('');
         }
 
@@ -1528,7 +1536,7 @@
             const date = new Date(log.date);
             let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
             log.exercises.forEach(ex => {
-                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.65rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
+                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -1621,7 +1629,7 @@
             container.innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isRest = day === 'rest';
-                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold;">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
+                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold;">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.87rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
             }).join('');
         }
 
@@ -1651,7 +1659,7 @@
             document.getElementById('daySelector').innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isCurrent = day === currentWorkoutDay;
-                return `<div style="padding: 12px; margin-bottom: 8px; background: ${isCurrent ? 'rgba(255,61,0,0.1)' : 'var(--bg-tertiary)'}; border: 1px solid ${isCurrent ? 'var(--accent-primary)' : 'var(--border)'}; cursor: pointer;" onclick="selectWorkoutDay('${day}')"><div style="font-family: 'Bebas Neue'; font-size: 1.1rem;">${workout.name}</div><div style="font-size: 0.75rem; color: var(--text-muted);">${labels[idx]}</div></div>`;
+                return `<div style="padding: 12px; margin-bottom: 8px; background: ${isCurrent ? 'rgba(255,61,0,0.1)' : 'var(--bg-tertiary)'}; border: 1px solid ${isCurrent ? 'var(--accent-primary)' : 'var(--border)'}; cursor: pointer;" onclick="selectWorkoutDay('${day}')"><div style="font-family: 'Bebas Neue'; font-size: 1.1rem;">${workout.name}</div><div style="font-size: 0.87rem; color: var(--text-muted);">${labels[idx]}</div></div>`;
             }).join('');
             document.getElementById('switchModal').classList.add('active');
         }
