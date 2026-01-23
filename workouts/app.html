@@ -249,6 +249,22 @@
             margin-top: 8px;
         }
 
+        .workout-title-link {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+        }
+
+        .workout-title-link:hover .workout-day-badge {
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .workout-title-link:hover .workout-name {
+            color: var(--accent-primary);
+        }
+
         .workout-meta {
             font-size: 0.875rem;
             color: var(--text-muted);
@@ -852,7 +868,8 @@
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 106, 0.05) 100%);
             border: 1px solid rgba(0, 255, 136, 0.3);
             padding: 16px 20px;
-            margin-bottom: 24px;
+            margin-top: 40px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -963,10 +980,6 @@
             <button class="nav-tab" data-tab="history">Workout History</button>
         </nav>
 
-        <div class="export-banner">
-            <span class="export-banner-text">📤 Export complete workout history for analytics</span>
-            <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
-        </div>
 
         <div class="stats-grid">
             <div class="stat-card">
@@ -992,7 +1005,7 @@
                 <div class="workout-area">
                     <div class="section-card">
                         <div class="workout-header">
-                            <div>
+                            <div onclick="switchWorkout()" class="workout-title-link">
                                 <div class="workout-day-badge" id="workoutDayBadge">DAY 1</div>
                                 <h2 class="workout-name" id="workoutName">PUSH A</h2>
                                 <p class="workout-meta" id="workoutMeta">Upper Chest & Shoulder Width • 12 Sets Total
@@ -1003,7 +1016,6 @@
                         <div id="exerciseList"></div>
                         <div class="complete-workout-section">
                             <button class="btn btn-primary" onclick="completeWorkout()">COMPLETE WORKOUT</button>
-                            <button class="btn btn-export" onclick="completeAndExport()">COMPLETE & EXPORT CSV</button>
                             <button class="btn btn-secondary" onclick="clearCurrentWorkout()">Clear</button>
                         </div>
                     </div>
@@ -1040,6 +1052,11 @@
                 <h3 class="section-title">Workout History</h3>
                 <div id="fullHistory"></div>
             </div>
+        </div>
+
+        <div class="export-banner">
+            <span class="export-banner-text">📤 Export complete workout history for analytics</span>
+            <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
         </div>
     </div>
 
@@ -1527,19 +1544,13 @@
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
                 // Convert kg volume to lbs for display
                 const displayVolume = Math.round(kgToLbs(totalVolume));
-                return `<div class="log-entry"><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button><button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button></div></div>`;
+                return `<div class="log-entry"><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div>`;
             }).join('');
         }
 
         function exportSingleLog(id) { const log = workoutLogs.find(l => l.id.toString() === id.toString()); if (log) exportSingleWorkout(log); }
 
-        async function deleteLog(id) {
-            if (confirm('Delete this log?')) {
-                await deleteFromFirebase(id);
-                workoutLogs = workoutLogs.filter(l => l.id.toString() !== id.toString());
-                renderRecentLogs(); renderFullHistory(); updateStats();
-            }
-        }
+
 
         function viewLogDetail(id) {
             const log = workoutLogs.find(l => l.id.toString() === id.toString());
@@ -1709,22 +1720,16 @@
         function renderFullHistory() {
             const container = document.getElementById('fullHistory');
             if (workoutLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`; return; }
-            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-danger" onclick="clearAllLogs()">Clear All</button></div>` + workoutLogs.map(log => {
+            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button></div>` + workoutLogs.map(log => {
                 const date = new Date(log.date);
                 const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
                 const displayVolume = Math.round(kgToLbs(totalVolume));
-                return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button><button class="btn btn-danger btn-small" onclick="deleteLog('${log.id}')">Delete</button></div></div></div>`;
+                return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div></div>`;
             }).join('');
         }
 
-        async function clearAllLogs() {
-            if (confirm('Delete ALL workout logs?') && confirm('Really? This cannot be undone!')) {
-                for (const log of workoutLogs) await deleteFromFirebase(log.id);
-                workoutLogs = [];
-                renderRecentLogs(); renderFullHistory(); updateStats();
-            }
-        }
+
 
         init();
     </script>
