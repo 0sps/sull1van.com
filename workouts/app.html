@@ -1111,151 +1111,89 @@
     </script>
 
     <script>
-        // EXERCISE NAME MAPPING
-        const exerciseExportNames = {
-            'incline-db-press': 'Dumbbell Incline Bench Press',
-            'flat-db-press': 'Dumbbell Bench Press',
-            'dips': 'Dips',
-            'pec-deck': 'Machine Fly',
-            'cable-crossover': 'Cable Crossover',
-            'push-ups': 'Push Ups',
-            'seated-db-press': 'Seated Dumbbell Press',
-            'cable-lateral-raise': 'Cable Lateral Raise',
-            'db-lateral-raise': 'Dumbbell Lateral Raise',
-            'machine-rear-delt-fly': 'Machine Rear Delt Fly',
-            'face-pulls': 'Face Pull',
-            'arnold-press': 'Arnold Press',
-            'front-raise': 'Dumbbell Front Raise',
-            'pull-ups': 'Pull Up',
-            'lat-pulldown': 'Lat Pulldown',
-            'single-arm-db-row': 'Dumbbell Row',
-            'barbell-row': 'Barbell Row',
-            'chest-supported-row': 'Chest Supported Dumbbell Row',
-            'cable-row': 'Life Fitness Seated Row',
-            'barbell-shrug': 'Barbell Shrug',
-            'db-shrug': 'Dumbbell Shrug',
-            'incline-db-curl': 'Incline Dumbbell Curl',
-            'barbell-curl': 'Barbell Curl',
-            'hammer-curl': 'Hammer Curls',
-            'preacher-curl': 'Preacher Curl',
-            'cable-curl': 'Cable Curl',
-            'overhead-cable-ext': 'Cable Rope Overhead Triceps Extension',
-            'tricep-pushdown': 'Cable Tricep Pushdown',
-            'skull-crushers': 'Skull Crusher',
-            'back-squat': 'Barbell Squat',
-            'front-squat': 'Front Squat',
-            'leg-press': 'Leg Press',
-            'leg-extension': 'Leg Extension',
-            'hack-squat': 'Hack Squat',
-            'goblet-squat': 'Goblet Squat',
-            'lunges': 'Dumbbell Lunges',
-            'rdl': 'Romanian Deadlift',
-            'seated-leg-curl': 'Seated Leg Curl',
-            'lying-leg-curl': 'Lying Leg Curl',
-            'hip-thrust': 'Hip Thrust',
-            'standing-calf-raise': 'Standing Machine Calf Press',
-            'seated-calf-raise': 'Seated Calf Raise',
-            'cable-crunch': 'Cable Crunch',
-            'hanging-leg-raise': 'Hanging Leg Raise'
-        };
+        // DATA LOADED FROM JSON FILES
+        let exercisesData = {};  // Will be loaded from exercises.json
+        let trainingPlanData = null;  // Will be loaded from training-plan.json
+        let exerciseDatabase = [];  // Built from exercisesData after loading
+        let trainingPlan = {};  // Built from trainingPlanData after loading
 
-        const exerciseMultipliers = {
-            'incline-db-press': 2, 'flat-db-press': 2, 'seated-db-press': 2, 'db-lateral-raise': 2,
-            'single-arm-db-row': 2, 'db-shrug': 2, 'incline-db-curl': 2, 'hammer-curl': 2,
-            'chest-supported-row': 2, 'arnold-press': 2, 'front-raise': 2, 'lunges': 2
-        };
+        // Helper functions to get exercise data
+        function getExercise(id) {
+            return exercisesData[id] || null;
+        }
 
-        const exerciseDatabase = [
-            { id: 'incline-db-press', name: 'Incline Dumbbell Press', muscles: ['Upper Chest', 'Anterior Delt'], category: 'Chest', equipment: 'Dumbbells' },
-            { id: 'flat-db-press', name: 'Flat Dumbbell Bench Press', muscles: ['Mid/Lower Chest', 'Triceps'], category: 'Chest', equipment: 'Dumbbells' },
-            { id: 'dips', name: 'Dips', muscles: ['Chest', 'Triceps'], category: 'Chest', equipment: 'Bodyweight' },
-            { id: 'pec-deck', name: 'Pec Deck / Machine Fly', muscles: ['Chest'], category: 'Chest', equipment: 'Machine' },
-            { id: 'cable-crossover', name: 'Cable Crossover', muscles: ['Chest'], category: 'Chest', equipment: 'Cable' },
-            { id: 'seated-db-press', name: 'Seated Dumbbell Shoulder Press', muscles: ['Anterior Delt', 'Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
-            { id: 'cable-lateral-raise', name: 'Cable Lateral Raise', muscles: ['Lateral Delt'], category: 'Shoulders', equipment: 'Cable' },
-            { id: 'db-lateral-raise', name: 'Dumbbell Lateral Raise', muscles: ['Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
-            { id: 'machine-rear-delt-fly', name: 'Machine Rear Delt Fly', muscles: ['Posterior Delt', 'Rhomboids'], category: 'Shoulders', equipment: 'Machine' },
-            { id: 'face-pulls', name: 'Face Pulls', muscles: ['Posterior Delt', 'Traps'], category: 'Shoulders', equipment: 'Cable' },
-            { id: 'arnold-press', name: 'Arnold Press', muscles: ['Anterior Delt', 'Lateral Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
-            { id: 'front-raise', name: 'Front Raise', muscles: ['Anterior Delt'], category: 'Shoulders', equipment: 'Dumbbells' },
-            { id: 'pull-ups', name: 'Pull-Ups', muscles: ['Lats', 'Biceps'], category: 'Back', equipment: 'Bodyweight' },
-            { id: 'lat-pulldown', name: 'Lat Pulldown', muscles: ['Lats'], category: 'Back', equipment: 'Cable' },
-            { id: 'single-arm-db-row', name: 'Single Arm Dumbbell Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Dumbbells' },
-            { id: 'barbell-row', name: 'Barbell Row', muscles: ['Lats', 'Rhomboids', 'Traps'], category: 'Back', equipment: 'Barbell' },
-            { id: 'chest-supported-row', name: 'Chest-Supported Dumbbell Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Dumbbells', instructions: "set an incline bench to about 30 or 45 degrees. lie face down on the bench with your chest against the pad. your head should be hanging off the top edge.\n\ngrab a pair of dumbbells on the floor. let your arms hang straight down. row the dumbbells up toward your hips, squeezing your shoulder blades together at the top.\ndo not let your chest leave the pad. if you have to \"bounce\" your chest off the bench to get the weight up, it's too heavy." },
-            { id: 'cable-row', name: 'Seated Cable Row', muscles: ['Lats', 'Rhomboids'], category: 'Back', equipment: 'Cable' },
-            { id: 'barbell-shrug', name: 'Barbell Shrug', muscles: ['Upper Traps'], category: 'Traps', equipment: 'Barbell' },
-            { id: 'db-shrug', name: 'Dumbbell Shrug', muscles: ['Upper Traps'], category: 'Traps', equipment: 'Dumbbells' },
-            { id: 'incline-db-curl', name: 'Incline Dumbbell Curl', muscles: ['Biceps'], category: 'Biceps', equipment: 'Dumbbells' },
-            { id: 'barbell-curl', name: 'Barbell Curl', muscles: ['Biceps'], category: 'Biceps', equipment: 'Barbell' },
-            { id: 'hammer-curl', name: 'Hammer Curl', muscles: ['Biceps', 'Brachialis'], category: 'Biceps', equipment: 'Dumbbells' },
-            { id: 'preacher-curl', name: 'Preacher Curl', muscles: ['Biceps'], category: 'Biceps', equipment: 'Barbell' },
-            { id: 'cable-curl', name: 'Cable Curl', muscles: ['Biceps'], category: 'Biceps', equipment: 'Cable' },
-            { id: 'overhead-cable-ext', name: 'Overhead Cable Tricep Extension', muscles: ['Tricep Long Head'], category: 'Triceps', equipment: 'Cable' },
-            { id: 'tricep-pushdown', name: 'Tricep Pushdown', muscles: ['Triceps'], category: 'Triceps', equipment: 'Cable' },
-            { id: 'skull-crushers', name: 'Skull Crushers', muscles: ['Triceps'], category: 'Triceps', equipment: 'Barbell' },
-            { id: 'back-squat', name: 'Back Squat', muscles: ['Quads', 'Glutes'], category: 'Quads', equipment: 'Barbell' },
-            { id: 'front-squat', name: 'Front Squat', muscles: ['Quads'], category: 'Quads', equipment: 'Barbell' },
-            { id: 'leg-press', name: 'Leg Press', muscles: ['Quads', 'Glutes'], category: 'Quads', equipment: 'Machine' },
-            { id: 'leg-extension', name: 'Leg Extension', muscles: ['Quads'], category: 'Quads', equipment: 'Machine' },
-            { id: 'hack-squat', name: 'Hack Squat', muscles: ['Quads'], category: 'Quads', equipment: 'Machine' },
-            { id: 'goblet-squat', name: 'Goblet Squat', muscles: ['Quads', 'Glutes'], category: 'Quads', equipment: 'Dumbbells' },
-            { id: 'lunges', name: 'Lunges', muscles: ['Quads', 'Glutes'], category: 'Quads', equipment: 'Dumbbells' },
-            { id: 'rdl', name: 'Romanian Deadlift (RDL)', muscles: ['Hamstrings', 'Glutes'], category: 'Hamstrings', equipment: 'Barbell' },
-            { id: 'seated-leg-curl', name: 'Seated Leg Curl', muscles: ['Hamstrings'], category: 'Hamstrings', equipment: 'Machine' },
-            { id: 'lying-leg-curl', name: 'Lying Leg Curl', muscles: ['Hamstrings'], category: 'Hamstrings', equipment: 'Machine' },
-            { id: 'hip-thrust', name: 'Hip Thrust', muscles: ['Glutes'], category: 'Glutes', equipment: 'Barbell' },
-            { id: 'standing-calf-raise', name: 'Standing Calf Raise', muscles: ['Calves'], category: 'Calves', equipment: 'Machine' },
-            { id: 'seated-calf-raise', name: 'Seated Calf Raise', muscles: ['Soleus'], category: 'Calves', equipment: 'Machine' },
-            { id: 'cable-crunch', name: 'Cable Crunch', muscles: ['Abs'], category: 'Core', equipment: 'Cable' },
-            { id: 'hanging-leg-raise', name: 'Hanging Leg Raise', muscles: ['Abs'], category: 'Core', equipment: 'Bodyweight' }
-        ];
+        function getExportName(id) {
+            const exercise = exercisesData[id];
+            return exercise ? exercise.exportName : id;
+        }
 
-        const trainingPlan = {
-            day1: {
-                name: 'PUSH A', subtitle: 'Upper Chest & Shoulder Width', exercises: [
-                    { exerciseId: 'incline-db-press', sets: 5, reps: '8-10', notes: 'Primary upper body mass builder' },
-                    { exerciseId: 'seated-db-press', sets: 5, reps: '8-10', notes: 'Builds shoulder mass' },
-                    { exerciseId: 'cable-lateral-raise', sets: 5, reps: '12-15', notes: 'CRITICAL: Creates shoulder width and V-taper' }
-                ]
-            },
-            day2: {
-                name: 'PULL A', subtitle: 'Back Width & Power', exercises: [
-                    { exerciseId: 'pull-ups', sets: 5, reps: '8-10', notes: 'Best back width builder (or Lat Pulldown)' },
-                    { exerciseId: 'single-arm-db-row', sets: 5, reps: '8-10', notes: 'Explosive power, back thickness' },
-                    { exerciseId: 'barbell-shrug', sets: 5, reps: '10-15', notes: 'Builds "yoked" neck look' }
-                ]
-            },
-            day3: {
-                name: 'LEGS A', subtitle: 'Quad & Glute Dominant', exercises: [
-                    { exerciseId: 'back-squat', sets: 5, reps: '6-10', notes: 'THE mass builder - FULL DEPTH' },
-                    { exerciseId: 'leg-extension', sets: 5, reps: '12-15', notes: 'Isolates quads for hypertrophy' },
-                    { exerciseId: 'standing-calf-raise', sets: 5, reps: '10-15', notes: 'Full stretch at bottom, pause at top' }
-                ]
-            },
-            day4: {
-                name: 'PUSH B', subtitle: 'Chest & Triceps', exercises: [
-                    { exerciseId: 'flat-db-press', sets: 5, reps: '8-12', notes: 'Primary chest mass builder' },
-                    { exerciseId: 'dips', sets: 5, reps: '8-12', notes: 'Lean forward for chest emphasis' },
-                    { exerciseId: 'overhead-cable-ext', sets: 5, reps: '10-15', notes: 'Direct tricep mass builder' }
-                ]
-            },
-            day5: {
-                name: 'PULL B', subtitle: 'Back Detail & Arms', exercises: [
-                    { exerciseId: 'chest-supported-row', sets: 5, reps: '10-12', notes: 'ZERO lower back stress' },
-                    { exerciseId: 'machine-rear-delt-fly', sets: 5, reps: '15-20', notes: 'Rear delt and rotator cuff health' },
-                    { exerciseId: 'incline-db-curl', sets: 5, reps: '10-12', notes: 'Maximum stretch for bicep development' }
-                ]
-            },
-            day6: {
-                name: 'LEGS B', subtitle: 'Posterior Chain & Core', exercises: [
-                    { exerciseId: 'rdl', sets: 5, reps: '8-10', notes: 'Best hamstring builder' },
-                    { exerciseId: 'seated-leg-curl', sets: 5, reps: '10-15', notes: 'Squeeze at top, control eccentric' },
-                    { exerciseId: 'cable-crunch', sets: 5, reps: '12-15', notes: 'Best weighted ab exercise' }
-                ]
-            },
-            rest: { name: 'REST DAY', subtitle: 'Recovery & Light Activity', exercises: [] }
-        };
+        function getMultiplier(id) {
+            const exercise = exercisesData[id];
+            return exercise ? exercise.multiplier : 1;
+        }
+
+        // Load JSON data files
+        async function loadExerciseData() {
+            try {
+                const response = await fetch('exercises.json');
+                exercisesData = await response.json();
+
+                // Build exerciseDatabase array for compatibility
+                exerciseDatabase = Object.entries(exercisesData).map(([id, data]) => ({
+                    id: id,
+                    name: data.name,
+                    muscles: data.muscles || [],
+                    category: data.category || '',
+                    equipment: data.equipment || '',
+                    instructions: data.instructions || '',
+                    notes: data.notes || ''
+                }));
+
+                return true;
+            } catch (error) {
+                console.error('Failed to load exercises.json:', error);
+                return false;
+            }
+        }
+
+        async function loadTrainingPlan() {
+            try {
+                const response = await fetch('training-plan.json');
+                trainingPlanData = await response.json();
+
+                // Convert to old format for compatibility
+                const schedule = trainingPlanData.schedule || [];
+                const workouts = trainingPlanData.workouts || {};
+
+                // Map schedule to day1-day6, rest format
+                trainingPlan = {};
+                schedule.forEach((workoutName, index) => {
+                    const dayKey = index === 3 ? 'rest' : `day${index < 3 ? index + 1 : index}`;
+                    const workout = workouts[workoutName];
+
+                    if (workout) {
+                        trainingPlan[dayKey] = {
+                            name: workoutName,
+                            subtitle: workout.subtitle || '',
+                            exercises: (workout.exercises || []).map(ex => {
+                                const exercise = getExercise(ex.id);
+                                return {
+                                    exerciseId: ex.id,
+                                    sets: ex.sets || 3,
+                                    reps: ex.reps || '8-12',
+                                    notes: exercise ? exercise.notes : ''
+                                };
+                            })
+                        };
+                    }
+                });
+
+                return true;
+            } catch (error) {
+                console.error('Failed to load training-plan.json:', error);
+                return false;
+            }
+        }
 
         const dayToWorkout = { 0: 'day1', 1: 'day2', 2: 'day3', 3: 'rest', 4: 'day4', 5: 'day5', 6: 'day6' };
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -1379,6 +1317,16 @@
 
         async function init() {
             if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
+
+            // Load exercise and training plan data from JSON files
+            const exercisesLoaded = await loadExerciseData();
+            const planLoaded = await loadTrainingPlan();
+
+            if (!exercisesLoaded || !planLoaded) {
+                console.error('Failed to load data files');
+                document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data files. Please refresh.</div>';
+                return;
+            }
 
             await loadFromFirebase();
             document.getElementById('loadingOverlay').style.display = 'none';

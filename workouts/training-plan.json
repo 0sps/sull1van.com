@@ -1,0 +1,138 @@
+{
+    "name": "Push/Pull/Legs Split",
+    "schedule": [
+        "PUSH A",
+        "PULL A",
+        "LEGS A",
+        "REST",
+        "PUSH B",
+        "PULL B",
+        "LEGS B"
+    ],
+    "workouts": {
+        "PUSH A": {
+            "subtitle": "Upper Chest & Shoulder Width",
+            "exercises": [
+                {
+                    "id": "ex001",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex005",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex004",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        },
+        "PULL A": {
+            "subtitle": "Back Width & Power",
+            "exercises": [
+                {
+                    "id": "ex003",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex083",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex140",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "LEGS A": {
+            "subtitle": "Quad & Glute Dominant",
+            "exercises": [
+                {
+                    "id": "ex006",
+                    "sets": 5,
+                    "reps": "6-10"
+                },
+                {
+                    "id": "ex002",
+                    "sets": 5,
+                    "reps": "12-15"
+                },
+                {
+                    "id": "ex007",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "REST": {
+            "subtitle": "Recovery & Light Activity",
+            "exercises": []
+        },
+        "PUSH B": {
+            "subtitle": "Chest & Triceps",
+            "exercises": [
+                {
+                    "id": "ex017",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "id": "ex055",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "id": "ex021",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "PULL B": {
+            "subtitle": "Back Detail & Arms",
+            "exercises": [
+                {
+                    "id": "ex138",
+                    "sets": 5,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex033",
+                    "sets": 5,
+                    "reps": "15-20"
+                },
+                {
+                    "id": "ex014",
+                    "sets": 5,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "LEGS B": {
+            "subtitle": "Posterior Chain & Core",
+            "exercises": [
+                {
+                    "id": "ex025",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex008",
+                    "sets": 5,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex009",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        }
+    }
+}

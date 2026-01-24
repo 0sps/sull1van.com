@@ -1,0 +1,3629 @@
+{
+  "ex001": {
+    "name": "﻿Dumbbell Incline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "﻿Dumbbell Incline Bench Press",
+    "multiplier": 1
+  },
+  "ex002": {
+    "name": "Leg Extension",
+    "muscles": [
+      "Quads"
+    ],
+    "category": "Quads",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "Isolates quads for hypertrophy",
+    "exportName": "Leg Extension",
+    "multiplier": 1
+  },
+  "ex003": {
+    "name": "Pull Up",
+    "muscles": [
+      "Lats",
+      "Biceps"
+    ],
+    "category": "Back",
+    "equipment": "Bodyweight",
+    "instructions": "",
+    "notes": "Best back width builder (or Lat Pulldown)",
+    "exportName": "Pull Up",
+    "multiplier": 1
+  },
+  "ex004": {
+    "name": "Cable Lateral Raise",
+    "muscles": [
+      "Lateral Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "CRITICAL: Creates shoulder width and V-taper",
+    "exportName": "Cable Lateral Raise",
+    "multiplier": 1
+  },
+  "ex005": {
+    "name": "Dumbbell Shoulder Press",
+    "muscles": [
+      "Anterior Delt",
+      "Lateral Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "Builds shoulder mass",
+    "exportName": "Seated Dumbbell Press",
+    "multiplier": 2
+  },
+  "ex006": {
+    "name": "Back Squat",
+    "muscles": [
+      "Quads",
+      "Glutes"
+    ],
+    "category": "Quads",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "THE mass builder - FULL DEPTH",
+    "exportName": "Barbell Squat",
+    "multiplier": 1
+  },
+  "ex007": {
+    "name": "Standing Machine Calf Press",
+    "muscles": [
+      "Calves"
+    ],
+    "category": "Calves",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "Full stretch at bottom, pause at top",
+    "exportName": "Standing Machine Calf Press",
+    "multiplier": 1
+  },
+  "ex008": {
+    "name": "Seated Leg Curl",
+    "muscles": [
+      "Hamstrings"
+    ],
+    "category": "Hamstrings",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "Squeeze at top, control eccentric",
+    "exportName": "Seated Leg Curl",
+    "multiplier": 1
+  },
+  "ex009": {
+    "name": "Cable Crunch",
+    "muscles": [
+      "Abs"
+    ],
+    "category": "Core",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "Best weighted ab exercise",
+    "exportName": "Cable Crunch",
+    "multiplier": 1
+  },
+  "ex010": {
+    "name": "Dumbbell Bicep Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Bicep Curl",
+    "multiplier": 1
+  },
+  "ex011": {
+    "name": "Machine Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Row",
+    "multiplier": 1
+  },
+  "ex012": {
+    "name": "Lat Pulldown",
+    "muscles": [
+      "Lats"
+    ],
+    "category": "Back",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lat Pulldown",
+    "multiplier": 1
+  },
+  "ex013": {
+    "name": "Leg Press",
+    "muscles": [
+      "Quads",
+      "Glutes"
+    ],
+    "category": "Quads",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Leg Press",
+    "multiplier": 1
+  },
+  "ex014": {
+    "name": "Incline Dumbbell Curl",
+    "muscles": [
+      "Biceps"
+    ],
+    "category": "Biceps",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "Maximum stretch for bicep development",
+    "exportName": "Incline Dumbbell Curl",
+    "multiplier": 2
+  },
+  "ex015": {
+    "name": "Dumbbell Preacher Curls",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Preacher Curls",
+    "multiplier": 1
+  },
+  "ex016": {
+    "name": "Incline Back Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Back Extension",
+    "multiplier": 1
+  },
+  "ex017": {
+    "name": "Dumbbell Bench Press",
+    "muscles": [
+      "Mid/Lower Chest",
+      "Triceps"
+    ],
+    "category": "Chest",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Bench Press",
+    "multiplier": 2
+  },
+  "ex018": {
+    "name": "Machine Fly",
+    "muscles": [
+      "Chest"
+    ],
+    "category": "Chest",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Fly",
+    "multiplier": 1
+  },
+  "ex019": {
+    "name": "Cable Tricep Pushdown",
+    "muscles": [
+      "Triceps"
+    ],
+    "category": "Triceps",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Tricep Pushdown",
+    "multiplier": 1
+  },
+  "ex020": {
+    "name": "Life Fitness Seated Row",
+    "muscles": [
+      "Lats",
+      "Rhomboids"
+    ],
+    "category": "Back",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Life Fitness Seated Row",
+    "multiplier": 1
+  },
+  "ex021": {
+    "name": "Cable Rope Overhead Triceps Extension",
+    "muscles": [
+      "Tricep Long Head"
+    ],
+    "category": "Triceps",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "Direct tricep mass builder",
+    "exportName": "Cable Rope Overhead Triceps Extension",
+    "multiplier": 1
+  },
+  "ex022": {
+    "name": "Dumbbell Back Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Back Fly",
+    "multiplier": 1
+  },
+  "ex023": {
+    "name": "Hammer Curls",
+    "muscles": [
+      "Biceps",
+      "Brachialis"
+    ],
+    "category": "Biceps",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hammer Curls",
+    "multiplier": 2
+  },
+  "ex024": {
+    "name": "Cable Rope Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Rope Tricep Extension",
+    "multiplier": 1
+  },
+  "ex025": {
+    "name": "Romanian Deadlift",
+    "muscles": [
+      "Hamstrings",
+      "Glutes"
+    ],
+    "category": "Hamstrings",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "Best hamstring builder",
+    "exportName": "Romanian Deadlift",
+    "multiplier": 1
+  },
+  "ex026": {
+    "name": "Dumbbell Lateral Raise",
+    "muscles": [
+      "Lateral Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Lateral Raise",
+    "multiplier": 2
+  },
+  "ex027": {
+    "name": "Step Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Step Up",
+    "multiplier": 1
+  },
+  "ex028": {
+    "name": "Dumbbell Bulgarian Split Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Bulgarian Split Squat",
+    "multiplier": 1
+  },
+  "ex029": {
+    "name": "Bicycle Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bicycle Crunch",
+    "multiplier": 1
+  },
+  "ex030": {
+    "name": "Seated Machine Calf Press",
+    "muscles": [
+      "Soleus"
+    ],
+    "category": "Calves",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Calf Raise",
+    "multiplier": 1
+  },
+  "ex031": {
+    "name": "Calf Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Calf Press",
+    "multiplier": 1
+  },
+  "ex032": {
+    "name": "Dumbbell Pause Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Pause Curl",
+    "multiplier": 1
+  },
+  "ex033": {
+    "name": "Machine Rear Delt Fly",
+    "muscles": [
+      "Posterior Delt",
+      "Rhomboids"
+    ],
+    "category": "Shoulders",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "Rear delt and rotator cuff health",
+    "exportName": "Machine Rear Delt Fly",
+    "multiplier": 1
+  },
+  "ex034": {
+    "name": "Hammerstrength Chest Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hammerstrength Chest Press",
+    "multiplier": 1
+  },
+  "ex035": {
+    "name": "Hammerstrength Iso Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hammerstrength Iso Row",
+    "multiplier": 1
+  },
+  "ex036": {
+    "name": "Lying Hamstrings Curl",
+    "muscles": [
+      "Hamstrings"
+    ],
+    "category": "Hamstrings",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lying Leg Curl",
+    "multiplier": 1
+  },
+  "ex037": {
+    "name": "Dumbbell Front Raise",
+    "muscles": [
+      "Anterior Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Front Raise",
+    "multiplier": 2
+  },
+  "ex038": {
+    "name": "Cable Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Row",
+    "multiplier": 1
+  },
+  "ex039": {
+    "name": "booty Builder Seated Hip Thrust",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "booty Builder Seated Hip Thrust",
+    "multiplier": 1
+  },
+  "ex040": {
+    "name": "Bulgarian Split Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bulgarian Split Squat",
+    "multiplier": 1
+  },
+  "ex041": {
+    "name": "Wide Grip Lat Pulldown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Wide Grip Lat Pulldown",
+    "multiplier": 1
+  },
+  "ex042": {
+    "name": "Bent Over Barbell Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bent Over Barbell Row",
+    "multiplier": 1
+  },
+  "ex043": {
+    "name": "Dumbbell Rear Delt Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Rear Delt Raise",
+    "multiplier": 1
+  },
+  "ex044": {
+    "name": "EZ-Bar Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "EZ-Bar Curl",
+    "multiplier": 1
+  },
+  "ex045": {
+    "name": "Straight-Arm Pulldown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Straight-Arm Pulldown",
+    "multiplier": 1
+  },
+  "ex046": {
+    "name": "Cable Face Pull",
+    "muscles": [
+      "Posterior Delt",
+      "Traps"
+    ],
+    "category": "Shoulders",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Face Pull",
+    "multiplier": 1
+  },
+  "ex047": {
+    "name": "Seated Dumbbell Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Dumbbell Curl",
+    "multiplier": 1
+  },
+  "ex048": {
+    "name": "Reverse Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Lunge",
+    "multiplier": 1
+  },
+  "ex049": {
+    "name": "Cable Underhand Tricep Pushdown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Underhand Tricep Pushdown",
+    "multiplier": 1
+  },
+  "ex050": {
+    "name": "Hanging Knee Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hanging Knee Raise",
+    "multiplier": 1
+  },
+  "ex051": {
+    "name": "T-Bar Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "T-Bar Row",
+    "multiplier": 1
+  },
+  "ex052": {
+    "name": "Dumbbell Shoulder Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Shoulder Raise",
+    "multiplier": 1
+  },
+  "ex053": {
+    "name": "Close-Grip Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Close-Grip Bench Press",
+    "multiplier": 1
+  },
+  "ex054": {
+    "name": "Dumbbell Walking Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Walking Lunge",
+    "multiplier": 1
+  },
+  "ex055": {
+    "name": "Dip",
+    "muscles": [
+      "Chest",
+      "Triceps"
+    ],
+    "category": "Chest",
+    "equipment": "Bodyweight",
+    "instructions": "",
+    "notes": "Lean forward for chest emphasis",
+    "exportName": "Dip",
+    "multiplier": 1
+  },
+  "ex056": {
+    "name": "Barbell Incline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Incline Bench Press",
+    "multiplier": 1
+  },
+  "ex057": {
+    "name": "Barbell Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Bench Press",
+    "multiplier": 1
+  },
+  "ex058": {
+    "name": "Barbell Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Shoulder Press",
+    "multiplier": 1
+  },
+  "ex059": {
+    "name": "Single Leg Leg Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Leg Extension",
+    "multiplier": 1
+  },
+  "ex060": {
+    "name": "Smith Machine Overhead Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Overhead Shoulder Press",
+    "multiplier": 1
+  },
+  "ex061": {
+    "name": "Dumbbell Bent Over Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Bent Over Row",
+    "multiplier": 1
+  },
+  "ex062": {
+    "name": "Mts Front Pulldown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mts Front Pulldown",
+    "multiplier": 1
+  },
+  "ex063": {
+    "name": "Lat Pulldown With Skinny Grip",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lat Pulldown With Skinny Grip",
+    "multiplier": 1
+  },
+  "ex064": {
+    "name": "Machine Hip Abductor",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Hip Abductor",
+    "multiplier": 1
+  },
+  "ex065": {
+    "name": "Machine Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Tricep Extension",
+    "multiplier": 1
+  },
+  "ex066": {
+    "name": "Machine Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Shoulder Press",
+    "multiplier": 1
+  },
+  "ex067": {
+    "name": "Seated Dumbbell Rear Delt Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Dumbbell Rear Delt Raise",
+    "multiplier": 1
+  },
+  "ex068": {
+    "name": "Good Morning",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Good Morning",
+    "multiplier": 1
+  },
+  "ex069": {
+    "name": "Barbell Seated Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Seated Calf Raise",
+    "multiplier": 1
+  },
+  "ex070": {
+    "name": "Glute Kickback Machine",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Glute Kickback Machine",
+    "multiplier": 1
+  },
+  "ex071": {
+    "name": "Mts Row (pros Gym)",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mts Row (pros Gym)",
+    "multiplier": 1
+  },
+  "ex072": {
+    "name": "Hammerstrength Incline Chest Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hammerstrength Incline Chest Press",
+    "multiplier": 1
+  },
+  "ex073": {
+    "name": "Skullcrusher",
+    "muscles": [
+      "Triceps"
+    ],
+    "category": "Triceps",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Skull Crusher",
+    "multiplier": 1
+  },
+  "ex074": {
+    "name": "Reverse Barbell Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Barbell Curl",
+    "multiplier": 1
+  },
+  "ex075": {
+    "name": "Barbell Curl",
+    "muscles": [
+      "Biceps"
+    ],
+    "category": "Biceps",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Curl",
+    "multiplier": 1
+  },
+  "ex076": {
+    "name": "Machine Hip Adductor",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Hip Adductor",
+    "multiplier": 1
+  },
+  "ex077": {
+    "name": "Dumbbell Bent Over Reverse Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Bent Over Reverse Fly",
+    "multiplier": 1
+  },
+  "ex078": {
+    "name": "Cable Rope Hammer Curls",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Rope Hammer Curls",
+    "multiplier": 1
+  },
+  "ex079": {
+    "name": "Seated Barbell Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Barbell Shoulder Press",
+    "multiplier": 1
+  },
+  "ex080": {
+    "name": "Cable Bicep Curl",
+    "muscles": [
+      "Biceps"
+    ],
+    "category": "Biceps",
+    "equipment": "Cable",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Curl",
+    "multiplier": 1
+  },
+  "ex081": {
+    "name": "Mts High Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mts High Row",
+    "multiplier": 1
+  },
+  "ex082": {
+    "name": "Concentration Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Concentration Curl",
+    "multiplier": 1
+  },
+  "ex083": {
+    "name": "Dumbbell Row",
+    "muscles": [
+      "Lats",
+      "Rhomboids"
+    ],
+    "category": "Back",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "Explosive power, back thickness",
+    "exportName": "Dumbbell Row",
+    "multiplier": 2
+  },
+  "ex084": {
+    "name": "Barbell Hip Thrust",
+    "muscles": [
+      "Glutes"
+    ],
+    "category": "Glutes",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hip Thrust",
+    "multiplier": 1
+  },
+  "ex085": {
+    "name": "Incline Dumbbell Squeeze Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Dumbbell Squeeze Press",
+    "multiplier": 1
+  },
+  "ex086": {
+    "name": "Barbell Decline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Decline Bench Press",
+    "multiplier": 1
+  },
+  "ex087": {
+    "name": "Machine Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Bench Press",
+    "multiplier": 1
+  },
+  "ex088": {
+    "name": "Hack Squat",
+    "muscles": [
+      "Quads"
+    ],
+    "category": "Quads",
+    "equipment": "Machine",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hack Squat",
+    "multiplier": 1
+  },
+  "ex089": {
+    "name": "Leg Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Leg Raise",
+    "multiplier": 1
+  },
+  "ex090": {
+    "name": "Dumbbell Row Bent Over Holding Onto Box",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Row Bent Over Holding Onto Box",
+    "multiplier": 1
+  },
+  "ex091": {
+    "name": "Reverse Grip Pull Down",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Grip Pull Down",
+    "multiplier": 1
+  },
+  "ex092": {
+    "name": "Smith Machine Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Squat",
+    "multiplier": 1
+  },
+  "ex093": {
+    "name": "Machine Leg Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Leg Press",
+    "multiplier": 1
+  },
+  "ex094": {
+    "name": "Dumbbell Step Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Step Up",
+    "multiplier": 1
+  },
+  "ex095": {
+    "name": "Running",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Running",
+    "multiplier": 1
+  },
+  "ex096": {
+    "name": "0",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "0",
+    "multiplier": 1
+  },
+  "ex097": {
+    "name": "Hanging Leg Raise",
+    "muscles": [
+      "Abs"
+    ],
+    "category": "Core",
+    "equipment": "Bodyweight",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hanging Leg Raise",
+    "multiplier": 1
+  },
+  "ex098": {
+    "name": "Box Jump",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Box Jump",
+    "multiplier": 1
+  },
+  "ex099": {
+    "name": "Mid Cable Crossover Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mid Cable Crossover Fly",
+    "multiplier": 1
+  },
+  "ex100": {
+    "name": "Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Deadlift",
+    "multiplier": 1
+  },
+  "ex101": {
+    "name": "Landmine Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Landmine Press",
+    "multiplier": 1
+  },
+  "ex102": {
+    "name": "Front Plate Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Front Plate Raise",
+    "multiplier": 1
+  },
+  "ex103": {
+    "name": "Dumbbell Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Tricep Extension",
+    "multiplier": 1
+  },
+  "ex104": {
+    "name": "Dumbbell Shrug",
+    "muscles": [
+      "Upper Traps"
+    ],
+    "category": "Traps",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Shrug",
+    "multiplier": 2
+  },
+  "ex105": {
+    "name": "Chest Dip",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Chest Dip",
+    "multiplier": 1
+  },
+  "ex106": {
+    "name": "Split Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Split Squat",
+    "multiplier": 1
+  },
+  "ex107": {
+    "name": "Barbell Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Lunge",
+    "multiplier": 1
+  },
+  "ex108": {
+    "name": "Dumbbell Lunge",
+    "muscles": [
+      "Quads",
+      "Glutes"
+    ],
+    "category": "Quads",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Lunges",
+    "multiplier": 2
+  },
+  "ex109": {
+    "name": "Dumbbell Squat To Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Squat To Shoulder Press",
+    "multiplier": 1
+  },
+  "ex110": {
+    "name": "Reverse Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Crunch",
+    "multiplier": 1
+  },
+  "ex111": {
+    "name": "Front Squat",
+    "muscles": [
+      "Quads"
+    ],
+    "category": "Quads",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Front Squat",
+    "multiplier": 1
+  },
+  "ex112": {
+    "name": "Dumbbell Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Fly",
+    "multiplier": 1
+  },
+  "ex113": {
+    "name": "Frog Pump",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Frog Pump",
+    "multiplier": 1
+  },
+  "ex114": {
+    "name": "Landmine Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Landmine Row",
+    "multiplier": 1
+  },
+  "ex115": {
+    "name": "Behind the Back Cable Bicep Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Behind the Back Cable Bicep Curl",
+    "multiplier": 1
+  },
+  "ex116": {
+    "name": "Biceps Curl To Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Biceps Curl To Shoulder Press",
+    "multiplier": 1
+  },
+  "ex117": {
+    "name": "Standing Barbell Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Standing Barbell Calf Raise",
+    "multiplier": 1
+  },
+  "ex118": {
+    "name": "Overhead Dumbbell Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Overhead Dumbbell Lunge",
+    "multiplier": 1
+  },
+  "ex119": {
+    "name": "Dumbbell Sumo Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Sumo Squat",
+    "multiplier": 1
+  },
+  "ex120": {
+    "name": "Single Leg Standing Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Standing Calf Raise",
+    "multiplier": 1
+  },
+  "ex121": {
+    "name": "Air Squats",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Air Squats",
+    "multiplier": 1
+  },
+  "ex122": {
+    "name": "Decline Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Decline Push Up",
+    "multiplier": 1
+  },
+  "ex123": {
+    "name": "Cable Crossover Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Crossover Fly",
+    "multiplier": 1
+  },
+  "ex124": {
+    "name": "Deadlift to Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Deadlift to Calf Raise",
+    "multiplier": 1
+  },
+  "ex125": {
+    "name": "Sumo Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Sumo Deadlift",
+    "multiplier": 1
+  },
+  "ex126": {
+    "name": "Machine Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Squat",
+    "multiplier": 1
+  },
+  "ex127": {
+    "name": "Dumbbell Romanian Deadlift to Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Romanian Deadlift to Calf Raise",
+    "multiplier": 1
+  },
+  "ex128": {
+    "name": "Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Calf Raise",
+    "multiplier": 1
+  },
+  "ex129": {
+    "name": "Side Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Side Lunge",
+    "multiplier": 1
+  },
+  "ex130": {
+    "name": "Dumbbell Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Clean",
+    "multiplier": 1
+  },
+  "ex131": {
+    "name": "Kettlebell Sumo Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kettlebell Sumo Squat",
+    "multiplier": 1
+  },
+  "ex132": {
+    "name": "Elbows Out Bent Over Dumbbell Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Elbows Out Bent Over Dumbbell Row",
+    "multiplier": 1
+  },
+  "ex133": {
+    "name": "Decline Reverse Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Decline Reverse Crunch",
+    "multiplier": 1
+  },
+  "ex134": {
+    "name": "Romanian Deadlift to Bent-Over Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Romanian Deadlift to Bent-Over Row",
+    "multiplier": 1
+  },
+  "ex135": {
+    "name": "Single Leg Romanian Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Romanian Deadlift",
+    "multiplier": 1
+  },
+  "ex136": {
+    "name": "Dumbbell Seated Single Arm Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Seated Single Arm Shoulder Press",
+    "multiplier": 1
+  },
+  "ex137": {
+    "name": "Diamond Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Diamond Push Up",
+    "multiplier": 1
+  },
+  "ex138": {
+    "name": "Incline Dumbbell Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Dumbbell Row",
+    "multiplier": 1
+  },
+  "ex139": {
+    "name": "Barbell Step Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Step Up",
+    "multiplier": 1
+  },
+  "ex140": {
+    "name": "Barbell Shrug",
+    "muscles": [
+      "Upper Traps"
+    ],
+    "category": "Traps",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "Builds \"yoked\" neck look",
+    "exportName": "Barbell Shrug",
+    "multiplier": 1
+  },
+  "ex141": {
+    "name": "Reverse Grip Barbell Bent Over Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Grip Barbell Bent Over Row",
+    "multiplier": 1
+  },
+  "ex142": {
+    "name": "Dumbbell Floor Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Floor Press",
+    "multiplier": 1
+  },
+  "ex143": {
+    "name": "Barbell Front Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Front Raise",
+    "multiplier": 1
+  },
+  "ex144": {
+    "name": "Forward Lunge with Twist",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Forward Lunge with Twist",
+    "multiplier": 1
+  },
+  "ex145": {
+    "name": "Burpee",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Burpee",
+    "multiplier": 1
+  },
+  "ex146": {
+    "name": "Crunches",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Crunches",
+    "multiplier": 1
+  },
+  "ex147": {
+    "name": "Dumbbell Incline Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Incline Fly",
+    "multiplier": 1
+  },
+  "ex148": {
+    "name": "Australian Chin Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Australian Chin Up",
+    "multiplier": 1
+  },
+  "ex149": {
+    "name": "Push Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Push Press",
+    "multiplier": 1
+  },
+  "ex150": {
+    "name": "Decline Overhead Weighted Sit Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Decline Overhead Weighted Sit Up",
+    "multiplier": 1
+  },
+  "ex151": {
+    "name": "Decline Russian Twists",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Decline Russian Twists",
+    "multiplier": 1
+  },
+  "ex152": {
+    "name": "Dumbbell Side Bend",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Side Bend",
+    "multiplier": 1
+  },
+  "ex153": {
+    "name": "Kettlebell Upright Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kettlebell Upright Row",
+    "multiplier": 1
+  },
+  "ex154": {
+    "name": "Alternating Single Arm Kettlebell Swing",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Alternating Single Arm Kettlebell Swing",
+    "multiplier": 1
+  },
+  "ex155": {
+    "name": "Superman",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Superman",
+    "multiplier": 1
+  },
+  "ex156": {
+    "name": "Chin Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Chin Up",
+    "multiplier": 1
+  },
+  "ex157": {
+    "name": "Wide Grip Pull Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Wide Grip Pull Up",
+    "multiplier": 1
+  },
+  "ex158": {
+    "name": "Cable Hip Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Hip Extension",
+    "multiplier": 1
+  },
+  "ex159": {
+    "name": "Cable Crossover Incline Bench Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Crossover Incline Bench Fly",
+    "multiplier": 1
+  },
+  "ex160": {
+    "name": "Arnold Dumbbell Press",
+    "muscles": [
+      "Anterior Delt",
+      "Lateral Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Arnold Press",
+    "multiplier": 2
+  },
+  "ex161": {
+    "name": "Side Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Side Bridge",
+    "multiplier": 1
+  },
+  "ex162": {
+    "name": "Handle Band Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Handle Band Crunch",
+    "multiplier": 1
+  },
+  "ex163": {
+    "name": "Hanging Windshield Wiper",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hanging Windshield Wiper",
+    "multiplier": 1
+  },
+  "ex164": {
+    "name": "Jump Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Jump Squat",
+    "multiplier": 1
+  },
+  "ex165": {
+    "name": "Lunge Jump",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lunge Jump",
+    "multiplier": 1
+  },
+  "ex166": {
+    "name": "Low Cable Chest Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Low Cable Chest Fly",
+    "multiplier": 1
+  },
+  "ex167": {
+    "name": "Single Arm Low Cable Crossover Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Arm Low Cable Crossover Fly",
+    "multiplier": 1
+  },
+  "ex168": {
+    "name": "Iron Cross",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Iron Cross",
+    "multiplier": 1
+  },
+  "ex169": {
+    "name": "Dumbbell Skullcrusher",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Skullcrusher",
+    "multiplier": 1
+  },
+  "ex170": {
+    "name": "Cross Body Hammer Curls",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cross Body Hammer Curls",
+    "multiplier": 1
+  },
+  "ex171": {
+    "name": "TRX Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Bridge",
+    "multiplier": 1
+  },
+  "ex172": {
+    "name": "Jump Rope",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Jump Rope",
+    "multiplier": 1
+  },
+  "ex173": {
+    "name": "Landmine Romanian Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Landmine Romanian Deadlift",
+    "multiplier": 1
+  },
+  "ex174": {
+    "name": "Landmine Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Landmine Squat",
+    "multiplier": 1
+  },
+  "ex175": {
+    "name": "Dumbbell Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Squat",
+    "multiplier": 1
+  },
+  "ex176": {
+    "name": "Preacher Curl",
+    "muscles": [
+      "Biceps"
+    ],
+    "category": "Biceps",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Preacher Curl",
+    "multiplier": 1
+  },
+  "ex177": {
+    "name": "Dumbbell Decline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Decline Bench Press",
+    "multiplier": 1
+  },
+  "ex178": {
+    "name": "Vertical Leg Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Vertical Leg Raise",
+    "multiplier": 1
+  },
+  "ex179": {
+    "name": "Barbell Ab Rollout",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Ab Rollout",
+    "multiplier": 1
+  },
+  "ex180": {
+    "name": "Ab Crunch Machine",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Ab Crunch Machine",
+    "multiplier": 1
+  },
+  "ex181": {
+    "name": "Lateral Cable Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lateral Cable Tricep Extension",
+    "multiplier": 1
+  },
+  "ex182": {
+    "name": "Seated Back Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Back Extension",
+    "multiplier": 1
+  },
+  "ex183": {
+    "name": "Tricep Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Tricep Push Up",
+    "multiplier": 1
+  },
+  "ex184": {
+    "name": "Dumbbell Hanging Lateral Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Hanging Lateral Raise",
+    "multiplier": 1
+  },
+  "ex185": {
+    "name": "Scissor Crossover Kick",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Scissor Crossover Kick",
+    "multiplier": 1
+  },
+  "ex186": {
+    "name": "Back Extensions",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Back Extensions",
+    "multiplier": 1
+  },
+  "ex187": {
+    "name": "Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Push Up",
+    "multiplier": 1
+  },
+  "ex188": {
+    "name": "Archer Pull Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Archer Pull Up",
+    "multiplier": 1
+  },
+  "ex189": {
+    "name": "Plank",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Plank",
+    "multiplier": 1
+  },
+  "ex190": {
+    "name": "Leg Pull-In",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Leg Pull-In",
+    "multiplier": 1
+  },
+  "ex191": {
+    "name": "Neutral Grip Pull Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Neutral Grip Pull Up",
+    "multiplier": 1
+  },
+  "ex192": {
+    "name": "Shotgun Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Shotgun Row",
+    "multiplier": 1
+  },
+  "ex193": {
+    "name": "Smith Machine Incline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Incline Bench Press",
+    "multiplier": 1
+  },
+  "ex194": {
+    "name": "Dumbbell Decline Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Decline Fly",
+    "multiplier": 1
+  },
+  "ex195": {
+    "name": "Russian Twist",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Russian Twist",
+    "multiplier": 1
+  },
+  "ex196": {
+    "name": "Incline EZ-Bar Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline EZ-Bar Curl",
+    "multiplier": 1
+  },
+  "ex197": {
+    "name": "Smith Machine Shrug",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Shrug",
+    "multiplier": 1
+  },
+  "ex198": {
+    "name": "Cable Shoulder Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Shoulder Press",
+    "multiplier": 1
+  },
+  "ex199": {
+    "name": "Walking",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Walking",
+    "multiplier": 1
+  },
+  "ex200": {
+    "name": "V-Bar Pull Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "V-Bar Pull Up",
+    "multiplier": 1
+  },
+  "ex201": {
+    "name": "Stiff-Legged Barbell Good Morning",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Stiff-Legged Barbell Good Morning",
+    "multiplier": 1
+  },
+  "ex202": {
+    "name": "Swimming",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Swimming",
+    "multiplier": 1
+  },
+  "ex203": {
+    "name": "Single Leg Glute Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Glute Bridge",
+    "multiplier": 1
+  },
+  "ex204": {
+    "name": "Cable Wrist Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Wrist Curl",
+    "multiplier": 1
+  },
+  "ex205": {
+    "name": "Hanging Oblique Knee Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hanging Oblique Knee Raise",
+    "multiplier": 1
+  },
+  "ex206": {
+    "name": "Zottman Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Zottman Curl",
+    "multiplier": 1
+  },
+  "ex207": {
+    "name": "Barbell Bicep Drag Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Bicep Drag Curl",
+    "multiplier": 1
+  },
+  "ex208": {
+    "name": "Side Plank Leg Lift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Side Plank Leg Lift",
+    "multiplier": 1
+  },
+  "ex209": {
+    "name": "Reverse Plank on Elbows",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Plank on Elbows",
+    "multiplier": 1
+  },
+  "ex210": {
+    "name": "Bench Dip",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bench Dip",
+    "multiplier": 1
+  },
+  "ex211": {
+    "name": "Hiking",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hiking",
+    "multiplier": 1
+  },
+  "ex212": {
+    "name": "Dumbbell Goblet Squat",
+    "muscles": [
+      "Quads",
+      "Glutes"
+    ],
+    "category": "Quads",
+    "equipment": "Dumbbells",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Goblet Squat",
+    "multiplier": 1
+  },
+  "ex213": {
+    "name": "Cycling - Stationary",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cycling - Stationary",
+    "multiplier": 1
+  },
+  "ex214": {
+    "name": "Side Laterals to Front Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Side Laterals to Front Raise",
+    "multiplier": 1
+  },
+  "ex215": {
+    "name": "Rowing",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Rowing",
+    "multiplier": 1
+  },
+  "ex216": {
+    "name": "Smith Machine Calf Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Calf Raise",
+    "multiplier": 1
+  },
+  "ex217": {
+    "name": "Dumbbell Kickbacks",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Kickbacks",
+    "multiplier": 1
+  },
+  "ex218": {
+    "name": "Cable Shoulder External Rotation",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Shoulder External Rotation",
+    "multiplier": 1
+  },
+  "ex219": {
+    "name": "Behind the Back Cable Lateral Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Behind the Back Cable Lateral Raise",
+    "multiplier": 1
+  },
+  "ex220": {
+    "name": "Incline Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Push Up",
+    "multiplier": 1
+  },
+  "ex221": {
+    "name": "Inverted Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Inverted Row",
+    "multiplier": 1
+  },
+  "ex222": {
+    "name": "Vertical Knee Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Vertical Knee Raise",
+    "multiplier": 1
+  },
+  "ex223": {
+    "name": "Elliptical",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Elliptical",
+    "multiplier": 1
+  },
+  "ex224": {
+    "name": "Medicine Ball Slam",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Medicine Ball Slam",
+    "multiplier": 1
+  },
+  "ex225": {
+    "name": "Anterior Isometric Neck",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Anterior Isometric Neck",
+    "multiplier": 1
+  },
+  "ex226": {
+    "name": "Upright Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Upright Row",
+    "multiplier": 1
+  },
+  "ex227": {
+    "name": "Stair Stepper",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Stair Stepper",
+    "multiplier": 1
+  },
+  "ex228": {
+    "name": "Assisted Pull Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Assisted Pull Up",
+    "multiplier": 1
+  },
+  "ex229": {
+    "name": "TRX Chest Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Chest Press",
+    "multiplier": 1
+  },
+  "ex230": {
+    "name": "Superman Hold",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Superman Hold",
+    "multiplier": 1
+  },
+  "ex231": {
+    "name": "Superman with Scaption",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Superman with Scaption",
+    "multiplier": 1
+  },
+  "ex232": {
+    "name": "Dumbbell Upright Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Upright Row",
+    "multiplier": 1
+  },
+  "ex233": {
+    "name": "Cable Shrugs",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Shrugs",
+    "multiplier": 1
+  },
+  "ex234": {
+    "name": "Push Jerk",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Push Jerk",
+    "multiplier": 1
+  },
+  "ex235": {
+    "name": "Cable Crossover Lat Pulldown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Crossover Lat Pulldown",
+    "multiplier": 1
+  },
+  "ex236": {
+    "name": "Face Down Plate Neck Resistance",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Face Down Plate Neck Resistance",
+    "multiplier": 1
+  },
+  "ex237": {
+    "name": "Cable Chest Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Chest Press",
+    "multiplier": 1
+  },
+  "ex238": {
+    "name": "Smith Machine Bent Over Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Bent Over Row",
+    "multiplier": 1
+  },
+  "ex239": {
+    "name": "Dumbbell Hang Power Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Hang Power Clean",
+    "multiplier": 1
+  },
+  "ex240": {
+    "name": "Loop Band Standing Decline Chest Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Loop Band Standing Decline Chest Press",
+    "multiplier": 1
+  },
+  "ex241": {
+    "name": "Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Clean",
+    "multiplier": 1
+  },
+  "ex242": {
+    "name": "Hang Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hang Clean",
+    "multiplier": 1
+  },
+  "ex243": {
+    "name": "Clean and Jerk",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Clean and Jerk",
+    "multiplier": 1
+  },
+  "ex244": {
+    "name": "Kneeling Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kneeling Squat",
+    "multiplier": 1
+  },
+  "ex245": {
+    "name": "Lateral Box Jump",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Lateral Box Jump",
+    "multiplier": 1
+  },
+  "ex246": {
+    "name": "Mini Loop Band Lateral Walk",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Lateral Walk",
+    "multiplier": 1
+  },
+  "ex247": {
+    "name": "Assisted Chin Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Assisted Chin Up",
+    "multiplier": 1
+  },
+  "ex248": {
+    "name": "Barbell Row",
+    "muscles": [
+      "Lats",
+      "Rhomboids",
+      "Traps"
+    ],
+    "category": "Back",
+    "equipment": "Barbell",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Row",
+    "multiplier": 1
+  },
+  "ex249": {
+    "name": "Machine Bicep Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Machine Bicep Curl",
+    "multiplier": 1
+  },
+  "ex250": {
+    "name": "Power Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Power Clean",
+    "multiplier": 1
+  },
+  "ex251": {
+    "name": "Single Leg Kettlebell Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Kettlebell Deadlift",
+    "multiplier": 1
+  },
+  "ex252": {
+    "name": "Toes to Bar",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Toes to Bar",
+    "multiplier": 1
+  },
+  "ex253": {
+    "name": "Tuck Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Tuck Crunch",
+    "multiplier": 1
+  },
+  "ex254": {
+    "name": "Jackknife Sit-Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Jackknife Sit-Up",
+    "multiplier": 1
+  },
+  "ex255": {
+    "name": "Split Jerk",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Split Jerk",
+    "multiplier": 1
+  },
+  "ex256": {
+    "name": "Seated Tricep Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Seated Tricep Press",
+    "multiplier": 1
+  },
+  "ex257": {
+    "name": "TRX Resisted Rotation 1",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Resisted Rotation 1",
+    "multiplier": 1
+  },
+  "ex258": {
+    "name": "Trap Bar Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Trap Bar Deadlift",
+    "multiplier": 1
+  },
+  "ex259": {
+    "name": "Bent Over Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bent Over Row",
+    "multiplier": 1
+  },
+  "ex260": {
+    "name": "EZ-Bar Skullcrusher",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "EZ-Bar Skullcrusher",
+    "multiplier": 1
+  },
+  "ex261": {
+    "name": "Balance Trainer Cable Crunch With Side Bends",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Cable Crunch With Side Bends",
+    "multiplier": 1
+  },
+  "ex262": {
+    "name": "Scissor Kick",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Scissor Kick",
+    "multiplier": 1
+  },
+  "ex263": {
+    "name": "Palms-Down Barbell Wrist Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Palms-Down Barbell Wrist Curl",
+    "multiplier": 1
+  },
+  "ex264": {
+    "name": "Handle Band Pec Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Handle Band Pec Fly",
+    "multiplier": 1
+  },
+  "ex265": {
+    "name": "Pendlay Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pendlay Row",
+    "multiplier": 1
+  },
+  "ex266": {
+    "name": "Cross Body Mountain Climber",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cross Body Mountain Climber",
+    "multiplier": 1
+  },
+  "ex267": {
+    "name": "Plank Jack",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Plank Jack",
+    "multiplier": 1
+  },
+  "ex268": {
+    "name": "Plank Jack on Elbows",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Plank Jack on Elbows",
+    "multiplier": 1
+  },
+  "ex269": {
+    "name": "Reverse Plank",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Reverse Plank",
+    "multiplier": 1
+  },
+  "ex270": {
+    "name": "Pause Barbell Incline Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pause Barbell Incline Bench Press",
+    "multiplier": 1
+  },
+  "ex271": {
+    "name": "Exercise Ball Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Exercise Ball Crunch",
+    "multiplier": 1
+  },
+  "ex272": {
+    "name": "Dead Hang",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dead Hang",
+    "multiplier": 1
+  },
+  "ex273": {
+    "name": "Incline Barbell Skull Crusher",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Barbell Skull Crusher",
+    "multiplier": 1
+  },
+  "ex274": {
+    "name": "Hip Thrust",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hip Thrust",
+    "multiplier": 1
+  },
+  "ex275": {
+    "name": "Single Leg Kickback",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Leg Kickback",
+    "multiplier": 1
+  },
+  "ex276": {
+    "name": "Muscle Snatch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Muscle Snatch",
+    "multiplier": 1
+  },
+  "ex277": {
+    "name": "Pause Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pause Bench Press",
+    "multiplier": 1
+  },
+  "ex278": {
+    "name": "Balance Trainer Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Push Up",
+    "multiplier": 1
+  },
+  "ex279": {
+    "name": "Walking Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Walking Lunge",
+    "multiplier": 1
+  },
+  "ex280": {
+    "name": "V-Bar Pulldown",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "V-Bar Pulldown",
+    "multiplier": 1
+  },
+  "ex281": {
+    "name": "TRX Bicep Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Bicep Curl",
+    "multiplier": 1
+  },
+  "ex282": {
+    "name": "Dead Bug",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dead Bug",
+    "multiplier": 1
+  },
+  "ex283": {
+    "name": "Flutter Kicks",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Flutter Kicks",
+    "multiplier": 1
+  },
+  "ex284": {
+    "name": "Balance Trainer Wide Pushups",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Wide Pushups",
+    "multiplier": 1
+  },
+  "ex285": {
+    "name": "Snatch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Snatch",
+    "multiplier": 1
+  },
+  "ex286": {
+    "name": "TRX Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Squat",
+    "multiplier": 1
+  },
+  "ex287": {
+    "name": "Alternating Medicine Ball Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Alternating Medicine Ball Push Up",
+    "multiplier": 1
+  },
+  "ex288": {
+    "name": "Kettlebell Overhead Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kettlebell Overhead Press",
+    "multiplier": 1
+  },
+  "ex289": {
+    "name": "Floor Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Floor Press",
+    "multiplier": 1
+  },
+  "ex290": {
+    "name": "Smith Machine Stiff-Legged Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Stiff-Legged Deadlift",
+    "multiplier": 1
+  },
+  "ex291": {
+    "name": "Renegade Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Renegade Row",
+    "multiplier": 1
+  },
+  "ex292": {
+    "name": "Hang Power Clean",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hang Power Clean",
+    "multiplier": 1
+  },
+  "ex293": {
+    "name": "Pause Back Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pause Back Squat",
+    "multiplier": 1
+  },
+  "ex294": {
+    "name": "Smith Machine Bench Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine Bench Press",
+    "multiplier": 1
+  },
+  "ex295": {
+    "name": "Balance Trainer Narrow Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Narrow Push Up",
+    "multiplier": 1
+  },
+  "ex296": {
+    "name": "TRX Glute Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Glute Bridge",
+    "multiplier": 1
+  },
+  "ex297": {
+    "name": "Mini Loop Band Hip Thrust",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Hip Thrust",
+    "multiplier": 1
+  },
+  "ex298": {
+    "name": "Smith Machine One-Arm Upright Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Smith Machine One-Arm Upright Row",
+    "multiplier": 1
+  },
+  "ex299": {
+    "name": "Single Arm Dumbbell Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Arm Dumbbell Tricep Extension",
+    "multiplier": 1
+  },
+  "ex300": {
+    "name": "Single Dumbbell Sumo Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Dumbbell Sumo Squat",
+    "multiplier": 1
+  },
+  "ex301": {
+    "name": "Mini Loop Band Kneeling Bicep Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Kneeling Bicep Curl",
+    "multiplier": 1
+  },
+  "ex302": {
+    "name": "Balance Trainer Spiderman Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Spiderman Push Up",
+    "multiplier": 1
+  },
+  "ex303": {
+    "name": "TRX Chest Fly",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Chest Fly",
+    "multiplier": 1
+  },
+  "ex304": {
+    "name": "Snatch High Pull",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Snatch High Pull",
+    "multiplier": 1
+  },
+  "ex305": {
+    "name": "Single Arm Kettlebell Swing",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Arm Kettlebell Swing",
+    "multiplier": 1
+  },
+  "ex306": {
+    "name": "Single Arm Overhead Dumbbell Lunge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Arm Overhead Dumbbell Lunge",
+    "multiplier": 1
+  },
+  "ex307": {
+    "name": "Box Front Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Box Front Squat",
+    "multiplier": 1
+  },
+  "ex308": {
+    "name": "Balance Trainer Dome Push Ups",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Dome Push Ups",
+    "multiplier": 1
+  },
+  "ex309": {
+    "name": "Opposite Leg Toe Touch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Opposite Leg Toe Touch",
+    "multiplier": 1
+  },
+  "ex310": {
+    "name": "Power Snatch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Power Snatch",
+    "multiplier": 1
+  },
+  "ex311": {
+    "name": "Snatch Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Snatch Deadlift",
+    "multiplier": 1
+  },
+  "ex312": {
+    "name": "TRX Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Row",
+    "multiplier": 1
+  },
+  "ex313": {
+    "name": "Zottman Preacher Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Zottman Preacher Curl",
+    "multiplier": 1
+  },
+  "ex314": {
+    "name": "TRX Pike",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Pike",
+    "multiplier": 1
+  },
+  "ex315": {
+    "name": "Power Clean Thruster",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Power Clean Thruster",
+    "multiplier": 1
+  },
+  "ex316": {
+    "name": "Tate Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Tate Press",
+    "multiplier": 1
+  },
+  "ex317": {
+    "name": "Box Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Box Squat",
+    "multiplier": 1
+  },
+  "ex318": {
+    "name": "Toe Touchers",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Toe Touchers",
+    "multiplier": 1
+  },
+  "ex319": {
+    "name": "Push Up on Knees",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Push Up on Knees",
+    "multiplier": 1
+  },
+  "ex320": {
+    "name": "Dumbbell Squeeze Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Squeeze Press",
+    "multiplier": 1
+  },
+  "ex321": {
+    "name": "Dumbbell Pullover",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Pullover",
+    "multiplier": 1
+  },
+  "ex322": {
+    "name": "Mini Loop Band Tricep Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Tricep Press",
+    "multiplier": 1
+  },
+  "ex323": {
+    "name": "Hang Snatch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Hang Snatch",
+    "multiplier": 1
+  },
+  "ex324": {
+    "name": "Kettlebell Row",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kettlebell Row",
+    "multiplier": 1
+  },
+  "ex325": {
+    "name": "Kettlebell Swing",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Kettlebell Swing",
+    "multiplier": 1
+  },
+  "ex326": {
+    "name": "Stability Ball Hip Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Stability Ball Hip Bridge",
+    "multiplier": 1
+  },
+  "ex327": {
+    "name": "Barbell Glute Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Barbell Glute Bridge",
+    "multiplier": 1
+  },
+  "ex328": {
+    "name": "Mini Loop Band Standing Hip Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Standing Hip Extension",
+    "multiplier": 1
+  },
+  "ex329": {
+    "name": "Single Arm Preacher Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Single Arm Preacher Curl",
+    "multiplier": 1
+  },
+  "ex330": {
+    "name": "Exercise Ball Pull In",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Exercise Ball Pull In",
+    "multiplier": 1
+  },
+  "ex331": {
+    "name": "Mini Loop Band Fire Hydrant",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Fire Hydrant",
+    "multiplier": 1
+  },
+  "ex332": {
+    "name": "Pike Push Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pike Push Up",
+    "multiplier": 1
+  },
+  "ex333": {
+    "name": "Elevated Hip Bridge",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Elevated Hip Bridge",
+    "multiplier": 1
+  },
+  "ex334": {
+    "name": "Weighted Ball Hyperextension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Weighted Ball Hyperextension",
+    "multiplier": 1
+  },
+  "ex335": {
+    "name": "Dumbbell No Money Curls",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell No Money Curls",
+    "multiplier": 1
+  },
+  "ex336": {
+    "name": "Oblique Crunch",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Oblique Crunch",
+    "multiplier": 1
+  },
+  "ex337": {
+    "name": "Balance Trainer Plank",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Balance Trainer Plank",
+    "multiplier": 1
+  },
+  "ex338": {
+    "name": "Cycling",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cycling",
+    "multiplier": 1
+  },
+  "ex339": {
+    "name": "Power Clean and Press",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Power Clean and Press",
+    "multiplier": 1
+  },
+  "ex340": {
+    "name": "Mini Loop Band Plank with Straight Leg Kickback",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Mini Loop Band Plank with Straight Leg Kickback",
+    "multiplier": 1
+  },
+  "ex341": {
+    "name": "TRX Tricep Extension",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "TRX Tricep Extension",
+    "multiplier": 1
+  },
+  "ex342": {
+    "name": "Olympic Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Olympic Squat",
+    "multiplier": 1
+  },
+  "ex343": {
+    "name": "Pause Front Squat",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Pause Front Squat",
+    "multiplier": 1
+  },
+  "ex344": {
+    "name": "Incline Hammer Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Incline Hammer Curl",
+    "multiplier": 1
+  },
+  "ex345": {
+    "name": "Rack Pulls",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Rack Pulls",
+    "multiplier": 1
+  },
+  "ex346": {
+    "name": "Cat Cow",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cat Cow",
+    "multiplier": 1
+  },
+  "ex347": {
+    "name": "Cable Preacher Curl",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Cable Preacher Curl",
+    "multiplier": 1
+  },
+  "ex348": {
+    "name": "Partner Floor Glute-Ham Raise",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Partner Floor Glute-Ham Raise",
+    "multiplier": 1
+  },
+  "ex349": {
+    "name": "Clean Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Clean Deadlift",
+    "multiplier": 1
+  },
+  "ex350": {
+    "name": "Dumbbell Romanian Deadlift",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Dumbbell Romanian Deadlift",
+    "multiplier": 1
+  },
+  "ex351": {
+    "name": "High Knee",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "High Knee",
+    "multiplier": 1
+  },
+  "ex352": {
+    "name": "Bar Muscle Up",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Bar Muscle Up",
+    "multiplier": 1
+  },
+  "ex353": {
+    "name": "Running - Trueform",
+    "muscles": [],
+    "category": "",
+    "equipment": "",
+    "instructions": "",
+    "notes": "",
+    "exportName": "Running - Trueform",
+    "multiplier": 1
+  }
+}
