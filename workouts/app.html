@@ -339,8 +339,6 @@
             gap: 6px;
         }
 
-
-
         .warmup-btn {
             width: 28px;
             height: 28px;
@@ -352,6 +350,7 @@
             font-size: 1rem;
             cursor: pointer;
             opacity: 0.4;
+            flex-shrink: 0;
         }
 
         .warmup-btn.active {
@@ -366,9 +365,16 @@
             opacity: 0.8;
         }
 
+        .set-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .set-inputs {
             display: flex;
             gap: 4px;
+            flex: 1;
         }
 
         .set-input {
@@ -399,6 +405,50 @@
             color: #b0b0b5;
             font-size: 0.89rem;
             font-weight: 700;
+        }
+
+        .delete-set-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: 1px solid #ff3d5a;
+            background: transparent;
+            color: #ff3d5a;
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .delete-set-btn:hover {
+            opacity: 1;
+            background: rgba(255, 61, 90, 0.1);
+        }
+
+        .add-set-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-set-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            background: rgba(255, 61, 0, 0.05);
         }
 
         .btn {
@@ -457,6 +507,17 @@
         .btn-logout:hover {
             border-color: #ff3d5a;
             color: #ff3d5a;
+        }
+
+        .btn-edit {
+            background: rgba(255, 187, 0, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .btn-edit:hover {
+            background: rgba(255, 187, 0, 0.2);
+            box-shadow: 0 0 10px rgba(255, 187, 0, 0.3);
         }
 
         .log-sidebar {
@@ -777,6 +838,10 @@
             overflow-y: auto;
         }
 
+        .modal.modal-wide {
+            max-width: 700px;
+        }
+
         .modal-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.8rem;
@@ -901,6 +966,96 @@
             color: var(--text-muted);
             font-size: 0.85rem;
         }
+
+        /* Edit modal styles */
+        .edit-exercise-section {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+        }
+
+        .edit-exercise-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--accent-secondary);
+        }
+
+        .edit-set-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .edit-set-label {
+            min-width: 60px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .edit-set-input {
+            padding: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 80px;
+        }
+
+        .edit-set-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .edit-warmup-btn {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            background: transparent;
+            border: 1px solid var(--warning);
+            color: var(--text-muted);
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .edit-warmup-btn.active {
+            background: rgba(255, 187, 0, 0.2);
+            color: var(--warning);
+            opacity: 1;
+        }
+
+        .edit-delete-set-btn {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            background: transparent;
+            border: 1px solid #ff3d5a;
+            color: #ff3d5a;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .edit-delete-set-btn:hover {
+            opacity: 1;
+            background: rgba(255, 61, 90, 0.1);
+        }
+
+        .edit-add-set-btn {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            background: transparent;
+            border: 1px dashed var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .edit-add-set-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
     </style>
 </head>
 
@@ -925,7 +1080,6 @@
                     <span id="syncIcon">✓</span>
                     <span id="syncText">Synced</span>
                 </div>
-
                 <button class="btn btn-logout" onclick="logout()">LOGOUT</button>
             </div>
             <div class="current-date">
@@ -940,7 +1094,6 @@
             <button class="nav-tab" data-tab="library">Exercise Library</button>
             <button class="nav-tab" data-tab="history">Workout History</button>
         </nav>
-
 
         <div class="stats-grid">
             <div class="stat-card">
@@ -969,8 +1122,7 @@
                             <div onclick="switchWorkout()" class="workout-title-link">
                                 <div class="workout-day-badge" id="workoutDayBadge">DAY 1</div>
                                 <h2 class="workout-name" id="workoutName">PUSH A</h2>
-                                <p class="workout-meta" id="workoutMeta">Upper Chest & Shoulder Width • 12 Sets Total
-                                </p>
+                                <p class="workout-meta" id="workoutMeta">Upper Chest & Shoulder Width • 12 Sets Total</p>
                             </div>
                             <button class="btn btn-secondary btn-small" onclick="switchWorkout()">Switch Day</button>
                         </div>
@@ -992,8 +1144,7 @@
         <div id="planTab" class="tab-content plan-view">
             <div class="section-card">
                 <h3 class="section-title">Sean Sullivan's Training Plan</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Push/Pull/Legs × 2 per
-                    week • 72 sets total • Goal: Gain 15lbs muscle</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Push/Pull/Legs × 2 per week • 72 sets total • Goal: Gain 15lbs muscle</p>
                 <div id="planDays"></div>
             </div>
         </div>
@@ -1020,12 +1171,12 @@
         </div>
     </div>
 
+    <!-- Modals -->
     <div class="modal-overlay" id="switchModal">
         <div class="modal">
             <h3 class="modal-title">Select Workout Day</h3>
             <div id="daySelector"></div>
-            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeSwitchModal()">Cancel</button>
-            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeSwitchModal()">Cancel</button></div>
         </div>
     </div>
 
@@ -1033,8 +1184,7 @@
         <div class="modal">
             <h3 class="modal-title" id="modalExerciseName"></h3>
             <div id="modalExerciseDetails"></div>
-            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button>
-            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button></div>
         </div>
     </div>
 
@@ -1042,18 +1192,25 @@
         <div class="modal">
             <h3 class="modal-title" id="historyModalTitle">EXERCISE HISTORY</h3>
             <div id="historyModalContent"></div>
-            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeHistoryModal()">Close</button>
-            </div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeHistoryModal()">Close</button></div>
         </div>
     </div>
 
     <div class="modal-overlay" id="instructionsModal">
         <div class="modal">
             <h3 class="modal-title" id="instructionsModalTitle">INSTRUCTIONS</h3>
-            <div id="instructionsModalContent" style="white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;">
-            </div>
-            <div class="modal-actions"><button class="btn btn-secondary"
-                    onclick="closeInstructionsModal()">CLOSE</button>
+            <div id="instructionsModalContent" style="white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;"></div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeInstructionsModal()">CLOSE</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal modal-wide">
+            <h3 class="modal-title" id="editModalTitle">EDIT WORKOUT</h3>
+            <div id="editModalContent"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="saveEditedWorkout()">SAVE CHANGES</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -1075,10 +1232,8 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         const ALLOWED_EMAIL = "sspsful@gmail.com";
 
-        // Make Firebase functions available globally
         window.firebaseDb = db;
         window.firebaseAuth = auth;
         window.firebaseCollection = collection;
@@ -1090,12 +1245,10 @@
         window.firebaseOrderBy = orderBy;
         window.firebaseSignOut = signOut;
 
-        // Check auth state
         onAuthStateChanged(auth, (user) => {
             if (!user || user.email !== ALLOWED_EMAIL) {
                 window.location.href = 'index.html';
             } else {
-                // User is authenticated
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
@@ -1111,88 +1264,49 @@
     </script>
 
     <script>
-        // DATA LOADED FROM JSON FILES
-        let exercisesData = {};  // Will be loaded from exercises.json
-        let trainingPlanData = null;  // Will be loaded from training-plan.json
-        let exerciseDatabase = [];  // Built from exercisesData after loading
-        let trainingPlan = {};  // Built from trainingPlanData after loading
+        let exercisesData = {};
+        let trainingPlanData = null;
+        let exerciseDatabase = [];
+        let trainingPlan = {};
 
-        // Helper functions to get exercise data
-        function getExercise(id) {
-            return exercisesData[id] || null;
-        }
+        function getExercise(id) { return exercisesData[id] || null; }
+        function getExportName(id) { const ex = exercisesData[id]; return ex ? ex.exportName : id; }
+        function getMultiplier(id) { const ex = exercisesData[id]; return ex ? ex.multiplier : 1; }
 
-        function getExportName(id) {
-            const exercise = exercisesData[id];
-            return exercise ? exercise.exportName : id;
-        }
-
-        function getMultiplier(id) {
-            const exercise = exercisesData[id];
-            return exercise ? exercise.multiplier : 1;
-        }
-
-        // Load JSON data files
         async function loadExerciseData() {
             try {
                 const response = await fetch('exercises.json');
                 exercisesData = await response.json();
-
-                // Build exerciseDatabase array for compatibility
                 exerciseDatabase = Object.entries(exercisesData).map(([id, data]) => ({
-                    id: id,
-                    name: data.name,
-                    muscles: data.muscles || [],
-                    category: data.category || '',
-                    equipment: data.equipment || '',
-                    instructions: data.instructions || '',
-                    notes: data.notes || ''
+                    id, name: data.name, muscles: data.muscles || [], category: data.category || '',
+                    equipment: data.equipment || '', instructions: data.instructions || '', notes: data.notes || ''
                 }));
-
                 return true;
-            } catch (error) {
-                console.error('Failed to load exercises.json:', error);
-                return false;
-            }
+            } catch (error) { console.error('Failed to load exercises.json:', error); return false; }
         }
 
         async function loadTrainingPlan() {
             try {
                 const response = await fetch('training-plan.json');
                 trainingPlanData = await response.json();
-
-                // Convert to old format for compatibility
                 const schedule = trainingPlanData.schedule || [];
                 const workouts = trainingPlanData.workouts || {};
-
-                // Map schedule to day1-day6, rest format
                 trainingPlan = {};
                 schedule.forEach((workoutName, index) => {
                     const dayKey = index === 3 ? 'rest' : `day${index < 3 ? index + 1 : index}`;
                     const workout = workouts[workoutName];
-
                     if (workout) {
                         trainingPlan[dayKey] = {
-                            name: workoutName,
-                            subtitle: workout.subtitle || '',
+                            name: workoutName, subtitle: workout.subtitle || '',
                             exercises: (workout.exercises || []).map(ex => {
                                 const exercise = getExercise(ex.id);
-                                return {
-                                    exerciseId: ex.id,
-                                    sets: ex.sets || 3,
-                                    reps: ex.reps || '8-12',
-                                    notes: exercise ? exercise.notes : ''
-                                };
+                                return { exerciseId: ex.id, sets: ex.sets || 3, reps: ex.reps || '8-12', notes: exercise ? exercise.notes : '' };
                             })
                         };
                     }
                 });
-
                 return true;
-            } catch (error) {
-                console.error('Failed to load training-plan.json:', error);
-                return false;
-            }
+            } catch (error) { console.error('Failed to load training-plan.json:', error); return false; }
         }
 
         const dayToWorkout = { 0: 'day1', 1: 'day2', 2: 'day3', 3: 'rest', 4: 'day4', 5: 'day5', 6: 'day6' };
@@ -1201,9 +1315,34 @@
         let workoutLogs = [];
         let currentWorkoutDay = null;
         let currentExerciseData = {};
+        let exerciseSetCounts = {};
         let activeFilter = null;
         let weightUnit = 'lbs';
+        let editingLog = null;
 
+        // LOCAL STORAGE (24hr expiry)
+        const STORAGE_KEY = 'workout_progress';
+        const STORAGE_EXPIRY_HOURS = 24;
+
+        function saveProgressToStorage() {
+            const data = { workoutDay: currentWorkoutDay, exerciseData: currentExerciseData, setCounts: exerciseSetCounts, timestamp: Date.now() };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadProgressFromStorage() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (!stored) return null;
+                const data = JSON.parse(stored);
+                const hoursSinceStored = (Date.now() - data.timestamp) / (1000 * 60 * 60);
+                if (hoursSinceStored > STORAGE_EXPIRY_HOURS) { localStorage.removeItem(STORAGE_KEY); return null; }
+                return data;
+            } catch (e) { console.error('Error loading progress:', e); return null; }
+        }
+
+        function clearProgressStorage() { localStorage.removeItem(STORAGE_KEY); }
+
+        // FIREBASE
         async function loadFromFirebase() {
             try {
                 updateSyncStatus('syncing');
@@ -1213,11 +1352,7 @@
                 snapshot.forEach(doc => workoutLogs.push({ id: doc.id, ...doc.data() }));
                 updateSyncStatus('synced');
                 return true;
-            } catch (error) {
-                console.error('Firebase load error:', error);
-                updateSyncStatus('error');
-                return false;
-            }
+            } catch (error) { console.error('Firebase load error:', error); updateSyncStatus('error'); return false; }
         }
 
         async function saveToFirebase(log) {
@@ -1226,24 +1361,7 @@
                 await window.firebaseSetDoc(window.firebaseDoc(window.firebaseDb, 'workouts', log.id.toString()), log);
                 updateSyncStatus('synced');
                 return true;
-            } catch (error) {
-                console.error('Firebase save error:', error);
-                updateSyncStatus('error');
-                return false;
-            }
-        }
-
-        async function deleteFromFirebase(logId) {
-            try {
-                updateSyncStatus('syncing');
-                await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDb, 'workouts', logId.toString()));
-                updateSyncStatus('synced');
-                return true;
-            } catch (error) {
-                console.error('Firebase delete error:', error);
-                updateSyncStatus('error');
-                return false;
-            }
+            } catch (error) { console.error('Firebase save error:', error); updateSyncStatus('error'); return false; }
         }
 
         function updateSyncStatus(status) {
@@ -1256,8 +1374,7 @@
             else { icon.textContent = '!'; text.textContent = 'Sync Error'; }
         }
 
-
-
+        // EXPORT
         function formatDateForCSV(date) {
             const d = new Date(date);
             const pad = n => String(n).padStart(2, '0');
@@ -1266,9 +1383,7 @@
 
         function lbsToKg(lbs) { return lbs * 0.45359237; }
         function kgToLbs(kg) { return kg / 0.45359237; }
-        // Display weight: convert kg to lbs and round to integer
         function displayWeight(kgWeight) { return Math.round(kgToLbs(kgWeight)); }
-
 
         function exportToCSV() {
             if (workoutLogs.length === 0) { alert('No workout data to export!'); return; }
@@ -1279,10 +1394,8 @@
                     const exportName = getExportName(ex.id);
                     const multiplier = getMultiplier(ex.id);
                     ex.sets.forEach(set => {
-                        // Data is always stored in kg, no conversion needed
-                        const weightKg = set.weight || 0;
                         const isWarmup = set.isWarmup ? 'True' : 'False';
-                        csv += `${dateStr},${exportName},${set.reps || 0},${weightKg},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
+                        csv += `${dateStr},${exportName},${set.reps || 0},${set.weight || 0},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
                     });
                 });
             });
@@ -1296,10 +1409,8 @@
                 const exportName = getExportName(ex.id);
                 const multiplier = getMultiplier(ex.id);
                 ex.sets.forEach(set => {
-                    // Data is always stored in kg, no conversion needed
-                    const weightKg = set.weight || 0;
                     const isWarmup = set.isWarmup ? 'True' : 'False';
-                    csv += `${dateStr},${exportName},${set.reps || 0},${weightKg},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
+                    csv += `${dateStr},${exportName},${set.reps || 0},${set.weight || 0},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
                 });
             });
             downloadCSV(csv, `Workout_${log.workoutName.replace(/\s+/g, '_')}_${new Date(log.date).toISOString().split('T')[0]}.csv`);
@@ -1308,25 +1419,20 @@
         function downloadCSV(csv, filename) {
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = filename;
+            const a = document.createElement('a'); a.href = url; a.download = filename;
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
+        // INIT
         async function init() {
             if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
-
-            // Load exercise and training plan data from JSON files
             const exercisesLoaded = await loadExerciseData();
             const planLoaded = await loadTrainingPlan();
-
             if (!exercisesLoaded || !planLoaded) {
-                console.error('Failed to load data files');
-                document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data files. Please refresh.</div>';
+                document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data. Please refresh.</div>';
                 return;
             }
-
             await loadFromFirebase();
             document.getElementById('loadingOverlay').style.display = 'none';
             updateCurrentDate();
@@ -1346,7 +1452,16 @@
         }
 
         function setTodaysWorkout() {
-            currentWorkoutDay = dayToWorkout[new Date().getDay()];
+            const savedProgress = loadProgressFromStorage();
+            if (savedProgress && savedProgress.workoutDay) {
+                currentWorkoutDay = savedProgress.workoutDay;
+                currentExerciseData = savedProgress.exerciseData || {};
+                exerciseSetCounts = savedProgress.setCounts || {};
+            } else {
+                currentWorkoutDay = dayToWorkout[new Date().getDay()];
+                currentExerciseData = {};
+                exerciseSetCounts = {};
+            }
             updateWorkoutDisplay();
         }
 
@@ -1355,10 +1470,18 @@
             const isRest = currentWorkoutDay === 'rest';
             document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay.replace('day', '')}`;
             document.getElementById('workoutName').textContent = workout.name;
-            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${workout.exercises.length * 4} Sets Total`;
+            let totalSets = 0;
+            if (!isRest) {
+                workout.exercises.forEach(ex => {
+                    const key = `${currentWorkoutDay}_${ex.exerciseId}`;
+                    totalSets += exerciseSetCounts[key] || 3;
+                });
+            }
+            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${totalSets} Sets Total`;
             renderExercises();
         }
 
+        // RENDER EXERCISES (with dynamic sets)
         function renderExercises() {
             const container = document.getElementById('exerciseList');
             const workout = trainingPlan[currentWorkoutDay];
@@ -1366,24 +1489,89 @@
                 container.innerHTML = `<div class="rest-day-message"><div class="rest-day-icon">🧘</div><h2 class="rest-day-title">REST & RECOVER</h2><p class="rest-day-subtitle">Complete rest or light activity. Your muscles grow during recovery!</p></div>`;
                 return;
             }
-            const unitLabel = weightUnit === 'kg' ? 'kg' : 'lbs';
             container.innerHTML = workout.exercises.map((ex, idx) => {
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
-
+                if (!exerciseSetCounts[exerciseKey]) exerciseSetCounts[exerciseKey] = 3;
+                const setCount = exerciseSetCounts[exerciseKey];
                 return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
-            <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
-            <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => {
-                    const savedData = currentExerciseData[exerciseKey]?.[i] || {};
-                    const savedReps = savedData.reps || '';
-                    const savedWeight = savedData.weight || '';
-                    const isWarmup = savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0);
-
-                    return `<div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${isWarmup ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
-                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
-                }).join('')}</div></div>`;
+                    <div class="exercise-header">
+                        <div style="flex: 1; min-width: 0;">
+                            <h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer;">${exercise.name.toUpperCase()}</h4>
+                            <p class="exercise-muscles">${exercise.muscles.join(' • ')}</p>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink:0;margin-left:auto;">
+                            <button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button>
+                            <span class="exercise-sets" id="sets-display-${exerciseKey}">${setCount} × ${ex.reps}</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
+                    <div class="sets-grid" id="sets-${exerciseKey}">${renderSetsForExercise(exerciseKey, setCount)}</div>
+                    <button class="add-set-btn" onclick="addSet('${exerciseKey}', '${ex.reps}')">+ ADD SET</button>
+                </div>`;
             }).join('');
+        }
+
+        function renderSetsForExercise(exerciseKey, setCount) {
+            let html = '';
+            for (let i = 0; i < setCount; i++) {
+                const savedData = currentExerciseData[exerciseKey]?.[i] || {};
+                const savedReps = savedData.reps || '';
+                const savedWeight = savedData.weight || '';
+                const isWarmup = savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0);
+                html += `<div class="set-input-group" id="set-${exerciseKey}-${i}">
+                    <span class="set-label">Set ${i + 1}</span>
+                    <div class="set-row">
+                        <button class="warmup-btn ${isWarmup ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
+                        <div class="set-inputs">
+                            <input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" oninput="updateExerciseData(this)">
+                            <input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" oninput="updateExerciseData(this)">
+                        </div>
+                        <button class="delete-set-btn" onclick="deleteSet('${exerciseKey}', ${i})" title="Delete set">−</button>
+                    </div>
+                </div>`;
+            }
+            return html;
+        }
+
+        // ADD/DELETE SET
+        function addSet(exerciseKey, defaultReps) {
+            exerciseSetCounts[exerciseKey] = (exerciseSetCounts[exerciseKey] || 3) + 1;
+            const newSetIndex = exerciseSetCounts[exerciseKey] - 1;
+            if (!currentExerciseData[exerciseKey]) currentExerciseData[exerciseKey] = {};
+            currentExerciseData[exerciseKey][newSetIndex] = { isWarmup: false, reps: '', weight: '' };
+            document.getElementById(`sets-${exerciseKey}`).innerHTML = renderSetsForExercise(exerciseKey, exerciseSetCounts[exerciseKey]);
+            updateExerciseSetsDisplay(exerciseKey);
+            saveProgressToStorage();
+        }
+
+        function deleteSet(exerciseKey, setIndex) {
+            const currentCount = exerciseSetCounts[exerciseKey] || 3;
+            if (currentCount <= 1) { alert('Cannot delete the last set!'); return; }
+            if (currentExerciseData[exerciseKey]) {
+                const newData = {};
+                let newIndex = 0;
+                for (let i = 0; i < currentCount; i++) {
+                    if (i !== setIndex) { newData[newIndex] = currentExerciseData[exerciseKey][i] || {}; newIndex++; }
+                }
+                currentExerciseData[exerciseKey] = newData;
+            }
+            exerciseSetCounts[exerciseKey] = currentCount - 1;
+            document.getElementById(`sets-${exerciseKey}`).innerHTML = renderSetsForExercise(exerciseKey, exerciseSetCounts[exerciseKey]);
+            updateExerciseSetsDisplay(exerciseKey);
+            saveProgressToStorage();
+        }
+
+        function updateExerciseSetsDisplay(exerciseKey) {
+            const workout = trainingPlan[currentWorkoutDay];
+            const ex = workout.exercises.find(e => `${currentWorkoutDay}_${e.exerciseId}` === exerciseKey);
+            if (ex) {
+                const display = document.getElementById(`sets-display-${exerciseKey}`);
+                if (display) display.textContent = `${exerciseSetCounts[exerciseKey]} × ${ex.reps}`;
+            }
+            let totalSets = 0;
+            workout.exercises.forEach(e => { totalSets += exerciseSetCounts[`${currentWorkoutDay}_${e.exerciseId}`] || 3; });
+            document.getElementById('workoutMeta').textContent = `${workout.subtitle} • ${totalSets} Sets Total`;
         }
 
         function updateExerciseData(input) {
@@ -1391,6 +1579,7 @@
             if (!currentExerciseData[key]) currentExerciseData[key] = {};
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = { isWarmup: idx === 0 };
             currentExerciseData[key][idx][type] = input.value;
+            saveProgressToStorage();
             checkExerciseCompletion(key);
         }
 
@@ -1400,47 +1589,48 @@
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
             btn.classList.toggle('active');
             currentExerciseData[key][idx].isWarmup = btn.classList.contains('active');
+            saveProgressToStorage();
         }
 
         function checkExerciseCompletion(key) {
             const el = document.getElementById(`exercise-${key}`);
+            if (!el) return;
             const inputs = el.querySelectorAll('.set-input');
             let complete = true;
             inputs.forEach(i => { if (!i.value) complete = false; });
             el.classList.toggle('completed', complete);
         }
 
-        async function completeWorkout(shouldExport = false) {
-            if (currentWorkoutDay === 'rest') { alert('Today is a rest day!'); return null; }
+        // COMPLETE WORKOUT
+        async function completeWorkout() {
+            if (currentWorkoutDay === 'rest') { alert('Today is a rest day!'); return; }
             const workout = trainingPlan[currentWorkoutDay];
             const exercises = workout.exercises.map(ex => {
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const key = `${currentWorkoutDay}_${ex.exerciseId}`;
-                const sets = Array.from({ length: ex.sets }, (_, i) => {
+                const setCount = exerciseSetCounts[key] || 3;
+                const sets = [];
+                for (let i = 0; i < setCount; i++) {
                     const setData = currentExerciseData[key]?.[i] || {};
                     let weight = parseFloat(setData.weight) || 0;
-                    // Convert lbs to kg for storage - data is always stored in kg
-                    if (weightUnit === 'lbs' && weight > 0) {
-                        weight = lbsToKg(weight);
-                    }
-                    return { weight, reps: parseInt(setData.reps) || 0, isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0), note: '' };
-                });
+                    if (weightUnit === 'lbs' && weight > 0) weight = lbsToKg(weight);
+                    sets.push({ weight, reps: parseInt(setData.reps) || 0, isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0), note: '' });
+                }
                 return { id: ex.exerciseId, name: exercise.name, sets };
             });
-            // Always store as 'kg' since we convert above
             const log = { id: Date.now(), date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
             await saveToFirebase(log);
             workoutLogs.unshift(log);
             currentExerciseData = {};
-            renderExercises(); renderRecentLogs(); updateStats();
-            if (shouldExport) exportSingleWorkout(log);
+            exerciseSetCounts = {};
+            clearProgressStorage();
+            renderExercises();
+            renderRecentLogs();
+            updateStats();
             alert('💪 Workout logged and synced!');
-            return log;
         }
 
-
-
-
+        // RECENT LOGS
         function renderRecentLogs() {
             const container = document.getElementById('recentLogs');
             const recent = workoutLogs.slice(0, 5);
@@ -1449,15 +1639,20 @@
                 const date = new Date(log.date);
                 const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
-                // Convert kg volume to lbs for display
-                const displayVolume = Math.round(kgToLbs(totalVolume));
-                return `<div class="log-entry"><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div>`;
+                return `<div class="log-entry">
+                    <div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div>
+                    <div class="log-workout-name">${log.workoutName}</div>
+                    <div class="log-stats">${totalSets} sets • ${Math.round(kgToLbs(totalVolume)).toLocaleString()} lbs</div>
+                    <div class="log-actions">
+                        <button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button>
+                        <button class="btn btn-edit btn-small" onclick="openEditModal('${log.id}')">Edit</button>
+                        <button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button>
+                    </div>
+                </div>`;
             }).join('');
         }
 
         function exportSingleLog(id) { const log = workoutLogs.find(l => l.id.toString() === id.toString()); if (log) exportSingleWorkout(log); }
-
-
 
         function viewLogDetail(id) {
             const log = workoutLogs.find(l => l.id.toString() === id.toString());
@@ -1465,18 +1660,86 @@
             const date = new Date(log.date);
             let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
             log.exercises.forEach(ex => {
-                const exerciseId = ex.exerciseId;
-                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px; cursor: pointer;" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
+                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px;">${ex.name}</h4>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => 
+                    `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};">
+                        <div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div>
+                        <div>${displayWeight(set.weight)}lbs × ${set.reps}</div>
+                    </div>`).join('')}</div></div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
             document.getElementById('exerciseModal').classList.add('active');
         }
 
+        // EDIT MODAL
+        function openEditModal(id) {
+            const log = workoutLogs.find(l => l.id.toString() === id.toString());
+            if (!log) return;
+            editingLog = JSON.parse(JSON.stringify(log));
+            const date = new Date(log.date);
+            document.getElementById('editModalTitle').textContent = `EDIT: ${log.workoutName}`;
+            let html = `<p style="color: var(--text-muted); margin-bottom: 20px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
+            editingLog.exercises.forEach((ex, exIdx) => {
+                html += `<div class="edit-exercise-section" id="edit-exercise-${exIdx}">
+                    <div class="edit-exercise-name">${ex.name}</div>
+                    <div id="edit-sets-${exIdx}">${renderEditSets(exIdx)}</div>
+                    <button class="edit-add-set-btn" onclick="addEditSet(${exIdx})">+ Add Set</button>
+                </div>`;
+            });
+            document.getElementById('editModalContent').innerHTML = html;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function renderEditSets(exIdx) {
+            const ex = editingLog.exercises[exIdx];
+            return ex.sets.map((set, setIdx) => `
+                <div class="edit-set-row" id="edit-set-${exIdx}-${setIdx}">
+                    <span class="edit-set-label">${set.isWarmup ? 'Warm' : 'Set ' + (setIdx + 1)}</span>
+                    <input type="number" class="edit-set-input" value="${displayWeight(set.weight)}" onchange="updateEditSet(${exIdx}, ${setIdx}, 'weight', this.value)" placeholder="lbs">
+                    <span style="color: var(--text-muted);">×</span>
+                    <input type="number" class="edit-set-input" value="${set.reps}" onchange="updateEditSet(${exIdx}, ${setIdx}, 'reps', this.value)" placeholder="reps">
+                    <button class="edit-warmup-btn ${set.isWarmup ? 'active' : ''}" onclick="toggleEditWarmup(${exIdx}, ${setIdx}, this)">W</button>
+                    <button class="edit-delete-set-btn" onclick="deleteEditSet(${exIdx}, ${setIdx})">−</button>
+                </div>`).join('');
+        }
+
+        function updateEditSet(exIdx, setIdx, field, value) {
+            if (field === 'weight') editingLog.exercises[exIdx].sets[setIdx].weight = lbsToKg(parseFloat(value) || 0);
+            else if (field === 'reps') editingLog.exercises[exIdx].sets[setIdx].reps = parseInt(value) || 0;
+        }
+
+        function toggleEditWarmup(exIdx, setIdx, btn) {
+            btn.classList.toggle('active');
+            editingLog.exercises[exIdx].sets[setIdx].isWarmup = btn.classList.contains('active');
+        }
+
+        function addEditSet(exIdx) {
+            editingLog.exercises[exIdx].sets.push({ weight: 0, reps: 0, isWarmup: false, note: '' });
+            document.getElementById(`edit-sets-${exIdx}`).innerHTML = renderEditSets(exIdx);
+        }
+
+        function deleteEditSet(exIdx, setIdx) {
+            if (editingLog.exercises[exIdx].sets.length <= 1) { alert('Cannot delete the last set!'); return; }
+            editingLog.exercises[exIdx].sets.splice(setIdx, 1);
+            document.getElementById(`edit-sets-${exIdx}`).innerHTML = renderEditSets(exIdx);
+        }
+
+        async function saveEditedWorkout() {
+            if (!editingLog) return;
+            await saveToFirebase(editingLog);
+            const idx = workoutLogs.findIndex(l => l.id.toString() === editingLog.id.toString());
+            if (idx !== -1) workoutLogs[idx] = editingLog;
+            renderRecentLogs();
+            renderFullHistory();
+            updateStats();
+            closeEditModal();
+            alert('✅ Workout updated!');
+        }
+
+        function closeEditModal() { document.getElementById('editModal').classList.remove('active'); editingLog = null; }
         function closeExerciseModal() { document.getElementById('exerciseModal').classList.remove('active'); }
-
         function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
-
         function closeInstructionsModal() { document.getElementById('instructionsModal').classList.remove('active'); }
 
         function showInstructions(exerciseId) {
@@ -1489,60 +1752,22 @@
         }
 
         function showExerciseHistory(exerciseName) {
-            // Search through all workout logs to find the most recent occurrence of this exercise
-            let mostRecentLog = null;
-            let mostRecentExercise = null;
-            let mostRecentDate = null;
-
-            // workoutLogs is already sorted by date descending, so first match is most recent
+            let mostRecentExercise = null, mostRecentDate = null;
             for (const log of workoutLogs) {
-                const exercise = log.exercises.find(ex =>
-                    ex.name.toLowerCase() === exerciseName.toLowerCase() ||
-                    ex.name.toLowerCase().includes(exerciseName.toLowerCase()) ||
-                    exerciseName.toLowerCase().includes(ex.name.toLowerCase())
-                );
-                if (exercise) {
-                    mostRecentLog = log;
-                    mostRecentExercise = exercise;
-                    mostRecentDate = new Date(log.date);
-                    break;
-                }
+                const exercise = log.exercises.find(ex => ex.name.toLowerCase().includes(exerciseName.toLowerCase()) || exerciseName.toLowerCase().includes(ex.name.toLowerCase()));
+                if (exercise) { mostRecentExercise = exercise; mostRecentDate = new Date(log.date); break; }
             }
-
-            const modal = document.getElementById('historyModal');
-            const title = document.getElementById('historyModalTitle');
             const content = document.getElementById('historyModalContent');
-
-            title.textContent = exerciseName.toUpperCase() + ' HISTORY';
-
-            if (!mostRecentExercise) {
-                content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>No history found for this exercise</p></div>`;
-            } else {
-                const dateStr = mostRecentDate.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
-
-                let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
-                html += `<div style="margin-top: 12px;">`;
-
+            document.getElementById('historyModalTitle').textContent = exerciseName.toUpperCase() + ' HISTORY';
+            if (!mostRecentExercise) { content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>No history found</p></div>`; }
+            else {
+                let html = `<p class="history-date">Most recent: <strong>${mostRecentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</strong></p><div style="margin-top: 12px;">`;
                 mostRecentExercise.sets.forEach((set, i) => {
-                    const weightLbs = displayWeight(set.weight);
-                    const warmupClass = set.isWarmup ? 'warmup' : '';
-                    const label = set.isWarmup ? 'WARM' : `SET ${i + 1}`;
-                    html += `<div class="history-set ${warmupClass}">
-                        <span>${label}</span>
-                        <span><strong>${weightLbs} lbs</strong> × ${set.reps} reps</span>
-                    </div>`;
+                    html += `<div class="history-set ${set.isWarmup ? 'warmup' : ''}"><span>${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</span><span><strong>${displayWeight(set.weight)} lbs</strong> × ${set.reps} reps</span></div>`;
                 });
-
-                html += `</div>`;
-                content.innerHTML = html;
+                content.innerHTML = html + '</div>';
             }
-
-            modal.classList.add('active');
+            document.getElementById('historyModal').classList.add('active');
         }
 
         function updateStats() {
@@ -1559,7 +1784,7 @@
             }
             document.getElementById('totalWorkouts').textContent = totalWorkouts;
             document.getElementById('totalSets').textContent = totalSets;
-            document.getElementById('totalVolume').textContent = Math.round(totalVolume).toLocaleString();
+            document.getElementById('totalVolume').textContent = Math.round(kgToLbs(totalVolume)).toLocaleString();
             document.getElementById('currentStreak').textContent = streak;
         }
 
@@ -1577,11 +1802,11 @@
         function togglePlanDay(day) { document.getElementById(`plan-${day}`).classList.toggle('expanded'); }
 
         function renderLibrary() {
-            const categories = [...new Set(exerciseDatabase.map(e => e.category))];
+            const categories = [...new Set(exerciseDatabase.map(e => e.category).filter(c => c))];
             document.getElementById('muscleFilter').innerHTML = `<span class="filter-chip ${!activeFilter ? 'active' : ''}" onclick="filterLibrary(null)">All</span>${categories.map(cat => `<span class="filter-chip ${activeFilter === cat ? 'active' : ''}" onclick="filterLibrary('${cat}')">${cat}</span>`).join('')}`;
             const searchTerm = document.getElementById('librarySearch')?.value?.toLowerCase() || '';
             const filtered = exerciseDatabase.filter(ex => (ex.name.toLowerCase().includes(searchTerm) || ex.muscles.some(m => m.toLowerCase().includes(searchTerm))) && (!activeFilter || ex.category === activeFilter));
-            document.getElementById('libraryGrid').innerHTML = filtered.map(ex => `<div class="library-exercise" onclick="showExerciseInfo('${ex.id}')"><h4 class="library-exercise-name">${ex.name}</h4><p class="library-exercise-muscles">${ex.muscles.join(' • ')}</p><span class="library-exercise-category">${ex.category}</span></div>`).join('');
+            document.getElementById('libraryGrid').innerHTML = filtered.map(ex => `<div class="library-exercise" onclick="showExerciseInfo('${ex.id}')"><h4 class="library-exercise-name">${ex.name}</h4><p class="library-exercise-muscles">${ex.muscles.join(' • ')}</p><span class="library-exercise-category">${ex.category || 'Uncategorized'}</span></div>`).join('');
         }
 
         function filterLibrary(category) { activeFilter = category; renderLibrary(); }
@@ -1590,7 +1815,7 @@
             const ex = exerciseDatabase.find(e => e.id === id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
-            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="margin-bottom: 16px;"><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
+            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category || 'Uncategorized'}</p><p><strong>Equipment:</strong> ${ex.equipment || 'None'}</p><p><strong>Target:</strong> ${ex.muscles.join(', ') || 'N/A'}</p><hr style="border-color: var(--border); margin: 16px 0;"><p><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p>`;
             document.getElementById('exerciseModal').classList.add('active');
         }
 
@@ -1605,34 +1830,24 @@
             document.getElementById('switchModal').classList.add('active');
         }
 
-        function selectWorkoutDay(day) { currentWorkoutDay = day; currentExerciseData = {}; updateWorkoutDisplay(); closeSwitchModal(); }
+        function selectWorkoutDay(day) {
+            currentExerciseData = {};
+            exerciseSetCounts = {};
+            clearProgressStorage();
+            currentWorkoutDay = day;
+            updateWorkoutDisplay();
+            closeSwitchModal();
+        }
+
         function closeSwitchModal() { document.getElementById('switchModal').classList.remove('active'); }
 
         function setupTabs() {
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const tabName = tab.dataset.tab;
-
-                    if (tabName === 'workout') {
-                        const todaysDay = dayToWorkout[new Date().getDay()];
-                        const workoutTab = document.getElementById('workoutTab');
-                        const isWorkoutTabVisible = workoutTab.style.display !== 'none';
-                        const isShowingToday = currentWorkoutDay === todaysDay;
-
-                        if (isWorkoutTabVisible && isShowingToday) {
-                            document.getElementById('workoutCard').scrollIntoView({ behavior: 'smooth' });
-                            return;
-                        }
-
-                        // Switch to today's workout if not showing it
-                        currentWorkoutDay = todaysDay;
-                        updateWorkoutDisplay();
-                    }
-
                     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
-
                     if (tabName === 'workout') document.getElementById('workoutTab').style.display = 'block';
                     else if (tabName === 'plan') { document.getElementById('planTab').style.display = 'block'; document.getElementById('planTab').classList.add('active'); }
                     else if (tabName === 'library') { document.getElementById('libraryTab').style.display = 'block'; document.getElementById('libraryTab').classList.add('active'); }
@@ -1645,19 +1860,15 @@
         function renderFullHistory() {
             const container = document.getElementById('fullHistory');
             if (workoutLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`; return; }
-            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button></div>` + workoutLogs.map(log => {
+            container.innerHTML = `<div style="margin-bottom: 20px;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button></div>` + workoutLogs.map(log => {
                 const date = new Date(log.date);
                 const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
-                const displayVolume = Math.round(kgToLbs(totalVolume));
-                return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div></div>`;
+                return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${Math.round(kgToLbs(totalVolume)).toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-edit btn-small" onclick="openEditModal('${log.id}')">Edit</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div></div>`;
             }).join('');
         }
-
-
 
         init();
     </script>
 </body>
-
 </html>
