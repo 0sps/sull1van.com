@@ -1738,6 +1738,30 @@
                 });
                 return { id: ex.exerciseId, name: exercise.name, sets };
             });
+
+            // Check for sets with 0 reps
+            let hasZeroReps = false;
+            for (const exercise of exercises) {
+                if (exercise.sets.some(set => set.reps === 0)) {
+                    hasZeroReps = true;
+                    break;
+                }
+            }
+
+            // If there are sets with 0 reps, ask for confirmation
+            if (hasZeroReps) {
+                const userConfirmed = confirm('Warning: some sets were detected with 0 reps. Do you still want to save?');
+                if (!userConfirmed) {
+                    // User clicked "No" - abort save
+                    return null;
+                }
+
+                // User clicked "Yes" - filter out sets with 0 reps
+                exercises.forEach(exercise => {
+                    exercise.sets = exercise.sets.filter(set => set.reps > 0);
+                });
+            }
+
             // Always store as 'kg' since we convert above
             const logId = Date.now();
             const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
