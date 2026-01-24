@@ -1,13 +1,5 @@
-# Import scripts (one-time use only)
-import-admin.js
-import-to-firebase.js
-package.json
-package-lock.json
 node_modules/
-
-# Sensitive files - NEVER commit
-*.json
-
-# Data files
-WorkoutExport.csv
+.DS_Store
+serviceAccount.json
+workout-c7be0-firebase-adminsdk-fbsvc-e4ba6c5e4d.json
 *.csv
