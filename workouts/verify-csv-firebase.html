@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to Firebase Verification</title>
+    <style>
+        body {
+            font-family: monospace;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0a0a0b;
+            color: #ffffff;
+        }
+
+        h1 {
+            color: #ff3d00;
+        }
+
+        button {
+            background: #ff3d00;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        #output {
+            background: #111;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #333;
+            max-height: 600px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+        }
+
+        .success {
+            color: #00ff88;
+        }
+
+        .error {
+            color: #ff3d5a;
+        }
+
+        .warning {
+            color: #ffbb00;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📊 CSV to Firebase Verification</h1>
+    <p>Upload your WorkoutExport.csv to verify all workouts exist in Firebase with correct exercise IDs.</p>
+
+    <input type="file" id="csvFile" accept=".csv" />
+    <button type="button" onclick="verifyData()" id="verifyBtn">VERIFY CSV vs FIREBASE</button>
+
+    <div id="output">Waiting for CSV file...</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+            authDomain: "workout-c7be0.firebaseapp.com",
+            projectId: "workout-c7be0",
+            storageBucket: "workout-c7be0.firebasestorage.app",
+            messagingSenderId: "625595909146",
+            appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let csvData = null;
+        let firebaseData = null;
+
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : '';
+            output.innerHTML += `<span class="${className}">${message}</span>\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('output').innerHTML = '';
+        }
+
+        // Parse CSV file
+        document.getElementById('csvFile').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const text = event.target.result;
+                const lines = text.split('\n');
+                const headers = lines[0].split(',');
+
+                csvData = {};
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+
+                    const values = lines[i].split(',');
+                    const date = values[0]?.trim();
+                    const exercise = values[1]?.trim();
+
+                    if (!date || !exercise) continue;
+
+                    if (!csvData[date]) {
+                        csvData[date] = new Set();
+                    }
+                    csvData[date].add(exercise);
+                }
+
+                clearLog();
+                log(`✅ Loaded CSV: ${Object.keys(csvData).length} workout dates, ${lines.length - 1} total sets`, 'success');
+                document.getElementById('verifyBtn').disabled = false;
+            };
+            reader.readAsText(file);
+        });
+
+        window.verifyData = async function () {
+            if (!csvData) {
+                log('❌ Please upload a CSV file first', 'error');
+                return;
+            }
+
+            document.getElementById('verifyBtn').disabled = true;
+            clearLog();
+            log('🔍 Starting verification...\n');
+
+            try {
+                // Load Firebase data
+                log('📥 Loading Firebase workout logs...');
+                const snapshot = await getDocs(collection(db, 'workouts'));
+
+                firebaseData = {};
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.date;
+                    if (date && data.exercises) {
+                        firebaseData[date] = {
+                            exercises: data.exercises.map(ex => ex.name),
+                            workoutName: data.workoutName
+                        };
+                    }
+                });
+
+                log(`✅ Loaded ${snapshot.size} Firebase workout logs\n`, 'success');
+
+                // Verify each CSV workout exists in Firebase
+                const csvDates = Object.keys(csvData).sort();
+                let foundCount = 0;
+                let notFoundCount = 0;
+                let mismatchCount = 0;
+
+                log('═══════════════════════════════════════════════════════');
+                log('📊 VERIFICATION RESULTS');
+                log('═══════════════════════════════════════════════════════\n');
+
+                for (const csvDate of csvDates) {
+                    const csvExercises = Array.from(csvData[csvDate]);
+
+                    // Try to find matching Firebase workout
+                    let found = false;
+                    for (const fbDate in firebaseData) {
+                        const fbExercises = firebaseData[fbDate].exercises;
+
+                        // Check if exercises match
+                        const csvSet = new Set(csvExercises);
+                        const fbSet = new Set(fbExercises);
+
+                        // If all CSV exercises are in Firebase workout
+                        const allMatch = csvExercises.every(ex => fbSet.has(ex));
+
+                        if (allMatch && csvSet.size === fbSet.size) {
+                            found = true;
+                            foundCount++;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        notFoundCount++;
+                        if (notFoundCount <= 10) {
+                            log(`⚠️  ${csvDate}: Not found or mismatch (${csvExercises.length} exercises)`, 'warning');
+                        }
+                    }
+                }
+
+                log('\n═══════════════════════════════════════════════════════');
+                log('📈 SUMMARY');
+                log('═══════════════════════════════════════════════════════');
+                log(`Total CSV workouts: ${csvDates.length}`);
+                log(`✅ Found in Firebase: ${foundCount}`, 'success');
+                log(`⚠️  Not found/mismatch: ${notFoundCount}`, notFoundCount > 0 ? 'warning' : 'success');
+                log(`Match rate: ${(foundCount / csvDates.length * 100).toFixed(1)}%\n`);
+
+                if (notFoundCount === 0) {
+                    log('🎉 PERFECT MATCH! All CSV workouts exist in Firebase!', 'success');
+                } else {
+                    log(`ℹ️  Note: Some workouts may not match due to:`, 'warning');
+                    log(`   - Different exercise names between CSV and Firebase`);
+                    log(`   - Workouts split across multiple days`);
+                    log(`   - Imported vs logged workouts`);
+                }
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+                console.error(error);
+            } finally {
+                document.getElementById('verifyBtn').disabled = false;
+            }
+        };
+
+        // Check auth
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                log(`✅ Authenticated as: ${user.email}\n`, 'success');
+            } else {
+                log(`❌ Not authenticated! Please log in to the main app first.`, 'error');
+                document.getElementById('verifyBtn').disabled = true;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1268,8 +1268,7 @@
         function kgToLbs(kg) { return kg / 0.45359237; }
         // Display weight: convert kg to lbs and round to integer
         function displayWeight(kgWeight) { return Math.round(kgToLbs(kgWeight)); }
-        function getExportName(id) { return exerciseExportNames[id] || id; }
-        function getMultiplier(id) { return exerciseMultipliers[id] || 1; }
+
 
         function exportToCSV() {
             if (workoutLogs.length === 0) { alert('No workout data to export!'); return; }
