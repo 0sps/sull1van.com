@@ -1164,7 +1164,12 @@
 
         <div class="export-banner">
             <span class="export-banner-text">📤 Export complete workout history for analytics</span>
-            <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
+                <button class="btn btn-secondary btn-small" onclick="openDeleteSetModal()"
+                    style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DELETE
+                    SETS</button>
+            </div>
         </div>
     </div>
 
@@ -2242,7 +2247,7 @@
         function renderFullHistory() {
             const container = document.getElementById('fullHistory');
             if (workoutLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`; return; }
-            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button></div>` + workoutLogs.map(log => {
+            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-secondary" onclick="openDeleteSetModal()" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DELETE SETS</button></div>` + workoutLogs.map(log => {
                 const date = new Date(log.date);
                 const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
