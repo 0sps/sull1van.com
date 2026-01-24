@@ -367,16 +367,20 @@
 
         .set-inputs {
             display: flex;
-            gap: 4px;
+            gap: 12px;
+            align-items: center;
         }
 
         .set-input {
-            padding: 12px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
+            padding: 17px 12px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.9);
             color: var(--text-primary);
-            font-family: 'Space Mono', monospace;
-            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-style: italic;
             text-align: center;
         }
 
@@ -390,14 +394,32 @@
 
         .set-input:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 10px var(--accent-glow);
+            border-bottom-color: var(--accent-primary);
+        }
+
+        /* Hide number input spinner buttons */
+        .set-input::-webkit-outer-spin-button,
+        .set-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .set-input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
 
         .set-input::placeholder {
-            color: #b0b0b5;
-            font-size: 0.89rem;
+            color: rgba(176, 176, 181, 0.7);
+            font-size: 1.2rem;
             font-weight: 700;
+        }
+
+        .input-separator {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 2rem;
+            font-weight: 300;
+            user-select: none;
         }
 
         .btn {
@@ -1075,8 +1097,8 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="instructionsModal">
-        <div class="modal">
+    <div class="modal-overlay" id="instructionsModal" onclick="closeInstructionsModal()">
+        <div class="modal" onclick="event.stopPropagation()">
             <h3 class="modal-title" id="instructionsModalTitle">INSTRUCTIONS</h3>
             <div id="instructionsModalContent" style="white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;">
             </div>
@@ -1471,12 +1493,11 @@
                     const isWarmup = savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0);
 
                     return `<div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${isWarmup ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
-                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
+                <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><span class="input-separator">/</span><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
                 }).join('');
 
                 return `<div class="exercise-item" id="exercise-${exerciseKey}">
             <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
-            <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
             <div class="sets-grid">${setsHtml}</div>
             <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; align-items: center;">
                 <button class="btn btn-secondary btn-small btn-remove-set" onclick="removeSet('${exerciseKey}')" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a; width: 100%; max-width: 200px;" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
@@ -1762,7 +1783,7 @@
             container.innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isRest = day === 'rest';
-                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div><div style="font-size: 0.87rem; color: var(--text-muted); margin-top: 4px;">${ex.notes}</div></div>`; }).join('')}</div></div>`;
+                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div></div>`; }).join('')}</div></div>`;
             }).join('');
         }
 

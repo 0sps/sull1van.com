@@ -50,10 +50,25 @@
             z-index: 0;
         }
 
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30%;
+            width: 130%;
+            height: 100%;
+            background-image: url('sean.jpg');
+            background-size: auto 100%;
+            background-position: center;
+            background-repeat: repeat-x;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
         .login-container {
             position: relative;
             z-index: 1;
-            background: var(--bg-secondary);
+            background: rgba(17, 17, 19, 0.5);
             border: 1px solid var(--border);
             padding: 48px;
             max-width: 400px;
