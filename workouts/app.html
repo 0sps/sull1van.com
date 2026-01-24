@@ -1086,21 +1086,24 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-value" id="totalWorkouts">0</div>
-                <div class="stat-label">Total Workouts</div>
+                <div class="stat-label">Recent Workouts</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="totalSets">0</div>
-                <div class="stat-label">Total Sets</div>
+                <div class="stat-label">Recent Sets</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="totalVolume">0</div>
-                <div class="stat-label">Volume (lbs)</div>
+                <div class="stat-label">Recent Volume (lbs)</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="currentStreak">0</div>
                 <div class="stat-label">Day Streak</div>
             </div>
         </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.82rem; margin-top: -12px; margin-bottom: 30px;">
+            📊 Stats based on your last 60 workouts
+        </p>
 
         <div id="workoutTab" class="tab-content">
             <div class="main-layout">
@@ -1158,6 +1161,7 @@
         <div id="historyTab" class="tab-content" style="display: none;">
             <div class="section-card">
                 <h3 class="section-title">Workout History</h3>
+                <p id="historySubtitle" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;"></p>
                 <div id="fullHistory"></div>
             </div>
         </div>
@@ -1245,7 +1249,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1272,6 +1276,7 @@
         window.firebaseDeleteDoc = deleteDoc;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
+        window.firebaseLimit = limit;
         window.firebaseSignOut = signOut;
 
         // Check auth state
@@ -1304,6 +1309,21 @@
         // Helper functions to get exercise data
         function getExercise(id) {
             return exercisesData[id] || null;
+        }
+
+        // Get exercise in UI format (for rendering)
+        function getExerciseForUI(id) {
+            const data = exercisesData[id];
+            if (!data) return null;
+            return {
+                id: id,
+                name: data.name,
+                muscles: data.muscles || [],
+                category: data.category || '',
+                equipment: data.equipment || '',
+                instructions: data.instructions || '',
+                notes: data.notes || ''
+            };
         }
 
         function getExportName(id) {
@@ -1388,15 +1408,27 @@
         let currentSetCounts = {}; // Track number of sets per exercise !
         let editingLogData = null; // Store full log data when editing
         let activeFilter = null;
-        let weightUnit = 'lbs';
 
-        async function loadFromFirebase() {
+        // Stats caching to avoid unnecessary recalculations
+        let cachedStats = null;
+        let cachedStatsVersion = 0;
+        let isFullHistoryLoaded = false; // Track if we've loaded all history or just recent
+
+        function invalidateStatsCache() {
+            cachedStatsVersion++;
+        }
+
+        async function loadFromFirebase(limitCount = 60) {
             try {
                 updateSyncStatus('syncing');
-                const q = window.firebaseQuery(window.firebaseCollection(window.firebaseDb, 'workouts'), window.firebaseOrderBy('date', 'desc'));
+                const q = limitCount > 0
+                    ? window.firebaseQuery(window.firebaseCollection(window.firebaseDb, 'workouts'), window.firebaseOrderBy('date', 'desc'), window.firebaseLimit(limitCount))
+                    : window.firebaseQuery(window.firebaseCollection(window.firebaseDb, 'workouts'), window.firebaseOrderBy('date', 'desc'));
                 const snapshot = await window.firebaseGetDocs(q);
                 workoutLogs = [];
                 snapshot.forEach(doc => workoutLogs.push({ id: doc.id, ...doc.data() }));
+                isFullHistoryLoaded = (limitCount === 0); // Track if we loaded everything
+                invalidateStatsCache();
                 updateSyncStatus('synced');
                 return true;
             } catch (error) {
@@ -1498,6 +1530,8 @@
         function kgToLbs(kg) { return kg / 0.45359237; }
         // Display weight: convert kg to lbs and round to integer
         function displayWeight(kgWeight) { return Math.round(kgToLbs(kgWeight)); }
+        // Helper to compare log IDs (handles both string and number types)
+        function compareLogIds(id1, id2) { return id1.toString() === id2.toString(); }
 
 
         function exportToCSV() {
@@ -1606,14 +1640,13 @@
                 container.innerHTML = `<div class="rest-day-message"><div class="rest-day-icon">🧘</div><h2 class="rest-day-title">REST & RECOVER</h2><p class="rest-day-subtitle">Complete rest or light activity. Your muscles grow during recovery!</p></div>`;
                 return;
             }
-            const unitLabel = weightUnit === 'kg' ? 'kg' : 'lbs';
             container.innerHTML = workout.exercises.map((ex, idx) => {
-                const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
+                const exercise = getExerciseForUI(ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
 
-                // Initialize set count to 3 if not already set
+                // Initialize set count from workout plan if not already set
                 if (!currentSetCounts[exerciseKey]) {
-                    currentSetCounts[exerciseKey] = 3;
+                    currentSetCounts[exerciseKey] = ex.sets;
                 }
 
                 const numSets = currentSetCounts[exerciseKey];
@@ -1689,7 +1722,7 @@
             if (currentWorkoutDay === 'rest') { alert('Today is a rest day!'); return null; }
             const workout = trainingPlan[currentWorkoutDay];
             const exercises = workout.exercises.map(ex => {
-                const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
+                const exercise = getExerciseForUI(ex.exerciseId);
                 const key = `${currentWorkoutDay}_${ex.exerciseId}`;
                 // Use dynamic set count instead of fixed ex.sets
                 const numSets = currentSetCounts[key] || 3;
@@ -1725,6 +1758,7 @@
             }
 
             workoutLogs.unshift(log);
+            invalidateStatsCache();
 
             currentExerciseData = {};
             currentSetCounts = {};
@@ -1751,10 +1785,10 @@
             }).join('');
         }
 
-        function exportSingleLog(id) { const log = workoutLogs.find(l => l.id.toString() === id.toString()); if (log) exportSingleWorkout(log); }
+        function exportSingleLog(id) { const log = workoutLogs.find(l => compareLogIds(l.id, id)); if (log) exportSingleWorkout(log); }
 
         function loadWorkoutForEditing(logId) {
-            const log = workoutLogs.find(l => l.id.toString() === logId.toString());
+            const log = workoutLogs.find(l => compareLogIds(l.id, logId));
             if (!log) return;
 
             // Store a deep copy to avoid direct mutation until saved
@@ -1779,7 +1813,7 @@
             if (!editingLogData) return;
 
             container.innerHTML = editingLogData.exercises.map((ex, exIdx) => {
-                const exercise = exerciseDatabase.find(e => e.id === ex.id) || { name: ex.name, muscles: [] };
+                const exercise = getExerciseForUI(ex.id) || { name: ex.name, muscles: [] };
 
                 const setsHtml = ex.sets.map((set, setIdx) => {
                     // Convert kg to lbs for display in the modal
@@ -1846,10 +1880,11 @@
                 await saveToFirebase(editingLogData);
 
                 // Update local workoutLogs
-                const index = workoutLogs.findIndex(l => l.id.toString() === editingLogData.id.toString());
+                const index = workoutLogs.findIndex(l => compareLogIds(l.id, editingLogData.id));
                 if (index !== -1) {
                     workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
                 }
+                invalidateStatsCache();
 
                 // Refresh UI
                 renderRecentLogs();
@@ -1963,7 +1998,7 @@
                 const typeLabel = set.isWarmup ? 'Warmup' : 'Working';
                 const typeColor = set.isWarmup ? 'var(--warning)' : 'var(--accent-secondary)';
                 const isSelected = selectedSetForDeletion &&
-                    selectedSetForDeletion.workoutId === set.workoutId &&
+                    compareLogIds(selectedSetForDeletion.workoutId, set.workoutId) &&
                     selectedSetForDeletion.exerciseIndex === set.exerciseIndex &&
                     selectedSetForDeletion.setIndex === set.setIndex;
 
@@ -2011,7 +2046,7 @@
 
             try {
                 // Find the workout
-                const workoutIdx = workoutLogs.findIndex(l => l.id.toString() === workoutId.toString());
+                const workoutIdx = workoutLogs.findIndex(l => compareLogIds(l.id, workoutId));
                 if (workoutIdx === -1) {
                     alert('❌ Workout not found');
                     return;
@@ -2036,6 +2071,7 @@
                     await saveToFirebase(workout);
                     workoutLogs[workoutIdx] = workout;
                 }
+                invalidateStatsCache();
 
                 // Refresh UI
                 renderRecentLogs();
@@ -2058,7 +2094,7 @@
 
 
         function viewLogDetail(id) {
-            const log = workoutLogs.find(l => l.id.toString() === id.toString());
+            const log = workoutLogs.find(l => compareLogIds(l.id, id));
             if (!log) return;
             const date = new Date(log.date);
             let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
@@ -2085,7 +2121,7 @@
         function closeInstructionsModal() { document.getElementById('instructionsModal').classList.remove('active'); }
 
         function showInstructions(exerciseId) {
-            const exercise = exerciseDatabase.find(e => e.id === exerciseId);
+            const exercise = getExerciseForUI(exerciseId);
             if (exercise) {
                 document.getElementById('instructionsModalTitle').textContent = exercise.name.toUpperCase();
                 document.getElementById('instructionsModalContent').textContent = exercise.instructions || "No instructions given";
@@ -2151,6 +2187,16 @@
         }
 
         function updateStats() {
+            // Check if we can use cached stats
+            if (cachedStats && cachedStats.version === cachedStatsVersion) {
+                document.getElementById('totalWorkouts').textContent = cachedStats.totalWorkouts;
+                document.getElementById('totalSets').textContent = cachedStats.totalSets;
+                document.getElementById('totalVolume').textContent = cachedStats.totalVolume;
+                document.getElementById('currentStreak').textContent = cachedStats.streak;
+                return;
+            }
+
+            // Recalculate stats
             const totalWorkouts = workoutLogs.length;
             const totalSets = workoutLogs.reduce((s, log) => s + log.exercises.reduce((ss, ex) => ss + ex.sets.length, 0), 0);
             const totalVolume = workoutLogs.reduce((s, log) => s + log.exercises.reduce((ss, ex) => ss + ex.sets.reduce((sss, set) => sss + (set.weight * set.reps), 0), 0), 0);
@@ -2162,9 +2208,22 @@
                 const isRestDay = dayToWorkout[checkDate.getDay()] === 'rest';
                 if (hasWorkout || isRestDay) { if (!isRestDay) streak++; } else break;
             }
+
+            const displayVolume = Math.round(kgToLbs(totalVolume)).toLocaleString();
+
+            // Cache the calculated stats
+            cachedStats = {
+                totalWorkouts: totalWorkouts,
+                totalSets: totalSets,
+                totalVolume: displayVolume,
+                streak: streak,
+                version: cachedStatsVersion
+            };
+
+            // Update DOM
             document.getElementById('totalWorkouts').textContent = totalWorkouts;
             document.getElementById('totalSets').textContent = totalSets;
-            document.getElementById('totalVolume').textContent = Math.round(totalVolume).toLocaleString();
+            document.getElementById('totalVolume').textContent = displayVolume;
             document.getElementById('currentStreak').textContent = streak;
         }
 
@@ -2175,7 +2234,7 @@
             container.innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isRest = day === 'rest';
-                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div></div>`; }).join('')}</div></div>`;
+                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = getExerciseForUI(ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div></div>`; }).join('')}</div></div>`;
             }).join('');
         }
 
@@ -2192,7 +2251,7 @@
         function filterLibrary(category) { activeFilter = category; renderLibrary(); }
 
         function showExerciseInfo(id) {
-            const ex = exerciseDatabase.find(e => e.id === id);
+            const ex = getExerciseForUI(id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
             document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="margin-bottom: 16px;"><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
@@ -2252,10 +2311,35 @@
             document.getElementById('librarySearch').addEventListener('input', renderLibrary);
         }
 
+        async function loadAllHistory() {
+            await loadFromFirebase(0); // 0 = no limit, load everything
+            renderFullHistory();
+            renderRecentLogs();
+            updateStats();
+        }
+
         function renderFullHistory() {
             const container = document.getElementById('fullHistory');
-            if (workoutLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`; return; }
-            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-secondary" onclick="openDeleteSetModal()" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DELETE SETS</button></div>` + workoutLogs.map(log => {
+            const subtitle = document.getElementById('historySubtitle');
+
+            if (workoutLogs.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`;
+                if (subtitle) subtitle.textContent = '';
+                return;
+            }
+
+            // Update subtitle based on whether full history is loaded
+            if (subtitle) {
+                subtitle.textContent = isFullHistoryLoaded
+                    ? `Showing all ${workoutLogs.length} workouts`
+                    : `Showing ${workoutLogs.length} most recent workouts`;
+            }
+
+            const loadAllButton = !isFullHistoryLoaded
+                ? `<button class="btn btn-secondary" onclick="loadAllHistory()" style="background: rgba(255, 187, 0, 0.1); border-color: var(--warning); color: var(--warning);">LOAD ALL HISTORY</button>`
+                : '';
+
+            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-secondary" onclick="openDeleteSetModal()" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DELETE SETS</button>${loadAllButton}</div>` + workoutLogs.map(log => {
                 const date = new Date(log.date);
                 const totalSets = log.exercises.reduce((s, ex) => s + ex.sets.length, 0);
                 const totalVolume = log.exercises.reduce((s, ex) => s + ex.sets.reduce((ss, set) => ss + (set.weight * set.reps), 0), 0);
