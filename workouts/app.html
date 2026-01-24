@@ -274,7 +274,6 @@
 
         .exercise-item:hover {
             border-color: var(--accent-primary);
-            transform: translateX(4px);
         }
 
         .exercise-item.completed {
@@ -728,6 +727,30 @@
             background: var(--accent-primary);
         }
 
+        /* Set management buttons - no animations, just color changes on hover */
+        .btn-add-set {
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-add-set:hover {
+            background: rgba(0, 255, 136, 0.2) !important;
+            border-color: var(--success) !important;
+        }
+
+        .btn-remove-set {
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-remove-set:hover:not(:disabled) {
+            background: rgba(255, 61, 90, 0.2) !important;
+            border-color: #ff3d5a !important;
+        }
+
+        .btn-remove-set:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
         .rest-day-message {
             text-align: center;
             padding: 60px 20px;
@@ -1033,7 +1056,12 @@
         <div class="modal">
             <h3 class="modal-title" id="modalExerciseName"></h3>
             <div id="modalExerciseDetails"></div>
-            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button>
+            <div class="modal-actions">
+                <button class="btn btn-primary btn-small"
+                    onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId)"
+                    style="background: rgba(255, 187, 0, 0.2); border: 1px solid var(--warning); color: var(--warning);">✏️
+                    Edit</button>
+                <button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1201,6 +1229,8 @@
         let workoutLogs = [];
         let currentWorkoutDay = null;
         let currentExerciseData = {};
+        let currentSetCounts = {}; // Track number of sets per exercise
+        let editingWorkoutId = null; // Track if we're editing a past workout
         let activeFilter = null;
         let weightUnit = 'lbs';
 
@@ -1254,6 +1284,50 @@
             if (status === 'synced') { icon.textContent = '✓'; text.textContent = 'Synced'; }
             else if (status === 'syncing') { icon.textContent = '↻'; text.textContent = 'Syncing...'; }
             else { icon.textContent = '!'; text.textContent = 'Sync Error'; }
+        }
+
+        // LocalStorage persistence functions
+        function saveWorkoutProgress() {
+            const data = {
+                workoutDay: currentWorkoutDay,
+                exerciseData: currentExerciseData,
+                setCounts: currentSetCounts,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('workoutProgress', JSON.stringify(data));
+        }
+
+        function loadWorkoutProgress() {
+            try {
+                const saved = localStorage.getItem('workoutProgress');
+                if (!saved) return false;
+
+                const data = JSON.parse(saved);
+                const age = Date.now() - data.timestamp;
+                const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+
+                // Check if data is expired (> 24 hours)
+                if (age > TWENTY_FOUR_HOURS) {
+                    clearWorkoutProgress();
+                    return false;
+                }
+
+                // Only load if it's for the same workout day
+                if (data.workoutDay === currentWorkoutDay) {
+                    currentExerciseData = data.exerciseData || {};
+                    currentSetCounts = data.setCounts || {};
+                    return true;
+                }
+
+                return false;
+            } catch (error) {
+                console.error('Error loading workout progress:', error);
+                return false;
+            }
+        }
+
+        function clearWorkoutProgress() {
+            localStorage.removeItem('workoutProgress');
         }
 
 
@@ -1331,6 +1405,10 @@
             document.getElementById('loadingOverlay').style.display = 'none';
             updateCurrentDate();
             setTodaysWorkout();
+
+            // Load saved progress from localStorage
+            loadWorkoutProgress();
+
             renderExercises();
             renderRecentLogs();
             renderPlanView();
@@ -1347,10 +1425,18 @@
 
         function setTodaysWorkout() {
             currentWorkoutDay = dayToWorkout[new Date().getDay()];
-            updateWorkoutDisplay();
+            updateWorkoutDisplay(true);
         }
 
-        function updateWorkoutDisplay() {
+        function updateWorkoutDisplay(clearProgress = false) {
+            // Only clear progress when explicitly switching to a different workout day
+            if (clearProgress) {
+                clearWorkoutProgress();
+                currentExerciseData = {};
+                currentSetCounts = {};
+                editingWorkoutId = null;
+            }
+
             const workout = trainingPlan[currentWorkoutDay];
             const isRest = currentWorkoutDay === 'rest';
             document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay.replace('day', '')}`;
@@ -1371,10 +1457,14 @@
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
 
-                return `<div class="exercise-item animate-in" style="animation-delay: ${idx * 0.1}s" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
-            <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
-            <div class="sets-grid">${Array.from({ length: ex.sets }, (_, i) => {
+                // Initialize set count to 3 if not already set
+                if (!currentSetCounts[exerciseKey]) {
+                    currentSetCounts[exerciseKey] = 3;
+                }
+
+                const numSets = currentSetCounts[exerciseKey];
+
+                const setsHtml = Array.from({ length: numSets }, (_, i) => {
                     const savedData = currentExerciseData[exerciseKey]?.[i] || {};
                     const savedReps = savedData.reps || '';
                     const savedWeight = savedData.weight || '';
@@ -1382,7 +1472,17 @@
 
                     return `<div class="set-input-group"><span class="set-label">Set ${i + 1}</span><button class="warmup-btn ${isWarmup ? 'active' : ''}" data-exercise="${exerciseKey}" data-set="${i}" onclick="toggleWarmup(this)">W</button>
                 <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
-                }).join('')}</div></div>`;
+                }).join('');
+
+                return `<div class="exercise-item" id="exercise-${exerciseKey}">
+            <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
+            <p style="font-size: 0.87rem; color: var(--warning); margin-bottom: 12px;">${ex.notes}</p>
+            <div class="sets-grid">${setsHtml}</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; align-items: center;">
+                <button class="btn btn-secondary btn-small btn-remove-set" onclick="removeSet('${exerciseKey}')" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a; width: 100%; max-width: 200px;" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
+                <button class="btn btn-secondary btn-small btn-add-set" onclick="addSet('${exerciseKey}')" style="background: rgba(0, 255, 136, 0.1); border-color: var(--success); color: var(--success); width: 100%; max-width: 200px;">+ Add Set</button>
+            </div>
+            </div>`;
             }).join('');
         }
 
@@ -1392,6 +1492,7 @@
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = { isWarmup: idx === 0 };
             currentExerciseData[key][idx][type] = input.value;
             checkExerciseCompletion(key);
+            saveWorkoutProgress(); // Save to localStorage
         }
 
         function toggleWarmup(btn) {
@@ -1400,6 +1501,27 @@
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
             btn.classList.toggle('active');
             currentExerciseData[key][idx].isWarmup = btn.classList.contains('active');
+            saveWorkoutProgress(); // Save to localStorage
+        }
+
+        function addSet(exerciseKey) {
+            currentSetCounts[exerciseKey] = (currentSetCounts[exerciseKey] || 3) + 1;
+            saveWorkoutProgress();
+            renderExercises();
+        }
+
+        function removeSet(exerciseKey) {
+            const currentCount = currentSetCounts[exerciseKey] || 3;
+            if (currentCount > 1) {
+                currentSetCounts[exerciseKey] = currentCount - 1;
+                // Remove data for the last set
+                const lastSetIndex = currentCount - 1;
+                if (currentExerciseData[exerciseKey] && currentExerciseData[exerciseKey][lastSetIndex]) {
+                    delete currentExerciseData[exerciseKey][lastSetIndex];
+                }
+                saveWorkoutProgress();
+                renderExercises();
+            }
         }
 
         function checkExerciseCompletion(key) {
@@ -1416,7 +1538,9 @@
             const exercises = workout.exercises.map(ex => {
                 const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
                 const key = `${currentWorkoutDay}_${ex.exerciseId}`;
-                const sets = Array.from({ length: ex.sets }, (_, i) => {
+                // Use dynamic set count instead of fixed ex.sets
+                const numSets = currentSetCounts[key] || 3;
+                const sets = Array.from({ length: numSets }, (_, i) => {
                     const setData = currentExerciseData[key]?.[i] || {};
                     let weight = parseFloat(setData.weight) || 0;
                     // Convert lbs to kg for storage - data is always stored in kg
@@ -1428,13 +1552,27 @@
                 return { id: ex.exerciseId, name: exercise.name, sets };
             });
             // Always store as 'kg' since we convert above
-            const log = { id: Date.now(), date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
+            const logId = editingWorkoutId || Date.now();
+            const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
             await saveToFirebase(log);
-            workoutLogs.unshift(log);
+
+            // Update or add to workoutLogs
+            if (editingWorkoutId) {
+                const index = workoutLogs.findIndex(l => l.id.toString() === editingWorkoutId.toString());
+                if (index !== -1) {
+                    workoutLogs[index] = log;
+                }
+            } else {
+                workoutLogs.unshift(log);
+            }
+
             currentExerciseData = {};
+            currentSetCounts = {};
+            editingWorkoutId = null;
+            clearWorkoutProgress(); // Clear localStorage after completing workout
             renderExercises(); renderRecentLogs(); updateStats();
             if (shouldExport) exportSingleWorkout(log);
-            alert('💪 Workout logged and synced!');
+            alert(editingWorkoutId ? '✏️ Workout updated and synced!' : '💪 Workout logged and synced!');
             return log;
         }
 
@@ -1457,6 +1595,56 @@
 
         function exportSingleLog(id) { const log = workoutLogs.find(l => l.id.toString() === id.toString()); if (log) exportSingleWorkout(log); }
 
+        function loadWorkoutForEditing(logId) {
+            const log = workoutLogs.find(l => l.id.toString() === logId.toString());
+            if (!log) return;
+
+            // Set the workout day to match the log
+            currentWorkoutDay = log.workoutDay;
+            editingWorkoutId = log.id;
+
+            // Clear existing data
+            currentExerciseData = {};
+            currentSetCounts = {};
+
+            // Load the log data into currentExerciseData
+            log.exercises.forEach(ex => {
+                const exerciseKey = `${currentWorkoutDay}_${ex.id}`;
+                currentSetCounts[exerciseKey] = ex.sets.length;
+                currentExerciseData[exerciseKey] = {};
+
+                ex.sets.forEach((set, i) => {
+                    // Convert kg to lbs for display
+                    const weightLbs = set.weight > 0 ? displayWeight(set.weight) : '';
+                    currentExerciseData[exerciseKey][i] = {
+                        reps: set.reps || '',
+                        weight: weightLbs,
+                        isWarmup: set.isWarmup
+                    };
+                });
+            });
+
+            // Update the display
+            updateWorkoutDisplayForEdit();
+            renderExercises();
+
+            // Close the modal
+            closeExerciseModal();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            alert('✏️ Editing workout. Make your changes and click "Complete Workout" to save.');
+        }
+
+        function updateWorkoutDisplayForEdit() {
+            const workout = trainingPlan[currentWorkoutDay];
+            const isRest = currentWorkoutDay === 'rest';
+            document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay.replace('day', '')}`;
+            document.getElementById('workoutName').textContent = workout.name + ' (EDITING)';
+            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${workout.exercises.length * 4} Sets Total`;
+        }
+
 
 
         function viewLogDetail(id) {
@@ -1470,6 +1658,10 @@
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
+
+            // Store the log ID for the Edit button
+            document.getElementById('exerciseModal').dataset.logId = id;
+
             document.getElementById('exerciseModal').classList.add('active');
         }
 
@@ -1605,7 +1797,7 @@
             document.getElementById('switchModal').classList.add('active');
         }
 
-        function selectWorkoutDay(day) { currentWorkoutDay = day; currentExerciseData = {}; updateWorkoutDisplay(); closeSwitchModal(); }
+        function selectWorkoutDay(day) { currentWorkoutDay = day; currentExerciseData = {}; updateWorkoutDisplay(true); closeSwitchModal(); }
         function closeSwitchModal() { document.getElementById('switchModal').classList.remove('active'); }
 
         function setupTabs() {
@@ -1626,7 +1818,7 @@
 
                         // Switch to today's workout if not showing it
                         currentWorkoutDay = todaysDay;
-                        updateWorkoutDisplay();
+                        updateWorkoutDisplay(true);
                     }
 
                     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
