@@ -448,6 +448,102 @@
             color: var(--text-secondary);
         }
 
+        .btn-primary.success {
+            background: var(--success) !important;
+            color: #000 !important;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6) !important;
+            transform: scale(1.05) translateY(-2px) !important;
+            animation: successPulse 2s infinite;
+        }
+
+        @keyframes successPulse {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 60px rgba(0, 255, 136, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            }
+        }
+
+        .set-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .set-table th {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            text-align: left;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .set-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .set-table tr {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .set-table tbody tr:hover {
+            background: rgba(255, 61, 0, 0.05);
+        }
+
+        .set-table tbody tr.selected {
+            background: rgba(255, 61, 90, 0.15);
+            border-left: 3px solid #ff3d5a;
+        }
+
+        .delete-set-btn {
+            background: rgba(255, 61, 90, 0.2);
+            border: 1px solid #ff3d5a;
+            color: #ff3d5a;
+            padding: 6px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .delete-set-btn:hover {
+            background: rgba(255, 61, 90, 0.3);
+            box-shadow: 0 0 15px rgba(255, 61, 90, 0.4);
+        }
+
+        .delete-set-btn.confirm {
+            background: #ff3d5a;
+            color: #000;
+            font-weight: bold;
+            animation: deletePulse 1s infinite;
+        }
+
+        @keyframes deletePulse {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 61, 90, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
+            }
+        }
+
         .btn-secondary:hover {
             border-color: var(--accent-primary);
             color: var(--text-primary);
@@ -1021,13 +1117,20 @@
                         </div>
                         <div id="exerciseList"></div>
                         <div class="complete-workout-section">
-                            <button class="btn btn-primary" onclick="completeWorkout()">COMPLETE WORKOUT</button>
+                            <button class="btn btn-primary" id="completeWorkoutBtn" onclick="completeWorkout()">COMPLETE
+                                WORKOUT</button>
                         </div>
                     </div>
                 </div>
                 <div class="log-sidebar">
                     <div class="section-card">
-                        <h3 class="section-title">Recent Logs</h3>
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 class="section-title" style="margin-bottom: 0;">Recent Logs</h3>
+                            <button class="btn btn-secondary btn-small" onclick="openDeleteSetModal()"
+                                style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">Delete
+                                Sets</button>
+                        </div>
                         <div id="recentLogs"></div>
                     </div>
                 </div>
@@ -1104,6 +1207,32 @@
             </div>
             <div class="modal-actions"><button class="btn btn-secondary"
                     onclick="closeInstructionsModal()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal" style="max-width: 800px; width: 95%;">
+            <h3 class="modal-title" id="editModalTitle">EDIT WORKOUT</h3>
+            <p id="editModalSubtitle" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;"></p>
+            <div id="editExerciseList" style="margin-bottom: 24px;"></div>
+            <div class="modal-actions"
+                style="position: sticky; bottom: -32px; background: var(--bg-secondary); padding-top: 16px; margin-top: 0; border-top: 1px solid var(--border); z-index: 10;">
+                <button class="btn btn-primary" id="saveEditsBtn" onclick="saveEditedWorkout()" style="flex: 2;">SAVE
+                    EDITS</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()" style="flex: 1;">DISCARD EDITS</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="deleteSetModal">
+        <div class="modal" style="max-width: 900px; width: 95%;">
+            <h3 class="modal-title">DELETE INDIVIDUAL SETS</h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Showing last 20 sets from
+                recent workouts. Click a row to select, then confirm deletion.</p>
+            <div id="deleteSetList" style="margin-bottom: 24px; max-height: 500px; overflow-y: auto;"></div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeDeleteSetModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1252,7 +1381,7 @@
         let currentWorkoutDay = null;
         let currentExerciseData = {};
         let currentSetCounts = {}; // Track number of sets per exercise
-        let editingWorkoutId = null; // Track if we're editing a past workout
+        let editingLogData = null; // Store full log data when editing
         let activeFilter = null;
         let weightUnit = 'lbs';
 
@@ -1453,10 +1582,8 @@
         function updateWorkoutDisplay(clearProgress = false) {
             // Only clear progress when explicitly switching to a different workout day
             if (clearProgress) {
-                clearWorkoutProgress();
                 currentExerciseData = {};
                 currentSetCounts = {};
-                editingWorkoutId = null;
             }
 
             const workout = trainingPlan[currentWorkoutDay];
@@ -1573,27 +1700,32 @@
                 return { id: ex.exerciseId, name: exercise.name, sets };
             });
             // Always store as 'kg' since we convert above
-            const logId = editingWorkoutId || Date.now();
+            const logId = Date.now();
             const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
+
+            console.log('LOGGING NEW WORKOUT TO FIREBASE:', logId);
             await saveToFirebase(log);
 
-            // Update or add to workoutLogs
-            if (editingWorkoutId) {
-                const index = workoutLogs.findIndex(l => l.id.toString() === editingWorkoutId.toString());
-                if (index !== -1) {
-                    workoutLogs[index] = log;
-                }
-            } else {
-                workoutLogs.unshift(log);
+            // Morph button into success state
+            const btn = document.getElementById('completeWorkoutBtn');
+            if (btn) {
+                const originalText = btn.textContent;
+                btn.textContent = 'WORKOUT SAVED!';
+                btn.classList.add('success');
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('success');
+                }, 2000);
             }
+
+            workoutLogs.unshift(log);
 
             currentExerciseData = {};
             currentSetCounts = {};
-            editingWorkoutId = null;
             clearWorkoutProgress(); // Clear localStorage after completing workout
             renderExercises(); renderRecentLogs(); updateStats();
             if (shouldExport) exportSingleWorkout(log);
-            alert(editingWorkoutId ? '✏️ Workout updated and synced!' : '💪 Workout logged and synced!');
             return log;
         }
 
@@ -1620,50 +1752,302 @@
             const log = workoutLogs.find(l => l.id.toString() === logId.toString());
             if (!log) return;
 
-            // Set the workout day to match the log
-            currentWorkoutDay = log.workoutDay;
-            editingWorkoutId = log.id;
+            // Store a deep copy to avoid direct mutation until saved
+            editingLogData = JSON.parse(JSON.stringify(log));
 
-            // Clear existing data
-            currentExerciseData = {};
-            currentSetCounts = {};
+            // Populate Modal UI
+            document.getElementById('editModalTitle').textContent = `EDIT ${log.workoutName.toUpperCase()}`;
+            const date = new Date(log.date);
+            document.getElementById('editModalSubtitle').textContent = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
-            // Load the log data into currentExerciseData
-            log.exercises.forEach(ex => {
-                const exerciseKey = `${currentWorkoutDay}_${ex.id}`;
-                currentSetCounts[exerciseKey] = ex.sets.length;
-                currentExerciseData[exerciseKey] = {};
+            renderEditExercises();
 
-                ex.sets.forEach((set, i) => {
-                    // Convert kg to lbs for display
-                    const weightLbs = set.weight > 0 ? displayWeight(set.weight) : '';
-                    currentExerciseData[exerciseKey][i] = {
-                        reps: set.reps || '',
-                        weight: weightLbs,
-                        isWarmup: set.isWarmup
-                    };
-                });
-            });
+            // Show the modal
+            document.getElementById('editModal').classList.add('active');
 
-            // Update the display
-            updateWorkoutDisplayForEdit();
-            renderExercises();
-
-            // Close the modal
+            // Close the view detail modal
             closeExerciseModal();
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            alert('✏️ Editing workout. Make your changes and click "Complete Workout" to save.');
         }
 
-        function updateWorkoutDisplayForEdit() {
-            const workout = trainingPlan[currentWorkoutDay];
-            const isRest = currentWorkoutDay === 'rest';
-            document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay.replace('day', '')}`;
-            document.getElementById('workoutName').textContent = workout.name + ' (EDITING)';
-            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${workout.exercises.length * 4} Sets Total`;
+        function renderEditExercises() {
+            const container = document.getElementById('editExerciseList');
+            if (!editingLogData) return;
+
+            container.innerHTML = editingLogData.exercises.map((ex, exIdx) => {
+                const exercise = exerciseDatabase.find(e => e.id === ex.id) || { name: ex.name, muscles: [] };
+
+                const setsHtml = ex.sets.map((set, setIdx) => {
+                    // Convert kg to lbs for display in the modal
+                    const weightLbs = set.weight > 0 ? displayWeight(set.weight) : '';
+                    const isWarmup = set.isWarmup;
+
+                    return `
+                    <div class="set-input-group">
+                        <span class="set-label">Set ${setIdx + 1}</span>
+                        <button class="warmup-btn ${isWarmup ? 'active' : ''}" 
+                                onclick="toggleEditWarmup(${exIdx}, ${setIdx}, this)">W</button>
+                        <div class="set-inputs">
+                            <input type="number" class="set-input" placeholder="REPS" 
+                                   value="${set.reps || ''}" 
+                                   onchange="updateEditExerciseData(${exIdx}, ${setIdx}, 'reps', this.value)">
+                            <span class="input-separator">/</span>
+                            <input type="number" class="set-input" placeholder="WEIGHT" 
+                                   value="${weightLbs}" 
+                                   onchange="updateEditExerciseData(${exIdx}, ${setIdx}, 'weight', this.value)">
+                        </div>
+                    </div>`;
+                }).join('');
+
+                return `
+                <div class="exercise-item">
+                    <div class="exercise-header">
+                        <div style="flex: 1; min-width: 0;">
+                            <h4 class="exercise-name">${exercise.name.toUpperCase()}</h4>
+                            <p class="exercise-muscles">${(exercise.muscles || []).join(' • ')}</p>
+                        </div>
+                    </div>
+                    <div class="sets-grid">${setsHtml}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function updateEditExerciseData(exIdx, setIdx, type, value) {
+            if (!editingLogData) return;
+            const set = editingLogData.exercises[exIdx].sets[setIdx];
+            if (type === 'reps') {
+                set.reps = parseInt(value) || 0;
+            } else if (type === 'weight') {
+                // Convert back to kg for storage
+                let weight = parseFloat(value) || 0;
+                if (weight > 0) weight = lbsToKg(weight);
+                set.weight = weight;
+            }
+        }
+
+        function toggleEditWarmup(exIdx, setIdx, btn) {
+            if (!editingLogData) return;
+            btn.classList.toggle('active');
+            editingLogData.exercises[exIdx].sets[setIdx].isWarmup = btn.classList.contains('active');
+        }
+
+        async function saveEditedWorkout() {
+            if (!editingLogData) return;
+
+            console.log('PREPARING TO SAVE EDITED WORKOUT TO FIREBASE:', editingLogData.id);
+
+            try {
+                // Save to Firebase - Use the original log ID and data structure
+                // IMPORTANT: editingLogData already contains the original date and ID
+                await saveToFirebase(editingLogData);
+
+                // Update local workoutLogs
+                const index = workoutLogs.findIndex(l => l.id.toString() === editingLogData.id.toString());
+                if (index !== -1) {
+                    workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
+                }
+
+                // Refresh UI
+                renderRecentLogs();
+                updateStats();
+                if (document.getElementById('historyTab').style.display !== 'none') {
+                    renderFullHistory();
+                }
+
+                // Success animation for save button
+                const btn = document.getElementById('saveEditsBtn');
+                if (btn) {
+                    const originalText = btn.textContent;
+                    btn.textContent = 'EDITS SAVED!';
+                    btn.classList.add('success');
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('success');
+                        closeEditModal(); // Close modal after the animation/delay
+                    }, 2000);
+                } else {
+                    alert('✏️ Workout updated and synced!');
+                    closeEditModal();
+                }
+            } catch (error) {
+                console.error('FAILED TO SAVE EDITED WORKOUT:', error);
+                alert('❌ Error saving changes. Please try again.');
+            }
+        }
+
+        function closeEditModal() {
+            editingLogData = null;
+            document.getElementById('editModal').classList.remove('active');
+            document.getElementById('editExerciseList').innerHTML = '';
+        }
+
+        // Delete Set Feature
+        let selectedSetForDeletion = null;
+
+        function flattenRecentSets() {
+            const flatSets = [];
+
+            for (const log of workoutLogs) {
+                for (let exIdx = 0; exIdx < log.exercises.length; exIdx++) {
+                    const exercise = log.exercises[exIdx];
+                    const exerciseData = getExercise(exercise.id);
+                    const exerciseName = exerciseData ? exerciseData.name : exercise.name;
+
+                    for (let setIdx = 0; setIdx < exercise.sets.length; setIdx++) {
+                        const set = exercise.sets[setIdx];
+                        flatSets.push({
+                            workoutId: log.id,
+                            workoutDate: log.date,
+                            exerciseIndex: exIdx,
+                            exerciseId: exercise.id,
+                            exerciseName: exerciseName,
+                            setIndex: setIdx,
+                            weight: set.weight, // stored in kg
+                            reps: set.reps,
+                            isWarmup: set.isWarmup
+                        });
+
+                        if (flatSets.length >= 20) {
+                            return flatSets;
+                        }
+                    }
+                }
+            }
+
+            return flatSets;
+        }
+
+        function openDeleteSetModal() {
+            selectedSetForDeletion = null;
+            renderDeleteSetList();
+            document.getElementById('deleteSetModal').classList.add('active');
+        }
+
+        function closeDeleteSetModal() {
+            selectedSetForDeletion = null;
+            document.getElementById('deleteSetModal').classList.remove('active');
+        }
+
+        function renderDeleteSetList() {
+            const container = document.getElementById('deleteSetList');
+            const sets = flattenRecentSets();
+
+            if (sets.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No sets found</p></div>`;
+                return;
+            }
+
+            let html = `
+                <table class="set-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Exercise</th>
+                            <th>Weight</th>
+                            <th>Reps</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            sets.forEach((set, idx) => {
+                const date = new Date(set.workoutDate);
+                const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const weightLbs = Math.round(kgToLbs(set.weight));
+                const typeLabel = set.isWarmup ? 'Warmup' : 'Working';
+                const typeColor = set.isWarmup ? 'var(--warning)' : 'var(--accent-secondary)';
+                const isSelected = selectedSetForDeletion &&
+                    selectedSetForDeletion.workoutId === set.workoutId &&
+                    selectedSetForDeletion.exerciseIndex === set.exerciseIndex &&
+                    selectedSetForDeletion.setIndex === set.setIndex;
+
+                html += `
+                    <tr class="${isSelected ? 'selected' : ''}" onclick="selectSetForDeletion(${idx})">
+                        <td>${dateStr}</td>
+                        <td><strong>${set.exerciseName}</strong></td>
+                        <td>${weightLbs} lbs</td>
+                        <td>${set.reps}</td>
+                        <td style="color: ${typeColor};">${typeLabel}</td>
+                        <td>
+                            ${isSelected ? `<button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">Delete?</button>` : ''}
+                        </td>
+                    </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        function selectSetForDeletion(idx) {
+            const sets = flattenRecentSets();
+            selectedSetForDeletion = sets[idx];
+            renderDeleteSetList();
+        }
+
+        function confirmDeleteSet(idx) {
+            const btn = document.getElementById(`deleteBtn_${idx}`);
+            if (!btn) return;
+
+            if (btn.textContent === 'Delete?') {
+                btn.textContent = 'Sure?';
+                btn.classList.add('confirm');
+            } else if (btn.textContent === 'Sure?') {
+                executeDeleteSet();
+            }
+        }
+
+        async function executeDeleteSet() {
+            if (!selectedSetForDeletion) return;
+
+            const { workoutId, exerciseIndex, setIndex } = selectedSetForDeletion;
+
+            console.log('DELETING SET FROM FIREBASE:', { workoutId, exerciseIndex, setIndex });
+
+            try {
+                // Find the workout
+                const workoutIdx = workoutLogs.findIndex(l => l.id.toString() === workoutId.toString());
+                if (workoutIdx === -1) {
+                    alert('❌ Workout not found');
+                    return;
+                }
+
+                const workout = JSON.parse(JSON.stringify(workoutLogs[workoutIdx]));
+
+                // Remove the set
+                workout.exercises[exerciseIndex].sets.splice(setIndex, 1);
+
+                // If exercise has no sets left, remove the exercise
+                if (workout.exercises[exerciseIndex].sets.length === 0) {
+                    workout.exercises.splice(exerciseIndex, 1);
+                }
+
+                // If workout has no exercises left, delete the entire workout
+                if (workout.exercises.length === 0) {
+                    await deleteFromFirebase(workoutId);
+                    workoutLogs.splice(workoutIdx, 1);
+                } else {
+                    // Update the workout
+                    await saveToFirebase(workout);
+                    workoutLogs[workoutIdx] = workout;
+                }
+
+                // Refresh UI
+                renderRecentLogs();
+                updateStats();
+                if (document.getElementById('historyTab').style.display !== 'none') {
+                    renderFullHistory();
+                }
+
+                // Refresh the delete modal
+                selectedSetForDeletion = null;
+                renderDeleteSetList();
+
+                alert('✅ Set deleted successfully!');
+            } catch (error) {
+                console.error('FAILED TO DELETE SET:', error);
+                alert('❌ Error deleting set. Please try again.');
+            }
         }
 
 
