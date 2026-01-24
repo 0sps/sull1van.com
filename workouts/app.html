@@ -2069,10 +2069,13 @@
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
 
-            // Store the log ID for the Edit button
-            document.getElementById('exerciseModal').dataset.logId = id;
+            // Store the log ID for the Edit button and show it
+            const modal = document.getElementById('exerciseModal');
+            modal.dataset.logId = id;
+            const editBtn = modal.querySelector('.btn-primary');
+            if (editBtn) editBtn.style.display = '';
 
-            document.getElementById('exerciseModal').classList.add('active');
+            modal.classList.add('active');
         }
 
         function closeExerciseModal() { document.getElementById('exerciseModal').classList.remove('active'); }
@@ -2193,7 +2196,12 @@
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
             document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="margin-bottom: 16px;"><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
-            document.getElementById('exerciseModal').classList.add('active');
+            // Hide Edit button for library view
+            const modal = document.getElementById('exerciseModal');
+            modal.dataset.logId = '';
+            const editBtn = modal.querySelector('.btn-primary');
+            if (editBtn) editBtn.style.display = 'none';
+            modal.classList.add('active');
         }
 
         function switchWorkout() {
