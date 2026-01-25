@@ -495,12 +495,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            isolation: isolate;
-        }
-
-        .set-table tbody tr {
-            display: table-row;
-            contain: layout style paint;
         }
 
         .set-table tbody tr:hover {
@@ -512,86 +506,60 @@
             border-left: 3px solid #ff3d5a;
         }
 
-        .set-table tr.confirming::after,
         .set-table tr.deleted-success::after {
-            content: 'SURE?';
+            content: 'DELETED!';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.2rem;
             letter-spacing: 2px;
-            z-index: 2;
-            pointer-events: none;
-            transition: all 0.2s ease;
-            overflow: hidden;
-        }
-
-        .set-table tr.confirming::after {
-            background: rgba(255, 61, 90, 0.9);
-            color: #000;
-        }
-
-        .set-table tr.confirming {
-            background: rgba(255, 61, 90, 0.2) !important;
-        }
-
-        .set-table tr.deleted-success::after {
-            content: 'DELETED!';
             background: rgba(0, 255, 136, 0.9);
             color: #000;
+            z-index: 2;
+            pointer-events: none;
         }
 
         .set-table tr.deleted-success {
             background: rgba(0, 255, 136, 0.2) !important;
         }
 
-        .delete-set-btn {
-            background: rgba(255, 61, 90, 0.2);
-            border: 1px solid #ff3d5a;
-            color: #ff3d5a;
+        .delete-set-btn,
+        .cancel-set-btn {
             padding: 6px 16px;
             font-family: 'Space Mono', monospace;
             font-size: 0.85rem;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
+        .delete-set-btn {
+            background: rgba(255, 61, 90, 0.2);
+            border: 1px solid #ff3d5a;
+            color: #ff3d5a;
+        }
+
         .delete-set-btn:hover {
             background: rgba(255, 61, 90, 0.3);
-            box-shadow: 0 0 15px rgba(255, 61, 90, 0.4);
         }
 
-        .delete-set-btn.confirm {
-            background: #ff3d5a;
-            color: #000;
-            font-weight: bold;
-            animation: deletePulse 1s infinite;
+        .cancel-set-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        @keyframes deletePulse {
-            0% {
-                box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(255, 61, 90, 0.8);
-            }
-
-            100% {
-                box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
-            }
+        .cancel-set-btn:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            color: #fff;
         }
 
         .btn-secondary:hover {
@@ -845,24 +813,6 @@
 
             .set-inputs {
                 gap: 8px;
-            }
-
-            /* Ensure delete overlays stay within row on mobile */
-            .set-table tr.confirming,
-            .set-table tr.deleted-success {
-                position: relative;
-                overflow: hidden;
-            }
-
-            .set-table tr.confirming::after,
-            .set-table tr.deleted-success::after {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                width: auto;
-                height: auto;
             }
 
             .set-table th:nth-child(6),
@@ -2191,13 +2141,11 @@
                     selectedSetForDeletion.exerciseIndex === set.exerciseIndex &&
                     selectedSetForDeletion.setIndex === set.setIndex;
 
-                // On mobile, the row itself shows the confirming state
-                const confirmingClass = (isSelected && window.innerWidth <= 768) ? 'confirming' : '';
                 const emptyClass = set.isEmptyWorkout ? 'empty-workout-row' : '';
 
                 html += `
-                    <tr class="${isSelected ? 'selected' : ''} ${confirmingClass} ${emptyClass}" 
-                        id="deleteRow_${idx}" 
+                    <tr class="${isSelected ? 'selected' : ''} ${emptyClass}"
+                        id="deleteRow_${idx}"
                         onclick="selectSetForDeletion(${idx})"
                         style="${set.isEmptyWorkout ? 'background: rgba(255,255,255,0.03); opacity: 0.8;' : ''}">
                         <td>${dateStr}</td>
@@ -2210,7 +2158,7 @@
                             ${set.isEmptyWorkout ? 'System Log' : typeLabel}
                         </td>
                         <td>
-                            ${isSelected ? `<button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">Delete?</button>` : ''}
+                            ${isSelected ? `<button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">DELETE</button> <button class="cancel-set-btn" onclick="event.stopPropagation(); cancelSetDeletion()">CANCEL</button>` : ''}
                         </td>
                     </tr>`;
             });
@@ -2220,17 +2168,23 @@
         }
 
         function selectSetForDeletion(idx) {
-            const isMobile = window.innerWidth <= 768;
-            const row = document.getElementById(`deleteRow_${idx}`);
-
-            if (isMobile && row && row.classList.contains('confirming')) {
-                // Secondary tap on mobile -> execute delete
-                executeDeleteSet(idx);
-                return;
-            }
-
             const sets = flattenRecentSets();
-            selectedSetForDeletion = sets[idx];
+            const clickedSet = sets[idx];
+
+            // If clicking the same row, deselect it
+            if (selectedSetForDeletion &&
+                compareLogIds(selectedSetForDeletion.workoutId, clickedSet.workoutId) &&
+                selectedSetForDeletion.exerciseIndex === clickedSet.exerciseIndex &&
+                selectedSetForDeletion.setIndex === clickedSet.setIndex) {
+                selectedSetForDeletion = null;
+            } else {
+                selectedSetForDeletion = clickedSet;
+            }
+            renderDeleteSetList();
+        }
+
+        function cancelSetDeletion() {
+            selectedSetForDeletion = null;
             renderDeleteSetList();
         }
 
@@ -2238,10 +2192,12 @@
             const btn = document.getElementById(`deleteBtn_${idx}`);
             if (!btn) return;
 
-            if (btn.textContent === 'Delete?') {
-                btn.textContent = 'Sure?';
-                btn.classList.add('confirm');
-            } else if (btn.textContent === 'Sure?') {
+            if (btn.textContent === 'DELETE') {
+                btn.textContent = 'SURE?';
+                btn.style.background = '#ff3d5a';
+                btn.style.color = '#000';
+                btn.style.fontWeight = 'bold';
+            } else if (btn.textContent === 'SURE?') {
                 executeDeleteSet(idx);
             }
         }
@@ -2249,21 +2205,11 @@
         async function executeDeleteSet(idx) {
             if (!selectedSetForDeletion) return;
 
-            const isMobile = window.innerWidth <= 768;
             const row = document.getElementById(`deleteRow_${idx}`);
 
-            // Visual feedback
-            if (isMobile && row) {
-                row.classList.remove('confirming');
+            // Show green "Deleted!" overlay on the row
+            if (row) {
                 row.classList.add('deleted-success');
-            } else {
-                const btn = document.getElementById(`deleteBtn_${idx}`);
-                if (btn) {
-                    btn.textContent = 'Deleted!';
-                    btn.style.background = '#00ff88';
-                    btn.style.borderColor = '#00ff88';
-                    btn.style.color = '#000';
-                }
             }
 
             const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
@@ -2315,13 +2261,8 @@
                     renderFullHistory();
                 }
 
-                // Refresh the delete modal
+                // Keep the row showing "Deleted!" - don't re-render
                 selectedSetForDeletion = null;
-                renderDeleteSetList();
-
-                if (!isMobile) {
-                    alert('✅ Set deleted successfully!');
-                }
             } catch (error) {
                 console.error('FAILED TO DELETE SET:', error);
                 alert('❌ Error deleting set. Please try again.');
