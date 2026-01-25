@@ -494,6 +494,7 @@
         .set-table tr {
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .set-table tbody tr:hover {
@@ -503,6 +504,44 @@
         .set-table tbody tr.selected {
             background: rgba(255, 61, 90, 0.15);
             border-left: 3px solid #ff3d5a;
+        }
+
+        .set-table tr.confirming::after,
+        .set-table tr.deleted-success::after {
+            content: 'SURE?';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            z-index: 10;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        .set-table tr.confirming::after {
+            background: rgba(255, 61, 90, 0.9);
+            color: #000;
+        }
+
+        .set-table tr.confirming {
+            background: rgba(255, 61, 90, 0.2) !important;
+        }
+
+        .set-table tr.deleted-success::after {
+            content: 'DELETED!';
+            background: rgba(0, 255, 136, 0.9);
+            color: #000;
+        }
+
+        .set-table tr.deleted-success {
+            background: rgba(0, 255, 136, 0.2) !important;
         }
 
         .delete-set-btn {
@@ -777,6 +816,17 @@
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .set-table th:nth-child(6),
+            .set-table td:nth-child(6) {
+                display: none;
+            }
+
+            .set-table th,
+            .set-table td {
+                padding: 10px 8px;
+                font-size: 0.8rem;
             }
         }
 
@@ -2071,8 +2121,11 @@
                     selectedSetForDeletion.exerciseIndex === set.exerciseIndex &&
                     selectedSetForDeletion.setIndex === set.setIndex;
 
+                // On mobile, the row itself shows the confirming state
+                const confirmingClass = (isSelected && window.innerWidth <= 768) ? 'confirming' : '';
+
                 html += `
-                    <tr class="${isSelected ? 'selected' : ''}" onclick="selectSetForDeletion(${idx})">
+                    <tr class="${isSelected ? 'selected' : ''} ${confirmingClass}" id="deleteRow_${idx}" onclick="selectSetForDeletion(${idx})">
                         <td>${dateStr}</td>
                         <td><strong>${set.exerciseName}</strong></td>
                         <td>${weightLbs} lbs</td>
@@ -2089,6 +2142,15 @@
         }
 
         function selectSetForDeletion(idx) {
+            const isMobile = window.innerWidth <= 768;
+            const row = document.getElementById(`deleteRow_${idx}`);
+
+            if (isMobile && row && row.classList.contains('confirming')) {
+                // Secondary tap on mobile -> execute delete
+                executeDeleteSet(idx);
+                return;
+            }
+
             const sets = flattenRecentSets();
             selectedSetForDeletion = sets[idx];
             renderDeleteSetList();
@@ -2102,16 +2164,36 @@
                 btn.textContent = 'Sure?';
                 btn.classList.add('confirm');
             } else if (btn.textContent === 'Sure?') {
-                executeDeleteSet();
+                executeDeleteSet(idx);
             }
         }
 
-        async function executeDeleteSet() {
+        async function executeDeleteSet(idx) {
             if (!selectedSetForDeletion) return;
+
+            const isMobile = window.innerWidth <= 768;
+            const row = document.getElementById(`deleteRow_${idx}`);
+
+            // Visual feedback
+            if (isMobile && row) {
+                row.classList.remove('confirming');
+                row.classList.add('deleted-success');
+            } else {
+                const btn = document.getElementById(`deleteBtn_${idx}`);
+                if (btn) {
+                    btn.textContent = 'Deleted!';
+                    btn.style.background = '#00ff88';
+                    btn.style.borderColor = '#00ff88';
+                    btn.style.color = '#000';
+                }
+            }
 
             const { workoutId, exerciseIndex, setIndex } = selectedSetForDeletion;
 
             console.log('DELETING SET FROM FIREBASE:', { workoutId, exerciseIndex, setIndex });
+
+            // Small delay for the "Deleted!" visual
+            await new Promise(r => setTimeout(r, 600));
 
             try {
                 // Find the workout
@@ -2153,7 +2235,9 @@
                 selectedSetForDeletion = null;
                 renderDeleteSetList();
 
-                alert('✅ Set deleted successfully!');
+                if (!isMobile) {
+                    alert('✅ Set deleted successfully!');
+                }
             } catch (error) {
                 console.error('FAILED TO DELETE SET:', error);
                 alert('❌ Error deleting set. Please try again.');
