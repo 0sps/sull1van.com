@@ -511,7 +511,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 61, 90, 0.5);
+            background: rgba(198, 40, 40, 0.5);
             /* Initial red overlay */
             display: flex;
             align-items: center;
@@ -532,7 +532,7 @@
             padding: 10px 24px;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1rem;
-            border-radius: 4px;
+            border-radius: 0;
             cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
@@ -541,25 +541,24 @@
         }
 
         .delete-set-btn {
-            background: #ff3333;
-            /* Explicit red */
-            border: none;
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            background: rgba(198, 40, 40, 0.1);
+            border: 2px solid #c62828;
+            color: #c62828;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .delete-set-btn:hover {
-            background: #cc0000;
+            background: rgba(198, 40, 40, 0.2);
         }
 
         .cancel-set-btn {
-            background: transparent;
-            border: 2px solid #fff;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #fbb7b7;
+            color: #fbb7b7;
         }
 
         .cancel-set-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .btn-secondary:hover {
@@ -2207,13 +2206,13 @@
 
             if (btn.textContent === 'DELETE') {
                 btn.textContent = 'Sure?';
-                btn.style.background = '#000';
-                btn.style.color = '#ff3333';
-                btn.style.border = '2px solid #ff3333';
+                btn.style.background = '#661414';
+                btn.style.color = '#c62828';
+                btn.style.border = '2px solid #c62828';
                 btn.style.fontWeight = 'bold';
 
                 if (overlay) {
-                    overlay.style.background = 'rgba(255, 61, 90, 0.7)';
+                    overlay.style.background = 'rgba(198, 40, 40, 0.7)';
                 }
             } else if (btn.textContent === 'Sure?') {
                 executeDeleteSet(idx);
