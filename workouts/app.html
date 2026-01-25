@@ -1240,7 +1240,7 @@
             <div class="modal-actions">
                 <button class="btn btn-primary btn-small"
                     onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId)"
-                    style="background: rgba(255, 187, 0, 0.2); border: 1px solid var(--warning); color: var(--warning);">✏️
+                    style="background: rgba(255, 187, 0, 0.2); border: 1px solid var(--warning); color: var(--warning);">
                     Edit</button>
                 <button class="btn btn-secondary" onclick="closeExerciseModal()">Close</button>
             </div>
@@ -1731,9 +1731,9 @@
                 return `<div class="exercise-item" id="exercise-${exerciseKey}">
             <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <div class="sets-grid">${setsHtml}</div>
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; align-items: center;">
-                <button class="btn btn-secondary btn-small btn-remove-set" onclick="removeSet('${exerciseKey}')" style="background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a; width: 100%; max-width: 200px;" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
-                <button class="btn btn-secondary btn-small btn-add-set" onclick="addSet('${exerciseKey}')" style="background: rgba(0, 255, 136, 0.1); border-color: var(--success); color: var(--success); width: 100%; max-width: 200px;">+ Add Set</button>
+            <div style="display: flex; flex-direction: row; gap: 8px; margin-top: 40px; align-items: center;">
+                <button class="btn btn-secondary btn-small btn-remove-set" onclick="removeSet('${exerciseKey}')" style="background: rgba(255, 61, 90, 0.1); padding-top: 25px; padding-bottom: 25px; border-color: #ff3d5a; color: #ff3d5a; width: 100%; max-width: 200px;" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
+                <button class="btn btn-secondary btn-small btn-add-set" onclick="addSet('${exerciseKey}')" style="background: rgba(0, 255, 136, 0.1); padding-top: 25px; padding-bottom: 25px; border-color: var(--success); color: var(--success); width: 100%; max-width: 200px;">+ Add Set</button>
             </div>
             </div>`;
             }).join('');
