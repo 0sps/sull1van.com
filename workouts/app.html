@@ -1795,7 +1795,19 @@
             el.classList.toggle('completed', complete);
         }
 
-        let pendingWorkoutData = null; // Store workout data while waiting for user confirmation
+        function validateAndCleanWorkout(exercises) {
+            let hasZeroReps = false;
+            const cleanedExercises = exercises.map(ex => {
+                const cleanedSets = ex.sets.filter(set => {
+                    const isZero = (parseInt(set.reps) || 0) === 0;
+                    if (isZero) hasZeroReps = true;
+                    return !isZero;
+                });
+                return { ...ex, sets: cleanedSets };
+            }).filter(ex => ex.sets.length > 0);
+
+            return { cleanedExercises, hasZeroReps };
+        }
 
         async function completeWorkout(shouldExport = false) {
             if (currentWorkoutDay === 'rest') { alert('Today is a rest day!'); return null; }
@@ -1803,63 +1815,40 @@
             const exercises = workout.exercises.map(ex => {
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const key = `${currentWorkoutDay}_${ex.exerciseId}`;
-                // Use dynamic set count instead of fixed ex.sets
                 const numSets = currentSetCounts[key] || 3;
                 const sets = Array.from({ length: numSets }, (_, i) => {
                     const setData = currentExerciseData[key]?.[i] || {};
                     let weight = parseFloat(setData.weight) || 0;
-                    // Convert lbs to kg for storage - data is always stored in kg
-                    if (weightUnit === 'lbs' && weight > 0) {
-                        weight = lbsToKg(weight);
-                    }
+                    if (weightUnit === 'lbs' && weight > 0) weight = lbsToKg(weight);
                     return { weight, reps: parseInt(setData.reps) || 0, isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0), note: '' };
                 });
                 return { id: ex.exerciseId, name: exercise.name, sets };
             });
 
-            // Check for sets with 0 reps
-            let hasZeroReps = false;
-            for (const exercise of exercises) {
-                if (exercise.sets.some(set => set.reps === 0)) {
-                    hasZeroReps = true;
-                    break;
-                }
-            }
+            const { cleanedExercises, hasZeroReps } = validateAndCleanWorkout(exercises);
 
-            // If there are sets with 0 reps, show custom modal
             if (hasZeroReps) {
-                // Store the data and export flag for later
-                pendingWorkoutData = { exercises, shouldExport };
+                pendingWorkoutData = { exercises: cleanedExercises, shouldExport, isEdit: false };
                 document.getElementById('zeroRepsModal').classList.add('active');
                 return null;
             }
 
-            // No zero reps, proceed with save
-            return await saveWorkoutData(exercises, shouldExport);
+            return await saveWorkoutData(cleanedExercises, shouldExport);
         }
 
         async function saveWorkoutData(exercises, shouldExport = false) {
             const workout = trainingPlan[currentWorkoutDay];
-
-            // Filter out sets with 0 reps
-            exercises.forEach(exercise => {
-                exercise.sets = exercise.sets.filter(set => set.reps > 0);
-            });
-
-            // Always store as 'kg' since we convert above
             const logId = Date.now();
             const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
 
             console.log('LOGGING NEW WORKOUT TO FIREBASE:', logId);
             await saveToFirebase(log);
 
-            // Morph button into success state
             const btn = document.getElementById('completeWorkoutBtn');
             if (btn) {
                 const originalText = btn.textContent;
                 btn.textContent = 'WORKOUT SAVED!';
                 btn.classList.add('success');
-
                 setTimeout(() => {
                     btn.textContent = originalText;
                     btn.classList.remove('success');
@@ -1868,10 +1857,9 @@
 
             workoutLogs.unshift(log);
             invalidateStatsCache();
-
             currentExerciseData = {};
             currentSetCounts = {};
-            clearWorkoutProgress(); // Clear localStorage after completing workout
+            clearWorkoutProgress();
             renderExercises(); renderRecentLogs(); updateStats();
             if (shouldExport) exportSingleWorkout(log);
             return log;
@@ -1884,11 +1872,15 @@
 
         async function confirmCompleteWorkout() {
             if (!pendingWorkoutData) return;
-
-            const { exercises, shouldExport } = pendingWorkoutData;
+            const { exercises, shouldExport, isEdit } = pendingWorkoutData;
             closeZeroRepsModal();
 
-            await saveWorkoutData(exercises, shouldExport);
+            if (isEdit) {
+                editingLogData.exercises = exercises;
+                await finalizeEditedWorkoutSave();
+            } else {
+                await saveWorkoutData(exercises, shouldExport);
+            }
         }
 
 
@@ -2024,11 +2016,23 @@
         async function saveEditedWorkout() {
             if (!editingLogData) return;
 
+            const { cleanedExercises, hasZeroReps } = validateAndCleanWorkout(editingLogData.exercises);
+
+            if (hasZeroReps) {
+                pendingWorkoutData = { exercises: cleanedExercises, shouldExport: false, isEdit: true };
+                document.getElementById('zeroRepsModal').classList.add('active');
+                return;
+            }
+
+            editingLogData.exercises = cleanedExercises;
+            await finalizeEditedWorkoutSave();
+        }
+
+        async function finalizeEditedWorkoutSave() {
             console.log('PREPARING TO SAVE EDITED WORKOUT TO FIREBASE:', editingLogData.id);
 
             try {
                 // Save to Firebase - Use the original log ID and data structure
-                // IMPORTANT: editingLogData already contains the original date and ID
                 await saveToFirebase(editingLogData);
 
                 // Update local workoutLogs
