@@ -456,6 +456,19 @@
             animation: successPulse 2s infinite;
         }
 
+        .btn-danger {
+            background: rgba(255, 61, 90, 0.1);
+            border: 1px solid #ff3d5a;
+            color: #ff3d5a;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 61, 90, 0.2);
+            border-color: #ff3d5a;
+            box-shadow: 0 0 30px rgba(255, 61, 90, 0.6);
+            transform: translateY(-2px);
+        }
+
         @keyframes successPulse {
             0% {
                 box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
@@ -1298,7 +1311,7 @@
                 style="position: sticky; bottom: -32px; background: var(--bg-secondary); padding-top: 16px; margin-top: 0; border-top: 1px solid var(--border); z-index: 10;">
                 <button class="btn btn-primary" id="saveEditsBtn" onclick="saveEditedWorkout()" style="flex: 2;">SAVE
                     EDITS</button>
-                <button class="btn btn-secondary" onclick="closeEditModal()" style="flex: 1;">DISCARD EDITS</button>
+                <button class="btn btn-danger" onclick="closeEditModal()" style="flex: 1;">DISCARD EDITS</button>
             </div>
         </div>
     </div>
