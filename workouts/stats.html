@@ -8,7 +8,6 @@
     <meta name="description" content="Comprehensive workout analytics and performance tracking dashboard">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -919,33 +918,7 @@
             filter: drop-shadow(0 0 20px var(--accent-glow));
         }
 
-        /* Sortable Styles */
-        .sortable-ghost {
-            opacity: 0.3;
-            transform: scale(0.95);
-            background: rgba(255, 61, 0, 0.1) !important;
-            border: 2px dashed var(--accent-primary) !important;
-        }
 
-        .sortable-chosen {
-            box-shadow: 0 0 50px var(--accent-glow) !important;
-            cursor: grabbing !important;
-        }
-
-        .sortable-drag {
-            cursor: grabbing !important;
-            opacity: 1 !important;
-        }
-
-        .stat-card,
-        .chart-section {
-            cursor: grab;
-        }
-
-        .stat-card:active,
-        .chart-section:active {
-            cursor: grabbing;
-        }
 
         /* Delta Styles */
         .delta-stat {
@@ -979,6 +952,12 @@
             -webkit-backdrop-filter: none !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+            transition: all 0.4s ease;
+        }
+
+        .holographic:hover {
+            border-color: var(--accent-primary) !important;
+            box-shadow: 0 0 40px rgba(255, 61, 0, 0.3) !important;
         }
 
         /* Disable glass-card specific decorations when holographic */
@@ -1066,28 +1045,28 @@
 
             <!-- Key Metrics -->
             <div class="stats-grid" id="draggableStats">
-                <div class="glass-card stat-card holographic" data-id="stat-workouts">
+                <div class="glass-card stat-card holographic">
                     <div class="stat-icon">💪</div>
                     <div class="stat-value" id="totalWorkouts">0</div>
                     <div class="stat-label">Workouts</div>
                     <div id="deltaWorkouts" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card holographic" data-id="stat-volume">
+                <div class="glass-card stat-card holographic">
                     <div class="stat-icon">🔥</div>
                     <div class="stat-value" id="totalVolume">0</div>
                     <div class="stat-label">Vol (lbs)</div>
                     <div id="deltaVolume" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card holographic" data-id="stat-intensity">
+                <div class="glass-card stat-card holographic">
                     <div class="stat-icon">📈</div>
                     <div class="stat-value" id="avgIntensity">0</div>
                     <div class="stat-label">Avg Weight</div>
                     <div id="deltaIntensity" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card holographic" data-id="stat-streak">
+                <div class="glass-card stat-card holographic">
                     <div class="stat-icon">⚡</div>
                     <div class="stat-value" id="currentStreak">0</div>
                     <div class="stat-label">Streak</div>
@@ -1098,7 +1077,7 @@
             <!-- Draggable Dashboard Sections -->
             <div id="draggableSections">
 
-                <div class="chart-section" data-id="muscle-focus">
+                <div class="chart-section">
                     <h2 class="section-title">Muscle Focus</h2>
                     <div class="glass-card chart-container muscle-focus-container">
                         <div class="donut-chart" id="muscleChart">
@@ -1116,7 +1095,7 @@
                     </div>
                 </div>
 
-                <div class="chart-section" data-id="volume-progression">
+                <div class="chart-section">
                     <h2 class="section-title">Volume Progression</h2>
                     <div class="glass-card chart-container">
                         <div class="volume-chart-wrapper">
@@ -1125,7 +1104,7 @@
                     </div>
                 </div>
 
-                <div class="chart-section" data-id="performance-insights">
+                <div class="chart-section">
                     <h2 class="section-title">Performance Insights (Average Weights)</h2>
                     <div class="glass-card chart-container">
                         <div id="performanceInsights"
@@ -1135,19 +1114,19 @@
                     </div>
                 </div>
 
-                <div class="chart-section" data-id="exercise-frequency">
+                <div class="chart-section">
                     <h2 class="section-title">Exercise Frequency</h2>
                     <div class="glass-card chart-container">
                         <div class="frequency-list" id="frequencyList"></div>
                     </div>
                 </div>
 
-                <div class="chart-section" data-id="prs">
+                <div class="chart-section">
                     <h2 class="section-title">Personal Records</h2>
                     <div class="pr-list" id="prList"></div>
                 </div>
 
-                <div class="chart-section" data-id="activity">
+                <div class="chart-section">
                     <h2 class="section-title">Training Activity</h2>
                     <div class="glass-card chart-container">
                         <div id="calendarGrid" class="calendar-grid"></div>
@@ -1642,70 +1621,7 @@
                     }).join('');
                 }
 
-                function initSortable() {
-                    const statsGrid = document.getElementById('draggableStats');
-                    if (statsGrid) {
-                        // Apply saved order
-                        const order = localStorage.getItem('statsOrder');
-                        if (order) {
-                            const orderArray = order.split('|');
-                            const items = Array.from(statsGrid.children);
-                            orderArray.forEach(id => {
-                                const item = items.find(el => el.getAttribute('data-id') === id);
-                                if (item) statsGrid.appendChild(item);
-                            });
-                        }
 
-                        new Sortable(statsGrid, {
-                            animation: 150,
-                            ghostClass: 'sortable-ghost',
-                            chosenClass: 'sortable-chosen',
-                            dragClass: 'sortable-drag',
-                            store: {
-                                get: (sortable) => {
-                                    const order = localStorage.getItem('statsOrder');
-                                    return order ? order.split('|') : [];
-                                },
-                                set: (sortable) => {
-                                    const order = sortable.toArray();
-                                    localStorage.setItem('statsOrder', order.join('|'));
-                                }
-                            }
-                        });
-                    }
-
-                    const sectionsGrid = document.getElementById('draggableSections');
-                    if (sectionsGrid) {
-                        // Apply saved order
-                        const order = localStorage.getItem('sectionsOrder');
-                        if (order) {
-                            const orderArray = order.split('|');
-                            const items = Array.from(sectionsGrid.children);
-                            orderArray.forEach(id => {
-                                const item = items.find(el => el.getAttribute('data-id') === id);
-                                if (item) sectionsGrid.appendChild(item);
-                            });
-                        }
-
-                        new Sortable(sectionsGrid, {
-                            animation: 150,
-                            ghostClass: 'sortable-ghost',
-                            chosenClass: 'sortable-chosen',
-                            dragClass: 'sortable-drag',
-                            // Removed handle restriction to allow dragging the whole block
-                            store: {
-                                get: (sortable) => {
-                                    const order = localStorage.getItem('sectionsOrder');
-                                    return order ? order.split('|') : [];
-                                },
-                                set: (sortable) => {
-                                    const order = sortable.toArray();
-                                    localStorage.setItem('sectionsOrder', order.join('|'));
-                                }
-                            }
-                        });
-                    }
-                }
 
 
                 function updateDashboard() {
@@ -1746,7 +1662,6 @@
                         if (sc) sc.style.display = 'block';
 
                         filterData('all');
-                        initSortable();
 
                         // Filter button listeners
                         document.querySelectorAll('.filter-btn').forEach(btn => {

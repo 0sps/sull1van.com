@@ -2335,11 +2335,12 @@
 
             // workoutLogs is already sorted by date descending, so first match is most recent
             for (const log of workoutLogs) {
-                const exercise = log.exercises.find(ex =>
-                    ex.name.toLowerCase() === exerciseName.toLowerCase() ||
-                    ex.name.toLowerCase().includes(exerciseName.toLowerCase()) ||
-                    exerciseName.toLowerCase().includes(ex.name.toLowerCase())
-                );
+                const exercise = log.exercises.find(ex => {
+                    const nameMatch = ex.name.toLowerCase() === exerciseName.toLowerCase() ||
+                        ex.name.toLowerCase().includes(exerciseName.toLowerCase()) ||
+                        exerciseName.toLowerCase().includes(ex.name.toLowerCase());
+                    return nameMatch && ex.sets && ex.sets.length > 0;
+                });
                 if (exercise) {
                     mostRecentLog = log;
                     mostRecentExercise = exercise;
