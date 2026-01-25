@@ -970,13 +970,21 @@
             color: var(--text-muted);
         }
 
-        /* Holographic Effect */
+        /* Holographic Effect - Mirrored exactly from PR style */
         .holographic {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.08) 100%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, .01) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        /* Disable glass-card specific decorations when holographic */
+        .holographic::after {
+            content: none !important;
+            display: none !important;
         }
 
         .holographic::before {
@@ -986,16 +994,8 @@
             left: -150%;
             width: 400%;
             height: 400%;
-            background: linear-gradient(45deg,
-                    transparent 20%,
-                    rgba(255, 0, 100, 0.1) 25%,
-                    rgba(0, 255, 200, 0.1) 35%,
-                    rgba(255, 200, 0, 0.1) 45%,
-                    rgba(0, 100, 255, 0.1) 55%,
-                    rgba(200, 0, 255, 0.1) 65%,
-                    transparent 70%);
+            background: rgba(255, 255, 255, 0.02);
             z-index: 1;
-            animation: holoShimmer 6s linear infinite;
             pointer-events: none;
         }
 
@@ -1477,7 +1477,7 @@
                         });
                     });
 
-                    const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 6);
+                    const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 5);
                     const container = document.getElementById('prList');
                     if (!container) return;
 
@@ -1487,7 +1487,7 @@
                     container.innerHTML = sorted.map(([name, pr], index) => {
                         const prDate = new Date(pr.date);
                         const isRecent = prDate >= sevenDaysAgo;
-                        // For testing: force holographic on the first card regardless of date
+                        // For testing: force holographic on the first card
                         const cardClass = (isRecent || index === 0) ? 'pr-card holographic' : 'pr-card';
 
                         return `
@@ -1498,7 +1498,6 @@
                         </div>
                     `;
                     }).join('');
-
                 }
 
                 function createParticle(card) {
@@ -1693,6 +1692,7 @@
                             ghostClass: 'sortable-ghost',
                             chosenClass: 'sortable-chosen',
                             dragClass: 'sortable-drag',
+                            // Removed handle restriction to allow dragging the whole block
                             store: {
                                 get: (sortable) => {
                                     const order = localStorage.getItem('sectionsOrder');
