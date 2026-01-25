@@ -1238,7 +1238,7 @@
     <div class="modal-overlay" id="deleteSetModal">
         <div class="modal" style="max-width: 900px; width: 95%;">
             <h3 class="modal-title">DELETE INDIVIDUAL SETS</h3>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Showing last 20 sets from
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Showing last 40 sets from
                 recent workouts. Click a row to select, then confirm deletion.</p>
             <div id="deleteSetList" style="margin-bottom: 24px; max-height: 500px; overflow-y: auto;"></div>
             <div class="modal-actions">
@@ -1991,14 +1991,16 @@
 
         function flattenRecentSets() {
             const flatSets = [];
+            // Look at the first 15 workouts or fewer if history is shorter
+            const recentLogs = workoutLogs.slice(0, 15);
 
-            for (const log of workoutLogs) {
+            for (const log of recentLogs) {
                 for (let exIdx = 0; exIdx < log.exercises.length; exIdx++) {
                     const exercise = log.exercises[exIdx];
                     const exerciseData = getExercise(exercise.id);
-                    const exerciseName = exerciseData ? exerciseData.name : exercise.name;
+                    const exerciseName = exerciseData ? exerciseData.name : (exercise.name || 'Unknown Exercise');
 
-                    for (let setIdx = 0; setIdx < exercise.sets.length; setIdx++) {
+                    for (let setIdx = 0; setIdx < (exercise.sets || []).length; setIdx++) {
                         const set = exercise.sets[setIdx];
                         flatSets.push({
                             workoutId: log.id,
@@ -2011,15 +2013,17 @@
                             reps: set.reps,
                             isWarmup: set.isWarmup
                         });
-
-                        if (flatSets.length >= 20) {
-                            return flatSets;
-                        }
                     }
                 }
             }
 
-            return flatSets;
+            // Sort globally: Date DESC, Exercise Index DESC, Set Index DESC
+            // This puts the absolute newest sets (from the end of the session) at the top
+            return flatSets.sort((a, b) => {
+                if (b.workoutDate !== a.workoutDate) return b.workoutDate - a.workoutDate;
+                if (b.exerciseIndex !== a.exerciseIndex) return b.exerciseIndex - a.exerciseIndex;
+                return b.setIndex - a.setIndex;
+            }).slice(0, 40); // Show up to 40 recent sets
         }
 
         function openDeleteSetModal() {
