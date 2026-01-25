@@ -2401,10 +2401,23 @@
             let streak = 0;
             const today = new Date(); today.setHours(0, 0, 0, 0);
             for (let i = 0; i < 365; i++) {
-                const checkDate = new Date(today); checkDate.setDate(checkDate.getDate() - i);
+                const checkDate = new Date(today);
+                checkDate.setDate(checkDate.getDate() - i);
                 const hasWorkout = workoutLogs.some(log => new Date(log.date).toDateString() === checkDate.toDateString());
                 const isRestDay = dayToWorkout[checkDate.getDay()] === 'rest';
-                if (hasWorkout || isRestDay) { if (!isRestDay) streak++; } else break;
+
+                if (hasWorkout) {
+                    streak++;
+                } else if (isRestDay) {
+                    // Rest day continues streak but doesn't increment count
+                    continue;
+                } else if (i === 0) {
+                    // Today's workout pending - continue to check yesterday
+                    continue;
+                } else {
+                    // Missed expected workout day
+                    break;
+                }
             }
 
             const displayVolume = Math.round(kgToLbs(totalVolume)).toLocaleString();
