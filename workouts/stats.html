@@ -8,6 +8,7 @@
     <meta name="description" content="Comprehensive workout analytics and performance tracking dashboard">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -22,6 +23,7 @@
             --text-muted: #606065;
             --success: #00ff88;
             --warning: #ffbb00;
+            --danger: #ff3d00;
             --border: #2a2a2d;
             --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
             --glass-bg: rgba(26, 26, 29, 0.4);
@@ -916,6 +918,57 @@
             opacity: 0.4;
             filter: drop-shadow(0 0 20px var(--accent-glow));
         }
+
+        /* Sortable Styles */
+        .sortable-ghost {
+            opacity: 0.3;
+            transform: scale(0.95);
+            background: rgba(255, 61, 0, 0.1) !important;
+            border: 2px dashed var(--accent-primary) !important;
+        }
+
+        .sortable-chosen {
+            box-shadow: 0 0 50px var(--accent-glow) !important;
+            cursor: grabbing !important;
+        }
+
+        .sortable-drag {
+            cursor: grabbing !important;
+            opacity: 1 !important;
+        }
+
+        .stat-card,
+        .chart-section {
+            cursor: grab;
+        }
+
+        .stat-card:active,
+        .chart-section:active {
+            cursor: grabbing;
+        }
+
+        /* Delta Styles */
+        .delta-stat {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .delta-up {
+            color: var(--success);
+        }
+
+        .delta-down {
+            color: var(--danger);
+        }
+
+        .delta-neutral {
+            color: var(--text-muted);
+        }
     </style>
 </head>
 
@@ -945,36 +998,40 @@
             </div>
 
             <!-- Key Metrics -->
-            <div class="stats-grid">
-                <div class="glass-card stat-card glow-pulse">
+            <div class="stats-grid" id="draggableStats">
+                <div class="glass-card stat-card" data-id="stat-workouts">
                     <div class="stat-icon">💪</div>
                     <div class="stat-value" id="totalWorkouts">0</div>
                     <div class="stat-label">Workouts</div>
-                    <div class="stat-change positive" id="workoutsChange" style="display: none;">+0 this week</div>
+                    <div id="deltaWorkouts" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card">
+                <div class="glass-card stat-card" data-id="stat-volume">
                     <div class="stat-icon">🔥</div>
                     <div class="stat-value" id="totalVolume">0</div>
                     <div class="stat-label">Vol (lbs)</div>
+                    <div id="deltaVolume" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card">
+                <div class="glass-card stat-card" data-id="stat-intensity">
                     <div class="stat-icon">📈</div>
                     <div class="stat-value" id="avgIntensity">0</div>
                     <div class="stat-label">Avg Weight</div>
+                    <div id="deltaIntensity" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card">
+                <div class="glass-card stat-card" data-id="stat-streak">
                     <div class="stat-icon">⚡</div>
                     <div class="stat-value" id="currentStreak">0</div>
                     <div class="stat-label">Streak</div>
+                    <div id="deltaStreak" class="delta-stat"></div>
                 </div>
             </div>
 
-            <!-- New Section: Muscle Distribution & Volume Trend -->
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; margin-bottom: 50px;">
-                <div class="chart-section">
+            <!-- Draggable Dashboard Sections -->
+            <div id="draggableSections">
+
+                <div class="chart-section" data-id="muscle-focus">
                     <h2 class="section-title">Muscle Focus</h2>
                     <div class="glass-card chart-container muscle-focus-container">
                         <div class="donut-chart" id="muscleChart">
@@ -992,8 +1049,7 @@
                     </div>
                 </div>
 
-                <!-- Volume Progression -->
-                <div class="chart-section" style="margin-bottom: 50px;">
+                <div class="chart-section" data-id="volume-progression">
                     <h2 class="section-title">Volume Progression</h2>
                     <div class="glass-card chart-container">
                         <div class="volume-chart-wrapper">
@@ -1002,8 +1058,7 @@
                     </div>
                 </div>
 
-                <!-- Performance Insights -->
-                <div class="chart-section" style="margin-bottom: 50px;">
+                <div class="chart-section" data-id="performance-insights">
                     <h2 class="section-title">Performance Insights (Average Weights)</h2>
                     <div class="glass-card chart-container">
                         <div id="performanceInsights"
@@ -1012,237 +1067,288 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="chart-section" data-id="exercise-frequency">
+                    <h2 class="section-title">Exercise Frequency</h2>
+                    <div class="glass-card chart-container">
+                        <div class="frequency-list" id="frequencyList"></div>
+                    </div>
+                </div>
+
+                <div class="chart-section" data-id="prs">
+                    <h2 class="section-title">Personal Records</h2>
+                    <div class="pr-list" id="prList"></div>
+                </div>
+
+                <div class="chart-section" data-id="activity">
+                    <h2 class="section-title">Training Activity</h2>
+                    <div class="glass-card chart-container">
+                        <div id="calendarGrid" class="calendar-grid"></div>
+                        <div class="weekly-grid" id="weeklyGrid"></div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Side Panel for Day Details -->
-        <div id="detailsPanel" class="details-panel">
-            <button class="details-close" id="closePanel">&times;</button>
-            <div class="details-content" id="detailsContent">
-                <h3 id="detailsDate">JAN 25, 2026</h3>
-                <div id="detailsLogs"></div>
+            <!-- Side Panel for Day Details -->
+            <div id="detailsPanel" class="details-panel">
+                <button class="details-close" id="closePanel">&times;</button>
+                <div class="details-content" id="detailsContent">
+                    <h3 id="detailsDate">JAN 25, 2026</h3>
+                    <div id="detailsLogs"></div>
+                </div>
             </div>
-        </div>
 
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-            import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+            <script type="module">
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+                import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+                import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
-                authDomain: "workout-c7be0.firebaseapp.com",
-                projectId: "workout-c7be0",
-                storageBucket: "workout-c7be0.firebasestorage.app",
-                messagingSenderId: "625595909146",
-                appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
-            };
-
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-
-            let workoutLogs = [];
-            let filteredLogs = [];
-            let exerciseData = {};
-            let currentRange = 'all';
-
-            function kgToLbs(kg) { return kg * 2.20462; }
-
-            async function loadData() {
-                try {
-                    // Load Exercises
-                    const exRes = await fetch('exercises.json');
-                    exerciseData = await exRes.json();
-
-                    // Load Workouts
-                    const q = query(collection(db, 'workouts'), orderBy('date', 'desc'));
-                    const snapshot = await getDocs(q);
-                    workoutLogs = snapshot.docs.map(doc => doc.data());
-                    console.log('Loaded workouts:', workoutLogs.length);
-                    return workoutLogs;
-                } catch (error) {
-                    console.error('Error loading data:', error);
-                    return [];
-                }
-            }
-
-            function filterData(range) {
-                currentRange = range;
-                if (range === 'all') {
-                    filteredLogs = [...workoutLogs];
-                } else {
-                    const days = parseInt(range);
-                    const cutoff = new Date();
-                    cutoff.setDate(cutoff.getDate() - days);
-                    filteredLogs = workoutLogs.filter(log => new Date(log.date) >= cutoff);
-                }
-                updateDashboard();
-            }
-
-            function animateValue(element, start, end, duration) {
-                if (!element) return;
-                const range = end - start;
-                const startTime = performance.now();
-
-                function update(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    // Easing function: easeOutQuart
-                    const easeValue = 1 - Math.pow(1 - progress, 4);
-                    const current = start + (range * easeValue);
-
-                    element.textContent = Math.round(current).toLocaleString();
-
-                    if (progress < 1) {
-                        requestAnimationFrame(update);
-                    } else {
-                        element.textContent = Math.round(end).toLocaleString();
-                    }
-                }
-                requestAnimationFrame(update);
-            }
-
-            function renderKeyMetrics() {
-                const stats = {
-                    totalWorkouts: filteredLogs.length,
-                    totalVolume: 0,
-                    totalSets: 0,
-                    totalWeight: 0,
-                    streak: 0
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+                    authDomain: "workout-c7be0.firebaseapp.com",
+                    projectId: "workout-c7be0",
+                    storageBucket: "workout-c7be0.firebasestorage.app",
+                    messagingSenderId: "625595909146",
+                    appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
                 };
 
-                filteredLogs.forEach(log => {
-                    log.exercises.forEach(ex => {
-                        ex.sets.forEach(set => {
-                            stats.totalSets++;
-                            stats.totalVolume += (set.weight * set.reps);
-                            stats.totalWeight += set.weight;
-                        });
-                    });
-                });
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
 
-                const avgIntensity = stats.totalSets > 0 ? (stats.totalWeight / stats.totalSets) : 0;
+                let workoutLogs = [];
+                let filteredLogs = [];
+                let exerciseData = {};
+                let currentRange = 'all';
 
-                // Streak calculation (always based on all logs)
-                let streak = 0;
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const dayToWorkout = { 0: 'day1', 1: 'day2', 2: 'day3', 3: 'rest', 4: 'day4', 5: 'day5', 6: 'day6' };
+                function kgToLbs(kg) { return kg * 2.20462; }
 
-                for (let i = 0; i < 365; i++) {
-                    const checkDate = new Date(today);
-                    checkDate.setDate(checkDate.getDate() - i);
-                    const hasWorkout = workoutLogs.some(log => new Date(log.date).toDateString() === checkDate.toDateString());
-                    const isRestDay = dayToWorkout[checkDate.getDay()] === 'rest';
-                    if (hasWorkout || isRestDay) {
-                        if (!isRestDay) streak++;
-                    } else break;
-                }
+                async function loadData() {
+                    try {
+                        // Load Exercises
+                        const exRes = await fetch('exercises.json');
+                        exerciseData = await exRes.json();
 
-                animateValue(document.getElementById('totalWorkouts'), 0, stats.totalWorkouts, 1500);
-                animateValue(document.getElementById('totalVolume'), 0, Math.round(kgToLbs(stats.totalVolume)), 1800);
-                animateValue(document.getElementById('avgIntensity'), 0, Math.round(kgToLbs(avgIntensity)), 1500);
-                animateValue(document.getElementById('currentStreak'), 0, streak, 1500);
-
-                const changeEl = document.getElementById('workoutsChange');
-                if (changeEl) {
-                    const oneWeekAgo = new Date();
-                    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-                    const thisWeekWorkouts = workoutLogs.filter(log => new Date(log.date) >= oneWeekAgo).length;
-                    if (thisWeekWorkouts > 0) {
-                        changeEl.textContent = `+${thisWeekWorkouts} this week`;
-                        changeEl.style.display = 'inline-block';
-                    } else {
-                        changeEl.style.display = 'none';
+                        // Load Workouts
+                        const q = query(collection(db, 'workouts'), orderBy('date', 'desc'));
+                        const snapshot = await getDocs(q);
+                        workoutLogs = snapshot.docs.map(doc => doc.data());
+                        console.log('Loaded workouts:', workoutLogs.length);
+                        return workoutLogs;
+                    } catch (error) {
+                        console.error('Error loading data:', error);
+                        return [];
                     }
                 }
-            }
 
-            function renderMuscleDistribution() {
-                const muscleCounts = {};
-                filteredLogs.forEach(log => {
-                    log.exercises.forEach(ex => {
-                        // Find exercise in metadata
-                        const meta = Object.values(exerciseData).find(e => e.name === ex.name);
-                        const muscles = meta?.muscles?.length > 0 ? meta.muscles : [meta?.category || 'Other'];
+                function filterData(range) {
+                    currentRange = range;
+                    if (range === 'all') {
+                        filteredLogs = [...workoutLogs];
+                    } else {
+                        const days = parseInt(range);
+                        const cutoff = new Date();
+                        cutoff.setDate(cutoff.getDate() - days);
+                        filteredLogs = workoutLogs.filter(log => new Date(log.date) >= cutoff);
+                    }
+                    updateDashboard();
+                }
 
-                        muscles.forEach(m => {
-                            if (!m || m === "") m = 'Misc';
-                            muscleCounts[m] = (muscleCounts[m] || 0) + ex.sets.length;
+                function animateValue(element, start, end, duration) {
+                    if (!element) return;
+                    const range = end - start;
+                    const startTime = performance.now();
+
+                    function update(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Easing function: easeOutQuart
+                        const easeValue = 1 - Math.pow(1 - progress, 4);
+                        const current = start + (range * easeValue);
+
+                        element.textContent = Math.round(current).toLocaleString();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        } else {
+                            element.textContent = Math.round(end).toLocaleString();
+                        }
+                    }
+                    requestAnimationFrame(update);
+                }
+
+                function renderKeyMetrics() {
+                    const stats = {
+                        workouts: filteredLogs.length,
+                        volume: 0,
+                        sets: 0,
+                        weight: 0,
+                        streak: 0
+                    };
+
+                    filteredLogs.forEach(log => {
+                        log.exercises.forEach(ex => {
+                            ex.sets.forEach(set => {
+                                stats.sets++;
+                                stats.volume += (set.weight * set.reps);
+                                stats.weight += set.weight;
+                            });
                         });
                     });
-                });
 
-                const sorted = Object.entries(muscleCounts)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 5);
+                    const avgIntensity = stats.sets > 0 ? (stats.weight / stats.sets) : 0;
 
-                const total = Object.values(muscleCounts).reduce((a, b) => a + b, 0);
-                const container = document.getElementById('donutSegments');
-                const legend = document.getElementById('muscleLegend');
-                const colors = ['#ff3d00', '#ff6d3d', '#ffbb00', '#ffea00', '#606065'];
+                    // Comparative Stats
+                    if (currentRange !== 'all') {
+                        const days = parseInt(currentRange);
+                        const now = new Date();
+                        const currentStart = new Date(now.getTime() - (days * 24 * 60 * 60 * 1000));
+                        const prevEnd = currentStart;
+                        const prevStart = new Date(prevEnd.getTime() - (days * 24 * 60 * 60 * 1000));
 
-                let offset = 0;
-                if (container) container.innerHTML = '';
-                if (legend) legend.innerHTML = '';
+                        const prevLogs = workoutLogs.filter(l => {
+                            const d = new Date(l.date);
+                            return d >= prevStart && d < prevEnd;
+                        });
 
-                sorted.forEach(([name, count], i) => {
-                    const percent = (count / total) * 100;
-                    const dash = (percent * 100) / 100;
-                    const color = colors[i] || colors[colors.length - 1];
+                        const prevStats = { workouts: prevLogs.length, volume: 0, weight: 0, sets: 0 };
+                        prevLogs.forEach(l => l.exercises.forEach(ex => ex.sets.forEach(s => {
+                            prevStats.sets++;
+                            prevStats.volume += (s.weight * s.reps);
+                            prevStats.weight += s.weight;
+                        })));
 
-                    if (container) {
-                        container.innerHTML += `
+                        const prevAvgIntensity = prevStats.sets > 0 ? (prevStats.weight / prevStats.sets) : 0;
+
+                        updateDelta('deltaWorkouts', stats.workouts, prevStats.workouts);
+                        updateDelta('deltaVolume', Math.round(kgToLbs(stats.volume)), Math.round(kgToLbs(prevStats.volume)));
+                        updateDelta('deltaIntensity', Math.round(kgToLbs(avgIntensity)), Math.round(kgToLbs(prevAvgIntensity)));
+                    } else {
+                        ['deltaWorkouts', 'deltaVolume', 'deltaIntensity'].forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.innerHTML = '';
+                        });
+                    }
+
+                    function updateDelta(id, current, prev) {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+                        if (prev === 0) {
+                            el.innerHTML = '<span class="delta-neutral">NEW PERIOD</span>';
+                            return;
+                        }
+                        const diff = ((current - prev) / prev) * 100;
+                        const icon = diff >= 0 ? '▲' : '▼';
+                        const cls = diff >= 0 ? 'delta-up' : 'delta-down';
+                        el.innerHTML = `<span class="${cls}">${icon} ${Math.abs(Math.round(diff))}%</span> <span style="opacity:0.4; font-size:0.7rem; margin-left:4px;">vs prev</span>`;
+                    }
+
+                    // Streak calculation
+                    let streak = 0;
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const dayToWorkout = { 0: 'day1', 1: 'day2', 2: 'day3', 3: 'rest', 4: 'day4', 5: 'day5', 6: 'day6' };
+
+                    for (let i = 0; i < 365; i++) {
+                        const checkDate = new Date(today);
+                        checkDate.setDate(checkDate.getDate() - i);
+                        const hasWorkout = workoutLogs.some(log => new Date(log.date).toDateString() === checkDate.toDateString());
+                        const isRestDay = dayToWorkout[checkDate.getDay()] === 'rest';
+                        if (hasWorkout || isRestDay) {
+                            if (!isRestDay) streak++;
+                        } else break;
+                    }
+
+                    animateValue(document.getElementById('totalWorkouts'), 0, stats.workouts, 1200);
+                    animateValue(document.getElementById('totalVolume'), 0, Math.round(kgToLbs(stats.volume)), 1500);
+                    animateValue(document.getElementById('avgIntensity'), 0, Math.round(kgToLbs(avgIntensity)), 1200);
+                    animateValue(document.getElementById('currentStreak'), 0, streak, 1200);
+                }
+
+                function renderMuscleDistribution() {
+                    const muscleCounts = {};
+                    filteredLogs.forEach(log => {
+                        log.exercises.forEach(ex => {
+                            // Find exercise in metadata
+                            const meta = Object.values(exerciseData).find(e => e.name === ex.name);
+                            const muscles = meta?.muscles?.length > 0 ? meta.muscles : [meta?.category || 'Other'];
+
+                            muscles.forEach(m => {
+                                if (!m || m === "") m = 'Misc';
+                                muscleCounts[m] = (muscleCounts[m] || 0) + ex.sets.length;
+                            });
+                        });
+                    });
+
+                    const sorted = Object.entries(muscleCounts)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 5);
+
+                    const total = Object.values(muscleCounts).reduce((a, b) => a + b, 0);
+                    const container = document.getElementById('donutSegments');
+                    const legend = document.getElementById('muscleLegend');
+                    const colors = ['#ff3d00', '#ff6d3d', '#ffbb00', '#ffea00', '#606065'];
+
+                    let offset = 0;
+                    if (container) container.innerHTML = '';
+                    if (legend) legend.innerHTML = '';
+
+                    sorted.forEach(([name, count], i) => {
+                        const percent = (count / total) * 100;
+                        const dash = (percent * 100) / 100;
+                        const color = colors[i] || colors[colors.length - 1];
+
+                        if (container) {
+                            container.innerHTML += `
                         <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" 
                             stroke="${color}" stroke-dasharray="${dash} ${100 - dash}" stroke-dashoffset="${-offset}"></circle>
                     `;
-                    }
+                        }
 
-                    if (legend) {
-                        legend.innerHTML += `
+                        if (legend) {
+                            legend.innerHTML += `
                         <div class="legend-item">
                             <div class="legend-color" style="background: ${color}"></div>
                             <div>${name} (${Math.round(percent)}%)</div>
                         </div>
                     `;
-                    }
+                        }
 
-                    offset += dash;
-                });
-
-                const topMuscleValEl = document.getElementById('topMuscleVal');
-                const topMuscleLabelEl = document.getElementById('topMuscleLabel');
-                if (topMuscleValEl) topMuscleValEl.textContent = sorted[0]?.[0] || '--';
-                if (topMuscleLabelEl) topMuscleLabelEl.textContent = 'Primary Focus';
-            }
-
-            function renderVolumeChart() {
-                const container = document.getElementById('volumeChart');
-                if (!container) return;
-                const daysToDisplay = currentRange === 'all' ? 30 : parseInt(currentRange);
-                const data = [];
-                const today = new Date();
-
-                for (let i = daysToDisplay - 1; i >= 0; i--) {
-                    const date = new Date(today);
-                    date.setDate(date.getDate() - i);
-                    date.setHours(0, 0, 0, 0);
-
-                    const dayLogs = filteredLogs.filter(log => {
-                        const d = new Date(log.date);
-                        d.setHours(0, 0, 0, 0);
-                        return d.getTime() === date.getTime();
+                        offset += dash;
                     });
 
-                    const vol = dayLogs.reduce((s, log) => s + log.exercises.reduce((ss, ex) => ss + ex.sets.reduce((sss, set) => sss + (set.weight * set.reps), 0), 0), 0);
-                    data.push({ date, vol: Math.round(kgToLbs(vol)), name: dayLogs[0]?.workoutName || '' });
+                    const topMuscleValEl = document.getElementById('topMuscleVal');
+                    const topMuscleLabelEl = document.getElementById('topMuscleLabel');
+                    if (topMuscleValEl) topMuscleValEl.textContent = sorted[0]?.[0] || '--';
+                    if (topMuscleLabelEl) topMuscleLabelEl.textContent = 'Primary Focus';
                 }
 
-                const max = Math.max(...data.map(d => d.vol), 1);
-                container.innerHTML = data.map(d => {
-                    const h = (d.vol / max) * 100;
-                    return `
+                function renderVolumeChart() {
+                    const container = document.getElementById('volumeChart');
+                    if (!container) return;
+                    const daysToDisplay = currentRange === 'all' ? 30 : parseInt(currentRange);
+                    const data = [];
+                    const today = new Date();
+
+                    for (let i = daysToDisplay - 1; i >= 0; i--) {
+                        const date = new Date(today);
+                        date.setDate(date.getDate() - i);
+                        date.setHours(0, 0, 0, 0);
+
+                        const dayLogs = filteredLogs.filter(log => {
+                            const d = new Date(log.date);
+                            d.setHours(0, 0, 0, 0);
+                            return d.getTime() === date.getTime();
+                        });
+
+                        const vol = dayLogs.reduce((s, log) => s + log.exercises.reduce((ss, ex) => ss + ex.sets.reduce((sss, set) => sss + (set.weight * set.reps), 0), 0), 0);
+                        data.push({ date, vol: Math.round(kgToLbs(vol)), name: dayLogs[0]?.workoutName || '' });
+                    }
+
+                    const max = Math.max(...data.map(d => d.vol), 1);
+                    container.innerHTML = data.map(d => {
+                        const h = (d.vol / max) * 100;
+                        return `
                     <div class="volume-bar" style="height: ${h}%" data-value="${d.date.getDate()}">
                         <div class="tooltip">
                             <strong>${d.vol.toLocaleString()} lbs</strong><br>
@@ -1250,23 +1356,23 @@
                         </div>
                     </div>
                 `;
-                }).join('');
-            }
+                    }).join('');
+                }
 
-            function renderExerciseFrequency() {
-                const counts = {};
-                filteredLogs.forEach(log => {
-                    log.exercises.forEach(ex => {
-                        counts[ex.name] = (counts[ex.name] || 0) + ex.sets.length;
+                function renderExerciseFrequency() {
+                    const counts = {};
+                    filteredLogs.forEach(log => {
+                        log.exercises.forEach(ex => {
+                            counts[ex.name] = (counts[ex.name] || 0) + ex.sets.length;
+                        });
                     });
-                });
 
-                const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
-                const max = sorted[0]?.[1] || 1;
-                const container = document.getElementById('frequencyList');
-                if (!container) return;
+                    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
+                    const max = sorted[0]?.[1] || 1;
+                    const container = document.getElementById('frequencyList');
+                    if (!container) return;
 
-                container.innerHTML = sorted.map(([name, count]) => `
+                    container.innerHTML = sorted.map(([name, count]) => `
                 <div class="frequency-item">
                     <div class="frequency-name">${name}</div>
                     <div class="frequency-bar-container">
@@ -1277,99 +1383,99 @@
                 </div>
             `).join('');
 
-                setTimeout(() => {
-                    document.querySelectorAll('.frequency-bar-fill').forEach(b => b.style.width = b.dataset.width + '%');
-                }, 100);
-            }
+                    setTimeout(() => {
+                        document.querySelectorAll('.frequency-bar-fill').forEach(b => b.style.width = b.dataset.width + '%');
+                    }, 100);
+                }
 
-            function renderPRs() {
-                const prs = {};
-                workoutLogs.forEach(log => { // PRs always from all time
-                    log.exercises.forEach(ex => {
-                        ex.sets.forEach(set => {
-                            if (!set.isWarmup && (!prs[ex.name] || set.weight > prs[ex.name].weight)) {
-                                prs[ex.name] = { weight: set.weight, reps: set.reps, date: log.date };
-                            }
+                function renderPRs() {
+                    const prs = {};
+                    workoutLogs.forEach(log => { // PRs always from all time
+                        log.exercises.forEach(ex => {
+                            ex.sets.forEach(set => {
+                                if (!set.isWarmup && (!prs[ex.name] || set.weight > prs[ex.name].weight)) {
+                                    prs[ex.name] = { weight: set.weight, reps: set.reps, date: log.date };
+                                }
+                            });
                         });
                     });
-                });
 
-                const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 5);
-                const container = document.getElementById('prList');
-                if (!container) return;
+                    const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 5);
+                    const container = document.getElementById('prList');
+                    if (!container) return;
 
-                container.innerHTML = sorted.map(([name, pr]) => `
+                    container.innerHTML = sorted.map(([name, pr]) => `
                 <div class="pr-card">
                     <div class="pr-exercise-name">${name}</div>
                     <div class="pr-value">${Math.round(kgToLbs(pr.weight))} lbs × ${pr.reps}</div>
                     <div class="pr-date">${new Date(pr.date).toLocaleDateString()}</div>
                 </div>
             `).join('');
-            }
+                }
 
-            function renderWeeklyBreakdown() {
-                const counts = [0, 0, 0, 0, 0, 0, 0];
-                filteredLogs.forEach(log => {
-                    counts[new Date(log.date).getDay()]++;
-                });
-                const names = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-                const container = document.getElementById('weeklyGrid');
-                if (!container) return;
-                container.innerHTML = names.map((n, i) => `
+                function renderWeeklyBreakdown() {
+                    const counts = [0, 0, 0, 0, 0, 0, 0];
+                    filteredLogs.forEach(log => {
+                        counts[new Date(log.date).getDay()]++;
+                    });
+                    const names = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                    const container = document.getElementById('weeklyGrid');
+                    if (!container) return;
+                    container.innerHTML = names.map((n, i) => `
                 <div class="day-card" style="padding: 15px;">
                     <div class="day-name" style="font-size: 0.9rem; margin-bottom: 5px;">${n}</div>
                     <div class="day-count" style="font-size: 1.8rem;">${counts[i]}</div>
                 </div>
             `).join('');
-            }
-
-            function renderHeatmap() {
-                const container = document.getElementById('calendarGrid');
-                if (!container) return;
-                const data = [];
-                const today = new Date();
-                for (let i = 27; i >= 0; i--) {
-                    const d = new Date(today);
-                    d.setDate(d.getDate() - i);
-                    d.setHours(0, 0, 0, 0);
-                    const logs = workoutLogs.filter(l => new Date(l.date).toDateString() === d.toDateString());
-                    data.push({ date: d, logs });
                 }
 
-                container.innerHTML = data.map(day => {
-                    let cls = 'calendar-day';
-                    let emoji = '';
-                    if (day.logs.length > 0) {
-                        cls += ' has-workout';
-                        emoji = '💪';
+                function renderHeatmap() {
+                    const container = document.getElementById('calendarGrid');
+                    if (!container) return;
+                    const data = [];
+                    const today = new Date();
+                    for (let i = 27; i >= 0; i--) {
+                        const d = new Date(today);
+                        d.setDate(d.getDate() - i);
+                        d.setHours(0, 0, 0, 0);
+                        const logs = workoutLogs.filter(l => new Date(l.date).toDateString() === d.toDateString());
+                        data.push({ date: d, logs });
                     }
-                    return `
+
+                    container.innerHTML = data.map(day => {
+                        let cls = 'calendar-day';
+                        let emoji = '';
+                        if (day.logs.length > 0) {
+                            cls += ' has-workout';
+                            emoji = '💪';
+                        }
+                        return `
                     <div class="${cls}" data-date="${day.date.toISOString()}">
                         <div class="calendar-day-label">${day.date.toLocaleDateString('en-US', { weekday: 'short' })}</div>
                         <div>${day.date.getDate()}</div>
                         <div style="font-size: 1.2rem;">${emoji}</div>
                     </div>
                 `;
-                }).join('');
+                    }).join('');
 
-                // Add Click Handlers
-                document.querySelectorAll('.calendar-day').forEach(el => {
-                    el.onclick = () => showDayDetails(el.dataset.date);
-                });
-            }
+                    // Add Click Handlers
+                    document.querySelectorAll('.calendar-day').forEach(el => {
+                        el.onclick = () => showDayDetails(el.dataset.date);
+                    });
+                }
 
-            function showDayDetails(dateIso) {
-                const date = new Date(dateIso);
-                const logs = workoutLogs.filter(l => new Date(l.date).toDateString() === date.toDateString());
+                function showDayDetails(dateIso) {
+                    const date = new Date(dateIso);
+                    const logs = workoutLogs.filter(l => new Date(l.date).toDateString() === date.toDateString());
 
-                document.getElementById('detailsDate').textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-                const list = document.getElementById('detailsLogs');
-                if (!list) return;
+                    document.getElementById('detailsDate').textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    const list = document.getElementById('detailsLogs');
+                    if (!list) return;
 
-                if (logs.length === 0) {
-                    list.innerHTML = '<p style="color: var(--text-muted)">REST DAY</p>';
-                } else {
-                    list.innerHTML = logs.map(log => `
+                    if (logs.length === 0) {
+                        list.innerHTML = '<p style="color: var(--text-muted)">REST DAY</p>';
+                    } else {
+                        list.innerHTML = logs.map(log => `
                     <div style="margin-bottom: 30px;">
                         <h4 style="color: var(--accent-secondary); margin-bottom: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;">
                             ${log.workoutName || 'WORKOUT'}
@@ -1387,39 +1493,39 @@
                         `).join('')}
                     </div>
                 `).join('');
+                    }
+
+                    document.getElementById('detailsPanel').classList.add('open');
                 }
 
-                document.getElementById('detailsPanel').classList.add('open');
-            }
+                function renderPerformanceInsights() {
+                    const container = document.getElementById('performanceInsights');
+                    if (!container) return;
 
-            function renderPerformanceInsights() {
-                const container = document.getElementById('performanceInsights');
-                if (!container) return;
-
-                const exerciseStats = {};
-                filteredLogs.forEach(log => {
-                    log.exercises.forEach(ex => {
-                        if (!exerciseStats[ex.name]) {
-                            exerciseStats[ex.name] = { totalWeight: 0, totalReps: 0, sets: 0 };
-                        }
-                        ex.sets.forEach(set => {
-                            if (set.weight > 0) {
-                                exerciseStats[ex.name].totalWeight += (set.weight * set.reps);
-                                exerciseStats[ex.name].totalReps += set.reps;
-                                exerciseStats[ex.name].sets++;
+                    const exerciseStats = {};
+                    filteredLogs.forEach(log => {
+                        log.exercises.forEach(ex => {
+                            if (!exerciseStats[ex.name]) {
+                                exerciseStats[ex.name] = { totalWeight: 0, totalReps: 0, sets: 0 };
                             }
+                            ex.sets.forEach(set => {
+                                if (set.weight > 0) {
+                                    exerciseStats[ex.name].totalWeight += (set.weight * set.reps);
+                                    exerciseStats[ex.name].totalReps += set.reps;
+                                    exerciseStats[ex.name].sets++;
+                                }
+                            });
                         });
                     });
-                });
 
-                const topExercises = Object.entries(exerciseStats)
-                    .sort((a, b) => b[1].sets - a[1].sets)
-                    .slice(0, 8);
+                    const topExercises = Object.entries(exerciseStats)
+                        .sort((a, b) => b[1].sets - a[1].sets)
+                        .slice(0, 8);
 
-                container.innerHTML = topExercises.map(([name, stats]) => {
-                    const avgWeightValue = stats.totalReps > 0 ? (stats.totalWeight / stats.totalReps) : 0;
-                    const avgWeight = Math.round(kgToLbs(avgWeightValue));
-                    return `
+                    container.innerHTML = topExercises.map(([name, stats]) => {
+                        const avgWeightValue = stats.totalReps > 0 ? (stats.totalWeight / stats.totalReps) : 0;
+                        const avgWeight = Math.round(kgToLbs(avgWeightValue));
+                        return `
                     <div class="pr-card" style="padding: 20px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
                         <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;">
                             ${name}
@@ -1435,56 +1541,101 @@
                         </div>
                     </div>
                 `;
-                }).join('');
-            }
+                    }).join('');
+                }
 
-            function updateDashboard() {
-                renderKeyMetrics();
-                renderMuscleDistribution();
-                renderVolumeChart();
-                renderExerciseFrequency();
-                renderPRs();
-                renderWeeklyBreakdown();
-                renderHeatmap();
-                renderPerformanceInsights();
-            }
+                function initSortable() {
+                    const statsGrid = document.getElementById('draggableStats');
+                    if (statsGrid) {
+                        new Sortable(statsGrid, {
+                            animation: 150,
+                            ghostClass: 'sortable-ghost',
+                            chosenClass: 'sortable-chosen',
+                            dragClass: 'sortable-drag',
+                            store: {
+                                get: (sortable) => {
+                                    const order = localStorage.getItem('statsOrder');
+                                    return order ? order.split('|') : [];
+                                },
+                                set: (sortable) => {
+                                    const order = sortable.toArray();
+                                    localStorage.setItem('statsOrder', order.join('|'));
+                                }
+                            }
+                        });
+                    }
 
-            // Initialize
-            async function init() {
-                await loadData();
+                    const sectionsGrid = document.getElementById('draggableSections');
+                    if (sectionsGrid) {
+                        new Sortable(sectionsGrid, {
+                            animation: 150,
+                            ghostClass: 'sortable-ghost',
+                            chosenClass: 'sortable-chosen',
+                            dragClass: 'sortable-drag',
+                            handle: '.section-title',
+                            store: {
+                                get: (sortable) => {
+                                    const order = localStorage.getItem('sectionsOrder');
+                                    return order ? order.split('|') : [];
+                                },
+                                set: (sortable) => {
+                                    const order = sortable.toArray();
+                                    localStorage.setItem('sectionsOrder', order.join('|'));
+                                }
+                            }
+                        });
+                    }
+                }
 
-                onAuthStateChanged(auth, async (user) => {
-                    if (!user) return;
 
-                    const ls = document.getElementById('loadingState');
-                    const sc = document.getElementById('statsContent');
-                    if (ls) ls.style.display = 'none';
-                    if (sc) sc.style.display = 'block';
+                function updateDashboard() {
+                    renderKeyMetrics();
+                    renderMuscleDistribution();
+                    renderVolumeChart();
+                    renderExerciseFrequency();
+                    renderPRs();
+                    renderWeeklyBreakdown();
+                    renderHeatmap();
+                    renderPerformanceInsights();
+                }
 
-                    filterData('all');
+                // Initialize
+                async function init() {
+                    await loadData();
 
-                    // Filter button listeners
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
-                        btn.onclick = () => {
-                            const activeBtn = document.querySelector('.filter-btn.active');
-                            if (activeBtn) activeBtn.classList.remove('active');
-                            btn.classList.add('active');
-                            filterData(btn.dataset.range);
+                    onAuthStateChanged(auth, async (user) => {
+                        if (!user) return;
+
+                        const ls = document.getElementById('loadingState');
+                        const sc = document.getElementById('statsContent');
+                        if (ls) ls.style.display = 'none';
+                        if (sc) sc.style.display = 'block';
+
+                        filterData('all');
+                        initSortable();
+
+                        // Filter button listeners
+                        document.querySelectorAll('.filter-btn').forEach(btn => {
+                            btn.onclick = () => {
+                                const activeBtn = document.querySelector('.filter-btn.active');
+                                if (activeBtn) activeBtn.classList.remove('active');
+                                btn.classList.add('active');
+                                filterData(btn.dataset.range);
+                            }
+                        });
+
+                        // Close panel listener
+                        const cp = document.getElementById('closePanel');
+                        if (cp) {
+                            cp.onclick = () => {
+                                document.getElementById('detailsPanel').classList.remove('open');
+                            }
                         }
                     });
+                }
 
-                    // Close panel listener
-                    const cp = document.getElementById('closePanel');
-                    if (cp) {
-                        cp.onclick = () => {
-                            document.getElementById('detailsPanel').classList.remove('open');
-                        }
-                    }
-                });
-            }
-
-            init();
-        </script>
+                init();
+            </script>
 </body>
 
 </html>
