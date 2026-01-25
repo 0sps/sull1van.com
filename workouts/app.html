@@ -491,7 +491,7 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .set-table tr {
+        .set-table tbody tr {
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
@@ -502,64 +502,64 @@
         }
 
         .set-table tbody tr.selected {
-            background: rgba(255, 61, 90, 0.15);
-            border-left: 3px solid #ff3d5a;
+            position: relative;
         }
 
-        .set-table tr.deleted-success::after {
-            content: 'DELETED!';
+        .delete-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            background: rgba(255, 61, 90, 0.5);
+            /* Initial red overlay */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            background: rgba(0, 255, 136, 0.9);
-            color: #000;
-            z-index: 2;
-            pointer-events: none;
+            gap: 16px;
+            z-index: 100;
+            pointer-events: auto;
+            border-radius: 4px;
+            /* Match row border radius if applicable */
         }
 
-        .set-table tr.deleted-success {
-            background: rgba(0, 255, 136, 0.2) !important;
+        .delete-overlay.deleted-state {
+            background: rgba(0, 255, 136, 0.9) !important;
         }
 
         .delete-set-btn,
         .cancel-set-btn {
-            padding: 6px 16px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
+            padding: 10px 24px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: bold;
         }
 
         .delete-set-btn {
-            background: rgba(255, 61, 90, 0.2);
-            border: 1px solid #ff3d5a;
-            color: #ff3d5a;
+            background: #ff3333;
+            /* Explicit red */
+            border: none;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .delete-set-btn:hover {
-            background: rgba(255, 61, 90, 0.3);
+            background: #cc0000;
         }
 
         .cancel-set-btn {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #fff;
+            color: #fff;
         }
 
         .cancel-set-btn:hover {
-            border-color: rgba(255, 255, 255, 0.8);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .btn-secondary:hover {
@@ -1277,7 +1277,9 @@
                 style="position: sticky; bottom: -32px; background: var(--bg-secondary); padding-top: 16px; margin-top: 0; border-top: 1px solid var(--border); z-index: 10;">
                 <button class="btn btn-primary" id="saveEditsBtn" onclick="saveEditedWorkout()" style="flex: 2;">SAVE
                     EDITS</button>
-                <button class="btn btn-secondary" onclick="closeEditModal()" style="flex: 1; background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DISCARD EDITS</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()"
+                    style="flex: 1; background: rgba(255, 61, 90, 0.1); border-color: #ff3d5a; color: #ff3d5a;">DISCARD
+                    EDITS</button>
             </div>
         </div>
     </div>
@@ -2143,24 +2145,34 @@
 
                 const emptyClass = set.isEmptyWorkout ? 'empty-workout-row' : '';
 
-                html += `
-                    <tr class="${isSelected ? 'selected' : ''} ${emptyClass}"
-                        id="deleteRow_${idx}"
-                        onclick="selectSetForDeletion(${idx})"
-                        style="${set.isEmptyWorkout ? 'background: rgba(255,255,255,0.03); opacity: 0.8;' : ''}">
-                        <td>${dateStr}</td>
-                        <td style="${set.isEmptyWorkout ? 'color: var(--text-muted); font-style: italic;' : ''}">
-                            <strong>${set.exerciseName}</strong>
-                        </td>
-                        <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : `${weightLbs} lbs`}</td>
-                        <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : set.reps}</td>
-                        <td style="color: ${set.isEmptyWorkout ? 'var(--text-muted)' : typeColor};">
-                            ${set.isEmptyWorkout ? 'System Log' : typeLabel}
-                        </td>
-                        <td>
-                            ${isSelected ? `<button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">DELETE</button> <button class="cancel-set-btn" onclick="event.stopPropagation(); cancelSetDeletion()">CANCEL</button>` : ''}
-                        </td>
-                    </tr>`;
+                if (isSelected) {
+                    html += `
+                        <tr class="selected ${emptyClass}" id="deleteRow_${idx}" style="position: relative; height: 50px;">
+                            <td colspan="6" style="padding: 0; position: relative;">
+                                <div class="delete-overlay" id="overlay_${idx}" onclick="event.stopPropagation()">
+                                    <button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">DELETE</button>
+                                    <button class="cancel-set-btn" onclick="event.stopPropagation(); cancelSetDeletion()">CANCEL</button>
+                                </div>
+                            </td>
+                        </tr>`;
+                } else {
+                    html += `
+                        <tr class="${emptyClass}"
+                            id="deleteRow_${idx}"
+                            onclick="selectSetForDeletion(${idx})"
+                            style="position: relative; ${set.isEmptyWorkout ? 'background: rgba(255,255,255,0.03); opacity: 0.8;' : ''}">
+                            <td>${dateStr}</td>
+                            <td style="${set.isEmptyWorkout ? 'color: var(--text-muted); font-style: italic;' : ''}">
+                                <strong>${set.exerciseName}</strong>
+                            </td>
+                            <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : `${weightLbs} lbs`}</td>
+                            <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : set.reps}</td>
+                            <td style="color: ${set.isEmptyWorkout ? 'var(--text-muted)' : typeColor};">
+                                ${set.isEmptyWorkout ? 'System Log' : typeLabel}
+                            </td>
+                            <td></td>
+                        </tr>`;
+                }
             });
 
             html += `</tbody></table>`;
@@ -2190,14 +2202,20 @@
 
         function confirmDeleteSet(idx) {
             const btn = document.getElementById(`deleteBtn_${idx}`);
+            const overlay = document.getElementById(`overlay_${idx}`);
             if (!btn) return;
 
             if (btn.textContent === 'DELETE') {
-                btn.textContent = 'SURE?';
-                btn.style.background = '#ff3d5a';
-                btn.style.color = '#000';
+                btn.textContent = 'Sure?';
+                btn.style.background = '#000';
+                btn.style.color = '#ff3333';
+                btn.style.border = '2px solid #ff3333';
                 btn.style.fontWeight = 'bold';
-            } else if (btn.textContent === 'SURE?') {
+
+                if (overlay) {
+                    overlay.style.background = 'rgba(255, 61, 90, 0.7)';
+                }
+            } else if (btn.textContent === 'Sure?') {
                 executeDeleteSet(idx);
             }
         }
@@ -2205,11 +2223,12 @@
         async function executeDeleteSet(idx) {
             if (!selectedSetForDeletion) return;
 
-            const row = document.getElementById(`deleteRow_${idx}`);
+            const overlay = document.getElementById(`overlay_${idx}`);
 
-            // Show green "Deleted!" overlay on the row
-            if (row) {
-                row.classList.add('deleted-success');
+            // Show green "Deleted!" overlay
+            if (overlay) {
+                overlay.classList.add('deleted-state');
+                overlay.innerHTML = '<span style="font-family: \'Bebas Neue\', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
             }
 
             const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
