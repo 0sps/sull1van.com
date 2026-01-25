@@ -1278,7 +1278,7 @@
     </div>
 
     <div class="modal-overlay" id="editModal">
-        <div class="modal" style="max-width: 800px; width: 95%;">
+        <div class="modal" style="max-width: 480px; width: 95%;">
             <h3 class="modal-title" id="editModalTitle">EDIT WORKOUT</h3>
             <p id="editModalSubtitle" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;"></p>
             <div id="editExerciseList" style="margin-bottom: 24px;"></div>
@@ -1971,8 +1971,35 @@
                         </div>
                     </div>
                     <div class="sets-grid">${setsHtml}</div>
+                    <div style="display: flex; flex-direction: row; gap: 8px; margin-top: 40px; align-items: center;">
+                        <button class="btn btn-secondary btn-small btn-remove-set" onclick="removeEditSet(${exIdx})" style="background: rgba(255, 61, 90, 0.1); padding-top: 25px; padding-bottom: 25px; border-color: #ff3d5a; color: #ff3d5a; width: 100%; max-width: 200px;" ${ex.sets.length <= 1 ? 'disabled' : ''}>− Remove Set</button>
+                        <button class="btn btn-secondary btn-small btn-add-set" onclick="addEditSet(${exIdx})" style="background: rgba(0, 255, 136, 0.1); padding-top: 25px; padding-bottom: 25px; border-color: var(--success); color: var(--success); width: 100%; max-width: 200px;">+ Add Set</button>
+                    </div>
                 </div>`;
             }).join('');
+        }
+
+        function addEditSet(exIdx) {
+            if (!editingLogData) return;
+            const ex = editingLogData.exercises[exIdx];
+            // Add a new set with default values, mimicking the last set's weight if possible
+            const lastSet = ex.sets[ex.sets.length - 1] || { weight: 0, reps: 0 };
+            ex.sets.push({
+                weight: lastSet.weight,
+                reps: lastSet.reps,
+                isWarmup: false,
+                note: ''
+            });
+            renderEditExercises();
+        }
+
+        function removeEditSet(exIdx) {
+            if (!editingLogData) return;
+            const ex = editingLogData.exercises[exIdx];
+            if (ex.sets.length > 1) {
+                ex.sets.pop();
+                renderEditExercises();
+            }
         }
 
         function updateEditExerciseData(exIdx, setIdx, type, value) {

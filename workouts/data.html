@@ -5,41 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DATA EXPLORER | SEAN'S LOG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #111113;
-            --bg-tertiary: #1a1a1d;
+            --bg-primary: #050505;
+            --bg-secondary: #0d0d0f;
+            --bg-tertiary: #16161a;
             --accent-primary: #ff3d00;
             --accent-secondary: #ff6d3d;
-            --accent-glow: rgba(255, 61, 0, 0.3);
+            --accent-tertiary: #ffbb00;
+            --accent-glow: rgba(255, 61, 0, 0.35);
             --text-primary: #ffffff;
-            --text-secondary: #a0a0a5;
-            --text-muted: #606065;
+            --text-secondary: #a0a0ab;
+            --text-muted: #52525b;
             --success: #00ff88;
-            --warning: #ffbb00;
-            --error: #ff3d5a;
-            --border: #2a2a2d;
+            --warning: #facc15;
+            --error: #ef4444;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(255, 255, 255, 0.15);
             --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
+            --glass-bg: rgba(13, 13, 15, 0.7);
+            --sidebar-width: 380px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-bright) transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-bright);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
 
         body {
-            font-family: 'Space Mono', monospace;
-            font-size: 14px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
             background: var(--bg-primary);
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
         }
 
         .bg-pattern {
@@ -48,7 +74,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at 20% 20%, rgba(255, 61, 0, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(255, 109, 61, 0.05) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(255, 61, 0, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(255, 187, 0, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(255, 109, 61, 0.04) 0%, transparent 70%),
+                radial-gradient(circle at 50% 50%, rgba(13, 13, 15, 0.4) 0%, var(--bg-primary) 100%);
             pointer-events: none;
             z-index: 0;
         }
@@ -57,11 +87,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
-            background: var(--bg-secondary);
+            padding: 18px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             position: relative;
-            z-index: 10;
+            z-index: 100;
         }
 
         .logo {
@@ -72,58 +104,100 @@
 
         .logo h1 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 2px;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
             background: var(--gradient-fire);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            filter: drop-shadow(0 0 15px var(--accent-glow));
         }
 
         .logo span {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
         }
 
         .sync-status {
             font-size: 0.7rem;
-            padding: 4px 8px;
-            border-radius: 2px;
+            padding: 5px 12px;
+            border-radius: 4px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .sync-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
         }
 
         .sync-status.synced {
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(0, 255, 136, 0.08);
             color: var(--success);
             border: 1px solid rgba(0, 255, 136, 0.2);
         }
 
+        .sync-status.synced::before {
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
         .sync-status.syncing {
-            background: rgba(255, 187, 0, 0.1);
+            background: rgba(250, 204, 21, 0.08);
             color: var(--warning);
-            border: 1px solid rgba(255, 187, 0, 0.2);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        .sync-status.syncing::before {
+            background: var(--warning);
+            animation: pulse-warn 1.5s infinite;
+        }
+
+        @keyframes pulse-warn {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         main {
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: var(--sidebar-width) 1fr;
             flex: 1;
             position: relative;
             z-index: 5;
@@ -132,258 +206,411 @@
 
         /* Sidebar Styling */
         .sidebar {
-            background: var(--bg-secondary);
+            background: rgba(13, 13, 15, 0.5);
+            backdrop-filter: blur(10px);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            z-index: 10;
         }
 
         .sidebar-toolbar {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            background: var(--bg-tertiary);
+            gap: 16px;
+            background: linear-gradient(to bottom, var(--bg-secondary), transparent);
         }
 
         .toolbar-group {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .btn-tool {
-            padding: 6px 10px;
-            background: var(--bg-secondary);
+            padding: 8px 14px;
+            background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-tool:hover {
-            border-color: var(--accent-primary);
+            background: var(--bg-secondary);
+            border-color: var(--text-muted);
             color: var(--text-primary);
+            transform: translateY(-1px);
         }
 
         .btn-tool.active {
             background: var(--accent-primary);
             color: white;
             border-color: var(--accent-primary);
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
         .date-input {
-            background: var(--bg-secondary);
+            background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 4px;
-            font-size: 0.7rem;
-            font-family: inherit;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-family: 'Space Mono', monospace;
+            border-radius: 6px;
+            flex: 1;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
         }
 
         .search-box {
             width: 100%;
-            padding: 8px 12px;
-            background: var(--bg-primary);
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.75rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(255, 61, 0, 0.1);
         }
 
         #logList {
             flex: 1;
             overflow-y: auto;
-            padding: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .log-item {
-            padding: 12px;
-            background: var(--bg-tertiary);
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            margin-bottom: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: visible;
+        }
+
+        .log-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--accent-primary);
+            opacity: 0;
+            transition: opacity 0.15s;
         }
 
         .log-item:hover {
-            border-color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-bright);
         }
 
         .log-item.active {
-            border-color: var(--accent-primary);
-            background: rgba(255, 61, 0, 0.05);
+            background: rgba(255, 61, 0, 0.08);
+            border-color: rgba(255, 61, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(255, 61, 0, 0.1);
+        }
+
+        .log-item.active::before {
+            opacity: 1;
         }
 
         .log-item-date {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            color: var(--accent-secondary);
+            font-size: 1.4rem;
+            color: var(--text-primary);
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-item-time {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-secondary);
+            font-weight: normal;
         }
 
         .log-item-info {
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .log-item-id {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            font-family: 'Space Mono', monospace;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         /* Editor Area */
         .editor-container {
             display: flex;
             flex-direction: column;
-            background: var(--bg-primary);
-            padding: 20px;
+            background: transparent;
+            padding: 30px;
             overflow: hidden;
+            position: relative;
         }
 
         .editor-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 24px;
+            z-index: 10;
+        }
+
+        .editor-title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .editor-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #fff, #a0a0ab);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .editor-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
         }
 
         .editor-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .editor-empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-align: center;
+            gap: 20px;
+            border: 2px dashed var(--border);
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .editor-empty-state i {
+            font-size: 4rem;
+            opacity: 0.2;
+        }
+
+        .editor-empty-state h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.05);
         }
 
         #jsonEditor {
             flex: 1;
-            background: #0d0d0e;
-            color: #d1d1d1;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: #e2e8f0;
             border: 1px solid var(--border);
-            padding: 15px;
+            border-radius: 12px;
+            padding: 24px;
             font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            line-height: 1.5;
+            font-size: 14px;
+            line-height: 1.6;
             resize: none;
             outline: none;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.4);
         }
 
         #jsonEditor:focus {
-            border-color: var(--accent-primary);
+            border-color: rgba(255, 61, 0, 0.3);
+            background: #0d0d0d;
+            box-shadow: 0 0 30px rgba(255, 61, 0, 0.05);
+        }
+
+        /* Buttons */
+        .btn-base {
+            padding: 10px 20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            text-transform: uppercase;
         }
 
         .btn-fire {
-            padding: 8px 16px;
             background: var(--gradient-fire);
-            border: none;
             color: white;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
         .btn-fire:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .btn-fire:active {
-            transform: translateY(0);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+            filter: brightness(1.1);
         }
 
         .btn-danger {
-            background: rgba(255, 61, 90, 0.1);
-            border: 1px solid var(--error);
-            color: var(--error);
-            padding: 8px 16px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            cursor: pointer;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
         }
 
         .btn-danger:hover {
-            background: var(--error);
+            background: #ef4444;
             color: white;
+            border-color: #ef4444;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
         }
 
         .btn-success {
             background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.3);
             color: var(--success);
-            padding: 8px 16px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
         .btn-success:hover {
             background: var(--success);
-            color: black;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            color: #000;
+            border-color: var(--success);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
         }
 
-        /* Custom Modal and Undo Box Styles */
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Modals & Overlays */
         .custom-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(13, 13, 15, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            backdrop-filter: blur(4px);
+            animation: fade-in 0.3s ease;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .custom-modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 30px;
-            max-width: 400px;
+            background: rgba(22, 22, 26, 0.8);
+            border: 1px solid var(--border-bright);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 480px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 61, 0, 0.05);
+            transform: translateY(0);
+            animation: modal-up 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modal-up {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .custom-modal h3 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             color: var(--text-primary);
         }
 
         .custom-modal p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+            font-size: 1rem;
         }
 
         .custom-modal-actions {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .custom-modal-actions button {
@@ -392,48 +619,66 @@
 
         .undo-box {
             position: fixed;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--bg-tertiary);
+            background: rgba(22, 22, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--success);
+            border-radius: 12px;
             padding: 20px 40px;
             display: none;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             z-index: 10001;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            min-width: 300px;
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.15);
+            min-width: 320px;
+            animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slide-up {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
         }
 
         .undo-text {
             color: var(--success);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
         .undo-link {
             color: var(--text-primary);
-            text-decoration: underline;
+            text-decoration: none;
             cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: all 0.2s;
         }
 
         .undo-link:hover {
-            color: var(--success);
+            background: var(--success);
+            color: #000;
         }
 
         .loading-bar-container {
             width: 100%;
             height: 4px;
             background: rgba(0, 255, 136, 0.1);
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            border-radius: 2px;
             overflow: hidden;
         }
 
@@ -453,6 +698,111 @@
                 width: 100%;
             }
         }
+
+        /* Toast & Loading */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            padding: 16px 24px;
+            background: rgba(22, 22, 26, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-bright);
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateY(150%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 20000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 61, 0, 0.1);
+            border-top: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            :root {
+                --sidebar-width: 320px;
+            }
+        }
+
+        /* Validation Report */
+        .validation-report {
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .report-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .report-item.pass {
+            color: var(--success);
+        }
+
+        .report-item.fail {
+            color: var(--error);
+        }
+
+        .report-icon {
+            font-weight: bold;
+            font-size: 1rem;
+        }
     </style>
 </head>
 
@@ -462,14 +812,15 @@
     <header>
         <div class="logo">
             <h1>DATA EXPLORER</h1>
-            <span>Admin Tool</span>
+            <span>v2.0 ADMIN</span>
         </div>
         <div class="header-right">
-            <div id="syncStatus" class="sync-status synced">Ready</div>
+            <div id="syncStatus" class="sync-status synced">Synced</div>
             <div class="user-info">
-                <span id="userEmail">Not Logged In</span>
+                <span id="userEmail">sspsful@gmail.com</span>
             </div>
-            <button class="btn-tool" onclick="logout()">Logout</button>
+            <button class="btn-base btn-ghost" style="padding: 6px 12px; font-size: 0.8rem;"
+                onclick="logout()">Logout</button>
         </div>
     </header>
 
@@ -477,15 +828,15 @@
         <div class="sidebar">
             <div class="sidebar-toolbar">
                 <div class="toolbar-group">
-                    <button class="btn-tool" onclick="loadLogs(20)">Last 20</button>
-                    <button class="btn-tool" onclick="loadLogs(50)">Last 50</button>
-                    <button class="btn-tool" onclick="loadLogs(0)">Load All</button>
+                    <button class="btn-tool" id="btn20" onclick="loadLogs(20); setActive(this)">Last 20</button>
+                    <button class="btn-tool" id="btn50" onclick="loadLogs(50); setActive(this)">Last 50</button>
+                    <button class="btn-tool" id="btnAll" onclick="loadLogs(0); setActive(this)">Load All</button>
                 </div>
                 <div class="toolbar-group">
                     <input type="date" id="startDate" class="date-input">
-                    <span style="color: var(--text-muted); font-size: 10px;">to</span>
+                    <span style="color: var(--text-muted); font-size: 10px; font-family: 'Space Mono';">to</span>
                     <input type="date" id="endDate" class="date-input">
-                    <button class="btn-tool" onclick="loadByDate()">Go</button>
+                    <button class="btn-tool" onclick="loadByDate()">GO</button>
                 </div>
                 <input type="text" id="logSearch" class="search-box" placeholder="Search loaded logs..."
                     oninput="filterLogs()">
@@ -499,16 +850,30 @@
 
         <div class="editor-container">
             <div class="editor-header">
-                <div class="editor-title" id="editorTitle">Select a Log</div>
+                <div class="editor-title-container">
+                    <div class="editor-title" id="editorTitle">Data Console</div>
+                    <div class="editor-subtitle" id="editorSubtitle">Ready for inspection</div>
+                </div>
                 <div class="editor-actions" id="editorActions" style="display: none;">
-                    <button class="btn-danger" onclick="deleteCurrentLog()">Delete</button>
-                    <button class="btn-tool" onclick="discardChanges()">Discard Changes</button>
-                    <button class="btn-success" onclick="saveCurrentLog()">Save Changes</button>
+                    <button class="btn-base btn-danger" onclick="deleteCurrentLog()">Delete</button>
+                    <button class="btn-base btn-ghost" onclick="discardChanges()">Discard</button>
+                    <button class="btn-base btn-success" onclick="saveCurrentLog()">Save Changes</button>
                 </div>
             </div>
-            <textarea id="jsonEditor" spellcheck="false"
+
+            <!-- Empty State -->
+            <div id="emptyState" class="editor-empty-state">
+                <h2 style="font-size: 4rem; margin-bottom: 10px;">SELECTION REQUIRED</h2>
+                <p>Select a workout log from the explorer to begin editing</p>
+                <div style="margin-top: 20px; opacity: 0.5; font-family: 'Space Mono'; font-size: 0.7rem;">
+                    PRO TIP: USE CTRL+S TO QUICK SAVE
+                </div>
+            </div>
+
+            <textarea id="jsonEditor" spellcheck="false" style="display: none;"
                 placeholder="Select a log from the left to edit its raw JSON data..."></textarea>
-            <div id="validationMsg" style="margin-top: 10px; font-size: 12px; color: var(--error); height: 1.5em;">
+            <div id="validationMsg"
+                style="margin-top: 15px; font-size: 0.8rem; color: var(--error); height: 1.5em; font-family: 'Space Mono';">
             </div>
         </div>
     </main>
@@ -525,8 +890,8 @@
             <p>You are about to permanently delete this workout log. This action can be undone briefly after confirming.
             </p>
             <div class="custom-modal-actions">
-                <button class="btn-tool" onclick="hideDeleteModal()">CANCEL</button>
-                <button class="btn-danger" id="confirmDeleteFinal" onclick="triggerDeleteWithUndo()">YES,
+                <button class="btn-base btn-ghost" onclick="hideDeleteModal()">CANCEL</button>
+                <button class="btn-base btn-danger" id="confirmDeleteFinal" onclick="triggerDeleteWithUndo()">YES,
                     DELETE</button>
             </div>
         </div>
@@ -542,20 +907,27 @@
             </p>
             <p>This JSON does not match the standard structure. Are you sure you want to save anyway?</p>
             <div class="custom-modal-actions">
-                <button class="btn-tool" onclick="hideValidationModal()">GO BACK</button>
-                <button class="btn-danger" onclick="proceedWithSaveAnyway()">SAVE ANYWAY</button>
+                <button class="btn-base btn-ghost" onclick="hideValidationModal()">GO BACK</button>
+                <button class="btn-base btn-danger" onclick="proceedWithSaveAnyway()">SAVE ANYWAY</button>
             </div>
         </div>
     </div>
 
     <!-- Save Confirmation Modal -->
     <div id="saveModalOverlay" class="custom-modal-overlay">
-        <div class="custom-modal" style="border-color: var(--success);">
+        <div class="custom-modal" style="border-color: var(--success); max-width: 550px;">
             <h3 style="color: var(--success);">READY TO SAVE?</h3>
-            <p>Are you sure you want to apply these changes to the workout log?</p>
+            <p>The following structural checks have passed successfully:</p>
+
+            <div id="saveValidationReport" class="validation-report">
+                <!-- Validation checks will be injected here -->
+            </div>
+
+            <p style="font-size: 0.85rem; margin-top: 20px;">Pushing these changes to the live database.</p>
+
             <div class="custom-modal-actions">
-                <button class="btn-tool" onclick="hideSaveModal()">GO BACK</button>
-                <button class="btn-success" onclick="triggerSaveWithUndo()">YES, SAVE</button>
+                <button class="btn-base btn-ghost" onclick="hideSaveModal()">GO BACK</button>
+                <button class="btn-base btn-success" onclick="triggerSaveWithUndo()">YES, SAVE</button>
             </div>
         </div>
     </div>
@@ -639,6 +1011,11 @@
             el.className = `sync-status ${status.toLowerCase()}`;
         }
 
+        window.setActive = function (btn) {
+            document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
         // FIREBASE OPERATIONS
         window.loadLogs = async function (limitCount) {
             try {
@@ -710,12 +1087,14 @@
 
                 return `
                     <div class="log-item ${activeLogId === log.id ? 'active' : ''}" onclick="selectLog('${log.id}')">
-                        <div class="log-item-date">${dateStr}</div>
-                        <div class="log-item-info">
-                            <span>${log.workoutName || 'Unknown Workout'}</span>
-                            <span>${timeStr}</span>
+                        <div class="log-item-date">
+                            ${dateStr}
+                            <span class="log-item-time">${timeStr}</span>
                         </div>
-                        <div class="log-item-id">ID: ${log.id}</div>
+                        <div class="log-item-info">
+                            <span class="log-item-name">${log.workoutName || 'Unknown Workout'}</span>
+                        </div>
+                        <div class="log-item-id"># ${log.id}</div>
                     </div>
                 `;
             }).join('');
@@ -743,11 +1122,16 @@
 
             // Update Editor
             const title = document.getElementById('editorTitle');
+            const subtitle = document.getElementById('editorSubtitle');
             const date = new Date(log.date).toLocaleString();
-            title.textContent = `${log.workoutName} (${date})`;
+
+            title.textContent = log.workoutName;
+            subtitle.textContent = `Captured on ${date}`;
 
             document.getElementById('editorActions').style.display = 'flex';
+            document.getElementById('emptyState').style.display = 'none';
             const editor = document.getElementById('jsonEditor');
+            editor.style.display = 'block';
             editor.value = JSON.stringify(log, null, 4);
             editor.dataset.originalId = id;
 
@@ -769,26 +1153,43 @@
                     if (!confirm("The 'id' in JSON has changed. This will create a NEW document. Continue?")) return;
                 }
 
-                // Check structure validation
-                const validationError = getValidationError(updatedData);
-                if (validationError) {
-                    window._pendingSaveData = updatedData;
-                    window._pendingOriginalId = originalId;
-                    showValidationModal(validationError);
-                    return;
-                }
+                // Run full validation
+                const report = runValidation(updatedData);
+                window._pendingSaveData = updatedData;
+                window._pendingOriginalId = originalId;
 
-                // All checks passed, show confirmation modal
-                showSaveModal(updatedData, originalId);
+                if (report.error) {
+                    showValidationModal(report.error);
+                } else {
+                    showSaveModal(updatedData, originalId, report);
+                }
             } catch (err) {
                 validationMsg.textContent = "Invalid JSON: " + err.message;
                 showToast("Save failed", "error");
             }
         }
 
-        function showSaveModal(data, originalId) {
+        function showSaveModal(data, originalId, report) {
             window._pendingSaveData = data;
             window._pendingOriginalId = originalId;
+
+            const reportContainer = document.getElementById('saveValidationReport');
+            if (report) {
+                reportContainer.innerHTML = report.checks.map(check => `
+                    <div class="report-item ${check.passed ? 'pass' : 'fail'}">
+                        <span class="report-icon">${check.passed ? '✓' : '✗'}</span>
+                        <span>${check.label}</span>
+                    </div>
+                `).join('');
+            } else {
+                reportContainer.innerHTML = `
+                    <div class="report-item pass">
+                        <span class="report-icon">✓</span>
+                        <span>Manual Override / Validation Bypassed</span>
+                    </div>
+                `;
+            }
+
             document.getElementById('saveModalOverlay').style.display = 'flex';
         }
 
@@ -802,45 +1203,76 @@
             showSaveModal(window._pendingSaveData, window._pendingOriginalId);
         }
 
-        function getValidationError(data) {
+        function runValidation(data) {
+            const checks = [
+                { id: 'jsonObj', label: 'Object Structure Integrity', passed: false },
+                { id: 'rootFields', label: 'Standard Root Parameters Present', passed: false },
+                { id: 'exerciseArray', label: 'Exercise Array Index Integrity', passed: false },
+                { id: 'exerciseIds', label: 'Exercise Library Identification', passed: false },
+                { id: 'setsData', label: 'Sets, Reps, and Weight Values Valid', passed: false }
+            ];
+
+            let error = null;
+
             try {
-                if (typeof data !== 'object' || data === null) return "Data must be a JSON object";
+                if (typeof data !== 'object' || data === null) {
+                    error = "Data must be a JSON object";
+                } else {
+                    checks.find(c => c.id === 'jsonObj').passed = true;
 
-                // Root fields
-                const rootFields = ['id', 'date', 'weightUnit', 'workoutName', 'exercises'];
-                for (const field of rootFields) {
-                    if (!data.hasOwnProperty(field)) return `Missing root field: "${field}"`;
-                }
+                    const rootFields = ['id', 'date', 'weightUnit', 'workoutName', 'exercises'];
+                    const missing = rootFields.filter(f => !data.hasOwnProperty(f));
+                    if (missing.length > 0) {
+                        error = `Missing root field: "${missing[0]}"`;
+                    } else {
+                        checks.find(c => c.id === 'rootFields').passed = true;
 
-                if (!Array.isArray(data.exercises)) return '"exercises" must be an array';
+                        if (!Array.isArray(data.exercises)) {
+                            error = '"exercises" must be an array';
+                        } else {
+                            checks.find(c => c.id === 'exerciseArray').passed = true;
 
-                for (let i = 0; i < data.exercises.length; i++) {
-                    const ex = data.exercises[i];
-                    const exLabel = `Exercise[${i}] (${ex.name || 'unnamed'})`;
+                            let idsValid = true;
+                            let setsValid = true;
 
-                    if (!ex.name) return `${exLabel}: Missing "name"`;
-                    if (!ex.id) return `${exLabel}: Missing "id"`;
+                            for (let i = 0; i < data.exercises.length; i++) {
+                                const ex = data.exercises[i];
+                                if (!ex.name || !ex.id) {
+                                    error = `Exercise[${i}]: Missing name or id`;
+                                    idsValid = false; break;
+                                }
+                                if (Object.keys(exerciseLibrary).length > 0 && !exerciseLibrary[ex.id]) {
+                                    error = `Exercise[${i}]: ID "${ex.id}" not found in library`;
+                                    idsValid = false; break;
+                                }
+                                if (!ex.sets || !Array.isArray(ex.sets)) {
+                                    error = `Exercise[${i}]: sets must be an array`;
+                                    setsValid = false; break;
+                                }
+                                for (const set of ex.sets) {
+                                    if (typeof set.reps !== 'number' || typeof set.weight !== 'number' || set.isWarmup === undefined) {
+                                        error = `Exercise[${i}]: Invalid set data (reps/weight/warmup)`;
+                                        setsValid = false; break;
+                                    }
+                                }
+                                if (!setsValid) break;
+                            }
 
-                    // Verify ID exists in exercises.json
-                    if (Object.keys(exerciseLibrary).length > 0 && !exerciseLibrary[ex.id]) {
-                        return `${exLabel}: ID "${ex.id}" is invalid (not found in exercises.json)`;
+                            if (idsValid) checks.find(c => c.id === 'exerciseIds').passed = true;
+                            if (setsValid) checks.find(c => c.id === 'setsData').passed = true;
+                        }
                     }
-
-                    if (!ex.sets || !Array.isArray(ex.sets)) return `${exLabel}: "sets" must be an array`;
-
-                    for (let j = 0; j < ex.sets.length; j++) {
-                        const set = ex.sets[j];
-                        const setLabel = `${exLabel}, Set[${j}]`;
-
-                        if (typeof set.reps !== 'number') return `${setLabel}: "reps" must be a number`;
-                        if (typeof set.weight !== 'number') return `${setLabel}: "weight" must be a number`;
-                        if (set.isWarmup === undefined) return `${setLabel}: Missing "isWarmup" boolean`;
-                    }
                 }
-                return null; // Valid
             } catch (e) {
-                return "Validation crashed: " + e.message;
+                error = "Validation crashed: " + e.message;
             }
+
+            return { error, checks };
+        }
+
+        function getValidationError(data) {
+            // Deprecated in favor of runValidation
+            return runValidation(data).error;
         }
 
         function showValidationModal(errorMsg) {
@@ -990,6 +1422,15 @@
             pendingActionTimeout = null;
             const btn = document.querySelector('.btn-danger');
             if (btn) btn.textContent = 'Delete';
+        }
+
+        window.deleteCurrentLog = function () {
+            if (!activeLogId) return;
+            document.getElementById('deleteModalOverlay').style.display = 'flex';
+        }
+
+        window.hideDeleteModal = function () {
+            document.getElementById('deleteModalOverlay').style.display = 'none';
         }
 
         window.discardChanges = function () {
