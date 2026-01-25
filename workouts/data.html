@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATA EXPLORER | SEAN'S LOG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #1a1a1d;
+            --accent-primary: #ff3d00;
+            --accent-secondary: #ff6d3d;
+            --accent-glow: rgba(255, 61, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a5;
+            --text-muted: #606065;
+            --success: #00ff88;
+            --warning: #ffbb00;
+            --error: #ff3d5a;
+            --border: #2a2a2d;
+            --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 20% 20%, rgba(255, 61, 0, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(255, 109, 61, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sync-status {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sync-status.synced {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .sync-status.syncing {
+            background: rgba(255, 187, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 187, 0, 0.2);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            flex: 1;
+            position: relative;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-toolbar {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--bg-tertiary);
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .btn-tool {
+            padding: 6px 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .btn-tool:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .btn-tool.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .date-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 4px;
+            font-size: 0.7rem;
+            font-family: inherit;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.75rem;
+        }
+
+        #logList {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .log-item {
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .log-item:hover {
+            border-color: var(--text-muted);
+        }
+
+        .log-item.active {
+            border-color: var(--accent-primary);
+            background: rgba(255, 61, 0, 0.05);
+        }
+
+        .log-item-date {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent-secondary);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .log-item-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .log-item-id {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Editor Area */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .editor-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        #jsonEditor {
+            flex: 1;
+            background: #0d0d0e;
+            color: #d1d1d1;
+            border: 1px solid var(--border);
+            padding: 15px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+        }
+
+        #jsonEditor:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .btn-fire {
+            padding: 8px 16px;
+            background: var(--gradient-fire);
+            border: none;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-fire:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-fire:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
+            background: rgba(255, 61, 90, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 8px 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        /* Custom Modal and Undo Box Styles */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+        }
+
+        .custom-modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-modal h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .custom-modal p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .custom-modal-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .custom-modal-actions button {
+            flex: 1;
+        }
+
+        .undo-box {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--success);
+            padding: 20px 40px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 10001;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            min-width: 300px;
+        }
+
+        .undo-text {
+            color: var(--success);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .undo-link {
+            color: var(--text-primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .undo-link:hover {
+            color: var(--success);
+        }
+
+        .loading-bar-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 255, 136, 0.1);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        @keyframes loadingBarAnim {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-pattern"></div>
+
+    <header>
+        <div class="logo">
+            <h1>DATA EXPLORER</h1>
+            <span>Admin Tool</span>
+        </div>
+        <div class="header-right">
+            <div id="syncStatus" class="sync-status synced">Ready</div>
+            <div class="user-info">
+                <span id="userEmail">Not Logged In</span>
+            </div>
+            <button class="btn-tool" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="sidebar">
+            <div class="sidebar-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" onclick="loadLogs(20)">Last 20</button>
+                    <button class="btn-tool" onclick="loadLogs(50)">Last 50</button>
+                    <button class="btn-tool" onclick="loadLogs(0)">Load All</button>
+                </div>
+                <div class="toolbar-group">
+                    <input type="date" id="startDate" class="date-input">
+                    <span style="color: var(--text-muted); font-size: 10px;">to</span>
+                    <input type="date" id="endDate" class="date-input">
+                    <button class="btn-tool" onclick="loadByDate()">Go</button>
+                </div>
+                <input type="text" id="logSearch" class="search-box" placeholder="Search loaded logs..."
+                    oninput="filterLogs()">
+            </div>
+            <div id="logList">
+                <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+                    Select a frequency to load workouts
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-container">
+            <div class="editor-header">
+                <div class="editor-title" id="editorTitle">Select a Log</div>
+                <div class="editor-actions" id="editorActions" style="display: none;">
+                    <button class="btn-danger" onclick="deleteCurrentLog()">Delete</button>
+                    <button class="btn-tool" onclick="discardChanges()">Discard Changes</button>
+                    <button class="btn-fire" onclick="saveCurrentLog()">Save Changes</button>
+                </div>
+            </div>
+            <textarea id="jsonEditor" spellcheck="false"
+                placeholder="Select a log from the left to edit its raw JSON data..."></textarea>
+            <div id="validationMsg" style="margin-top: 10px; font-size: 12px; color: var(--error); height: 1.5em;">
+            </div>
+        </div>
+    </main>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="status-msg" id="loadingStatus">Fetching Data...</div>
+    </div>
+
+    <!-- Custom Delete Confirmation Modal -->
+    <div id="deleteModalOverlay" class="custom-modal-overlay">
+        <div class="custom-modal">
+            <h3>ARE YOU SURE?</h3>
+            <p>You are about to permanently delete this workout log. This action can be undone briefly after confirming.
+            </p>
+            <div class="custom-modal-actions">
+                <button class="btn-tool" onclick="hideDeleteModal()">CANCEL</button>
+                <button class="btn-danger" id="confirmDeleteFinal" onclick="triggerDeleteWithUndo()">YES,
+                    DELETE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Undo Deletion Box -->
+    <div id="undoBox" class="undo-box">
+        <span class="undo-text">DELETED!</span>
+        <span class="undo-link" onclick="undoDeletion()">Undo</span>
+        <div class="loading-bar-container">
+            <div id="undoLoadingBar" class="loading-bar"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        // CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+            authDomain: "workout-c7be0.firebaseapp.com",
+            projectId: "workout-c7be0",
+            storageBucket: "workout-c7be0.firebasestorage.app",
+            messagingSenderId: "625595909146",
+            appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        };
+
+        const ALLOWED_EMAIL = "sspsful@gmail.com";
+
+        // INITIALIZE FIREBASE
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // GLOBAL REFERENCES
+        let currentLogs = [];
+        let activeLogId = null;
+
+        // AUTH GUARD
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== ALLOWED_EMAIL) {
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('userEmail').textContent = user.email;
+            }
+        });
+
+        // UI HELPERS
+        function showLoading(show, message = "Processing...") {
+            const overlay = document.getElementById('loadingOverlay');
+            const msg = document.getElementById('loadingStatus');
+            msg.textContent = message;
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function setSyncStatus(status) {
+            const el = document.getElementById('syncStatus');
+            el.textContent = status;
+            el.className = `sync-status ${status.toLowerCase()}`;
+        }
+
+        // FIREBASE OPERATIONS
+        window.loadLogs = async function (limitCount) {
+            try {
+                showLoading(true, `Fetching last ${limitCount || 'all'} logs...`);
+                setSyncStatus('Syncing');
+
+                let q = query(collection(db, 'workouts'), orderBy('date', 'desc'));
+                if (limitCount > 0) q = query(q, limit(limitCount));
+
+                const snapshot = await getDocs(q);
+                currentLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                renderLogList(currentLogs);
+                showToast(`Loaded ${currentLogs.length} logs`);
+            } catch (err) {
+                console.error(err);
+                showToast("Fetch failed", "error");
+            } finally {
+                showLoading(false);
+                setSyncStatus('Synced');
+            }
+        }
+
+        window.loadByDate = async function () {
+            const start = document.getElementById('startDate').value;
+            const end = document.getElementById('endDate').value;
+
+            if (!start || !end) {
+                showToast("Select both dates", "error");
+                return;
+            }
+
+            try {
+                showLoading(true, "Searching date range...");
+                const startISO = new Date(start).toISOString();
+                const endISO = new Date(new Date(end).setHours(23, 59, 59, 999)).toISOString();
+
+                const q = query(
+                    collection(db, 'workouts'),
+                    where('date', '>=', startISO),
+                    where('date', '<=', endISO),
+                    orderBy('date', 'desc')
+                );
+
+                const snapshot = await getDocs(q);
+                currentLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                renderLogList(currentLogs);
+                showToast(`Found ${currentLogs.length} logs`);
+            } catch (err) {
+                console.error(err);
+                showToast("Search failed", "error");
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function renderLogList(logs) {
+            const list = document.getElementById('logList');
+            if (logs.length === 0) {
+                list.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No logs found matching criteria</div>';
+                return;
+            }
+
+            list.innerHTML = logs.map(log => {
+                const date = new Date(log.date);
+                const dateStr = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                return `
+                    <div class="log-item ${activeLogId === log.id ? 'active' : ''}" onclick="selectLog('${log.id}')">
+                        <div class="log-item-date">${dateStr}</div>
+                        <div class="log-item-info">
+                            <span>${log.workoutName || 'Unknown Workout'}</span>
+                            <span>${timeStr}</span>
+                        </div>
+                        <div class="log-item-id">ID: ${log.id}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.filterLogs = function () {
+            const query = document.getElementById('logSearch').value.toLowerCase();
+            const filtered = currentLogs.filter(log =>
+                log.workoutName?.toLowerCase().includes(query) ||
+                log.id.toString().includes(query) ||
+                log.date.includes(query)
+            );
+            renderLogList(filtered);
+        }
+
+        window.selectLog = function (id) {
+            activeLogId = id;
+            const log = currentLogs.find(l => l.id.toString() === id.toString());
+            if (!log) return;
+
+            // Highlight in sidebar
+            document.querySelectorAll('.log-item').forEach(item => {
+                item.classList.toggle('active', item.innerHTML.includes(`ID: ${id}`));
+            });
+
+            // Update Editor
+            const title = document.getElementById('editorTitle');
+            const date = new Date(log.date).toLocaleString();
+            title.textContent = `${log.workoutName} (${date})`;
+
+            document.getElementById('editorActions').style.display = 'flex';
+            const editor = document.getElementById('jsonEditor');
+            editor.value = JSON.stringify(log, null, 4);
+            editor.dataset.originalId = id;
+
+            // Focus and scroll to top
+            editor.scrollTop = 0;
+            document.getElementById('validationMsg').textContent = '';
+        }
+
+        window.saveCurrentLog = async function () {
+            const editor = document.getElementById('jsonEditor');
+            const validationMsg = document.getElementById('validationMsg');
+
+            try {
+                const updatedData = JSON.parse(editor.value);
+                const originalId = editor.dataset.originalId;
+
+                // Validate ID consistency (optional but safe)
+                if (updatedData.id.toString() !== originalId.toString()) {
+                    if (!confirm("The 'id' in JSON has changed. This will create a NEW document. Continue?")) return;
+                }
+
+                showLoading(true, "Saving to Firebase...");
+                await setDoc(doc(db, 'workouts', updatedData.id.toString()), updatedData);
+
+                // Update local state
+                const idx = currentLogs.findIndex(l => l.id.toString() === originalId.toString());
+                if (idx !== -1) currentLogs[idx] = updatedData;
+                else currentLogs.unshift(updatedData);
+
+                renderLogList(currentLogs);
+                selectLog(updatedData.id.toString());
+                showToast("Log saved successfully");
+                validationMsg.textContent = "";
+            } catch (err) {
+                validationMsg.textContent = "Invalid JSON: " + err.message;
+                showToast("Save failed", "error");
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // DELETE LOG WITH UNDO FLOW
+        let deleteTimeout = null;
+        let pendingDeleteId = null;
+
+        window.deleteCurrentLog = function () {
+            if (!activeLogId) return;
+            const btn = document.querySelector('.btn-danger');
+
+            if (btn.textContent === 'Delete') {
+                btn.textContent = 'Sure?';
+                btn.classList.add('warning'); // Style it slightly different
+                // Reset after 3 seconds if not clicked
+                setTimeout(() => {
+                    if (btn.textContent === 'Sure?') {
+                        btn.textContent = 'Delete';
+                        btn.classList.remove('warning');
+                    }
+                }, 3000);
+            } else {
+                // Secondary click confirmed, show custom modal
+                showDeleteModal();
+            }
+        }
+
+        function showDeleteModal() {
+            document.getElementById('deleteModalOverlay').style.display = 'flex';
+        }
+
+        window.hideDeleteModal = function () {
+            document.getElementById('deleteModalOverlay').style.display = 'none';
+            // Reset the main delete button text
+            const btn = document.querySelector('.btn-danger');
+            btn.textContent = 'Delete';
+        }
+
+        window.triggerDeleteWithUndo = function () {
+            if (!activeLogId) return;
+            pendingDeleteId = activeLogId;
+
+            // Hide selection in UI immediately but don't delete from Firebase yet
+            const logToRemove = pendingDeleteId;
+            document.getElementById('deleteModalOverlay').style.display = 'none';
+
+            // Re-render list without the "deleted" item temporarily
+            const originalLogs = [...currentLogs];
+            currentLogs = currentLogs.filter(l => l.id.toString() !== pendingDeleteId.toString());
+            renderLogList(currentLogs);
+
+            // Clear editor
+            document.getElementById('jsonEditor').value = "";
+            document.getElementById('editorTitle').textContent = "Select a Log";
+            document.getElementById('editorActions').style.display = 'none';
+
+            // Show Undo Box
+            const undoBox = document.getElementById('undoBox');
+            const loadingBar = document.getElementById('undoLoadingBar');
+            undoBox.style.display = 'flex';
+
+            // Animation for loading bar
+            loadingBar.style.animation = 'none';
+            void loadingBar.offsetWidth; // Trigger reflow
+            loadingBar.style.animation = 'loadingBarAnim 2s linear forwards';
+
+            // Set final deletion timeout
+            deleteTimeout = setTimeout(async () => {
+                if (pendingDeleteId) {
+                    try {
+                        await deleteDoc(doc(db, 'workouts', pendingDeleteId.toString()));
+                        showToast("Log permanently deleted");
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Final deletion failed", "error");
+                        // If it fails, maybe put it back?
+                        currentLogs = originalLogs;
+                        renderLogList(currentLogs);
+                    }
+                }
+                hideUndoBox();
+            }, 2000);
+
+            // Store originalLogs in a way undo can access
+            window._tempLogsBeforeDelete = originalLogs;
+        }
+
+        window.undoDeletion = function () {
+            if (deleteTimeout) {
+                clearTimeout(deleteTimeout);
+                deleteTimeout = null;
+
+                // Put items back in local state
+                if (window._tempLogsBeforeDelete) {
+                    currentLogs = window._tempLogsBeforeDelete;
+                    renderLogList(currentLogs);
+                    // Reselect the item
+                    selectLog(pendingDeleteId);
+                }
+
+                pendingDeleteId = null;
+                hideUndoBox();
+                showToast("Deletion undone!");
+            }
+        }
+
+        function hideUndoBox() {
+            document.getElementById('undoBox').style.display = 'none';
+            pendingDeleteId = null;
+            // Also reset the delete button text for next time
+            const btn = document.querySelector('.btn-danger');
+            if (btn) btn.textContent = 'Delete';
+        }
+
+        window.discardChanges = function () {
+            if (!activeLogId) return;
+            const log = currentLogs.find(l => l.id.toString() === activeLogId.toString());
+            if (log) {
+                document.getElementById('jsonEditor').value = JSON.stringify(log, null, 4);
+                document.getElementById('validationMsg').textContent = "";
+                showToast("Changes discarded");
+            }
+        }
+
+        window.logout = async function () {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        }
+
+        // Global Event Handlers
+        document.getElementById('jsonEditor').addEventListener('keydown', function (e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
+                this.selectionStart = this.selectionEnd = start + 4;
+            }
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveCurrentLog();
+            }
+        });
+
+    </script>
+</body>
+
+</html>
