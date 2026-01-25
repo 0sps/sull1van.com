@@ -2045,13 +2045,17 @@
             const recentLogs = workoutLogs.slice(0, 15);
 
             for (const log of recentLogs) {
+                let workoutHasSets = false;
                 for (let exIdx = 0; exIdx < log.exercises.length; exIdx++) {
                     const exercise = log.exercises[exIdx];
                     const exerciseData = getExercise(exercise.id);
                     const exerciseName = exerciseData ? exerciseData.name : (exercise.name || 'Unknown Exercise');
 
-                    for (let setIdx = 0; setIdx < (exercise.sets || []).length; setIdx++) {
-                        const set = exercise.sets[setIdx];
+                    const sets = exercise.sets || [];
+                    if (sets.length > 0) workoutHasSets = true;
+
+                    for (let setIdx = 0; setIdx < sets.length; setIdx++) {
+                        const set = sets[setIdx];
                         flatSets.push({
                             workoutId: log.id,
                             workoutDate: log.date,
@@ -2059,11 +2063,28 @@
                             exerciseId: exercise.id,
                             exerciseName: exerciseName,
                             setIndex: setIdx,
-                            weight: set.weight, // stored in kg
-                            reps: set.reps,
-                            isWarmup: set.isWarmup
+                            weight: set.weight || 0, // stored in kg
+                            reps: set.reps || 0,
+                            isWarmup: set.isWarmup || false,
+                            isEmptyWorkout: false
                         });
                     }
+                }
+
+                // If no sets were found in any exercise of this workout, add a placeholder
+                if (!workoutHasSets) {
+                    flatSets.push({
+                        workoutId: log.id,
+                        workoutDate: log.date,
+                        exerciseIndex: 0,
+                        exerciseId: 'empty',
+                        exerciseName: '(Empty Workout)',
+                        setIndex: 0,
+                        weight: 0,
+                        reps: 0,
+                        isWarmup: false,
+                        isEmptyWorkout: true
+                    });
                 }
             }
 
@@ -2123,14 +2144,22 @@
 
                 // On mobile, the row itself shows the confirming state
                 const confirmingClass = (isSelected && window.innerWidth <= 768) ? 'confirming' : '';
+                const emptyClass = set.isEmptyWorkout ? 'empty-workout-row' : '';
 
                 html += `
-                    <tr class="${isSelected ? 'selected' : ''} ${confirmingClass}" id="deleteRow_${idx}" onclick="selectSetForDeletion(${idx})">
+                    <tr class="${isSelected ? 'selected' : ''} ${confirmingClass} ${emptyClass}" 
+                        id="deleteRow_${idx}" 
+                        onclick="selectSetForDeletion(${idx})"
+                        style="${set.isEmptyWorkout ? 'background: rgba(255,255,255,0.03); opacity: 0.8;' : ''}">
                         <td>${dateStr}</td>
-                        <td><strong>${set.exerciseName}</strong></td>
-                        <td>${weightLbs} lbs</td>
-                        <td>${set.reps}</td>
-                        <td style="color: ${typeColor};">${typeLabel}</td>
+                        <td style="${set.isEmptyWorkout ? 'color: var(--text-muted); font-style: italic;' : ''}">
+                            <strong>${set.exerciseName}</strong>
+                        </td>
+                        <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : `${weightLbs} lbs`}</td>
+                        <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : set.reps}</td>
+                        <td style="color: ${set.isEmptyWorkout ? 'var(--text-muted)' : typeColor};">
+                            ${set.isEmptyWorkout ? 'System Log' : typeLabel}
+                        </td>
                         <td>
                             ${isSelected ? `<button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">Delete?</button>` : ''}
                         </td>
@@ -2188,9 +2217,9 @@
                 }
             }
 
-            const { workoutId, exerciseIndex, setIndex } = selectedSetForDeletion;
+            const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
 
-            console.log('DELETING SET FROM FIREBASE:', { workoutId, exerciseIndex, setIndex });
+            console.log('DELETING SET FROM FIREBASE:', { workoutId, exerciseIndex, setIndex, isEmptyWorkout });
 
             // Small delay for the "Deleted!" visual
             await new Promise(r => setTimeout(r, 600));
@@ -2203,24 +2232,30 @@
                     return;
                 }
 
-                const workout = JSON.parse(JSON.stringify(workoutLogs[workoutIdx]));
-
-                // Remove the set
-                workout.exercises[exerciseIndex].sets.splice(setIndex, 1);
-
-                // If exercise has no sets left, remove the exercise
-                if (workout.exercises[exerciseIndex].sets.length === 0) {
-                    workout.exercises.splice(exerciseIndex, 1);
-                }
-
-                // If workout has no exercises left, delete the entire workout
-                if (workout.exercises.length === 0) {
+                if (isEmptyWorkout) {
+                    // It's an empty workout placeholder - delete the entire document
                     await deleteFromFirebase(workoutId);
                     workoutLogs.splice(workoutIdx, 1);
                 } else {
-                    // Update the workout
-                    await saveToFirebase(workout);
-                    workoutLogs[workoutIdx] = workout;
+                    const workout = JSON.parse(JSON.stringify(workoutLogs[workoutIdx]));
+
+                    // Remove the set
+                    workout.exercises[exerciseIndex].sets.splice(setIndex, 1);
+
+                    // If exercise has no sets left, remove the exercise
+                    if (workout.exercises[exerciseIndex].sets.length === 0) {
+                        workout.exercises.splice(exerciseIndex, 1);
+                    }
+
+                    // If workout has no exercises left, delete the entire workout
+                    if (workout.exercises.length === 0) {
+                        await deleteFromFirebase(workoutId);
+                        workoutLogs.splice(workoutIdx, 1);
+                    } else {
+                        // Update the workout
+                        await saveToFirebase(workout);
+                        workoutLogs[workoutIdx] = workout;
+                    }
                 }
                 invalidateStatsCache();
 
