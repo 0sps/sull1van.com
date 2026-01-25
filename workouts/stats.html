@@ -969,6 +969,73 @@
         .delta-neutral {
             color: var(--text-muted);
         }
+
+        /* Holographic Effect */
+        .holographic {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.08) 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .holographic::before {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 400%;
+            height: 400%;
+            background: linear-gradient(45deg,
+                    transparent 20%,
+                    rgba(255, 0, 100, 0.1) 25%,
+                    rgba(0, 255, 200, 0.1) 35%,
+                    rgba(255, 200, 0, 0.1) 45%,
+                    rgba(0, 100, 255, 0.1) 55%,
+                    rgba(200, 0, 255, 0.1) 65%,
+                    transparent 70%);
+            z-index: 1;
+            animation: holoShimmer 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes holoShimmer {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            box-shadow: 0 0 8px #fff, 0 0 12px var(--accent-primary);
+        }
+
+        @keyframes particleFly {
+            0% {
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1.2);
+            }
+
+            100% {
+                transform: translateY(-80px) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -999,28 +1066,28 @@
 
             <!-- Key Metrics -->
             <div class="stats-grid" id="draggableStats">
-                <div class="glass-card stat-card" data-id="stat-workouts">
+                <div class="glass-card stat-card holographic" data-id="stat-workouts">
                     <div class="stat-icon">💪</div>
                     <div class="stat-value" id="totalWorkouts">0</div>
                     <div class="stat-label">Workouts</div>
                     <div id="deltaWorkouts" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card" data-id="stat-volume">
+                <div class="glass-card stat-card holographic" data-id="stat-volume">
                     <div class="stat-icon">🔥</div>
                     <div class="stat-value" id="totalVolume">0</div>
                     <div class="stat-label">Vol (lbs)</div>
                     <div id="deltaVolume" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card" data-id="stat-intensity">
+                <div class="glass-card stat-card holographic" data-id="stat-intensity">
                     <div class="stat-icon">📈</div>
                     <div class="stat-value" id="avgIntensity">0</div>
                     <div class="stat-label">Avg Weight</div>
                     <div id="deltaIntensity" class="delta-stat"></div>
                 </div>
 
-                <div class="glass-card stat-card" data-id="stat-streak">
+                <div class="glass-card stat-card holographic" data-id="stat-streak">
                     <div class="stat-icon">⚡</div>
                     <div class="stat-value" id="currentStreak">0</div>
                     <div class="stat-label">Streak</div>
@@ -1410,17 +1477,39 @@
                         });
                     });
 
-                    const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 5);
+                    const sorted = Object.entries(prs).sort((a, b) => b[1].weight - a[1].weight).slice(0, 6);
                     const container = document.getElementById('prList');
                     if (!container) return;
 
-                    container.innerHTML = sorted.map(([name, pr]) => `
-                <div class="pr-card">
-                    <div class="pr-exercise-name">${name}</div>
-                    <div class="pr-value">${Math.round(kgToLbs(pr.weight))} lbs × ${pr.reps}</div>
-                    <div class="pr-date">${new Date(pr.date).toLocaleDateString()}</div>
-                </div>
-            `).join('');
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+                    container.innerHTML = sorted.map(([name, pr], index) => {
+                        const prDate = new Date(pr.date);
+                        const isRecent = prDate >= sevenDaysAgo;
+                        // For testing: force holographic on the first card regardless of date
+                        const cardClass = (isRecent || index === 0) ? 'pr-card holographic' : 'pr-card';
+
+                        return `
+                        <div class="${cardClass}">
+                            <div class="pr-exercise-name">${name}</div>
+                            <div class="pr-value">${Math.round(kgToLbs(pr.weight))} lbs × ${pr.reps}</div>
+                            <div class="pr-date">${prDate.toLocaleDateString()}</div>
+                        </div>
+                    `;
+                    }).join('');
+
+                }
+
+                function createParticle(card) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    const x = Math.random() * card.offsetWidth;
+                    p.style.left = x + 'px';
+                    p.style.bottom = '10px';
+                    p.style.animation = `particleFly ${3 + Math.random() * 2}s ease-out forwards`;
+                    card.appendChild(p);
+                    setTimeout(() => p.remove(), 5000);
                 }
 
                 function renderWeeklyBreakdown() {
@@ -1557,6 +1646,17 @@
                 function initSortable() {
                     const statsGrid = document.getElementById('draggableStats');
                     if (statsGrid) {
+                        // Apply saved order
+                        const order = localStorage.getItem('statsOrder');
+                        if (order) {
+                            const orderArray = order.split('|');
+                            const items = Array.from(statsGrid.children);
+                            orderArray.forEach(id => {
+                                const item = items.find(el => el.getAttribute('data-id') === id);
+                                if (item) statsGrid.appendChild(item);
+                            });
+                        }
+
                         new Sortable(statsGrid, {
                             animation: 150,
                             ghostClass: 'sortable-ghost',
@@ -1577,12 +1677,22 @@
 
                     const sectionsGrid = document.getElementById('draggableSections');
                     if (sectionsGrid) {
+                        // Apply saved order
+                        const order = localStorage.getItem('sectionsOrder');
+                        if (order) {
+                            const orderArray = order.split('|');
+                            const items = Array.from(sectionsGrid.children);
+                            orderArray.forEach(id => {
+                                const item = items.find(el => el.getAttribute('data-id') === id);
+                                if (item) sectionsGrid.appendChild(item);
+                            });
+                        }
+
                         new Sortable(sectionsGrid, {
                             animation: 150,
                             ghostClass: 'sortable-ghost',
                             chosenClass: 'sortable-chosen',
                             dragClass: 'sortable-drag',
-                            // Removed handle restriction to allow dragging the whole block
                             store: {
                                 get: (sortable) => {
                                     const order = localStorage.getItem('sectionsOrder');
@@ -1607,6 +1717,20 @@
                     renderWeeklyBreakdown();
                     renderHeatmap();
                     renderPerformanceInsights();
+
+                    // Trigger particles for all holographic components
+                    document.querySelectorAll('.holographic').forEach(card => {
+                        if (card.dataset.particlesStarted) return;
+                        card.dataset.particlesStarted = 'true';
+
+                        const interval = setInterval(() => {
+                            if (!card.isConnected) {
+                                clearInterval(interval);
+                                return;
+                            }
+                            createParticle(card);
+                        }, 800);
+                    });
                 }
 
                 // Initialize
