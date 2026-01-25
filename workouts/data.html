@@ -324,6 +324,24 @@
             color: white;
         }
 
+        .btn-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 8px 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-success:hover {
+            background: var(--success);
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
         /* Custom Modal and Undo Box Styles */
         .custom-modal-overlay {
             position: fixed;
@@ -485,7 +503,7 @@
                 <div class="editor-actions" id="editorActions" style="display: none;">
                     <button class="btn-danger" onclick="deleteCurrentLog()">Delete</button>
                     <button class="btn-tool" onclick="discardChanges()">Discard Changes</button>
-                    <button class="btn-fire" onclick="saveCurrentLog()">Save Changes</button>
+                    <button class="btn-success" onclick="saveCurrentLog()">Save Changes</button>
                 </div>
             </div>
             <textarea id="jsonEditor" spellcheck="false"
@@ -525,15 +543,27 @@
             <p>This JSON does not match the standard structure. Are you sure you want to save anyway?</p>
             <div class="custom-modal-actions">
                 <button class="btn-tool" onclick="hideValidationModal()">GO BACK</button>
-                <button class="btn-danger" onclick="proceedWithSave()">SAVE ANYWAY</button>
+                <button class="btn-danger" onclick="proceedWithSaveAnyway()">SAVE ANYWAY</button>
             </div>
         </div>
     </div>
 
-    <!-- Undo Deletion Box -->
+    <!-- Save Confirmation Modal -->
+    <div id="saveModalOverlay" class="custom-modal-overlay">
+        <div class="custom-modal" style="border-color: var(--success);">
+            <h3 style="color: var(--success);">READY TO SAVE?</h3>
+            <p>Are you sure you want to apply these changes to the workout log?</p>
+            <div class="custom-modal-actions">
+                <button class="btn-tool" onclick="hideSaveModal()">GO BACK</button>
+                <button class="btn-success" onclick="triggerSaveWithUndo()">YES, SAVE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Undo Box (Shared for Delete and Save) -->
     <div id="undoBox" class="undo-box">
-        <span class="undo-text">DELETED!</span>
-        <span class="undo-link" onclick="undoDeletion()">Undo</span>
+        <span id="undoTitle" class="undo-text">DELETED!</span>
+        <span class="undo-link" id="undoActionLink" onclick="handleUndoClick()">Undo</span>
         <div class="loading-bar-container">
             <div id="undoLoadingBar" class="loading-bar"></div>
         </div>
@@ -566,6 +596,18 @@
         // GLOBAL REFERENCES
         let currentLogs = [];
         let activeLogId = null;
+        let exerciseLibrary = {};
+
+        // Load Exercise Library for validation
+        async function loadExerciseLibrary() {
+            try {
+                const response = await fetch('exercises.json');
+                exerciseLibrary = await response.json();
+            } catch (err) {
+                console.error("Failed to load exercises.json for validation:", err);
+            }
+        }
+        loadExerciseLibrary();
 
         // AUTH GUARD
         onAuthStateChanged(auth, (user) => {
@@ -722,7 +764,7 @@
                 const updatedData = JSON.parse(editor.value);
                 const originalId = editor.dataset.originalId;
 
-                // Validate ID consistency (optional but safe)
+                // Validate ID consistency
                 if (updatedData.id.toString() !== originalId.toString()) {
                     if (!confirm("The 'id' in JSON has changed. This will create a NEW document. Continue?")) return;
                 }
@@ -736,11 +778,28 @@
                     return;
                 }
 
-                await executeSave(updatedData, originalId);
+                // All checks passed, show confirmation modal
+                showSaveModal(updatedData, originalId);
             } catch (err) {
                 validationMsg.textContent = "Invalid JSON: " + err.message;
                 showToast("Save failed", "error");
             }
+        }
+
+        function showSaveModal(data, originalId) {
+            window._pendingSaveData = data;
+            window._pendingOriginalId = originalId;
+            document.getElementById('saveModalOverlay').style.display = 'flex';
+        }
+
+        window.hideSaveModal = function () {
+            document.getElementById('saveModalOverlay').style.display = 'none';
+        }
+
+        window.proceedWithSaveAnyway = function () {
+            hideValidationModal();
+            // After bypassing validation, we STILL show the standard save confirmation
+            showSaveModal(window._pendingSaveData, window._pendingOriginalId);
         }
 
         function getValidationError(data) {
@@ -761,6 +820,12 @@
 
                     if (!ex.name) return `${exLabel}: Missing "name"`;
                     if (!ex.id) return `${exLabel}: Missing "id"`;
+
+                    // Verify ID exists in exercises.json
+                    if (Object.keys(exerciseLibrary).length > 0 && !exerciseLibrary[ex.id]) {
+                        return `${exLabel}: ID "${ex.id}" is invalid (not found in exercises.json)`;
+                    }
+
                     if (!ex.sets || !Array.isArray(ex.sets)) return `${exLabel}: "sets" must be an array`;
 
                     for (let j = 0; j < ex.sets.length; j++) {
@@ -787,15 +852,6 @@
             document.getElementById('validationModalOverlay').style.display = 'none';
         }
 
-        window.proceedWithSave = async function () {
-            hideValidationModal();
-            if (window._pendingSaveData) {
-                await executeSave(window._pendingSaveData, window._pendingOriginalId);
-                window._pendingSaveData = null;
-                window._pendingOriginalId = null;
-            }
-        }
-
         async function executeSave(data, originalId) {
             showLoading(true, "Saving to Firebase...");
             try {
@@ -818,52 +874,83 @@
             }
         }
 
-        // DELETE LOG WITH UNDO FLOW
-        let deleteTimeout = null;
-        let pendingDeleteId = null;
+        window.proceedWithSave = async function () {
+            // This function is effectively replaced by proceedWithSaveAnyway and triggerSaveWithUndo
+        }
 
-        window.deleteCurrentLog = function () {
-            if (!activeLogId) return;
-            const btn = document.querySelector('.btn-danger');
+        // SHARED UNDO SYSTEM
+        let pendingActionTimeout = null;
+        let pendingActionType = null; // 'delete' or 'save'
+        let pendingData = null;
+        let pendingId = null;
 
-            if (btn.textContent === 'Delete') {
-                btn.textContent = 'Sure?';
-                btn.classList.add('warning'); // Style it slightly different
-                // Reset after 3 seconds if not clicked
-                setTimeout(() => {
-                    if (btn.textContent === 'Sure?') {
-                        btn.textContent = 'Delete';
-                        btn.classList.remove('warning');
-                    }
-                }, 3000);
-            } else {
-                // Secondary click confirmed, show custom modal
-                showDeleteModal();
+        function showUndoBox(type, title) {
+            pendingActionType = type;
+            const undoBox = document.getElementById('undoBox');
+            const loadingBar = document.getElementById('undoLoadingBar');
+            const titleEl = document.getElementById('undoTitle');
+
+            titleEl.textContent = title;
+            undoBox.style.display = 'flex';
+
+            loadingBar.style.animation = 'none';
+            void loadingBar.offsetWidth;
+            loadingBar.style.animation = 'loadingBarAnim 2s linear forwards';
+        }
+
+        window.handleUndoClick = function () {
+            if (pendingActionTimeout) {
+                clearTimeout(pendingActionTimeout);
+                pendingActionTimeout = null;
+
+                if (pendingActionType === 'delete') {
+                    undoDeletion();
+                } else if (pendingActionType === 'save') {
+                    undoSave();
+                }
+
+                hideUndoBox();
             }
         }
 
-        function showDeleteModal() {
-            document.getElementById('deleteModalOverlay').style.display = 'flex';
+        // SAVE WITH UNDO
+        window.triggerSaveWithUndo = function () {
+            const data = window._pendingSaveData;
+            const originalId = window._pendingOriginalId;
+            if (!data) return;
+
+            hideSaveModal();
+            pendingData = data;
+            pendingId = originalId;
+
+            // Show Undo UI
+            showUndoBox('save', 'SAVED!');
+
+            pendingActionTimeout = setTimeout(async () => {
+                await executeSave(pendingData, pendingId);
+                hideUndoBox();
+            }, 2000);
         }
 
-        window.hideDeleteModal = function () {
-            document.getElementById('deleteModalOverlay').style.display = 'none';
-            // Reset the main delete button text
-            const btn = document.querySelector('.btn-danger');
-            btn.textContent = 'Delete';
+        function undoSave() {
+            showToast("Save undone!");
+            // Data is still in the editor, we just didn't push to Firebase
+            // So we just re-select the log to ensure local state is synced
+            selectLog(pendingId);
+            pendingData = null;
+            pendingId = null;
         }
 
+        // DELETE WITH UNDO
         window.triggerDeleteWithUndo = function () {
             if (!activeLogId) return;
-            pendingDeleteId = activeLogId;
+            pendingId = activeLogId;
 
-            // Hide selection in UI immediately but don't delete from Firebase yet
-            const logToRemove = pendingDeleteId;
             document.getElementById('deleteModalOverlay').style.display = 'none';
 
-            // Re-render list without the "deleted" item temporarily
+            // Hide selection in UI immediately
             const originalLogs = [...currentLogs];
-            currentLogs = currentLogs.filter(l => l.id.toString() !== pendingDeleteId.toString());
+            currentLogs = currentLogs.filter(l => l.id.toString() !== pendingId.toString());
             renderLogList(currentLogs);
 
             // Clear editor
@@ -871,60 +958,36 @@
             document.getElementById('editorTitle').textContent = "Select a Log";
             document.getElementById('editorActions').style.display = 'none';
 
-            // Show Undo Box
-            const undoBox = document.getElementById('undoBox');
-            const loadingBar = document.getElementById('undoLoadingBar');
-            undoBox.style.display = 'flex';
+            showUndoBox('delete', 'DELETED!');
+            window._tempLogsBeforeDelete = originalLogs;
 
-            // Animation for loading bar
-            loadingBar.style.animation = 'none';
-            void loadingBar.offsetWidth; // Trigger reflow
-            loadingBar.style.animation = 'loadingBarAnim 2s linear forwards';
-
-            // Set final deletion timeout
-            deleteTimeout = setTimeout(async () => {
-                if (pendingDeleteId) {
-                    try {
-                        await deleteDoc(doc(db, 'workouts', pendingDeleteId.toString()));
-                        showToast("Log permanently deleted");
-                    } catch (err) {
-                        console.error(err);
-                        showToast("Final deletion failed", "error");
-                        // If it fails, maybe put it back?
-                        currentLogs = originalLogs;
-                        renderLogList(currentLogs);
-                    }
+            pendingActionTimeout = setTimeout(async () => {
+                try {
+                    await deleteDoc(doc(db, 'workouts', pendingId.toString()));
+                    showToast("Log permanently deleted");
+                } catch (err) {
+                    console.error(err);
+                    showToast("Final deletion failed", "error");
+                    currentLogs = window._tempLogsBeforeDelete;
+                    renderLogList(currentLogs);
                 }
                 hideUndoBox();
             }, 2000);
-
-            // Store originalLogs in a way undo can access
-            window._tempLogsBeforeDelete = originalLogs;
         }
 
-        window.undoDeletion = function () {
-            if (deleteTimeout) {
-                clearTimeout(deleteTimeout);
-                deleteTimeout = null;
-
-                // Put items back in local state
-                if (window._tempLogsBeforeDelete) {
-                    currentLogs = window._tempLogsBeforeDelete;
-                    renderLogList(currentLogs);
-                    // Reselect the item
-                    selectLog(pendingDeleteId);
-                }
-
-                pendingDeleteId = null;
-                hideUndoBox();
-                showToast("Deletion undone!");
+        function undoDeletion() {
+            if (window._tempLogsBeforeDelete) {
+                currentLogs = window._tempLogsBeforeDelete;
+                renderLogList(currentLogs);
+                selectLog(pendingId);
             }
+            showToast("Deletion undone!");
         }
 
         function hideUndoBox() {
             document.getElementById('undoBox').style.display = 'none';
-            pendingDeleteId = null;
-            // Also reset the delete button text for next time
+            pendingActionType = null;
+            pendingActionTimeout = null;
             const btn = document.querySelector('.btn-danger');
             if (btn) btn.textContent = 'Delete';
         }
