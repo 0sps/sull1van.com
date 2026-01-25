@@ -514,6 +514,22 @@
         </div>
     </div>
 
+    <!-- JSON Validation Warning Modal -->
+    <div id="validationModalOverlay" class="custom-modal-overlay">
+        <div class="custom-modal" style="border-color: var(--error); max-width: 500px;">
+            <h3 style="color: var(--error);">INVALID STRUCTURE?</h3>
+            <p id="validationErrorDetail"
+                style="background: rgba(255, 61, 90, 0.1); padding: 15px; border-left: 3px solid var(--error); text-align: left; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 25px;">
+                <!-- Error detail goes here -->
+            </p>
+            <p>This JSON does not match the standard structure. Are you sure you want to save anyway?</p>
+            <div class="custom-modal-actions">
+                <button class="btn-tool" onclick="hideValidationModal()">GO BACK</button>
+                <button class="btn-danger" onclick="proceedWithSave()">SAVE ANYWAY</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Undo Deletion Box -->
     <div id="undoBox" class="undo-box">
         <span class="undo-text">DELETED!</span>
@@ -711,20 +727,91 @@
                     if (!confirm("The 'id' in JSON has changed. This will create a NEW document. Continue?")) return;
                 }
 
-                showLoading(true, "Saving to Firebase...");
-                await setDoc(doc(db, 'workouts', updatedData.id.toString()), updatedData);
+                // Check structure validation
+                const validationError = getValidationError(updatedData);
+                if (validationError) {
+                    window._pendingSaveData = updatedData;
+                    window._pendingOriginalId = originalId;
+                    showValidationModal(validationError);
+                    return;
+                }
+
+                await executeSave(updatedData, originalId);
+            } catch (err) {
+                validationMsg.textContent = "Invalid JSON: " + err.message;
+                showToast("Save failed", "error");
+            }
+        }
+
+        function getValidationError(data) {
+            try {
+                if (typeof data !== 'object' || data === null) return "Data must be a JSON object";
+
+                // Root fields
+                const rootFields = ['id', 'date', 'weightUnit', 'workoutName', 'exercises'];
+                for (const field of rootFields) {
+                    if (!data.hasOwnProperty(field)) return `Missing root field: "${field}"`;
+                }
+
+                if (!Array.isArray(data.exercises)) return '"exercises" must be an array';
+
+                for (let i = 0; i < data.exercises.length; i++) {
+                    const ex = data.exercises[i];
+                    const exLabel = `Exercise[${i}] (${ex.name || 'unnamed'})`;
+
+                    if (!ex.name) return `${exLabel}: Missing "name"`;
+                    if (!ex.id) return `${exLabel}: Missing "id"`;
+                    if (!ex.sets || !Array.isArray(ex.sets)) return `${exLabel}: "sets" must be an array`;
+
+                    for (let j = 0; j < ex.sets.length; j++) {
+                        const set = ex.sets[j];
+                        const setLabel = `${exLabel}, Set[${j}]`;
+
+                        if (typeof set.reps !== 'number') return `${setLabel}: "reps" must be a number`;
+                        if (typeof set.weight !== 'number') return `${setLabel}: "weight" must be a number`;
+                        if (set.isWarmup === undefined) return `${setLabel}: Missing "isWarmup" boolean`;
+                    }
+                }
+                return null; // Valid
+            } catch (e) {
+                return "Validation crashed: " + e.message;
+            }
+        }
+
+        function showValidationModal(errorMsg) {
+            document.getElementById('validationErrorDetail').textContent = errorMsg;
+            document.getElementById('validationModalOverlay').style.display = 'flex';
+        }
+
+        window.hideValidationModal = function () {
+            document.getElementById('validationModalOverlay').style.display = 'none';
+        }
+
+        window.proceedWithSave = async function () {
+            hideValidationModal();
+            if (window._pendingSaveData) {
+                await executeSave(window._pendingSaveData, window._pendingOriginalId);
+                window._pendingSaveData = null;
+                window._pendingOriginalId = null;
+            }
+        }
+
+        async function executeSave(data, originalId) {
+            showLoading(true, "Saving to Firebase...");
+            try {
+                await setDoc(doc(db, 'workouts', data.id.toString()), data);
 
                 // Update local state
                 const idx = currentLogs.findIndex(l => l.id.toString() === originalId.toString());
-                if (idx !== -1) currentLogs[idx] = updatedData;
-                else currentLogs.unshift(updatedData);
+                if (idx !== -1) currentLogs[idx] = data;
+                else currentLogs.unshift(data);
 
                 renderLogList(currentLogs);
-                selectLog(updatedData.id.toString());
+                selectLog(data.id.toString());
                 showToast("Log saved successfully");
-                validationMsg.textContent = "";
+                document.getElementById('validationMsg').textContent = "";
             } catch (err) {
-                validationMsg.textContent = "Invalid JSON: " + err.message;
+                console.error(err);
                 showToast("Save failed", "error");
             } finally {
                 showLoading(false);
