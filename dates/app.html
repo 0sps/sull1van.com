@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#3a3a3c">
+    <meta name="theme-color" content="#000814">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Contacts</title>
     <style>
         :root {
             /* iOS System Colors - Dark Mode Base */
-            --ios-bg: #1c1c1e;
+            --ios-bg: #000814;
             --ios-card: rgba(28, 28, 30, 0.7);
             --ios-card-grouped: rgba(28, 28, 30, 0.7);
             --ios-nav-bar: rgba(0, 0, 0, 0.3);
@@ -22,9 +21,9 @@
             --ios-gray: #8e8e93;
             --ios-gray2: #636366;
             --ios-gray3: #48484a;
-            --ios-gray4: #3a3a3c;
-            --ios-gray5: #2c2c2e;
-            --ios-gray6: #1c1c1e;
+            --ios-gray4: #1c1c1e;
+            --ios-gray5: #0a0a0a;
+            --ios-gray6: #0a0a0a;
 
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.6);
@@ -50,6 +49,7 @@
             width: 100vw;
             margin: 0;
             padding: 0;
+            background: transparent !important;
         }
 
         body {
@@ -1802,9 +1802,9 @@
             bg.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
             document.querySelector('meta[name="theme-color"]').setAttribute('content', theme);
 
-            // Apply gradient to HTML root to handle iOS overscroll
-            document.documentElement.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%) fixed center / cover no-repeat`;
-            document.body.style.background = 'transparent';
+            // Set root backgrounds to match gradient ends to fix iOS overscroll bars
+            document.documentElement.style.backgroundColor = top;
+            document.body.style.backgroundColor = bot;
 
             // Ensure text is always white for the weather aesthetic
             document.body.style.setProperty('--text-primary', '#ffffff');
