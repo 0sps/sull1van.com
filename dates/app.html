@@ -482,6 +482,14 @@
             color: var(--ios-gray2);
         }
 
+        /* Contenteditable Placeholder */
+        .form-input[contenteditable]:empty::before {
+            content: attr(placeholder);
+            color: var(--ios-gray2);
+            pointer-events: none;
+            display: block;
+        }
+
         .section-header {
             font-size: 14px;
             text-transform: uppercase;
@@ -959,7 +967,8 @@
                     <div class="form-group-container">
                         <div class="form-row">
                             <label class="form-label">Name</label>
-                            <input type="text" id="name" class="form-input" placeholder="Required" dir="auto">
+                            <div id="name" class="form-input" contenteditable="true" placeholder="Required" dir="auto">
+                            </div>
                         </div>
                         <div class="form-row">
                             <label class="form-label">Job</label>
@@ -975,10 +984,11 @@
                             <input type="text" id="howWeMet" class="form-input" placeholder="Hinge, Work..."
                                 list="metOptions">
                             <datalist id="metOptions">
-                                <option value="Hinge">
-                                <option value="Bumble">
+                                <option value="Grindr">
+                                <option value="Tinder">
                                 <option value="IRL">
                                 <option value="Friends">
+                                <option value="Instagram">
                             </datalist>
                         </div>
                     </div>
@@ -1038,8 +1048,12 @@
                     <datalist id="statusOptions">
                         <option value="Talking">
                         <option value="Dating">
-                        <option value="Friendzoned">
-                        <option value="Ghosted">
+                        <option value="Friendzoned Me">
+                        <option value="Friendzoned Them">
+                        <option value="Ghosted Me">
+                        <option value="Ghosted Them">
+                        <option value="Broke up with them">
+                        <option value="Ended it with me">
                     </datalist>
 
                     <!-- DELETE -->
@@ -1383,6 +1397,7 @@
             document.getElementById('modalTitle').textContent = 'New Date';
             document.getElementById('deleteContainer').style.display = 'none';
             document.getElementById('personForm').reset();
+            document.getElementById('name').innerText = '';
 
             // Set initial date
             const now = new Date();
@@ -1409,13 +1424,14 @@
 
             // Fill
             const set = (eid, val) => document.getElementById(eid).value = val || '';
+            const setName = (val) => document.getElementById('name').innerText = val || '';
             const toFormattedDate = (ts) => {
                 if (!ts) return '';
                 const d = new Date(ts.seconds * 1000);
                 return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}/${d.getFullYear()}`;
             };
 
-            set('name', p.name);
+            setName(p.name);
             set('occupation', p.occupation);
             set('dateWeMet', toFormattedDate(p.dateWeMet));
             set('howWeMet', p.howWeMet);
@@ -1446,8 +1462,11 @@
         }
 
         window.savePerson = async function () {
-            const getVal = id => document.getElementById(id).value;
-            const getNum = id => parseFloat(getVal(id)) || 0;
+            const getVal = id => {
+                const el = document.getElementById(id);
+                return el.tagName === 'DIV' ? el.innerText : el.value;
+            };
+            const getNum = id => parseFloat(document.getElementById(id).value) || 0;
             const parseDate = str => {
                 if (!str) return null;
                 const parts = str.split('/');
