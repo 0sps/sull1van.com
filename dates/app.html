@@ -44,6 +44,7 @@
             background-color: var(--ios-bg);
             color: var(--text-primary);
             min-height: 100vh;
+            width: 100vw;
             padding-bottom: 40px;
             font-size: 17px;
             line-height: 1.4;
@@ -122,6 +123,9 @@
             width: 220px;
             margin: 24px auto;
             isolation: isolate;
+            touch-action: pan-y;
+            /* Prevent horizontal page scroll when interacting */
+            user-select: none;
         }
 
         .segmented-control::before {
@@ -182,6 +186,7 @@
             overflow: hidden;
             /* This stops the -20px margin from causing page scroll */
             width: 100%;
+            max-width: 100vw;
         }
 
         .analytics-scroll::-webkit-scrollbar {
@@ -859,7 +864,39 @@
             window.location.href = 'index.html';
         }
 
-        // Swipe Support
+        // Segmented Control Drag/Slide Support
+        const segControl = document.querySelector('.segmented-control');
+        let isDraggingSeg = false;
+
+        segControl.addEventListener('touchstart', (e) => {
+            isDraggingSeg = true;
+            handleSegTouch(e);
+        }, { passive: false });
+
+        segControl.addEventListener('touchmove', (e) => {
+            if (isDraggingSeg) {
+                e.preventDefault();
+                handleSegTouch(e);
+            }
+        }, { passive: false });
+
+        segControl.addEventListener('touchend', () => {
+            isDraggingSeg = false;
+        });
+
+        function handleSegTouch(e) {
+            const rect = segControl.getBoundingClientRect();
+            const touch = e.touches[0];
+            const x = touch.clientX - rect.left;
+            const ratio = x / rect.width;
+            if (ratio < 0.5) {
+                if (viewMode !== 'list') setMode('list');
+            } else {
+                if (viewMode !== 'grid') setMode('grid');
+            }
+        }
+
+        // Swipe Support (Content Area)
         let touchstartX = 0;
         let touchendX = 0;
 
