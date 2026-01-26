@@ -231,7 +231,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8uvGCSb3-stSl0ECOeo-Hl1emIRcx2CM",
@@ -261,12 +261,6 @@
             }
         });
 
-        // Handle Redirect Result
-        getRedirectResult(auth).catch((error) => {
-            console.error('Redirect result error:', error);
-            showError(`Authentication failed after redirect: ${error.code} - ${error.message}`);
-        });
-
         // Make signIn function globally accessible
         window.signInWithGoogle = async function () {
             const btn = document.getElementById('googleBtn');
@@ -278,30 +272,32 @@
             loginContent.style.display = 'none';
             loading.classList.add('show');
 
-            // Detect mobile
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
             try {
-                if (isMobile) {
-                    await signInWithRedirect(auth, provider);
-                } else {
-                    const result = await signInWithPopup(auth, provider);
-                    const user = result.user;
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
 
-                    if (user.email === ALLOWED_EMAIL) {
-                        window.location.href = 'app.html';
-                    } else {
-                        await auth.signOut();
-                        showError(`Access denied. ${user.email} is not authorized.`);
-                    }
+                if (user.email === ALLOWED_EMAIL) {
+                    window.location.href = 'app.html';
+                } else {
+                    await auth.signOut();
+                    showError(`Access denied. ${user.email} is not authorized. Please sign in with ${ALLOWED_EMAIL}.`);
                 }
             } catch (error) {
-                console.error('Auth error:', error);
+                console.error('Auth error details:', error);
+
+                let message = 'Authentication failed. ';
                 if (error.code === 'auth/popup-closed-by-user') {
-                    showError('Sign-in cancelled.');
+                    message = 'Sign-in cancelled. Please try again and complete the login in the popup.';
+                } else if (error.code === 'auth/unauthorized-domain') {
+                    message = 'DOMAIN NOT AUTHORIZED: Please add "sull1van.com" to the Authorized Domains list in your Firebase Console (Authentication > Settings).';
+                } else if (error.code === 'auth/popup-blocked') {
+                    message = 'POPUP BLOCKED: Please enable popups for this site in your mobile browser settings.';
+                } else if (error.code === 'auth/network-request-failed') {
+                    message = 'Network error. Please check your internet connection.';
                 } else {
-                    showError(`Authentication failed: ${error.code} - ${error.message}`);
+                    message += `Error Code: ${error.code}. ${error.message}`;
                 }
+                showError(message);
             }
         }
 
@@ -314,6 +310,8 @@
             loginContent.style.display = 'block';
             errorMsg.textContent = message;
             errorMsg.classList.add('show');
+
+            console.error('Showing error to user:', message);
         }
     </script>
 </body>
