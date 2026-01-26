@@ -57,6 +57,8 @@
             color: var(--text-primary);
             font-size: 17px;
             line-height: 1.4;
+            transition: background 5s ease;
+            background-attachment: fixed;
         }
 
         #main-scroll-view {
@@ -81,7 +83,6 @@
             position: fixed;
             inset: 0;
             z-index: -3;
-            transition: background 5s ease;
         }
 
         /* Celestial Sky Elements */
@@ -1814,7 +1815,7 @@
         function updateDynamicBackground() {
             const now = new Date();
             const hour = now.getHours() + now.getMinutes() / 60;
-            const bg = document.getElementById('dynamicBg');
+            // Removed bg element constant, targeting body directly
 
             // Define colors: [Hour, [TopColor, BottomColor, ThemeColor]]
             // Gradient Logic: 
@@ -1872,14 +1873,9 @@
             const bot = lerp(s1[1][1], s2[1][1], p);
             const theme = lerp(s1[1][2], s2[1][2], p);
 
-            bg.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
+            // Apply gradient to body directly to correct iOS borders
+            document.body.style.backgroundImage = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
             document.querySelector('meta[name="theme-color"]').setAttribute('content', top);
-
-            // Fix for iOS Safari Borders:
-            // 1. HTML gets solid 'top' color (handles top overscroll/status bar)
-            // 2. Body is transparent (reveals the fixed bg-layer gradient)
-            document.documentElement.style.backgroundColor = top;
-            document.body.style.backgroundColor = 'transparent';
 
             // Ensure text is always white for the weather aesthetic
             document.body.style.setProperty('--text-primary', '#ffffff');
