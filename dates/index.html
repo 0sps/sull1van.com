@@ -530,7 +530,7 @@
 
             // Set root backgrounds to match gradient ends to fix iOS overscroll bars
             document.documentElement.style.backgroundColor = top;
-            document.body.style.backgroundColor = bot;
+            document.body.style.backgroundColor = 'transparent';
 
             const brightness = (parseInt(top.match(/\d+/g)[0]) * 0.299 + parseInt(top.match(/\d+/g)[1]) * 0.587 + parseInt(top.match(/\d+/g)[2]) * 0.114);
             if (brightness > 180) {
