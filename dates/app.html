@@ -15,7 +15,7 @@
             --ios-bg: #1c1c1e;
             --ios-card: rgba(28, 28, 30, 0.7);
             --ios-card-grouped: rgba(28, 28, 30, 0.7);
-            --ios-nav-bar: rgba(0, 0, 0, 0.8);
+            --ios-nav-bar: rgba(0, 0, 0, 0.3);
             --ios-separator: rgba(255, 255, 255, 0.1);
             --ios-blue: #0a84ff;
             --ios-red: #ff453a;
@@ -44,62 +44,162 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
         }
 
-        html {
-            background: #3a3a3c;
+        html,
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background: linear-gradient(180deg, #3a3a3c 0%, #1c1c1e 100%);
             background-attachment: fixed;
             color: var(--text-primary);
-            min-height: 100vh;
-            width: 100vw;
             padding-bottom: 40px;
             font-size: 17px;
             line-height: 1.4;
             overflow-x: hidden;
-            background-color: #1c1c1e;
-            /* Fallback for safe areas */
+            transition: background 1s ease;
         }
 
-        /* Background Glow to match index.html */
-        body::after {
-            content: '';
+        /* Grain Effect */
+        .grain {
             position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Gradient Layer */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            transition: background 5s ease;
+        }
+
+        /* Celestial Sky Elements */
+        .sun-container {
+            position: fixed;
+            top: 15%;
+            right: 15%;
+            width: 200px;
+            height: 200px;
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 2s ease, transform 2s ease;
+        }
+
+        .sun {
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40vw;
-            height: 40vw;
-            background: var(--ios-blue);
-            filter: blur(120px);
-            opacity: 0.1;
-            z-index: 0;
-            pointer-events: none;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #ffffff 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            box-shadow:
+                0 0 100px 30px rgba(255, 255, 255, 0.6),
+                0 0 200px 60px rgba(255, 255, 255, 0.3);
+            z-index: 2;
         }
 
-        /* iOS Navigation Bar */
-        .nav-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: transparent;
+        .sun-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%),
+                conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.05) 30deg, transparent 60deg, rgba(255, 255, 255, 0.03) 90deg, transparent 180deg);
+            border-radius: 50%;
+            animation: rotate-rays 60s linear infinite reverse;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes rotate-rays {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Light Particles */
+        #particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        @keyframes particle-life {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Pinned Header Banner */
+        .app-header-banner {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 0.5px solid var(--ios-separator);
-            padding: 12px 20px;
+            border-radius: 24px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Gradient Border via shadow or similar since mask trick is complex on fixed container with rounded corners needing BG */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-title {
-            font-size: 28px;
+        .header-title {
+            font-size: 34px;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: 0.4px;
+            color: var(--text-primary);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-actions {
+        .header-actions {
             display: flex;
             gap: 20px;
             align-items: center;
@@ -108,7 +208,7 @@
         .nav-btn {
             background: none;
             border: none;
-            color: var(--ios-blue);
+            color: inherit;
             font-size: 17px;
             font-weight: 500;
             cursor: pointer;
@@ -163,33 +263,21 @@
             border: none;
             background: transparent;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-primary);
             border-radius: 8px;
             cursor: pointer;
             touch-action: manipulation;
             z-index: 2;
             transition: color 0.2s;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .segment-btn.active {
             font-weight: 600;
         }
 
-        /* Analytics HUD */
-        .analytics-scroll {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            gap: 16px;
-            overflow-x: hidden;
-            max-width: 100%;
-            padding: 0 20px 24px;
-            margin: 0 -20px;
-            /* Revert to allow edge-to-edge scroll but with container fix */
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
+
 
         .container {
             position: relative;
@@ -203,19 +291,16 @@
             max-width: 100vw;
         }
 
-        .analytics-scroll::-webkit-scrollbar {
-            display: none;
-        }
 
         .hud-card {
-            background: var(--ios-card);
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             min-width: 150px;
             padding: 20px;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .hud-label {
@@ -235,12 +320,12 @@
 
         /* List View (Inset Grouped) */
         .ios-list {
+            position: relative;
             border-radius: var(--radius-l);
-            background: var(--ios-card-grouped);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             overflow: hidden;
             margin-bottom: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .list-row {
@@ -297,7 +382,7 @@
         }
 
         .grid-card {
-            background: var(--ios-card);
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 20px;
@@ -307,17 +392,31 @@
             position: relative;
             cursor: pointer;
             touch-action: manipulation;
-            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s var(--spring);
         }
 
         .grid-card:hover {
-            transform: translateY(-4px);
-            background: rgba(40, 40, 42, 0.7);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .grid-card:active {
             transform: scale(0.96);
+        }
+
+        /* Gradient Borders via Pseudo-element (Does not affect background) */
+        .hud-card::after,
+        .ios-list::after,
+        .grid-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.082), rgba(76, 76, 76, 0.107));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         /* View Containers */
@@ -851,6 +950,15 @@
 </head>
 
 <body>
+    <div class="bg-layer" id="dynamicBg">
+        <div class="sun-container" id="sun">
+            <div class="sun"></div>
+            <div class="sun-rays"></div>
+        </div>
+        <div id="particles-container"></div>
+    </div>
+    <div class="grain"></div>
+
     <!-- Splash Loader -->
     <div id="splashLoader" class="loading-overlay">
         <div class="app-icon">S</div>
@@ -862,21 +970,18 @@
         <span id="toastText">Saved!</span>
     </div>
 
-    <!-- Navigation -->
-    <div class="nav-bar">
-        <div class="nav-title">Dates</div>
-        <div class="nav-actions">
+    <!-- Global Header Banner -->
+    <div class="app-header-banner">
+        <div class="header-title">Dates</div>
+        <div class="header-actions">
             <button class="nav-btn bold" onclick="openAddModal()">Add</button>
             <button class="nav-btn" onclick="signOut()">Log Out</button>
         </div>
     </div>
 
-    <!-- Analytics HUD -->
-    <div class="analytics-scroll" id="analytics">
-        <!-- JS -->
-    </div>
+    <div class="container" style="padding-top: 120px;">
+        <!-- View Segment Control -->
 
-    <div class="container">
         <!-- View Segment Control -->
         <div style="text-align: center;">
             <div class="segmented-control">
@@ -884,7 +989,6 @@
                 <button id="segGrid" class="segment-btn" onclick="setMode('grid')">Cards</button>
             </div>
         </div>
-
         <div id="contentArea">
             <div id="listView" class="view-content active"></div>
             <div id="gridView" class="view-content"></div>
@@ -1145,7 +1249,6 @@
         }
 
         function render() {
-            renderAnalytics();
             const listContent = document.getElementById('listView');
             const gridContent = document.getElementById('gridView');
             const empty = document.getElementById('emptyState');
@@ -1204,23 +1307,7 @@
             return (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
         }
 
-        function renderAnalytics() {
-            const total = allPeople.length;
-            const dates = allPeople.reduce((a, b) => a + (b.numberOfDates || 0), 0);
-            const active = allPeople.filter(p => {
-                // Active if contact within 30 days
-                if (!p.lastContactDate) return false;
-                const diff = Date.now() - (p.lastContactDate.seconds * 1000);
-                return diff < (30 * 24 * 60 * 60 * 1000);
-            }).length;
 
-            const html = `
-                <div class="hud-card"><div class="hud-label">Dates</div><div class="hud-value">${total}</div></div>
-                <div class="hud-card"><div class="hud-label">Total Dates</div><div class="hud-value">${dates}</div></div>
-                <div class="hud-card"><div class="hud-label">Active (30d)</div><div class="hud-value" style="color:var(--ios-blue)">${active}</div></div>
-            `;
-            document.getElementById('analytics').innerHTML = html;
-        }
 
         /* ----- LOG ACTIONS ----- */
         window.openLog = function (id) {
@@ -1657,6 +1744,123 @@
                 if (delta < 0 && viewMode === 'list') setMode('grid');
             }
         }
+        function updateDynamicBackground() {
+            const now = new Date();
+            const hour = now.getHours() + now.getMinutes() / 60;
+            const bg = document.getElementById('dynamicBg');
+
+            // Define colors: [Hour, [TopColor, BottomColor, ThemeColor]]
+            // Updated to match iOS Weather blue vibrancy
+            const stops = [
+                [0, ["#000814", "#0a1a2f", "#000814"]], // Midnight Blue
+                [6, ["#0c3b6d", "#1e6cb3", "#0c3b6d"]], // Sunrise Blue
+                [10, ["#2563eb", "#60a5fa", "#2563eb"]], // Morning Bright Blue
+                [12, ["#1d4ed8", "#3b82f6", "#1d4ed8"]], // Noon Deep Blue
+                [15, ["#2563eb", "#60a5fa", "#2563eb"]], // Afternoon
+                [18, ["#1e40af", "#3b82f6", "#1e40af"]], // Evening
+                [21, ["#0f172a", "#1e293b", "#0f172a"]], // Night
+                [24, ["#000814", "#0a1a2f", "#000814"]]  // Midnight repeat
+            ];
+
+            // Find current stop
+            let s1, s2;
+            for (let i = 0; i < stops.length - 1; i++) {
+                if (hour >= stops[i][0] && hour < stops[i + 1][0]) {
+                    s1 = stops[i];
+                    s2 = stops[i + 1];
+                    break;
+                }
+            }
+
+            const p = (hour - s1[0]) / (s2[0] - s1[0]);
+
+            const lerp = (c1, c2, p) => {
+                const r1 = parseInt(c1.substring(1, 3), 16);
+                const g1 = parseInt(c1.substring(3, 5), 16);
+                const b1 = parseInt(c1.substring(5, 7), 16);
+                const r2 = parseInt(c2.substring(1, 3), 16);
+                const g2 = parseInt(c2.substring(3, 5), 16);
+                const b2 = parseInt(c2.substring(5, 7), 16);
+                const r = Math.round(r1 + (r2 - r1) * p);
+                const g = Math.round(g1 + (g2 - g1) * p);
+                const b = Math.round(b1 + (b2 - b1) * p);
+                return `rgb(${r},${g},${b})`;
+            };
+
+            const top = lerp(s1[1][0], s2[1][0], p);
+            const bot = lerp(s1[1][1], s2[1][1], p);
+            const theme = lerp(s1[1][2], s2[1][2], p);
+
+            bg.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', theme);
+
+            // Ensure text is always white for the weather aesthetic
+            document.body.style.setProperty('--text-primary', '#ffffff');
+            document.body.style.setProperty('--text-secondary', 'rgba(255,255,255,0.7)');
+
+            // Transition sun based on hour
+            const sun = document.getElementById('sun');
+            if (hour >= 6 && hour <= 19) {
+                sun.style.opacity = '1';
+                // Move sun across sky
+                const sunX = 15 + ((hour - 6) / 13) * 70; // 15% to 85%
+                sun.style.right = `${100 - sunX}%`;
+                sun.style.top = `${15 + Math.sin((hour - 6) / 13 * Math.PI) * -10}%`;
+            } else {
+                sun.style.opacity = '0';
+            }
+        }
+
+        /* Light Particle Engine */
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                spawnParticle(container);
+            }
+        }
+
+        function spawnParticle(container) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+
+            const size = Math.random() * 3 + 1;
+            const duration = Math.random() * 4 + 3;
+            const delay = Math.random() * 10;
+
+            // Get sun position
+            const sun = document.getElementById('sun');
+            const sunRect = sun.getBoundingClientRect();
+
+            // Spawn near sun center
+            const startX = sunRect.left + sunRect.width / 2;
+            const startY = sunRect.top + sunRect.height / 2;
+
+            // Trajectory outwards (random direction)
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 100 + Math.random() * 300;
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${startX}px`;
+            p.style.top = `${startY}px`;
+            p.style.setProperty('--tx', `${tx}px`);
+            p.style.setProperty('--ty', `${ty}px`);
+            p.style.animation = `particle-life ${duration}s ease-out ${delay}s infinite`;
+
+            container.appendChild(p);
+        }
+
+        setTimeout(createParticles, 1000); // Wait for sun to position correctly
+        updateDynamicBackground();
+        setInterval(updateDynamicBackground, 60000); // Update every minute
+
+        setTimeout(createParticles, 1000); // Wait for sun to position correctly
+        updateDynamicBackground();
+        setInterval(updateDynamicBackground, 60000); // Update every minute
     </script>
 </body>
 
