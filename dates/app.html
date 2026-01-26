@@ -116,12 +116,30 @@
             background: rgba(120, 120, 128, 0.2);
             border-radius: 10px;
             padding: 2px;
-            display: inline-flex;
+            display: flex;
             position: relative;
             height: 32px;
             width: 220px;
             margin: 24px auto;
-            display: flex;
+            isolation: isolate;
+        }
+
+        .segmented-control::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: calc(50% - 2px);
+            height: calc(100% - 4px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+        }
+
+        .segmented-control.grid-active::before {
+            transform: translateX(100%);
         }
 
         .segment-btn {
@@ -134,21 +152,11 @@
             border-radius: 8px;
             cursor: pointer;
             z-index: 2;
-            transition: all 0.2s var(--spring);
+            transition: color 0.2s;
         }
 
         .segment-btn.active {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
             font-weight: 600;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
 
         /* Analytics HUD */
@@ -160,8 +168,20 @@
             overflow-x: auto;
             padding: 0 20px 24px;
             margin: 0 -20px;
+            /* Revert to allow edge-to-edge scroll but with container fix */
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            overflow: hidden;
+            /* This stops the -20px margin from causing page scroll */
+            width: 100%;
         }
 
         .analytics-scroll::-webkit-scrollbar {
@@ -277,6 +297,25 @@
 
         .grid-card:active {
             transform: scale(0.96);
+        }
+
+        /* View Containers */
+        #contentArea {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-content {
+            transition: opacity 0.2s ease, transform 0.2s var(--spring);
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .view-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .card-initials {
@@ -476,7 +515,10 @@
             </div>
         </div>
 
-        <div id="contentArea"></div>
+        <div id="contentArea">
+            <div id="listView" class="view-content active"></div>
+            <div id="gridView" class="view-content"></div>
+        </div>
 
         <div id="emptyState" style="text-align: center; padding: 40px; color: var(--text-secondary); display: none;">
             <p>No recorded dates yet</p>
@@ -623,53 +665,74 @@
         /* ----- VIEW TOGGLE ----- */
         window.setMode = function (mode) {
             viewMode = mode;
-            document.getElementById('segList').className = viewMode === 'list' ? 'segment-btn active' : 'segment-btn';
-            document.getElementById('segGrid').className = viewMode === 'grid' ? 'segment-btn active' : 'segment-btn';
-            render();
+            const control = document.querySelector('.segmented-control');
+            const listBtn = document.getElementById('segList');
+            const gridBtn = document.getElementById('segGrid');
+            const listView = document.getElementById('listView');
+            const gridView = document.getElementById('gridView');
+
+            if (viewMode === 'list') {
+                control.classList.remove('grid-active');
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+                listView.classList.add('active');
+                gridView.classList.remove('active');
+            } else {
+                control.classList.add('grid-active');
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+                gridView.classList.add('active');
+                listView.classList.remove('active');
+            }
         }
 
         function render() {
             renderAnalytics();
-            const content = document.getElementById('contentArea');
+            const listContent = document.getElementById('listView');
+            const gridContent = document.getElementById('gridView');
             const empty = document.getElementById('emptyState');
 
             if (allPeople.length === 0) {
-                content.innerHTML = '';
+                listContent.innerHTML = '';
+                gridContent.innerHTML = '';
                 empty.style.display = 'block';
                 return;
             }
             empty.style.display = 'none';
 
-            if (viewMode === 'list') {
-                content.innerHTML = `
-                    <div class="ios-list">
-                        ${allPeople.map(p => `
-                            <div class="list-row" onclick="openEdit('${p.id}')">
-                                <div class="row-content">
-                                    <div class="row-title">${p.name}</div>
-                                    <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
-                                </div>
-                                <div class="row-rating-badge">
-                                    ${calculateAvg(p)}
-                                </div>
+            // Pre-render List View
+            listContent.innerHTML = `
+                <div class="ios-list">
+                    ${allPeople.map(p => `
+                        <div class="list-row" onclick="openEdit('${p.id}')">
+                            <div class="row-content">
+                                <div class="row-title">${p.name}</div>
+                                <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
                             </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                content.innerHTML = `
-                    <div class="ios-grid">
-                        ${allPeople.map(p => `
-                            <div class="grid-card" onclick="openEdit('${p.id}')">
-                                <div class="card-initials">${p.name.charAt(0)}</div>
-                                <div class="card-name">${p.name}</div>
-                                <div class="card-detail">${p.occupation || 'No Job'}</div>
-                                <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;">${calculateAvg(p)} ★</div>
+                            <div class="row-rating-badge">
+                                ${calculateAvg(p)}
                             </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Pre-render Grid View
+            gridContent.innerHTML = `
+                <div class="ios-grid">
+                    ${allPeople.map(p => `
+                        <div class="grid-card" onclick="openEdit('${p.id}')">
+                            <div class="card-initials">${p.name.charAt(0)}</div>
+                            <div class="card-name">${p.name}</div>
+                            <div class="card-detail">${p.occupation || 'No Job'}</div>
+                            <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;">${calculateAvg(p)} ★</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Set initial state
+            setMode(viewMode);
         }
 
         function calculateAvg(p) {
@@ -690,7 +753,7 @@
             }).length;
 
             const html = `
-                <div class="hud-card"><div class="hud-label">Contacts</div><div class="hud-value">${total}</div></div>
+                <div class="hud-card"><div class="hud-label">Dates</div><div class="hud-value">${total}</div></div>
                 <div class="hud-card"><div class="hud-label">Total Dates</div><div class="hud-value">${dates}</div></div>
                 <div class="hud-card"><div class="hud-label">Active (30d)</div><div class="hud-value" style="color:var(--ios-blue)">${active}</div></div>
             `;
@@ -700,7 +763,7 @@
         /* ----- ACTIONS ----- */
         window.openAddModal = function () {
             currentEditId = null;
-            document.getElementById('modalTitle').textContent = 'New Contact';
+            document.getElementById('modalTitle').textContent = 'New Date';
             document.getElementById('deleteContainer').style.display = 'none';
             document.getElementById('personForm').reset();
             document.getElementById('dateWeMet').value = new Date().toISOString().split('T')[0];
@@ -713,7 +776,7 @@
             const p = allPeople.find(x => x.id === id);
             if (!p) return;
 
-            document.getElementById('modalTitle').textContent = 'Edit Contact';
+            document.getElementById('modalTitle').textContent = 'Edit Date';
             document.getElementById('deleteContainer').style.display = 'block';
 
             // Fill
@@ -785,7 +848,7 @@
         }
 
         window.deletePerson = async function () {
-            if (!currentEditId || !confirm('Delete Contact?')) return;
+            if (!currentEditId || !confirm('Delete Date?')) return;
             await deleteDoc(doc(db, COLLECTION_NAME, currentEditId));
             closeModal();
             loadPeople();
@@ -794,6 +857,27 @@
         window.signOut = async function () {
             await auth.signOut();
             window.location.href = 'index.html';
+        }
+
+        // Swipe Support
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        document.getElementById('contentArea').addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.getElementById('contentArea').addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleGesture();
+        }, { passive: true });
+
+        function handleGesture() {
+            const delta = touchendX - touchstartX;
+            if (Math.abs(delta) > 100) { // Min swipe distance
+                if (delta > 0 && viewMode === 'grid') setMode('list');
+                if (delta < 0 && viewMode === 'list') setMode('grid');
+            }
         }
     </script>
 </body>
