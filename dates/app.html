@@ -42,7 +42,17 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
         }
 
-        html,
+        html {
+            min-height: 100dvh;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Background will be set via JS - applied to html for iOS 26 Safari */
+            transition: background 5s ease;
+            background-attachment: fixed;
+        }
+
         body {
             min-height: 100dvh;
             width: 100%;
@@ -50,14 +60,9 @@
             padding: 0;
             background-color: transparent;
             overflow-x: hidden;
-        }
-
-        body {
             color: var(--text-primary);
             font-size: 17px;
             line-height: 1.4;
-            transition: background 5s ease;
-            background-attachment: fixed;
         }
 
         #main-scroll-view {
@@ -74,14 +79,16 @@
             pointer-events: none;
             z-index: -2;
             opacity: 0.08;
+            background-color: transparent;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* Gradient Layer */
+        /* Gradient Layer - transparent for iOS 26 Safari */
         .bg-layer {
             position: fixed;
             inset: 0;
             z-index: -3;
+            background-color: transparent;
         }
 
         /* Celestial Sky Elements */
@@ -1878,9 +1885,9 @@
             const bot = lerp(s1[1][1], s2[1][1], p);
             const theme = lerp(s1[1][2], s2[1][2], p);
 
-            // Apply gradient to body directly to correct iOS borders
-            document.body.style.backgroundImage = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
-            // document.querySelector('meta[name="theme-color"]').setAttribute('content', top);
+            // Apply gradient to HTML element (not body) for iOS 26 Safari compatibility
+            // iOS 26 Safari samples fixed element backgrounds for browser bars
+            document.documentElement.style.backgroundImage = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
 
             // Ensure text is always white for the weather aesthetic
             document.body.style.setProperty('--text-primary', '#ffffff');
