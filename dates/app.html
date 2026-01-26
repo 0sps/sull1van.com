@@ -493,10 +493,33 @@
         .delete-action:active {
             background: rgba(255, 69, 58, 0.1);
         }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--ios-bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            transition: opacity 0.4s var(--spring);
+        }
+
+        .loading-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Splash Loader -->
+    <div id="splashLoader" class="loading-overlay">
+        <div class="app-icon">S</div>
+        <div class="spinner"></div>
+    </div>
 
     <!-- Navigation -->
     <div class="nav-bar">
@@ -630,7 +653,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8uvGCSb3-stSl0ECOeo-Hl1emIRcx2CM",
@@ -643,7 +666,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
+
+        // Use persistence for instant loading
+        const db = initializeFirestore(app, {
+            localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+        });
         const ALLOWED_EMAIL = "sspsful@gmail.com";
         const COLLECTION_NAME = "Dates";
 
@@ -655,17 +682,24 @@
             if (!user || user.email !== ALLOWED_EMAIL) {
                 window.location.href = 'index.html';
             } else {
-                await loadPeople();
+                startDataListener();
             }
         });
 
-        async function loadPeople() {
-            const snap = await getDocs(collection(db, COLLECTION_NAME));
-            allPeople = [];
-            snap.forEach(d => allPeople.push({ id: d.id, ...d.data() }));
-            // Sort by Date Met (newest first)
-            allPeople.sort((a, b) => (b.dateWeMet?.seconds || 0) - (a.dateWeMet?.seconds || 0));
-            render();
+        function startDataListener() {
+            const q = query(collection(db, COLLECTION_NAME), orderBy("dateWeMet", "desc"));
+            onSnapshot(q, (snap) => {
+                allPeople = [];
+                snap.forEach(d => allPeople.push({ id: d.id, ...d.data() }));
+                render();
+
+                // Remove splash loader on first data arrival
+                const splash = document.getElementById('splashLoader');
+                if (splash) splash.classList.add('fade-out');
+            }, (error) => {
+                console.error("Snapshot error:", error);
+                alert("Failed to load data. Please check your connection.");
+            });
         }
 
         /* ----- VIEW TOGGLE ----- */
@@ -849,7 +883,7 @@
                     await addDoc(collection(db, COLLECTION_NAME), data);
                 }
                 closeModal();
-                loadPeople();
+                // No need for manually loadPeople() because onSnapshot handles it!
             } catch (e) { alert(e.message); }
         }
 
@@ -857,7 +891,7 @@
             if (!currentEditId || !confirm('Delete Date?')) return;
             await deleteDoc(doc(db, COLLECTION_NAME, currentEditId));
             closeModal();
-            loadPeople();
+            // onSnapshot handles the refresh
         }
 
         window.signOut = async function () {
