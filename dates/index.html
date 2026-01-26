@@ -417,9 +417,8 @@
             const bot = lerp(s1[1][1], s2[1][1], p);
             bg.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
             document.querySelector('meta[name="theme-color"]').setAttribute('content', top);
-            document.documentElement.style.backgroundImage = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
-            document.documentElement.style.backgroundAttachment = 'fixed';
-            document.body.style.backgroundColor = 'transparent';
+            document.documentElement.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%) fixed center / cover no-repeat`;
+            document.body.style.background = 'transparent';
 
             const brightness = (parseInt(top.match(/\d+/g)[0]) * 0.299 + parseInt(top.match(/\d+/g)[1]) * 0.587 + parseInt(top.match(/\d+/g)[2]) * 0.114);
             if (brightness > 180) {

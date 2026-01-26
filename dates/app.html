@@ -53,13 +53,11 @@
         }
 
         body {
-            background-attachment: fixed;
             color: var(--text-primary);
             padding-bottom: 40px;
             font-size: 17px;
             line-height: 1.4;
             overflow-x: hidden;
-            transition: background 1s ease;
         }
 
         /* Grain Effect */
@@ -1804,10 +1802,9 @@
             bg.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
             document.querySelector('meta[name="theme-color"]').setAttribute('content', theme);
 
-            // Apply fixed gradient to HTML to handle Safari overscroll (rubber-banding)
-            document.documentElement.style.backgroundImage = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
-            document.documentElement.style.backgroundAttachment = 'fixed';
-            document.body.style.backgroundColor = 'transparent';
+            // Apply gradient to HTML root to handle iOS overscroll
+            document.documentElement.style.background = `linear-gradient(180deg, ${top} 0%, ${bot} 100%) fixed center / cover no-repeat`;
+            document.body.style.background = 'transparent';
 
             // Ensure text is always white for the weather aesthetic
             document.body.style.setProperty('--text-primary', '#ffffff');
