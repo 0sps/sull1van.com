@@ -44,18 +44,28 @@
 
         html,
         body {
-            min-height: 100vh;
+            height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
             background-color: #000814;
+            overflow: hidden;
+            position: fixed;
         }
 
         body {
             color: var(--text-primary);
             font-size: 17px;
             line-height: 1.4;
+        }
+
+        #main-scroll-view {
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            z-index: 1;
         }
 
         /* Grain Effect */
@@ -976,23 +986,28 @@
         </div>
     </div>
 
-    <div class="container" style="padding-top: 120px;">
-        <!-- View Segment Control -->
+    <div id="main-scroll-view">
+        <div class="container" style="padding-top: 120px;">
+            <!-- View Segment Control -->
 
-        <!-- View Segment Control -->
-        <div style="text-align: center;">
-            <div class="segmented-control">
-                <button id="segList" class="segment-btn active" onclick="setMode('list')">List</button>
-                <button id="segGrid" class="segment-btn" onclick="setMode('grid')">Cards</button>
+            <!-- View Segment Control -->
+            <div style="text-align: center;">
+                <div class="segmented-control">
+                    <button id="segList" class="segment-btn active" onclick="setMode('list')">List</button>
+                    <button id="segGrid" class="segment-btn" onclick="setMode('grid')">Cards</button>
+                </div>
             </div>
-        </div>
-        <div id="contentArea">
-            <div id="listView" class="view-content active"></div>
-            <div id="gridView" class="view-content"></div>
-        </div>
+            <div id="contentArea">
+                <div id="listView" class="view-content active"></div>
+                <div id="gridView" class="view-content"></div>
+            </div>
 
-        <div id="emptyState" style="text-align: center; padding: 40px; color: var(--text-secondary); display: none;">
-            <p>No recorded dates yet</p>
+            <div id="emptyState"
+                style="text-align: center; padding: 40px; color: var(--text-secondary); display: none;">
+                <p>No recorded dates yet</p>
+            </div>
+
+            <div style="height: 40px;"></div> <!-- Bottom Padding for scroll -->
         </div>
     </div>
 
