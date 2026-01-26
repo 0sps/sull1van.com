@@ -176,10 +176,12 @@
 
         /* Pinned Header Banner */
         .app-header-banner {
-            position: sticky;
-            top: 10px;
-            margin-top: env(safe-area-inset-top);
-            margin-bottom: 20px;
+            position: fixed;
+            top: calc(10px + env(safe-area-inset-top));
+            left: calc(20px + env(safe-area-inset-left));
+            right: calc(20px + env(safe-area-inset-right));
+            margin-top: 0;
+            margin-bottom: 0;
             height: 80px;
 
             /* Dark Glass Tint */
@@ -1030,20 +1032,22 @@
 
 
 
+    <!-- Global Header Banner -->
+    <div class="app-header-banner">
+        <div class="header-title">Dates</div>
+        <div class="header-actions">
+            <button class="nav-btn" onclick="openAddModal()">
+                <img src="add.svg" alt="Add">
+            </button>
+            <button class="nav-btn" onclick="signOut()">
+                <img src="exit.svg" alt="Log Out">
+            </button>
+        </div>
+    </div>
+
     <div id="main-scroll-view">
-        <div class="container">
+        <div class="container" style="padding-top: calc(100px + env(safe-area-inset-top));">
             <!-- Global Header Banner -->
-            <div class="app-header-banner">
-                <div class="header-title">Dates</div>
-                <div class="header-actions">
-                    <button class="nav-btn" onclick="openAddModal()">
-                        <img src="add.svg" alt="Add">
-                    </button>
-                    <button class="nav-btn" onclick="signOut()">
-                        <img src="exit.svg" alt="Log Out">
-                    </button>
-                </div>
-            </div>
 
             <!-- View Segment Control -->
 
