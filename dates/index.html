@@ -487,16 +487,29 @@
             const hour = now.getHours() + now.getMinutes() / 60;
             const bg = document.getElementById('dynamicBg');
 
+            // Define colors: [Hour, [TopColor, BottomColor, ThemeColor]]
+            // Gradient Logic: 
+            // 00:00 - Midnight Blue
+            // 06:00 - Dawn (Slate -> Gold)
+            // 10:00 - Morning (Bright Blue)
+            // 17:00 - Sunset (Slate -> Gold)
+            // 21:00 - Night (Dark Blue)
             const stops = [
                 [0, ["#000814", "#0a1a2f", "#000814"]], // Midnight Blue
                 [5, ["#1a0505", "#2a1010", "#1a0505"]], // Pre-Dawn Dark
-                [6, ["#ff4500", "#ff8c00", "#ff4500"]], // Sunrise: Blood Orange/Red
-                [7, ["#ff7700", "#ffae00", "#ff7700"]], // Sunrise Finish: Golden Orange to Blue transition start
+
+                // Screenshot Vibes: Slate Grey to Golden Glow
+                [6, ["#3b464b", "#dca860", "#3b464b"]], // Sunrise Start
+                [7, ["#4a5c66", "#eccc80", "#4a5c66"]], // Sunrise Brightening
+
                 [8, ["#2563eb", "#60a5fa", "#2563eb"]], // Morning: Blue
                 [16, ["#1e40af", "#3b82f6", "#1e40af"]], // Late Afternoon: Deep Blue
-                [17, ["#ff8c00", "#ffd700", "#ff8c00"]], // Pre-Sunset: Gold/Orange
-                [18, ["#ff4500", "#ff6347", "#ff4500"]], // Sunset: Blood Orange/Red
-                [19, ["#2e0b0e", "#4a1920", "#2e0b0e"]], // Dusk: Dark Red/Purple
+
+                // Screenshot Vibes: Slate Grey to Golden Glow
+                [17, ["#4a5c66", "#eccc80", "#4a5c66"]], // Pre-Sunset (Lighter)
+                [18, ["#3b464b", "#dca860", "#3b464b"]], // Sunset (Darker slate, rich gold)
+                [19, ["#232a2e", "#8c6c3e", "#232a2e"]], // Dusk (Very dark slate, fading gold)
+
                 [21, ["#0f172a", "#1e293b", "#0f172a"]], // Night: Dark Blue
                 [24, ["#000814", "#0a1a2f", "#000814"]]  // Midnight repeat
             ];
@@ -551,13 +564,15 @@
                 let sunColor1, sunColor2, sunShadow1, sunShadow2;
 
                 if (hour < 9 || hour > 16) {
-                    sunColor1 = "#ff4500";
-                    sunColor2 = "#ffd700";
-                    sunShadow1 = "rgba(255, 69, 0, 0.6)";
-                    sunShadow2 = "rgba(255, 140, 0, 0.3)";
+                    // Sunrise/Sunset Mode (Golden)
+                    sunColor1 = "#ffcc33"; // Golden Yellow
+                    sunColor2 = "#fff5e6"; // Warm Pale
+                    sunShadow1 = "rgba(255, 204, 51, 0.6)"; // Gold Glow
+                    sunShadow2 = "rgba(255, 165, 0, 0.3)"; // Orange tint
                 } else {
-                    sunColor1 = "#ffffff";
-                    sunColor2 = "#fff9c4";
+                    // Day Mode (Blue Sky)
+                    sunColor1 = "#ffffff"; // White
+                    sunColor2 = "#fff9c4"; // Pale Yellow
                     sunShadow1 = "rgba(255, 255, 255, 0.6)";
                     sunShadow2 = "rgba(255, 235, 59, 0.3)";
                 }
