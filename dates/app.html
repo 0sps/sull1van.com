@@ -45,7 +45,7 @@
 
         html,
         body {
-            min-height: 100vh;
+            min-height: 100dvh;
             width: 100%;
             margin: 0;
             padding: 0;
@@ -59,13 +59,17 @@
             line-height: 1.4;
             transition: background 5s ease;
             background-attachment: fixed;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
         }
 
         #main-scroll-view {
             position: relative;
             width: 100%;
             z-index: 1;
-            padding-bottom: 40px;
+            padding-bottom: calc(40px + env(safe-area-inset-bottom));
         }
 
         /* Grain Effect */
@@ -178,9 +182,9 @@
         /* Pinned Header Banner */
         .app-header-banner {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
+            top: calc(10px + env(safe-area-inset-top));
+            left: calc(20px + env(safe-area-inset-left));
+            right: calc(20px + env(safe-area-inset-right));
             height: 80px;
 
             /* Dark Glass Tint */
@@ -556,7 +560,7 @@
             display: flex;
             flex-direction: column;
             z-index: 1001;
-            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: none;
             opacity: 0;
@@ -1043,7 +1047,7 @@
     </div>
 
     <div id="main-scroll-view">
-        <div class="container" style="padding-top: 120px;">
+        <div class="container" style="padding-top: calc(100px + env(safe-area-inset-top));">
             <!-- View Segment Control -->
 
             <!-- View Segment Control -->
