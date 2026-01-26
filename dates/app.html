@@ -41,7 +41,8 @@
         }
 
         body {
-            background-color: var(--ios-bg);
+            background: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
             width: 100vw;
@@ -72,9 +73,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--ios-nav-bar);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            background: transparent;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 0.5px solid var(--ios-separator);
             padding: 12px 20px;
             display: flex;
@@ -358,14 +359,16 @@
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            display: none;
             opacity: 0;
-            transition: opacity 0.3s;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s var(--spring), visibility 0.4s;
         }
 
         .sheet-overlay.show {
-            display: block;
             opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         .sheet-modal {
@@ -373,21 +376,23 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #1c1c1e;
+            background: #2c2c2e;
             border-radius: 24px 24px 0 0;
             height: 94vh;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateY(100%) scale(0.95);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s var(--spring);
             display: flex;
             flex-direction: column;
             z-index: 1001;
             padding-bottom: env(safe-area-inset-bottom);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: none;
+            opacity: 0;
         }
 
         .sheet-overlay.show .sheet-modal {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+            opacity: 1;
         }
 
         .sheet-header {
@@ -395,19 +400,19 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px 20px;
-            background: rgba(28, 28, 30, 0.8);
+            background: rgba(44, 44, 46, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 0.5px solid var(--ios-separator);
             border-radius: 24px 24px 0 0;
         }
 
         .sheet-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 600;
         }
 
         .sheet-btn {
-            font-size: 17px;
+            font-size: 18px;
             color: var(--ios-blue);
             background: none;
             border: none;
@@ -417,7 +422,7 @@
         .sheet-content {
             overflow-y: auto;
             flex: 1;
-            background: #000;
+            background: #2c2c2e;
             padding: 32px 20px;
         }
 
@@ -444,7 +449,7 @@
 
         .form-label {
             width: 110px;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--text-primary);
         }
 
@@ -453,7 +458,7 @@
             background: transparent;
             border: none;
             color: var(--ios-blue);
-            font-size: 17px;
+            font-size: 18px;
             text-align: right;
             outline: none;
         }
@@ -463,7 +468,7 @@
         }
 
         .section-header {
-            font-size: 13px;
+            font-size: 14px;
             text-transform: uppercase;
             color: var(--text-secondary);
             margin: 0 0 10px 16px;
@@ -482,7 +487,7 @@
         .delete-action {
             width: 100%;
             padding: 16px;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--ios-red);
             background: transparent;
             border: none;
@@ -492,6 +497,222 @@
 
         .delete-action:active {
             background: rgba(255, 69, 58, 0.1);
+        }
+
+        /* Log View Styles */
+        .essential-info-dropdown {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--ios-separator);
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--ios-blue);
+        }
+
+        .summary-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .summary-value {
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .summary-scores {
+            grid-column: span 2;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .score-pill {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Timeline Styles */
+        .log-timeline {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .log-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 0;
+            width: 2px;
+            background: var(--ios-separator);
+        }
+
+        .log-entry {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .log-bubble-container {
+            position: relative;
+        }
+
+        .log-entry-actions {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            display: flex;
+            gap: 12px;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+
+        .log-entry:hover .log-entry-actions {
+            opacity: 1;
+        }
+
+        .log-action-btn {
+            background: none;
+            border: none;
+            color: var(--ios-blue);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .log-action-btn.delete {
+            color: var(--ios-red);
+        }
+
+        .log-entry-dot {
+            position: absolute;
+            left: -24px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--ios-blue);
+            box-shadow: 0 0 10px var(--ios-blue);
+        }
+
+        .log-date {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .log-bubble {
+            background: var(--ios-card);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 17px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Log Entry Area */
+        .new-entry-container {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .entry-textarea {
+            background: var(--ios-gray6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            color: white;
+            font-size: 18px;
+            width: 100%;
+            min-height: 100px;
+            outline: none;
+            resize: none;
+        }
+
+        .entry-textarea:focus {
+            border-color: var(--ios-blue);
+        }
+
+        .quick-action-btn {
+            background: var(--ios-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .quick-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .list-row-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .plus-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(10, 132, 255, 0.1);
+            color: var(--ios-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 500;
+            border: 0.5px solid rgba(10, 132, 255, 0.3);
+            transition: all 0.2s;
+        }
+
+        .plus-badge:active {
+            background: var(--ios-blue);
+            color: white;
         }
 
         .loading-overlay {
@@ -511,6 +732,93 @@
             opacity: 0;
             pointer-events: none;
         }
+
+        /* Ratings Grid */
+        .ratings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .rating-box {
+            background: rgba(131, 38, 38, 0.26);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s var(--spring);
+        }
+
+        .rating-box:focus-within {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--ios-blue);
+            transform: scale(1.02);
+        }
+
+        .rating-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .rating-input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 33px;
+            font-weight: 700;
+            text-align: center;
+            width: 100%;
+            outline: none;
+            -moz-appearance: textfield;
+            appearance: none;
+        }
+
+        .rating-input::-webkit-outer-spin-button,
+        .rating-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Toast Styles */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #31a84f, #115121);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 18px;
+            height: 18px;
+        }
     </style>
 </head>
 
@@ -519,6 +827,11 @@
     <div id="splashLoader" class="loading-overlay">
         <div class="app-icon">S</div>
         <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastText">Saved!</span>
     </div>
 
     <!-- Navigation -->
@@ -554,6 +867,64 @@
         </div>
     </div>
 
+    <!-- LOG SHEET MODAL -->
+    <div id="logOverlay" class="sheet-overlay" onclick="closeLogModal(event)">
+        <div class="sheet-modal" onclick="event.stopPropagation()">
+            <div class="sheet-header">
+                <button class="sheet-btn" onclick="closeLogModal()">Close</button>
+                <div class="sheet-title" id="logModalTitle">Person Name</div>
+                <button class="sheet-btn" style="font-weight: 600;" onclick="openPersonDetails()">Edit</button>
+            </div>
+            <div class="sheet-content">
+                <!-- Profile Summary (Always Visible) -->
+                <div class="essential-info-dropdown">
+                    <div class="summary-header">
+                        <div class="summary-title" id="summaryName">John Doe • 24</div>
+                    </div>
+                    <div class="summary-grid" id="summaryDetails" style="cursor: pointer;"
+                        onclick="openPersonDetails()">
+                        <div class="summary-item">
+                            <span class="summary-label">Occupation</span>
+                            <span class="summary-value" id="sumJob">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Location</span>
+                            <span class="summary-value" id="sumLoc">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">How We Met</span>
+                            <span class="summary-value" id="sumMetVia">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Interest</span>
+                            <span class="summary-value" id="sumInterest">-</span>
+                        </div>
+                        <div class="summary-scores" id="sumScores">
+                            <!-- JS Badges -->
+                        </div>
+                        <div style="grid-column: span 2; text-align: center; margin-top: 8px;">
+                            <span style="font-size: 11px; color: var(--ios-blue); font-weight: 600;">TAP TO EDIT ALL
+                                DETAILS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">New Update</div>
+                <div class="new-entry-container">
+                    <textarea id="logEntryText" class="entry-textarea" placeholder="What happened today?"></textarea>
+                    <button class="quick-action-btn" onclick="saveLogEntry()">Post Update</button>
+                </div>
+
+                <div class="section-header">Timeline</div>
+                <div class="log-timeline" id="logTimeline">
+                    <!-- JS -->
+                </div>
+
+                <div style="height: 100px;"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- MAIN SHEET MODAL -->
     <div id="sheetOverlay" class="sheet-overlay" onclick="closeModal(event)">
         <div class="sheet-modal" onclick="event.stopPropagation()">
@@ -576,7 +947,8 @@
                         </div>
                         <div class="form-row">
                             <label class="form-label">Met</label>
-                            <input type="date" id="dateWeMet" class="form-input">
+                            <input type="tel" id="dateWeMet" class="form-input" placeholder="MM/DD/YYYY"
+                                oninput="formatDateInput(this)">
                         </div>
                         <div class="form-row">
                             <label class="form-label">Via</label>
@@ -593,22 +965,34 @@
 
                     <!-- RATINGS -->
                     <div class="section-header">RATINGS (1-10)</div>
-                    <div class="form-group-container">
-                        <div class="form-row"><label class="form-label">Face</label><input type="number" id="ratingFace"
-                                class="form-input" placeholder="-"></div>
-                        <div class="form-row"><label class="form-label">Body</label><input type="number" id="ratingBody"
-                                class="form-input" placeholder="-"></div>
-                        <div class="form-row"><label class="form-label">Kiss</label><input type="number"
-                                id="ratingKissing" class="form-input" placeholder="-"></div>
-                        <div class="form-row"><label class="form-label">Vibe</label><input type="number" id="ratingVibe"
-                                class="form-input" placeholder="-"></div>
+                    <div class="ratings-grid">
+                        <div class="rating-box">
+                            <span class="rating-label">Face</span>
+                            <input type="number" id="ratingFace" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)">
+                        </div>
+                        <div class="rating-box">
+                            <span class="rating-label">Body</span>
+                            <input type="number" id="ratingBody" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)">
+                        </div>
+                        <div class="rating-box">
+                            <span class="rating-label">Kiss</span>
+                            <input type="number" id="ratingKissing" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)">
+                        </div>
+                        <div class="rating-box">
+                            <span class="rating-label">Vibe</span>
+                            <input type="number" id="ratingVibe" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)">
+                        </div>
                     </div>
 
                     <!-- DETAILS -->
                     <div class="section-header">DETAILS</div>
                     <div class="form-group-container">
-                        <div class="form-row"><label class="form-label">Age</label><input type="date" id="birthdate"
-                                class="form-input"></div>
+                        <div class="form-row"><label class="form-label">Birthday</label><input type="tel" id="birthdate"
+                                class="form-input" placeholder="MM/DD/YYYY" oninput="formatDateInput(this)"></div>
                         <div class="form-row"><label class="form-label">Height (Ft)</label><input type="number"
                                 id="heightFeet" class="form-input" placeholder="5"></div>
                         <div class="form-row"><label class="form-label">Height (In)</label><input type="number"
@@ -744,13 +1128,16 @@
             listContent.innerHTML = `
                 <div class="ios-list">
                     ${allPeople.map(p => `
-                        <div class="list-row" onclick="openEdit('${p.id}')">
+                        <div class="list-row" onclick="openLog('${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                             <div class="row-content">
                                 <div class="row-title">${p.name}</div>
                                 <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
                             </div>
-                            <div class="row-rating-badge">
-                                ${calculateAvg(p)}
+                            <div class="list-row-actions">
+                                <div class="plus-badge" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
+                                <div class="row-rating-badge" onclick="event.stopPropagation(); openEdit('${p.id}')">
+                                    ${calculateAvg(p)}
+                                </div>
                             </div>
                         </div>
                     `).join('')}
@@ -761,11 +1148,12 @@
             gridContent.innerHTML = `
                 <div class="ios-grid">
                     ${allPeople.map(p => `
-                        <div class="grid-card" onclick="openEdit('${p.id}')">
+                        <div class="grid-card" onclick="openLog('${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                             <div class="card-initials">${p.name.charAt(0)}</div>
                             <div class="card-name">${p.name}</div>
                             <div class="card-detail">${p.occupation || 'No Job'}</div>
-                            <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;">${calculateAvg(p)} ★</div>
+                            <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">${calculateAvg(p)} ★</div>
+                            <div class="plus-badge" style="position:absolute; top:12px; right:12px;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
                         </div>
                     `).join('')}
                 </div>
@@ -800,13 +1188,193 @@
             document.getElementById('analytics').innerHTML = html;
         }
 
+        /* ----- LOG ACTIONS ----- */
+        window.openLog = function (id) {
+            currentEditId = id;
+            editingLogIdx = -1; // Reset log editing state
+            const p = allPeople.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('logModalTitle').textContent = p.name;
+            document.getElementById('logEntryText').value = '';
+            document.querySelector('.quick-action-btn').textContent = 'Post Update';
+
+            // Essential Info Summary - OPEN BY DEFAULT
+            const age = getAge(p.birthdate);
+            document.getElementById('summaryName').textContent = `${p.name} • ${age}`;
+            document.getElementById('sumJob').textContent = p.occupation || '-';
+            document.getElementById('sumLoc').textContent = p.location || '-';
+            document.getElementById('sumMetVia').textContent = p.howWeMet || '-';
+            document.getElementById('sumInterest').textContent = p.interestLevel || '-';
+
+            // Score Badges
+            const scores = document.getElementById('sumScores');
+            scores.innerHTML = '';
+            const categories = [
+                { label: 'FACE', val: p.ratings?.face },
+                { label: 'BODY', val: p.ratings?.body },
+                { label: 'KISS', val: p.ratings?.kissing },
+                { label: 'VIBE', val: p.ratings?.conversationVibe }
+            ];
+
+            categories.filter(c => c.val > 0).forEach(c => {
+                const pill = document.createElement('div');
+                pill.className = 'score-pill';
+                // Use the hue logic for badges too!
+                const hue = (Math.min(c.val, 10) - 1) * 11.1;
+                pill.style.color = `hsl(${hue}, 80%, 70%)`;
+                pill.style.background = `hsla(${hue}, 80%, 20%, 0.3)`;
+                pill.textContent = `${c.label}: ${c.val}`;
+                scores.appendChild(pill);
+            });
+
+            // Timeline
+            renderTimeline(p.logs);
+
+            document.getElementById('logOverlay').classList.add('show');
+        }
+
+        window.closeLogModal = function (e) {
+            if (e && e.target !== document.getElementById('logOverlay')) return;
+            document.getElementById('logOverlay').classList.remove('show');
+        }
+
+        let editingLogIdx = -1;
+
+        function renderTimeline(logs) {
+            const container = document.getElementById('logTimeline');
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-secondary); font-size:14px; padding-top:10px;">No updates yet</p>';
+                return;
+            }
+
+            // We need original indices for editing, so store them
+            const items = logs.map((l, idx) => ({ ...l, originalIdx: idx }));
+            const sorted = items.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+
+            container.innerHTML = sorted.map(l => {
+                const date = new Date(l.timestamp.seconds * 1000);
+                const timeStr = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+                return `
+                    <div class="log-entry">
+                        <div class="log-entry-dot"></div>
+                        <div class="log-date">${timeStr}</div>
+                        <div class="log-bubble-container">
+                            <div class="log-bubble">${l.note}</div>
+                            <div class="log-entry-actions">
+                                <button class="log-action-btn" onclick="startEditLog(${l.originalIdx})">Edit</button>
+                                <button class="log-action-btn delete" onclick="deleteLogEntry(${l.originalIdx})">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.startEditLog = function (idx) {
+            const p = allPeople.find(x => x.id === currentEditId);
+            if (!p || !p.logs[idx]) return;
+
+            editingLogIdx = idx;
+            const textarea = document.getElementById('logEntryText');
+            textarea.value = p.logs[idx].note;
+            document.querySelector('.quick-action-btn').textContent = 'Update Note';
+            textarea.focus();
+            textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        window.deleteLogEntry = async function (idx) {
+            if (!confirm('Delete this entry?')) return;
+            const p = allPeople.find(x => x.id === currentEditId);
+            if (!p) return;
+
+            const updatedLogs = [...p.logs];
+            updatedLogs.splice(idx, 1);
+
+            try {
+                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), { logs: updatedLogs });
+                showToast("Entry deleted");
+                renderTimeline(updatedLogs);
+            } catch (e) { showToast("Failed to delete", true); }
+        }
+
+        window.saveLogEntry = async function () {
+            const note = document.getElementById('logEntryText').value.trim();
+            if (!note) return;
+
+            const p = allPeople.find(x => x.id === currentEditId);
+            if (!p) return;
+
+            let updatedLogs = p.logs ? [...p.logs] : [];
+
+            if (editingLogIdx >= 0) {
+                // Edit existing
+                updatedLogs[editingLogIdx] = {
+                    ...updatedLogs[editingLogIdx],
+                    note: note,
+                    // Optionally update timestamp? User said "edit info about past log entries"
+                    // Usually we keep the original timestamp but maybe add a "last edited"? 
+                    // Let's keep original timestamp.
+                };
+            } else {
+                // New entry
+                const newLog = {
+                    timestamp: Timestamp.now(),
+                    note: note
+                };
+                updatedLogs.push(newLog);
+            }
+
+            try {
+                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), {
+                    logs: updatedLogs,
+                    numberOfDates: updatedLogs.length
+                });
+
+                document.getElementById('logEntryText').value = '';
+                document.querySelector('.quick-action-btn').textContent = 'Post Update';
+                editingLogIdx = -1;
+                showToast(editingLogIdx >= 0 ? "Entry updated" : "Update Saved!");
+                renderTimeline(updatedLogs);
+            } catch (e) {
+                showToast("Failed to save", true);
+            }
+        }
+
+        window.openPersonDetails = function () {
+            // Close log, open edit
+            document.getElementById('logOverlay').classList.remove('show');
+            openEdit(currentEditId);
+        }
+
+        function getAge(ts) {
+            if (!ts) return '??';
+            const birth = new Date(ts.seconds * 1000);
+            const now = new Date();
+            let age = now.getFullYear() - birth.getFullYear();
+            const m = now.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+            return age;
+        }
+
         /* ----- ACTIONS ----- */
         window.openAddModal = function () {
             currentEditId = null;
             document.getElementById('modalTitle').textContent = 'New Date';
             document.getElementById('deleteContainer').style.display = 'none';
             document.getElementById('personForm').reset();
-            document.getElementById('dateWeMet').value = new Date().toISOString().split('T')[0];
+
+            // Set initial date
+            const now = new Date();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const yyyy = now.getFullYear();
+            document.getElementById('dateWeMet').value = `${mm}/${dd}/${yyyy}`;
+
+            // Refresh Rating Colors
+            ['ratingFace', 'ratingBody', 'ratingKissing', 'ratingVibe'].forEach(id => {
+                updateRatingColor(document.getElementById(id));
+            });
 
             document.getElementById('sheetOverlay').classList.add('show');
         }
@@ -821,17 +1389,21 @@
 
             // Fill
             const set = (eid, val) => document.getElementById(eid).value = val || '';
-            const toDate = (ts) => ts ? new Date(ts.seconds * 1000).toISOString().split('T')[0] : '';
+            const toFormattedDate = (ts) => {
+                if (!ts) return '';
+                const d = new Date(ts.seconds * 1000);
+                return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}/${d.getFullYear()}`;
+            };
 
             set('name', p.name);
             set('occupation', p.occupation);
-            set('dateWeMet', toDate(p.dateWeMet));
+            set('dateWeMet', toFormattedDate(p.dateWeMet));
             set('howWeMet', p.howWeMet);
             set('ratingFace', p.ratings?.face);
             set('ratingBody', p.ratings?.body);
             set('ratingKissing', p.ratings?.kissing);
             set('ratingVibe', p.ratings?.conversationVibe);
-            set('birthdate', toDate(p.birthdate));
+            set('birthdate', toFormattedDate(p.birthdate));
             set('heightFeet', p.height?.feet);
             set('heightInches', p.height?.inches);
             set('location', p.location);
@@ -839,6 +1411,11 @@
             set('relationshipStatus', p.relationshipStatus);
             set('interestLevel', p.interestLevel);
             set('numberOfDates', p.numberOfDates || 0);
+
+            // Refresh Rating Colors
+            ['ratingFace', 'ratingBody', 'ratingKissing', 'ratingVibe'].forEach(id => {
+                updateRatingColor(document.getElementById(id));
+            });
 
             document.getElementById('sheetOverlay').classList.add('show');
         }
@@ -851,7 +1428,17 @@
         window.savePerson = async function () {
             const getVal = id => document.getElementById(id).value;
             const getNum = id => parseFloat(getVal(id)) || 0;
-            const toTs = str => str ? Timestamp.fromDate(new Date(str + 'T12:00:00')) : null;
+            const parseDate = str => {
+                if (!str) return null;
+                const parts = str.split('/');
+                if (parts.length !== 3) return null;
+                const m = parseInt(parts[0]) - 1;
+                const d = parseInt(parts[1]);
+                let y = parseInt(parts[2]);
+                if (y < 100) y += 2000;
+                const dt = new Date(y, m, d, 12, 0, 0);
+                return isNaN(dt.getTime()) ? null : Timestamp.fromDate(dt);
+            };
 
             const name = getVal('name').trim();
             if (!name) return alert('Name Required');
@@ -859,7 +1446,7 @@
             const data = {
                 name,
                 occupation: getVal('occupation'),
-                dateWeMet: toTs(getVal('dateWeMet')) || Timestamp.now(),
+                dateWeMet: parseDate(getVal('dateWeMet')) || Timestamp.now(),
                 howWeMet: getVal('howWeMet'),
                 ratings: {
                     face: getNum('ratingFace'),
@@ -867,7 +1454,7 @@
                     kissing: getNum('ratingKissing'),
                     conversationVibe: getNum('ratingVibe')
                 },
-                birthdate: toTs(getVal('birthdate')),
+                birthdate: parseDate(getVal('birthdate')),
                 height: { feet: getNum('heightFeet'), inches: getNum('heightInches') },
                 location: getVal('location'),
                 instagram: getVal('instagram'),
@@ -876,15 +1463,95 @@
                 numberOfDates: getNum('numberOfDates')
             };
 
+            closeModal();
+
             try {
                 if (currentEditId) {
                     await updateDoc(doc(db, COLLECTION_NAME, currentEditId), data);
                 } else {
                     await addDoc(collection(db, COLLECTION_NAME), data);
                 }
-                closeModal();
-                // No need for manually loadPeople() because onSnapshot handles it!
-            } catch (e) { alert(e.message); }
+                showToast("Saved!");
+            } catch (e) {
+                console.error("Save error:", e);
+                showToast("Save failed, please try again", true);
+            }
+        }
+
+        let lastTap = 0;
+        window.itemTap = function (e, id) {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                // Double tap -> Edit
+                clearTimeout(lastTapTimeout);
+                openEdit(id);
+            } else {
+                // Single tap -> Log (delayed to wait for possible double tap)
+                window.lastTapTimeout = setTimeout(() => {
+                    openLog(id);
+                }, 300);
+            }
+            lastTap = now;
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+
+            toastText.textContent = message;
+
+            // Set gradient and border based on status
+            if (isError) {
+                toast.style.background = 'linear-gradient(135deg, #FF453A, #C9342B)';
+                toast.style.borderColor = 'rgba(255, 69, 58, 0.4)';
+            } else {
+                toast.style.background = 'linear-gradient(135deg, #34C759, #248A3D)';
+                toast.style.borderColor = 'rgba(10, 132, 255, 0.1)';
+            }
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        window.updateRatingColor = function (input) {
+            if (!input) return;
+            const val = parseFloat(input.value) || 0;
+            const box = input.closest('.rating-box');
+            if (!box) return;
+
+            // Clamp value between 1 and 10 for color calculation
+            // Green is 120 (Hue), Red is 0 (Hue)
+            const clamped = Math.min(Math.max(val, 1), 10);
+
+            // Map 1-10 to 0-120 hue
+            // (clamped - 1) / 9 goes from 0 to 1
+            const hue = (clamped - 1) * 11.1; // 100/9 approx (using 100 for a deeper green)
+
+            // If val < 1, prioritize red hues. If val > 10, prioritize green.
+            box.style.background = `hsla(${hue}, 60%, 20%, 0.5)`;
+            box.style.borderColor = `hsla(${hue}, 60%, 40%, 0.6)`;
+        }
+
+        window.formatDateInput = function (input) {
+            // Remove all non-digits
+            let val = input.value.replace(/\D/g, '');
+            if (val.length > 8) val = val.substring(0, 8);
+
+            // Re-format as MM/DD/YYYY
+            let formatted = '';
+            if (val.length > 0) {
+                formatted += val.substring(0, 2);
+                if (val.length > 2) {
+                    formatted += '/' + val.substring(2, 4);
+                    if (val.length > 4) {
+                        formatted += '/' + val.substring(4, 8);
+                    }
+                }
+            }
+            input.value = formatted;
         }
 
         window.deletePerson = async function () {
