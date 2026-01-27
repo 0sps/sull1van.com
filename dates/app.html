@@ -396,7 +396,13 @@
             border-bottom: 0.5px solid var(--ios-separator);
             cursor: pointer;
             touch-action: manipulation;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .list-row.animate-press {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .list-row:last-child {
@@ -458,7 +464,7 @@
             position: relative;
             cursor: pointer;
             touch-action: manipulation;
-            transition: background 0.2s;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s;
             /* Only transition background */
 
             /* Soft Glass Edges */
@@ -482,6 +488,12 @@
 
         .grid-card:active {
             transform: scale(0.96);
+            transition: transform 0.1s ease-out;
+        }
+
+        .grid-card.animate-press {
+            transform: scale(0.92);
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Gradient Borders via Pseudo-element (Does not affect background) */
@@ -612,6 +624,15 @@
             border: none;
             cursor: pointer;
             touch-action: manipulation;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s;
+        }
+
+        .sheet-btn.animate-press {
+            transform: scale(0.85);
+            /* Slightly more pronounced for text */
+            color: #60a5fa;
+            /* Brighter Blue */
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1), color 0.1s;
         }
 
         .sheet-content {
@@ -734,6 +755,16 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s;
+            border-radius: 0 0 16px 16px;
+            /* Ensure highlight fits corners if we add bg change */
+        }
+
+        .summary-grid.animate-press {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.05);
+            /* Light highlight on press */
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .summary-item {
@@ -862,7 +893,9 @@
         }
 
         .entry-textarea {
-            background: var(--ios-gray6);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 16px;
@@ -1001,15 +1034,29 @@
             left: 50%;
             bottom: 40px;
             transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, #31a84f, #115121);
+            background: linear-gradient(135deg,
+                    rgba(30, 30, 30, 0.4) 0%,
+                    rgba(30, 30, 30, 0.6) 100%);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: white;
             padding: 12px 24px;
             border-radius: 50px;
             font-size: 15px;
             font-weight: 600;
             z-index: 10000;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+            /* Soft Glass Edges (3D Depth) */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+            /* Softer Shadow with Inset Highlight */
+            box-shadow:
+                0 4px 16px -4px rgba(0, 0, 0, 0.15),
+                inset 1px 1px 0 rgba(255, 255, 255, 0.08);
+
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             opacity: 0;
             pointer-events: none;
@@ -1027,13 +1074,130 @@
             width: 18px;
             height: 18px;
         }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px;
+            border-radius: 30px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-tab {
+            padding: 10px 24px;
+            border-radius: 24px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s var(--spring);
+        }
+
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stats Page Styles */
+        .year-picker {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .year-picker::-webkit-scrollbar {
+            display: none;
+        }
+
+        .year-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 15px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .year-chip.active {
+            background: var(--ios-blue);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(10, 132, 255, 0.4);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            padding-bottom: 100px;
+        }
+
+        .stat-card-lg {
+            background: rgba(44, 44, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-sub {
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .empty-year {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
     </style>
 </head>
 
 <body>
     <!-- iOS 26 Safari Fix: This fixed element will be sampled for address bar color -->
     <div class="ios-bg-wrapper" id="iosBgWrapper"></div>
-
     <div class="bg-layer" id="dynamicBg">
         <div class="sun-container" id="sun">
             <div class="sun"></div>
@@ -1054,8 +1218,6 @@
         <span id="toastText">Saved!</span>
     </div>
 
-
-
     <!-- Global Header Banner -->
     <div class="app-header-banner">
         <div class="header-title">Dates</div>
@@ -1071,38 +1233,53 @@
 
     <div id="main-scroll-view">
         <div class="container" style="padding-top: calc(100px + env(safe-area-inset-top));">
-            <!-- Global Header Banner -->
 
-            <!-- View Segment Control -->
+            <!-- DATES VIEW -->
+            <div id="dates-view">
+                <!-- View Segment Control -->
+                <div style="text-align: center;">
+                    <div class="segmented-control">
+                        <button id="segList" class="segment-btn active" onclick="setMode('list')">List</button>
+                        <button id="segGrid" class="segment-btn" onclick="setMode('grid')">Cards</button>
+                    </div>
+                </div>
+                <div id="contentArea">
+                    <div id="listView" class="view-content active"></div>
+                    <div id="gridView" class="view-content"></div>
+                </div>
 
-            <!-- View Segment Control -->
-            <div style="text-align: center;">
-                <div class="segmented-control">
-                    <button id="segList" class="segment-btn active" onclick="setMode('list')">List</button>
-                    <button id="segGrid" class="segment-btn" onclick="setMode('grid')">Cards</button>
+                <div id="emptyState"
+                    style="text-align: center; padding: 40px; color: var(--text-secondary); display: none;">
+                    <p>No recorded dates yet</p>
                 </div>
             </div>
-            <div id="contentArea">
-                <div id="listView" class="view-content active"></div>
-                <div id="gridView" class="view-content"></div>
-            </div>
 
-            <div id="emptyState"
-                style="text-align: center; padding: 40px; color: var(--text-secondary); display: none;">
-                <p>No recorded dates yet</p>
+            <!-- STATS VIEW -->
+            <div id="stats-view" class="view-content">
+                <div class="year-picker" id="yearPicker">
+                    <!-- JS Generated -->
+                </div>
+                <div id="statsContent" class="stats-grid">
+                    <!-- JS Generated -->
+                </div>
             </div>
 
             <div style="height: 40px;"></div> <!-- Bottom Padding for scroll -->
         </div>
     </div>
 
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-tab active" id="tabDates" onclick="switchTab('dates')">Dates</button>
+        <button class="nav-tab" id="tabStats" onclick="switchTab('stats')">Stats</button>
+    </div>
+
     <!-- LOG SHEET MODAL -->
     <div id="logOverlay" class="sheet-overlay" onclick="closeLogModal(event)">
         <div class="sheet-modal" onclick="event.stopPropagation()">
-            <div class="sheet-header">
-                <button class="sheet-btn" onclick="closeLogModal()">Close</button>
-                <div class="sheet-title" id="logModalTitle">Person Name</div>
-                <button class="sheet-btn" style="font-weight: 600;" onclick="openPersonDetails()">Edit</button>
+            <div class="sheet-header"><button class="sheet-btn" onclick="handleCloseClick(this)">Close</button>
+                <div class="sheet-title" id="logModalTitle">Person Name</div><button class="sheet-btn"
+                    style="font-weight: 600;" onclick="handleEditClick(this)">Edit</button>
             </div>
             <div class="sheet-content">
                 <!-- Profile Summary (Always Visible) -->
@@ -1111,129 +1288,98 @@
                         <div class="summary-title" id="summaryName">John Doe • 24</div>
                     </div>
                     <div class="summary-grid" id="summaryDetails" style="cursor: pointer;"
-                        onclick="openPersonDetails()">
-                        <div class="summary-item">
-                            <span class="summary-label">Occupation</span>
-                            <span class="summary-value" id="sumJob">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Location</span>
-                            <span class="summary-value" id="sumLoc">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">How We Met</span>
-                            <span class="summary-value" id="sumMetVia">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Interest</span>
-                            <span class="summary-value" id="sumInterest">-</span>
-                        </div>
+                        onclick="handleSummaryClick(this)">
+                        <div class="summary-item"><span class="summary-label">Occupation</span><span
+                                class="summary-value" id="sumJob">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Location</span><span class="summary-value"
+                                id="sumLoc">-</span></div>
+                        <div class="summary-item"><span class="summary-label">How We Met</span><span
+                                class="summary-value" id="sumMetVia">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Interest</span><span class="summary-value"
+                                id="sumInterest">-</span></div>
                         <div class="summary-scores" id="sumScores">
                             <!-- JS Badges -->
                         </div>
-                        <div style="grid-column: span 2; text-align: center; margin-top: 8px;">
-                            <span style="font-size: 11px; color: var(--ios-blue); font-weight: 600;">TAP TO EDIT ALL
-                                DETAILS</span>
-                        </div>
+                        <div style="grid-column: span 2; text-align: center; margin-top: 8px;"><span
+                                style="font-size: 11px; color: var(--ios-blue); font-weight: 600;">TAP
+                                TO EDIT ALL DETAILS</span></div>
                     </div>
                 </div>
-
                 <div class="section-header">New Update</div>
-                <div class="new-entry-container">
-                    <textarea id="logEntryText" class="entry-textarea" placeholder="What happened today?"></textarea>
-                    <button class="quick-action-btn" onclick="saveLogEntry()">Post Update</button>
-                </div>
-
+                <div class="new-entry-container"><textarea id="logEntryText" class="entry-textarea"
+                        placeholder="What happened today?"></textarea><button class="quick-action-btn"
+                        onclick="saveLogEntry()">Post Update</button></div>
                 <div class="section-header">Timeline</div>
                 <div class="log-timeline" id="logTimeline">
                     <!-- JS -->
                 </div>
-
                 <div style="height: 100px;"></div>
             </div>
         </div>
     </div>
-
     <!-- MAIN SHEET MODAL -->
     <div id="sheetOverlay" class="sheet-overlay" onclick="closeModal(event)">
         <div class="sheet-modal" onclick="event.stopPropagation()">
-            <div class="sheet-header">
-                <button class="sheet-btn" onclick="closeModal()">Cancel</button>
-                <div class="sheet-title" id="modalTitle">New Date</div>
-                <button class="sheet-btn" style="font-weight: 600;" onclick="savePerson()">Done</button>
+            <div class="sheet-header"><button class="sheet-btn" onclick="closeModal()">Cancel</button>
+                <div class="sheet-title" id="modalTitle">New Date</div><button class="sheet-btn"
+                    style="font-weight: 600;" onclick="savePerson()">Done</button>
             </div>
             <div class="sheet-content">
                 <form id="personForm">
                     <!-- BASICS -->
                     <div class="form-group-container">
-                        <div class="form-row">
-                            <label class="form-label">Name</label>
+                        <div class="form-row"><label class="form-label">Name</label>
                             <div id="name" class="form-input" contenteditable="true" placeholder="Required" dir="auto">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <label class="form-label">Job</label>
-                            <input type="text" id="occupation" class="form-input" placeholder="Occupation" dir="auto">
-                        </div>
-                        <div class="form-row">
-                            <label class="form-label">Met</label>
-                            <input type="tel" id="dateWeMet" class="form-input" placeholder="MM/DD/YYYY"
-                                oninput="formatDateInput(this)">
-                        </div>
-                        <div class="form-row">
-                            <label class="form-label">Via</label>
-                            <input type="text" id="howWeMet" class="form-input" placeholder="Hinge, Work..."
-                                list="metOptions">
-                            <datalist id="metOptions">
+                        <div class="form-row"><label class="form-label">Job</label><input type="text" id="occupation"
+                                class="form-input" placeholder="Occupation" dir="auto"></div>
+                        <div class="form-row"><label class="form-label">Met</label><input type="tel" id="dateWeMet"
+                                class="form-input" placeholder="MM/DD/YYYY" oninput="formatDateInput(this)"></div>
+                        <div class="form-row"><label class="form-label">Via</label><input type="text" id="howWeMet"
+                                class="form-input" placeholder="Hinge, Work..." list="metOptions"><datalist
+                                id="metOptions">
                                 <option value="Grindr">
                                 <option value="Tinder">
                                 <option value="IRL">
                                 <option value="Friends">
                                 <option value="Instagram">
-                            </datalist>
-                        </div>
+                            </datalist></div>
                     </div>
-
                     <!-- RATINGS -->
                     <div class="section-header">RATINGS (1-10)</div>
                     <div class="ratings-grid">
-                        <div class="rating-box">
-                            <span class="rating-label">Face</span>
-                            <input type="number" id="ratingFace" class="rating-input" value="0" min="0" max="10"
-                                oninput="updateRatingColor(this)">
-                        </div>
-                        <div class="rating-box">
-                            <span class="rating-label">Body</span>
-                            <input type="number" id="ratingBody" class="rating-input" value="0" min="0" max="10"
-                                oninput="updateRatingColor(this)">
-                        </div>
-                        <div class="rating-box">
-                            <span class="rating-label">Kiss</span>
-                            <input type="number" id="ratingKissing" class="rating-input" value="0" min="0" max="10"
-                                oninput="updateRatingColor(this)">
-                        </div>
-                        <div class="rating-box">
-                            <span class="rating-label">Vibe</span>
-                            <input type="number" id="ratingVibe" class="rating-input" value="0" min="0" max="10"
-                                oninput="updateRatingColor(this)">
-                        </div>
+                        <div class="rating-box"><span class="rating-label">Face</span><input type="number"
+                                id="ratingFace" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)"></div>
+                        <div class="rating-box"><span class="rating-label">Body</span><input type="number"
+                                id="ratingBody" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)"></div>
+                        <div class="rating-box"><span class="rating-label">Kiss</span><input type="number"
+                                id="ratingKissing" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)"></div>
+                        <div class="rating-box"><span class="rating-label">Vibe</span><input type="number"
+                                id="ratingVibe" class="rating-input" value="0" min="0" max="10"
+                                oninput="updateRatingColor(this)"></div>
                     </div>
-
                     <!-- DETAILS -->
                     <div class="section-header">DETAILS</div>
                     <div class="form-group-container">
                         <div class="form-row"><label class="form-label">Birthday</label><input type="tel" id="birthdate"
                                 class="form-input" placeholder="MM/DD/YYYY" oninput="formatDateInput(this)"></div>
-                        <div class="form-row"><label class="form-label">Height (Ft)</label><input type="number"
-                                id="heightFeet" class="form-input" placeholder="5"></div>
-                        <div class="form-row"><label class="form-label">Height (In)</label><input type="number"
-                                id="heightInches" class="form-input" placeholder="10"></div>
+                        <div class="form-row"><label class="form-label">Height
+                                (Ft)</label><input type="number" id="heightFeet" class="form-input" placeholder="5">
+                        </div>
+                        <div class="form-row"><label class="form-label">Height
+                                (In)</label><input type="number" id="heightInches" class="form-input" placeholder="10">
+                        </div>
                         <div class="form-row"><label class="form-label">Location</label><input type="text" id="location"
-                                class="form-input" placeholder="City"></div>
+                                class="form-input" placeholder="City">
+                        </div>
                         <div class="form-row"><label class="form-label">Insta</label><input type="text" id="instagram"
-                                class="form-input" placeholder="@handle"></div>
+                                class="form-input" placeholder="@handle">
+                        </div>
                     </div>
-
                     <!-- STATUS -->
                     <div class="section-header">STATUS</div>
                     <div class="form-group-container">
@@ -1243,10 +1389,9 @@
                         <div class="form-row"><label class="form-label">Interest</label><input type="text"
                                 id="interestLevel" class="form-input" placeholder="Level"></div>
                         <div class="form-row"><label class="form-label">Dates</label><input type="number"
-                                id="numberOfDates" class="form-input" value="0"></div>
-                    </div>
-
-                    <datalist id="statusOptions">
+                                id="numberOfDates" class="form-input" value="0">
+                        </div>
+                    </div><datalist id="statusOptions">
                         <option value="Talking">
                         <option value="Dating">
                         <option value="Friendzoned Me">
@@ -1256,23 +1401,45 @@
                         <option value="Broke up with them">
                         <option value="Ended it with me">
                     </datalist>
-
                     <!-- DELETE -->
-                    <div class="delete-btn-container" id="deleteContainer" style="display:none;">
-                        <button type="button" class="delete-action" onclick="deletePerson()">Delete Date</button>
-                    </div>
-
-                    <div style="height: 100px;"></div> <!-- Scroll pad -->
+                    <div class="delete-btn-container" id="deleteContainer" style="display:none;"><button type="button"
+                            class="delete-action" onclick="deletePerson()">Delete Date</button></div>
+                    <div style="height: 100px;"></div>
+                    <!-- Scroll pad -->
                 </form>
             </div>
         </div>
     </div>
-
     <!-- FIREBASE LOGIC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+    <script type="module">import {
+            initializeApp
+        }
+
+            from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        }
+
+            from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+        import {
+            initializeFirestore,
+            persistentLocalCache,
+            persistentMultipleTabManager,
+            collection,
+            addDoc,
+            updateDoc,
+            deleteDoc,
+            doc,
+            onSnapshot,
+            query,
+            orderBy,
+            Timestamp
+        }
+
+            from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8uvGCSb3-stSl0ECOeo-Hl1emIRcx2CM",
@@ -1281,44 +1448,135 @@
             storageBucket: "dates-cfeb5.firebasestorage.app",
             messagingSenderId: "932967099991",
             appId: "1:932967099991:web:11afdf5dbc03c1e8cafd12"
-        };
+        }
+
+            ;
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
         // Use persistence for instant loading
         const db = initializeFirestore(app, {
-            localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+            localCache: persistentLocalCache({
+                tabManager: persistentMultipleTabManager()
+            })
         });
         const ALLOWED_EMAIL = "sspsful@gmail.com";
         const COLLECTION_NAME = "Dates";
 
         let allPeople = [];
         let viewMode = 'list'; // Start with List view
+        let currentTab = 'dates';
         let currentEditId = null;
+        let selectedYear = new Date().getFullYear();
 
         onAuthStateChanged(auth, async (user) => {
             if (!user || user.email !== ALLOWED_EMAIL) {
                 window.location.href = 'index.html';
-            } else {
+            }
+            else {
                 startDataListener();
             }
         });
 
         function startDataListener() {
             const q = query(collection(db, COLLECTION_NAME), orderBy("dateWeMet", "desc"));
+
             onSnapshot(q, (snap) => {
                 allPeople = [];
-                snap.forEach(d => allPeople.push({ id: d.id, ...d.data() }));
+
+                snap.forEach(d => allPeople.push({
+                    id: d.id, ...d.data()
+                }));
                 render();
 
                 // Remove splash loader on first data arrival
                 const splash = document.getElementById('splashLoader');
                 if (splash) splash.classList.add('fade-out');
-            }, (error) => {
-                console.error("Snapshot error:", error);
-                alert("Failed to load data. Please check your connection.");
-            });
+            }
+
+                , (error) => {
+                    console.error("Snapshot error:", error);
+                    alert("Failed to load data. Please check your connection.");
+                });
+        }
+
+        /* ----- CARD ANIMATION ----- */
+        window.handleCardClick = function (el, id) {
+            // 1. "IN" - Press down
+            el.classList.add('animate-press');
+
+            // 2. "OUT" - Bounce back really quickly (Half the time ~90ms total)
+            setTimeout(() => {
+                el.classList.remove('animate-press');
+
+                // 3. Open Log after slight delay to allow bounce-back to start
+                setTimeout(() => {
+                    openLog(id);
+                }
+
+                    , 40);
+            }
+
+                , 80);
+        }
+
+        /* ----- CLOSE BTN ANIMATION ----- */
+        window.handleCloseClick = function (el) {
+            // 1. Press IN + Color Change
+            el.classList.add('animate-press');
+
+            // 2. Bounce OUT 
+            setTimeout(() => {
+                el.classList.remove('animate-press');
+
+                // 3. Action
+                setTimeout(() => {
+                    closeLogModal();
+                }
+
+                    , 40);
+            }
+
+                , 80);
+        }
+
+        window.handleEditClick = function (el) {
+            // 1. Press IN + Color Change
+            el.classList.add('animate-press');
+
+            // 2. Bounce OUT 
+            setTimeout(() => {
+                el.classList.remove('animate-press');
+
+                // 3. Action
+                setTimeout(() => {
+                    openPersonDetails();
+                }
+
+                    , 40);
+            }
+
+                , 80);
+        }
+
+        window.handleSummaryClick = function (el) {
+            // 1. Press IN
+            el.classList.add('animate-press');
+
+            // 2. Bounce OUT 
+            setTimeout(() => {
+                el.classList.remove('animate-press');
+
+                // 3. Action
+                setTimeout(() => {
+                    openPersonDetails();
+                }
+
+                    , 40);
+            }
+
+                , 80);
         }
 
         /* ----- VIEW TOGGLE ----- */
@@ -1336,7 +1594,9 @@
                 gridBtn.classList.remove('active');
                 listView.classList.add('active');
                 gridView.classList.remove('active');
-            } else {
+            }
+
+            else {
                 control.classList.add('grid-active');
                 gridBtn.classList.add('active');
                 listBtn.classList.remove('active');
@@ -1356,42 +1616,37 @@
                 empty.style.display = 'block';
                 return;
             }
+
             empty.style.display = 'none';
 
             // Pre-render List View
-            listContent.innerHTML = `
-                <div class="ios-list">
-                    ${allPeople.map(p => `
-                        <div class="list-row" onclick="openLog('${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                            <div class="row-content">
-                                <div class="row-title">${p.name}</div>
-                                <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
-                            </div>
-                            <div class="list-row-actions">
-                                <div class="plus-badge" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
-                                <div class="row-rating-badge" onclick="event.stopPropagation(); openEdit('${p.id}')">
-                                    ${calculateAvg(p)}
-                                </div>
-                            </div>
+            listContent.innerHTML = `<div class="ios-list">
+                ${allPeople.map(p => `
+                    <div class="list-row" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                        <div class="row-content">
+                            <div class="row-title">${p.name}</div>
+                            <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
                         </div>
-                    `).join('')}
-                </div>
-            `;
+                        <div class="list-row-actions">
+                            <div class="plus-badge" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
+                            <div class="row-rating-badge" onclick="event.stopPropagation(); openEdit('${p.id}')">${calculateAvg(p)}</div>
+                        </div>
+                    </div>`).join('')}
+            </div>`;
 
             // Pre-render Grid View
-            gridContent.innerHTML = `
-                <div class="ios-grid">
-                    ${allPeople.map(p => `
-                        <div class="grid-card" onclick="openLog('${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                            <div class="card-initials">${p.name.charAt(0)}</div>
-                            <div class="card-name">${p.name}</div>
-                            <div class="card-detail">${p.occupation || 'No Job'}</div>
-                            <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">${calculateAvg(p)} ★</div>
-                            <div class="plus-badge" style="position:absolute; top:12px; right:12px;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
+            gridContent.innerHTML = `<div class="ios-grid">
+                ${allPeople.map(p => `
+                    <div class="grid-card" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                        <div class="card-initials">${p.name.charAt(0)}</div>
+                        <div class="card-name">${p.name}</div>
+                        <div class="card-detail">${p.occupation || 'No Job'}</div>
+                        <div class="card-detail" style="color:var(--ios-blue); font-weight:600; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">
+                            ${calculateAvg(p)} ★
                         </div>
-                    `).join('')}
-                </div>
-            `;
+                        <div class="plus-badge" style="position:absolute; top:12px; right:12px;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
+                    </div>`).join('')}
+            </div>`;
 
             // Set initial state
             setMode(viewMode);
@@ -1399,7 +1654,10 @@
 
         function calculateAvg(p) {
             if (!p.ratings) return '-';
-            const vals = [p.ratings.face, p.ratings.body, p.ratings.kissing, p.ratings.conversationVibe].filter(v => v > 0);
+            const vals = [p.ratings.face,
+            p.ratings.body,
+            p.ratings.kissing,
+            p.ratings.conversationVibe].filter(v => v > 0);
             if (vals.length === 0) return '-';
             return (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
         }
@@ -1419,6 +1677,7 @@
 
             // Essential Info Summary - OPEN BY DEFAULT
             const age = getAge(p.birthdate);
+
             document.getElementById('summaryName').textContent = `${p.name} • ${age}`;
             document.getElementById('sumJob').textContent = p.occupation || '-';
             document.getElementById('sumLoc').textContent = p.location || '-';
@@ -1428,11 +1687,26 @@
             // Score Badges
             const scores = document.getElementById('sumScores');
             scores.innerHTML = '';
-            const categories = [
-                { label: 'FACE', val: p.ratings?.face },
-                { label: 'BODY', val: p.ratings?.body },
-                { label: 'KISS', val: p.ratings?.kissing },
-                { label: 'VIBE', val: p.ratings?.conversationVibe }
+
+            const categories = [{
+                label: 'FACE', val: p.ratings?.face
+            }
+
+                ,
+            {
+                label: 'BODY', val: p.ratings?.body
+            }
+
+                ,
+            {
+                label: 'KISS', val: p.ratings?.kissing
+            }
+
+                ,
+            {
+                label: 'VIBE', val: p.ratings?.conversationVibe
+            }
+
             ];
 
             categories.filter(c => c.val > 0).forEach(c => {
@@ -1440,6 +1714,7 @@
                 pill.className = 'score-pill';
                 // Use the hue logic for badges too!
                 const hue = (Math.min(c.val, 10) - 1) * 11.1;
+
                 pill.style.color = `hsl(${hue}, 80%, 70%)`;
                 pill.style.background = `hsla(${hue}, 80%, 20%, 0.3)`;
                 pill.textContent = `${c.label}: ${c.val}`;
@@ -1461,31 +1736,36 @@
 
         function renderTimeline(logs) {
             const container = document.getElementById('logTimeline');
+
             if (!logs || logs.length === 0) {
                 container.innerHTML = '<p style="color:var(--text-secondary); font-size:14px; padding-top:10px;">No updates yet</p>';
                 return;
             }
 
             // We need original indices for editing, so store them
-            const items = logs.map((l, idx) => ({ ...l, originalIdx: idx }));
+            const items = logs.map((l, idx) => ({
+                ...l, originalIdx: idx
+            }));
             const sorted = items.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
 
             container.innerHTML = sorted.map(l => {
                 const date = new Date(l.timestamp.seconds * 1000);
-                const timeStr = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-                return `
-                    <div class="log-entry">
-                        <div class="log-entry-dot"></div>
-                        <div class="log-date">${timeStr}</div>
-                        <div class="log-bubble-container">
-                            <div class="log-bubble">${l.note}</div>
-                            <div class="log-entry-actions">
-                                <button class="log-action-btn" onclick="startEditLog(${l.originalIdx})">Edit</button>
-                                <button class="log-action-btn delete" onclick="deleteLogEntry(${l.originalIdx})">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+
+                const timeStr = date.toLocaleDateString(undefined, {
+                    month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+                });
+
+                return `<div class="log-entry">
+            <div class="log-entry-dot"></div>
+            <div class="log-date">${timeStr}</div>
+            <div class="log-bubble-container">
+                <div class="log-bubble">${l.note}</div>
+                <div class="log-entry-actions">
+                    <button class="log-action-btn" onclick="startEditLog(${l.originalIdx})">Edit</button>
+                    <button class="log-action-btn delete" onclick="deleteLogEntry(${l.originalIdx})">Delete</button>
+                </div>
+            </div>
+        </div>`;
             }).join('');
         }
 
@@ -1498,7 +1778,10 @@
             textarea.value = p.logs[idx].note;
             document.querySelector('.quick-action-btn').textContent = 'Update Note';
             textarea.focus();
-            textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            textarea.scrollIntoView({
+                behavior: 'smooth', block: 'center'
+            });
         }
 
         window.deleteLogEntry = async function (idx) {
@@ -1510,10 +1793,16 @@
             updatedLogs.splice(idx, 1);
 
             try {
-                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), { logs: updatedLogs });
+                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), {
+                    logs: updatedLogs
+                });
                 showToast("Entry deleted");
                 renderTimeline(updatedLogs);
-            } catch (e) { showToast("Failed to delete", true); }
+            }
+
+            catch (e) {
+                showToast("Failed to delete", true);
+            }
         }
 
         window.saveLogEntry = async function () {
@@ -1526,6 +1815,7 @@
             let updatedLogs = p.logs ? [...p.logs] : [];
 
             if (editingLogIdx >= 0) {
+
                 // Edit existing
                 updatedLogs[editingLogIdx] = {
                     ...updatedLogs[editingLogIdx],
@@ -1533,13 +1823,20 @@
                     // Optionally update timestamp? User said "edit info about past log entries"
                     // Usually we keep the original timestamp but maybe add a "last edited"? 
                     // Let's keep original timestamp.
-                };
-            } else {
+                }
+
+                    ;
+            }
+
+            else {
+
                 // New entry
                 const newLog = {
                     timestamp: Timestamp.now(),
                     note: note
-                };
+                }
+
+                    ;
                 updatedLogs.push(newLog);
             }
 
@@ -1554,7 +1851,9 @@
                 editingLogIdx = -1;
                 showToast(editingLogIdx >= 0 ? "Entry updated" : "Update Saved!");
                 renderTimeline(updatedLogs);
-            } catch (e) {
+            }
+
+            catch (e) {
                 showToast("Failed to save", true);
             }
         }
@@ -1588,12 +1887,16 @@
             const mm = String(now.getMonth() + 1).padStart(2, '0');
             const dd = String(now.getDate()).padStart(2, '0');
             const yyyy = now.getFullYear();
+
             document.getElementById('dateWeMet').value = `${mm}/${dd}/${yyyy}`;
 
             // Refresh Rating Colors
-            ['ratingFace', 'ratingBody', 'ratingKissing', 'ratingVibe'].forEach(id => {
-                updateRatingColor(document.getElementById(id));
-            });
+            ['ratingFace',
+                'ratingBody',
+                'ratingKissing',
+                'ratingVibe'].forEach(id => {
+                    updateRatingColor(document.getElementById(id));
+                });
 
             document.getElementById('sheetOverlay').classList.add('show');
         }
@@ -1609,11 +1912,15 @@
             // Fill
             const set = (eid, val) => document.getElementById(eid).value = val || '';
             const setName = (val) => document.getElementById('name').innerText = val || '';
+
             const toFormattedDate = (ts) => {
                 if (!ts) return '';
                 const d = new Date(ts.seconds * 1000);
+
                 return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}/${d.getFullYear()}`;
-            };
+            }
+
+                ;
 
             setName(p.name);
             set('occupation', p.occupation);
@@ -1633,9 +1940,12 @@
             set('numberOfDates', p.numberOfDates || 0);
 
             // Refresh Rating Colors
-            ['ratingFace', 'ratingBody', 'ratingKissing', 'ratingVibe'].forEach(id => {
-                updateRatingColor(document.getElementById(id));
-            });
+            ['ratingFace',
+                'ratingBody',
+                'ratingKissing',
+                'ratingVibe'].forEach(id => {
+                    updateRatingColor(document.getElementById(id));
+                });
 
             document.getElementById('sheetOverlay').classList.add('show');
         }
@@ -1649,8 +1959,11 @@
             const getVal = id => {
                 const el = document.getElementById(id);
                 return el.tagName === 'DIV' ? el.innerText : el.value;
-            };
+            }
+
+                ;
             const getNum = id => parseFloat(document.getElementById(id).value) || 0;
+
             const parseDate = str => {
                 if (!str) return null;
                 const parts = str.split('/');
@@ -1661,12 +1974,15 @@
                 if (y < 100) y += 2000;
                 const dt = new Date(y, m, d, 12, 0, 0);
                 return isNaN(dt.getTime()) ? null : Timestamp.fromDate(dt);
-            };
+            }
+
+                ;
 
             const name = getVal('name').trim();
             if (!name) return alert('Name Required');
 
             const data = {
+
                 name,
                 occupation: getVal('occupation'),
                 dateWeMet: parseDate(getVal('dateWeMet')) || Timestamp.now(),
@@ -1676,44 +1992,65 @@
                     body: getNum('ratingBody'),
                     kissing: getNum('ratingKissing'),
                     conversationVibe: getNum('ratingVibe')
-                },
+                }
+
+                ,
                 birthdate: parseDate(getVal('birthdate')),
-                height: { feet: getNum('heightFeet'), inches: getNum('heightInches') },
+                height: {
+                    feet: getNum('heightFeet'), inches: getNum('heightInches')
+                }
+
+                ,
                 location: getVal('location'),
                 instagram: getVal('instagram'),
                 relationshipStatus: getVal('relationshipStatus'),
                 interestLevel: getVal('interestLevel'),
                 numberOfDates: getNum('numberOfDates')
-            };
+            }
+
+                ;
 
             closeModal();
 
             try {
                 if (currentEditId) {
                     await updateDoc(doc(db, COLLECTION_NAME, currentEditId), data);
-                } else {
+                }
+
+                else {
                     await addDoc(collection(db, COLLECTION_NAME), data);
                 }
+
                 showToast("Saved!");
-            } catch (e) {
+            }
+
+            catch (e) {
                 console.error("Save error:", e);
                 showToast("Save failed, please try again", true);
             }
         }
 
         let lastTap = 0;
+
         window.itemTap = function (e, id) {
             const now = Date.now();
+
             if (now - lastTap < 300) {
                 // Double tap -> Edit
                 clearTimeout(lastTapTimeout);
                 openEdit(id);
-            } else {
+            }
+
+            else {
+
                 // Single tap -> Log (delayed to wait for possible double tap)
                 window.lastTapTimeout = setTimeout(() => {
                     openLog(id);
-                }, 300);
+                }
+
+                    , 300);
             }
+
             lastTap = now;
         }
 
@@ -1724,19 +2061,26 @@
             toastText.textContent = message;
 
             // Set gradient and border based on status
+            // Set gradient and border based on status
             if (isError) {
-                toast.style.background = 'linear-gradient(135deg, #FF453A, #C9342B)';
-                toast.style.borderColor = 'rgba(255, 69, 58, 0.4)';
-            } else {
-                toast.style.background = 'linear-gradient(135deg, #34C759, #248A3D)';
-                toast.style.borderColor = 'rgba(10, 132, 255, 0.1)';
+                // Red Glass Gradient
+                toast.style.background = 'linear-gradient(135deg, rgba(255, 69, 58, 0.4) 0%, rgba(200, 50, 40, 0.5) 100%)';
             }
+
+            else {
+                // Green Glass Gradient (Matches header style but green)
+                toast.style.background = 'linear-gradient(135deg, rgba(52, 199, 89, 0.4) 0%, rgba(30, 160, 60, 0.5) 100%)';
+            }
+
+            // We do NOT set borderColor here anymore, relying on the CSS 3D borders (white/transparent) for the glass effect
 
             toast.classList.add('show');
 
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2000);
+            }
+
+                , 2000);
         }
 
         window.updateRatingColor = function (input) {
@@ -1765,15 +2109,19 @@
 
             // Re-format as MM/DD/YYYY
             let formatted = '';
+
             if (val.length > 0) {
                 formatted += val.substring(0, 2);
+
                 if (val.length > 2) {
                     formatted += '/' + val.substring(2, 4);
+
                     if (val.length > 4) {
                         formatted += '/' + val.substring(4, 8);
                     }
                 }
             }
+
             input.value = formatted;
         }
 
@@ -1796,14 +2144,22 @@
         segControl.addEventListener('touchstart', (e) => {
             isDraggingSeg = true;
             handleSegTouch(e);
-        }, { passive: false });
+        }
+
+            , {
+                passive: false
+            });
 
         segControl.addEventListener('touchmove', (e) => {
             if (isDraggingSeg) {
                 e.preventDefault();
                 handleSegTouch(e);
             }
-        }, { passive: false });
+        }
+
+            , {
+                passive: false
+            });
 
         segControl.addEventListener('touchend', () => {
             isDraggingSeg = false;
@@ -1814,9 +2170,12 @@
             const touch = e.touches[0];
             const x = touch.clientX - rect.left;
             const ratio = x / rect.width;
+
             if (ratio < 0.5) {
                 if (viewMode !== 'list') setMode('list');
-            } else {
+            }
+
+            else {
                 if (viewMode !== 'grid') setMode('grid');
             }
         }
@@ -1827,20 +2186,31 @@
 
         document.getElementById('contentArea').addEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX;
-        }, { passive: true });
+        }
+
+            , {
+                passive: true
+            });
 
         document.getElementById('contentArea').addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
             handleGesture();
-        }, { passive: true });
+        }
+
+            , {
+                passive: true
+            });
 
         function handleGesture() {
             const delta = touchendX - touchstartX;
-            if (Math.abs(delta) > 100) { // Min swipe distance
+
+            if (Math.abs(delta) > 100) {
+                // Min swipe distance
                 if (delta > 0 && viewMode === 'grid') setMode('list');
                 if (delta < 0 && viewMode === 'list') setMode('grid');
             }
         }
+
         function updateDynamicBackground() {
             const now = new Date();
             const hour = now.getHours() + now.getMinutes() / 60;
@@ -1853,28 +2223,66 @@
             // 10:00 - Morning (Bright Blue)
             // 17:00 - Sunset (Slate -> Gold)
             // 21:00 - Night (Dark Blue)
-            const stops = [
-                [0, ["#000814", "#0a1a2f", "#000814"]], // Midnight Blue
-                [5, ["#1a0505", "#2a1010", "#1a0505"]], // Pre-Dawn Dark
-
-                // Screenshot Vibes: Slate Grey to Golden Glow
-                [6, ["#3b464b", "#dca860", "#3b464b"]], // Sunrise Start
-                [7, ["#4a5c66", "#eccc80", "#4a5c66"]], // Sunrise Brightening
-
-                [8, ["#2563eb", "#60a5fa", "#2563eb"]], // Morning: Blue
-                [16, ["#1e40af", "#3b82f6", "#1e40af"]], // Late Afternoon: Deep Blue
-
-                // Screenshot Vibes: Slate Grey to Golden Glow
-                [17, ["#4a5c66", "#eccc80", "#4a5c66"]], // Pre-Sunset (Lighter)
-                [18, ["#3b464b", "#dca860", "#3b464b"]], // Sunset (Darker slate, rich gold)
-                [19, ["#232a2e", "#8c6c3e", "#232a2e"]], // Dusk (Very dark slate, fading gold)
-
-                [21, ["#0f172a", "#1e293b", "#0f172a"]], // Night: Dark Blue
-                [24, ["#000814", "#0a1a2f", "#000814"]]  // Midnight repeat
+            const stops = [[0,
+                ["#000814",
+                    "#0a1a2f",
+                    "#000814"]],
+            // Midnight Blue
+            [5,
+                ["#1a0505",
+                    "#2a1010",
+                    "#1a0505"]],
+            // Pre-Dawn Dark
+            [6,
+                ["#3b464b",
+                    "#dca860",
+                    "#3b464b"]],
+            // Sunrise Start
+            [7,
+                ["#4a5c66",
+                    "#eccc80",
+                    "#4a5c66"]],
+            // Sunrise Brightening
+            [8,
+                ["#2563eb",
+                    "#60a5fa",
+                    "#2563eb"]],
+            // Morning: Blue
+            [16,
+                ["#1e40af",
+                    "#3b82f6",
+                    "#1e40af"]],
+            // Late Afternoon: Deep Blue
+            [17,
+                ["#4a5c66",
+                    "#eccc80",
+                    "#4a5c66"]],
+            // Pre-Sunset (Lighter)
+            [18,
+                ["#3b464b",
+                    "#dca860",
+                    "#3b464b"]],
+            // Sunset (Darker slate, rich gold)
+            [19,
+                ["#232a2e",
+                    "#8c6c3e",
+                    "#232a2e"]],
+            // Dusk (Very dark slate, fading gold)
+            [21,
+                ["#0f172a",
+                    "#1e293b",
+                    "#0f172a"]],
+            // Night: Dark Blue
+            [24,
+                ["#000814",
+                    "#0a1a2f",
+                    "#000814"]] // Midnight repeat
             ];
 
             // Find current stop
-            let s1, s2;
+            let s1,
+                s2;
+
             for (let i = 0; i < stops.length - 1; i++) {
                 if (hour >= stops[i][0] && hour < stops[i + 1][0]) {
                     s1 = stops[i];
@@ -1895,8 +2303,11 @@
                 const r = Math.round(r1 + (r2 - r1) * p);
                 const g = Math.round(g1 + (g2 - g1) * p);
                 const b = Math.round(b1 + (b2 - b1) * p);
-                return `rgb(${r},${g},${b})`;
-            };
+
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+
+                ;
 
             const top = lerp(s1[1][0], s2[1][0], p);
             const bot = lerp(s1[1][1], s2[1][1], p);
@@ -1909,6 +2320,7 @@
 
             // Also apply to the fixed wrapper for iOS 26 Safari address bar
             const iosWrapper = document.getElementById('iosBgWrapper');
+
             if (iosWrapper) {
                 iosWrapper.style.backgroundImage = gradient;
             }
@@ -1928,7 +2340,10 @@
                 // Noon (12) is Pure White. 
                 // Sunrise (6) and Sunset (18) are Golden/Warm.
 
-                let sunColor1, sunColor2, sunShadow1, sunShadow2;
+                let sunColor1,
+                    sunColor2,
+                    sunShadow1,
+                    sunShadow2;
 
                 if (hour < 9 || hour > 16) {
                     // Sunrise/Sunset Mode (Golden)
@@ -1936,7 +2351,9 @@
                     sunColor2 = "#fff5e6"; // Warm Pale
                     sunShadow1 = "rgba(255, 204, 51, 0.6)"; // Gold Glow
                     sunShadow2 = "rgba(255, 165, 0, 0.3)"; // Orange tint
-                } else {
+                }
+
+                else {
                     // Day Mode (Blue Sky)
                     sunColor1 = "#ffffff"; // White
                     sunColor2 = "#fff9c4"; // Pale Yellow
@@ -1946,15 +2363,20 @@
 
                 // Apply transition styles
                 sunOrb.style.transition = "background 2s, box-shadow 2s";
+
                 sunOrb.style.background = `radial-gradient(circle, ${sunColor1} 30%, ${sunColor2} 50%, rgba(255, 255, 255, 0) 70%)`;
                 sunOrb.style.boxShadow = `0 0 100px 30px ${sunShadow1}, 0 0 200px 60px ${sunShadow2}`;
 
                 // Move sun across sky
                 const sunX = 15 + ((hour - 5) / 15) * 70; // 15% to 85%
+
                 sun.style.right = `${100 - sunX}%`;
+
                 // Sine wave arch path
                 sun.style.top = `${15 + Math.sin((hour - 5) / 15 * Math.PI) * -10}%`;
-            } else {
+            }
+
+            else {
                 sun.style.opacity = '0';
             }
         }
@@ -2005,6 +2427,141 @@
         setTimeout(createParticles, 1000); // Wait for sun to position correctly
         updateDynamicBackground();
         setInterval(updateDynamicBackground, 60000); // Update every minute
+
+
+        /* ----- TAB & STATS LOGIC ----- */
+        window.switchTab = function (tab) {
+            currentTab = tab;
+            const datesView = document.getElementById('dates-view');
+            const statsView = document.getElementById('stats-view');
+            const tabDates = document.getElementById('tabDates');
+            const tabStats = document.getElementById('tabStats');
+            const headerTitle = document.querySelector('.header-title');
+
+            if (tab === 'dates') {
+                datesView.style.display = 'block';
+                statsView.classList.remove('active');
+                tabDates.classList.add('active');
+                tabStats.classList.remove('active');
+                headerTitle.textContent = 'Dates';
+                // Small timeout to allow display block to apply before opacity transition if we added one (kept simple for now)
+            }
+
+            else {
+                datesView.style.display = 'none';
+                statsView.classList.add('active');
+                tabDates.classList.remove('active');
+                tabStats.classList.add('active');
+                headerTitle.textContent = 'Stats';
+                renderYearPicker();
+                renderStats();
+            }
+        }
+
+        function renderYearPicker() {
+            const container = document.getElementById('yearPicker');
+            const currentYear = new Date().getFullYear();
+            const years = [];
+            for (let y = 2018; y <= 2026; y++) years.push(y);
+
+            // Reverse so newest is first
+            container.innerHTML = years.reverse().map(y => `
+                <div class="year-chip ${y === selectedYear ? 'active' : ''}" 
+                     onclick="selectYear(${y})">${y}</div>
+            `).join('');
+        }
+
+        window.selectYear = function (y) {
+            selectedYear = y;
+            renderYearPicker(); // re-render to update active state
+            renderStats();
+        }
+
+        function renderStats() {
+            const container = document.getElementById('statsContent');
+
+            // Filter by year
+            const yearPeople = allPeople.filter(p => {
+                if (!p.dateWeMet) return false;
+                const d = new Date(p.dateWeMet.seconds * 1000);
+                return d.getFullYear() === selectedYear;
+            });
+
+            if (yearPeople.length === 0) {
+                container.innerHTML = `<div class="empty-year">No dates recorded in ${selectedYear}</div>`;
+                return;
+            }
+
+            // 1. Avg Rating (Face+Body+Kiss+Vibe / 4 for each person, then avg of that)
+            let totalScore = 0;
+            let count = 0;
+
+            yearPeople.forEach(p => {
+                if (p.ratings) {
+                    const vals = [p.ratings.face, p.ratings.body, p.ratings.kissing, p.ratings.conversationVibe];
+                    const validVals = vals.filter(v => typeof v === 'number' && v > 0);
+
+                    if (validVals.length > 0) {
+                        const personAvg = validVals.reduce((a, b) => a + b, 0) / validVals.length;
+                        totalScore += personAvg;
+                        count++;
+                    }
+                }
+            });
+            const globalAvg = count > 0 ? (totalScore / count).toFixed(1) : '-';
+
+            // 2. Top Rated Kiss
+            // Sort by ratings.kissing desc
+            const topKiss = [...yearPeople].sort((a, b) => (b.ratings?.kissing || 0) - (a.ratings?.kissing || 0))[0];
+            const topKissName = (topKiss && topKiss.ratings?.kissing > 0) ? topKiss.name : '-';
+            const topKissVal = (topKiss && topKiss.ratings?.kissing > 0) ? topKiss.ratings.kissing : '';
+
+            // 3. Top Rated Body
+            const topBody = [...yearPeople].sort((a, b) => (b.ratings?.body || 0) - (a.ratings?.body || 0))[0];
+            const topBodyName = (topBody && topBody.ratings?.body > 0) ? topBody.name : '-';
+            const topBodyVal = (topBody && topBody.ratings?.body > 0) ? topBody.ratings.body : '';
+
+            // 4. Most Updates
+            // Sort by logs length
+            const mostUpdates = [...yearPeople].sort((a, b) => (b.logs?.length || 0) - (a.logs?.length || 0))[0];
+            const mostUpdatesName = (mostUpdates && mostUpdates.logs && mostUpdates.logs.length > 0) ? mostUpdates.name : '-';
+            const mostUpdatesCount = (mostUpdates && mostUpdates.logs) ? mostUpdates.logs.length : 0;
+
+            container.innerHTML = `
+                <div class="stat-card-lg">
+                    <div class="stat-label">Average Rating</div>
+                    <div class="stat-value" style="color:#fff;">${globalAvg}</div>
+                    <div class="stat-sub">Across ${yearPeople.length} dates</div>
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-label">Best Kisser</div>
+                    <div class="stat-value" style="font-size:24px;">${topKissName}</div>
+                    ${topKissVal ? `<div class="stat-sub">${topKissVal}/10</div>` : ''}
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-label">Best Body</div>
+                    <div class="stat-value" style="font-size:24px;">${topBodyName}</div>
+                    ${topBodyVal ? `<div class="stat-sub">${topBodyVal}/10</div>` : ''}
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-label">Most Updates</div>
+                    <div class="stat-value" style="font-size:24px;">${mostUpdatesName}</div>
+                    ${mostUpdatesCount > 0 ? `<div class="stat-sub">${mostUpdatesCount} Entries</div>` : ''}
+                </div>
+            `;
+        }
+
+        // Safety timeout for splash screen
+        setTimeout(() => {
+            const splash = document.getElementById('splashLoader');
+            if (splash && !splash.classList.contains('fade-out')) {
+                splash.classList.add('fade-out');
+                console.warn("Forced splash removal due to timeout");
+            }
+        }, 3000);
 
 
     </script>
