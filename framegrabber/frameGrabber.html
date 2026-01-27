@@ -52,90 +52,62 @@
             z-index: -1;
         }
 
-        /* Header */
-        .app-header-banner {
-            position: fixed;
-            top: calc(10px + env(safe-area-inset-top));
-            left: 16px;
-            right: 16px;
-            height: 72px;
-            background: rgba(30, 45, 60, 0.15);
-            /* Ultra transparent */
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 24px;
-            z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 40px -10px rgba(0, 10, 20, 0.5);
-        }
-
+        /* Header - Deleted as per request, but keeping back btn style for player */
         .header-back-btn {
-            position: absolute;
-            left: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            width: 44px;
-            height: 44px;
+            position: fixed;
+            top: calc(15px + env(safe-area-inset-top));
+            left: 20px;
+            background: rgba(40, 60, 80, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: none;
-            /* Hidden by default */
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding-right: 2px;
-            /* Visual centering adjustment for arrow */
+            z-index: 1001;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .header-back-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             fill: currentColor;
         }
 
-        .header-title {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
         .container {
-            padding: 110px 16px 40px;
+            min-height: 100dvh;
+            padding: 20px 16px;
             max-width: 800px;
             margin: 0 auto;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            /* Vertical Centering */
             gap: 24px;
         }
 
         /* Upload Area */
         .upload-card {
-            width: 100%;
-            min-height: 240px;
+            width: 93%;
+            height: 80dvh;
+            /* 80% of device screen height */
             background: rgba(30, 35, 45, 0.12);
-            /* Ultra transparent */
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border-radius: var(--radius-xl);
+            border-radius: 40px;
+            /* Slightly more rounded for large card */
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 24px;
             cursor: pointer;
             transition: all 0.3s var(--spring);
             padding: 40px;
@@ -388,14 +360,12 @@
     <!-- Underwater Background Canvas -->
     <canvas id="underwaterCanvas"></canvas>
 
-    <div class="app-header-banner">
-        <button class="header-back-btn" id="backBtn" onclick="resetApp()">
-            <svg viewBox="0 0 24 24">
-                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
-            </svg>
-        </button>
-        <div class="header-title">FrameGrabber</div>
-    </div>
+    <!-- Floating Back Button (for player view) -->
+    <button class="header-back-btn" id="backBtn" onclick="resetApp()">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+        </svg>
+    </button>
 
     <div class="container">
         <!-- Upload -->
@@ -434,7 +404,7 @@
     </div>
 
     <script>
-        /* Cinematic 3D Underwater Animation System */
+        /* Cinematic 3D Underwater Animation System (Liquid Light Edition) */
         (function () {
             const canvas = document.getElementById('underwaterCanvas');
             if (!canvas) return;
@@ -445,9 +415,9 @@
             let rays = [];
 
             const COLORS = {
-                surface: '#0097b8', // Cinematic teal surface
-                mid: '#004e75',
-                deep: '#031b2b',
+                surface: '#005f73', // Rich cinematic teal
+                mid: '#003d5b',
+                deep: '#002133',
                 abyss: '#010810'
             };
 
@@ -465,31 +435,31 @@
                 rays = [];
 
                 // 1. Organic Marine Snow (Depth-aware)
-                for (let i = 0; i < 180; i++) {
+                for (let i = 0; i < 160; i++) {
                     particles.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
-                        z: Math.random(), // 0 to 1 depth
+                        z: Math.random(),
                         size: Math.random() * 1.5 + 0.3,
-                        speedY: Math.random() * 0.2 + 0.05,
+                        speedY: Math.random() * 0.15 + 0.05,
                         phase: Math.random() * Math.PI * 2,
                         opacity: Math.random() * 0.15 + 0.05
                     });
                 }
 
-                // 2. 3D Volumetric God Rays
-                // Each ray is a 3D shaft oscillating in perspective space
-                const rayCount = 12;
+                // 2. 3D Volumetric God Rays (Advanced Snaking)
+                const rayCount = 10;
                 for (let i = 0; i < rayCount; i++) {
                     rays.push({
                         x: Math.random() * width,
-                        z: Math.random(), // Depth factor
-                        width: Math.random() * 80 + 40,
-                        angle: (Math.random() - 0.5) * 0.4,
-                        speed: Math.random() * 0.0008 + 0.0004,
-                        opacity: Math.random() * 0.12 + 0.08,
+                        z: Math.random(),
+                        width: Math.random() * 100 + 50,
+                        angle: (Math.random() - 0.5) * 0.5,
+                        speed: Math.random() * 0.0005 + 0.0002,
+                        opacity: Math.random() * 0.1 + 0.05,
                         offset: Math.random() * Math.PI * 2,
-                        oscillation: Math.random() * 0.5 + 0.5
+                        waverSpeed: Math.random() * 2 + 1,
+                        driftSpeed: Math.random() * 0.5 + 0.2
                     });
                 }
             }
@@ -499,131 +469,108 @@
             function animate(time) {
                 const t = time * 0.001;
 
-                // A. Background Depth Gradient
+                // A. Deep Sea Background
                 const grad = ctx.createLinearGradient(0, 0, 0, height);
                 grad.addColorStop(0, COLORS.surface);
-                grad.addColorStop(0.3, COLORS.mid);
+                grad.addColorStop(0.4, COLORS.mid);
                 grad.addColorStop(0.7, COLORS.deep);
                 grad.addColorStop(1, COLORS.abyss);
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, width, height);
 
-                // B. Caustics / Water Surface Noise (Lens Layer)
-                ctx.save();
-                ctx.globalCompositeOperation = 'screen';
-                ctx.globalAlpha = 0.12;
-                for (let i = 0; i < 2; i++) {
-                    const shiftX = Math.sin(t * 0.2 + i) * 60;
-                    const shiftY = Math.cos(t * 0.15 + i) * 40;
-                    ctx.save();
-                    ctx.translate(width / 2 + shiftX, height / 2 + shiftY);
-                    ctx.rotate(t * 0.03 + i);
-                    ctx.scale(2, 1.5);
-
-                    // Large soft light blobs creating organic patterns
-                    const causticGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, width * 0.4);
-                    causticGrad.addColorStop(0, '#bef5ff');
-                    causticGrad.addColorStop(1, 'transparent');
-                    ctx.fillStyle = causticGrad;
-                    ctx.fillRect(-width, -width, width * 2, width * 2);
-                    ctx.restore();
-                }
-                ctx.restore();
-
-                // B. 3D Volumetric God Rays (Advanced Projection)
+                // B. Light Rays (3D Projected & Wavy)
                 ctx.save();
                 ctx.globalCompositeOperation = 'screen';
 
-                rays.forEach((ray, i) => {
-                    // Simulated 3D coordinates: x (horizontal), z (depth)
-                    // We oscillate the ray in 3D space
-                    const timeScale = t * 0.5;
-                    const freq = ray.speed * 10;
+                // Sort by Z for depth consistency
+                const sortedRays = [...rays].sort((a, b) => a.z - b.z);
 
-                    // 3D Position oscillation
-                    const oscX = Math.sin(timeScale * freq + ray.offset) * 120;
-                    const oscZ = Math.cos(timeScale * freq * 0.8 + ray.offset) * 0.5 + 0.5; // Depth shifting
+                sortedRays.forEach((ray, i) => {
+                    const depthFactor = 0.5 + ray.z * 1.5;
+                    const drift = Math.sin(t * ray.driftSpeed + ray.offset) * 100 * depthFactor;
+                    const xPos = ray.x + drift;
 
-                    // Combined depth: base depth + oscillation
-                    const finalZ = (ray.z + oscZ * 0.3); // Map to 0-1 range roughly
-                    const depthFactor = 0.4 + finalZ * 1.6; // Scale based on depth
+                    const simmer = 0.8 + Math.sin(t * 3 + i) * 0.2;
+                    const opacity = ray.opacity * depthFactor * simmer;
 
-                    // Perspective projection
-                    // Nearer things are bigger, faster, and clearer
-                    const xPos = ray.x + oscX * depthFactor;
-                    const blur = (1 - finalZ) * 10;
-                    ctx.filter = `blur(${blur}px)`;
+                    // Snaking / Wavering effect using multiple oscillating segments
+                    const waverTop = Math.sin(t * ray.waverSpeed + ray.offset) * 30;
+                    const waverMid = Math.sin(t * ray.waverSpeed * 0.7 + ray.offset + 1) * 50;
+                    const waverBot = Math.sin(t * ray.waverSpeed * 0.5 + ray.offset + 2) * 80;
 
-                    // 3D Rotation simulation (Pitch/Yaw)
-                    const angleSway = Math.sin(t * 1.2 + i) * 0.08;
+                    const angleSway = Math.sin(t * 0.5 + i) * 0.1;
                     const currentAngle = ray.angle + angleSway;
                     const flareLength = height * 1.2;
                     const shiftX = Math.sin(currentAngle) * flareLength;
 
-                    const simmer = 0.85 + Math.sin(t * 4 + i) * 0.15;
-                    const opacity = ray.opacity * depthFactor * simmer * (0.5 + finalZ * 0.5);
+                    const topW = ray.width * depthFactor;
+                    const botW = topW * 2.5;
 
-                    // Create volumetric gradient
-                    const rayGrad = ctx.createLinearGradient(xPos, 0, xPos + shiftX * 0.5, height);
-                    rayGrad.addColorStop(0, `hsla(190, 100%, 95%, ${opacity})`);
-                    rayGrad.addColorStop(0.3, `hsla(190, 100%, 80%, ${opacity * 0.4})`);
+                    // Set volumetric blur based on depth
+                    const blurSize = (1 - ray.z) * 15 + 5;
+                    ctx.filter = `blur(${blurSize}px)`;
+
+                    const rayGrad = ctx.createLinearGradient(xPos, 0, xPos + shiftX, height);
+                    rayGrad.addColorStop(0, `hsla(190, 80%, 95%, ${opacity})`);
+                    rayGrad.addColorStop(0.4, `hsla(190, 70%, 75%, ${opacity * 0.5})`);
                     rayGrad.addColorStop(1, 'transparent');
 
                     ctx.fillStyle = rayGrad;
 
-                    // Draw the ray using curved edges to simulate "liquid" light
-                    const topW = ray.width * depthFactor;
-                    const botW = topW * (2.0 + finalZ * 2); // Perspective expansion
-
                     ctx.beginPath();
-                    // Left edge - slight curvature
-                    ctx.moveTo(xPos - topW / 2, 0);
+                    // Curved left edge
+                    ctx.moveTo(xPos - topW / 2 + waverTop, 0);
                     ctx.bezierCurveTo(
-                        xPos - topW, height * 0.5,
-                        xPos + shiftX - botW, height * 0.5,
-                        xPos + shiftX - botW / 2, height
+                        xPos - topW * 0.8 + waverMid, height * 0.4,
+                        xPos + shiftX - botW * 0.8 + waverBot, height * 0.7,
+                        xPos + shiftX - botW / 2 + waverBot, height
                     );
-                    // Right edge - slight curvature
-                    ctx.lineTo(xPos + shiftX + botW / 2, height);
+
+                    // Bottom edge
+                    ctx.lineTo(xPos + shiftX + botW / 2 + waverBot, height);
+
+                    // Curved right edge
                     ctx.bezierCurveTo(
-                        xPos + shiftX + botW, height * 0.5,
-                        xPos + topW, height * 0.5,
-                        xPos + topW / 2, 0
+                        xPos + shiftX + botW * 0.8 + waverBot, height * 0.7,
+                        xPos + topW * 0.8 + waverMid, height * 0.4,
+                        xPos + topW / 2 + waverTop, 0
                     );
+
                     ctx.closePath();
                     ctx.fill();
 
-                    // Internal "Light Curtains" for detail
-                    if (finalZ > 0.6) {
+                    // Volumetric "Light Curtains" / Deep shimmer
+                    if (ray.z > 0.6) {
+                        const curtainOpacity = opacity * 0.2;
                         ctx.beginPath();
-                        const innerW = topW * 0.2;
-                        const innerOff = Math.sin(t * 3 + i) * (topW * 0.2);
-                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
-                        ctx.moveTo(xPos + innerOff, 0);
-                        ctx.lineTo(xPos + shiftX + innerOff * 2.5, height);
-                        ctx.lineTo(xPos + shiftX + innerOff * 2.5 + innerW, height);
-                        ctx.lineTo(xPos + innerOff + innerW, 0);
+                        const cw = topW * 0.15;
+                        const coff = Math.sin(t * 5 + i) * 20;
+                        ctx.fillStyle = `rgba(255, 255, 255, ${curtainOpacity})`;
+                        ctx.moveTo(xPos + coff, 0);
+                        ctx.lineTo(xPos + shiftX + coff * 2, height);
+                        ctx.lineTo(xPos + shiftX + coff * 2 + cw, height);
+                        ctx.lineTo(xPos + coff + cw, 0);
                         ctx.fill();
                     }
                 });
                 ctx.restore();
-                ctx.filter = 'none'; // Reset filter for next elements
+                ctx.filter = 'none';
 
-                // D. Marine Snow
+                // C. Marine Snow with Parallax
                 particles.forEach(p => {
-                    p.y -= p.speedY;
-                    p.x += Math.sin(t + p.phase) * 0.2;
+                    p.y -= p.speedY; // Upward drift
+                    p.x += Math.sin(t * 0.5 + p.phase) * 0.2;
 
                     if (p.y < -10) {
                         p.y = height + 10;
                         p.x = Math.random() * width;
                     }
 
-                    const nearFactor = 0.5 + p.z * 1.5;
-                    ctx.globalAlpha = p.opacity * nearFactor;
+                    const nearScale = 0.5 + p.z * 1.5;
+                    ctx.globalAlpha = p.opacity * nearScale;
                     ctx.fillStyle = '#ffffff';
                     ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size * nearFactor, 0, Math.PI * 2);
+                    ctx.arc(p.x, p.y, p.size * nearScale, 0, Math.PI * 2);
                     ctx.fill();
                 });
                 ctx.globalAlpha = 1;
