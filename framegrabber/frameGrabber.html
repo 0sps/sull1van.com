@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <title>Frame Grabber</title>
+    <style>
+        :root {
+            /* iOS System Colors - Dark Mode Base */
+            --ios-bg: #000814;
+            --ios-card: rgba(28, 28, 30, 0.7);
+            --ios-blue: #0a84ff;
+            --ios-red: #ff453a;
+            --ios-gray: #8e8e93;
+            --ios-gray2: #636366;
+            --ios-gray3: #48484a;
+            --ios-gray4: #1c1c1e;
+            --ios-gray5: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --radius-l: 16px;
+            --radius-xl: 24px;
+            --spring: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        }
+
+        html {
+            min-height: 100dvh;
+            width: 100%;
+            background-color: var(--ios-bg);
+            background-image: linear-gradient(to bottom, #001a33, #000814);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100dvh;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Header */
+        .app-header-banner {
+            position: fixed;
+            top: calc(10px + env(safe-area-inset-top));
+            left: 20px;
+            right: 20px;
+            height: 80px;
+            background: rgba(28, 28, 30, 0.6);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #FFFFFF 20%, rgba(255, 255, 255, 0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            padding: 120px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        /* Upload Area */
+        .upload-card {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(28, 28, 30, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s var(--spring);
+            padding: 40px;
+        }
+
+        .upload-card:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--ios-blue);
+        }
+
+        .upload-text {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        #videoInput {
+            display: none;
+        }
+
+        /* Player Area */
+        .player-container {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            display: none;
+            /* Hidden by default */
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            display: block;
+        }
+
+        .controls {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(28, 28, 30, 0.9);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            margin-top: -12px;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .time-display {
+            font-family: monospace;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .btn:active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .btn-primary:active {
+            opacity: 0.8;
+        }
+
+        .fine-tune {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fine-tune-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Canvas (Hidden) */
+        canvas {
+            display: none;
+        }
+
+        /* Floating action button area for save */
+        .save-area {
+            position: fixed;
+            bottom: max(20px, env(safe-area-inset-bottom));
+            left: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--ios-blue);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            /* Hidden until frame selected */
+        }
+
+        .instructions {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-header-banner">
+        <div class="header-title">FrameGrabber</div>
+    </div>
+
+    <div class="container">
+        <!-- Upload -->
+        <div class="upload-card" onclick="document.getElementById('videoInput').click()">
+            <div class="upload-icon">⏏</div>
+            <div class="upload-text">Tap to Select Video</div>
+            <div class="instructions">Choose a video from your Photo Library to extract high-quality frames.</div>
+            <input type="file" id="videoInput" accept="video/*">
+        </div>
+
+        <!-- Video Player -->
+        <div class="player-container" id="playerContainer">
+            <video id="videoElement" playsinline webkit-playsinline preload="metadata"></video>
+
+            <div class="controls">
+                <input type="range" id="scrubber" min="0" max="100" step="0.01" value="0">
+
+                <div class="fine-tune">
+                    <button class="fine-tune-btn" id="prevFrame" onclick="seek(-1/30)">-</button>
+                    <div class="time-display" id="timeDisplay">0.00s</div>
+                    <button class="fine-tune-btn" id="nextFrame" onclick="seek(1/30)">+</button>
+                </div>
+
+                <div class="button-row">
+                    <!-- <button class="btn" onclick="togglePlay()">Play/Pause</button> -->
+                    <button class="btn btn-primary" onclick="grabFrame()">Grab Frame</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="save-area">
+        <button class="save-btn" id="saveBtn" onclick="downloadFrame()">Download Frame</button>
+    </div>
+
+    <script>
+        const videoInput = document.getElementById('videoInput');
+        const video = document.getElementById('videoElement');
+        const playerContainer = document.getElementById('playerContainer');
+        const uploadCard = document.querySelector('.upload-card');
+        const scrubber = document.getElementById('scrubber');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const saveBtn = document.getElementById('saveBtn');
+
+        let videoBlobUrl = null;
+
+        videoInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (videoBlobUrl) URL.revokeObjectURL(videoBlobUrl);
+                videoBlobUrl = URL.createObjectURL(file);
+                video.src = videoBlobUrl;
+
+                // Show player, hide upload prompt
+                playerContainer.style.display = 'flex';
+                uploadCard.style.display = 'none';
+                saveBtn.style.display = 'none';
+
+                // Reset
+                video.currentTime = 0;
+            }
+        });
+
+        video.addEventListener('loadedmetadata', function () {
+            scrubber.max = video.duration;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        });
+
+        video.addEventListener('timeupdate', function () {
+            scrubber.value = video.currentTime;
+            timeDisplay.textContent = video.currentTime.toFixed(3) + 's';
+        });
+
+        scrubber.addEventListener('input', function () {
+            video.currentTime = parseFloat(this.value);
+            // Hide save button if scrubbing
+            saveBtn.style.display = 'none';
+        });
+
+        function seek(delta) {
+            video.currentTime = Math.min(Math.max(video.currentTime + delta, 0), video.duration);
+            saveBtn.style.display = 'none';
+        }
+
+        function grabFrame() {
+            if (video.readyState < 2) return;
+
+            // Draw exact match of video resolution
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Pulse animation or haptic feedback visual
+            const btn = document.querySelector('.btn-primary');
+            const originalText = btn.innerText;
+            btn.innerText = "Captured!";
+            setTimeout(() => btn.innerText = originalText, 1000);
+
+            // Show download button
+            saveBtn.innerText = `Download (${video.videoWidth}x${video.videoHeight})`;
+            saveBtn.style.display = 'block';
+        }
+
+        function downloadFrame() {
+            // Convert to blob and download
+            canvas.toBlob(function (blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                // Timestamp filename
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                a.download = `frame_${timestamp}.png`;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }, 'image/png');
+        }
+
+        // Clean up
+        window.addEventListener('beforeunload', () => {
+            if (videoBlobUrl) URL.revokeObjectURL(videoBlobUrl);
+        });
+    </script>
+</body>
+
+</html>
