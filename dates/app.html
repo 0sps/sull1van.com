@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <title>Contacts</title>
     <style>
         :root {
@@ -1905,7 +1906,7 @@
             // iOS 26 Safari samples the first fixed element's background for browser bars
             const gradient = `linear-gradient(180deg, ${top} 0%, ${bot} 100%)`;
             document.documentElement.style.backgroundImage = gradient;
-            
+
             // Also apply to the fixed wrapper for iOS 26 Safari address bar
             const iosWrapper = document.getElementById('iosBgWrapper');
             if (iosWrapper) {
