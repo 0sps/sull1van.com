@@ -34,15 +34,82 @@
         html {
             min-height: 100dvh;
             width: 100%;
-            background-color: var(--ios-bg);
-            background-image: linear-gradient(to bottom, #001529, #000000);
-            color: var(--text-primary);
+            background-color: #000000;
             overflow-x: hidden;
         }
 
         body {
             min-height: 100dvh;
             padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Underwater Background Animation */
+        .underwater-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(180deg, #005a9c 0%, #001529 60%, #000000 100%);
+        }
+
+        .light-rays {
+            position: absolute;
+            top: -20%;
+            left: -50%;
+            width: 200%;
+            height: 150%;
+            background:
+                conic-gradient(from 90deg at 50% 0%,
+                    transparent 0deg,
+                    rgba(255, 255, 255, 0.03) 10deg,
+                    transparent 15deg,
+                    rgba(255, 255, 255, 0.05) 25deg,
+                    transparent 40deg,
+                    rgba(255, 255, 255, 0.02) 50deg,
+                    transparent 60deg,
+                    rgba(255, 255, 255, 0.04) 75deg,
+                    transparent 90deg);
+            transform-origin: 50% 0%;
+            animation: sway 12s ease-in-out infinite alternate;
+            opacity: 0.6;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes sway {
+            0% {
+                transform: rotate(-5deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(5deg) scale(1.2);
+            }
+        }
+
+        /* Surface shimmer overlay */
+        .surface-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            opacity: 0.5;
+            animation: pulse-light 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-light {
+            0% {
+                opacity: 0.4;
+                transform: scaleY(1);
+            }
+
+            100% {
+                opacity: 0.6;
+                transform: scaleY(1.1);
+            }
         }
 
         /* Header */
@@ -52,18 +119,17 @@
             left: 16px;
             right: 16px;
             height: 72px;
-            background: rgba(40, 40, 45, 0.4);
+            background: rgba(40, 60, 80, 0.3);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border-radius: 99px;
-            /* Pill shape for modern look */
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 24px;
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 40px -10px rgba(0, 20, 40, 0.5);
         }
 
         .header-back-btn {
@@ -367,6 +433,12 @@
 </head>
 
 <body>
+
+    <!-- Underwater Background -->
+    <div class="underwater-bg">
+        <div class="light-rays"></div>
+        <div class="surface-shimmer"></div>
+    </div>
 
     <div class="app-header-banner">
         <button class="header-back-btn" id="backBtn" onclick="resetApp()">
