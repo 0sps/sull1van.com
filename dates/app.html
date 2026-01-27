@@ -1650,7 +1650,7 @@
                         <div class="card-detail" style="color:white; font-weight:700; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">
                             ${calculateAvg(p)} ★
                         </div>
-                        <div class="plus-badge" style="position:absolute; top:8px; right:8px; width: 24px; height: 24px; font-size: 16px;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
+                        <div class="plus-badge" style="position:absolute; top:8px; right:8px; width: 32px; height: 32px; font-size: 20px;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
                     </div>`).join('')}
             </div>`;
 
@@ -1731,6 +1731,7 @@
             renderTimeline(p.logs);
 
             document.getElementById('logOverlay').classList.add('show');
+            setTimeout(() => document.getElementById('logEntryText').focus(), 100);
         }
 
         window.closeLogModal = function (e) {
