@@ -28,6 +28,8 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
         }
 
@@ -145,15 +147,18 @@
             justify-content: center;
             gap: 24px;
             cursor: pointer;
-            transition: all 0.3s var(--spring);
+            transition: transform 0.2s var(--spring), background 0.2s var(--spring), border-color 0.2s var(--spring);
             padding: 40px;
             box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.4);
+            /* Prevent image/text drag-selection */
+            -webkit-user-drag: none;
         }
 
         .upload-card:active {
-            transform: scale(0.97);
-            background: rgba(50, 50, 55, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(0.96);
+            background: rgba(50, 50, 55, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+            transition: transform 0.1s var(--spring);
         }
 
         .upload-icon {
