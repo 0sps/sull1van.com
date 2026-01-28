@@ -1402,6 +1402,90 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 1px;
         }
+
+        /* Holographic Shimmer + Living Fire Border for 9.0+ */
+        .holographic-premium {
+            position: relative !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+            /* Using box-shadow instead of border to respect parent clipping/rounding */
+            box-shadow:
+                0 0 0 1.5px rgba(255, 180, 0, 0.5),
+                0 0 25px rgba(255, 100, 0, 0.2),
+                inset 0 0 15px rgba(255, 200, 0, 0.1) !important;
+            overflow: hidden !important;
+            z-index: 5;
+            /* Higher to avoid separator overlap */
+            animation: fire-border-pulse 3s infinite alternate ease-in-out !important;
+            border: none !important;
+            /* Remove the square border */
+        }
+
+        .holographic-premium::before {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 400%;
+            height: 400%;
+            background: linear-gradient(45deg,
+                    transparent 45%,
+                    rgba(255, 255, 255, 0.05) 48%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0.05) 52%,
+                    transparent 55%);
+            transform: rotate(25deg);
+            animation: holo-shimmer 3s infinite linear;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .holographic-premium::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 120%, rgba(255, 100, 0, 0.3), rgba(255, 50, 0, 0.15), transparent 70%);
+            animation: fire-flicker 2s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes holo-shimmer {
+            0% {
+                transform: translate(-30%, -30%) rotate(25deg);
+            }
+
+            100% {
+                transform: translate(30%, 30%) rotate(25deg);
+            }
+        }
+
+        @keyframes fire-flicker {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes fire-border-pulse {
+            0% {
+                box-shadow:
+                    0 0 0 1.5px rgba(255, 180, 0, 0.4),
+                    0 0 15px rgba(255, 100, 0, 0.15),
+                    inset 0 0 10px rgba(255, 200, 0, 0.05) !important;
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 2px rgba(255, 220, 100, 0.8),
+                    0 0 35px rgba(255, 140, 0, 0.35),
+                    inset 0 0 20px rgba(255, 200, 0, 0.15) !important;
+            }
+        }
     </style>
 </head>
 
@@ -1877,8 +1961,11 @@
 
             // Pre-render List View
             listContent.innerHTML = `<div class="ios-list">
-                ${allPeople.map(p => `
-                    <div class="list-row" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                ${allPeople.map(p => {
+                const avg = parseFloat(calculateAvg(p)) || 0;
+                const isPremium = avg >= 9.0;
+                return `
+                    <div class="list-row ${isPremium ? 'holographic-premium' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
                             <div class="row-subtitle">
@@ -1890,7 +1977,8 @@
                             <div class="row-rating-badge" onclick="event.stopPropagation(); openEdit('${p.id}')">${calculateAvg(p)}</div>
                             <div class="plus-badge" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
                         </div>
-                    </div>`).join('')}
+                    </div>`;
+            }).join('')}
             </div>`;
 
             // Pre-render Grid View
@@ -1898,8 +1986,10 @@
                 ${allPeople.map(p => {
                 const status = (p.relationshipStatus || '').trim().toLowerCase();
                 const isTalking = status === 'talking';
+                const avg = parseFloat(calculateAvg(p)) || 0;
+                const isPremium = avg >= 9.0;
                 return `
-                    <div class="grid-card" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                    <div class="grid-card ${isPremium ? 'holographic-premium' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                         <div class="card-initials ${isTalking ? 'status-pulse' : ''}">${p.name ? p.name.charAt(0) : '?'}</div>
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
