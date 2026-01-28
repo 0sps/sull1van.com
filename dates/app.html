@@ -1200,34 +1200,50 @@
             font-size: 16px;
         }
 
-        /* Status Pulsing Dot */
-        .status-pulse-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #34c759;
-            border-radius: 50%;
-            margin-right: 6px;
-            box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-            animation: pulse-green 2s infinite;
-            vertical-align: middle;
-            margin-bottom: 2px;
+        /* Status Pulsing Effect */
+        .status-pulse {
+            position: relative;
+            animation: pulse-border 2s infinite;
         }
 
-        @keyframes pulse-green {
+        .status-pulse::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            border: 2px solid #34c759;
+            opacity: 0;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-border {
             0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+                transform: scale(1);
             }
 
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 10px rgba(52, 199, 89, 0);
+            50% {
+                transform: scale(1.05);
             }
 
             100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            70% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
             }
         }
 
@@ -1485,12 +1501,22 @@
                         <div class="form-row"><label class="form-label">Status</label><input type="text"
                                 id="relationshipStatus" class="form-input" placeholder="Dating, Search..."
                                 list="statusOptions"></div>
+                        <div class="form-row"><label class="form-label">Dates</label><input type="number"
+                                id="numberOfDates" class="form-input" value="0">
+                        </div>
+                    </div>
+
+                    <div style="height: 16px;"></div> <!-- Detach spacer -->
+                    <div class="section-header">INTEREST</div>
+                    <div class="form-group-container"
+                        style="background: rgba(10, 132, 255, 0.1); border: 1px solid rgba(10, 132, 255, 0.3);">
                         <div class="form-row"
-                            style="flex-direction: column; align-items: flex-start; height: auto; padding: 16px;">
+                            style="flex-direction: column; align-items: flex-start; height: auto; padding: 16px; border-bottom: none;">
                             <div class="slider-header">
-                                <label class="form-label">Interest</label>
+                                <label class="form-label" style="color: var(--ios-blue); font-weight: 700;">Interest
+                                    Level</label>
                                 <span id="interestValue"
-                                    style="color: var(--ios-blue); font-weight: 700; font-size: 18px;">5</span>
+                                    style="color: white; background: var(--ios-blue); padding: 2px 10px; border-radius: 12px; font-weight: 800; font-size: 18px;">5</span>
                             </div>
                             <div class="slider-container">
                                 <input type="range" id="interestLevel" class="interest-slider" min="1" max="10" step="1"
@@ -1510,10 +1536,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row"><label class="form-label">Dates</label><input type="number"
-                                id="numberOfDates" class="form-input" value="0">
-                        </div>
-                    </div><datalist id="statusOptions">
+                    </div>
+                    <datalist id="statusOptions">
                         <option value="Talking">
                         <option value="Dating">
                         <option value="Friendzoned Me">
@@ -1748,7 +1772,7 @@
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
                             <div class="row-subtitle">
-                                ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span class="status-pulse-dot"></span>' : ''}
+                                ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span style="display:inline-block; width:8px; height:8px; background:#34c759; border-radius:50%; margin-right:6px; box-shadow: 0 0 8px #34c759;"></span>' : ''}
                                 ${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates
                             </div>
                         </div>
@@ -1763,11 +1787,10 @@
             gridContent.innerHTML = `<div class="ios-grid">
                 ${allPeople.map(p => `
                     <div class="grid-card" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                        <div class="card-initials">${p.name.charAt(0)}</div>
+                        <div class="card-initials ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? 'status-pulse' : ''}">${p.name.charAt(0)}</div>
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
                         <div class="card-detail" style="color:white; font-weight:700; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">
-                            ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span class="status-pulse-dot" style="width:6px; height:6px;"></span>' : ''}
                             ${calculateAvg(p)} ★
                         </div>
                         <div class="plus-badge" style="position:absolute; top:8px; right:8px; width: 32px; height: 32px; font-size: 20px; z-index: 10;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
