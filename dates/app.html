@@ -1210,48 +1210,49 @@
         /* Status Pulsing Effect */
         .status-pulse {
             position: relative;
-            animation: pulse-border 2s infinite;
+            background: linear-gradient(135deg, #34c759 0%, #248a3d 100%) !important;
+            box-shadow: 0 0 15px rgba(52, 199, 89, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            animation: pulse-shrink-grow 2s ease-in-out infinite !important;
         }
 
         .status-pulse::after {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -2px;
             border-radius: inherit;
             border: 2px solid #34c759;
             opacity: 0;
-            animation: pulse-glow 2.5s infinite;
+            animation: pulse-glow-ring 2s ease-out infinite;
             z-index: 5;
             pointer-events: none;
         }
 
-        @keyframes pulse-border {
+        @keyframes pulse-shrink-grow {
             0% {
                 transform: scale(1);
+                box-shadow: 0 0 10px rgba(52, 199, 89, 0.4);
             }
 
             50% {
-                transform: scale(1.08);
+                transform: scale(1.15);
+                box-shadow: 0 0 25px rgba(52, 199, 89, 0.8);
             }
 
             100% {
                 transform: scale(1);
+                box-shadow: 0 0 10px rgba(52, 199, 89, 0.4);
             }
         }
 
-        @keyframes pulse-glow {
+        @keyframes pulse-glow-ring {
             0% {
                 transform: scale(1);
-                opacity: 0.7;
-            }
-
-            70% {
-                transform: scale(1.4);
-                opacity: 0;
+                opacity: 0.8;
             }
 
             100% {
-                transform: scale(1);
+                transform: scale(1.8);
                 opacity: 0;
             }
         }
