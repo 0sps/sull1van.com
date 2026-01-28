@@ -1403,25 +1403,46 @@
             border-radius: 1px;
         }
 
-        /* Holographic Shimmer + Living Fire Border for 9.0+ */
+        /* Shared Base for Premium Entries */
         .holographic-premium {
             position: relative !important;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
-            /* Using box-shadow instead of border to respect parent clipping/rounding */
-            box-shadow:
-                0 0 0 1.5px rgba(255, 180, 0, 0.5),
-                0 0 25px rgba(255, 100, 0, 0.2),
-                inset 0 0 15px rgba(255, 200, 0, 0.1) !important;
             overflow: hidden !important;
-            z-index: 5;
-            /* Higher to avoid separator overlap */
-            animation: fire-border-pulse 3s infinite alternate ease-in-out !important;
+            z-index: 1;
             border: none !important;
-            /* Remove the square border */
         }
 
-        .holographic-premium::before {
+        /* List View (Inset Grouped) - Uses Box-Shadow for clipping compatibility */
+        .holographic-list {
+            box-shadow:
+                0 0 0 1.5px rgba(255, 180, 0, 0.5),
+                0 0 25px rgba(255, 100, 0, 0.1) !important;
+            animation: fire-border-pulse-list 3s infinite alternate ease-in-out !important;
+        }
+
+        /* Grid View (Cards) - Uses Masking for pixel-perfect standalone borders */
+        .holographic-card {
+            box-shadow: 0 0 25px rgba(255, 100, 0, 0.1) !important;
+        }
+
+        .holographic-card::before {
             content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(255, 180, 0, 0.5), rgba(255, 240, 150, 0.5));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 10;
+            pointer-events: none;
+            animation: fire-border-pulse-card 3s infinite alternate ease-in-out;
+        }
+
+        /* Shimmering Top Layer (Common) */
+        .holographic-shimmer-layer {
             position: absolute;
             top: -150%;
             left: -150%;
@@ -1429,21 +1450,21 @@
             height: 400%;
             background: linear-gradient(45deg,
                     transparent 45%,
-                    rgba(255, 255, 255, 0.05) 48%,
-                    rgba(255, 255, 255, 0.3) 50%,
-                    rgba(255, 255, 255, 0.05) 52%,
+                    rgba(255, 255, 255, 0.02) 48%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.02) 52%,
                     transparent 55%);
             transform: rotate(25deg);
             animation: holo-shimmer 3s infinite linear;
             pointer-events: none;
-            z-index: 2;
+            z-index: 5;
         }
 
-        .holographic-premium::after {
-            content: '';
+        /* Burning Bottom Layer (Common) */
+        .holographic-fire-layer {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 120%, rgba(255, 100, 0, 0.3), rgba(255, 50, 0, 0.15), transparent 70%);
+            background: radial-gradient(circle at 50% 120%, rgba(255, 100, 0, 0.4), rgba(255, 50, 0, 0.1), transparent 70%);
             animation: fire-flicker 2s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: 0;
@@ -1466,24 +1487,30 @@
             }
 
             100% {
-                opacity: 0.8;
-                transform: scale(1.08);
+                opacity: 0.9;
+                transform: scale(1.1);
             }
         }
 
-        @keyframes fire-border-pulse {
+        @keyframes fire-border-pulse-list {
             0% {
-                box-shadow:
-                    0 0 0 1.5px rgba(255, 180, 0, 0.4),
-                    0 0 15px rgba(255, 100, 0, 0.15),
-                    inset 0 0 10px rgba(255, 200, 0, 0.05) !important;
+                box-shadow: 0 0 0 1.5px rgba(255, 180, 0, 0.4), 0 0 15px rgba(255, 100, 0, 0.15);
             }
 
             100% {
-                box-shadow:
-                    0 0 0 2px rgba(255, 220, 100, 0.8),
-                    0 0 35px rgba(255, 140, 0, 0.35),
-                    inset 0 0 20px rgba(255, 200, 0, 0.15) !important;
+                box-shadow: 0 0 0 2px rgba(255, 220, 100, 0.8), 0 0 35px rgba(255, 140, 0, 0.35);
+            }
+        }
+
+        @keyframes fire-border-pulse-card {
+            0% {
+                opacity: 0.25;
+                filter: brightness(1) drop-shadow(0 0 2px rgba(255, 100, 0, 0.2));
+            }
+
+            100% {
+                opacity: 0.5;
+                filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 180, 0, 0.4));
             }
         }
     </style>
@@ -1965,7 +1992,8 @@
                 const avg = parseFloat(calculateAvg(p)) || 0;
                 const isPremium = avg >= 9.0;
                 return `
-                    <div class="list-row ${isPremium ? 'holographic-premium' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                    <div class="list-row ${isPremium ? 'holographic-premium holographic-list' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                        ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
                             <div class="row-subtitle">
@@ -1989,7 +2017,8 @@
                 const avg = parseFloat(calculateAvg(p)) || 0;
                 const isPremium = avg >= 9.0;
                 return `
-                    <div class="grid-card ${isPremium ? 'holographic-premium' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                    <div class="grid-card ${isPremium ? 'holographic-premium holographic-card' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                        ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
                         <div class="card-initials ${isTalking ? 'status-pulse' : ''}">${p.name ? p.name.charAt(0) : '?'}</div>
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
