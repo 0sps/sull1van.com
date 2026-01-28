@@ -551,6 +551,8 @@
             font-size: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 4px;
+            position: relative;
+            /* For pulse effect */
         }
 
         .card-name {
@@ -1214,11 +1216,13 @@
         .status-pulse::after {
             content: '';
             position: absolute;
-            inset: -2px;
+            inset: -4px;
             border-radius: inherit;
             border: 2px solid #34c759;
             opacity: 0;
-            animation: pulse-glow 2s infinite;
+            animation: pulse-glow 2.5s infinite;
+            z-index: 5;
+            pointer-events: none;
         }
 
         @keyframes pulse-border {
@@ -1227,7 +1231,7 @@
             }
 
             50% {
-                transform: scale(1.05);
+                transform: scale(1.08);
             }
 
             100% {
@@ -1297,6 +1301,73 @@
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             border: 0.5px solid rgba(0, 0, 0, 0.04);
+        }
+
+        /* Custom Status Picker */
+        .picker-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .picker-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .picker-menu {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(44, 44, 46, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .picker-overlay.show .picker-menu {
+            transform: translateY(0);
+        }
+
+        .picker-option {
+            padding: 16px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--ios-blue);
+            background: transparent;
+            border: none;
+            width: 100%;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .picker-option:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .picker-option:last-child {
+            border-bottom: none;
+        }
+
+        .picker-cancel {
+            margin-top: 10px;
+            background: rgba(44, 44, 46, 0.95);
+            border-radius: 14px;
+            color: var(--ios-red);
+            font-weight: 600;
         }
 
         .slider-stops {
@@ -1437,6 +1508,22 @@
             </div>
         </div>
     </div>
+
+    <!-- CUSTOM STATUS PICKER -->
+    <div id="statusPickerOverlay" class="picker-overlay" onclick="closeStatusPicker()">
+        <div class="picker-menu" onclick="event.stopPropagation()">
+            <button class="picker-option" onclick="selectStatus('Talking')">Talking</button>
+            <button class="picker-option" onclick="selectStatus('Dating')">Dating</button>
+            <button class="picker-option" onclick="selectStatus('Friendzoned Me')">Friendzoned Me</button>
+            <button class="picker-option" onclick="selectStatus('Friendzoned Them')">Friendzoned Them</button>
+            <button class="picker-option" onclick="selectStatus('Ghosted Me')">Ghosted Me</button>
+            <button class="picker-option" onclick="selectStatus('Ghosted Them')">Ghosted Them</button>
+            <button class="picker-option" onclick="selectStatus('Broke up with them')">Broke up with them</button>
+            <button class="picker-option" onclick="selectStatus('Ended it with me')">Ended it with me</button>
+            <button class="picker-option picker-cancel" onclick="closeStatusPicker()">Cancel</button>
+        </div>
+    </div>
+
     <!-- MAIN SHEET MODAL -->
     <div id="sheetOverlay" class="sheet-overlay" onclick="closeModal(event)">
         <div class="sheet-modal" onclick="event.stopPropagation()">
@@ -1503,9 +1590,12 @@
                     <!-- STATUS -->
                     <div class="section-header">STATUS</div>
                     <div class="form-group-container">
-                        <div class="form-row"><label class="form-label">Status</label><input type="text"
-                                id="relationshipStatus" class="form-input" placeholder="Dating, Search..."
-                                list="statusOptions"></div>
+                        <div class="form-row" onclick="openStatusPicker()">
+                            <label class="form-label">Status</label>
+                            <div id="relationshipStatusDisplay" class="form-input"
+                                style="color: var(--ios-blue); cursor: pointer;">Select Status...</div>
+                            <input type="hidden" id="relationshipStatus" value="">
+                        </div>
                         <div class="form-row"><label class="form-label">Dates</label><input type="number"
                                 id="numberOfDates" class="form-input" value="0">
                         </div>
@@ -1542,16 +1632,6 @@
                             </div>
                         </div>
                     </div>
-                    <datalist id="statusOptions">
-                        <option value="Talking">
-                        <option value="Dating">
-                        <option value="Friendzoned Me">
-                        <option value="Friendzoned Them">
-                        <option value="Ghosted Me">
-                        <option value="Ghosted Them">
-                        <option value="Broke up with them">
-                        <option value="Ended it with me">
-                    </datalist>
                     <!-- DELETE -->
                     <div class="delete-btn-container" id="deleteContainer" style="display:none;"><button type="button"
                             class="delete-action" onclick="deletePerson()">Delete Date</button></div>
@@ -1777,7 +1857,7 @@
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
                             <div class="row-subtitle">
-                                ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span style="display:inline-block; width:8px; height:8px; background:#34c759; border-radius:50%; margin-right:6px; box-shadow: 0 0 8px #34c759;"></span>' : ''}
+                                ${(p.relationshipStatus && p.relationshipStatus.trim().toLowerCase() === 'talking') ? '<span style="display:inline-block; width:10px; height:10px; background:#34c759; border-radius:50%; margin-right:8px; box-shadow: 0 0 10px #34c759;"></span>' : ''}
                                 ${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates
                             </div>
                         </div>
@@ -1790,16 +1870,20 @@
 
             // Pre-render Grid View
             gridContent.innerHTML = `<div class="ios-grid">
-                ${allPeople.map(p => `
+                ${allPeople.map(p => {
+                const status = (p.relationshipStatus || '').trim().toLowerCase();
+                const isTalking = status === 'talking';
+                return `
                     <div class="grid-card" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                        <div class="card-initials ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? 'status-pulse' : ''}">${p.name.charAt(0)}</div>
+                        <div class="card-initials ${isTalking ? 'status-pulse' : ''}">${p.name ? p.name.charAt(0) : '?'}</div>
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
                         <div class="card-detail" style="color:white; font-weight:700; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">
                             ${calculateAvg(p)} ★
                         </div>
                         <div class="plus-badge" style="position:absolute; top:8px; right:8px; width: 32px; height: 32px; font-size: 20px; z-index: 10;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
-                    </div>`).join('')}
+                    </div>`;
+            }).join('')}
             </div>`;
 
             // Set initial state
@@ -2038,6 +2122,8 @@
             document.getElementById('name').innerText = '';
             document.getElementById('interestLevel').value = 5;
             document.getElementById('interestValue').textContent = '5';
+            document.getElementById('relationshipStatus').value = '';
+            document.getElementById('relationshipStatusDisplay').textContent = 'Select Status...';
 
             // Set initial date
             const now = new Date();
@@ -2092,7 +2178,8 @@
             set('heightInches', p.height?.inches);
             set('location', p.location);
             set('instagram', p.instagram);
-            set('relationshipStatus', p.relationshipStatus);
+            document.getElementById('relationshipStatus').value = p.relationshipStatus || '';
+            document.getElementById('relationshipStatusDisplay').textContent = p.relationshipStatus || 'Select Status...';
             set('interestLevel', p.interestLevel || 5);
             document.getElementById('interestValue').textContent = p.interestLevel || 5;
             set('numberOfDates', p.numberOfDates || 0);
@@ -2116,7 +2203,9 @@
         window.savePerson = async function () {
             const getVal = id => {
                 const el = document.getElementById(id);
-                return el.tagName === 'DIV' ? el.innerText : el.value;
+                if (!el) return '';
+                if (el.tagName === 'DIV' && el.getAttribute('contenteditable')) return el.innerText;
+                return el.value;
             }
 
                 ;
@@ -2720,6 +2809,21 @@
                 console.warn("Forced splash removal due to timeout");
             }
         }, 3000);
+
+        /* ----- CUSTOM PICKER LOGIC ----- */
+        window.openStatusPicker = function () {
+            document.getElementById('statusPickerOverlay').classList.add('show');
+        }
+
+        window.closeStatusPicker = function () {
+            document.getElementById('statusPickerOverlay').classList.remove('show');
+        }
+
+        window.selectStatus = function (val) {
+            document.getElementById('relationshipStatus').value = val;
+            document.getElementById('relationshipStatusDisplay').textContent = val;
+            closeStatusPicker();
+        }
 
 
     </script>
