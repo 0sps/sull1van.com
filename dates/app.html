@@ -400,9 +400,9 @@
         }
 
         .list-row.animate-press {
-            transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.05);
-            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.08);
+            transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .list-row:last-child {
@@ -494,7 +494,8 @@
 
         .grid-card.animate-press {
             transform: scale(0.92);
-            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
+            background: rgba(255, 255, 255, 0.08);
+            transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1);
         }
 
         /* Gradient Borders via Pseudo-element (Does not affect background) */
@@ -1198,6 +1199,98 @@
             color: var(--text-secondary);
             font-size: 16px;
         }
+
+        /* Status Pulsing Dot */
+        .status-pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #34c759;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+            animation: pulse-green 2s infinite;
+            vertical-align: middle;
+            margin-bottom: 2px;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(52, 199, 89, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+            }
+        }
+
+        /* iOS Segmented Slider */
+        .slider-container {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .interest-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            outline: none;
+            padding: 0 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .interest-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .interest-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .slider-stops {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 12px;
+            margin-top: 8px;
+        }
+
+        .stop-mark {
+            width: 2px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 1px;
+        }
     </style>
 </head>
 
@@ -1392,8 +1485,31 @@
                         <div class="form-row"><label class="form-label">Status</label><input type="text"
                                 id="relationshipStatus" class="form-input" placeholder="Dating, Search..."
                                 list="statusOptions"></div>
-                        <div class="form-row"><label class="form-label">Interest</label><input type="text"
-                                id="interestLevel" class="form-input" placeholder="Level"></div>
+                        <div class="form-row"
+                            style="flex-direction: column; align-items: flex-start; height: auto; padding: 16px;">
+                            <div class="slider-header">
+                                <label class="form-label">Interest</label>
+                                <span id="interestValue"
+                                    style="color: var(--ios-blue); font-weight: 700; font-size: 18px;">5</span>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="interestLevel" class="interest-slider" min="1" max="10" step="1"
+                                    value="5"
+                                    oninput="document.getElementById('interestValue').textContent = this.value">
+                                <div class="slider-stops">
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                    <div class="stop-mark"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-row"><label class="form-label">Dates</label><input type="number"
                                 id="numberOfDates" class="form-input" value="0">
                         </div>
@@ -1631,7 +1747,10 @@
                     <div class="list-row" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
-                            <div class="row-subtitle">${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates</div>
+                            <div class="row-subtitle">
+                                ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span class="status-pulse-dot"></span>' : ''}
+                                ${p.relationshipStatus || 'No Status'} • ${p.numberOfDates || 0} dates
+                            </div>
                         </div>
                         <div class="list-row-actions">
                             <div class="row-rating-badge" onclick="event.stopPropagation(); openEdit('${p.id}')">${calculateAvg(p)}</div>
@@ -1648,6 +1767,7 @@
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
                         <div class="card-detail" style="color:white; font-weight:700; margin-top:auto;" onclick="event.stopPropagation(); openEdit('${p.id}')">
+                            ${(p.relationshipStatus && p.relationshipStatus.toLowerCase() === 'talking') ? '<span class="status-pulse-dot" style="width:6px; height:6px;"></span>' : ''}
                             ${calculateAvg(p)} ★
                         </div>
                         <div class="plus-badge" style="position:absolute; top:8px; right:8px; width: 32px; height: 32px; font-size: 20px; z-index: 10;" onclick="event.stopPropagation(); openLog('${p.id}')">+</div>
@@ -1888,6 +2008,8 @@
             document.getElementById('deleteContainer').style.display = 'none';
             document.getElementById('personForm').reset();
             document.getElementById('name').innerText = '';
+            document.getElementById('interestLevel').value = 5;
+            document.getElementById('interestValue').textContent = '5';
 
             // Set initial date
             const now = new Date();
@@ -1943,7 +2065,8 @@
             set('location', p.location);
             set('instagram', p.instagram);
             set('relationshipStatus', p.relationshipStatus);
-            set('interestLevel', p.interestLevel);
+            set('interestLevel', p.interestLevel || 5);
+            document.getElementById('interestValue').textContent = p.interestLevel || 5;
             set('numberOfDates', p.numberOfDates || 0);
 
             // Refresh Rating Colors
