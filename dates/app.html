@@ -1432,8 +1432,8 @@
     <div class="app-header-banner">
         <div class="header-left">
             <button class="nav-btn" id="themeToggleBtn" onclick="toggleTheme()"
-                style="width: 44px; height: 44px; justify-content: center;">
-                🌓
+                style="width: 44px; height: 44px; justify-content: center; padding: 0;">
+                <!-- SVG Injected by JS -->
             </button>
         </div>
         <div class="header-title">Dates</div>
@@ -2873,11 +2873,22 @@
             const btn = document.getElementById('themeToggleBtn');
             if (!btn) return;
 
-            let icon = '🌓';
-            if (manualTheme === 'day') icon = '☀️';
-            else if (manualTheme === 'night') icon = '🌙';
+            let svg = '';
+            const color = 'white';
+            const size = 20;
 
-            btn.innerHTML = `<span style="font-size: 20px;">${icon}</span>`;
+            if (manualTheme === 'day') {
+                // Sun Icon
+                svg = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+            } else if (manualTheme === 'night') {
+                // Moon Icon
+                svg = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+            } else {
+                // Auto/Contrast Icon (Circle with half fill)
+                svg = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke-opacity="0.3"/><path d="M12 3a9 9 0 0 0 0 18V3z" fill="${color}"/></svg>`;
+            }
+
+            btn.innerHTML = svg;
         }
 
         // Initialize state
