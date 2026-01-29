@@ -1709,8 +1709,22 @@
                 </div>
             </div>
 
-            <div style="height: 40px;"></div> <!-- Bottom Padding for scroll -->
         </div>
+
+        <!-- Sync Status Footer -->
+        <div style="text-align: center; padding: 20px 0 40px 0;">
+            <div id="lastSyncText"
+                style="color: var(--text-secondary); font-size: 13px; font-weight: 500; margin-bottom: 8px;">
+                Last sync was: Never
+            </div>
+            <button onclick="performSmartSync()"
+                style="color: var(--ios-blue); background: none; border: none; font-size: 15px; font-weight: 700; cursor: pointer;">
+                Sync Now
+            </button>
+        </div>
+
+        <div style="height: 40px;"></div> <!-- Bottom Padding for scroll -->
+    </div>
     </div>
 
     <!-- Bottom Navigation -->
@@ -1742,6 +1756,12 @@
                                 class="summary-value" id="sumMetVia">-</span></div>
                         <div class="summary-item"><span class="summary-label">Interest</span><span class="summary-value"
                                 id="sumInterest">-</span></div>
+                        <div class="summary-item"
+                            style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 8px; padding-top: 8px;">
+                            <span class="summary-label">Last Updated</span>
+                            <span class="summary-value" id="sumLastUpdated"
+                                style="font-size: 13px; color: var(--text-secondary);">-</span>
+                        </div>
                         <div class="summary-scores" id="sumScores">
                             <!-- JS Badges -->
                         </div>
@@ -1922,7 +1942,11 @@
             onSnapshot,
             query,
             orderBy,
-            Timestamp
+            where,
+            getDocs,
+            getDocsFromCache,
+            Timestamp,
+            serverTimestamp
         }
 
             from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
@@ -1965,26 +1989,115 @@
             }
         });
 
-        function startDataListener() {
-            const q = query(collection(db, COLLECTION_NAME), orderBy("dateWeMet", "desc"));
-
-            onSnapshot(q, (snap) => {
-                allPeople = [];
-
-                snap.forEach(d => allPeople.push({
-                    id: d.id, ...d.data()
-                }));
-                render();
-
-                // Remove splash loader on first data arrival
-                const splash = document.getElementById('splashLoader');
-                if (splash) splash.classList.add('fade-out');
+        async function startDataListener() {
+            // 1. Initial Load from Local Cache (Instant UI)
+            try {
+                const qAll = query(collection(db, COLLECTION_NAME), orderBy("dateWeMet", "desc"));
+                const cacheSnapshot = await getDocsFromCache(qAll);
+                if (!cacheSnapshot.empty) {
+                    allPeople = [];
+                    cacheSnapshot.forEach(d => allPeople.push({ id: d.id, ...d.data() }));
+                    render();
+                    hideSplash();
+                }
+            } catch (e) {
+                console.log("No cache found or cache error, wait for sync.");
             }
 
-                , (error) => {
-                    console.error("Snapshot error:", error);
-                    alert("Failed to load data. Please check your connection.");
+            // 2. Perform Smart Sync
+            performSmartSync();
+        }
+
+        /* ----- ROBUST SYNC ENGINE ----- */
+        window.performSmartSync = async function () {
+            const syncBtn = document.querySelector('button[onclick="performSmartSync()"]');
+            if (syncBtn) syncBtn.textContent = "Syncing...";
+
+            try {
+                // A. UPSTREAM (Push Local Changes)
+                const dirtyIds = JSON.parse(localStorage.getItem('sullivan_dates_local_dirty_ids') || '[]');
+
+                if (dirtyIds.length > 0) {
+                    console.log("Pushing local changes for:", dirtyIds);
+                    for (const id of dirtyIds) {
+                        const person = allPeople.find(p => p.id === id);
+                        if (person) {
+                            await updateDoc(doc(db, COLLECTION_NAME, id), {
+                                ...person
+                            });
+                        }
+                    }
+                    localStorage.setItem('sullivan_dates_local_dirty_ids', '[]');
+                }
+
+                // B. DOWNSTREAM (Pull Remote Changes)
+                const lastSyncTimeStr = localStorage.getItem('sullivan_dates_last_sync_time');
+                let lastSyncTS = new Timestamp(0, 0);
+
+                if (lastSyncTimeStr) {
+                    lastSyncTS = Timestamp.fromMillis(parseInt(lastSyncTimeStr));
+                }
+
+                console.log("Pulling changes since:", lastSyncTS.toDate());
+
+                // Fetch only docs updated since last sync
+                const qDelta = query(collection(db, COLLECTION_NAME), where("lastUpdated", ">", lastSyncTS));
+                const snap = await getDocs(qDelta);
+
+                if (!snap.empty) {
+                    console.log(`Downloaded ${snap.size} new/updated docs.`);
+                    snap.forEach(d => {
+                        const docData = { id: d.id, ...d.data() };
+                        const idx = allPeople.findIndex(p => p.id === docData.id);
+                        if (idx >= 0) {
+                            allPeople[idx] = docData;
+                        } else {
+                            allPeople.push(docData);
+                        }
+                    });
+
+                    allPeople.sort((a, b) => {
+                        const dateA = a.dateWeMet?.seconds || 0;
+                        const dateB = b.dateWeMet?.seconds || 0;
+                        return dateB - dateA;
+                    });
+
+                    render();
+                }
+
+                // C. Update Footer & Timestamp
+                const nowMillis = Date.now();
+                localStorage.setItem('sullivan_dates_last_sync_time', nowMillis.toString());
+                updateSyncFooter(nowMillis);
+                hideSplash();
+
+            } catch (e) {
+                console.error("Sync Logic Failed:", e);
+                showToast("Sync failed - Offline?", true);
+            } finally {
+                if (syncBtn) syncBtn.textContent = "Sync Now";
+            }
+        }
+
+        function updateSyncFooter(ts) {
+            const el = document.getElementById('lastSyncText');
+            if (el) {
+                const date = new Date(ts);
+                const str = date.toLocaleDateString(undefined, {
+                    month: 'short', day: 'numeric', year: 'numeric',
+                    hour: 'numeric', minute: '2-digit'
                 });
+                el.textContent = `Last sync was: ${str}`;
+            }
+        }
+
+        // Initialize footer on load
+        const storedSync = localStorage.getItem('sullivan_dates_last_sync_time');
+        if (storedSync) updateSyncFooter(parseInt(storedSync));
+
+        function hideSplash() {
+            const splash = document.getElementById('splashLoader');
+            if (splash) splash.classList.add('fade-out');
         }
 
         /* ----- CARD ANIMATION ----- */
@@ -2185,6 +2298,16 @@
             document.getElementById('sumMetVia').textContent = p.howWeMet || '-';
             document.getElementById('sumInterest').textContent = p.interestLevel || '-';
 
+            const lu = p.lastUpdated;
+            if (lu) {
+                const d = new Date(lu.seconds * 1000);
+                document.getElementById('sumLastUpdated').textContent = d.toLocaleDateString(undefined, {
+                    month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
+                });
+            } else {
+                document.getElementById('sumLastUpdated').textContent = 'Never (Sync Required)';
+            }
+
             // Score Badges
             const scores = document.getElementById('sumScores');
             scores.innerHTML = '';
@@ -2294,17 +2417,16 @@
             const updatedLogs = [...p.logs];
             updatedLogs.splice(idx, 1);
 
-            try {
-                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), {
-                    logs: updatedLogs
-                });
-                showToast("Entry deleted");
-                renderTimeline(updatedLogs);
-            }
+            // OPTIMISTIC UPDATE
+            p.logs = updatedLogs;
+            p.lastUpdated = Timestamp.now();
+            renderTimeline(updatedLogs);
+            markDirty(currentEditId);
 
-            catch (e) {
-                showToast("Failed to delete", true);
-            }
+            showToast("Entry deleted");
+
+            // Trigger Sync
+            performSmartSync();
         }
 
         window.saveLogEntry = async function () {
@@ -2342,22 +2464,20 @@
                 updatedLogs.push(newLog);
             }
 
-            try {
-                await updateDoc(doc(db, COLLECTION_NAME, currentEditId), {
-                    logs: updatedLogs,
-                    numberOfDates: updatedLogs.length
-                });
+            // OPTIMISTIC UPDATE
+            p.logs = updatedLogs;
+            p.numberOfDates = updatedLogs.length;
+            p.lastUpdated = Timestamp.now(); // Set local time
 
-                document.getElementById('logEntryText').value = '';
-                document.querySelector('.quick-action-btn').textContent = 'Post Update';
-                editingLogIdx = -1;
-                showToast(editingLogIdx >= 0 ? "Entry updated" : "Update Saved!");
-                renderTimeline(updatedLogs);
-            }
+            document.getElementById('logEntryText').value = '';
+            document.querySelector('.quick-action-btn').textContent = 'Post Update';
+            editingLogIdx = -1;
 
-            catch (e) {
-                showToast("Failed to save", true);
-            }
+            showToast("Update Saved! (Syncing...)");
+            renderTimeline(updatedLogs);
+
+            markDirty(currentEditId);
+            performSmartSync();
         }
 
         window.openPersonDetails = function () {
@@ -2518,28 +2638,50 @@
                 instagram: getVal('instagram'),
                 relationshipStatus: getVal('relationshipStatus'),
                 interestLevel: getVal('interestLevel'),
-                numberOfDates: getNum('numberOfDates')
+                numberOfDates: getNum('numberOfDates'),
+                lastUpdated: serverTimestamp()
             }
 
                 ;
 
             closeModal();
+            showToast("Saved! Syncing...");
 
-            try {
-                if (currentEditId) {
-                    await updateDoc(doc(db, COLLECTION_NAME, currentEditId), data);
+            if (currentEditId) {
+                // Update Existing Local Object
+                const idx = allPeople.findIndex(x => x.id === currentEditId);
+                if (idx >= 0) allPeople[idx] = { id: currentEditId, ...data };
+                markDirty(currentEditId);
+                performSmartSync();
+            } else {
+                // ADD NEW
+                // We must create it in Firestore to get an ID first, unfortunately. 
+                // Alternatively, we can generate a local ID, but Firestore auto-ID is safer to avoid collisions.
+                // For this V1, simple AddDoc is safer than robust offline ID generation.
+                try {
+                    // Direct add for new docs to ensure ID validity
+                    const ref = await addDoc(collection(db, COLLECTION_NAME), {
+                        ...data,
+                        lastUpdated: serverTimestamp()
+                    });
+                    // Then pull it back or manually push to array
+                    data.id = ref.id;
+                    allPeople.push(data);
+                    render();
+                    performSmartSync(); // To update footer
+                } catch (e) {
+                    console.error("Add failed", e);
+                    showToast("Failed to add new date", true);
                 }
-
-                else {
-                    await addDoc(collection(db, COLLECTION_NAME), data);
-                }
-
-                showToast("Saved!");
             }
+        }
 
-            catch (e) {
-                console.error("Save error:", e);
-                showToast("Save failed, please try again", true);
+        // DIRTY TRACKING HELPER
+        function markDirty(id) {
+            let dirty = JSON.parse(localStorage.getItem('sullivan_dates_local_dirty_ids') || '[]');
+            if (!dirty.includes(id)) {
+                dirty.push(id);
+                localStorage.setItem('sullivan_dates_local_dirty_ids', JSON.stringify(dirty));
             }
         }
 
@@ -2638,9 +2780,15 @@
 
         window.deletePerson = async function () {
             if (!currentEditId || !confirm('Delete Date?')) return;
+
+            // For now, doing direct delete. Robust offline delete requires a deleted-queue.
             await deleteDoc(doc(db, COLLECTION_NAME, currentEditId));
+
+            // Remove locally
+            allPeople = allPeople.filter(p => p.id !== currentEditId);
+            render();
             closeModal();
-            // onSnapshot handles the refresh
+            performSmartSync(); // Update footer
         }
 
         window.signOut = async function () {
