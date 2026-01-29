@@ -1286,6 +1286,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
+            width: 100%;
         }
 
         .interest-slider {
@@ -1389,6 +1390,60 @@
             font-weight: 600;
         }
 
+        .interest-badge-premium {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--ios-blue);
+            padding: 6px 16px;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .interest-badge-premium span#interestValue {
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            color: white !important;
+            line-height: 1 !important;
+            background: transparent !important;
+            padding: 0 !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .interest-badge-premium #interestIcon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+        }
+
+        .interest-badge-premium svg {
+            width: 100%;
+            height: 100%;
+            fill: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Danger state overrides for the badge */
+        .interest-danger .interest-badge-premium {
+            background: rgba(255, 59, 48, 0.2) !important;
+            box-shadow: 0 0 20px rgba(255, 59, 48, 0.4) !important;
+            border-color: rgba(255, 59, 48, 0.5) !important;
+            transform: scale(1.1);
+        }
+
+        /* Shared Base for Premium Entries */
+        .holographic-premium {
+            position: relative !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+            overflow: hidden !important;
+            z-index: 1;
+            border: none !important;
+        }
+
         .slider-stops {
             display: flex;
             justify-content: space-between;
@@ -1401,15 +1456,6 @@
             height: 6px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 1px;
-        }
-
-        /* Shared Base for Premium Entries */
-        .holographic-premium {
-            position: relative !important;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
-            overflow: hidden !important;
-            z-index: 1;
-            border: none !important;
         }
 
         /* List View (Inset Grouped) - Uses Box-Shadow for clipping compatibility */
@@ -1512,6 +1558,78 @@
                 opacity: 0.5;
                 filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 180, 0, 0.4));
             }
+        }
+
+        /* Narrow Section Logic */
+        .narrow-section {
+            width: 80% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        /* Adjust section headers to align with narrowed content */
+        .section-header.narrow-section {
+            margin-left: 10% !important;
+            /* Matches the 80% width centering logic */
+            text-align: left;
+        }
+
+        /* Interest Level Danger Effect */
+        @keyframes chevrons {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 50px 0;
+            }
+        }
+
+        .interest-danger {
+            background: rgba(40, 10, 10, 0.4) !important;
+            border: 1px solid rgba(255, 59, 48, 0.4) !important;
+            box-shadow: 0 0 25px rgba(255, 59, 48, 0.15) !important;
+            position: relative;
+            overflow: hidden !important;
+            isolation: isolate;
+            /* Ensures z-index: -1 stays within this container */
+        }
+
+        .interest-danger::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(45deg,
+                    rgba(255, 59, 48, 0.08) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 59, 48, 0.08) 50%,
+                    rgba(255, 59, 48, 0.08) 75%,
+                    transparent 75%,
+                    transparent);
+            background-size: 60px 60px;
+            animation: chevrons 3s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+            /* Pushed behind everything */
+        }
+
+        .interest-danger .form-label,
+        .interest-danger #interestValue {
+            background: transparent !important;
+            color: #ff453a !important;
+            text-shadow: 0 0 15px rgba(255, 69, 58, 0.6) !important;
+            font-weight: 800 !important;
+        }
+
+        .interest-danger .slider-header,
+        .interest-danger .slider-container {
+            z-index: 2;
+        }
+
+        .interest-danger .interest-slider {
+            background: rgba(30, 10, 10, 0.8) !important;
+            border-color: rgba(255, 59, 48, 0.3) !important;
         }
     </style>
 </head>
@@ -1670,7 +1788,7 @@
             <div class="sheet-content">
                 <form id="personForm">
                     <!-- BASICS -->
-                    <div class="form-group-container">
+                    <div class="form-group-container narrow-section">
                         <div class="form-row"><label class="form-label">Name</label>
                             <div id="name" class="form-input" contenteditable="true" placeholder="Required" dir="auto">
                             </div>
@@ -1690,8 +1808,8 @@
                             </datalist></div>
                     </div>
                     <!-- RATINGS -->
-                    <div class="section-header">RATINGS (1-10)</div>
-                    <div class="ratings-grid">
+                    <div class="section-header narrow-section">RATINGS (1-10)</div>
+                    <div class="ratings-grid narrow-section">
                         <div class="rating-box"><span class="rating-label">Face</span><input type="number"
                                 id="ratingFace" class="rating-input" value="0" min="0" max="10"
                                 oninput="updateRatingColor(this)"></div>
@@ -1706,8 +1824,8 @@
                                 oninput="updateRatingColor(this)"></div>
                     </div>
                     <!-- DETAILS -->
-                    <div class="section-header">DETAILS</div>
-                    <div class="form-group-container">
+                    <div class="section-header narrow-section">DETAILS</div>
+                    <div class="form-group-container narrow-section">
                         <div class="form-row"><label class="form-label">Birthday</label><input type="tel" id="birthdate"
                                 class="form-input" placeholder="MM/DD/YYYY" oninput="formatDateInput(this)"></div>
                         <div class="form-row"><label class="form-label">Height
@@ -1724,8 +1842,8 @@
                         </div>
                     </div>
                     <!-- STATUS -->
-                    <div class="section-header">STATUS</div>
-                    <div class="form-group-container">
+                    <div class="section-header narrow-section">STATUS</div>
+                    <div class="form-group-container narrow-section">
                         <div class="form-row" onclick="openStatusPicker()">
                             <label class="form-label">Status</label>
                             <div id="relationshipStatusDisplay" class="form-input"
@@ -1739,20 +1857,21 @@
 
                     <div style="height: 16px;"></div> <!-- Detach spacer -->
                     <div class="section-header">INTEREST</div>
-                    <div class="form-group-container"
+                    <div class="form-group-container" id="interestLevelContainer"
                         style="background: rgba(10, 132, 255, 0.1); border: 1px solid rgba(10, 132, 255, 0.3);">
                         <div class="form-row"
                             style="flex-direction: column; align-items: flex-start; height: auto; padding: 16px; border-bottom: none;">
-                            <div class="slider-header">
+                            <div class="slider-header" style="position: relative; z-index: 1;">
                                 <label class="form-label" style="color: var(--ios-blue); font-weight: 700;">Interest
                                     Level</label>
-                                <span id="interestValue"
-                                    style="color: white; background: var(--ios-blue); padding: 2px 10px; border-radius: 12px; font-weight: 800; font-size: 18px;">5</span>
+                                <div id="interestBadge" class="interest-badge-premium">
+                                    <div id="interestIcon"></div>
+                                    <span id="interestValue">5</span>
+                                </div>
                             </div>
-                            <div class="slider-container">
+                            <div class="slider-container" style="position: relative; z-index: 1;">
                                 <input type="range" id="interestLevel" class="interest-slider" min="1" max="10" step="1"
-                                    value="5"
-                                    oninput="document.getElementById('interestValue').textContent = this.value">
+                                    value="5" oninput="updateInterestUI(this.value);">
                                 <div class="slider-stops">
                                     <div class="stop-mark"></div>
                                     <div class="stop-mark"></div>
@@ -2285,6 +2404,8 @@
                     updateRatingColor(document.getElementById(id));
                 });
 
+            updateInterestUI(5);
+
             document.getElementById('sheetOverlay').classList.add('show');
         }
 
@@ -2328,13 +2449,14 @@
             document.getElementById('interestValue').textContent = p.interestLevel || 5;
             set('numberOfDates', p.numberOfDates || 0);
 
-            // Refresh Rating Colors
             ['ratingFace',
                 'ratingBody',
                 'ratingKissing',
                 'ratingVibe'].forEach(id => {
                     updateRatingColor(document.getElementById(id));
                 });
+
+            updateInterestUI(p.interestLevel || 5);
 
             document.getElementById('sheetOverlay').classList.add('show');
         }
@@ -2455,12 +2577,10 @@
             // Set gradient and border based on status
             if (isError) {
                 // Red Glass Gradient
-                toast.style.background = 'linear-gradient(135deg, rgba(255, 69, 58, 0.4) 0%, rgba(200, 50, 40, 0.5) 100%)';
-            }
-
-            else {
-                // Green Glass Gradient (Matches header style but green)
-                toast.style.background = 'linear-gradient(135deg, rgba(52, 199, 89, 0.4) 0%, rgba(30, 160, 60, 0.5) 100%)';
+                toast.style.background = 'linear-gradient(135deg, rgba(255, 69, 58, 0.3) 0%, rgba(255, 69, 58, 0.2) 100%)';
+            } else {
+                // Grey Glass Gradient (Matches card style)
+                toast.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
             }
 
             // We do NOT set borderColor here anymore, relying on the CSS 3D borders (white/transparent) for the glass effect
@@ -2974,6 +3094,56 @@
             document.getElementById('relationshipStatus').value = val;
             document.getElementById('relationshipStatusDisplay').textContent = val;
             closeStatusPicker();
+        }
+
+        window.updateInterestUI = function (val) {
+            const container = document.getElementById('interestLevelContainer');
+            const badge = document.getElementById('interestBadge');
+            const iconContainer = document.getElementById('interestIcon');
+            const valueSpan = document.getElementById('interestValue');
+
+            if (!container || !badge || !iconContainer || !valueSpan) return;
+
+            valueSpan.textContent = val;
+
+            let iconHtml = '';
+
+            if (val == 1) {
+                container.classList.add('interest-danger');
+                // Skull icon
+                iconHtml = `<svg viewBox="0 0 24 24"><path d="M12 2C7.03 2 3 6.03 3 11c0 2.45.98 4.67 2.57 6.3L5 22h14l-.57-4.7c1.59-1.63 2.57-3.85 2.57-6.3 0-4.97-4.03-9-9-9zm-3 9c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>`;
+            } else if (val <= 4) {
+                container.classList.remove('interest-danger');
+                // Heart Half/Low
+                iconHtml = `<svg viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/></svg>`;
+            } else if (val <= 8) {
+                container.classList.remove('interest-danger');
+                // Full Heart
+                iconHtml = `<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+            } else {
+                container.classList.remove('interest-danger');
+                // Fire icon
+                iconHtml = `<svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8c0-5.39-4.5-13.33-4.5-13.33zM12 19c-2.76 0-5-2.24-5-5 0-2.42 1.72-4.44 4.05-4.9.1.55.24 1.1.42 1.6l.4.9c.14.3.4.5.73.5H13c1.1 0 2 .9 2 2 0 2.76-2.24 5-5 5z"/></svg>`;
+            }
+
+            iconContainer.innerHTML = iconHtml;
+
+            // Styling levels
+            if (val > 1) {
+                if (val >= 9) {
+                    badge.style.background = 'linear-gradient(135deg, #ff9500, #ff3b30)';
+                    badge.style.boxShadow = '0 0 15px rgba(255, 149, 0, 0.4)';
+                } else if (val >= 5) {
+                    badge.style.background = 'var(--ios-blue)';
+                    badge.style.boxShadow = '0 4px 12px rgba(10, 132, 255, 0.3)';
+                } else {
+                    badge.style.background = '#8e8e93';
+                    badge.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                }
+            } else {
+                badge.style.background = ''; // Use CSS default for danger
+                badge.style.boxShadow = '';
+            }
         }
 
         /* ----- THEME TOGGLE LOGIC ----- */
