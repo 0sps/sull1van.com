@@ -1996,9 +1996,7 @@
             storageBucket: "dates-cfeb5.firebasestorage.app",
             messagingSenderId: "932967099991",
             appId: "1:932967099991:web:11afdf5dbc03c1e8cafd12"
-        }
-
-            ;
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -2019,7 +2017,8 @@
             BG_UPDATE_INTERVAL: 60000,
             YEAR_RANGE_START: 2018,
             YEAR_RANGE_END: 2026,
-            MIN_SWIPE_DISTANCE: 100
+            MIN_SWIPE_DISTANCE: 100,
+            RATING_FIELDS: ['ratingFace', 'ratingBody', 'ratingKissing', 'ratingVibe']
         };
 
         function escapeHtml(str) {
@@ -2027,6 +2026,44 @@
             const div = document.createElement('div');
             div.textContent = str;
             return div.innerHTML;
+        }
+
+        function toFormattedDate(ts) {
+            if (!ts) return '';
+            const d = new Date(ts.seconds * 1000);
+            return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}/${d.getFullYear()}`;
+        }
+
+        function parseDate(str) {
+            if (!str) return null;
+            const parts = str.split('/');
+            if (parts.length !== 3) return null;
+            const m = parseInt(parts[0]) - 1;
+            const d = parseInt(parts[1]);
+            let y = parseInt(parts[2]);
+            if (y < 100) y += 2000;
+            const dt = new Date(y, m, d, 12, 0, 0);
+            return isNaN(dt.getTime()) ? null : Timestamp.fromDate(dt);
+        }
+
+        function getPersonStatus(p) {
+            const avg = parseFloat(calculateAvg(p)) || 0;
+            return {
+                avg,
+                isPremium: avg >= 9.0,
+                isDanger: p.interestLevel == 1,
+                isTalking: (p.relationshipStatus || '').trim().toLowerCase() === 'talking'
+            };
+        }
+
+        function getHolographicHTML(isPremium) {
+            return isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : '';
+        }
+
+        function updateAllRatingColors() {
+            CONFIG.RATING_FIELDS.forEach(id => {
+                updateRatingColor(document.getElementById(id));
+            });
         }
 
         const AppState = {
@@ -2251,19 +2288,17 @@
         function renderList(container) {
             container.innerHTML = `<div class="ios-list">
                 ${AppState.data.allPeople.map(p => {
-                const avg = parseFloat(calculateAvg(p)) || 0;
-                const isPremium = avg >= 9.0;
-                const isDanger = p.interestLevel == 1;
+                const { isPremium, isDanger, isTalking } = getPersonStatus(p);
                 const safeName = escapeHtml(p.name);
                 const safeStatus = escapeHtml(p.relationshipStatus || 'No Status');
                 return `
                     <div class="list-row ${isPremium ? 'holographic-premium holographic-list' : ''} ${isDanger ? 'interest-danger' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                        ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
+                        ${getHolographicHTML(isPremium)}
 
                         <div class="row-content">
                             <div class="row-title">${safeName}</div>
                             <div class="row-subtitle">
-                                ${(p.relationshipStatus && p.relationshipStatus.trim().toLowerCase() === 'talking') ? '<span style="display:inline-block; width:10px; height:10px; background:#34c759; border-radius:50%; margin-right:8px; box-shadow: 0 0 10px #34c759;"></span>' : ''}
+                                ${isTalking ? '<span style="display:inline-block; width:10px; height:10px; background:#34c759; border-radius:50%; margin-right:8px; box-shadow: 0 0 10px #34c759;"></span>' : ''}
                                 ${safeStatus} • ${p.numberOfDates || 0} dates
                             </div>
                         </div>
@@ -2279,17 +2314,13 @@
         function renderGrid(container) {
             container.innerHTML = `<div class="ios-grid">
                 ${AppState.data.allPeople.map(p => {
-                const status = (p.relationshipStatus || '').trim().toLowerCase();
-                const isTalking = status === 'talking';
-                const avg = parseFloat(calculateAvg(p)) || 0;
-                const isPremium = avg >= 9.0;
-                const isDanger = p.interestLevel == 1;
+                const { isPremium, isDanger, isTalking } = getPersonStatus(p);
                 const safeName = escapeHtml(p.name);
                 const safeInitial = p.name ? escapeHtml(p.name.charAt(0)) : '?';
                 const safeJob = escapeHtml(p.occupation || 'No Job');
                 return `
                     <div class="grid-card ${isPremium ? 'holographic-premium holographic-card' : ''} ${isDanger ? 'interest-danger' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
-                        ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
+                        ${getHolographicHTML(isPremium)}
 
                         <div class="card-initials ${isTalking ? 'status-pulse' : ''}">${safeInitial}</div>
                         <div class="card-name">${safeName}</div>
@@ -2556,12 +2587,7 @@
             document.getElementById('dateWeMet').value = `${mm}/${dd}/${yyyy}`;
 
             // Refresh Rating Colors
-            ['ratingFace',
-                'ratingBody',
-                'ratingKissing',
-                'ratingVibe'].forEach(id => {
-                    updateRatingColor(document.getElementById(id));
-                });
+            updateAllRatingColors();
 
             updateInterestUI(5);
 
@@ -2579,15 +2605,6 @@
             // Fill
             const set = (eid, val) => document.getElementById(eid).value = val || '';
             const setName = (val) => document.getElementById('name').innerText = val || '';
-
-            const toFormattedDate = (ts) => {
-                if (!ts) return '';
-                const d = new Date(ts.seconds * 1000);
-
-                return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}/${d.getFullYear()}`;
-            }
-
-                ;
 
             setName(p.name);
             set('occupation', p.occupation);
@@ -2608,12 +2625,7 @@
             document.getElementById('interestValue').textContent = p.interestLevel || 5;
             set('numberOfDates', p.numberOfDates || 0);
 
-            ['ratingFace',
-                'ratingBody',
-                'ratingKissing',
-                'ratingVibe'].forEach(id => {
-                    updateRatingColor(document.getElementById(id));
-                });
+            updateAllRatingColors();
 
             updateInterestUI(p.interestLevel || 5);
 
@@ -2631,30 +2643,13 @@
                 if (!el) return '';
                 if (el.tagName === 'DIV' && el.getAttribute('contenteditable')) return el.innerText;
                 return el.value;
-            }
-
-                ;
+            };
             const getNum = id => parseFloat(document.getElementById(id).value) || 0;
-
-            const parseDate = str => {
-                if (!str) return null;
-                const parts = str.split('/');
-                if (parts.length !== 3) return null;
-                const m = parseInt(parts[0]) - 1;
-                const d = parseInt(parts[1]);
-                let y = parseInt(parts[2]);
-                if (y < 100) y += 2000;
-                const dt = new Date(y, m, d, 12, 0, 0);
-                return isNaN(dt.getTime()) ? null : Timestamp.fromDate(dt);
-            }
-
-                ;
 
             const name = getVal('name').trim();
             if (!name) return alert('Name Required');
 
             const data = {
-
                 name,
                 occupation: getVal('occupation'),
                 dateWeMet: parseDate(getVal('dateWeMet')) || Timestamp.now(),
@@ -2664,24 +2659,19 @@
                     body: getNum('ratingBody'),
                     kissing: getNum('ratingKissing'),
                     conversationVibe: getNum('ratingVibe')
-                }
-
-                ,
+                },
                 birthdate: parseDate(getVal('birthdate')),
                 height: {
-                    feet: getNum('heightFeet'), inches: getNum('heightInches')
-                }
-
-                ,
+                    feet: getNum('heightFeet'),
+                    inches: getNum('heightInches')
+                },
                 location: getVal('location'),
                 instagram: getVal('instagram'),
                 relationshipStatus: getVal('relationshipStatus'),
                 interestLevel: getNum('interestLevel'),
                 numberOfDates: getNum('numberOfDates'),
                 lastUpdated: serverTimestamp()
-            }
-
-                ;
+            };
 
             closeModal();
             showToast("Saved! Syncing...");
@@ -2724,7 +2714,6 @@
             toastText.textContent = message;
 
             // Set gradient and border based on status
-            // Set gradient and border based on status
             if (isError) {
                 // Red Glass Gradient
                 toast.style.background = 'linear-gradient(135deg, rgba(255, 69, 58, 0.3) 0%, rgba(255, 69, 58, 0.2) 100%)';
@@ -2739,9 +2728,7 @@
 
             setTimeout(() => {
                 toast.classList.remove('show');
-            }
-
-                , CONFIG.TOAST_DURATION);
+            }, CONFIG.TOAST_DURATION);
         }
 
         window.updateRatingColor = function (input) {
