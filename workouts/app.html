@@ -524,6 +524,133 @@
         .btn-export:hover {
             box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
+        /* Layout & Utility Classes */
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flex-col-center {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+        .flex-wrap-gap {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .text-muted-sm {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+        .text-muted-xs {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .m-b-16 {
+            margin-bottom: 16px;
+        }
+        .m-b-20 {
+            margin-bottom: 20px;
+        }
+        .m-b-24 {
+            margin-bottom: 24px;
+        }
+        .m-t-12 {
+            margin-top: 12px;
+        }
+        .m-t-neg-12 {
+            margin-top: -12px;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .flex-1 {
+            flex: 1;
+        }
+        .flex-2 {
+            flex: 2;
+        }
+        /* Component Specific */
+        .exercise-info-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .exercise-meta-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+            min-width: 100px;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        .sticky-bottom-actions {
+            position: sticky;
+            bottom: -32px;
+            background: var(--bg-secondary);
+            padding-top: 16px;
+            margin-top: 0;
+            border-top: 1px solid var(--border);
+            z-index: 10;
+        }
+        .modal-sm {
+            max-width: 480px !important;
+            width: 95% !important;
+        }
+        .modal-md {
+            max-width: 500px !important;
+            width: 90% !important;
+        }
+        .modal-lg {
+            max-width: 900px !important;
+            width: 95% !important;
+        }
+        .day-selector-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .day-selector-item.active {
+            background: rgba(255, 61, 0, 0.1);
+            border-color: var(--accent-primary);
+        }
+        .row-relative {
+            position: relative;
+        }
+        .row-h-50 {
+            height: 50px;
+        }
+        .row-empty {
+            background: rgba(255, 255, 255, 0.03);
+            opacity: 0.8;
+        }
+        .no-display {
+            display: none;
+        }
+        .log-entry-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
         .btn-logout {
             background: transparent;
             border: 1px solid var(--border);
@@ -965,12 +1092,6 @@
             <div class="logo">
                 <a href="app.html">
                     <h1>SEAN'S LOG</h1>
-                    <!--  modify this title <a href so that there is no outline when it renders on the webpage -->
-                    <style>
-                        a {
-                            text-decoration: none;
-                        }
-                    </style>
                 </a>
             </div>
             <div class="header-right">
@@ -994,8 +1115,7 @@
             <button class="nav-tab" data-tab="plan">Full Plan</button>
             <button class="nav-tab" data-tab="library">Exercise Library</button>
             <button class="nav-tab" data-tab="history">Workout History</button>
-            <a href="stats.html" class="nav-tab"
-                style="text-decoration: none; display: flex; align-items: center; gap: 8px;">Stats Dashboard</a>
+            <a href="stats.html" class="nav-tab flex-between flex-wrap-gap">Stats Dashboard</a>
         </nav>
         <div class="stats-grid">
             <div class="stat-card">
@@ -1015,8 +1135,7 @@
                 <div class="stat-label">Day Streak</div>
             </div>
         </div>
-        <p
-            style="text-align: center; color: var(--text-muted); font-size: 0.82rem; margin-top: -12px; margin-bottom: 30px;">
+        <p class="text-center text-muted-xs m-t-neg-12 m-b-30">
             Stats based on your last 60 workouts
         </p>
         <div id="workoutTab" class="tab-content">
@@ -1041,8 +1160,7 @@
                 </div>
                 <div class="log-sidebar">
                     <div class="section-card">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="flex-between m-b-16">
                             <h3 class="section-title" style="margin-bottom: 0;">Recent Logs</h3>
                             <button class="btn btn-secondary btn-small btn-delete" onclick="openDeleteSetModal()">Delete
                                 Sets</button>
@@ -1055,7 +1173,7 @@
         <div id="planTab" class="tab-content plan-view">
             <div class="section-card">
                 <h3 class="section-title">Sean Sullivan's Training Plan</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Push/Pull/Legs × 2 per
+                <p class="text-muted-sm">Push/Pull/Legs × 2 per
                     week • 72 sets total • Goal: Gain 15lbs muscle</p>
                 <div id="planDays"></div>
             </div>
@@ -1068,16 +1186,16 @@
                 <div class="library-grid" id="libraryGrid"></div>
             </div>
         </div>
-        <div id="historyTab" class="tab-content" style="display: none;">
+        <div id="historyTab" class="tab-content no-display">
             <div class="section-card">
                 <h3 class="section-title">Workout History</h3>
-                <p id="historySubtitle" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;"></p>
+                <p id="historySubtitle" class="text-muted-sm m-b-20"></p>
                 <div id="fullHistory"></div>
             </div>
         </div>
         <div class="export-banner">
             <span class="export-banner-text">📤 Export complete workout history for analytics</span>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div class="flex-wrap-gap">
                 <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
                 <button class="btn btn-secondary btn-small btn-delete" onclick="openDeleteSetModal()">DELETE
                     SETS</button>
@@ -1097,9 +1215,8 @@
             <h3 class="modal-title" id="modalExerciseName"></h3>
             <div id="modalExerciseDetails"></div>
             <div class="modal-actions">
-                <button class="btn btn-primary btn-small"
-                    onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId)"
-                    style="background: rgba(255, 187, 0, 0.2); border: 1px solid var(--warning); color: var(--warning);">
+                <button class="btn btn-primary btn-small btn-warning-outline"
+                    onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId)">
                     Edit</button>
                 <button class="btn btn-secondary" onclick="closeModal('exerciseModal')">Close</button>
             </div>
@@ -1117,7 +1234,7 @@
     <div class="modal-overlay" id="instructionsModal" onclick="closeModal('instructionsModal')">
         <div class="modal" onclick="event.stopPropagation()">
             <h3 class="modal-title" id="instructionsModalTitle">INSTRUCTIONS</h3>
-            <div id="instructionsModalContent" style="white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;">
+            <div id="instructionsModalContent" class="pre-wrap text-md">
             </div>
             <div class="modal-actions"><button class="btn btn-secondary"
                     onclick="closeModal('instructionsModal')">CLOSE</button>
@@ -1125,43 +1242,42 @@
         </div>
     </div>
     <div class="modal-overlay" id="editModal">
-        <div class="modal" style="max-width: 480px; width: 95%;">
+        <div class="modal modal-sm">
             <h3 class="modal-title" id="editModalTitle">EDIT WORKOUT</h3>
-            <p id="editModalSubtitle" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;"></p>
-            <div id="editExerciseList" style="margin-bottom: 24px;"></div>
-            <div class="modal-actions"
-                style="position: sticky; bottom: -32px; background: var(--bg-secondary); padding-top: 16px; margin-top: 0; border-top: 1px solid var(--border); z-index: 10;">
-                <button class="btn btn-primary" id="saveEditsBtn" onclick="saveEditedWorkout()" style="flex: 2;">SAVE
+            <p id="editModalSubtitle" class="text-muted-xs m-b-20"></p>
+            <div id="editExerciseList" class="m-b-24"></div>
+            <div class="modal-actions sticky-bottom-actions">
+                <button class="btn btn-primary btn-flex-2" id="saveEditsBtn" onclick="saveEditedWorkout()">SAVE
                     EDITS</button>
-                <button class="btn btn-secondary btn-delete" onclick="closeEditModal()" style="flex: 1;">DISCARD
+                <button class="btn btn-secondary btn-delete btn-flex-1" onclick="closeEditModal()">DISCARD
                     EDITS</button>
             </div>
         </div>
     </div>
     <div class="modal-overlay" id="deleteSetModal">
-        <div class="modal" style="max-width: 900px; width: 95%;">
+        <div class="modal modal-lg">
             <h3 class="modal-title">DELETE INDIVIDUAL SETS</h3>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Showing last 40 sets from
+            <p class="text-muted-xs m-b-20">Showing last 40 sets from
                 recent workouts. Click a row to select, then confirm deletion.</p>
-            <div id="deleteSetList" style="margin-bottom: 24px; max-height: 500px; overflow-y: auto;"></div>
+            <div id="deleteSetList" class="m-b-24" style="max-height: 500px; overflow-y: auto;"></div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeDeleteSetModal()">Close</button>
             </div>
         </div>
     </div>
     <div class="modal-overlay" id="zeroRepsModal">
-        <div class="modal" style="max-width: 500px; width: 90%;">
+        <div class="modal modal-md">
             <h3 class="modal-title">ZERO REPS DETECTED</h3>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">
+            <p class="text-muted-sm m-b-20" style="line-height: 1.5;">
                 Some sets were detected with 0 reps. These sets will <strong>not be saved</strong> to your workout
                 history.
             </p>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">
+            <p class="text-muted-sm m-b-20">
                 Do you still want to save this workout?
             </p>
             <div class="modal-actions">
-                <button class="btn btn-primary" onclick="confirmCompleteWorkout()" style="flex: 1;">YES, SAVE</button>
-                <button class="btn btn-secondary" onclick="closeZeroRepsModal()" style="flex: 1;">NO, GO BACK</button>
+                <button class="btn btn-primary btn-flex-1" onclick="confirmCompleteWorkout()">YES, SAVE</button>
+                <button class="btn btn-secondary btn-flex-1" onclick="closeZeroRepsModal()">NO, GO BACK</button>
             </div>
         </div>
     </div>
@@ -1526,7 +1642,7 @@
                 <div class="set-inputs"><input type="number" class="set-input" placeholder="REPS" value="${savedReps}" data-exercise="${exerciseKey}" data-set="${i}" data-type="reps" onchange="updateExerciseData(this)"><span class="input-separator">/</span><input type="number" class="set-input" placeholder="WEIGHT" value="${savedWeight}" data-exercise="${exerciseKey}" data-set="${i}" data-type="weight" onchange="updateExerciseData(this)"></div></div>`;
                 }).join('');
                 return `<div class="exercise-item" id="exercise-${exerciseKey}">
-            <div class="exercise-header"><div style="flex: 1; min-width: 0;"><h4 class="exercise-name" onclick="showInstructions('${exercise.id}')" style="cursor: pointer; word-wrap: break-word;">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center;min-width:100px;flex-shrink: 0; margin-left: auto;"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
+            <div class="exercise-header"><div class="exercise-info-col"><h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exercise.id}')">${exercise.name.toUpperCase()}</h4><p class="exercise-muscles">${exercise.muscles.join(' • ')}</p></div><div class="exercise-meta-col"><button class="btn-history" onclick="showExerciseHistory('${exercise.name}')">History</button><span class="exercise-sets">${ex.sets} × ${ex.reps}</span></div></div>
             <div class="sets-grid">${setsHtml}</div>
             <div class="button-row">
                 <button class="btn btn-secondary btn-small btn-remove-set-style" onclick="removeSet('${exerciseKey}')" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
@@ -1709,7 +1825,7 @@
                 return `
                 <div class="exercise-item">
                     <div class="exercise-header">
-                        <div style="flex: 1; min-width: 0;">
+                        <div class="exercise-info-col">
                             <h4 class="exercise-name">${exercise.name.toUpperCase()}</h4>
                             <p class="exercise-muscles">${(exercise.muscles || []).join(' • ')}</p>
                         </div>
@@ -1908,7 +2024,7 @@
                 const emptyClass = set.isEmptyWorkout ? 'empty-workout-row' : '';
                 if (isSelected) {
                     html += `
-                        <tr class="selected ${emptyClass}" id="deleteRow_${idx}" style="position: relative; height: 50px;">
+                        <tr class="selected row-relative row-h-50 ${emptyClass}" id="deleteRow_${idx}">
                             <td colspan="6" style="padding: 0; position: relative;">
                                 <div class="delete-overlay" id="overlay_${idx}" onclick="event.stopPropagation()">
                                     <button class="delete-set-btn" id="deleteBtn_${idx}" onclick="event.stopPropagation(); confirmDeleteSet(${idx})">DELETE</button>
@@ -1918,16 +2034,15 @@
                         </tr>`;
                 } else {
                     html += `
-                        <tr class="${emptyClass}"
+                        <tr class="row-relative ${emptyClass} ${set.isEmptyWorkout ? 'row-empty' : ''}"
                             id="deleteRow_${idx}"
-                            onclick="selectSetForDeletion(${idx})"
-                            style="position: relative; ${set.isEmptyWorkout ? 'background: rgba(255,255,255,0.03); opacity: 0.8;' : ''}">
+                            onclick="selectSetForDeletion(${idx})">
                             <td>${dateStr}</td>
-                            <td style="${set.isEmptyWorkout ? 'color: var(--text-muted); font-style: italic;' : ''}">
+                            <td class="${set.isEmptyWorkout ? 'text-muted italic' : ''}">
                                 <strong>${set.exerciseName}</strong>
                             </td>
-                            <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : `${weightLbs} lbs`}</td>
-                            <td>${set.isEmptyWorkout ? '<span style="color:var(--text-muted)">(Empty)</span>' : set.reps}</td>
+                            <td>${set.isEmptyWorkout ? '<span class="text-muted">(Empty)</span>' : `${weightLbs} lbs`}</td>
+                            <td>${set.isEmptyWorkout ? '<span class="text-muted">(Empty)</span>' : set.reps}</td>
                             <td style="color: ${set.isEmptyWorkout ? 'var(--text-muted)' : typeColor};">
                                 ${set.isEmptyWorkout ? 'System Log' : typeLabel}
                             </td>
@@ -1979,7 +2094,7 @@
             // Show green "Deleted!" overlay
             if (overlay) {
                 overlay.classList.add('deleted-state');
-                overlay.innerHTML = '<span style="font-family: \'Bebas Neue\', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
+                overlay.innerHTML = '<span class="exercise-name" style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
             }
             const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
             // Small delay for the "Deleted!" visual
@@ -2031,10 +2146,10 @@
             const log = workoutLogs.find(l => compareLogIds(l.id, id));
             if (!log) return;
             const date = new Date(log.date);
-            let html = `<p style="color: var(--text-muted); margin-bottom: 16px;">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
+            let html = `<p class="text-muted m-b-16">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>`;
             log.exercises.forEach(ex => {
                 const exerciseId = ex.exerciseId;
-                html += `<div style="margin-bottom: 16px;"><h4 style="font-family: 'Bebas Neue'; margin-bottom: 8px; cursor: pointer;" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">${ex.sets.map((set, i) => `<div style="background: var(--bg-tertiary); padding: 8px; text-align: center; font-size: 0.8rem; border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div style="font-size: 0.77rem; color: var(--text-muted);">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
+                html += `<div class="m-b-16"><h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div class="grid-4">${ex.sets.map((set, i) => `<div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -2088,7 +2203,7 @@
                     year: 'numeric'
                 });
                 let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
-                html += `<div style="margin-top: 12px;">`;
+                html += `<div class="m-t-12">`;
                 mostRecentExercise.sets.forEach((set, i) => {
                     const weightLbs = displayWeight(set.weight);
                     const warmupClass = set.isWarmup ? 'warmup' : '';
@@ -2158,7 +2273,7 @@
             container.innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isRest = day === 'rest';
-                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p style="color: var(--text-muted); padding-top: 12px;">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = getExerciseForUI(ex.exerciseId); return `<div class="plan-exercise"><div style="display: flex; justify-content: space-between;"><span style="font-weight: bold; cursor: pointer;" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span style="color: var(--accent-secondary);">${ex.sets} × ${ex.reps}</span></div></div>`; }).join('')}</div></div>`;
+                return `<div class="plan-day" id="plan-${day}"><div class="plan-day-header" onclick="togglePlanDay('${day}')"><div><div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${day.replace('day', '')} - ${workout.name}`}</div><div class="plan-day-subtitle">${labels[idx]} • ${workout.subtitle}</div></div><span class="toggle-arrow">▼</span></div><div class="plan-day-exercises">${isRest ? '<p class="text-muted m-t-12">Complete rest or light activity</p>' : workout.exercises.map(ex => { const exercise = getExerciseForUI(ex.exerciseId); return `<div class="plan-exercise"><div class="flex-between"><span class="cursor-pointer text-bold" onclick="showInstructions('${exercise.id}')">${exercise.name}</span><span class="text-accent">${ex.sets} × ${ex.reps}</span></div></div>`; }).join('')}</div></div>`;
             }).join('');
         }
         function togglePlanDay(day) { document.getElementById(`plan-${day}`).classList.toggle('expanded'); }
@@ -2174,7 +2289,7 @@
             const ex = getExerciseForUI(id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
-            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong>Category:</strong> ${ex.category}</p><p><strong>Equipment:</strong> ${ex.equipment}</p><p><strong>Target:</strong> ${ex.muscles.join(', ')}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="margin-bottom: 16px;"><strong>Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><hr style="border-color: var(--border); margin: 16px 0;"><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>CSV Name:</strong> ${getExportName(id)}</p><p style="font-size: 0.8rem; color: var(--text-muted);"><strong>Multiplier:</strong> ${getMultiplier(id)}</p>`;
+            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong class="text-bold">Category:</strong> ${ex.category}</p><p><strong class="text-bold">Equipment:</strong> ${ex.equipment}</p><p><strong class="text-bold">Target:</strong> ${ex.muscles.join(', ')}</p><div class="hr-muted"></div><p class="m-b-16"><strong class="text-bold">Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><div class="hr-muted"></div><p class="text-sm text-muted"><strong class="text-bold">CSV Name:</strong> ${getExportName(id)}</p><p class="text-sm text-muted"><strong class="text-bold">Multiplier:</strong> ${getMultiplier(id)}</p>`;
             // Hide Edit button for library view
             const modal = document.getElementById('exerciseModal');
             modal.dataset.logId = '';
@@ -2188,7 +2303,7 @@
             document.getElementById('daySelector').innerHTML = days.map((day, idx) => {
                 const workout = trainingPlan[day];
                 const isCurrent = day === currentWorkoutDay;
-                return `<div style="padding: 12px; margin-bottom: 8px; background: ${isCurrent ? 'rgba(255,61,0,0.1)' : 'var(--bg-tertiary)'}; border: 1px solid ${isCurrent ? 'var(--accent-primary)' : 'var(--border)'}; cursor: pointer;" onclick="selectWorkoutDay('${day}')"><div style="font-family: 'Bebas Neue'; font-size: 1.1rem;">${workout.name}</div><div style="font-size: 0.87rem; color: var(--text-muted);">${labels[idx]}</div></div>`;
+                return `<div class="day-selector-item ${isCurrent ? 'active' : ''}" onclick="selectWorkoutDay('${day}')"><div class="exercise-name text-lg">${workout.name}</div><div class="text-muted-xs">${labels[idx]}</div></div>`;
             }).join('');
             document.getElementById('switchModal').classList.add('active');
         }
@@ -2243,14 +2358,14 @@
                     : `Showing ${workoutLogs.length} most recent workouts`;
             }
             const loadAllButton = !isFullHistoryLoaded
-                ? `<button class="btn btn-secondary" onclick="loadAllHistory()" style="background: rgba(255, 187, 0, 0.1); border-color: var(--warning); color: var(--warning);">LOAD ALL HISTORY</button>`
+                ? `<button class="btn btn-secondary btn-warning-outline" onclick="loadAllHistory()">LOAD ALL HISTORY</button>`
                 : '';
-            container.innerHTML = `<div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-secondary btn-delete" onclick="openDeleteSetModal()">DELETE SETS</button>${loadAllButton}</div>` + workoutLogs.map(log => {
+            container.innerHTML = `<div class="m-b-20 flex-wrap-gap"><button class="btn btn-export" onclick="exportToCSV()">EXPORT ALL TO CSV</button><button class="btn btn-secondary btn-delete" onclick="openDeleteSetModal()">DELETE SETS</button>${loadAllButton}</div>` + workoutLogs.map(log => {
                 const date = new Date(log.date);
                 const totalSets = calculateTotalSets(log);
                 const totalVolume = calculateTotalVolume(log);
                 const displayVolume = Math.round(kgToLbs(totalVolume));
-                return `<div class="log-entry"><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div></div>`;
+                return `<div class="log-entry"><div class="log-entry-content"><div><div class="log-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div><div class="log-workout-name">${log.workoutName}</div><div class="log-stats">${totalSets} sets • ${displayVolume.toLocaleString()} lbs</div></div><div class="log-actions"><button class="btn btn-secondary btn-small" onclick="viewLogDetail('${log.id}')">View</button><button class="btn btn-export btn-small" onclick="exportSingleLog('${log.id}')">CSV</button></div></div></div>`;
             }).join('');
         }
         init();
