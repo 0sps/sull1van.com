@@ -1597,15 +1597,15 @@
 
         /* Narrow Section Logic */
         .narrow-section {
-            width: 80% !important;
+            width: 90% !important;
             margin-left: auto !important;
             margin-right: auto !important;
         }
 
         /* Adjust section headers to align with narrowed content */
         .section-header.narrow-section {
-            margin-left: 10% !important;
-            /* Matches the 80% width centering logic */
+            margin-left: 5% !important;
+            /* Matches the 90% width centering logic */
             text-align: left;
         }
 
@@ -2261,9 +2261,11 @@
                 ${allPeople.map(p => {
                 const avg = parseFloat(calculateAvg(p)) || 0;
                 const isPremium = avg >= 9.0;
+                const isDanger = p.interestLevel == 1;
                 return `
-                    <div class="list-row ${isPremium ? 'holographic-premium holographic-list' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                    <div class="list-row ${isPremium ? 'holographic-premium holographic-list' : ''} ${isDanger ? 'interest-danger' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                         ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
+
                         <div class="row-content">
                             <div class="row-title">${p.name}</div>
                             <div class="row-subtitle">
@@ -2286,9 +2288,11 @@
                 const isTalking = status === 'talking';
                 const avg = parseFloat(calculateAvg(p)) || 0;
                 const isPremium = avg >= 9.0;
+                const isDanger = p.interestLevel == 1;
                 return `
-                    <div class="grid-card ${isPremium ? 'holographic-premium holographic-card' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
+                    <div class="grid-card ${isPremium ? 'holographic-premium holographic-card' : ''} ${isDanger ? 'interest-danger' : ''}" onclick="handleCardClick(this, '${p.id}')" oncontextmenu="event.preventDefault(); openEdit('${p.id}')">
                         ${isPremium ? '<div class="holographic-shimmer-layer"></div><div class="holographic-fire-layer"></div>' : ''}
+
                         <div class="card-initials ${isTalking ? 'status-pulse' : ''}">${p.name ? p.name.charAt(0) : '?'}</div>
                         <div class="card-name">${p.name}</div>
                         <div class="card-detail">${p.occupation || 'No Job'}</div>
@@ -2675,7 +2679,7 @@
                 location: getVal('location'),
                 instagram: getVal('instagram'),
                 relationshipStatus: getVal('relationshipStatus'),
-                interestLevel: getVal('interestLevel'),
+                interestLevel: getNum('interestLevel'),
                 numberOfDates: getNum('numberOfDates'),
                 lastUpdated: serverTimestamp()
             }
