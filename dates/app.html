@@ -2196,7 +2196,9 @@
 
         /* ----- VIEW TOGGLE ----- */
         window.setMode = function (mode) {
+            if (AppState.ui.viewMode === mode) return; // No change
             AppState.ui.viewMode = mode;
+
             const control = document.querySelector('.segmented-control');
             const listBtn = document.getElementById('segList');
             const gridBtn = document.getElementById('segGrid');
@@ -2218,6 +2220,9 @@
                 gridView.classList.add('active');
                 listView.classList.remove('active');
             }
+
+            // Re-render when view type changes
+            render();
         }
 
         function render() {
@@ -2234,8 +2239,17 @@
 
             empty.style.display = 'none';
 
-            // Pre-render List View
-            listContent.innerHTML = `<div class="ios-list">
+            if (AppState.ui.viewMode === 'list') {
+                renderList(listContent);
+                gridContent.innerHTML = ''; // Clear unused view
+            } else {
+                renderGrid(gridContent);
+                listContent.innerHTML = ''; // Clear unused view
+            }
+        }
+
+        function renderList(container) {
+            container.innerHTML = `<div class="ios-list">
                 ${AppState.data.allPeople.map(p => {
                 const avg = parseFloat(calculateAvg(p)) || 0;
                 const isPremium = avg >= 9.0;
@@ -2260,9 +2274,10 @@
                     </div>`;
             }).join('')}
             </div>`;
+        }
 
-            // Pre-render Grid View
-            gridContent.innerHTML = `<div class="ios-grid">
+        function renderGrid(container) {
+            container.innerHTML = `<div class="ios-grid">
                 ${AppState.data.allPeople.map(p => {
                 const status = (p.relationshipStatus || '').trim().toLowerCase();
                 const isTalking = status === 'talking';
@@ -2286,9 +2301,6 @@
                     </div>`;
             }).join('')}
             </div>`;
-
-            // Set initial state
-            setMode(AppState.ui.viewMode);
         }
 
         function calculateAvg(p) {
