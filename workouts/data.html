@@ -959,8 +959,6 @@
             appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
         };
 
-        const ALLOWED_EMAIL = "sspsful@gmail.com";
-
         // INITIALIZE FIREBASE
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -984,10 +982,10 @@
 
         // AUTH GUARD
         onAuthStateChanged(auth, (user) => {
-            if (!user || user.email !== ALLOWED_EMAIL) {
+            if (!user) {
                 window.location.href = 'index.html';
             } else {
-                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userEmail').textContent = user.email || '';
             }
         });
 
