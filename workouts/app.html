@@ -642,6 +642,57 @@
             box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
 
+        /* Success Toast */
+        .success-toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: #000;
+            padding: 16px 40px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+            z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-width: 250px;
+        }
+
+        .success-toast.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 4px;
+            background: #002e1a;
+            width: 100%;
+            transform-origin: right;
+        }
+
+        .success-toast.active .toast-progress {
+            animation: toastProgress 3s linear forwards;
+        }
+
+        @keyframes toastProgress {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: 0%;
+            }
+        }
+
         /* Layout & Utility Classes */
         .flex-between {
             display: flex;
@@ -1582,6 +1633,11 @@
             </div>
         </div>
     </div>
+
+    <div id="successToast" class="success-toast">
+        WORKOUT SAVED!
+        <div class="toast-progress"></div>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -1688,6 +1744,14 @@
             document.getElementById('notificationTitle').textContent = title;
             document.getElementById('notificationMessage').textContent = message;
             openModal('notificationModal');
+        }
+
+        function showSuccessToast() {
+            const toast = document.getElementById('successToast');
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
         }
 
         // --- Date Formatting ---
@@ -2390,6 +2454,13 @@
                 }
             });
 
+            // Auto-select text on focus
+            document.addEventListener('focusin', (e) => {
+                if (e.target.classList.contains('set-input')) {
+                    e.target.select();
+                }
+            });
+
             // Library search input
             const librarySearch = document.getElementById('librarySearch');
             if (librarySearch) {
@@ -2579,25 +2650,32 @@
             const workout = getWorkoutData(currentWorkoutDay);
             const logId = Date.now();
             const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
-            await saveToFirebase(log);
-            const btn = document.getElementById('completeWorkoutBtn');
-            if (btn) {
-                const originalText = btn.textContent;
-                btn.textContent = 'WORKOUT SAVED!';
-                btn.classList.add('success');
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.classList.remove('success');
-                }, 2000);
+
+            const success = await saveToFirebase(log);
+
+            if (success) {
+                const btn = document.getElementById('completeWorkoutBtn');
+                if (btn) {
+                    const originalText = btn.textContent;
+                    btn.textContent = 'WORKOUT SAVED!';
+                    btn.classList.add('success');
+                    showSuccessToast();
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('success');
+                    }, 2000);
+                }
+                workoutLogs.unshift(log);
+                invalidateStatsCache();
+                currentExerciseData = {};
+                currentSetCounts = {};
+                clearWorkoutProgress();
+                refreshUI(['exercises', 'logs', 'stats']);
+                if (shouldExport) exportSingleWorkout(log);
+            } else {
+                showNotification('SAVE ERROR', 'There was a problem saving your workout to Firebase. Please check your connection and try again.');
             }
-            workoutLogs.unshift(log);
-            invalidateStatsCache();
-            currentExerciseData = {};
-            currentSetCounts = {};
-            clearWorkoutProgress();
-            refreshUI(['exercises', 'logs', 'stats']);
-            if (shouldExport) exportSingleWorkout(log);
-            return log;
+            return success ? log : null;
         }
         function closeZeroRepsModal() {
             closeModal('zeroRepsModal');
@@ -2720,36 +2798,42 @@
         async function finalizeEditedWorkoutSave() {
             try {
                 // Save to Firebase - Use the original log ID and data structure
-                await saveToFirebase(editingLogData);
-                // Update local workoutLogs
-                const index = workoutLogs.findIndex(l => compareLogIds(l.id, editingLogData.id));
-                if (index !== -1) {
-                    workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
-                }
-                invalidateStatsCache();
-                // Refresh UI
-                renderRecentLogs();
-                updateStats();
-                if (document.getElementById('historyTab').style.display !== 'none') {
-                    renderFullHistory();
-                }
-                // Success animation for save button
-                const btn = document.getElementById('saveEditsBtn');
-                if (btn) {
-                    const originalText = btn.textContent;
-                    btn.textContent = 'EDITS SAVED!';
-                    btn.classList.add('success');
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.classList.remove('success');
-                        closeEditModal(); // Close modal after the animation/delay
-                    }, 2000);
+                const success = await saveToFirebase(editingLogData);
+
+                if (success) {
+                    // Update local workoutLogs
+                    const index = workoutLogs.findIndex(l => compareLogIds(l.id, editingLogData.id));
+                    if (index !== -1) {
+                        workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
+                    }
+                    invalidateStatsCache();
+                    // Refresh UI
+                    renderRecentLogs();
+                    updateStats();
+                    if (document.getElementById('historyTab').style.display !== 'none') {
+                        renderFullHistory();
+                    }
+                    // Success animation for save button
+                    const btn = document.getElementById('saveEditsBtn');
+                    if (btn) {
+                        const originalText = btn.textContent;
+                        btn.textContent = 'EDITS SAVED!';
+                        btn.classList.add('success');
+                        showSuccessToast();
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('success');
+                            closeEditModal(); // Close modal after the animation/delay
+                        }, 2000);
+                    } else {
+                        showNotification('SUCCESS', '✏️ Workout updated and synced!');
+                        closeEditModal();
+                    }
                 } else {
-                    showNotification('SUCCESS', '✏️ Workout updated and synced!');
-                    closeEditModal();
+                    showNotification('ERROR', '❌ Error saving changes. Please try again.');
                 }
             } catch (error) {
-                console.error('FAILED TO SAVE EDITED WORKOUT:', error);
+                console.error('FAILED TO FINALIZE EDIT:', error);
                 showNotification('ERROR', '❌ Error saving changes. Please try again.');
             }
         }
