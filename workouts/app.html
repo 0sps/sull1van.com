@@ -1573,6 +1573,15 @@
             </div>
         </div>
     </div>
+    <div class="modal-overlay" id="notificationModal">
+        <div class="modal modal-sm">
+            <h3 class="modal-title" id="notificationTitle">NOTIFICATION</h3>
+            <p id="notificationMessage" class="text-muted-sm m-b-20" style="line-height: 1.5;"></p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary btn-flex-1" onclick="closeModal('notificationModal')">OK</button>
+            </div>
+        </div>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -1673,6 +1682,12 @@
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
+        }
+
+        function showNotification(title, message) {
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            openModal('notificationModal');
         }
 
         // --- Date Formatting ---
@@ -2205,7 +2220,7 @@
         }
 
         function exportToCSV() {
-            if (workoutLogs.length === 0) { alert('No workout data to export!'); return; }
+            if (workoutLogs.length === 0) { showNotification('EXPORT ERROR', 'No workout data to export!'); return; }
             const sorted = workoutLogs.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
             const csv = buildWorkoutCSV(sorted);
             downloadCSV(csv, `WorkoutExport_${new Date().toISOString().split('T')[0]}.csv`);
@@ -2244,7 +2259,7 @@
             return csv;
         }
         function exportToCSV() {
-            if (workoutLogs.length === 0) { alert('No workout data to export!'); return; }
+            if (workoutLogs.length === 0) { showNotification('EXPORT ERROR', 'No workout data to export!'); return; }
             const sorted = workoutLogs.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
             const csv = buildWorkoutCSV(sorted);
             downloadCSV(csv, `WorkoutExport_${new Date().toISOString().split('T')[0]}.csv`);
@@ -2520,7 +2535,7 @@
         }
         async function completeWorkout(shouldExport = false) {
             const workout = getWorkoutData(currentWorkoutDay);
-            if (workout.exercises.length === 0) { alert('Today is a rest day!'); return null; }
+            if (workout.exercises.length === 0) { showNotification('REST DAY', 'Today is a rest day!'); return null; }
 
             let hasEmptySets = false;
             const logExercises = workout.exercises.map(ex => {
@@ -2550,7 +2565,7 @@
                 return { id: ex.exerciseId, name: exercise.name, sets: sets.filter(s => s.reps > 0) };
             }).filter(ex => ex.sets.length > 0);
 
-            if (logExercises.length === 0) { alert('Please enter reps for at least one set!'); return null; }
+            if (logExercises.length === 0) { showNotification('MISSING DATA', 'Please enter reps for at least one set!'); return null; }
 
             if (hasEmptySets) {
                 pendingWorkoutData = { exercises: logExercises, shouldExport, isEdit: false };
@@ -2730,12 +2745,12 @@
                         closeEditModal(); // Close modal after the animation/delay
                     }, 2000);
                 } else {
-                    alert('✏️ Workout updated and synced!');
+                    showNotification('SUCCESS', '✏️ Workout updated and synced!');
                     closeEditModal();
                 }
             } catch (error) {
                 console.error('FAILED TO SAVE EDITED WORKOUT:', error);
-                alert('❌ Error saving changes. Please try again.');
+                showNotification('ERROR', '❌ Error saving changes. Please try again.');
             }
         }
         function closeEditModal() {
@@ -2918,7 +2933,7 @@
                 // Find the workout
                 const workoutIdx = workoutLogs.findIndex(l => compareLogIds(l.id, workoutId));
                 if (workoutIdx === -1) {
-                    alert('❌ Workout not found');
+                    showNotification('ERROR', '❌ Workout not found');
                     return;
                 }
                 if (isEmptyWorkout) {
@@ -2954,7 +2969,7 @@
                 selectedSetForDeletion = null;
             } catch (error) {
                 console.error('FAILED TO DELETE SET:', error);
-                alert('❌ Error deleting set. Please try again.');
+                showNotification('ERROR', '❌ Error deleting set. Please try again.');
             }
         }
         function viewLogDetail(id) {
