@@ -1,5 +1,6 @@
 {
     "name": "Push/Pull/Legs Split",
+    "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
     "schedule": [
         "PUSH A",
         "PULL A",
