@@ -1267,6 +1267,28 @@
             margin-bottom: 16px;
         }
 
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
+            border-left: 3px solid var(--accent-primary);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         .empty-state {
             text-align: center;
             padding: 40px;
@@ -1537,17 +1559,17 @@
     </div>
     <div class="modal-overlay" id="zeroRepsModal">
         <div class="modal modal-md">
-            <h3 class="modal-title">ZERO REPS DETECTED</h3>
+            <h3 class="modal-title">EMPTY SETS FOUND</h3>
             <p class="text-muted-sm m-b-20" style="line-height: 1.5;">
-                Some sets were detected with 0 reps. These sets will <strong>not be saved</strong> to your workout
-                history.
+                Some sets were detected as empty. If you continue, these sets will <strong>not be saved</strong> to your
+                workout history.
             </p>
             <p class="text-muted-sm m-b-20">
-                Do you still want to save this workout?
+                Save anyway?
             </p>
             <div class="modal-actions">
-                <button class="btn btn-primary btn-flex-1" onclick="confirmCompleteWorkout()">YES, SAVE</button>
-                <button class="btn btn-secondary btn-flex-1" onclick="closeZeroRepsModal()">NO, GO BACK</button>
+                <button class="btn btn-primary btn-flex-1" onclick="confirmCompleteWorkout()">SAVE ANYWAY</button>
+                <button class="btn btn-secondary btn-flex-1" onclick="closeZeroRepsModal()">GO BACK</button>
             </div>
         </div>
     </div>
@@ -2499,20 +2521,43 @@
         async function completeWorkout(shouldExport = false) {
             const workout = getWorkoutData(currentWorkoutDay);
             if (workout.exercises.length === 0) { alert('Today is a rest day!'); return null; }
+
+            let hasEmptySets = false;
             const logExercises = workout.exercises.map(ex => {
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const key = `${currentWorkoutDay}_${ex.exerciseId}`;
                 const numSets = currentSetCounts[key] || 3;
+
                 const sets = Array.from({ length: numSets }, (_, i) => {
                     const setData = currentExerciseData[key]?.[i] || {};
-                    let weight = parseFloat(setData.weight) || 0;
-                    if (weightUnit === 'lbs' && weight > 0) weight = lbsToKg(weight);
-                    return { weight, reps: parseInt(setData.reps) || 0, isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0), note: '' };
+                    const reps = parseInt(setData.reps) || 0;
+                    const weight = parseFloat(setData.weight) || 0;
+
+                    if (reps === 0) hasEmptySets = true;
+
+                    let finalWeight = weight;
+                    if (weightUnit === 'lbs' && finalWeight > 0) finalWeight = lbsToKg(finalWeight);
+
+                    return {
+                        weight: finalWeight,
+                        reps: reps,
+                        isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0),
+                        note: ''
+                    };
                 });
+
+                // Filter out the empty sets for the actual log
                 return { id: ex.exerciseId, name: exercise.name, sets: sets.filter(s => s.reps > 0) };
             }).filter(ex => ex.sets.length > 0);
 
             if (logExercises.length === 0) { alert('Please enter reps for at least one set!'); return null; }
+
+            if (hasEmptySets) {
+                pendingWorkoutData = { exercises: logExercises, shouldExport, isEdit: false };
+                openModal('zeroRepsModal');
+                return null;
+            }
+
             return await saveWorkoutData(logExercises, shouldExport);
         }
         async function saveWorkoutData(exercises, shouldExport = false) {
@@ -2765,11 +2810,11 @@
             const container = document.getElementById('deleteSetList');
             const sets = flattenRecentSets();
             if (sets.length === 0) {
-                container.innerHTML = `< div class="empty-state" ><div class="empty-state-icon">📋</div><p>No sets found</p></div > `;
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No sets found</p></div>`;
                 return;
             }
             let html = `
-            < table class="set-table" >
+            <table class="set-table">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -2820,7 +2865,7 @@
                         </tr>`;
                 }
             });
-            html += `</tbody></table > `;
+            html += `</tbody></table>`;
             container.innerHTML = html;
         }
         function selectSetForDeletion(idx) {
@@ -2842,8 +2887,8 @@
             renderDeleteSetList();
         }
         function confirmDeleteSet(idx) {
-            const btn = document.getElementById(`deleteBtn_${idx} `);
-            const overlay = document.getElementById(`overlay_${idx} `);
+            const btn = document.getElementById(`deleteBtn_${idx}`);
+            const overlay = document.getElementById(`overlay_${idx}`);
             if (!btn) return;
             if (btn.textContent === 'DELETE') {
                 btn.textContent = 'Sure?';
@@ -2860,7 +2905,7 @@
         }
         async function executeDeleteSet(idx) {
             if (!selectedSetForDeletion) return;
-            const overlay = document.getElementById(`overlay_${idx} `);
+            const overlay = document.getElementById(`overlay_${idx}`);
             // Show green "Deleted!" overlay
             if (overlay) {
                 overlay.classList.add('deleted-state');
@@ -2916,10 +2961,10 @@
             const log = workoutLogs.find(l => compareLogIds(l.id, id));
             if (!log) return;
             const date = new Date(log.date);
-            let html = `< p class="text-muted m-b-16" > ${formatDateFull(date)}</p > `;
+            let html = `<p class="text-muted m-b-16">${formatDateFull(date)}</p>`;
             log.exercises.forEach(ex => {
                 const exerciseId = ex.exerciseId;
-                html += `< div class="m-b-16" ><h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div class="grid-4">${ex.sets.map((set, i) => `<div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div > `;
+                html += `<div class="m-b-16"><h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div class="grid-4">${ex.sets.map((set, i) => `<div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -2963,21 +3008,21 @@
             const content = document.getElementById('historyModalContent');
             title.textContent = exerciseName.toUpperCase() + ' HISTORY';
             if (!mostRecentExercise) {
-                content.innerHTML = `< div class="empty-state" ><div class="empty-state-icon">📊</div><p>No history found for this exercise</p></div > `;
+                content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>No history found for this exercise</p></div>`;
             } else {
                 const dateStr = formatDateFull(mostRecentDate);
-                let html = `< p class="history-date" > Most recent: <strong>${dateStr}</strong></p > `;
-                html += `< div class="m-t-12" > `;
+                let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
+                html += `<div class="m-t-12">`;
                 mostRecentExercise.sets.forEach((set, i) => {
                     const weightLbs = displayWeight(set.weight);
                     const warmupClass = set.isWarmup ? 'warmup' : '';
                     const label = set.isWarmup ? 'WARM' : `SET ${i + 1} `;
-                    html += `< div class="history-set ${warmupClass}" >
+                    html += `<div class="history-set ${warmupClass}">
                         <span>${label}</span>
                         <span><strong>${weightLbs} lbs</strong> × ${set.reps} reps</span>
-                    </div > `;
+                    </div>`;
                 });
-                html += `</div > `;
+                html += `</div>`;
                 content.innerHTML = html;
             }
             openModal('historyModal');
@@ -3087,7 +3132,7 @@
             const ex = getExerciseForUI(id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
-            document.getElementById('modalExerciseDetails').innerHTML = `< p > <strong class="text-bold">Category:</strong> ${ex.category}</p ><p><strong class="text-bold">Equipment:</strong> ${ex.equipment}</p><p><strong class="text-bold">Target:</strong> ${ex.muscles.join(', ')}</p><div class="hr-muted"></div><p class="m-b-16"><strong class="text-bold">Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><div class="hr-muted"></div><p class="text-sm text-muted"><strong class="text-bold">CSV Name:</strong> ${getExportName(id)}</p><p class="text-sm text-muted"><strong class="text-bold">Multiplier:</strong> ${getMultiplier(id)}</p>`;
+            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong class="text-bold">Category:</strong> ${ex.category}</p><p><strong class="text-bold">Equipment:</strong> ${ex.equipment}</p><p><strong class="text-bold">Target:</strong> ${ex.muscles.join(', ')}</p><div class="hr-muted"></div><p class="m-b-16"><strong class="text-bold">Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><div class="hr-muted"></div><p class="text-sm text-muted"><strong class="text-bold">CSV Name:</strong> ${getExportName(id)}</p><p class="text-sm text-muted"><strong class="text-bold">Multiplier:</strong> ${getMultiplier(id)}</p>`;
             // Hide Edit button for library view
             const modal = document.getElementById('exerciseModal');
             modal.dataset.logId = '';
