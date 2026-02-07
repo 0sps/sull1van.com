@@ -647,7 +647,9 @@
             position: fixed;
             bottom: 40px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translateX(-50%) translateY(150px);
+            opacity: 0;
+            visibility: hidden;
             background: var(--success);
             color: #000;
             padding: 16px 40px;
@@ -657,7 +659,7 @@
             text-transform: uppercase;
             box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
             z-index: 10000;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, visibility 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -667,6 +669,8 @@
 
         .success-toast.active {
             transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
 
         .toast-progress {
