@@ -2308,42 +2308,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Helper to compare log IDs (handles both string and number types)
-        function compareLogIds(id1, id2) { return id1.toString() === id2.toString(); }
-        function buildWorkoutCSV(logs) {
-            let csv = 'Date,Exercise,Reps,Weight(kg),Duration(s),Distance(m),Incline,Resistance,isWarmup,Note,multiplier\n';
-            logs.forEach(log => {
-                const dateStr = formatDateForCSV(log.date);
-                log.exercises.forEach(ex => {
-                    const exportName = getExportName(ex.id);
-                    const multiplier = getMultiplier(ex.id);
-                    ex.sets.forEach(set => {
-                        const weightKg = set.weight || 0;
-                        const isWarmup = set.isWarmup ? 'True' : 'False';
-                        csv += `${dateStr},${exportName},${set.reps || 0},${weightKg},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
-                    });
-                });
-            });
-            return csv;
-        }
-        function exportToCSV() {
-            if (workoutLogs.length === 0) { showNotification('EXPORT ERROR', 'No workout data to export!'); return; }
-            const sorted = workoutLogs.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-            const csv = buildWorkoutCSV(sorted);
-            downloadCSV(csv, `WorkoutExport_${new Date().toISOString().split('T')[0]}.csv`);
-        }
-        function exportSingleWorkout(log) {
-            const csv = buildWorkoutCSV([log]);
-            downloadCSV(csv, `Workout_${log.workoutName.replace(/\s+/g, '_')}_${new Date(log.date).toISOString().split('T')[0]}.csv`);
-        }
-        function downloadCSV(csv, filename) {
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = filename;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
+
         // --- Event Handler Setup ---
         /**
          * Setup centralized event handlers using delegation
