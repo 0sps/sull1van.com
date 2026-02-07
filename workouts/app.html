@@ -2332,7 +2332,7 @@
                     if (mode === 'workout') {
                         toggleWarmup(warmupBtn);
                     } else if (mode === 'edit') {
-                        const exIdx = parseInt(warmupBtn.dataset.exIdx);
+                        const exIdx = parseInt(e.target.closest('[data-ex-idx]').dataset.exIdx);
                         const setIdx = parseInt(warmupBtn.dataset.setIdx);
                         toggleEditWarmup(exIdx, setIdx, warmupBtn);
                     }
