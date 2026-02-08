@@ -1157,6 +1157,38 @@
             margin-top: 4px;
         }
 
+        /* Stats Dashboard Collapsible Styles */
+        .stats-dashboard-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 0;
+            pointer-events: none;
+        }
+
+        .stats-dashboard-wrapper.expanded {
+            max-height: 600px;
+            opacity: 1;
+            margin-bottom: 20px;
+            pointer-events: all;
+        }
+
+        .nav-tab.stats-active {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .toggle-icon-dash {
+            transition: transform 0.3s ease;
+        }
+
+        .stats-active .toggle-icon-dash {
+            transform: rotate(180deg);
+        }
+
         .complete-workout-section {
             margin-top: 24px;
             padding-top: 24px;
@@ -1454,37 +1486,39 @@
             <button class="nav-tab" data-tab="plan">Full Plan</button>
             <button class="nav-tab" data-tab="library">Exercise Library</button>
             <button class="nav-tab" data-tab="history">Workout History</button>
-            <a href="stats.html" target="_blank" class="nav-tab flex-between flex-wrap-gap">
+            <button class="nav-tab flex-between flex-wrap-gap" id="statsDashboardBtn" onclick="toggleStatsDashboard()">
                 Stats Dashboard
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px; opacity: 0.8;">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                <svg class="toggle-icon-dash" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                    style="margin-left: 8px; opacity: 0.8;">
+                    <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
-            </a>
+            </button>
         </nav>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="totalWorkouts">0</div>
-                <div class="stat-label">Recent Workouts</div>
+
+        <div id="statsDashboardWrapper" class="stats-dashboard-wrapper">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalWorkouts">0</div>
+                    <div class="stat-label">Recent Workouts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSets">0</div>
+                    <div class="stat-label">Recent Sets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalVolume">0</div>
+                    <div class="stat-label">Recent Volume (lbs)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalSets">0</div>
-                <div class="stat-label">Recent Sets</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalVolume">0</div>
-                <div class="stat-label">Recent Volume (lbs)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="currentStreak">0</div>
-                <div class="stat-label">Day Streak</div>
-            </div>
+            <p class="text-center text-muted-xs m-t-neg-12 m-b-20">
+                Stats based on your last 60 workouts
+            </p>
         </div>
-        <p class="text-center text-muted-xs m-t-neg-12 m-b-40">
-            Stats based on your last 60 workouts
-        </p>
         <div id="workoutTab" class="tab-content">
             <div class="main-layout">
                 <div class="workout-area">
@@ -3223,8 +3257,14 @@
         }
         function selectWorkoutDay(day) { currentWorkoutDay = day; currentExerciseData = {}; updateWorkoutDisplay(true); closeSwitchModal(); }
         function closeSwitchModal() { closeModal('switchModal'); }
+        function toggleStatsDashboard() {
+            const wrapper = document.getElementById('statsDashboardWrapper');
+            const btn = document.getElementById('statsDashboardBtn');
+            wrapper.classList.toggle('expanded');
+            btn.classList.toggle('stats-active');
+        }
         function setupTabs() {
-            document.querySelectorAll('.nav-tab').forEach(tab => {
+            document.querySelectorAll('.nav-tab[data-tab]').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const tabName = tab.dataset.tab;
                     if (tabName === 'workout') {
@@ -3240,7 +3280,7 @@
                         currentWorkoutDay = todaysDay;
                         updateWorkoutDisplay(true);
                     }
-                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.nav-tab[data-tab]').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
                     if (tabName === 'workout') document.getElementById('workoutTab').style.display = 'block';
