@@ -851,8 +851,6 @@
             newDimDisplay.textContent = `${dims.width} x ${dims.height}`;
             estimateDisplay.textContent = "Calculating...";
 
-            // To estimate size, we actually render it to a blob (debounced would be better but for small-ish images it's fine)
-            // debouncing estimation
             clearTimeout(window.estTimeout);
             window.estTimeout = setTimeout(async () => {
                 canvas.width = dims.width;
@@ -865,7 +863,14 @@
                 try {
                     canvas.toBlob((blob) => {
                         if (blob) {
-                            estimateDisplay.textContent = formatBytes(blob.size);
+                            // Detect if the browser fell back to PNG
+                            if (blob.type !== format && format !== 'image/jpeg' && format !== 'image/jpg') {
+                                estimateDisplay.textContent = "Format Not Supported";
+                                estimateDisplay.style.color = "#ffb7b2"; // Pastel red warning
+                            } else {
+                                estimateDisplay.textContent = formatBytes(blob.size);
+                                estimateDisplay.style.color = "var(--ios-blue)";
+                            }
                         } else {
                             estimateDisplay.textContent = "Error estimating";
                         }
@@ -884,19 +889,33 @@
 
             const format = selectedFormat;
             const quality = qualitySlider.value / 100;
-            const extension = format.split('/')[1].replace('jpeg', 'jpg');
 
             canvas.toBlob(function (blob) {
                 if (!blob) {
-                    alert("Failed to export in this format. The browser might not support it.");
+                    alert("Failed to export image.");
                     return;
                 }
+
+                // Extension logic based on the ACTUAL blob type returned
+                let actualExtension = blob.type.split('/')[1].replace('jpeg', 'jpg');
+
+                // If the browser fell back to PNG but user didn't want PNG
+                if (blob.type !== format && format !== 'image/jpeg' && format !== 'image/jpg') {
+                    const requestedName = format.split('/')[1].toUpperCase();
+                    if (!confirm(`Your browser doesn't support saving as ${requestedName} yet. Would you like to save as PNG instead?`)) {
+                        return;
+                    }
+                }
+
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = url;
+
                 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-                a.download = `smallpic_${timestamp}.${extension}`;
+                // Use the actual extension from the blob to prevent .jxl.png
+                a.download = `smallpic_${timestamp}.${actualExtension}`;
+
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(() => {
