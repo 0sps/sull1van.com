@@ -72,6 +72,24 @@
             overflow-x: hidden;
         }
 
+        .custom-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 17px;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .custom-input:focus {
+            border-color: var(--ios-blue);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
         .sky-container {
             position: fixed;
             top: 0;
@@ -222,11 +240,53 @@
         }
 
         #previewImage {
+            display: none;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .thumbnail-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .thumbnail {
             width: 100%;
-            height: auto;
-            max-height: 50vh;
-            display: block;
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow: hidden;
+        }
+
+        .filename {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .filesize {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
 
         .resize-controls {
@@ -277,37 +337,92 @@
             border-color: var(--ios-blue);
         }
 
-        .custom-input-group {
+        .format-buttons {
             display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .format-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 12px 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s var(--spring);
+            text-align: center;
+        }
+
+        .format-btn.active {
+            border-color: white;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* Pastel Colors */
+        .btn-jpeg {
+            color: #ffb7b2;
+        }
+
+        /* Pastel Red/Pink */
+        .btn-png {
+            color: #b2e2f2;
+        }
+
+        /* Pastel Blue */
+        .btn-jxl {
+            color: #b2f2bb;
+        }
+
+        /* Pastel Green */
+        .btn-heif {
+            color: #f2e2b2;
+        }
+
+        /* Pastel Yellow/Gold */
+
+        .format-btn.active.btn-jpeg {
+            background: rgba(255, 183, 178, 0.3);
+        }
+
+        .format-btn.active.btn-png {
+            background: rgba(178, 226, 242, 0.3);
+        }
+
+        .format-btn.active.btn-jxl {
+            background: rgba(178, 242, 187, 0.3);
+        }
+
+        .format-btn.active.btn-heif {
+            background: rgba(242, 226, 178, 0.3);
+        }
+
+        .custom-input-group {
+            display: none;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .custom-input {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 17px;
-            width: 100%;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .format-select {
-            width: 100%;
+            background: rgba(255, 255, 255, 0.12);
             padding: 12px 16px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 17px;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
+            border: 1px solid var(--ios-blue);
+            margin-top: 8px;
+            animation: slideDown 0.3s var(--spring);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .quality-slider-container {
@@ -420,7 +535,16 @@
 
         <!-- Image Preview & Controls -->
         <div class="preview-container" id="previewContainer">
-            <img id="previewImage">
+            <div class="preview-header">
+                <div class="thumbnail-container">
+                    <img id="thumbnail" class="thumbnail">
+                </div>
+                <div class="image-info">
+                    <div id="filenameDisplay" class="filename">filename.jpg</div>
+                    <div id="origSizeDisplay" class="filesize">0 KB</div>
+                </div>
+            </div>
+            <img id="previewImage" style="display: none;">
 
             <div class="resize-controls">
                 <!-- Size Preset Selection -->
@@ -435,10 +559,10 @@
                 </div>
 
                 <!-- Custom Dimension Input -->
-                <div class="control-group" id="customDimGroup" style="display: none;">
-                    <div class="control-label">Longest Edge (pixels)</div>
-                    <div class="custom-input-group">
-                        <input type="number" id="customDim" class="custom-input" placeholder="Enter dimension..."
+                <div id="customDimGroup" style="display: none; margin-top: -10px;">
+                    <div class="custom-input-group"
+                        style="display: block; border: none; background: transparent; padding: 0;">
+                        <input type="number" id="customDim" class="custom-input" placeholder="Enter longest edge px..."
                             oninput="updateEstimate()">
                     </div>
                 </div>
@@ -446,12 +570,12 @@
                 <!-- Format Selection -->
                 <div class="control-group">
                     <div class="control-label">Export Format</div>
-                    <select id="formatSelect" class="format-select" onchange="toggleQualitySlider(); updateEstimate();">
-                        <option value="image/jpeg">JPEG</option>
-                        <option value="image/png">PNG</option>
-                        <option value="image/jxl">JXL (Safari 17+)</option>
-                        <option value="image/heif">HEIF (iOS Support)</option>
-                    </select>
+                    <div class="format-buttons">
+                        <button class="format-btn btn-jpeg active" onclick="setFormat('image/jpeg')">JPEG</button>
+                        <button class="format-btn btn-png" onclick="setFormat('image/png')">PNG</button>
+                        <button class="format-btn btn-jxl" onclick="setFormat('image/jxl')">JXL</button>
+                        <button class="format-btn btn-heif" onclick="setFormat('image/heif')">HEIF</button>
+                    </div>
                 </div>
 
                 <!-- Quality Slider (JPEG Only) -->
@@ -466,10 +590,6 @@
 
                 <!-- Info and Estimate -->
                 <div class="control-group">
-                    <div class="info-row">
-                        <span>Original Size:</span>
-                        <span id="origSizeDisplay">0 KB</span>
-                    </div>
                     <div class="info-row">
                         <span>New Dimensions:</span>
                         <span id="newDimDisplay">0 x 0</span>
@@ -595,7 +715,6 @@
         const qualityValue = document.getElementById('qualityValue');
         const customDimGroup = document.getElementById('customDimGroup');
         const customDimInput = document.getElementById('customDim');
-        const origSizeDisplay = document.getElementById('origSizeDisplay');
         const newDimDisplay = document.getElementById('newDimDisplay');
         const estimateDisplay = document.getElementById('estimateDisplay');
         const canvas = document.getElementById('canvas');
@@ -606,6 +725,7 @@
         let originalImage = new Image();
         let originalFile = null;
         let selectedPreset = 'high';
+        let selectedFormat = 'image/jpeg';
         let currentBlobUrl = null;
 
         imageInput.addEventListener('change', function (e) {
@@ -617,6 +737,8 @@
                     originalImage.src = event.target.result;
                     originalImage.onload = function () {
                         previewImage.src = originalImage.src;
+                        document.getElementById('thumbnail').src = originalImage.src;
+                        document.getElementById('filenameDisplay').textContent = file.name;
                         origSizeDisplay.textContent = formatBytes(file.size);
 
                         // Show controls
@@ -657,12 +779,31 @@
             } else {
                 customDimGroup.style.display = 'none';
             }
+            updateEstimate();
+        }
 
+        function updateQualityLabel() {
+            qualityValue.textContent = qualitySlider.value + '%';
+        }
+
+        function setFormat(format) {
+            selectedFormat = format;
+
+            // Update UI
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === format.split('/')[1] ||
+                    (format === 'image/jpeg' && btn.innerText === 'JPEG')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            toggleQualitySlider();
             updateEstimate();
         }
 
         function toggleQualitySlider() {
-            if (formatSelect.value === 'image/jpeg') {
+            if (selectedFormat === 'image/jpeg') {
                 qualityContainer.style.display = 'flex';
             } else {
                 qualityContainer.style.display = 'none';
@@ -718,7 +859,7 @@
                 canvas.height = dims.height;
                 ctx.drawImage(originalImage, 0, 0, dims.width, dims.height);
 
-                const format = formatSelect.value;
+                const format = selectedFormat;
                 const quality = qualitySlider.value / 100;
 
                 try {
@@ -741,7 +882,7 @@
             canvas.height = dims.height;
             ctx.drawImage(originalImage, 0, 0, dims.width, dims.height);
 
-            const format = formatSelect.value;
+            const format = selectedFormat;
             const quality = qualitySlider.value / 100;
             const extension = format.split('/')[1].replace('jpeg', 'jpg');
 
