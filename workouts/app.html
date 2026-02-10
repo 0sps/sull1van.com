@@ -1490,6 +1490,7 @@
             <button class="nav-tab" data-tab="plan">Full Plan</button>
             <button class="nav-tab" data-tab="library">Exercise Library</button>
             <button class="nav-tab" data-tab="history">Workout History</button>
+            <button class="nav-tab" onclick="openManualLogModal()">MANUAL LOG</button>
             <button class="nav-tab flex-between flex-wrap-gap" id="statsDashboardBtn" onclick="toggleStatsDashboard()">
                 Stats Dashboard
                 <svg class="toggle-icon-dash" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -1676,6 +1677,35 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="manualLogModal">
+        <div class="modal modal-md">
+            <h1 class="modal-title">MANUAL WORKOUT LOG</h1>
+            <div class="m-b-20">
+                <input type="text" class="library-search" id="manualExerciseSearch"
+                    placeholder="Search exercise name..." oninput="searchManualExercises()">
+            </div>
+            <div id="manualSearchResults" class="m-b-20" style="max-height: 200px; overflow-y: auto;"></div>
+
+            <div id="manualExerciseInputs" class="no-display">
+                <h4 id="selectedManualExerciseName" class="section-title"
+                    style="font-size: 1.1rem; margin-bottom: 15px;">
+                </h4>
+                <div id="manualSetsContainer" class="sets-grid"></div>
+                <div class="m-t-20 flex-wrap-gap">
+                    <button class="btn btn-secondary btn-small" onclick="addManualSet()">+ ADD SET</button>
+                    <button class="btn btn-secondary btn-small btn-delete" onclick="removeManualSet()">- REMOVE
+                        SET</button>
+                </div>
+            </div>
+
+            <div class="modal-actions m-t-32">
+                <button class="btn btn-primary btn-flex-2" id="submitManualLogBtn" onclick="submitManualLog()">SAVE
+                    LOG</button>
+                <button class="btn btn-secondary btn-flex-1" onclick="closeModal('manualLogModal')">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <div id="successToast" class="success-toast">
         WORKOUT SAVED!
         <div class="toast-progress"></div>
@@ -1765,6 +1795,7 @@
         let cachedStatsVersion = 0;
         let isFullHistoryLoaded = false; // Track if we've loaded all history or just recent
         let pendingWorkoutData = null;
+        let manualLogData = {}; // NEW: Store data for manual log inputs
         const logCalculationCache = new Map(); // Cache for log calculations (sets/volume)
         let pendingRenders = new Set(); // Batched render queue
         let renderScheduled = false; // Render batch scheduler flag
@@ -1877,6 +1908,28 @@
             }
 
             return { isValid: false, sanitizedValue: '', error: 'Invalid input type' };
+        }
+
+        /**
+         * Validates a workout object and removes sets with 0 reps.
+         * @param {Array} exercises - The exercises array to clean
+         * @returns {Object} { cleanedExercises, hasZeroReps }
+         */
+        function validateAndCleanWorkout(exercises) {
+            let hasZeroReps = false;
+            const cleanedExercises = exercises.map(ex => {
+                const sets = ex.sets.filter(s => {
+                    const reps = parseInt(s.reps) || 0;
+                    if (reps === 0) {
+                        hasZeroReps = true;
+                        return false;
+                    }
+                    return true;
+                });
+                return { ...ex, sets };
+            }).filter(ex => ex.sets.length > 0);
+
+            return { cleanedExercises, hasZeroReps };
         }
 
         /**
@@ -2450,7 +2503,7 @@
             document.addEventListener('change', (e) => {
                 if (e.target.classList.contains('set-input')) {
                     const mode = e.target.dataset.mode;
-                    if (mode === 'workout') {
+                    if (mode === 'workout' || mode === 'manual') {
                         updateExerciseData(e.target);
                     } else if (mode === 'edit') {
                         const exIdx = parseInt(e.target.dataset.exIdx);
@@ -2690,11 +2743,13 @@
         }
         async function confirmCompleteWorkout() {
             if (!pendingWorkoutData) return;
-            const { exercises, shouldExport, isEdit } = pendingWorkoutData;
+            const { exercises, shouldExport, isEdit, isManual } = pendingWorkoutData;
             closeZeroRepsModal();
             if (isEdit) {
                 editingLogData.exercises = exercises;
                 await finalizeEditedWorkoutSave();
+            } else if (isManual) {
+                await finalizeManualLogSave(exercises);
             } else {
                 await saveWorkoutData(exercises, shouldExport);
             }
@@ -3343,6 +3398,192 @@
                     });
             });
         }
+
+        // ============================================================================
+        // MANUAL LOG LOGIC
+        // ============================================================================
+        let selectedManualExerciseId = null;
+        let manualSetCount = 1;
+
+        function openManualLogModal() {
+            selectedManualExerciseId = null;
+            manualSetCount = 1;
+            document.getElementById('manualExerciseSearch').value = '';
+            document.getElementById('manualSearchResults').innerHTML = '';
+            document.getElementById('manualExerciseInputs').classList.add('no-display');
+            document.getElementById('submitManualLogBtn').disabled = true;
+            openModal('manualLogModal');
+        }
+
+        window.openManualLogModal = openManualLogModal;
+
+        function searchManualExercises() {
+            const query = document.getElementById('manualExerciseSearch').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('manualSearchResults');
+
+            if (query.length < 2) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const matches = Object.entries(exercisesData)
+                .filter(([id, data]) => data.name.toLowerCase().includes(query))
+                .slice(0, 10);
+
+            if (matches.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-muted-xs">No exercises found.</p>';
+                return;
+            }
+
+            resultsContainer.innerHTML = matches.map(([id, data]) => `
+                <div class="history-set" style="cursor: pointer; border-left: 3px solid var(--accent-secondary);" onclick="selectManualExercise('${id}')">
+                    <div class="set-info">
+                        <span class="set-weight">${data.name}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.searchManualExercises = searchManualExercises;
+
+        function selectManualExercise(id) {
+            selectedManualExerciseId = id;
+            const exercise = exercisesData[id];
+            document.getElementById('selectedManualExerciseName').textContent = exercise.name;
+            document.getElementById('manualExerciseInputs').classList.remove('no-display');
+            document.getElementById('manualSearchResults').innerHTML = '';
+            document.getElementById('manualExerciseSearch').value = '';
+            document.getElementById('submitManualLogBtn').disabled = false;
+
+            manualSetCount = 1;
+            manualLogData = {}; // Reset data for new manual exercise
+            renderManualSets();
+        }
+
+        window.selectManualExercise = selectManualExercise;
+
+        function renderManualSets() {
+            const container = document.getElementById('manualSetsContainer');
+            container.innerHTML = '';
+
+            for (let i = 0; i < manualSetCount; i++) {
+                const setDiv = document.createElement('div');
+                setDiv.className = 'set-inputs';
+                // Using exact same style as existing site for sets/reps
+                // Added data-mode, data-exercise, data-set, and data-type for integrated validation
+                setDiv.innerHTML = `
+                    <span class="set-number" style="min-width: 25px; font-weight: 700;">${i + 1}</span>
+                    <input type="number" step="any" class="set-input weight-input" placeholder="LBS" id="manualWeight_${i}" 
+                           data-mode="manual" data-exercise="${selectedManualExerciseId}" data-set="${i}" data-type="weight"
+                           style="background: rgba(255,255,255,0.05); border-bottom: 2px solid var(--border); width: 80px; text-align: center;">
+                    <span class="input-separator">×</span>
+                    <input type="number" class="set-input reps-input" placeholder="REPS" id="manualReps_${i}"
+                           data-mode="manual" data-exercise="${selectedManualExerciseId}" data-set="${i}" data-type="reps"
+                           style="background: rgba(255,255,255,0.05); border-bottom: 2px solid var(--border); width: 80px; text-align: center;">
+                `;
+                container.appendChild(setDiv);
+            }
+        }
+
+        function addManualSet() {
+            manualSetCount++;
+            renderManualSets();
+        }
+
+        window.addManualSet = addManualSet;
+
+        function removeManualSet() {
+            if (manualSetCount > 1) {
+                manualSetCount--;
+                renderManualSets();
+            }
+        }
+
+        window.removeManualSet = removeManualSet;
+
+        async function submitManualLog() {
+            if (!selectedManualExerciseId) return;
+
+            const exercises = [{
+                id: selectedManualExerciseId,
+                name: exercisesData[selectedManualExerciseId].name,
+                sets: Array.from({ length: manualSetCount }, (_, i) => {
+                    const setData = manualLogData[selectedManualExerciseId]?.[i] || {};
+                    const reps = parseInt(setData.reps) || 0;
+                    const weightInput = parseFloat(setData.weight) || 0;
+
+                    let weight = weightInput;
+                    if (weightUnit === 'lbs' && weight > 0) weight = lbsToKg(weight);
+
+                    return {
+                        weight: weight,
+                        reps: reps,
+                        isWarmup: false,
+                        note: ''
+                    };
+                })
+            }];
+
+            const { cleanedExercises, hasZeroReps } = validateAndCleanWorkout(exercises);
+
+            if (cleanedExercises.length === 0) {
+                showNotification('MISSING DATA', 'Please enter reps for at least one set!');
+                return;
+            }
+
+            if (hasZeroReps) {
+                pendingWorkoutData = { exercises: cleanedExercises, isManual: true };
+                openModal('zeroRepsModal');
+                return;
+            }
+
+            await finalizeManualLogSave(cleanedExercises);
+        }
+
+        async function finalizeManualLogSave(exercises) {
+            const btn = document.getElementById('submitManualLogBtn');
+            const originalText = btn.textContent;
+
+            const logId = Date.now();
+            const log = {
+                id: logId,
+                date: new Date().toISOString(),
+                workoutDay: -1, // Manual log
+                workoutName: 'MANUAL ENTRY',
+                exercises: exercises,
+                weightUnit: 'kg'
+            };
+
+            btn.disabled = true;
+            btn.textContent = 'SAVING...';
+
+            const success = await saveToFirebase(log);
+
+            if (success) {
+                btn.textContent = 'WORKOUT SAVED!';
+                btn.classList.add('success');
+                showSuccessToast();
+
+                workoutLogs.unshift(log);
+                invalidateStatsCache();
+                refreshUI(['logs', 'stats']);
+
+                setTimeout(() => {
+                    closeModal('manualLogModal');
+                    btn.textContent = originalText;
+                    btn.classList.remove('success');
+                    btn.disabled = false;
+                    manualLogData = {};
+                }, 1500);
+            } else {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                showNotification('SAVE ERROR', 'Problem saving to Firebase.');
+            }
+        }
+
+        window.submitManualLog = submitManualLog;
+        window.finalizeManualLogSave = finalizeManualLogSave;
     </script>
 </body>
 
