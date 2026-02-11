@@ -1767,12 +1767,10 @@
         };
 
         const CONFIG = {
-            DEFAULT_SETS: 3,
             RECENT_LOGS_LIMIT: 5,
             FIREBASE_INIT_LIMIT: 60,
             LOCAL_STORAGE_TTL: 24 * 60 * 60 * 1000, // 24 hours
             HISTORY_LIMIT_DAYS: 365,
-            CSV_MULTIPLIER_DEFAULT: 1.0,
             MAX_RECENT_SETS: 40,
             SET_DELETION_LOG_SLICE: 15
         };
@@ -1795,7 +1793,7 @@
         let cachedStatsVersion = 0;
         let isFullHistoryLoaded = false; // Track if we've loaded all history or just recent
         let pendingWorkoutData = null;
-        let manualLogData = {}; // NEW: Store data for manual log inputs
+        let manualLogData = {}; // Store data for manual log inputs
         const logCalculationCache = new Map(); // Cache for log calculations (sets/volume)
         let pendingRenders = new Set(); // Batched render queue
         let renderScheduled = false; // Render batch scheduler flag
@@ -1851,12 +1849,6 @@
         function displayVolume(kgVolume, withCommas = false) {
             const lbs = Math.round(kgToLbs(kgVolume));
             return withCommas ? lbs.toLocaleString() : lbs;
-        }
-
-        function convertInputWeight(weight) {
-            let numWeight = parseFloat(weight) || 0;
-            if (weightUnit === 'lbs' && numWeight > 0) return lbsToKg(numWeight);
-            return numWeight;
         }
 
         // --- Input Validation ---
@@ -2559,7 +2551,7 @@
             renderLibrary();
             updateStats();
             setupTabs();
-            setupEventHandlers(); // NEW - Setup event delegation
+            setupEventHandlers(); // Setup event delegation
         }
         function updateCurrentDate() {
             const now = new Date();
