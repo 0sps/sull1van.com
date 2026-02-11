@@ -1692,9 +1692,9 @@
                 </h4>
                 <div id="manualSetsContainer" class="sets-grid"></div>
                 <div class="m-t-20 flex-wrap-gap">
-                    <button class="btn btn-secondary btn-small" onclick="addManualSet()">+ ADD SET</button>
-                    <button class="btn btn-secondary btn-small btn-delete" onclick="removeManualSet()">- REMOVE
-                        SET</button>
+                    <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="manual">+ ADD SET</button>
+                    <button class="btn btn-secondary btn-small btn-delete btn-remove-set-style" data-mode="manual">−
+                        REMOVE SET</button>
                 </div>
             </div>
 
@@ -2083,27 +2083,30 @@
          * @param {Object} options - { key, setIdx, reps, weight, isWarmup, isEdit, exIdx }
          */
         function generateSetHTML(options) {
-            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx } = options;
+            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual } = options;
             const displayWeightValue = isEdit && weight > 0 ? displayWeight(weight) : weight;
-            const mode = isEdit ? 'edit' : 'workout';
+            let mode = 'workout';
+            if (isEdit) mode = 'edit';
+            if (isManual) mode = 'manual';
 
             // Data attributes for event delegation
-            const warmupAttrs = isEdit
-                ? `data-mode="edit" data-ex-idx="${exIdx}" data-set-idx="${setIdx}"`
-                : `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
-
-            const inputBaseAttrs = isEdit
-                ? `data-mode="edit" data-ex-idx="${exIdx}" data-set-idx="${setIdx}"`
-                : `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
+            let commonAttrs = '';
+            if (isEdit) {
+                commonAttrs = `data-mode="edit" data-ex-idx="${exIdx}" data-set-idx="${setIdx}"`;
+            } else if (isManual) {
+                commonAttrs = `data-mode="manual" data-exercise="${key}" data-set="${setIdx}"`;
+            } else {
+                commonAttrs = `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
+            }
 
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
-                    <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${warmupAttrs}>W</button>
+                    <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
                     <div class="set-inputs">
-                        <input type="number" class="set-input" placeholder="REPS" value="${reps || ''}" data-type="reps" ${inputBaseAttrs}>
+                        <input type="number" class="set-input" placeholder="REPS" value="${reps || ''}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
-                        <input type="number" class="set-input" placeholder="WEIGHT" value="${displayWeightValue || ''}" data-type="weight" ${inputBaseAttrs}>
+                        <input type="number" class="set-input" placeholder="WEIGHT" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
                     </div>
                 </div>`;
         }
@@ -2453,6 +2456,8 @@
                     if (mode === 'edit') {
                         const exIdx = parseInt(addSetBtn.dataset.exIdx);
                         addEditSet(exIdx);
+                    } else if (mode === 'manual') {
+                        addManualSet();
                     } else {
                         const key = addSetBtn.dataset.exerciseKey;
                         if (key) addSet(key);
@@ -2467,6 +2472,8 @@
                     if (mode === 'edit') {
                         const exIdx = parseInt(removeSetBtn.dataset.exIdx);
                         removeEditSet(exIdx);
+                    } else if (mode === 'manual') {
+                        removeManualSet();
                     } else {
                         const key = removeSetBtn.dataset.exerciseKey;
                         if (key) removeSet(key);
@@ -2611,6 +2618,7 @@
             }).join('');
         }
         function updateExerciseData(input) {
+            const mode = input.dataset.mode;
             const key = input.dataset.exercise, idx = parseInt(input.dataset.set), type = input.dataset.type;
 
             // Validate input
@@ -2619,6 +2627,13 @@
             if (!validation.isValid) {
                 showInputError(input, validation.error);
                 input.value = validation.sanitizedValue; // Use sanitized value
+            }
+
+            if (mode === 'manual') {
+                if (!manualLogData[key]) manualLogData[key] = {};
+                if (!manualLogData[key][idx]) manualLogData[key][idx] = { isWarmup: false };
+                manualLogData[key][idx][type] = validation.sanitizedValue;
+                return;
             }
 
             // Initialize structures
@@ -2632,7 +2647,17 @@
             saveWorkoutProgress(); // Save to localStorage
         }
         function toggleWarmup(btn) {
+            const mode = btn.dataset.mode;
             const key = btn.dataset.exercise, idx = parseInt(btn.dataset.set);
+
+            if (mode === 'manual') {
+                if (!manualLogData[key]) manualLogData[key] = {};
+                if (!manualLogData[key][idx]) manualLogData[key][idx] = {};
+                btn.classList.toggle('active');
+                manualLogData[key][idx].isWarmup = btn.classList.contains('active');
+                return;
+            }
+
             if (!currentExerciseData[key]) currentExerciseData[key] = {};
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
             btn.classList.toggle('active');
@@ -3467,21 +3492,19 @@
             container.innerHTML = '';
 
             for (let i = 0; i < manualSetCount; i++) {
-                const setDiv = document.createElement('div');
-                setDiv.className = 'set-inputs';
-                // Using exact same style as existing site for sets/reps
-                // Added data-mode, data-exercise, data-set, and data-type for integrated validation
-                setDiv.innerHTML = `
-                    <span class="set-number" style="min-width: 25px; font-weight: 700;">${i + 1}</span>
-                    <input type="number" step="any" class="set-input weight-input" placeholder="LBS" id="manualWeight_${i}" 
-                           data-mode="manual" data-exercise="${selectedManualExerciseId}" data-set="${i}" data-type="weight"
-                           style="background: rgba(255,255,255,0.05); border-bottom: 2px solid var(--border); width: 80px; text-align: center;">
-                    <span class="input-separator">×</span>
-                    <input type="number" class="set-input reps-input" placeholder="REPS" id="manualReps_${i}"
-                           data-mode="manual" data-exercise="${selectedManualExerciseId}" data-set="${i}" data-type="reps"
-                           style="background: rgba(255,255,255,0.05); border-bottom: 2px solid var(--border); width: 80px; text-align: center;">
-                `;
-                container.appendChild(setDiv);
+                const savedData = manualLogData[selectedManualExerciseId]?.[i] || {};
+                const setHtml = generateSetHTML({
+                    key: selectedManualExerciseId,
+                    setIdx: i,
+                    reps: savedData.reps,
+                    weight: savedData.weight,
+                    isWarmup: savedData.isWarmup || false,
+                    isManual: true
+                });
+
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = setHtml;
+                container.appendChild(wrapper.firstElementChild);
             }
         }
 
@@ -3495,6 +3518,9 @@
         function removeManualSet() {
             if (manualSetCount > 1) {
                 manualSetCount--;
+                if (manualLogData[selectedManualExerciseId] && manualLogData[selectedManualExerciseId][manualSetCount]) {
+                    delete manualLogData[selectedManualExerciseId][manualSetCount];
+                }
                 renderManualSets();
             }
         }
@@ -3560,9 +3586,22 @@
             const success = await saveToFirebase(log);
 
             if (success) {
+                // Success state for the modal button
                 btn.textContent = 'WORKOUT SAVED!';
                 btn.classList.add('success');
                 showSuccessToast();
+
+                // Also trigger success state for the main "COMPLETE WORKOUT" button if it exists
+                const mainBtn = document.getElementById('completeWorkoutBtn');
+                if (mainBtn) {
+                    const originalMainText = mainBtn.textContent;
+                    mainBtn.textContent = 'WORKOUT SAVED!';
+                    mainBtn.classList.add('success');
+                    setTimeout(() => {
+                        mainBtn.textContent = originalMainText;
+                        mainBtn.classList.remove('success');
+                    }, 2000);
+                }
 
                 workoutLogs.unshift(log);
                 invalidateStatsCache();
