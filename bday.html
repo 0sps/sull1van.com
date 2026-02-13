@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q3 GROUP REVIEW</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: "Comic Sans MS", "Arial", sans-serif;
+            background-color: #fefefe;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #deck {
+            width: 95%;
+            height: 90%;
+            background: white;
+            border: 4px solid #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 10px 10px 0px #888;
+        }
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .slide.active { display: flex; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #cc0000; text-decoration: underline; }
+        h2 { font-size: 1.5rem; color: #333; }
+        .chart-wrap { width: 100%; height: 50%; margin: 10px 0; }
+        .big-stat { font-size: 8rem; font-weight: bold; color: #ff0000; margin: 0; }
+        .small-caption { font-size: 1rem; color: #555; font-weight: normal; margin-top: -10px; margin-bottom: 20px; }
+        .controls {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: #ffff00;
+            border: 2px solid #000;
+            font-weight: bold;
+        }
+        button:hover { background: #ffcc00; }
+        .footer { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.9rem; font-weight: bold; color: #000; }
+        ul { text-align: left; display: inline-block; font-size: 1.3rem; }
+    </style>
+</head>
+<body>
+
+<div id="deck">
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <h1>Q3 GROUP REVIEW</h1>
+        <p>Topic: QUARTERLY RESULTS FROM THE BOYS (and girls)</p>
+        <p>Prepared for: The Squad</p>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJ6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCBmcm9tX2dpZmh5X2NvbS8xMjYwYUhYRGZlUjA0ZyZjdD1n/1260aHXDfeR04g/giphy.gif" width="150">
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <h1>Night Out Volume</h1>
+        <div class="chart-wrap"><canvas id="nightsChart"></canvas></div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <h1>The Blackout</h1>
+        <div class="chart-wrap"><canvas id="blackoutChart"></canvas></div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <h1>QUARTERLY DATE TREND</h1>
+        <div class="big-stat">-30%</div>
+        <div class="small-caption">DECREASE FROM LAST QUARTER</div>
+        <h2 style="color: red;">CRITICAL FAILURE</h2>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <h1>"Work Talk" at the Bar</h1>
+        <div class="chart-wrap"><canvas id="workTalkChart"></canvas></div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <h1>Group Net Worth</h1>
+        <h2 style="color: green; font-size: 5rem;">$0.00</h2>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJ6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCBmcm9tX2dpZmh5X2NvbS8zT1pIdzVvSndLdzZicTVUdyZjdD1n/3OZHw5oJwKw6bq5Uw/giphy.gif" width="120">
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <h1>Uber Rating</h1>
+        <div class="chart-wrap"><canvas id="uberChart"></canvas></div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <h1>Zyn Consumption</h1>
+        <div class="chart-wrap"><canvas id="zynChart"></canvas></div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <h1>Q4 ACTION ITEMS</h1>
+        <ul>
+            <li>1. Delete LinkedIn for at least 48 hours.</li>
+            <li>2. Talk to a girl/guy. Just one. Please.</li>
+            <li>3. Stop ordering shots at 1:45 AM.</li>
+            <li>4. If you mention "pivot tables" at the bar, you buy the next round.</li>
+        </ul>
+        <h1 style="margin-top: 20px;">CLASS DISMISSED.</h1>
+    </div>
+
+    <div class="controls">
+        <button onclick="changeSlide(-1)">LAST</button>
+        <button onclick="changeSlide(1)">NEXT</button>
+    </div>
+    <div class="footer">QUARTERLY REVIEW</div>
+</div>
+
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function changeSlide(n) {
+        slides[slideIndex].classList.remove('active');
+        slideIndex = (slideIndex + n + slides.length) % slides.length;
+        slides[slideIndex].classList.add('active');
+    }
+
+    // Chart Data
+    const createChart = (id, type, labels, label, data, color) => {
+        new Chart(document.getElementById(id), {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{ label: label, data: data, backgroundColor: color, borderColor: color, fill: false }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    };
+
+    createChart('nightsChart', 'bar', ['July', 'Aug', 'Sept'], 'Nights Out', [10, 15, 25], '#ff6600');
+    createChart('blackoutChart', 'line', ['Week 1', 'Week 4', 'Week 8', 'Week 12'], 'Blackouts', [1, 3, 6, 12], '#ff0000');
+    createChart('workTalkChart', 'doughnut', ['Actually Fun', 'Banking BS', 'Engineering Nerding'], 'Topics', [10, 60, 30], ['#00ff00', '#0000ff', '#ff00ff']);
+    createChart('uberChart', 'line', ['July', 'Aug', 'Sept'], 'Rating', [4.9, 4.5, 4.1], '#000');
+    createChart('zynChart', 'bar', ['Mon', 'Fri', 'Sat'], 'Cans per Group', [2, 12, 20], '#217346');
+</script>
+
+</body>
+</html>
