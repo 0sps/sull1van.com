@@ -1,0 +1,139 @@
+{
+    "name": "Push/Pull/Legs Split",
+    "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
+    "schedule": [
+        "PUSH A",
+        "PULL A",
+        "LEGS A",
+        "REST",
+        "PUSH B",
+        "PULL B",
+        "LEGS B"
+    ],
+    "workouts": {
+        "PUSH A": {
+            "subtitle": "Upper Chest / Shoulder",
+            "exercises": [
+                {
+                    "name": "Dumbbell Incline Bench Press",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "name": "Dumbbell Shoulder Press",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "name": "Cable Lateral Raise",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        },
+        "PULL A": {
+            "subtitle": "Back Width / Power",
+            "exercises": [
+                {
+                    "name": "Pull Up",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "name": "Single-arm Dumbbell Row",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "name": "Barbell Shrug",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "LEGS A": {
+            "subtitle": "Quad & Glute Dominant",
+            "exercises": [
+                {
+                    "name": "Back Squat",
+                    "sets": 5,
+                    "reps": "6-10"
+                },
+                {
+                    "name": "Leg Extension",
+                    "sets": 5,
+                    "reps": "12-15"
+                },
+                {
+                    "name": "Standing Machine Calf Press",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "REST": {
+            "subtitle": "Recovery or Light Activity",
+            "exercises": []
+        },
+        "PUSH B": {
+            "subtitle": "Chest & Tris baby",
+            "exercises": [
+                {
+                    "name": "Dumbbell Bench Press",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "name": "Dip",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "name": "Cable Rope Overhead Triceps Extension",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "PULL B": {
+            "subtitle": "Back n Arms",
+            "exercises": [
+                {
+                    "name": "Chest-Supported Dumbbell Incline Row",
+                    "sets": 5,
+                    "reps": "10-12"
+                },
+                {
+                    "name": "Machine Rear Delt Fly",
+                    "sets": 5,
+                    "reps": "15-20"
+                },
+                {
+                    "name": "Incline Dumbbell Curl",
+                    "sets": 5,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "LEGS B": {
+            "subtitle": "Posterior Chain and Core",
+            "exercises": [
+                {
+                    "name": "Romanian Deadlift",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "name": "Seated Leg Curl",
+                    "sets": 5,
+                    "reps": "10-15"
+                },
+                {
+                    "name": "Cable Crunch",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        }
+    }
+}
