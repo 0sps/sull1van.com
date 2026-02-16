@@ -326,6 +326,17 @@
             gap: 8px;
         }
 
+        .exercise-volume {
+            margin-top: 12px;
+            margin-bottom: 10px;
+            font-size: 0.82rem;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
         #exerciseList {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1851,6 +1862,67 @@
             return withCommas ? lbs.toLocaleString() : lbs;
         }
 
+        function formatLiftVolumeLbs(volumeLbs) {
+            if (!Number.isFinite(volumeLbs) || volumeLbs <= 0) return '0';
+            const rounded = Math.round(volumeLbs * 10) / 10;
+            return rounded.toLocaleString('en-US', {
+                minimumFractionDigits: Number.isInteger(rounded) ? 0 : 1,
+                maximumFractionDigits: 1
+            });
+        }
+
+        function normalizeWeightToLbs(weightValue) {
+            return weightUnit === 'kg' ? kgToLbs(weightValue) : weightValue;
+        }
+
+        function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
+            const numSets = setCount ?? currentSetCounts[exerciseKey] ?? 0;
+            let total = 0;
+
+            for (let i = 0; i < numSets; i++) {
+                const setData = currentExerciseData[exerciseKey]?.[i] || {};
+                const reps = parseInt(setData.reps, 10);
+                const weight = parseFloat(setData.weight);
+
+                // Ignore incomplete/blank sets.
+                if (!Number.isFinite(reps) || reps <= 0) continue;
+                if (!Number.isFinite(weight) || weight <= 0) continue;
+
+                total += reps * normalizeWeightToLbs(weight);
+            }
+
+            return total;
+        }
+
+        function calculateExerciseVolumeLbsFromInputs(exerciseKey) {
+            const exerciseEl = document.getElementById(`exercise-${exerciseKey}`);
+            if (!exerciseEl) return calculateExerciseVolumeLbs(exerciseKey);
+
+            let total = 0;
+            exerciseEl.querySelectorAll('.set-input-group').forEach(group => {
+                const repsInput = group.querySelector('.set-input[data-type="reps"]');
+                const weightInput = group.querySelector('.set-input[data-type="weight"]');
+                const reps = parseInt(repsInput?.value, 10);
+                const weight = parseFloat(weightInput?.value);
+
+                // Ignore blank/incomplete rows while user is still entering data.
+                if (!Number.isFinite(reps) || reps <= 0) return;
+                if (!Number.isFinite(weight) || weight <= 0) return;
+
+                total += reps * normalizeWeightToLbs(weight);
+            });
+
+            return total;
+        }
+
+        function updateExerciseVolumeDisplay(exerciseKey, volumeLbs = null) {
+            const volumeEl = document.getElementById(`exercise-volume-${exerciseKey}`);
+            if (!volumeEl) return;
+
+            const totalLbs = volumeLbs ?? calculateExerciseVolumeLbs(exerciseKey);
+            volumeEl.textContent = `Volume so far: ${formatLiftVolumeLbs(totalLbs)} lbs`;
+        }
+
         // --- Input Validation ---
         /**
          * Validate workout input
@@ -2107,7 +2179,7 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
-            const { isEdit, exIdx } = options;
+            const { isEdit, exIdx, volumeLbs = 0 } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
@@ -2128,6 +2200,9 @@
                     <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="workout" data-exercise-key="${key}">+ Add Set</button>
                 </div>`;
 
+            const volumeIndicator = isEdit ? '' : `
+                <div class="exercise-volume" id="exercise-volume-${key}">Volume so far: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
+
             return `
                 <div class="exercise-item" id="${isEdit ? '' : `exercise-${key}`}" data-mode="${mode}">
                     <div class="exercise-header">
@@ -2140,6 +2215,7 @@
                         ${headerActions}
                     </div>
                     <div class="sets-grid">${setsHtml}</div>
+                    ${volumeIndicator}
                     ${footerActions}
                 </div>`;
         }
@@ -2513,6 +2589,18 @@
                 }
             });
 
+            // Keep per-lift volume responsive while typing.
+            document.addEventListener('input', (e) => {
+                if (!e.target.classList.contains('set-input')) return;
+                if (e.target.dataset.mode !== 'workout') return;
+
+                const key = e.target.dataset.exercise;
+                if (!key) return;
+
+                const liveVolumeLbs = calculateExerciseVolumeLbsFromInputs(key);
+                updateExerciseVolumeDisplay(key, liveVolumeLbs);
+            });
+
             // Auto-select text on focus
             document.addEventListener('focusin', (e) => {
                 if (e.target.classList.contains('set-input')) {
@@ -2594,6 +2682,7 @@
                 }
 
                 const numSets = currentSetCounts[exerciseKey];
+                const volumeLbs = calculateExerciseVolumeLbs(exerciseKey, numSets);
                 const setsHtml = Array.from({ length: numSets }, (_, i) => {
                     const savedData = currentExerciseData[exerciseKey]?.[i] || {};
                     return generateSetHTML({
@@ -2606,7 +2695,7 @@
                     });
                 }).join('');
 
-                return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, { isEdit: false });
+                return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, { isEdit: false, volumeLbs });
             }).join('');
         }
         function updateExerciseData(input) {
@@ -2636,6 +2725,7 @@
             currentExerciseData[key][idx][type] = validation.sanitizedValue;
 
             checkExerciseCompletion(key);
+            updateExerciseVolumeDisplay(key);
             saveWorkoutProgress(); // Save to localStorage
         }
         function toggleWarmup(btn) {
