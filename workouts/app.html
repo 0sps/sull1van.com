@@ -1920,7 +1920,7 @@
             if (!volumeEl) return;
 
             const totalLbs = volumeLbs ?? calculateExerciseVolumeLbs(exerciseKey);
-            volumeEl.textContent = `Volume so far: ${formatLiftVolumeLbs(totalLbs)} lbs`;
+            volumeEl.textContent = `VOLUME: ${formatLiftVolumeLbs(totalLbs)} lbs`;
         }
 
         // --- Input Validation ---
@@ -3241,7 +3241,24 @@
             let html = `<p class="text-muted m-b-16">${formatDateFull(date)}</p>`;
             log.exercises.forEach(ex => {
                 const exerciseId = ex.exerciseId;
-                html += `<div class="m-b-16"><h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4><div class="grid-4">${ex.sets.map((set, i) => `<div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};"><div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div><div>${displayWeight(set.weight)}lbs × ${set.reps}</div></div>`).join('')}</div></div>`;
+                let volumeLbs = 0;
+                const setsHtml = ex.sets.map((set, i) => {
+                    const weightLbs = displayWeight(set.weight);
+                    const reps = parseInt(set.reps) || 0;
+                    volumeLbs += (reps * weightLbs);
+                    return `
+                        <div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};">
+                            <div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div>
+                            <div>${weightLbs}lbs × ${set.reps}</div>
+                        </div>`;
+                }).join('');
+
+                html += `
+                    <div class="m-b-16">
+                        <h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4>
+                        <div class="grid-4">${setsHtml}</div>
+                        <div class="exercise-volume">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>
+                    </div>`;
             });
             document.getElementById('modalExerciseName').textContent = log.workoutName;
             document.getElementById('modalExerciseDetails').innerHTML = html;
@@ -3290,8 +3307,11 @@
                 const dateStr = formatDateFull(mostRecentDate);
                 let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
                 html += `<div class="m-t-12">`;
+                let totalVolumeLbs = 0;
                 mostRecentExercise.sets.forEach((set, i) => {
                     const weightLbs = displayWeight(set.weight);
+                    const reps = parseInt(set.reps) || 0;
+                    totalVolumeLbs += (reps * weightLbs);
                     const warmupClass = set.isWarmup ? 'warmup' : '';
                     const label = set.isWarmup ? 'WARM' : `SET ${i + 1} `;
                     html += `<div class="history-set ${warmupClass}">
@@ -3300,6 +3320,7 @@
                     </div>`;
                 });
                 html += `</div>`;
+                html += `<div class="exercise-volume">VOLUME: ${formatLiftVolumeLbs(totalVolumeLbs)} lbs</div>`;
                 content.innerHTML = html;
             }
             openModal('historyModal');
