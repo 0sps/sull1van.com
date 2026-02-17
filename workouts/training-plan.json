@@ -36,7 +36,32 @@
                 }
             ]
         },
-        "LOWER": {
+       "PUSH": {
+            "subtitle": "pushing P",
+            "exercises": [
+                {
+                    "id": "ex017",
+                    "sets": 5,
+                    "reps": "6-10"
+                },
+                {
+                    "id": "ex055",
+                    "sets": 3,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex004",
+                    "sets": 5,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex021",
+                    "sets": 3,
+                    "reps": "10-15"
+                }
+            ]
+        },
+         "LOWER": {
             "subtitle": "lower",
             "exercises": [
                 {
@@ -58,31 +83,6 @@
                 {
                     "id": "ex007",
                     "sets": 4,
-                    "reps": "10-15"
-                }
-            ]
-        },
-        "PUSH": {
-            "subtitle": "pushing P",
-            "exercises": [
-                {
-                    "id": "ex017",
-                    "sets": 5,
-                    "reps": "6-10"
-                },
-                {
-                    "id": "ex055",
-                    "sets": 3,
-                    "reps": "10-15"
-                },
-                {
-                    "id": "ex004",
-                    "sets": 5,
-                    "reps": "10-15"
-                },
-                {
-                    "id": "ex021",
-                    "sets": 3,
                     "reps": "10-15"
                 }
             ]
