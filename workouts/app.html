@@ -2201,7 +2201,7 @@
                 </div>`;
 
             const volumeIndicator = isEdit ? '' : `
-                <div class="exercise-volume" id="exercise-volume-${key}">Volume so far: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
+                <div class="exercise-volume" id="exercise-volume-${key}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
 
             return `
                 <div class="exercise-item" id="${isEdit ? '' : `exercise-${key}`}" data-mode="${mode}">
