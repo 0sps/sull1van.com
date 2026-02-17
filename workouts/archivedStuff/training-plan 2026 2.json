@@ -1,0 +1,139 @@
+{
+    "name": "Push/Pull/Legs Split",
+    "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
+    "schedule": [
+        "PUSH A",
+        "PULL A",
+        "LEGS A",
+        "REST",
+        "PUSH B",
+        "PULL B",
+        "LEGS B"
+    ],
+    "workouts": {
+        "PUSH A": {
+            "subtitle": "Upper Chest / Shoulder",
+            "exercises": [
+                {
+                    "id": "ex001",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex005",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex004",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        },
+        "PULL A": {
+            "subtitle": "Back Width / Power",
+            "exercises": [
+                {
+                    "id": "ex012",
+                    "sets": 3,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex038",
+                    "sets": 3,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex104",
+                    "sets": 4,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "LEGS A": {
+            "subtitle": "Quad & Glute Dominant",
+            "exercises": [
+                {
+                    "id": "ex006",
+                    "sets": 5,
+                    "reps": "6-10"
+                },
+                {
+                    "id": "ex002",
+                    "sets": 5,
+                    "reps": "12-15"
+                },
+                {
+                    "id": "ex007",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "REST": {
+            "subtitle": "Recovery or Light Activity",
+            "exercises": []
+        },
+        "PUSH B": {
+            "subtitle": "Chest & Tris baby",
+            "exercises": [
+                {
+                    "id": "ex017",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "id": "ex055",
+                    "sets": 5,
+                    "reps": "8-12"
+                },
+                {
+                    "id": "ex021",
+                    "sets": 5,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "PULL B": {
+            "subtitle": "Back n Arms",
+            "exercises": [
+                {
+                    "id": "ex138",
+                    "sets": 5,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex033",
+                    "sets": 5,
+                    "reps": "15-20"
+                },
+                {
+                    "id": "ex014",
+                    "sets": 5,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "LEGS B": {
+            "subtitle": "Posterior Chain and Core",
+            "exercises": [
+                {
+                    "id": "ex025",
+                    "sets": 5,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex008",
+                    "sets": 5,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex009",
+                    "sets": 5,
+                    "reps": "12-15"
+                }
+            ]
+        }
+    }
+}
