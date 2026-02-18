@@ -4,8 +4,8 @@
     "schedule": [
         "UPPER",
         "PUSH",
-        "LOWER",
         "REST",
+        "LOWER",
         "PULL",
         "LEGS",
         "REST"
@@ -61,7 +61,11 @@
                 }
             ]
         },
-         "LOWER": {
+         "REST": {
+            "subtitle": "Recovery or Light Activity",
+            "exercises": []
+        },
+        "LOWER": {
             "subtitle": "lower",
             "exercises": [
                 {
@@ -86,10 +90,6 @@
                     "reps": "10-15"
                 }
             ]
-        },
-        "REST": {
-            "subtitle": "Recovery or Light Activity",
-            "exercises": []
         },
         "PULL": {
             "subtitle": "pull",
