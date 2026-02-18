@@ -3,12 +3,12 @@
     "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
     "schedule": [
         "PUSH A",
-        "PULL_A",
-        "LEGS_A",
+        "PULL A",
+        "LEGS A",
         "REST",
-        "PUSH_B",
-        "PULL_B",
-        "LEGS_B"
+        "PUSH B",
+        "PULL B",
+        "LEGS B"
     ],
     "workouts": {
         "PUSH A": {
@@ -36,7 +36,7 @@
                 }
             ]
         },
-        "PULL_A": {
+        "PULL A": {
             "subtitle": "Pull A (Heavy)",
             "exercises": [
                 {
@@ -61,7 +61,7 @@
                 }
             ]
         },
-        "LEGS_A": {
+        "LEGS A": {
             "subtitle": "Legs A (Heavy)",
             "exercises": [
                 {
@@ -90,7 +90,7 @@
             "subtitle": "Recovery or Light Activity",
             "exercises": []
         },
-        "PUSH_B": {
+        "PUSH B": {
             "subtitle": "Push B (Hypertrophy)",
             "exercises": [
                 {
@@ -115,7 +115,7 @@
                 }
             ]
         },
-        "PULL_B": {
+        "PULL B": {
             "subtitle": "Pull B (Hypertrophy)",
             "exercises": [
                 {
@@ -140,7 +140,7 @@
                 }
             ]
         },
-        "LEGS_B": {
+        "LEGS B": {
             "subtitle": "Legs B (Hypertrophy)",
             "exercises": [
                 {
