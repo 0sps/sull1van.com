@@ -430,9 +430,11 @@
         }
 
         .set-input::placeholder {
-            color: rgba(176, 176, 181, 0.7);
+            color: rgba(176, 176, 181, 0.4);
+            /* Fainter for ghost values */
             font-size: 1.2rem;
             font-weight: 700;
+            font-style: italic;
         }
 
         .input-separator {
@@ -1875,6 +1877,19 @@
             return weightUnit === 'kg' ? kgToLbs(weightValue) : weightValue;
         }
 
+        /**
+         * Finds the sets from the most recent session for a specific exercise.
+         */
+        function getLastSessionSets(exerciseId) {
+            if (!workoutLogs || workoutLogs.length === 0) return null;
+            // newest first
+            for (const log of workoutLogs) {
+                const ex = log.exercises.find(e => e.id === exerciseId);
+                if (ex && ex.sets && ex.sets.length > 0) return ex.sets;
+            }
+            return null;
+        }
+
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
             const numSets = setCount ?? currentSetCounts[exerciseKey] ?? 0;
             let total = 0;
@@ -2147,7 +2162,7 @@
          * @param {Object} options - { key, setIdx, reps, weight, isWarmup, isEdit, exIdx }
          */
         function generateSetHTML(options) {
-            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual } = options;
+            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, prevReps, prevWeight } = options;
             const displayWeightValue = isEdit && weight > 0 ? displayWeight(weight) : weight;
             let mode = 'workout';
             if (isEdit) mode = 'edit';
@@ -2163,14 +2178,17 @@
                 commonAttrs = `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
             }
 
+            const repsPlaceholder = prevReps ? `${prevReps}` : 'REPS';
+            const weightPlaceholder = prevWeight ? `${prevWeight}` : 'WEIGHT';
+
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
                     <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
                     <div class="set-inputs">
-                        <input type="number" class="set-input" placeholder="REPS" value="${reps || ''}" data-type="reps" ${commonAttrs}>
+                        <input type="number" class="set-input" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
-                        <input type="number" class="set-input" placeholder="WEIGHT" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
+                        <input type="number" class="set-input" placeholder="${weightPlaceholder}" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
                     </div>
                 </div>`;
         }
@@ -2675,6 +2693,7 @@
             container.innerHTML = workout.exercises.map((ex) => {
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
+                const lastSessionSets = getLastSessionSets(ex.exerciseId);
 
                 // Initialize set count from workout plan if not already set
                 if (!currentSetCounts[exerciseKey]) {
@@ -2685,13 +2704,17 @@
                 const volumeLbs = calculateExerciseVolumeLbs(exerciseKey, numSets);
                 const setsHtml = Array.from({ length: numSets }, (_, i) => {
                     const savedData = currentExerciseData[exerciseKey]?.[i] || {};
+                    const prevSet = (lastSessionSets && lastSessionSets[i]) ? lastSessionSets[i] : null;
+
                     return generateSetHTML({
                         key: exerciseKey,
                         setIdx: i,
                         reps: savedData.reps,
                         weight: savedData.weight,
                         isWarmup: savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0),
-                        isEdit: false
+                        isEdit: false,
+                        prevReps: prevSet ? prevSet.reps : null,
+                        prevWeight: (prevSet && prevSet.weight > 0) ? displayWeight(prevSet.weight) : null
                     });
                 }).join('');
 
