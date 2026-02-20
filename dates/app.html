@@ -600,9 +600,9 @@
         .sheet-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.05);
-            /* Barely there tint */
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.15);
+            /* Slightly darker for better focus */
+            backdrop-filter: blur(6px);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -621,9 +621,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-            backdrop-filter: blur(50px) saturate(240%) brightness(1.4);
-            -webkit-backdrop-filter: blur(50px) saturate(240%) brightness(1.4);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.12) 100%);
+            backdrop-filter: blur(55px) saturate(220%) brightness(1.2);
+            -webkit-backdrop-filter: blur(55px) saturate(220%) brightness(1.2);
             border-radius: 32px 32px 0 0;
             height: 94vh;
             transform: translateY(100%) scale(0.95);
