@@ -686,17 +686,20 @@
         .sheet-content {
             overflow-y: auto;
             flex: 1;
-            background: #2c2c2e;
+            background: transparent;
             padding: 32px 20px;
         }
 
         /* iOS Form Group */
         .form-group-container {
-            border-radius: 14px;
-            background: #1c1c1e;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
             overflow: hidden;
             margin-bottom: 24px;
-            border: 0.5px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .form-row {
@@ -724,8 +727,8 @@
 
         .form-input {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             color: var(--ios-blue);
             font-size: 17px;
@@ -735,6 +738,8 @@
             min-height: 40px;
             display: flex;
             align-items: center;
+            transition: all 0.2s var(--spring);
+            font-family: var(--font-body);
         }
 
         .form-input:focus {
@@ -764,11 +769,12 @@
 
         /* Delete Button */
         .delete-btn-container {
-            border-radius: 14px;
-            background: #1c1c1e;
+            border-radius: 16px;
+            background: rgba(255, 69, 58, 0.05);
             overflow: hidden;
             margin-top: 32px;
-            border: 0.5px solid rgba(255, 69, 58, 0.2);
+            border: 1px solid rgba(255, 69, 58, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .delete-action {
@@ -789,11 +795,14 @@
 
         /* Log View Styles */
         .essential-info-dropdown {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
             margin-bottom: 24px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.2px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
 
         .summary-header {
@@ -938,13 +947,16 @@
         }
 
         .log-bubble {
-            background: var(--ios-card);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(20px);
             padding: 16px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.2px solid rgba(255, 255, 255, 0.15);
             font-size: 17px;
             line-height: 1.5;
             white-space: pre-wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         /* Log Entry Area */
