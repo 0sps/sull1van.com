@@ -8,13 +8,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <title>Contacts</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
     <style>
         :root {
+            /* Fonts */
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+
             /* iOS System Colors - Dark Mode Base */
             --ios-bg: #000814;
             --ios-card: rgba(28, 28, 30, 0.7);
@@ -45,7 +47,7 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: var(--font-body);
         }
 
         html {
@@ -91,23 +93,54 @@
             padding-bottom: calc(40px + env(safe-area-inset-bottom));
         }
 
-        /* Grain Effect */
-        .grain {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -2;
-            opacity: 0.08;
-            background-color: transparent;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
         /* Gradient Layer - transparent for iOS 26 Safari */
         .bg-layer {
             position: fixed;
             inset: 0;
             z-index: -3;
             background-color: transparent;
+        }
+
+        /* Atmospheric Nebula */
+        .nebula {
+            position: fixed;
+            inset: 0;
+            z-index: -4;
+            background: radial-gradient(circle at 20% 30%, rgba(10, 132, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 149, 0, 0.05) 0%, transparent 50%);
+            filter: blur(80px);
+            animation: nebula-drift 30s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: radial-gradient(circle, transparent 40%, rgba(0, 8, 20, 0.4) 100%);
+            pointer-events: none;
+        }
+
+        @keyframes nebula-drift {
+            from {
+                transform: scale(1) translate(0, 0);
+            }
+
+            to {
+                transform: scale(1.1) translate(20px, 10px);
+            }
+        }
+
+        /* Grain Effect */
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.05;
+            background-color: transparent;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
         }
 
         /* Celestial Sky Elements */
@@ -210,32 +243,14 @@
             margin-bottom: 0;
             height: 80px;
 
-            /* Dark Glass Tint */
-            background: linear-gradient(135deg,
-                    rgba(0, 0, 0, 0.1) 0%,
-                    rgba(0, 0, 0, 0.2) 100%);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
-
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            z-index: 1000;
-
-            /* Soft Glass Edges */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            /* Reduced opacity */
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-
-            /* Softer Shadow */
-            box-shadow:
-                0 4px 16px -4px rgba(0, 0, 0, 0.15),
-                inset 1px 1px 0 rgba(255, 255, 255, 0.08);
-            /* Fainter reflection */
+            /* Glass 2.0 Refinement */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.25);
+            border-left: 1.2px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
         }
 
         .header-title {
@@ -245,6 +260,7 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%) translateZ(0);
+            font-family: var(--font-heading);
 
             /* Glass Text Effect */
             background: linear-gradient(180deg, #FFFFFF 20%, rgba(255, 255, 255, 0.6) 100%);
@@ -292,32 +308,34 @@
 
         /* Segmented Control */
         .segmented-control {
-            background: rgba(120, 120, 128, 0.2);
-            border-radius: 10px;
-            padding: 2px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 3px;
             display: flex;
             position: relative;
-            height: 32px;
-            width: 220px;
-            margin: 24px auto;
+            height: 38px;
+            width: 240px;
+            margin: 32px auto;
             isolation: isolate;
             touch-action: pan-y;
-            /* Prevent horizontal page scroll when interacting */
             user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
         }
 
         .segmented-control::before {
             content: '';
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: calc(50% - 2px);
-            height: calc(100% - 4px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-            border-radius: 8px;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            top: 3px;
+            left: 3px;
+            width: calc(50% - 3px);
+            height: calc(100% - 6px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 9px;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 1;
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
         }
 
         .segmented-control.grid-active::before {
@@ -360,13 +378,17 @@
 
         .hud-card {
             position: relative;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
             min-width: 150px;
             padding: 20px;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
         }
 
         .hud-label {
@@ -376,6 +398,7 @@
             color: var(--text-secondary);
             margin-bottom: 6px;
             letter-spacing: 0.5px;
+            font-family: var(--font-heading);
         }
 
         .hud-value {
@@ -388,10 +411,13 @@
         .ios-list {
             position: relative;
             border-radius: var(--radius-l);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
             overflow: hidden;
             margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1.2px solid rgba(255, 255, 255, 0.12);
         }
 
         .list-row {
@@ -429,6 +455,7 @@
             font-size: 18px;
             font-weight: 600;
             letter-spacing: -0.2px;
+            font-family: var(--font-heading);
         }
 
         .row-subtitle {
@@ -454,13 +481,9 @@
         }
 
         .grid-card {
-            /* Reverted to lighter Dark Glass Tint */
-            background: linear-gradient(135deg,
-                    rgba(0, 0, 0, 0.05) 0%,
-                    rgba(0, 0, 0, 0.15) 100%);
-            /* Kept saturate removed to fix the orange glow */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             aspect-ratio: 1 / 1;
 
             border-radius: 20px;
@@ -472,17 +495,15 @@
             cursor: pointer;
             touch-action: manipulation;
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s;
-            /* Only transition background */
 
-            /* Soft Glass Edges */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            /* Glass 2.0 Reflective Edges */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-left: 1.2px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
 
-            /* Softer Depth Shadow */
             box-shadow:
-                0 4px 12px -4px rgba(0, 0, 0, 0.15),
+                0 8px 32px -8px rgba(0, 0, 0, 0.4),
                 inset 1px 1px 0 rgba(255, 255, 255, 0.05);
         }
 
@@ -502,22 +523,6 @@
             transform: scale(0.92);
             background: rgba(255, 255, 255, 0.08);
             transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1);
-        }
-
-        /* Gradient Borders via Pseudo-element (Does not affect background) */
-        .hud-card::after,
-        .ios-list::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.082), rgba(76, 76, 76, 0.107));
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
         }
 
         /* View Containers */
@@ -562,6 +567,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-family: var(--font-heading);
         }
 
         .card-detail {
@@ -629,6 +635,7 @@
         .sheet-title {
             font-size: 19px;
             font-weight: 600;
+            font-family: var(--font-heading);
         }
 
         .sheet-btn {
@@ -1666,12 +1673,50 @@
             background: rgba(30, 10, 10, 0.8) !important;
             border-color: rgba(255, 59, 48, 0.3) !important;
         }
+
+        /* Solar View Transitions */
+        .solar-out {
+            animation: solar-out 0.4s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .solar-in {
+            animation: solar-in 0.4s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes solar-out {
+            from {
+                transform: rotateY(0) scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: rotateY(15deg) scale(0.92);
+                opacity: 0;
+                filter: blur(4px);
+            }
+        }
+
+        @keyframes solar-in {
+            from {
+                transform: rotateY(-15deg) scale(0.92);
+                opacity: 0;
+                filter: blur(4px);
+            }
+
+            to {
+                transform: rotateY(0) scale(1);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- iOS 26 Safari Fix: This fixed element will be sampled for address bar color -->
     <div class="ios-bg-wrapper" id="iosBgWrapper"></div>
+    <div class="nebula"></div>
+    <div class="vignette"></div>
     <div class="bg-layer" id="dynamicBg">
         <div class="sun-container" id="sun">
             <div class="sun"></div>
@@ -3093,7 +3138,8 @@
 
         /* ----- TAB & STATS LOGIC ----- */
         window.switchTab = function (tab) {
-            AppState.ui.currentTab = tab;
+            if (AppState.ui.currentTab === tab) return;
+
             const bottomNav = document.querySelector('.bottom-nav');
             const datesView = document.getElementById('dates-view');
             const statsView = document.getElementById('stats-view');
@@ -3101,25 +3147,39 @@
             const tabStats = document.getElementById('tabStats');
             const headerTitle = document.querySelector('.header-title');
 
-            if (tab === 'dates') {
-                bottomNav.classList.remove('tab-stats');
-                datesView.style.display = 'block';
-                statsView.classList.remove('active');
-                tabDates.classList.add('active');
-                tabStats.classList.remove('active');
-                headerTitle.textContent = 'Dates';
-            }
+            const currentView = AppState.ui.currentTab === 'dates' ? datesView : statsView;
+            const nextView = tab === 'dates' ? datesView : statsView;
 
-            else {
-                bottomNav.classList.add('tab-stats');
-                datesView.style.display = 'none';
-                statsView.classList.add('active');
-                tabDates.classList.remove('active');
-                tabStats.classList.add('active');
-                headerTitle.textContent = 'Stats';
-                renderYearPicker();
-                renderStats();
-            }
+            // Apply "Solar Out" to current
+            currentView.classList.add('solar-out');
+
+            setTimeout(() => {
+                AppState.ui.currentTab = tab;
+                currentView.classList.remove('solar-out', 'active');
+                currentView.style.display = 'none';
+
+                if (tab === 'dates') {
+                    bottomNav.classList.remove('tab-stats');
+                    datesView.style.display = 'block';
+                    datesView.classList.add('active', 'solar-in');
+                    tabDates.classList.add('active');
+                    tabStats.classList.remove('active');
+                    headerTitle.textContent = 'Dates';
+                } else {
+                    bottomNav.classList.add('tab-stats');
+                    statsView.style.display = 'block';
+                    statsView.classList.add('active', 'solar-in');
+                    tabDates.classList.remove('active');
+                    tabStats.classList.add('active');
+                    headerTitle.textContent = 'Stats';
+                    renderYearPicker();
+                    renderStats();
+                }
+
+                setTimeout(() => {
+                    nextView.classList.remove('solar-in');
+                }, 400);
+            }, 300);
         }
 
         function renderYearPicker() {
