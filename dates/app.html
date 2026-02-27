@@ -1734,9 +1734,9 @@
             border-width: 0;
             pointer-events: none;
             transition: max-width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        opacity 0.3s ease,
-                        padding 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        border-width 0.3s ease;
+                opacity 0.3s ease,
+                padding 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                border-width 0.3s ease;
         }
 
         .filter-chip.visible {
@@ -1783,23 +1783,23 @@
         .sort-ctx-menu {
             position: fixed;
             z-index: 1501;
-            background: rgba(26, 26, 30, 0.96);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+            backdrop-filter: blur(48px) saturate(150%) brightness(0.75);
+            -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(0.75);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.18);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.2);
             overflow: hidden;
             min-width: 230px;
             box-shadow:
-                0 28px 72px -8px rgba(0, 0, 0, 0.95),
-                0 8px 24px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+                0 28px 72px -8px rgba(0, 0, 0, 0.7),
+                0 8px 24px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
             transform-origin: top right;
             transform: scale(0.72) translateY(-14px);
-            opacity: 0;
+            opacity: 0.5;
             transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1),
-                        opacity 0.2s ease;
+                opacity 0.2s ease;
             pointer-events: none;
         }
 
@@ -1816,7 +1816,8 @@
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--text-secondary);
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .sort-ctx-option {
@@ -1825,7 +1826,7 @@
             justify-content: space-between;
             padding: 14px 16px;
             border: none;
-            border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+            border-top: 0.5px solid rgba(255, 255, 255, 0.08);
             background: transparent;
             color: var(--text-primary);
             font-size: 16px;
@@ -1842,7 +1843,7 @@
         }
 
         .sort-ctx-option:active {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .sort-ctx-option.selected {
@@ -1865,10 +1866,21 @@
 
         /* Filter button spring-pop on activate */
         @keyframes filter-spring {
-            0%   { transform: scale(1); }
-            35%  { transform: scale(0.84); }
-            65%  { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            35% {
+                transform: scale(0.84);
+            }
+
+            65% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .toolbar-btn.filter-spring {
@@ -2019,8 +2031,10 @@
                     </button>
                     <div id="filterChip" class="filter-chip" onclick="openFilterPicker()">
                         <span class="filter-chip-label" id="filterChipLabel">Talking</span>
-                        <button class="filter-chip-x" onclick="event.stopPropagation(); clearFilter()" aria-label="Clear filter">
-                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+                        <button class="filter-chip-x" onclick="event.stopPropagation(); clearFilter()"
+                            aria-label="Clear filter">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor"
+                                stroke-width="3.5" stroke-linecap="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>

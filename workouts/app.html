@@ -2678,7 +2678,8 @@
             const isRest = workout.exercises.length === 0;
             document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay + 1}`;
             document.getElementById('workoutName').textContent = workout.name;
-            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${workout.exercises.length * 4} Sets Total`;
+            const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets || 0), 0);
+            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${totalSets} Sets Total`;
             renderExercises();
         }
         function renderExercises() {
@@ -3012,7 +3013,7 @@
                     // Refresh UI
                     renderRecentLogs();
                     updateStats();
-                    if (document.getElementById('historyTab').style.display !== 'none') {
+                    if (document.getElementById('historyTab').style.display === 'block') {
                         renderFullHistory();
                     }
                     // Success animation for save button
@@ -3248,7 +3249,7 @@
                 // Refresh UI
                 renderRecentLogs();
                 updateStats();
-                if (document.getElementById('historyTab').style.display !== 'none') {
+                if (document.getElementById('historyTab').style.display === 'block') {
                     renderFullHistory();
                 }
                 // Keep the row showing "Deleted!" - don't re-render
@@ -3264,7 +3265,7 @@
             const date = new Date(log.date);
             let html = `<p class="text-muted m-b-16">${formatDateFull(date)}</p>`;
             log.exercises.forEach(ex => {
-                const exerciseId = ex.exerciseId;
+                const exerciseId = ex.id || ex.exerciseId;
                 let volumeLbs = 0;
                 const setsHtml = ex.sets.map((set, i) => {
                     const weightLbs = displayWeight(set.weight);
@@ -3399,7 +3400,10 @@
         }
         function renderPlanView() {
             const container = document.getElementById('planDays');
-            const labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday (Off)', 'Thursday', 'Friday', 'Saturday'];
+            const labels = dayNames.map((day, idx) => {
+                const w = getWorkoutData(idx);
+                return w.exercises.length === 0 ? `${day} (Off)` : day;
+            });
             container.innerHTML = labels.map((label, idx) => {
                 const workout = getWorkoutData(idx);
                 const isRest = workout.exercises.length === 0;
