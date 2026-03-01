@@ -167,6 +167,20 @@ devices:
   .stats-table td.diff-pos { color: #228B22; font-weight: 700; }
   .stats-table td.diff-neg { color: #C41C00; font-weight: 700; }
   .stats-table td.diff-zero { color: #555; font-weight: 700; }
+  .usba-badge {
+    display: inline-block;
+    margin-left: 7px;
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #555;
+    border: 1.5px solid #aaa;
+    border-radius: 4px;
+    padding: 1px 5px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
 </style>
 
 <table class="stats-table">
@@ -186,11 +200,11 @@ devices:
     <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30</td><td>14.45</td><td>2.0</td><td>29.5</td><td class="diff-neg">-0.50</td></tr>
     <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>20</td><td>8.6</td><td>2.0</td><td>17.5</td><td class="diff-neg">-2.50</td></tr>
     <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>45</td><td>14.6</td><td>3.0</td><td>44.7</td><td class="diff-neg">-0.30</td></tr>
-    <tr><td><strong>Govee Power Supply</strong></td><td>10</td><td>4.5</td><td>2.0</td><td>9.3</td><td class="diff-neg">-0.70</td></tr>
-    <tr><td><strong>Counterfeit AT&amp;T</strong></td><td>10</td><td>4.7</td><td>2.0</td><td>9.6</td><td class="diff-neg">-0.40</td></tr>
+    <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.5</td><td>2.0</td><td>9.3</td><td class="diff-neg">-0.70</td></tr>
+    <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.7</td><td>2.0</td><td>9.6</td><td class="diff-neg">-0.40</td></tr>
     <tr><td><strong>Counterfeit Samsung</strong></td><td>10</td><td>4.4</td><td>2.0</td><td>8.9</td><td class="diff-neg">-1.10</td></tr>
     <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36</td><td>4.9</td><td>1.8</td><td>8.9</td><td class="diff-neg">-0.46</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger (USB A Only)</strong></td><td>10.5</td><td>4.5</td><td>2.13</td><td>9.6</td><td class="diff-neg">-0.90</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5</td><td>4.5</td><td>2.13</td><td>9.6</td><td class="diff-neg">-0.90</td></tr>
     <tr><td><strong>Dealworthy Charger</strong></td><td>15</td><td>4.6</td><td>3.14</td><td>14.5</td><td class="diff-neg">-0.50</td></tr>
     <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td>4.74</td><td>2.43</td><td>11.54</td><td class="diff-neg">-0.46</td></tr>
     <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td>4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">+0.89</td></tr>
@@ -272,7 +286,7 @@ devices:
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
-      <td><strong>Counterfeit Chinese Wall Charger (USB A Only)</strong></td>
+      <td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td>
       <td>84mV</td>
       <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
@@ -308,7 +322,7 @@ devices:
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
-      <td><strong>Govee Power Supply</strong></td>
+      <td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td>
       <td>164mV</td>
       <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
@@ -320,7 +334,7 @@ devices:
       <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
-      <td><strong>Counterfeit AT&amp;T</strong></td>
+      <td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td>
       <td>260mV</td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
