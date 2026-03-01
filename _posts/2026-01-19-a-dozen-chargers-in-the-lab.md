@@ -218,12 +218,18 @@ devices:
 *Your results intro goes here.*
 
 <style>
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 32px;
+  }
   .stats-table {
     border-collapse: collapse;
     width: 100%;
+    min-width: 600px; /* Force scroll on mobile */
     font-family: sans-serif;
     font-size: calc(1em - 1px);
-    margin-bottom: 32px;
   }
   .stats-table th, .stats-table td {
     border: 1px solid #dddddd;
@@ -252,6 +258,7 @@ devices:
   }
 </style>
 
+<div class="table-wrapper">
 <table class="stats-table">
   <thead>
     <tr>
@@ -285,11 +292,13 @@ devices:
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
   </tbody>
 </table>
+</div>
 
 <style>
   table {
     border-collapse: collapse;
     width: 100%;
+    min-width: 600px; /* Force scroll on mobile */
     font-family: sans-serif;
     font-size: calc(1em - 1px);
   }
@@ -309,6 +318,7 @@ devices:
   .bolt-1 { color: #f87171; font-weight: 900; -webkit-text-stroke: 1px #f87171; }
 </style>
 
+<div class="table-wrapper">
 <table>
   <thead>
     <tr>
@@ -435,6 +445,7 @@ devices:
     </tr>
   </tbody>
 </table>
+</div>
 
 <p>
 <style>
@@ -759,6 +770,77 @@ devices:
     white-space: pre-wrap;
     background: transparent;
     overflow-y: visible; /* Scroll is handled by modal-text-panel now */
+  }
+
+  /* MOBILE OPTIMIZATIONS (Smart Media Queries) */
+  @media (max-width: 768px) {
+    .device-scroller {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 24px 15px;
+      height: 750px;
+    }
+    .device-card {
+      flex: 0 0 calc(100vw - 30px);
+      flex-direction: column;
+      height: 700px;
+      padding-left: 0;
+    }
+    .vertical-title-bar {
+      position: relative;
+      width: 100%;
+      height: 48px;
+    }
+    .vertical-title-text {
+      writing-mode: horizontal-tb;
+      transform: none;
+      font-size: 0.85em;
+      letter-spacing: 1.5px;
+    }
+    .device-content {
+      flex-direction: column;
+      padding: 16px;
+      gap: 16px;
+    }
+    .device-images {
+      width: 100%;
+      flex: none;
+      height: 220px;
+    }
+    .device-info {
+      padding-top: 5px;
+    }
+    .device-rating {
+      justify-content: flex-start;
+      font-size: 0.9em;
+    }
+
+    /* Modal Mobile */
+    .modal-wrapper {
+      width: 95%;
+      height: calc(100vh - 80px);
+    }
+    .modal-body {
+      flex-direction: column;
+    }
+    .modal-imgs {
+      flex: none !important;
+      height: 300px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .modal-text-panel {
+      flex: 1;
+    }
+    .modal-ratings-summary {
+      padding: 24px 24px 10px;
+    }
+    .modal-body p {
+      padding: 16px 24px 32px;
+    }
+    .modal-dismiss-hint {
+      display: none; /* Crowded on mobile */
+    }
   }
 </style>
 
