@@ -539,7 +539,7 @@ devices:
     justify-content: flex-end;
   }
   .device-card figcaption {
-    font-size: 0.95em;
+    font-size: 0.85em;
     font-family: sans-serif;
     line-height: 1.6;
     color: #444;
@@ -641,7 +641,7 @@ devices:
     flex-shrink: 0;
   }
   .modal-container {
-    background: #000;
+    background: #111;
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -666,7 +666,7 @@ devices:
     min-height: 0;
     display: flex;
     flex-direction: row;
-    background: #000;
+    background: #111;
   }
   .modal-body .modal-imgs {
     display: flex;
@@ -674,7 +674,7 @@ devices:
     gap: 0;
     flex: 2;
     min-height: 0;
-    background: #000;
+    background: #111;
   }
   .modal-body img {
     flex: 1;
@@ -750,7 +750,7 @@ devices:
     width: 110px;
   }
   .modal-body p {
-    font-size: 1.05em;
+    font-size: 0.95em;
     font-family: sans-serif;
     line-height: 1.6;
     color: #888;
