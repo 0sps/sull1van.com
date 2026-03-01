@@ -259,7 +259,7 @@ devices:
     align-self: flex-end;
     background: transparent;
     color: #808080;
-    border: 5px solid #808080;
+    border: 3px solid #808080;
     padding: 10px 20px;
     border-radius: 7.5px;
     cursor: pointer;
