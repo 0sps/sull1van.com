@@ -149,6 +149,209 @@ devices:
 
 *Your results intro goes here.*
 
+<style>
+  .stats-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: sans-serif;
+    margin-bottom: 32px;
+  }
+  .stats-table th, .stats-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  .stats-table th {
+    background-color: #f2f2f2;
+  }
+  .stats-table td.diff-pos { color: #228B22; font-weight: 700; }
+  .stats-table td.diff-neg { color: #C41C00; font-weight: 700; }
+  .stats-table td.diff-zero { color: #555; font-weight: 700; }
+</style>
+
+<table class="stats-table">
+  <thead>
+    <tr>
+      <th>Charger</th>
+      <th>Advertised (W)</th>
+      <th>Voltage (V)</th>
+      <th>Current (A)</th>
+      <th>Actual (W)</th>
+      <th>Difference (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Eero 15W Charger</strong></td><td>15</td><td>4.7</td><td>3.0</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
+    <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27</td><td>8.9</td><td>3.0</td><td>27.0</td><td class="diff-zero">0.00</td></tr>
+    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30</td><td>14.45</td><td>2.0</td><td>29.5</td><td class="diff-neg">-0.50</td></tr>
+    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>20</td><td>8.6</td><td>2.0</td><td>17.5</td><td class="diff-neg">-2.50</td></tr>
+    <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>45</td><td>14.6</td><td>3.0</td><td>44.7</td><td class="diff-neg">-0.30</td></tr>
+    <tr><td><strong>Govee Power Supply</strong></td><td>10</td><td>4.5</td><td>2.0</td><td>9.3</td><td class="diff-neg">-0.70</td></tr>
+    <tr><td><strong>Counterfeit AT&amp;T</strong></td><td>10</td><td>4.7</td><td>2.0</td><td>9.6</td><td class="diff-neg">-0.40</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td>10</td><td>4.4</td><td>2.0</td><td>8.9</td><td class="diff-neg">-1.10</td></tr>
+    <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36</td><td>4.9</td><td>1.8</td><td>8.9</td><td class="diff-neg">-0.46</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger (USB A Only)</strong></td><td>10.5</td><td>4.5</td><td>2.13</td><td>9.6</td><td class="diff-neg">-0.90</td></tr>
+    <tr><td><strong>Dealworthy Charger</strong></td><td>15</td><td>4.6</td><td>3.14</td><td>14.5</td><td class="diff-neg">-0.50</td></tr>
+    <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td>4.74</td><td>2.43</td><td>11.54</td><td class="diff-neg">-0.46</td></tr>
+    <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td>4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">+0.89</td></tr>
+    <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>4.6</td><td>3.04</td><td>14.0</td><td class="diff-neg">-1.00</td></tr>
+    <tr><td><strong>Anker ASPD053a</strong></td><td>40</td><td>14.55</td><td>2.7</td><td>39.4</td><td class="diff-neg">-0.60</td></tr>
+    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>15</td><td>4.68</td><td>3.03</td><td>14.21</td><td class="diff-neg">-0.79</td></tr>
+    <tr><td><strong>AOHI GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
+  </tbody>
+</table>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: sans-serif;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  /* These classes control the colors and force the bold thickness */
+  .bolt-5 { color: #004d00; font-weight: 900; -webkit-text-stroke: 1px #004d00; }
+  .bolt-4 { color: #228B22; font-weight: 900; -webkit-text-stroke: 1px #228B22; }
+  .bolt-3 { color: #32CD32; font-weight: 900; -webkit-text-stroke: 1px #32CD32; }
+  .bolt-2 { color: #D4A800; font-weight: 900; -webkit-text-stroke: 1px #D4A800; }
+  .bolt-1 { color: #C41C00; font-weight: 900; -webkit-text-stroke: 1px #C41C00; }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Charger</th>
+      <th>Vpp (mV)</th>
+      <th>Noise Rating (Graph 1)</th>
+      <th>Ripple Rating (Graphs 2 &amp; 3)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Macbook Pro M1</strong></td>
+      <td>24mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td>
+      <td>36mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Spigen PowerArc ArcStation Pro</strong></td>
+      <td>56mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Eero 15W Charger</strong></td>
+      <td>60mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>AOHI GaN Charger</strong></td>
+      <td>72mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker 637 Magnetic Charging Station</strong></td>
+      <td>76mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit Chinese Wall Charger (USB A Only)</strong></td>
+      <td>84mV</td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple 96W Macbook Charger</strong></td>
+      <td>92mV</td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple 30W Retail Charger</strong></td>
+      <td>96mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker ASPD053a</strong></td>
+      <td>128mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>iPhone 17 pro</strong></td>
+      <td>136mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td><strong>Shargeek Macintosh Charger</strong></td>
+      <td>152mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Govee Power Supply</strong></td>
+      <td>164mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Dealworthy Charger</strong></td>
+      <td>212mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit AT&amp;T</strong></td>
+      <td>260mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Amazon Kindle Charger</strong></td>
+      <td>288mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple HomePod Mini Charger</strong></td>
+      <td>308mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Vebner GaN 65W Charger</strong></td>
+      <td>332mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit Samsung</strong></td>
+      <td>468mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+  </tbody>
+</table>
+
 <p>
 <style>
   .device-scroller {
@@ -490,153 +693,4 @@ devices:
     if (e.key === 'Escape') closeModal();
   });
 </script>
-
-<style>
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    font-family: sans-serif;
-  }
-  th, td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  /* These classes control the colors and force the bold thickness */
-  .bolt-5 { color: #004d00; font-weight: 900; -webkit-text-stroke: 1px #004d00; }
-  .bolt-4 { color: #228B22; font-weight: 900; -webkit-text-stroke: 1px #228B22; }
-  .bolt-3 { color: #32CD32; font-weight: 900; -webkit-text-stroke: 1px #32CD32; }
-  .bolt-2 { color: #D4A800; font-weight: 900; -webkit-text-stroke: 1px #D4A800; }
-  .bolt-1 { color: #C41C00; font-weight: 900; -webkit-text-stroke: 1px #C41C00; }
-</style>
-
-<table>
-  <thead>
-    <tr>
-      <th>Charger</th>
-      <th>Vpp (mV)</th>
-      <th>Noise Rating (Graph 1)</th>
-      <th>Ripple Rating (Graphs 2 & 3)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Macbook Pro M1</strong></td>
-      <td>24mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td>
-      <td>36mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Spigen PowerArc ArcStation Pro</strong></td>
-      <td>56mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Eero 15W Charger</strong></td>
-      <td>60mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>AOHI GaN Charger</strong></td>
-      <td>72mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker 637 Magnetic Charging Station</strong></td>
-      <td>76mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit Chinese Wall Charger (USB A Only)</strong></td>
-      <td>84mV</td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple 96W Macbook Charger</strong></td>
-      <td>92mV</td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple 30W Retail Charger</strong></td>
-      <td>96mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker ASPD053a</strong></td>
-      <td>128mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>iPhone 17 pro</strong></td>
-      <td>136mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td><strong>Shargeek Macintosh Charger</strong></td>
-      <td>152mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Govee Power Supply</strong></td>
-      <td>164mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Dealworthy Charger</strong></td>
-      <td>212mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit AT&T</strong></td>
-      <td>260mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Amazon Kindle Charger</strong></td>
-      <td>288mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple HomePod Mini Charger</strong></td>
-      <td>308mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Vebner GaN 65W Charger</strong></td>
-      <td>332mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit Samsung</strong></td>
-      <td>468mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-  </tbody>
-</table>
 </p>
