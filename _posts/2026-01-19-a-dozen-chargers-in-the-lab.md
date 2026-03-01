@@ -446,6 +446,7 @@ devices:
     flex-direction: row;
     padding: 24px;
     gap: 24px;
+    min-height: 0;
   }
   .device-images {
     display: flex;
@@ -467,6 +468,7 @@ devices:
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    min-height: 0;
   }
   .device-rating {
     font-size: 1em;
@@ -486,6 +488,21 @@ devices:
     word-wrap: break-word;
     flex: 1;
     white-space: pre-wrap;
+    padding-right: 12px;
+  }
+  .device-card figcaption::-webkit-scrollbar {
+    width: 8px;
+  }
+  .device-card figcaption::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.03);
+    border-radius: 4px;
+  }
+  .device-card figcaption::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  .device-card figcaption::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.15);
   }
   .expand-btn {
     align-self: flex-end;
@@ -589,15 +606,16 @@ devices:
     flex: 1;
     min-height: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background: #000;
   }
   .modal-body .modal-imgs {
     display: flex;
     flex-direction: column;
     gap: 0;
-    flex: 1;
+    flex: 2;
     min-height: 0;
+    background: #000;
   }
   .modal-body img {
     flex: 1;
@@ -606,12 +624,28 @@ devices:
     object-fit: contain;
   }
   .modal-body p {
-    font-size: 1.05em;
-    line-height: 1.6;
-    color: #333;
-    margin: 10px 0 0;
-    flex-shrink: 0;
+    font-size: 1.15em;
+    line-height: 1.7;
+    color: #eee;
+    margin: 0;
+    padding: 40px;
+    flex: 1;
+    overflow-y: auto;
     white-space: pre-wrap;
+    background: #111;
+  }
+  .modal-body p::-webkit-scrollbar {
+    width: 10px;
+  }
+  .modal-body p::-webkit-scrollbar-track {
+    background: #111;
+  }
+  .modal-body p::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+  }
+  .modal-body p::-webkit-scrollbar-thumb:hover {
+    background: #444;
   }
 </style>
 
