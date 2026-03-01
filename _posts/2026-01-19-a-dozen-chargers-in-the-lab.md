@@ -368,6 +368,7 @@ devices:
 
 <p>
 <style>
+  body { overflow-x: hidden; }
   .device-scroller {
     width: 100vw;
     margin-left: calc(50% - 50vw);
