@@ -159,7 +159,7 @@ devices:
   .stats-table th, .stats-table td {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px 10px;
+    padding: 7px 10px;
   }
   .stats-table th {
     background-color: #f2f2f2;
@@ -212,7 +212,7 @@ devices:
   th, td {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 7px 8px;
   }
   th {
     background-color: #f2f2f2;
