@@ -2,7 +2,30 @@
 layout: default
 ---
 <h1>{{ page.title }}</h1>
-<div>By <b><a href="{{ site.baseurl }}/">{{ site.author }}</a></b> on {{ page.date | date: "%d %b %Y" }}</div>
+<div>By <b><a href="{{ site.baseurl }}/" style="color: inherit;">{{ site.author }}</a></b> on {{ page.date | date: "%d
+  %b %Y" }}</div>
+<div id="mobile-desktop-hint" style="display:none; font-size: 0.8em; margin-top: 0.25em; color: #777;">
+  Showing the mobile version. If it looks weird, you can <a href="#" onclick="forceDesktopView(); return false;">switch
+    to desktop</a>.
+</div>
+<script>
+  (function () {
+    // Show hint only on narrow screens (mobile)
+    if (window.innerWidth < 768) {
+      document.getElementById('mobile-desktop-hint').style.display = 'block';
+    }
+  })();
+  function forceDesktopView() {
+    var meta = document.querySelector('meta[name="viewport"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'viewport';
+      document.head.appendChild(meta);
+    }
+    meta.content = 'width=1200';
+    document.getElementById('mobile-desktop-hint').style.display = 'none';
+  }
+</script>
 
 {{ content }}
 
