@@ -302,11 +302,11 @@ devices:
     background-color: #f2f2f2;
   }
   /* These classes control the colors and force the bold thickness */
-  .bolt-5 { color: #004d00; font-weight: 900; -webkit-text-stroke: 1px #004d00; }
-  .bolt-4 { color: #228B22; font-weight: 900; -webkit-text-stroke: 1px #228B22; }
-  .bolt-3 { color: #32CD32; font-weight: 900; -webkit-text-stroke: 1px #32CD32; }
-  .bolt-2 { color: #D4A800; font-weight: 900; -webkit-text-stroke: 1px #D4A800; }
-  .bolt-1 { color: #C41C00; font-weight: 900; -webkit-text-stroke: 1px #C41C00; }
+  .bolt-5 { color: #2ecc71; font-weight: 900; -webkit-text-stroke: 1px #2ecc71; }
+  .bolt-4 { color: #4ade80; font-weight: 900; -webkit-text-stroke: 1px #4ade80; }
+  .bolt-3 { color: #86efac; font-weight: 900; -webkit-text-stroke: 1px #86efac; }
+  .bolt-2 { color: #facc15; font-weight: 900; -webkit-text-stroke: 1px #facc15; }
+  .bolt-1 { color: #f87171; font-weight: 900; -webkit-text-stroke: 1px #f87171; }
 </style>
 
 <table>
@@ -747,13 +747,13 @@ devices:
     text-transform: uppercase;
     font-size: 0.85em;
     letter-spacing: 1px;
-    width: 80px;
+    width: 110px;
   }
   .modal-body p {
     font-size: 1.05em;
     font-family: sans-serif;
     line-height: 1.6;
-    color: #eee;
+    color: #888;
     margin: 0;
     padding: 20px 40px 40px;
     white-space: pre-wrap;
