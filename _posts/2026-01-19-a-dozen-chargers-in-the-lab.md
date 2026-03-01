@@ -256,6 +256,18 @@ devices:
     vertical-align: middle;
     white-space: nowrap;
   }
+  @media (prefers-color-scheme: dark) {
+    .stats-table th, .stats-table td {
+      border-color: #2a2a2a;
+    }
+    .stats-table th {
+      background-color: #181818;
+    }
+    .usba-badge {
+      color: #888;
+      border-color: #444;
+    }
+  }
 </style>
 
 <div class="table-wrapper">
@@ -316,6 +328,14 @@ devices:
   .bolt-3 { color: #86efac; font-weight: 900; -webkit-text-stroke: 1px #86efac; }
   .bolt-2 { color: #facc15; font-weight: 900; -webkit-text-stroke: 1px #facc15; }
   .bolt-1 { color: #f87171; font-weight: 900; -webkit-text-stroke: 1px #f87171; }
+  @media (prefers-color-scheme: dark) {
+    th, td {
+      border-color: #2a2a2a;
+    }
+    th {
+      background-color: #181818;
+    }
+  }
 </style>
 
 <div class="table-wrapper">
