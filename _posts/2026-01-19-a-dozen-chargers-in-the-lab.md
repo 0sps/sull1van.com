@@ -681,6 +681,7 @@ devices:
     min-height: 0;
     width: 100%;
     object-fit: contain;
+    cursor: zoom-in;
   }
   .modal-body p {
     font-size: 1.05em;
@@ -688,11 +689,9 @@ devices:
     line-height: 1.6;
     color: #eee;
     margin: 0;
-    padding: 40px;
-    flex: 1;
-    overflow-y: auto;
+    padding: 20px 40px 40px;
     white-space: pre-wrap;
-    background: #111;
+    background: transparent;
   }
   .modal-body p::-webkit-scrollbar {
     width: 10px;
@@ -706,6 +705,60 @@ devices:
   }
   .modal-body p::-webkit-scrollbar-thumb:hover {
     background: #444;
+  }
+  .modal-text-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+    overflow-y: auto;
+  }
+  .modal-text-panel::-webkit-scrollbar {
+    width: 10px;
+  }
+  .modal-text-panel::-webkit-scrollbar-track {
+    background: #111;
+  }
+  .modal-text-panel::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+  }
+  .modal-text-panel::-webkit-scrollbar-thumb:hover {
+    background: #444;
+  }
+  .modal-ratings-summary {
+    padding: 30px 40px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .modal-ratings-summary .rating-item {
+    font-family: sans-serif;
+    color: #eee;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .modal-ratings-summary .label {
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    width: 80px;
+  }
+  .modal-body p {
+    font-size: 1.05em;
+    font-family: sans-serif;
+    line-height: 1.6;
+    color: #eee;
+    margin: 0;
+    padding: 20px 40px 40px;
+    white-space: pre-wrap;
+    background: transparent;
+    overflow-y: visible; /* Scroll is handled by modal-text-panel now */
   }
 </style>
 
@@ -760,14 +813,32 @@ devices:
     const content = document.getElementById('modal-content');
 
     let imgsHtml = '';
-    if(item.img1) imgsHtml += `<img src="${item.img1}" alt="${item.name}">`;
-    if(item.img2) imgsHtml += `<img src="${item.img2}" alt="${item.name}">`;
+    if(item.img1) imgsHtml += `<a href="${item.img1}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img1}" alt="${item.name}"></a>`;
+    if(item.img2) imgsHtml += `<a href="${item.img2}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img2}" alt="${item.name}"></a>`;
 
     document.getElementById('modal-title').textContent = item.name;
 
+    const getBolts = (rating) => {
+      if (rating === 'N/A' || rating === undefined || rating === null) return '<span style="color:#666; font-weight:700;">N/A</span>';
+      let b = '';
+      for (let i = 0; i < rating; i++) b += '⚡︎';
+      return `<span class="bolt-${rating}" style="font-size: 1.3em;">${b}</span>`;
+    };
+
+    const noiseBolts = getBolts(item.noise_rating);
+    const rippleBolts = getBolts(item.ripple_rating);
+    const overallBolts = getBolts(item.overall_rating);
+
     content.innerHTML = `
       <div class="modal-imgs">${imgsHtml}</div>
-      <p>${(item.caption || '').trim()}</p>
+      <div class="modal-text-panel">
+        <div class="modal-ratings-summary">
+          <div class="rating-item"><span class="label">Noise:</span> ${noiseBolts}</div>
+          <div class="rating-item"><span class="label">Ripple:</span> ${rippleBolts}</div>
+          <div class="rating-item"><span class="label">Overall:</span> ${overallBolts}</div>
+        </div>
+        <p>${(item.caption || '').trim()}</p>
+      </div>
     `;
 
     // Set transform-origin to the card's position so it appears to grow from there
