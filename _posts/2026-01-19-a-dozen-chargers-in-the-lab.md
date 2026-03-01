@@ -406,6 +406,7 @@ devices:
   }
   .device-card {
     flex: 0 0 820px;
+    height: 650px;
     margin: 0;
     position: relative;
     display: flex;
@@ -481,8 +482,9 @@ devices:
     justify-content: flex-end;
   }
   .device-card figcaption {
-    font-size: 1.1em;
-    line-height: 1.65;
+    font-size: 0.95em;
+    font-family: sans-serif;
+    line-height: 1.6;
     color: #444;
     overflow-y: auto;
     word-wrap: break-word;
@@ -624,8 +626,9 @@ devices:
     object-fit: contain;
   }
   .modal-body p {
-    font-size: 1.15em;
-    line-height: 1.7;
+    font-size: 1.05em;
+    font-family: sans-serif;
+    line-height: 1.6;
     color: #eee;
     margin: 0;
     padding: 40px;
@@ -672,9 +675,7 @@ devices:
             {% for i in (1..rating_num) %}⚡︎{% endfor %}
           </span>
         </div>
-        <figcaption>
-          {{ item.caption }}
-        </figcaption>
+        <figcaption>{{ item.caption | strip }}</figcaption>
         <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Click to Expand</button>
       </div>
     </div>
@@ -709,7 +710,7 @@ devices:
 
     content.innerHTML = `
       <div class="modal-imgs">${imgsHtml}</div>
-      <p>${item.caption || ''}</p>
+      <p>${(item.caption || '').trim()}</p>
     `;
 
     // Set transform-origin to the card's position so it appears to grow from there
