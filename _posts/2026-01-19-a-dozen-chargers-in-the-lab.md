@@ -513,6 +513,10 @@ devices:
     background: rgba(0,0,0,0.82);
     backdrop-filter: blur(6px);
   }
+  #device-modal.modal-open.modal-danger {
+    background: rgba(90,0,0,0.88);
+    backdrop-filter: blur(6px);
+  }
   .modal-dismiss-hint {
     position: absolute;
     font-family: sans-serif;
@@ -546,7 +550,7 @@ devices:
     flex-shrink: 0;
   }
   .modal-container {
-    background: #fff;
+    background: #000;
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -565,17 +569,18 @@ devices:
     opacity: 1;
   }
   .modal-body {
-    padding: 24px 40px;
+    padding: 0;
     overflow: hidden;
     flex: 1;
     min-height: 0;
     display: flex;
     flex-direction: column;
+    background: #000;
   }
   .modal-body .modal-imgs {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
     flex: 1;
     min-height: 0;
   }
@@ -584,8 +589,6 @@ devices:
     min-height: 0;
     width: 100%;
     object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
   }
   .modal-body p {
     font-size: 1.05em;
@@ -693,6 +696,20 @@ devices:
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
+  });
+
+  // Backdrop hover: turn red when mouse is over the bare backdrop, not the modal content
+  const modalEl = document.getElementById('device-modal');
+  modalEl.addEventListener('mousemove', (e) => {
+    const wrapper = modalEl.querySelector('.modal-wrapper');
+    if (wrapper && wrapper.contains(e.target)) {
+      modalEl.classList.remove('modal-danger');
+    } else {
+      modalEl.classList.add('modal-danger');
+    }
+  });
+  modalEl.addEventListener('mouseleave', () => {
+    modalEl.classList.remove('modal-danger');
   });
 </script>
 </p>
