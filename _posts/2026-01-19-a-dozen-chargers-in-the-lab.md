@@ -8,31 +8,42 @@ devices:
     img1: "/assets/images/macbook pro 1.png"
     img2: "/assets/images/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: |
+      The macbook pro has the cleanest power signature of the devices I tested. This was to be expected, since a MacBook Pro is just pulling DC current from its internal battery and sending it out. No AC->DC conversion required. 
+      
+      There's also no high frequency switching noice, or any noticeable ripple. This makes sense, since it doesn't have to swtich thousands of times a second to step down AC voltage into something manageable.
     rating: 5
+    
   - name: "Anker 621 MAG GO 5000mAh Battery"
     img1: "/assets/images/Anker a1654 Maggo power bank.png"
     img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: "Again, another battery, so good power quality is to be expected. Nothing major here. No noise, clean power signature. This is a good one to have."
     rating: 5
   - name: "Spigen PowerArc ArcStation Pro"
     img1: "/assets/images/Spigen PowerArc 1.png"
     img2: "/assets/images/Spigen PowerArc 2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: |
+      I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. the zoomed-out graph looks pretty similar to the one in this image, so i'm just showing you the zoomed in one here. Good charger. 
     rating: 5
   - name: "Eero 15W Charger"
     img1: "/assets/images/eero.png"
     img2: "/assets/images/eero2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: |
+      This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC noise (which would show up as a higher 'floor' on the purple graph). It's got a sawtooth waveform, so there is noise, but it is pretty small. 
+      
+      Incredible charger, especially for its size.
     rating: 5
   - name: "AOHI GaN Charger"
     img1: "/assets/images/AOHI GaN.png"
     img2: "/assets/images/AOHI GaN2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: |
+      This one performed very well. It is marketed as a GaN charger, and uses some components that are so new they have never been used in consumer chargers before. So this charger really should be considered a flagship. for that reason, I'm a little disappointed the power signature isn't better. It IS very good, but for how bleeding-edge this charger is marketed out to me, it performs comparatively to chargers half its size and price.
+
+      One future test I might do is examine the charger at higher power output. I didn't push it to the 100W limit in testing, but that is becuase I was using small wires that could have overheated. the charger might perform better at higher power output.
     rating: 5
   - name: "Anker 637 Magnetic Charging Station"
     img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
@@ -474,6 +485,7 @@ devices:
     overflow-y: auto;
     word-wrap: break-word;
     flex: 1;
+    white-space: pre-wrap;
   }
   .expand-btn {
     align-self: flex-end;
@@ -599,6 +611,7 @@ devices:
     color: #333;
     margin: 10px 0 0;
     flex-shrink: 0;
+    white-space: pre-wrap;
   }
 </style>
 
