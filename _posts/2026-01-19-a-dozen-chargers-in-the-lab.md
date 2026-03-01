@@ -13,6 +13,9 @@ devices:
       
       There's also no high frequency switching noice, or any noticeable ripple. This makes sense, since it doesn't have to swtich thousands of times a second to step down AC voltage into something manageable.
     rating: 5
+    noise_rating: 5
+    ripple_rating: "N/A"
+    overall_rating: 5
     
   - name: "Anker 621 MAG GO 5000mAh Battery"
     img1: "/assets/images/Anker a1654 Maggo power bank.png"
@@ -20,6 +23,9 @@ devices:
     bg: "hsl(120, 32%, 93%)"
     caption: "Again, another battery, so good power quality is to be expected. Nothing major here. No noise, clean power signature. This is a good one to have."
     rating: 5
+    noise_rating: 5
+    ripple_rating: 4
+    overall_rating: 5
   - name: "Spigen PowerArc ArcStation Pro"
     img1: "/assets/images/Spigen PowerArc 1.png"
     img2: "/assets/images/Spigen PowerArc 2.png"
@@ -27,6 +33,9 @@ devices:
     caption: |
       I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. the zoomed-out graph looks pretty similar to the one in this image, so i'm just showing you the zoomed in one here. Good charger. 
     rating: 5
+    noise_rating: 5
+    ripple_rating: 5
+    overall_rating: 5
   - name: "Eero 15W Charger"
     img1: "/assets/images/eero.png"
     img2: "/assets/images/eero2.png"
@@ -36,6 +45,9 @@ devices:
       
       Incredible charger, especially for its size.
     rating: 5
+    noise_rating: 5
+    ripple_rating: 3
+    overall_rating: 5
   - name: "AOHI GaN Charger"
     img1: "/assets/images/AOHI GaN.png"
     img2: "/assets/images/AOHI GaN2.png"
@@ -45,89 +57,134 @@ devices:
 
       One future test I might do is examine the charger at higher power output. I didn't push it to the 100W limit in testing, but that is becuase I was using small wires that could have overheated. the charger might perform better at higher power output.
     rating: 5
+    noise_rating: 5
+    ripple_rating: 5
+    overall_rating: 5
   - name: "Anker 637 Magnetic Charging Station"
     img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
     img2: "/assets/images/Anker 637 magnetic charging station USB C.png"
     bg: "hsl(120, 32%, 93%)"
     caption: ""
     rating: 5
+    noise_rating: 5
+    ripple_rating: 5
+    overall_rating: 5
   - name: "Counterfeit Chinese Wall Charger (USB A Only)"
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: ""
     rating: 4
+    noise_rating: 4
+    ripple_rating: 3
+    overall_rating: 4
   - name: "Apple 96W Macbook Charger"
     img1: "/assets/images/apple96W.png"
     img2: "/assets/images/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: ""
     rating: 4
+    noise_rating: 4
+    ripple_rating: 4
+    overall_rating: 4
   - name: "Apple 30W Retail Charger"
     img1: "/assets/images/apple retail.png"
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: "Advertised at 30W, actual measured power was 29.5W. Solid performance."
     rating: 4
+    noise_rating: 3
+    ripple_rating: 3
+    overall_rating: 4
   - name: "Anker ASPD053a"
     img1: "/assets/images/Anker ASP053a.png"
     img2: "/assets/images/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
     caption: ""
     rating: 3
+    noise_rating: 3
+    ripple_rating: 3
+    overall_rating: 3
   - name: "iPhone 17 pro"
     img1: "/assets/images/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
     caption: "Over-performed! Advertised at 4.5W but pulled 5.4W during testing."
     rating: 3
+    noise_rating: 3
+    ripple_rating: "N/A"
+    overall_rating: 3
   - name: "Shargeek Macintosh Charger"
     img1: "/assets/images/Shargeek Fun Macintosh Charger.png"
     img2: "/assets/images/Shargeek Fun Macintosh Charger2.png"
     bg: "hsl(60, 32%, 93%)"
     caption: "Hit its 27W target exactly. Perfect performance."
     rating: 3
+    noise_rating: 3
+    ripple_rating: 3
+    overall_rating: 3
   - name: "Govee Power Supply"
     img1: "/assets/images/Govee 1.png"
     img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: ""
     rating: 2
+    noise_rating: 2
+    ripple_rating: 3
+    overall_rating: 2
   - name: "Dealworthy Charger"
     img1: "/assets/images/Dealworthy 1.png"
     img2: "/assets/images/Dealworthy  2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: ""
     rating: 1
+    noise_rating: 2
+    ripple_rating: 2
+    overall_rating: 1
   - name: "Counterfeit AT&T"
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: ""
     rating: 2
+    noise_rating: 3
+    ripple_rating: 3
+    overall_rating: 2
   - name: "Amazon Kindle Charger"
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: ""
     rating: 1
+    noise_rating: 2
+    ripple_rating: 1
+    overall_rating: 1
   - name: "Apple HomePod Mini Charger"
     img1: "/assets/images/Apple Homepod Mini.png"
     img2: "/assets/images/Apple Homepod Mini 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: ""
     rating: 1
+    noise_rating: 1
+    ripple_rating: 2
+    overall_rating: 1
   - name: "Vebner GaN 65W Charger"
     img1: "/assets/images/VEBNERgan.png"
     img2: "/assets/images/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: ""
     rating: 1
+    noise_rating: 1
+    ripple_rating: 1
+    overall_rating: 1
   - name: "Counterfeit Samsung"
     img1: "/assets/images/Counerfeit Samsung 1.png"
     img2: "/assets/images/Counerfeit Samsung 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: ""
     rating: 1
+    noise_rating: 1
+    ripple_rating: 1
+    overall_rating: 1
 ---
 
 ## A Dozen Chargers in the Lab: Apple is Okay, but Not the Best
