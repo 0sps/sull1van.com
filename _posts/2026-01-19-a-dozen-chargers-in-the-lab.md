@@ -516,6 +516,7 @@ devices:
     position: relative;
     width: 90%;
     max-width: 1100px;
+    height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
   }
@@ -528,11 +529,13 @@ devices:
     margin-bottom: 12px;
     padding-left: 4px;
     transition: opacity 0.3s ease;
+    flex-shrink: 0;
   }
   .modal-container {
     background: #fff;
     width: 100%;
-    max-height: 85vh;
+    flex: 1;
+    min-height: 0;
     border-radius: 12px;
     position: relative;
     overflow: hidden;
@@ -547,43 +550,35 @@ devices:
     transform: scale(1);
     opacity: 1;
   }
-  /* Custom scrollbar for modal */
-  .modal-body::-webkit-scrollbar {
-    width: 14px;
-  }
-  .modal-body::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  .modal-body::-webkit-scrollbar-thumb {
-    background: #bbb;
-    border-radius: 10px;
-  }
-  .modal-body::-webkit-scrollbar-thumb:hover {
-    background: #999;
-  }
-
   .modal-body {
-    padding: 40px;
-    overflow-y: auto;
+    padding: 24px 40px;
+    overflow: hidden;
     flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
   .modal-body .modal-imgs {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
   }
   .modal-body img {
-    max-width: 100%;
-    height: auto;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.1);
   }
   .modal-body p {
-    font-size: 1.15em;
+    font-size: 1.05em;
     line-height: 1.6;
     color: #333;
-    margin-top: 0;
+    margin: 10px 0 0;
+    flex-shrink: 0;
   }
 </style>
 
@@ -645,16 +640,9 @@ devices:
 
     document.getElementById('modal-title').textContent = item.name;
 
-    let bolts = '';
-    for(let i=0; i<item.rating; i++) bolts += '⚡︎';
-
     content.innerHTML = `
-      <div class="device-rating" style="margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; justify-content: flex-start;">
-        <span style="font-weight: 700; color: #666; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Overall rating:</span>
-        <span class="bolt-${item.rating}" style="font-size: 1.5em; margin-left:15px;">${bolts}</span>
-      </div>
       <div class="modal-imgs">${imgsHtml}</div>
-      <p style="margin-top: 25px; font-size: 1.2em; line-height: 1.7;">${item.caption || ''}</p>
+      <p>${item.caption || ''}</p>
     `;
 
     // Set transform-origin to the card's position so it appears to grow from there
