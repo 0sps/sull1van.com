@@ -618,10 +618,10 @@ devices:
     background: rgba(0, 0, 0, 0.04);
     color: #555;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    padding: 8px 22px;
+    padding: 10px 44px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.72em;
+    font-size: 0.9em;
     font-weight: 700;
     font-family: sans-serif;
     text-transform: uppercase;
