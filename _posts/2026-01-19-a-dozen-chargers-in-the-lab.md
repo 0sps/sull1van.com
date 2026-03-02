@@ -558,12 +558,12 @@ devices:
   }
   .card-title-above {
     font-family: sans-serif;
-    font-size: 0.8em;
+    font-size: 1.6em;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2.5px;
     color: rgba(0, 0, 0, 0.45);
-    padding-left: 46px;
+    padding-left: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -582,23 +582,14 @@ devices:
     display: flex;
     flex-direction: row;
     border-radius: 20px;
-    padding: 0 0 0 42px;
+    padding: 0;
     border: 1px solid rgba(0,0,0,0.08);
     box-sizing: border-box;
     overflow: hidden;
     transition: transform 0.2s ease;
   }
   .vertical-title-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 42px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
+    display: none;
   }
   .vertical-title-text {
     writing-mode: vertical-rl;
