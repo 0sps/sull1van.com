@@ -482,7 +482,7 @@ devices:
     padding: 24px 10%;
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
-    height: 680px;
+    height: 645px;
     box-sizing: border-box;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
@@ -550,9 +550,33 @@ devices:
     pointer-events: none;
     margin-top: 2px;
   }
-  .device-card {
+  .card-column {
     flex: 0 0 820px;
-    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card-title-above {
+    font-family: sans-serif;
+    font-size: 0.8em;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: rgba(0, 0, 0, 0.45);
+    padding-left: 46px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card-title-above {
+      color: rgba(255, 255, 255, 0.35);
+    }
+  }
+  .device-card {
+    flex: 1;
+    height: 565px;
     margin: 0;
     position: relative;
     display: flex;
@@ -916,12 +940,19 @@ devices:
       margin-left: 0;
       margin-right: 0;
       padding: 24px 15px;
-      height: 730px;
+      height: 700px;
+    }
+    .card-column {
+      flex: 0 0 calc(100vw - 30px);
+    }
+    .card-title-above {
+      padding-left: 0;
+      text-align: center;
+      font-size: 0.75em;
     }
     .device-card {
-      flex: 0 0 calc(100vw - 30px);
       flex-direction: column;
-      height: 680px;
+      height: 640px;
       padding-left: 0;
     }
     .vertical-title-bar {
@@ -992,29 +1023,32 @@ devices:
 
 <div class="device-scroller" id="deviceScroller">
   {% for item in page.devices %}
-  <div class="device-card" style="background: {{ item.bg }};">
-    <div class="vertical-title-bar">
-      <div class="vertical-title-text">{{ item.name }}</div>
-    </div>
-    <div class="device-content">
-      <div class="device-images">
-        {% if item.img1 %}
-        <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
-        {% endif %}
-        {% if item.img2 %}
-        <img src="{{ item.img2 }}" alt="{{ item.name }} 2">
-        {% endif %}
+  <div class="card-column">
+    <div class="card-title-above">{{ item.name }}</div>
+    <div class="device-card" style="background: {{ item.bg }};">
+      <div class="vertical-title-bar">
+        <div class="vertical-title-text">{{ item.name }}</div>
       </div>
-      <div class="device-info">
-        <div class="device-rating rating-badge-{{ item.rating }}">
-          <span style="text-transform: uppercase; letter-spacing: 0.5px;">Overall rating:</span>
-          <span class="bolt-{{ item.rating }}" style="font-size: 1.2em; line-height: 1;">
-            {% assign rating_num = item.rating | plus: 0 %}
-            {% for i in (1..rating_num) %}⚡︎{% endfor %}
-          </span>
+      <div class="device-content">
+        <div class="device-images">
+          {% if item.img1 %}
+          <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
+          {% endif %}
+          {% if item.img2 %}
+          <img src="{{ item.img2 }}" alt="{{ item.name }} 2">
+          {% endif %}
         </div>
-        <figcaption>{{ item.caption | strip }}</figcaption>
-        <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Expand</button>
+        <div class="device-info">
+          <div class="device-rating rating-badge-{{ item.rating }}">
+            <span style="text-transform: uppercase; letter-spacing: 0.5px;">Overall rating:</span>
+            <span class="bolt-{{ item.rating }}" style="font-size: 1.2em; line-height: 1;">
+              {% assign rating_num = item.rating | plus: 0 %}
+              {% for i in (1..rating_num) %}⚡︎{% endfor %}
+            </span>
+          </div>
+          <figcaption>{{ item.caption | strip }}</figcaption>
+          <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Expand</button>
+        </div>
       </div>
     </div>
   </div>
