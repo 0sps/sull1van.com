@@ -1129,5 +1129,110 @@ devices:
   modalEl.addEventListener('mouseleave', () => {
     modalEl.classList.remove('modal-danger');
   });
+
+  // ─── Custom Scrollbar Sync ───
+  (function() {
+    const scroller = document.getElementById('deviceScroller');
+    const track = document.getElementById('customTrack');
+    const thumb = document.getElementById('customThumb');
+    if (!scroller || !track || !thumb) return;
+
+    function updateThumb() {
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      if (scrollableWidth <= 0) {
+        thumb.style.display = 'none';
+        return;
+      }
+      thumb.style.display = 'block';
+      const trackWidth = track.clientWidth;
+      const thumbWidth = Math.max(60, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
+      const scrollPercent = scroller.scrollLeft / scrollableWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      thumb.style.width = thumbWidth + 'px';
+      thumb.style.left = (scrollPercent * maxThumbLeft) + 'px';
+    }
+
+    scroller.addEventListener('scroll', updateThumb);
+    window.addEventListener('resize', updateThumb);
+
+    // Drag support
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartLeft = 0;
+
+    thumb.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartLeft = parseFloat(thumb.style.left) || 0;
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStartX;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
+      const scrollPercent = newLeft / maxThumbLeft;
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+      }
+    });
+
+    // Click on track to jump
+    track.addEventListener('click', (e) => {
+      if (e.target === thumb) return;
+      const rect = track.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const targetLeft = clickX - thumbWidth / 2;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const scrollPercent = Math.max(0, Math.min(1, targetLeft / maxThumbLeft));
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    });
+
+    // Touch drag support
+    thumb.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartLeft = parseFloat(thumb.style.left) || 0;
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - dragStartX;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
+      const scrollPercent = newLeft / maxThumbLeft;
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Initial render
+    setTimeout(updateThumb, 100);
+    // Also update after images load
+    scroller.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', updateThumb);
+    });
+  })();
 </script>
 </p>
