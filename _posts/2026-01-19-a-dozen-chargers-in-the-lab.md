@@ -540,6 +540,7 @@ devices:
   .device-images {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 12px;
     flex: 0 0 400px;
   }
@@ -944,8 +945,6 @@ devices:
 
 <div id="device-modal" onclick="closeModal()">
   <span class="modal-dismiss-hint bottom">click anywhere to dismiss</span>
-  <span class="modal-dismiss-hint left">click anywhere to dismiss</span>
-  <span class="modal-dismiss-hint right">click anywhere to dismiss</span>
   <div class="modal-wrapper" onclick="event.stopPropagation()">
     <div class="modal-header">
       <div id="modal-title" class="modal-title"></div>
