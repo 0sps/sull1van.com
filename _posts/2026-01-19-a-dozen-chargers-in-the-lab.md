@@ -698,8 +698,9 @@ devices:
     background: none;
     border: none;
     color: rgba(180, 60, 60, 0.7);
-    font-size: 1.6em;
+    font-size: calc(1.6em + 1px);
     font-weight: 900;
+    -webkit-text-stroke: 1.5px currentColor;
     cursor: pointer;
     padding: 4px 10px;
     line-height: 1;
@@ -780,6 +781,7 @@ devices:
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
     background: #111;
     overflow-y: auto;
   }
@@ -797,7 +799,10 @@ devices:
     background: #444;
   }
   .modal-ratings-summary {
-    padding: 30px 40px 10px 20px;
+    padding: 30px 0 10px 0;
+    max-width: 354px;
+    width: 100%;
+    box-sizing: border-box;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     display: flex;
     flex-direction: column;
@@ -825,7 +830,10 @@ devices:
     line-height: 1.6;
     color: #888;
     margin: 0;
-    padding: 20px 40px 40px 20px;
+    padding: 20px 0 40px 0;
+    max-width: 354px;
+    width: 100%;
+    box-sizing: border-box;
     white-space: pre-wrap;
     background: transparent;
     overflow-y: visible; /* Scroll is handled by modal-text-panel now */
