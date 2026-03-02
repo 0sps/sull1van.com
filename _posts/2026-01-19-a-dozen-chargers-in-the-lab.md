@@ -558,11 +558,11 @@ devices:
   }
   .card-title-above {
     font-family: sans-serif;
-    font-size: 1.6em;
+    font-size: 1.05em;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.65);
     padding-left: 4px;
     white-space: nowrap;
     overflow: hidden;
@@ -571,7 +571,7 @@ devices:
   }
   @media (prefers-color-scheme: dark) {
     .card-title-above {
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.25);
     }
   }
   .device-card {
