@@ -478,32 +478,58 @@ devices:
     display: flex;
     align-items: flex-start;
     overflow-x: scroll;
-    scrollbar-color: #999 transparent;
     gap: 30px;
     padding: 24px 10%;
+    padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
-    height: 700px;
+    height: 680px;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .device-scroller::-webkit-scrollbar {
-    height: 28px;
+    display: none;
   }
-  .device-scroller::-webkit-scrollbar-track {
-    background: linear-gradient(
-      to bottom,
-      transparent calc(50% - 1px),
-      rgba(150, 150, 150, 0.3) calc(50% - 1px),
-      rgba(150, 150, 150, 0.3) calc(50% + 1px),
-      transparent calc(50% + 1px)
-    );
+
+  /* Custom scrollbar - always visible */
+  .custom-scroll-area {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 0 10%;
+    box-sizing: border-box;
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-top: -6px;
   }
-  .device-scroller::-webkit-scrollbar-thumb {
+  .custom-scroll-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(150, 150, 150, 0.35);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+  .custom-scroll-thumb {
+    position: absolute;
+    height: 22px;
+    top: 50%;
+    transform: translateY(-50%);
     background: #999;
-    border-radius: 14px;
+    border-radius: 11px;
+    cursor: grab;
+    min-width: 60px;
+    transition: background 0.15s ease;
   }
-  .device-scroller::-webkit-scrollbar-thumb:hover {
+  .custom-scroll-thumb:hover {
     background: #777;
+  }
+  .custom-scroll-thumb:active {
+    background: #666;
+    cursor: grabbing;
   }
   .quality-labels-bar {
     width: 100vw;
@@ -522,7 +548,7 @@ devices:
     color: #888;
     user-select: none;
     pointer-events: none;
-    margin-top: -4px;
+    margin-top: 2px;
   }
   .device-card {
     flex: 0 0 820px;
@@ -952,6 +978,10 @@ devices:
     .modal-dismiss-hint {
       display: none; /* Crowded on mobile */
     }
+    .custom-scroll-area {
+      padding: 0 15px;
+      margin-top: -2px;
+    }
     .quality-labels-bar {
       padding: 4px 15px;
       font-size: 0.72em;
@@ -960,7 +990,7 @@ devices:
   }
 </style>
 
-<div class="device-scroller">
+<div class="device-scroller" id="deviceScroller">
   {% for item in page.devices %}
   <div class="device-card" style="background: {{ item.bg }};">
     <div class="vertical-title-bar">
@@ -991,6 +1021,11 @@ devices:
   {% endfor %}
 </div>
 
+<div class="custom-scroll-area">
+  <div class="custom-scroll-track" id="customTrack">
+    <div class="custom-scroll-thumb" id="customThumb"></div>
+  </div>
+</div>
 <div class="quality-labels-bar">
   <span>←← BETTER</span>
   <span>WORSE →→</span>
