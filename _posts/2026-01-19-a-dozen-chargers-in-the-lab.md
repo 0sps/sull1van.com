@@ -614,22 +614,33 @@ devices:
   }
   .expand-btn {
     align-self: flex-end;
-    background: transparent;
-    color: #808080;
-    border: 3px solid #808080;
-    padding: 10px 20px;
-    border-radius: 7.5px;
+    margin-top: auto;
+    background: rgba(0, 0, 0, 0.04);
+    color: #555;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 8px 22px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9em;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin-top: 15px;
-    opacity: 0.5;
+    font-size: 0.72em;
+    font-weight: 700;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .expand-btn::after {
+    content: '→';
+    display: inline-block;
+    font-size: 1.1em;
+    transition: color 0.25s ease;
   }
   .expand-btn:hover {
-    background: #808080;
-    color: #fff;
-    opacity: 1;
+    background: rgba(0, 0, 0, 0.08);
+    color: #222;
+    border-color: rgba(0, 0, 0, 0.25);
   }
 
   /* Modal Styles */
@@ -936,7 +947,7 @@ devices:
           </span>
         </div>
         <figcaption>{{ item.caption | strip }}</figcaption>
-        <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Click to Expand</button>
+        <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Expand</button>
       </div>
     </div>
   </div>
