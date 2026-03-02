@@ -494,7 +494,7 @@ devices:
   }
   .device-card {
     flex: 0 0 820px;
-    height: 630px;
+    height: 600px;
     margin: 0;
     position: relative;
     display: flex;
@@ -546,7 +546,7 @@ devices:
   .device-images img {
     width: 100%;
     height: auto;
-    max-height: 280px;
+    max-height: 290px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid #ddd;
@@ -560,14 +560,31 @@ devices:
     min-height: 0;
   }
   .device-rating {
-    font-size: 1em;
+    font-size: 0.85em;
     font-family: sans-serif;
-    color: #444;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 15px;
+    align-self: flex-end;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: 700;
+  }
+  .rating-badge-5 { background: rgba(46, 204, 113, 0.12); border-color: rgba(46, 204, 113, 0.4); color: #1e8449; }
+  .rating-badge-4 { background: rgba(74, 222, 128, 0.12); border-color: rgba(74, 222, 128, 0.4); color: #166534; }
+  .rating-badge-3 { background: rgba(134, 239, 172, 0.12); border-color: rgba(134, 239, 172, 0.4); color: #14532d; }
+  .rating-badge-2 { background: rgba(250, 204, 21, 0.12); border-color: rgba(250, 204, 21, 0.4); color: #854d0e; }
+  .rating-badge-1 { background: rgba(248, 113, 113, 0.12); border-color: rgba(248, 113, 113, 0.4); color: #991b1b; }
+
+  @media (prefers-color-scheme: dark) {
+    .rating-badge-5 { background: rgba(46, 204, 113, 0.2); border-color: rgba(46, 204, 113, 0.5); color: #58d68d; }
+    .rating-badge-4 { background: rgba(74, 222, 128, 0.2); border-color: rgba(74, 222, 128, 0.5); color: #4ade80; }
+    .rating-badge-3 { background: rgba(134, 239, 172, 0.2); border-color: rgba(134, 239, 172, 0.5); color: #86efac; }
+    .rating-badge-2 { background: rgba(250, 204, 21, 0.2); border-color: rgba(250, 204, 21, 0.5); color: #fde047; }
+    .rating-badge-1 { background: rgba(248, 113, 113, 0.2); border-color: rgba(248, 113, 113, 0.5); color: #fca5a5; }
   }
   .device-card figcaption {
     font-size: 0.85em;
@@ -880,9 +897,9 @@ devices:
         {% endif %}
       </div>
       <div class="device-info">
-        <div class="device-rating">
-          <span style="font-weight: 700;">Overall rating:</span>
-          <span class="bolt-{{ item.rating }}" style="font-size: 1.25em;">
+        <div class="device-rating rating-badge-{{ item.rating }}">
+          <span style="text-transform: uppercase; letter-spacing: 0.5px;">Overall rating:</span>
+          <span class="bolt-{{ item.rating }}" style="font-size: 1.2em; line-height: 1;">
             {% assign rating_num = item.rating | plus: 0 %}
             {% for i in (1..rating_num) %}⚡︎{% endfor %}
           </span>
