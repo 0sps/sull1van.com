@@ -477,7 +477,8 @@ devices:
     position: relative;
     display: flex;
     align-items: flex-start;
-    overflow-x: auto;
+    overflow-x: scroll;
+    scrollbar-color: #999 transparent;
     gap: 30px;
     padding: 24px 10%;
     -webkit-overflow-scrolling: touch;
@@ -486,11 +487,42 @@ devices:
     scroll-behavior: smooth;
   }
   .device-scroller::-webkit-scrollbar {
-    height: 16px;
+    height: 28px;
+  }
+  .device-scroller::-webkit-scrollbar-track {
+    background: linear-gradient(
+      to bottom,
+      transparent calc(50% - 1px),
+      rgba(150, 150, 150, 0.3) calc(50% - 1px),
+      rgba(150, 150, 150, 0.3) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
   }
   .device-scroller::-webkit-scrollbar-thumb {
-    background: #bbb;
-    border-radius: 10px;
+    background: #999;
+    border-radius: 14px;
+  }
+  .device-scroller::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+  .quality-labels-bar {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 10%;
+    box-sizing: border-box;
+    opacity: 0.7;
+    font-family: sans-serif;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+    user-select: none;
+    pointer-events: none;
+    margin-top: -4px;
   }
   .device-card {
     flex: 0 0 820px;
@@ -920,6 +952,11 @@ devices:
     .modal-dismiss-hint {
       display: none; /* Crowded on mobile */
     }
+    .quality-labels-bar {
+      padding: 4px 15px;
+      font-size: 0.72em;
+      letter-spacing: 2px;
+    }
   }
 </style>
 
@@ -952,6 +989,11 @@ devices:
     </div>
   </div>
   {% endfor %}
+</div>
+
+<div class="quality-labels-bar">
+  <span>←← BETTER</span>
+  <span>WORSE →→</span>
 </div>
 
 <div id="device-modal" onclick="closeModal()">
