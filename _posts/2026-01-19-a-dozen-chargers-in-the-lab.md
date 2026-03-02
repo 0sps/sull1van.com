@@ -735,17 +735,17 @@ devices:
     overflow: hidden;
     flex: 1;
     min-height: 0;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
     background: #111;
   }
   .modal-body .modal-imgs {
     display: flex;
     flex-direction: column;
     gap: 0;
-    flex: 2;
     min-height: 0;
     background: #111;
+    overflow: hidden;
   }
   .modal-body img {
     flex: 1;
@@ -778,12 +778,12 @@ devices:
     background: #444;
   }
   .modal-text-panel {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #111;
     overflow-y: auto;
+    min-height: 0;
   }
   .modal-text-panel::-webkit-scrollbar {
     width: 10px;
