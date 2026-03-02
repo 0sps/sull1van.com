@@ -481,7 +481,7 @@ devices:
     gap: 30px;
     padding: 24px 10%;
     -webkit-overflow-scrolling: touch;
-    height: 720px;
+    height: 700px;
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
@@ -494,7 +494,7 @@ devices:
   }
   .device-card {
     flex: 0 0 820px;
-    height: 650px;
+    height: 630px;
     margin: 0;
     position: relative;
     display: flex;
@@ -546,7 +546,7 @@ devices:
   .device-images img {
     width: 100%;
     height: auto;
-    max-height: 290px;
+    max-height: 280px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid #ddd;
@@ -799,12 +799,12 @@ devices:
       margin-left: 0;
       margin-right: 0;
       padding: 24px 15px;
-      height: 750px;
+      height: 730px;
     }
     .device-card {
       flex: 0 0 calc(100vw - 30px);
       flex-direction: column;
-      height: 700px;
+      height: 680px;
       padding-left: 0;
     }
     .vertical-title-bar {
