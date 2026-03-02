@@ -646,6 +646,7 @@ devices:
     justify-content: center;
     flex-direction: column;
     padding: 40px;
+    box-sizing: border-box;
     transition: background 0.35s ease, backdrop-filter 0.35s ease;
   }
   #device-modal.modal-open {
@@ -677,16 +678,37 @@ devices:
     display: flex;
     flex-direction: column;
   }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+  }
   .modal-title {
     font-family: sans-serif;
     font-size: 1.5em;
     font-weight: 700;
     color: rgba(255,255,255,0.88);
     letter-spacing: 1px;
-    margin-bottom: 12px;
     padding-left: 4px;
     transition: opacity 0.3s ease;
-    flex-shrink: 0;
+  }
+  .modal-close-btn {
+    background: none;
+    border: none;
+    color: rgba(180, 60, 60, 0.7);
+    font-size: 1.6em;
+    font-weight: 900;
+    cursor: pointer;
+    padding: 4px 10px;
+    line-height: 1;
+    font-family: sans-serif;
+    transition: color 0.2s ease;
+    user-select: none;
+  }
+  .modal-close-btn:hover {
+    color: rgba(220, 60, 60, 1);
   }
   .modal-container {
     background: #111;
@@ -917,7 +939,10 @@ devices:
   <span class="modal-dismiss-hint left">click anywhere to dismiss</span>
   <span class="modal-dismiss-hint right">click anywhere to dismiss</span>
   <div class="modal-wrapper" onclick="event.stopPropagation()">
-    <div id="modal-title" class="modal-title"></div>
+    <div class="modal-header">
+      <div id="modal-title" class="modal-title"></div>
+      <button class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+    </div>
     <div class="modal-container">
       <div id="modal-content" class="modal-body">
         <!-- Content injected by JS -->
