@@ -797,7 +797,7 @@ devices:
     background: #444;
   }
   .modal-ratings-summary {
-    padding: 30px 40px 10px;
+    padding: 30px 40px 10px 20px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     display: flex;
     flex-direction: column;
@@ -825,7 +825,7 @@ devices:
     line-height: 1.6;
     color: #888;
     margin: 0;
-    padding: 20px 40px 40px;
+    padding: 20px 40px 40px 20px;
     white-space: pre-wrap;
     background: transparent;
     overflow-y: visible; /* Scroll is handled by modal-text-panel now */
