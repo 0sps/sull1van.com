@@ -956,11 +956,15 @@ devices:
       height: 100%;
     }
     .card-title-above {
-      padding-left: 0;
+      padding: 4px 12px;
       text-align: center;
       font-size: 0.75em;
       white-space: normal;
       line-height: 1.3;
+      color: rgba(180, 180, 180, 0.85);
+      border: 1.5px solid rgba(180, 180, 180, 0.4);
+      border-radius: 8px;
+      align-self: center;
     }
     .device-card {
       flex-direction: column;
