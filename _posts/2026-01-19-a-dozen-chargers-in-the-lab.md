@@ -943,6 +943,8 @@ devices:
       padding-left: 0;
       text-align: center;
       font-size: 0.75em;
+      white-space: normal;
+      line-height: 1.3;
     }
     .device-card {
       flex-direction: column;
@@ -971,7 +973,9 @@ devices:
       min-height: 0;
       height: 0;
       max-height: none;
-      object-fit: contain;
+      object-fit: cover;
+      background: #111;
+      border-color: transparent;
     }
     .device-info {
       padding-top: 0;
@@ -980,8 +984,14 @@ devices:
       overflow-y: auto;
     }
     .device-rating {
+      align-self: flex-start;
       justify-content: flex-start;
       font-size: 0.9em;
+    }
+    .expand-btn {
+      align-self: stretch;
+      justify-content: center;
+      padding: 10px 20px;
     }
 
     /* Modal Mobile */
