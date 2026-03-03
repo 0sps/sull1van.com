@@ -930,11 +930,14 @@ devices:
       width: 100%;
       margin-left: 0;
       margin-right: 0;
-      padding: 24px 15px;
-      height: 700px;
+      padding: 24px 15px 10px 15px;
+      height: 740px;
+      align-items: stretch;
     }
     .card-column {
       flex: 0 0 calc(100vw - 30px);
+      flex-shrink: 0;
+      height: 100%;
     }
     .card-title-above {
       padding-left: 0;
@@ -943,7 +946,8 @@ devices:
     }
     .device-card {
       flex-direction: column;
-      height: 640px;
+      height: auto;
+      flex: 1;
       padding-left: 0;
     }
     .vertical-title-bar {
