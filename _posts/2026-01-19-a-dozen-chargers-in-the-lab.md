@@ -923,6 +923,25 @@ devices:
     background: transparent;
     overflow-y: visible; /* Scroll is handled by modal-text-panel now */
   }
+  .modal-close-bottom {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 18px;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-family: sans-serif;
+    font-size: 0.9em;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
 
   /* MOBILE OPTIMIZATIONS (Smart Media Queries) */
   @media (max-width: 768px) {
@@ -991,30 +1010,75 @@ devices:
       padding: 10px 20px;
     }
 
-    /* Modal Mobile */
+    /* Modal Mobile - Full-screen scrollable layout */
+    #device-modal {
+      padding: 0;
+    }
     .modal-wrapper {
-      width: 95%;
-      height: calc(100vh - 80px);
+      width: 100%;
+      height: 100%;
+      max-width: none;
+    }
+    .modal-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+      padding: 12px 16px;
+      margin-bottom: 0;
+    }
+    .modal-title {
+      font-size: 1.1em;
+    }
+    .modal-container {
+      border-radius: 0;
+      height: 100%;
     }
     .modal-body {
+      display: flex;
       flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .modal-imgs {
+    .modal-body .modal-imgs {
+      flex: none;
+      height: auto;
+      border-bottom: none;
+    }
+    .modal-body .modal-imgs a {
+      display: block !important;
       flex: none !important;
-      height: 300px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .modal-body img {
+      flex: none;
+      width: 100%;
+      height: auto;
+      max-height: 45vh;
+      object-fit: contain;
+      background: #000;
     }
     .modal-text-panel {
-      flex: 1;
+      flex: none;
+      overflow-y: visible;
+      padding: 0 20px;
+      align-items: flex-start;
     }
     .modal-ratings-summary {
-      padding: 24px 24px 10px;
+      padding: 20px 0 10px 0;
+      max-width: none;
     }
     .modal-body p {
-      padding: 16px 24px 32px;
+      padding: 12px 0 20px 0;
+      max-width: none;
+      font-size: 0.9em;
+    }
+    .modal-close-bottom {
+      display: flex;
     }
     .modal-dismiss-hint {
-      display: none; /* Crowded on mobile */
+      display: none;
     }
     .custom-scroll-area {
       padding: 0 15px;
@@ -1119,6 +1183,7 @@ devices:
         </div>
         <p>${(item.caption || '').trim()}</p>
       </div>
+      <button class="modal-close-bottom" onclick="closeModal()">CLOSE</button>
     `;
 
     // Set transform-origin to the card's position so it appears to grow from there
