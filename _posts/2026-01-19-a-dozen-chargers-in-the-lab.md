@@ -869,6 +869,7 @@ devices:
     background: #111;
     overflow-y: auto;
     min-height: 0;
+    padding: 0 5px;
   }
   .modal-text-panel::-webkit-scrollbar {
     width: 10px;
