@@ -930,7 +930,7 @@ devices:
       width: 100%;
       margin-left: 0;
       margin-right: 0;
-      padding: 24px 15px 10px 15px;
+      padding: 24px 0 10px 0;
       height: 740px;
       align-items: stretch;
     }
