@@ -323,7 +323,7 @@ devices:
     background-color: #f2f2f2;
   }
   /* These classes control the colors and force the bold thickness */
-  .bolt-5 { color: #2ecc71; font-weight: 900; -webkit-text-stroke: 1px #2ecc71; }
+  .bolt-5 { color: #1a9c54; font-weight: 900; -webkit-text-stroke: 1px #1a9c54; }
   .bolt-4 { color: #4ade80; font-weight: 900; -webkit-text-stroke: 1px #4ade80; }
   .bolt-3 { color: #86efac; font-weight: 900; -webkit-text-stroke: 1px #86efac; }
   .bolt-2 { color: #facc15; font-weight: 900; -webkit-text-stroke: 1px #facc15; }
