@@ -927,10 +927,7 @@ devices:
   /* MOBILE OPTIMIZATIONS (Smart Media Queries) */
   @media (max-width: 768px) {
     .device-scroller {
-      width: 100%;
-      margin-left: 0;
-      margin-right: 0;
-      padding: 24px 0 10px 0;
+      padding: 24px 15px 10px 15px;
       height: 740px;
       align-items: stretch;
     }
