@@ -951,28 +951,33 @@ devices:
       padding-left: 0;
     }
     .vertical-title-bar {
-      position: relative;
-      width: 100%;
-      height: 48px;
-    }
-    .vertical-title-text {
-      writing-mode: horizontal-tb;
-      transform: none;
-      font-size: 0.85em;
-      letter-spacing: 1.5px;
+      display: none;
     }
     .device-content {
       flex-direction: column;
       padding: 16px;
-      gap: 16px;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
     .device-images {
       width: 100%;
-      flex: none;
-      height: 220px;
+      flex: 0 0 200px;
+      overflow: hidden;
+    }
+    .device-images img {
+      flex: 1;
+      min-height: 0;
+      height: 0;
+      max-height: none;
+      object-fit: contain;
     }
     .device-info {
-      padding-top: 5px;
+      padding-top: 0;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
     }
     .device-rating {
       justify-content: flex-start;
