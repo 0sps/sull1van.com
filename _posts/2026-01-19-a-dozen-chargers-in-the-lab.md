@@ -322,18 +322,12 @@ devices:
   th {
     background-color: #f2f2f2;
   }
-  /* These classes control the colors and force the bold thickness */
-  .bolt-5 { color: #0f7a3c; font-weight: 900; -webkit-text-stroke: 1px #0f7a3c; }
-  .bolt-4 { color: #1e8449; font-weight: 900; -webkit-text-stroke: 1px #1e8449; }
-  .bolt-3 { color: #2e7d32; font-weight: 900; -webkit-text-stroke: 1px #2e7d32; }
-  .bolt-2 { color: #b45309; font-weight: 900; -webkit-text-stroke: 1px #b45309; }
-  .bolt-1 { color: #dc2626; font-weight: 900; -webkit-text-stroke: 1px #dc2626; }
-  /* Light mode: table-specific traffic-light gradient */
-  table .bolt-5 { color: #0f7a3c; -webkit-text-stroke: 1px #0f7a3c; }
-  table .bolt-4 { color: #16a34a; -webkit-text-stroke: 1px #16a34a; }
-  table .bolt-3 { color: #ca8a04; -webkit-text-stroke: 1px #ca8a04; }
-  table .bolt-2 { color: #ea580c; -webkit-text-stroke: 1px #ea580c; }
-  table .bolt-1 { color: #dc2626; -webkit-text-stroke: 1px #dc2626; }
+  /* Bolt colors: evenly-spaced red→orange→amber→lime→green gradient */
+  .bolt-5 { color: #127d36; font-weight: 900; -webkit-text-stroke: 1px #127d36; }
+  .bolt-4 { color: #4d8217; font-weight: 900; -webkit-text-stroke: 1px #4d8217; }
+  .bolt-3 { color: #916f08; font-weight: 900; -webkit-text-stroke: 1px #916f08; }
+  .bolt-2 { color: #97460c; font-weight: 900; -webkit-text-stroke: 1px #97460c; }
+  .bolt-1 { color: #9c1616; font-weight: 900; -webkit-text-stroke: 1px #9c1616; }
   @media (prefers-color-scheme: dark) {
     th, td {
       border-color: #2a2a2a;
@@ -341,12 +335,12 @@ devices:
     th {
       background-color: #181818;
     }
-    /* Dark mode: bright traffic-light gradient for dark table backgrounds */
-    table .bolt-5 { color: #2ecc71; -webkit-text-stroke: 1px #2ecc71; }
-    table .bolt-4 { color: #4ade80; -webkit-text-stroke: 1px #4ade80; }
-    table .bolt-3 { color: #fbbf24; -webkit-text-stroke: 1px #fbbf24; }
-    table .bolt-2 { color: #fb923c; -webkit-text-stroke: 1px #fb923c; }
-    table .bolt-1 { color: #f87171; -webkit-text-stroke: 1px #f87171; }
+    /* Bright gradient for dark table backgrounds */
+    table .bolt-5 { color: #42d773; -webkit-text-stroke: 1px #42d773; }
+    table .bolt-4 { color: #8cd742; -webkit-text-stroke: 1px #8cd742; }
+    table .bolt-3 { color: #eebd2b; -webkit-text-stroke: 1px #eebd2b; }
+    table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
+    table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
   }
 </style>
 
