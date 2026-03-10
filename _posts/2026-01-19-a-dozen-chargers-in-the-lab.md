@@ -324,10 +324,10 @@ devices:
   }
   /* These classes control the colors and force the bold thickness */
   .bolt-5 { color: #0f7a3c; font-weight: 900; -webkit-text-stroke: 1px #0f7a3c; }
-  .bolt-4 { color: #4ade80; font-weight: 900; -webkit-text-stroke: 1px #4ade80; }
-  .bolt-3 { color: #86efac; font-weight: 900; -webkit-text-stroke: 1px #86efac; }
-  .bolt-2 { color: #facc15; font-weight: 900; -webkit-text-stroke: 1px #facc15; }
-  .bolt-1 { color: #f87171; font-weight: 900; -webkit-text-stroke: 1px #f87171; }
+  .bolt-4 { color: #1e8449; font-weight: 900; -webkit-text-stroke: 1px #1e8449; }
+  .bolt-3 { color: #2e7d32; font-weight: 900; -webkit-text-stroke: 1px #2e7d32; }
+  .bolt-2 { color: #b45309; font-weight: 900; -webkit-text-stroke: 1px #b45309; }
+  .bolt-1 { color: #dc2626; font-weight: 900; -webkit-text-stroke: 1px #dc2626; }
   @media (prefers-color-scheme: dark) {
     th, td {
       border-color: #2a2a2a;
@@ -335,6 +335,12 @@ devices:
     th {
       background-color: #181818;
     }
+    /* Bright bolt colors for dark table backgrounds only */
+    table .bolt-5 { color: #2ecc71; -webkit-text-stroke: 1px #2ecc71; }
+    table .bolt-4 { color: #4ade80; -webkit-text-stroke: 1px #4ade80; }
+    table .bolt-3 { color: #86efac; -webkit-text-stroke: 1px #86efac; }
+    table .bolt-2 { color: #facc15; -webkit-text-stroke: 1px #facc15; }
+    table .bolt-1 { color: #f87171; -webkit-text-stroke: 1px #f87171; }
   }
 </style>
 
@@ -655,11 +661,12 @@ devices:
   .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
 
   @media (prefers-color-scheme: dark) {
-    .rating-badge-5 { background: rgba(46, 204, 113, 0.2); border-color: rgba(46, 204, 113, 0.5); color: #58d68d; }
-    .rating-badge-4 { background: rgba(74, 222, 128, 0.2); border-color: rgba(74, 222, 128, 0.5); color: #4ade80; }
-    .rating-badge-3 { background: rgba(134, 239, 172, 0.2); border-color: rgba(134, 239, 172, 0.5); color: #86efac; }
-    .rating-badge-2 { background: rgba(250, 204, 21, 0.2); border-color: rgba(250, 204, 21, 0.5); color: #fde047; }
-    .rating-badge-1 { background: rgba(248, 113, 113, 0.2); border-color: rgba(248, 113, 113, 0.5); color: #fca5a5; }
+    /* Card bg is light pastel in both modes, so dark text colors stay the same */
+    .rating-badge-5 { background: rgba(46, 204, 113, 0.22); border-color: rgba(46, 204, 113, 0.55); color: #145a30; }
+    .rating-badge-4 { background: rgba(74, 222, 128, 0.22); border-color: rgba(74, 222, 128, 0.55); color: #166534; }
+    .rating-badge-3 { background: rgba(134, 239, 172, 0.22); border-color: rgba(134, 239, 172, 0.55); color: #14532d; }
+    .rating-badge-2 { background: rgba(250, 204, 21, 0.22); border-color: rgba(250, 204, 21, 0.55); color: #854d0e; }
+    .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
   }
   .device-card figcaption {
     font-size: 0.85em;
