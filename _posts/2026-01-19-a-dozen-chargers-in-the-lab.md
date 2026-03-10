@@ -323,7 +323,7 @@ devices:
     background-color: #f2f2f2;
   }
   /* These classes control the colors and force the bold thickness */
-  .bolt-5 { color: #1a9c54; font-weight: 900; -webkit-text-stroke: 1px #1a9c54; }
+  .bolt-5 { color: #0f7a3c; font-weight: 900; -webkit-text-stroke: 1px #0f7a3c; }
   .bolt-4 { color: #4ade80; font-weight: 900; -webkit-text-stroke: 1px #4ade80; }
   .bolt-3 { color: #86efac; font-weight: 900; -webkit-text-stroke: 1px #86efac; }
   .bolt-2 { color: #facc15; font-weight: 900; -webkit-text-stroke: 1px #facc15; }
@@ -482,7 +482,7 @@ devices:
     padding: 24px 10%;
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
-    height: 581px;
+    height: 645px;
     box-sizing: border-box;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
@@ -576,7 +576,7 @@ devices:
   }
   .device-card {
     flex: 1;
-    height: 509px;
+    height: 565px;
     margin: 0;
     position: relative;
     display: flex;
