@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -64,7 +64,7 @@ devices:
     img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
     img2: "/assets/images/Anker 637 magnetic charging station USB C.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: ""
+    caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers top-notch power quality."
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -73,16 +73,16 @@ devices:
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: ""
+    caption: "This was another charger that made me mad simply because of how good it is. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output."
     rating: 4
     noise_rating: 4
     ripple_rating: 3
     overall_rating: 4
   - name: "Apple 96W Macbook Charger"
-    img1: "/assets/images/apple96W.png"
+    img1: "/assets/images/apple96W3.png"
     img2: "/assets/images/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: ""
+    caption: "Not as good as I would expect for how expensive this cahrger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, so it's not terribel per se, but the graph does leave some things to be desired. The power signature is a little noisy with those intermittent peaks. Not sure what the charger is having issue with here. There is also some AC noise coming through."
     rating: 4
     noise_rating: 4
     ripple_rating: 4
@@ -91,16 +91,16 @@ devices:
     img1: "/assets/images/apple retail.png"
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Advertised at 30W, actual measured power was 29.5W. Solid performance."
+    caption: "Advertised at 30W, actual measured power was 29.5W. Solid performance, although quite confusing because it is essentially the same as the Apple HomePod Mini charger, except that you buy it separately. The Apple HomePod Mini charger was much worse."
     rating: 4
     noise_rating: 3
     ripple_rating: 3
     overall_rating: 4
   - name: "Anker ASPD053a"
-    img1: "/assets/images/Anker ASP053a.png"
+    img1: "/assets/images/Anker ASP053a 3.png"
     img2: "/assets/images/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: ""
+    caption: "This charger was alright. It was a little noisy, and doesn't look extremely well regulated. There was some AC noise coming through, and there was also some ripple at the harmonics of the switching frequency (or what I assume to be the switching frequency). It looked like it had a spike roughly every 90KHz in the FFT at the bottom of the graph."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -108,7 +108,7 @@ devices:
   - name: "iPhone 17 pro"
     img1: "/assets/images/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Over-performed! Advertised at 4.5W but pulled 5.4W during testing."
+    caption: "This one is rated as over-performing, only advertising 4.5W but delivering more. That's not the entire story. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. I don't remember what it pulled when it was set up to deliver exactly 4.5 Watts. Either way, the iPhone wouldn't make a good power source, it has fairly noisy power signature. To be nice I ended up giving it 3 bolts."
     rating: 3
     noise_rating: 3
     ripple_rating: "N/A"
@@ -117,16 +117,16 @@ devices:
     img1: "/assets/images/Shargeek Fun Macintosh Charger.png"
     img2: "/assets/images/Shargeek Fun Macintosh Charger2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Hit its 27W target exactly. Perfect performance."
+    caption: "Disappointed in this one honestly. For being nearly $30, and only pumping out 27W, this charger has a pretty awful power signature. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a wall of noise. I would stay away from using this to charge my devices."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
     overall_rating: 3
   - name: "Govee Power Supply"
-    img1: "/assets/images/Govee 1.png"
-    img2: "/assets/images/Govee 2.png"
+    img1: "/assets/images/Govee 2.png"
+    img2: "/assets/images/Govee 3.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: ""
+    caption: "This one is genuinely bad. It gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks poorly regulated. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
     rating: 2
     noise_rating: 2
     ripple_rating: 3
@@ -135,7 +135,7 @@ devices:
     img1: "/assets/images/Dealworthy 1.png"
     img2: "/assets/images/Dealworthy  2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: ""
+    caption: "Awful charger, but that is to be expected for something that costs $6. Same story as before, but with more noise. Poor regulation and it shows through the noise and ripple in these graphs. Avoid."
     rating: 1
     noise_rating: 2
     ripple_rating: 2
@@ -144,7 +144,7 @@ devices:
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: ""
+    caption: "Also pretty bad, but at least it tried! This charger almost looked more uniform than other poorly performing ones (like the Govee) until I zoomed in. And wow, it looks horrible. Keep this away from your devices."
     rating: 2
     noise_rating: 3
     ripple_rating: 3
@@ -153,7 +153,7 @@ devices:
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: ""
+    caption: "Another awful charger. Considering the fact that this comes standard with the Kindle, I'm concerned with how the Kindle itself performs. The quality of the battery inside it might also be pretty disappointing if Amazon messed up their charger this badly."
     rating: 1
     noise_rating: 2
     ripple_rating: 1
@@ -162,7 +162,7 @@ devices:
     img1: "/assets/images/Apple Homepod Mini.png"
     img2: "/assets/images/Apple Homepod Mini 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: ""
+    caption: "Awful. Which is surprising since this comes straight from Apple. I haven't sen many worse chargers."
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -171,7 +171,7 @@ devices:
     img1: "/assets/images/VEBNERgan.png"
     img2: "/assets/images/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: ""
+    caption: "Awful charging quality, but this is a fake GaN charger sold on Amazon from an alternative electronics company known as Vebner. They are a real company, but the truth around their GaN claims is questionable."
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -180,7 +180,7 @@ devices:
     img1: "/assets/images/Counerfeit Samsung 1.png"
     img2: "/assets/images/Counerfeit Samsung 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: ""
+    caption: "Easily the worse one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be accpetable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it."
     rating: 1
     noise_rating: 1
     ripple_rating: 1
