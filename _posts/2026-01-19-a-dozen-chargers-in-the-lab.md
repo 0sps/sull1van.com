@@ -323,8 +323,8 @@ devices:
     background-color: #f2f2f2;
   }
   /* Bolt colors: evenly-spaced red→orange→amber→lime→green gradient */
-  .bolt-5 { color: #1fd65c; font-weight: 900; -webkit-text-stroke: 1px #1fd65c; }
-  .bolt-4 { color: #87db33; font-weight: 900; -webkit-text-stroke: 1px #87db33; }
+  .bolt-5 { color: #15933f; font-weight: 900; -webkit-text-stroke: 1px #15933f; }
+  .bolt-4 { color: #7ad025; font-weight: 900; -webkit-text-stroke: 1px #7ad025; }
   .bolt-3 { color: #f2c336; font-weight: 900; -webkit-text-stroke: 1px #f2c336; }
   .bolt-2 { color: #f08b42; font-weight: 900; -webkit-text-stroke: 1px #f08b42; }
   .bolt-1 { color: #e02929; font-weight: 900; -webkit-text-stroke: 1px #e02929; }
