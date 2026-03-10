@@ -328,6 +328,12 @@ devices:
   .bolt-3 { color: #2e7d32; font-weight: 900; -webkit-text-stroke: 1px #2e7d32; }
   .bolt-2 { color: #b45309; font-weight: 900; -webkit-text-stroke: 1px #b45309; }
   .bolt-1 { color: #dc2626; font-weight: 900; -webkit-text-stroke: 1px #dc2626; }
+  /* Light mode: table-specific traffic-light gradient */
+  table .bolt-5 { color: #0f7a3c; -webkit-text-stroke: 1px #0f7a3c; }
+  table .bolt-4 { color: #16a34a; -webkit-text-stroke: 1px #16a34a; }
+  table .bolt-3 { color: #ca8a04; -webkit-text-stroke: 1px #ca8a04; }
+  table .bolt-2 { color: #ea580c; -webkit-text-stroke: 1px #ea580c; }
+  table .bolt-1 { color: #dc2626; -webkit-text-stroke: 1px #dc2626; }
   @media (prefers-color-scheme: dark) {
     th, td {
       border-color: #2a2a2a;
@@ -335,11 +341,11 @@ devices:
     th {
       background-color: #181818;
     }
-    /* Bright bolt colors for dark table backgrounds only */
+    /* Dark mode: bright traffic-light gradient for dark table backgrounds */
     table .bolt-5 { color: #2ecc71; -webkit-text-stroke: 1px #2ecc71; }
     table .bolt-4 { color: #4ade80; -webkit-text-stroke: 1px #4ade80; }
-    table .bolt-3 { color: #86efac; -webkit-text-stroke: 1px #86efac; }
-    table .bolt-2 { color: #facc15; -webkit-text-stroke: 1px #facc15; }
+    table .bolt-3 { color: #fbbf24; -webkit-text-stroke: 1px #fbbf24; }
+    table .bolt-2 { color: #fb923c; -webkit-text-stroke: 1px #fb923c; }
     table .bolt-1 { color: #f87171; -webkit-text-stroke: 1px #f87171; }
   }
 </style>
