@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -41,7 +41,7 @@ devices:
     img2: "/assets/images/eero2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC noise (which would show up as a higher 'floor' on the purple graph). It's got a sawtooth waveform, so there is noise, but it is pretty small. 
+      This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. It comes included with the Eero Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC nnoise. It's got a sawtooth waveform, so there is noise, but it is pretty small. 
       
       Incredible charger, especially for its size.
     rating: 5
@@ -482,7 +482,7 @@ devices:
     padding: 24px 10%;
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
-    height: 645px;
+    height: 581px;
     box-sizing: border-box;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
@@ -576,7 +576,7 @@ devices:
   }
   .device-card {
     flex: 1;
-    height: 565px;
+    height: 509px;
     margin: 0;
     position: relative;
     display: flex;
@@ -616,6 +616,7 @@ devices:
     justify-content: center;
     gap: 12px;
     flex: 0 0 400px;
+    cursor: pointer;
   }
   .device-images img {
     width: 100%;
@@ -948,7 +949,7 @@ devices:
   @media (max-width: 768px) {
     .device-scroller {
       padding: 24px 15px 10px 15px;
-      height: 740px;
+      height: 666px;
       align-items: stretch;
     }
     .card-column {
@@ -1106,7 +1107,7 @@ devices:
         <div class="vertical-title-text">{{ item.name }}</div>
       </div>
       <div class="device-content">
-        <div class="device-images">
+        <div class="device-images" onclick='openModal({{ item | jsonify | escape }}, this)'>
           {% if item.img1 %}
           <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
           {% endif %}
