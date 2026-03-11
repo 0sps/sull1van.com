@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -183,7 +183,7 @@ devices:
     img2: "/assets/images/Counerfeit Samsung 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      Easily the worse one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
+      Easily the worst one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
       
       Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be accpetable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it.
     rating: 1
@@ -646,6 +646,7 @@ I started by testing all the chargers at all their advertised voltages, then not
     padding: 24px;
     gap: 24px;
     min-height: 0;
+    cursor: pointer;
   }
   .device-images {
     display: flex;
@@ -653,7 +654,6 @@ I started by testing all the chargers at all their advertised voltages, then not
     justify-content: center;
     gap: 12px;
     flex: 0 0 400px;
-    cursor: pointer;
   }
   .device-images img {
     width: 100%;
@@ -1145,8 +1145,8 @@ I started by testing all the chargers at all their advertised voltages, then not
       <div class="vertical-title-bar">
         <div class="vertical-title-text">{{ item.name }}</div>
       </div>
-      <div class="device-content">
-        <div class="device-images" onclick='openModal({{ item | jsonify | escape }}, this)'>
+      <div class="device-content" onclick='openModal({{ item | jsonify | escape }}, this)'>
+        <div class="device-images">
           {% if item.img1 %}
           <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
           {% endif %}
@@ -1163,7 +1163,7 @@ I started by testing all the chargers at all their advertised voltages, then not
             </span>
           </div>
           <figcaption>{{ item.caption | strip }}</figcaption>
-          <button class="expand-btn" onclick='openModal({{ item | jsonify | escape }}, this)'>Expand</button>
+          <button class="expand-btn">Expand</button>
         </div>
       </div>
     </div>
