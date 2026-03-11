@@ -49,8 +49,8 @@ devices:
     ripple_rating: 3
     overall_rating: 5
   - name: "AOHI GaN Charger"
-    img1: "/assets/images/AOHI GaN.png"
-    img2: "/assets/images/AOHI GaN2.png"
+    img1: "/assets/images/AOHI GaN2.png"
+    img2: "/assets/images/AOHI GaN3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This one performed very well. It is marketed as a GaN charger, and uses some components that are so new they have never been used in consumer chargers before. So this charger really should be considered a flagship. for that reason, I'm a little disappointed the power signature isn't better. It IS very good, but for how bleeding-edge this charger is marketed out to me, it performs comparatively to chargers half its size and price.
@@ -64,7 +64,7 @@ devices:
     img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
     img2: "/assets/images/Anker 637 magnetic charging station USB C.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers top-notch power quality."
+    caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers top-notch power quality. You can see from the images that there is a slight bit of noise in the voltage graph, but it's nothing major. At the bottom, we see a bit of a high level of AC noise coming through (seen at bottom left of the 5ms graph) but overall the high frequency noise on this charger is quite minimal. Overall a great charger to have."
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -1084,6 +1084,7 @@ I started by testing all the chargers at all their advertised voltages, then not
       flex: none;
       height: auto;
       border-bottom: none;
+      padding-top: 40px;
     }
     .modal-body .modal-imgs a {
       display: block !important;
