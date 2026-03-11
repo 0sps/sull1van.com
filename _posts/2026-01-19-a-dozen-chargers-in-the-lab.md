@@ -31,7 +31,9 @@ devices:
     img2: "/assets/images/Spigen PowerArc 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. the zoomed-out graph looks pretty similar to the one in this image, so i'm just showing you the zoomed in one here. Good charger. 
+      I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. 
+      
+      It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. the zoomed-out graph looks pretty similar to the one in this image, so i'm just showing you the zoomed in one here. Good charger. 
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -73,7 +75,7 @@ devices:
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that made me mad simply because of how good it is. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output."
+    caption: "This was another charger that made me mad simply because of how good it is. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage graph itself werent' great. Overall this is a solid charger to use."
     rating: 4
     noise_rating: 4
     ripple_rating: 3
@@ -180,7 +182,10 @@ devices:
     img1: "/assets/images/Counerfeit Samsung 1.png"
     img2: "/assets/images/Counerfeit Samsung 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Easily the worse one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be accpetable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it."
+    caption: |
+      Easily the worse one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
+      
+      Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be accpetable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it.
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -190,10 +195,11 @@ devices:
 ## A Dozen Chargers in the Lab: Apple is Okay, but Not the Best
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
+*(As of 3/11/26 this page is still being finished, expect inaccuracies)*
 
 Have you ever wondered about the quality of phone chargers? Whether  counterfeit chargers were secretly destroying your battery? That's what I'd wondered for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) one morning. I believe I was a freshman in college at the time when I read it. Most of it went over my head, but I did start thinking about what kinds of chargers I should keep around, and which I should avoid. 
 
-Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information **needed** to be out there in the world but just didn't exist yet.
+Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information *needed* to be out there in the world but just didn't exist yet.
 
 Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
 
