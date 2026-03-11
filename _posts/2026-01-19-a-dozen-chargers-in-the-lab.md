@@ -191,7 +191,11 @@ devices:
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 
-*Your intro goes here.*
+Have you ever wondered about the quality of phone chargers? Whether  counterfeit chargers were secretly destroying your battery? That's what I'd wondered for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) one morning. I believe I was a freshman in college at the time when I read it. Most of it went over my head, but I did start thinking about what kinds of chargers I should keep around, and which I should avoid. 
+
+Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information **needed** to be out there in the world but just didn't exist yet.
+
+Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
 
 ---
 
@@ -199,7 +203,9 @@ devices:
 
 <!-- Briefly describe the collection of chargers — where they came from (official, counterfeit, old, new, etc.) -->
 
-*Your overview of the charger collection goes here.*
+I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well.
+
+To clarify some confusion in how I've been referring to them: USB A is the rectangular connector we used to have on old chargers, and USB C is the round, modern plug. 
 
 ---
 
@@ -207,7 +213,26 @@ devices:
 
 <!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
-*Your methodology section goes here.*
+As it turns out, testing USB C cables is incredibly complex. Ever since the USB C Power Delivery standard came out, a standard USB Charger is capable of putting out many different voltages.
+
+As a brief refrehser, these chargers are outputting a specific voltage and then a variable amount of current. So the device negotiates a voltage with the charger, and once they agree on that the charger just tries to maintain that specific voltage regardless of what current the device pulls. The device decides how much current to pull. The charger's job is to supply current at a constant voltage until the device asks for too much current, which the charger reacts to by shutting off.
+
+Well, with USB A, you only have one voltage to test. With USB C Power Delivery, you have up to 4. And with more modern extensinos of this standard coming online, new chargers (ones that I don't have) are supporting more and more voltages. Some offer dozens. 
+
+This means that my work will be like Ken's, except 2-4x more data points. Let's go.
+
+
+### Testing setup
+
+My setup consisted of three distinct pieces:
+1. An oscilloscope, specifically the Rigol DS1054Z,
+2. An electronic load
+3. A USB C Power Delivery decoy board
+
+I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board had a positive and negative terminal which were connected to the electronic load with small wires.
+
+The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
+
 
 ---
 
@@ -215,7 +240,7 @@ devices:
 
 <!-- Introduce the interactive card viewer below. Something like "Scroll through the results below — click any card to expand the oscilloscope traces." -->
 
-*Your results intro goes here.*
+I started by testing all the chargers at all their advertised voltages, then noticed that the waveforms looked *exactly the same* regardless of voltage. The only indicator of a differing waveform was current. So I therefore tried to take a lower voltage but pull differing currents until I got the worst looking graph. In that respect, the graphs I captured below should represent the worst state of that specific charger. The caveat here is that I only tested up to ~30W, and some chargers support up to 100W, but my wires and breakout boards weren't big enough to handle that kind of power.
 
 <style>
   .table-wrapper {
