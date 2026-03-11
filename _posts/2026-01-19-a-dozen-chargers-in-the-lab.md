@@ -1090,7 +1090,7 @@ I started by testing all the chargers at all their advertised voltages, then not
       flex: none;
       height: auto;
       border-bottom: none;
-      padding-top: 40px;
+      padding-top: 60px;
     }
     .modal-body .modal-imgs a {
       display: block !important;
