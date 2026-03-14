@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -14,9 +14,22 @@ devices:
       There's also no high frequency switching noice, or any noticeable ripple. This makes sense, since it doesn't have to swtich thousands of times a second to step down AC voltage into something manageable.
     rating: 5
     noise_rating: 5
-    ripple_rating: "N/A"
+    ripple_rating: 5
     overall_rating: 5
-    
+
+  - name: "AOHI GaN 65W Charger"
+    img1: "/assets/images/AOHIGaN65W 1.png"
+    img2: "/assets/images/AOHIGaN65W 3.png"
+    bg: "hsl(120, 32%, 93%)"
+    caption: |
+      Without a doubt the best AC power adapter I have ever tested. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technolgoy in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
+    rating: 5
+    noise_rating: 5
+    ripple_rating: 5
+    overall_rating: 5
+
+
+
   - name: "Anker 621 MAG GO 5000mAh Battery"
     img1: "/assets/images/Anker a1654 Maggo power bank.png"
     img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
@@ -26,6 +39,7 @@ devices:
     noise_rating: 5
     ripple_rating: 4
     overall_rating: 5
+
   - name: "Spigen PowerArc ArcStation Pro"
     img1: "/assets/images/Spigen PowerArc 1.png"
     img2: "/assets/images/Spigen PowerArc 2.png"
@@ -151,11 +165,26 @@ devices:
     noise_rating: 3
     ripple_rating: 3
     overall_rating: 2
+
+  - name: "Anker A121B 100W charger"
+    img1: "/assets/images/Anker A121B 100w 1.png"
+    img2: "/assets/images/Anker A121B 100w 2.png"
+    bg: "hsl(0, 32%, 93%)"
+    caption: |
+      It's better than its 45W cousin (the Anker A121D), but this charger isn't that great. It does push out the advertised voltage and current, but it does so with a wall of noise. Zooming in to the smaller timeframe is telling, as we can see little tiny voltage peaks every few microseconds. What a strange design from Anker, who claim this to be a GaN charger. It is clearly a cheaper unit.
+    rating: 2
+    noise_rating: 2
+    ripple_rating: 2
+    overall_rating: 2
+
+
   - name: "Amazon Kindle Charger"
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: "Another awful charger. Considering the fact that this comes standard with the Kindle, I'm concerned with how the Kindle itself performs. The quality of the battery inside it might also be pretty disappointing if Amazon messed up their charger this badly."
+
+    
     rating: 1
     noise_rating: 2
     ripple_rating: 1
@@ -169,6 +198,8 @@ devices:
     noise_rating: 1
     ripple_rating: 2
     overall_rating: 1
+
+
   - name: "Vebner GaN 65W Charger"
     img1: "/assets/images/VEBNERgan.png"
     img2: "/assets/images/VEBNERgaqn2.png"
@@ -178,6 +209,24 @@ devices:
     noise_rating: 1
     ripple_rating: 1
     overall_rating: 1
+
+  - name: "Anker A121D 45w iPhone 17 charger"
+    img1: "/assets/images/Anker A121D 45w iPhone 17 charger 1.png"
+    img2: "/assets/images/Anker A121D 45w iPhone 17 charger 3.png"
+    bg: "hsl(0, 32%, 93%)"
+    caption: |
+      Is this even GaN???
+
+      This is easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, etc. But this charger is just awful. 
+
+      The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and a constant high-voltage whine that you can see in the lower timeframe. At that lower timeframe, it's also unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but constantly going back and forth. After some research, I believe this was a decision of Anker's to actually avoid newer GaN materials and use older switching technology, relying on aggressive Frequency Dithering to help ease the noise. This may not be the case but it is my suspicion.
+
+      Either way, it is awful!
+    rating: 1
+    noise_rating: 1
+    ripple_rating: 1
+    overall_rating: 1
+
   - name: "Counterfeit Samsung"
     img1: "/assets/images/Counerfeit Samsung 1.png"
     img2: "/assets/images/Counerfeit Samsung 2.png"
