@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -64,7 +64,7 @@ devices:
     noise_rating: 5
     ripple_rating: 3
     overall_rating: 5
-  - name: "AOHI GaN Charger"
+  - name: "AOHI GaN 100W Charger"
     img1: "/assets/images/AOHI GaN2.png"
     img2: "/assets/images/AOHI GaN3.png"
     bg: "hsl(120, 32%, 93%)"
@@ -381,9 +381,12 @@ I started by testing all the chargers at all their advertised voltages, then not
     <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>4.6</td><td>3.04</td><td>14.0</td><td class="diff-neg">-1.00</td></tr>
     <tr><td><strong>Anker ASPD053a</strong></td><td>40</td><td>14.55</td><td>2.7</td><td>39.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>15</td><td>4.68</td><td>3.03</td><td>14.21</td><td class="diff-neg">-0.79</td></tr>
-    <tr><td><strong>AOHI GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
+    <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>15</td><td>14.82</td><td>1.03</td><td>15.22</td><td class="diff-pos">+0.22</td></tr>
+    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>15</td><td>15.00</td><td>1.03</td><td>15.4</td><td class="diff-pos">+0.40</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>15</td><td>15.02</td><td>1.01</td><td>15.17</td><td class="diff-pos">+0.17</td></tr>
   </tbody>
 </table>
 </div>
@@ -456,13 +459,19 @@ I started by testing all the chargers at all their advertised voltages, then not
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
+      <td><strong>AOHI GaN 65W Charger</strong></td>
+      <td>60mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
       <td><strong>Eero 15W Charger</strong></td>
       <td>60mV</td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
-      <td><strong>AOHI GaN Charger</strong></td>
+      <td><strong>AOHI 100w GaN Charger</strong></td>
       <td>72mV</td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
@@ -516,10 +525,22 @@ I started by testing all the chargers at all their advertised voltages, then not
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
+      <td><strong>Anker A121B 100W Charger</strong></td>
+      <td>200mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
       <td><strong>Dealworthy Charger</strong></td>
       <td>212mV</td>
       <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker A121D 45W iPhone 17 Charger</strong></td>
+      <td>244mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
       <td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td>
