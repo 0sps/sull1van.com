@@ -65,7 +65,7 @@ devices:
     ripple_rating: 3
     overall_rating: 5
   - name: "AOHI GaN 100W Charger"
-    img1: "/assets/images/AOHIGaN100w 2.png"
+    img1: "/assets/images/AOHIGaN100w 1.png"
     img2: "/assets/images/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
@@ -134,7 +134,7 @@ devices:
     overall_rating: 3
   - name: "Shargeek Macintosh Charger"
     img1: "/assets/images/Shargeek Fun Macintosh Charger.png"
-    img2: "/assets/images/Shargeek Fun Macintosh Charger2.png"
+    img2: "/assets/images/Shargeek Fun Macintosh Charger3.png"
     bg: "hsl(60, 32%, 93%)"
     caption: "Disappointed in this one honestly. For being nearly $30, and only pumping out 27W, this charger has a pretty awful power signature. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a wall of noise. I would stay away from using this to charge my devices."
     rating: 3
