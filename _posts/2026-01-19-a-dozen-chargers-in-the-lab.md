@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -154,7 +154,7 @@ devices:
     img1: "/assets/images/Dealworthy 1.png"
     img2: "/assets/images/Dealworthy 3.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is.. but that is to be expected for something that costs $6. Lots of noise, poor regulation, and a lot of ripple. I suspect they are smearing the switching freuqency using frequency dithering.. something looks fishy. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger.
+    caption: "Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is.. but that is to be expected for something that costs $6. Lots of noise, poor regulation, and a lot of ripple. I suspect they are smearing the switching freuqency using frequency dithering.. something looks fishy. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger."
     rating: 1
     noise_rating: 2
     ripple_rating: 2
