@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -65,8 +65,8 @@ devices:
     ripple_rating: 3
     overall_rating: 5
   - name: "AOHI GaN 100W Charger"
-    img1: "/assets/images/AOHI GaN2.png"
-    img2: "/assets/images/AOHI GaN3.png"
+    img1: "/assets/images/AOHIGaN100w 2.png"
+    img2: "/assets/images/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This one performed very well. It is marketed as a GaN charger, and uses some components that are so new they have never been used in consumer chargers before. So this charger really should be considered a flagship. for that reason, I'm a little disappointed the power signature isn't better. It IS very good, but for how bleeding-edge this charger is marketed out to me, it performs comparatively to chargers half its size and price.
@@ -684,7 +684,6 @@ I started by testing all the chargers at all their advertised voltages, then not
     }
   }
   .device-card {
-    flex: 1;
     height: 565px;
     margin: 0;
     position: relative;
@@ -718,6 +717,7 @@ I started by testing all the chargers at all their advertised voltages, then not
     padding: 24px;
     gap: 24px;
     min-height: 0;
+    overflow: hidden;
     cursor: pointer;
   }
   .device-images {
@@ -742,6 +742,7 @@ I started by testing all the chargers at all their advertised voltages, then not
     flex-direction: column;
     justify-content: flex-start;
     min-height: 0;
+    overflow: hidden;
   }
   .device-rating {
     font-size: 0.85em;
