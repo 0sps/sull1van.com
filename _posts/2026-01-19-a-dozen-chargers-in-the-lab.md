@@ -22,7 +22,7 @@ devices:
     img2: "/assets/images/AOHIGaN65W 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt the best AC power adapter I have ever tested. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technolgoy in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
+      Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technolgoy in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -217,13 +217,13 @@ devices:
     caption: |
       Is this even GaN???
 
-      This is easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, etc. But this charger is just awful. 
+      Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, etc. But this charger is just awful. 
 
       The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and a constant high-voltage whine that you can see in the lower timeframe. At that lower timeframe, it's also unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but constantly going back and forth. After some research, I believe this was a decision of Anker's to actually avoid newer GaN materials and use older switching technology, relying on aggressive Frequency Dithering to help ease the noise. This may not be the case but it is my suspicion. 
 
       Either way, it is awful!
 
-      Sidenote: you would be right to point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, *how is that any different from what you are saying Anker did here?* It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they DO employ the same technology, but they switch constantly, but only vary it by 20-50KHz. Constantly moving the switching freuqency up and down, so the noise spreads out and doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI decided to manage thier noise entirely, so when they change the switching freuqency, it's only happening once when the charger starts sending a certain level of power. They probably only change it when the voltage changes, to make sure they can best accomodate the power. And then at lower voltage levels, I suspect they go down to a lower switching freuqency to save on electricity. They don't need to constantly switch up and down, because their aim isn't to spread noise out. 
+      <em>Sidenote: you would be right to point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they DO employ the same technology, but they switch constantly, but only vary it by 20-50KHz. Constantly moving the switching freuqency up and down, so the noise spreads out and doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI decided to manage thier noise entirely, so when they change the switching freuqency, it's only happening once when the charger starts sending a certain level of power. They probably only change it when the voltage changes, to make sure they can best accomodate the power. And then at lower voltage levels, I suspect they go down to a lower switching freuqency to save on electricity. They don't need to constantly switch up and down, because their aim isn't to spread noise out. </em>
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -234,7 +234,7 @@ devices:
     img2: "/assets/images/Counerfeit Samsung 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      Easily the worst one of the bunch. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
+      The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
       
       Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be accpetable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it.
     rating: 1
