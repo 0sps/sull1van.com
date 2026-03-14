@@ -1290,8 +1290,8 @@ I started by testing all the chargers at all their advertised voltages, then not
   .overcurrent-table td:nth-child(3) {
     background-color: rgba(0, 0, 0, 0.03);
   }
-  .overcurrent-table td.oc-voltage-ok { color: #228B22; font-weight: 700; }
-  .overcurrent-table td.oc-voltage-bad { color: #C41C00; font-weight: 700; }
+  .overcurrent-table td.oc-pos { color: #228B22; font-weight: 700; }
+  .overcurrent-table td.oc-neg { color: #C41C00; font-weight: 700; }
   @media (prefers-color-scheme: dark) {
     .overcurrent-table th, .overcurrent-table td {
       border-color: #2a2a2a;
@@ -1314,24 +1314,24 @@ I started by testing all the chargers at all their advertised voltages, then not
       <th>Adapter</th>
       <th>Rated Voltage (V)</th>
       <th>Rated Current (A)</th>
-      <th>Actual Voltage at Shutoff (V)</th>
-      <th>Actual Current at Shutoff (A)</th>
+      <th>Difference between advertised Current and Current at shutoff</th>
+      <th>Difference between advertised Voltage and Voltage at shutoff</th>
       <th>Actual Power at Shutoff (W)</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-voltage-ok">5.13</td><td>3.42</td><td>17.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-voltage-ok">5.13</td><td>3.6</td><td>18.5</td></tr>
-    <tr><td><strong>Anker 100W GaN Nano</strong></td><td>5</td><td>3</td><td class="oc-voltage-ok">5.12</td><td>3.35</td><td>17.2</td></tr>
-    <tr><td><strong>Anker 45W Nano (iPhone 17)</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.91</td><td>3.44</td><td>16.9</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.89</td><td>3.42</td><td>16.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.86</td><td>3.17</td><td>15.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-voltage-bad">4.83</td><td>3.46</td><td>16.7</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-voltage-bad">4.8</td><td>1.9</td><td>9.1</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.73</td><td>3.22</td><td>15.2</td></tr>
-    <tr><td><strong>AOHI GaN 65W</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.7</td><td>3.33</td><td>15.7</td></tr>
-    <tr><td><strong>Eero</strong></td><td>5</td><td>3</td><td class="oc-voltage-bad">4.69</td><td>3.36</td><td>15.8</td></tr>
-    <tr><td><strong>Counterfeit Wall Outlet</strong></td><td>5</td><td>2.1</td><td class="oc-voltage-bad">4.43</td><td>2.33</td><td>10.3</td></tr>
+    <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
+    <tr><td><strong>Anker 100W GaN Nano</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
+    <tr><td><strong>Anker 45W Nano (iPhone 17)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
+    <tr><td><strong>AOHI GaN 65W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
+    <tr><td><strong>Eero</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
+    <tr><td><strong>Counterfeit Wall Outlet</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
   </tbody>
 </table>
 </div>
