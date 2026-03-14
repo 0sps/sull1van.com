@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -1265,76 +1265,6 @@ I started by testing all the chargers at all their advertised voltages, then not
   <span>WORSE →→</span>
 </div>
 
----
-
-## Overcurrent Testing
-
-<style>
-  .overcurrent-table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 600px;
-    font-family: sans-serif;
-    font-size: calc(1em - 1px);
-  }
-  .overcurrent-table th, .overcurrent-table td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 6px 10px;
-  }
-  .overcurrent-table th {
-    background-color: #f2f2f2;
-  }
-  .overcurrent-table td:nth-child(1),
-  .overcurrent-table td:nth-child(2),
-  .overcurrent-table td:nth-child(3) {
-    background-color: rgba(0, 0, 0, 0.03);
-  }
-  .overcurrent-table td.oc-pos { color: #228B22; font-weight: 700; }
-  .overcurrent-table td.oc-neg { color: #C41C00; font-weight: 700; }
-  @media (prefers-color-scheme: dark) {
-    .overcurrent-table th, .overcurrent-table td {
-      border-color: #2a2a2a;
-    }
-    .overcurrent-table th {
-      background-color: #181818;
-    }
-    .overcurrent-table td:nth-child(1),
-    .overcurrent-table td:nth-child(2),
-    .overcurrent-table td:nth-child(3) {
-      background-color: rgba(255, 255, 255, 0.04);
-    }
-  }
-</style>
-
-<div class="table-wrapper">
-<table class="overcurrent-table">
-  <thead>
-    <tr>
-      <th>Adapter</th>
-      <th>Rated Voltage (V)</th>
-      <th>Rated Current (A)</th>
-      <th>Difference between advertised Current and Current at shutoff</th>
-      <th>Difference between advertised Voltage and Voltage at shutoff</th>
-      <th>Actual Power at Shutoff (W)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
-    <tr><td><strong>Anker 100W GaN Nano</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
-    <tr><td><strong>Anker 45W Nano (iPhone 17)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
-    <tr><td><strong>AOHI GaN 65W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
-    <tr><td><strong>Eero</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
-    <tr><td><strong>Counterfeit Wall Outlet</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
-  </tbody>
-</table>
-</div>
 
 <div id="device-modal" onclick="closeModal()">
   <span class="modal-dismiss-hint bottom">click anywhere to dismiss</span>
@@ -1542,3 +1472,80 @@ I started by testing all the chargers at all their advertised voltages, then not
   })();
 </script>
 </p>
+
+---
+
+## Overcurrent Testing
+
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Chargers generally deal with excess current by one of two methods: 1) reducing the voltage, or 2) shutting off. Option 1 is due to the laws of physics and is seen in poorly regulated chargers, while option 2 is the best one.
+
+In my testing, I set an electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in my testing, that is rarely what I got.
+
+I can't display the same graphs that Ken did without access to more specialized equipment. However, I CAN tell you that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range. For that reason, I used multimeter-style testing to see the total value of the voltage and current at the point when the charger finally shut off. The ideal value here is having a constant voltage. You don't want any voltage drop, because that suggests the charger allowed more current out than it should have.
+
+<style>
+  .overcurrent-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 600px;
+    font-family: sans-serif;
+    font-size: calc(1em - 1px);
+  }
+  .overcurrent-table th, .overcurrent-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px 10px;
+  }
+  .overcurrent-table th {
+    background-color: #f2f2f2;
+  }
+  .overcurrent-table td:nth-child(1),
+  .overcurrent-table td:nth-child(2),
+  .overcurrent-table td:nth-child(3) {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+  .overcurrent-table td.oc-pos { color: #228B22; font-weight: 700; }
+  .overcurrent-table td.oc-neg { color: #C41C00; font-weight: 700; }
+  @media (prefers-color-scheme: dark) {
+    .overcurrent-table th, .overcurrent-table td {
+      border-color: #2a2a2a;
+    }
+    .overcurrent-table th {
+      background-color: #181818;
+    }
+    .overcurrent-table td:nth-child(1),
+    .overcurrent-table td:nth-child(2),
+    .overcurrent-table td:nth-child(3) {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+  }
+</style>
+
+<div class="table-wrapper">
+<table class="overcurrent-table">
+  <thead>
+    <tr>
+      <th>Adapter</th>
+      <th>Rated Voltage (V)</th>
+      <th>Rated Current (A)</th>
+      <th>Difference between advertised Current and Current at shutoff</th>
+      <th>Difference between advertised Voltage and Voltage at shutoff</th>
+      <th>Actual Power at Shutoff (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
+    <tr><td><strong>Anker 100W GaN Nano</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
+    <tr><td><strong>Anker 45W Nano (iPhone 17)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
+    <tr><td><strong>AOHI GaN 65W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
+    <tr><td><strong>Eero</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
+    <tr><td><strong>Counterfeit Wall Outlet</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
+  </tbody>
+</table>
+</div>
