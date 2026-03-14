@@ -1479,7 +1479,10 @@ I started by testing all the chargers at all their advertised voltages, then not
 </script>
 </p>
 
+
+<br>
 ---
+<br>
 
 ## Overcurrent Testing
 
