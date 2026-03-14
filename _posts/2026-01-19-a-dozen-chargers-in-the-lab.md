@@ -152,9 +152,9 @@ devices:
     overall_rating: 2
   - name: "Dealworthy Charger"
     img1: "/assets/images/Dealworthy 1.png"
-    img2: "/assets/images/Dealworthy  2.png"
+    img2: "/assets/images/Dealworthy 3.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Awful charger, but that is to be expected for something that costs $6. Same story as before, but with more noise. Poor regulation and it shows through the noise and ripple in these graphs. Avoid."
+    caption: "Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is.. but that is to be expected for something that costs $6. Lots of noise, poor regulation, and a lot of ripple. I suspect they are smearing the switching freuqency using frequency dithering.. something looks fishy. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger.
     rating: 1
     noise_rating: 2
     ripple_rating: 2
@@ -169,7 +169,7 @@ devices:
     ripple_rating: 3
     overall_rating: 2
 
-  - name: "Anker A121B 100W charger"
+  - name: "Anker A121B 100W Charger"
     img1: "/assets/images/Anker A121B 100w 1.png"
     img2: "/assets/images/Anker A121B 100w 2.png"
     bg: "hsl(0, 32%, 93%)"
@@ -1536,16 +1536,16 @@ I can't display the same graphs that Ken did without access to more specialized 
   <tbody>
     <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
     <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
-    <tr><td><strong>Anker 100W GaN Nano</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
-    <tr><td><strong>Anker 45W Nano (iPhone 17)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
+    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
     <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
     <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
     <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
     <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
-    <tr><td><strong>AOHI GaN 65W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
-    <tr><td><strong>Eero</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
-    <tr><td><strong>Counterfeit Wall Outlet</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
   </tbody>
 </table>
 </div>
@@ -1555,8 +1555,10 @@ And there you have it. Most chargers did well, and only experienced minor voltag
 
 
 
-
-
+<br>
+<br>
+---
+<br>
 
 
 ## Conclusion
