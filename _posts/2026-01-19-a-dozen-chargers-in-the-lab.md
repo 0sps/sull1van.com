@@ -107,7 +107,10 @@ devices:
     img1: "/assets/images/apple retail.png"
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Advertised at 30W, actual measured power was 29.5W. Solid performance, although quite confusing because it is essentially the same as the Apple HomePod Mini charger, except that you buy it separately. The Apple HomePod Mini charger was much worse."
+    caption: |
+      Advertised at 30W, actual measured power was 29.5W. this one is good. at 5V1A, it has a messy power signature, with a lot of noise, but as soon as you crank it up to 7.5W it works just fine. I imagine this is because nobody at apple expected people to use this charger for 5W of power, since it's USB C and marketed as a fast charger. They made a bet that no one will use this charger below 7.5W, and I agree with them. A smart play financialy. 
+      
+      I also tested this 7.5W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. While i aim to display the *worst* possible graphs here on this site, I displayed the 7.5W+ graph because in normal usage you will almost never encounter that noise. Solid charger.
     rating: 4
     noise_rating: 3
     ripple_rating: 3
