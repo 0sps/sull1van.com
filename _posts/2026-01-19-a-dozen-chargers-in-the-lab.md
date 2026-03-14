@@ -1559,7 +1559,7 @@ And there you have it. Most chargers did well, and only experienced minor voltag
 
 
 
-##Conclusion
+## Conclusion
 
 Wow, that was a lot. Evaluating chargers seems quite difficult at first, but really isn't that hard. You don't need to be an electrical engineer to see the difference between a good and bad oscilloscope trace. The difficulty comes in interpreting the *why* behind most of these results. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers had noise at certain voltage/ current combinations and not others. Those led me down countless rabbitholes, and while interesting, they took a lot of time to research!
 
@@ -1571,4 +1571,5 @@ This was a lot of fun. I'm sure I made some simple mistakes and got things wrong
 
 
 Thanks for reading!
--Sean
+
+### -Sean
