@@ -1477,7 +1477,7 @@ I started by testing all the chargers at all their advertised voltages, then not
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Chargers generally deal with excess current by one of two methods: 1) reducing the voltage, or 2) shutting off. Option 1 is due to the laws of physics and is seen in poorly regulated chargers, while option 2 is the best one.
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Chargers generally deal with excess current by one of two methods: 1) reducing the voltage, or 2) shutting off. Option 1 is due to the laws of physics and is seen in poorly regulated chargers, while option 2 is the best one. There is a third option, which is to do absolutely nothing and allow the higher current to be pulled, but this will lead to overheating and will force the charger to shut down rather quickly.
 
 In my testing, I set an electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in my testing, that is rarely what I got.
 
@@ -1549,3 +1549,26 @@ I can't display the same graphs that Ken did without access to more specialized 
   </tbody>
 </table>
 </div>
+
+
+And there you have it. Most chargers did well, and only experienced minor voltage drops. A few of them allowed significantly higher current than advertised, and they seemed to handle it well, suggesting good engineering.
+
+
+
+
+
+
+
+##Conclusion
+
+Wow, that was a lot. Evaluating chargers seems quite difficult at first, but really isn't that hard. You don't need to be an electrical engineer to see the difference between a good and bad oscilloscope trace. The difficulty comes in interpreting the *why* behind most of these results. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers had noise at certain voltage/ current combinations and not others. Those led me down countless rabbitholes, and while interesting, they took a lot of time to research!
+
+I will say this, though: when you get into the details, testing USB C chargers involves a lot of graphs. So many of them. Chargers have so many voltages to support nowadays, which can sometimes carry their own distinct voltage traces on the oscilloscope screen. What's more, changing the current levels within those voltages is often what leads to the most change, which means that testing these requires you to look at the scope continuously while you cycle through all possible currents a typical device would use, [and in my case] stopping at the one that produces the most noise. It's a lot, but it's also quite rewarding.
+
+You can see from this testing that most modern, name-brand USB C chargers are fine. even the anker ones that I spent paragraphs whining about weren't that bad. Modern devices also do a great job of filtering out the excess noise, so most of these chargers would probably have no noticeable impact on a battery's long-term health. The USB C Power Delivery spec generally allows for 5% variation of voltage, which is about 250mV. As you can see from my graphs, just about everything fits within that range (albeit VERY slightly for some of them).
+
+This was a lot of fun. I'm sure I made some simple mistakes and got things wrong, so feel free to reach out if you think any corrections or modifications could be made.
+
+
+Thanks for reading!
+-Sean
