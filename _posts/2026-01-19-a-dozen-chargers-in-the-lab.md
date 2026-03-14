@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -363,6 +363,8 @@ I started by testing all the chargers at all their advertised voltages, then not
   }
 </style>
 
+
+## Expected/Actual Output
 <div class="table-wrapper">
 <table class="stats-table">
   <thead>
@@ -402,6 +404,9 @@ I started by testing all the chargers at all their advertised voltages, then not
 </table>
 </div>
 
+
+## Oscilloscope Graphs
+
 <style>
   table {
     border-collapse: collapse;
@@ -440,12 +445,13 @@ I started by testing all the chargers at all their advertised voltages, then not
   }
 </style>
 
+## Noise Ratings
 <div class="table-wrapper">
 <table>
   <thead>
     <tr>
       <th>Charger</th>
-      <th>Vpp (mV)</th>
+      <th>Noise in mV</th>
       <th>Noise Rating (Graph 1)</th>
       <th>Ripple Rating (Graphs 2 &amp; 3)</th>
     </tr>
