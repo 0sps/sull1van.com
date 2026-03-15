@@ -18,8 +18,8 @@ devices:
     overall_rating: 5
 
   - name: "AOHI GaN 65W Charger"
-    img1: "/assets/images/AOHIGaN65W 1.png"
-    img2: "/assets/images/AOHIGaN65W 3.png"
+    img1: "/assets/images/AOHIGaN65W 3.png"
+    img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technolgoy in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
@@ -77,8 +77,8 @@ devices:
     ripple_rating: 5
     overall_rating: 5
   - name: "Anker 637 Magnetic Charging Station"
-    img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
-    img2: "/assets/images/Anker 637 magnetic charging station USB C.png"
+    img1: "/assets/images/Anker 637 magnetic charging station USB C.png"
+    img2: "/assets/images/Anker 637 magnetic charging station USB A.png"
     bg: "hsl(120, 32%, 93%)"
     caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers top-notch power quality. You can see from the images that there is a slight bit of noise in the voltage graph, but it's nothing major. At the bottom, we see a bit of a high level of AC noise coming through (seen at bottom left of the 5ms graph) but overall the high frequency noise on this charger is quite minimal. Overall a great charger to have."
     rating: 5
@@ -142,8 +142,8 @@ devices:
     ripple_rating: 3
     overall_rating: 3
   - name: "Govee Power Supply"
-    img1: "/assets/images/Govee 2.png"
-    img2: "/assets/images/Govee 3.png"
+    img1: "/assets/images/Govee 3.png"
+    img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: "This one is genuinely bad. It gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks poorly regulated. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
     rating: 2
@@ -233,8 +233,8 @@ devices:
     overall_rating: 1
 
   - name: "Counterfeit Samsung"
-    img1: "/assets/images/Counerfeit Samsung 1.png"
-    img2: "/assets/images/Counerfeit Samsung 2.png"
+    img1: "/assets/images/Counerfeit Samsung 3.png"
+    img2: "/assets/images/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
