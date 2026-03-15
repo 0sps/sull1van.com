@@ -249,7 +249,7 @@ devices:
 ## A Dozen Chargers in the Lab: Apple is Okay, but Not the Best
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
-*(As of 3/11/26 this page is still being finished, expect inaccuracies)*
+*(As of 3/14/26 this page is still being finished, expect inaccuracies)*
 
 Have you ever wondered about the quality of phone chargers? Whether  counterfeit chargers were secretly destroying your battery? That's what I'd wondered for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) one morning. I believe I was a freshman in college at the time when I read it. Most of it went over my head, but I did start thinking about what kinds of chargers I should keep around, and which I should avoid. 
 
@@ -405,7 +405,7 @@ I started by testing all the chargers at all their advertised voltages, then not
 </div>
 
 
-## Oscilloscope Graphs
+
 
 <style>
   table {
@@ -592,6 +592,8 @@ I started by testing all the chargers at all their advertised voltages, then not
   </tbody>
 </table>
 </div>
+
+## Oscilloscope Graphs
 
 <p>
 <style>
