@@ -5,10 +5,8 @@
   <style>
     /* Theme toggle button */
     .theme-toggle {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      z-index: 9999;
+      float: right;
+      margin-top: 1.25em;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -16,15 +14,7 @@
       background: linear-gradient(to right, #fff 50%, #333 50%);
       cursor: pointer;
       padding: 0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .theme-toggle:hover {
-      transform: scale(1.12);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .theme-toggle:active {
-      transform: scale(0.95);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
 
     /* ----- Force DARK when data-theme="dark" ----- */
@@ -109,8 +99,8 @@
   </script>
 </head>
 <body>
-<button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button>
 <main>
+<button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button>
 {{ content }}
 </main>
 {% include footer.html %}
