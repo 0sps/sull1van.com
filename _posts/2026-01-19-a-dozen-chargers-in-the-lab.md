@@ -377,6 +377,16 @@ I started by testing all the chargers at all their advertised voltages, then not
       border-color: #444;
     }
   }
+  html[data-theme="dark"] .stats-table th, html[data-theme="dark"] .stats-table td { border-color: #2a2a2a; }
+  html[data-theme="dark"] .stats-table th { background-color: #181818; }
+  html[data-theme="dark"] .stats-table td:nth-child(1),
+  html[data-theme="dark"] .stats-table td:nth-child(2) { background-color: rgba(255, 255, 255, 0.04); }
+  html[data-theme="dark"] .usba-badge { color: #888; border-color: #444; }
+  html[data-theme="light"] .stats-table th, html[data-theme="light"] .stats-table td { border-color: #dddddd; }
+  html[data-theme="light"] .stats-table th { background-color: #f2f2f2; }
+  html[data-theme="light"] .stats-table td:nth-child(1),
+  html[data-theme="light"] .stats-table td:nth-child(2) { background-color: rgba(0, 0, 0, 0.03); }
+  html[data-theme="light"] .usba-badge { color: #555; border-color: #aaa; }
 </style>
 
 
@@ -459,6 +469,20 @@ I started by testing all the chargers at all their advertised voltages, then not
     table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
     table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
   }
+  html[data-theme="dark"] th, html[data-theme="dark"] td { border-color: #2a2a2a; }
+  html[data-theme="dark"] th { background-color: #181818; }
+  html[data-theme="dark"] table .bolt-5 { color: #42d773; -webkit-text-stroke: 1px #42d773; }
+  html[data-theme="dark"] table .bolt-4 { color: #8cd742; -webkit-text-stroke: 1px #8cd742; }
+  html[data-theme="dark"] table .bolt-3 { color: #eebd2b; -webkit-text-stroke: 1px #eebd2b; }
+  html[data-theme="dark"] table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
+  html[data-theme="dark"] table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
+  html[data-theme="light"] th, html[data-theme="light"] td { border-color: #dddddd; }
+  html[data-theme="light"] th { background-color: #f2f2f2; }
+  html[data-theme="light"] table .bolt-5 { color: #15933f; -webkit-text-stroke: 1px #15933f; }
+  html[data-theme="light"] table .bolt-4 { color: #7ad025; -webkit-text-stroke: 1px #7ad025; }
+  html[data-theme="light"] table .bolt-3 { color: #f2c336; -webkit-text-stroke: 1px #f2c336; }
+  html[data-theme="light"] table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
+  html[data-theme="light"] table .bolt-1 { color: #e02929; -webkit-text-stroke: 1px #e02929; }
 </style>
 
 ## Noise Ratings
@@ -718,6 +742,8 @@ I started by testing all the chargers at all their advertised voltages, then not
       color: rgba(255, 255, 255, 0.25);
     }
   }
+  html[data-theme="dark"] .card-title-above { color: rgba(255, 255, 255, 0.25); }
+  html[data-theme="light"] .card-title-above { color: rgba(0, 0, 0, 0.65); }
   .device-card {
     height: 565px;
     margin: 0;
@@ -807,6 +833,12 @@ I started by testing all the chargers at all their advertised voltages, then not
     .rating-badge-2 { background: rgba(250, 204, 21, 0.22); border-color: rgba(250, 204, 21, 0.55); color: #854d0e; }
     .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
   }
+  /* These badges sit on pastel card backgrounds so colors are the same in both themes */
+  html[data-theme="dark"] .rating-badge-5 { background: rgba(46, 204, 113, 0.22); border-color: rgba(46, 204, 113, 0.55); color: #145a30; }
+  html[data-theme="dark"] .rating-badge-4 { background: rgba(74, 222, 128, 0.22); border-color: rgba(74, 222, 128, 0.55); color: #166534; }
+  html[data-theme="dark"] .rating-badge-3 { background: rgba(134, 239, 172, 0.22); border-color: rgba(134, 239, 172, 0.55); color: #14532d; }
+  html[data-theme="dark"] .rating-badge-2 { background: rgba(250, 204, 21, 0.22); border-color: rgba(250, 204, 21, 0.55); color: #854d0e; }
+  html[data-theme="dark"] .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
   .device-card figcaption {
     font-size: 0.85em;
     font-family: sans-serif;
@@ -1546,6 +1578,16 @@ I can't display the same graphs that Ken did without access to more specialized 
       background-color: rgba(255, 255, 255, 0.04);
     }
   }
+  html[data-theme="dark"] .overcurrent-table th, html[data-theme="dark"] .overcurrent-table td { border-color: #2a2a2a; }
+  html[data-theme="dark"] .overcurrent-table th { background-color: #181818; }
+  html[data-theme="dark"] .overcurrent-table td:nth-child(1),
+  html[data-theme="dark"] .overcurrent-table td:nth-child(2),
+  html[data-theme="dark"] .overcurrent-table td:nth-child(3) { background-color: rgba(255, 255, 255, 0.04); }
+  html[data-theme="light"] .overcurrent-table th, html[data-theme="light"] .overcurrent-table td { border-color: #dddddd; }
+  html[data-theme="light"] .overcurrent-table th { background-color: #f2f2f2; }
+  html[data-theme="light"] .overcurrent-table td:nth-child(1),
+  html[data-theme="light"] .overcurrent-table td:nth-child(2),
+  html[data-theme="light"] .overcurrent-table td:nth-child(3) { background-color: rgba(0, 0, 0, 0.03); }
 </style>
 
 <div class="table-wrapper">
