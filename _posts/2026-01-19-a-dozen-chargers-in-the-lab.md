@@ -257,7 +257,10 @@ Fast forward six years, and the story had been relegated to an occasional though
 
 Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
 
-![Ken Shirriff's original charger teardown](/assets/images/ken_ss.png)
+<figure>
+  <img src="/assets/images/ken_ss.png" alt="Ken Shirriff's original charger teardown">
+  <figcaption>Ken Shirriff's original charger teardown article from 2012</figcaption>
+</figure>
 
 ---
 
@@ -294,6 +297,12 @@ My setup consisted of three distinct pieces:
 I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board had a positive and negative terminal which were connected to the electronic load with small wires.
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
+
+
+<figure>
+  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope">
+  <figcaption>My oiginal setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
+</figure>
 
 
 ---
