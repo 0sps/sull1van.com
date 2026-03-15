@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -256,6 +256,8 @@ Have you ever wondered about the quality of phone chargers? Whether  counterfeit
 Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information *needed* to be out there in the world but just didn't exist yet.
 
 Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
+
+![Ken Shirriff's original charger teardown](/assets/images/ken_ss.png)
 
 ---
 
