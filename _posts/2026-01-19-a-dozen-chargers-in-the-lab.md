@@ -251,11 +251,13 @@ devices:
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 *(As of 3/14/26 this page is still being finished, expect inaccuracies)*
 
-Have you ever wondered about the quality of phone chargers? Whether  counterfeit chargers were secretly destroying your battery? That's what I'd wondered for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) one morning. I believe I was a freshman in college at the time when I read it. Most of it went over my head, but I did start thinking about what kinds of chargers I should keep around, and which I should avoid. 
+Have you ever wondered what makes a phone charger hihg-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was a freshman in college at the time, and most of it went right over my head, but the idea that you should test chargers stuck with me.
 
-Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information *needed* to be out there in the world but just didn't exist yet.
+Fast forward six years, and I decided to turn that idea into a project. Ken's work only covered the USB-A chargers at the time, and I wondered what modern USB-C chargers would be like if I tested them in the same way. After a lot of online research, I couldn't find anyone who replicated this work already. t just felt like this information *needed* to be out there in the world. So one day, during a conversation with my boss at work, I told him about this whole thing and we jokingly said I'd do the entire project and present my results at our next team meeting (we like to share what we do outside of work too).
 
-Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
+Two months later, here we are.
+
+<br>
 
 <figure>
   <img src="/assets/images/ken_ss.png" alt="Ken Shirriff's original charger teardown">
@@ -268,23 +270,25 @@ Having thought about it on and off for years, I had a conversastion with my mana
 
 <!-- Briefly describe the collection of chargers — where they came from (official, counterfeit, old, new, etc.) -->
 
-I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well.
-
-To clarify some confusion in how I've been referring to them: USB A is the rectangular connector we used to have on old chargers, and USB C is the round, modern plug. 
+I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
 
 ---
+<!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
+
+As it turns out, testing USB C cables is incredibly complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Now, there are modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
+
+If you weren't aware, the relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the cahrger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
+
+The relationship is like a water hose: The water company guarantees it comes to your house at 60psi. So it's always at 60psi, but how much you open the hose and let out that 60psi water is up to you. If you had a big enough hose, somehow, you could use so much water that the water company can't keep up. In that instance, the water pressure drops, and it doesn't shoot out of the hose like you're used to, it just starts to gently pour out. The same is true of power. If the device pulls *too much* current, Ohm's law says that, all else equal, the voltage must drop. Cheap chargers will just let this happen on their own. Well-made chargers do not let this happen, and instead supply at a constant voltage until they reach a limit and completely shut off.
+
+<br>
 
 ## How I Tested Them
 
-<!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
-As it turns out, testing USB C cables is incredibly complex. Ever since the USB C Power Delivery standard came out, a standard USB Charger is capable of putting out many different voltages.
+When ken did his work, he generally only had one voltage to test. Unfortunately for me, with USB C Power Delivery, I have up to 4 in each charger. And if I stumbled down the path of testing AVS or PPS, I'd have dozens.
 
-As a brief refrehser, these chargers are outputting a specific voltage and then a variable amount of current. So the device negotiates a voltage with the charger, and once they agree on that the charger just tries to maintain that specific voltage regardless of what current the device pulls. The device decides how much current to pull. The charger's job is to supply current at a constant voltage until the device asks for too much current, which the charger reacts to by shutting off.
-
-Well, with USB A, you only have one voltage to test. With USB C Power Delivery, you have up to 4. And with more modern extensinos of this standard coming online, new chargers (ones that I don't have) are supporting more and more voltages. Some offer dozens. 
-
-This means that my work will be like Ken's, except 2-4x more data points. Let's go.
+So for my project, I tested the same things as ken, except I took 2-4x more data points!
 
 
 ### Testing setup
@@ -294,13 +298,14 @@ My setup consisted of three distinct pieces:
 2. An electronic load
 3. A USB C Power Delivery decoy board
 
-I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board had a positive and negative terminal which were connected to the electronic load with small wires.
+I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board was connected to the electronic load with small wires.
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
+*NOTE: If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the defualt alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad even if they are high quality.*
 
 
-<figure>
-  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope">
+<figure style="max-width: 300px;">
+  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
   <figcaption>My oiginal setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
 </figure>
 
