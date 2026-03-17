@@ -98,7 +98,7 @@ devices:
     img1: "/assets/images/apple96W3.png"
     img2: "/assets/images/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Not as good as I would expect for how expensive this cahrger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, so it's not terribel per se, but the graph does leave some things to be desired. The power signature is a little noisy with those intermittent peaks. Not sure what the charger is having issue with here. There is also some AC noise coming through."
+    caption: "Not as good as I would expect for how expensive this charger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, so it's not terribel per se, but the graph does leave some things to be desired. The power signature is a little noisy with those intermittent peaks. Not sure what the charger is having issue with here. There is also some AC noise coming through."
     rating: 4
     noise_rating: 4
     ripple_rating: 4
@@ -251,11 +251,11 @@ devices:
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 *(As of 3/14/26 this page is still being finished, expect inaccuracies)*
 
-Have you ever wondered what makes a phone charger hihg-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was a freshman in college at the time, and most of it went right over my head, but the idea that you should test chargers stuck with me.
+Have you ever wondered what makes a phone charger hihg-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was only 18 at the time, so most of went over my head. I did think about it from time to time, though, and whether someone had done this for modern chargers
 
-Fast forward six years, and I decided to turn that idea into a project. Ken's work only covered the USB-A chargers at the time, and I wondered what modern USB-C chargers would be like if I tested them in the same way. After a lot of online research, I couldn't find anyone who replicated this work already. t just felt like this information *needed* to be out there in the world. So one day, during a conversation with my boss at work, I told him about this whole thing and we jokingly said I'd do the entire project and present my results at our next team meeting (we like to share what we do outside of work too).
+Fast forward six years, and I decided to turn that idea into a project. Ken's work only covered the USB-A chargers at the time, and I wondered what modern USB-C chargers would be like if I tested them in the same way. After a lot of online research, I couldn't find anyone who replicated this work already. So one day, during a conversation with my boss at work, we talked about it and he egged me on. Even though it had nothing to do with our jobs, he was just as interested in the project as me, so I promised him I'd recreate Ken's work and let him know the results.
 
-Two months later, here we are.
+Enjoy!
 
 <br>
 
@@ -270,14 +270,14 @@ Two months later, here we are.
 
 <!-- Briefly describe the collection of chargers — where they came from (official, counterfeit, old, new, etc.) -->
 
-I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
+Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
 
 ---
 <!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
 As it turns out, testing USB C cables is incredibly complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Now, there are modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
 
-If you weren't aware, the relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the cahrger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
+If you weren't aware, the relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the charger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
 
 The relationship is like a water hose: The water company guarantees it comes to your house at 60psi. So it's always at 60psi, but how much you open the hose and let out that 60psi water is up to you. If you had a big enough hose, somehow, you could use so much water that the water company can't keep up. In that instance, the water pressure drops, and it doesn't shoot out of the hose like you're used to, it just starts to gently pour out. The same is true of power. If the device pulls *too much* current, Ohm's law says that, all else equal, the voltage must drop. Cheap chargers will just let this happen on their own. Well-made chargers do not let this happen, and instead supply at a constant voltage until they reach a limit and completely shut off.
 
