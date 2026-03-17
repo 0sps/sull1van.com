@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "A Dozen Chargers in the Lab"
 date: 2026-01-18
@@ -18,8 +18,8 @@ devices:
     overall_rating: 5
 
   - name: "AOHI GaN 65W Charger"
-    img1: "/assets/images/AOHIGaN65W 1.png"
-    img2: "/assets/images/AOHIGaN65W 3.png"
+    img1: "/assets/images/AOHIGaN65W 3.png"
+    img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technolgoy in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
@@ -77,8 +77,8 @@ devices:
     ripple_rating: 5
     overall_rating: 5
   - name: "Anker 637 Magnetic Charging Station"
-    img1: "/assets/images/Anker 637 magnetic charging station USB A.png"
-    img2: "/assets/images/Anker 637 magnetic charging station USB C.png"
+    img1: "/assets/images/Anker 637 magnetic charging station USB C.png"
+    img2: "/assets/images/Anker 637 magnetic charging station USB A.png"
     bg: "hsl(120, 32%, 93%)"
     caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers top-notch power quality. You can see from the images that there is a slight bit of noise in the voltage graph, but it's nothing major. At the bottom, we see a bit of a high level of AC noise coming through (seen at bottom left of the 5ms graph) but overall the high frequency noise on this charger is quite minimal. Overall a great charger to have."
     rating: 5
@@ -142,8 +142,8 @@ devices:
     ripple_rating: 3
     overall_rating: 3
   - name: "Govee Power Supply"
-    img1: "/assets/images/Govee 2.png"
-    img2: "/assets/images/Govee 3.png"
+    img1: "/assets/images/Govee 3.png"
+    img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: "This one is genuinely bad. It gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks poorly regulated. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
     rating: 2
@@ -222,19 +222,19 @@ devices:
 
       Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, etc. But this charger is just awful. 
 
-      The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and a constant high-voltage whine that you can see in the lower timeframe. At that lower timeframe, it's also unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but constantly going back and forth. After some research, I believe this was a decision of Anker's to actually avoid newer GaN materials and use older switching technology, relying on aggressive Frequency Dithering to help ease the noise. This may not be the case but it is my suspicion. 
+      The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and constant high-voltage spikes that you can see in the lower timeframe. Also, at that lower timeframe, it's unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but also just resembling noise. After some research, I anker actually did not use GaN technology at all but used traditional technology with aggressive frequency dithering to help ease the noise. This may not be the case but it is my suspicion. 
 
       Either way, it is awful!
 
-      <em>Sidenote: you would be right to point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they DO employ the same technology, but they switch constantly, but only vary it by 20-50KHz. Constantly moving the switching freuqency up and down, so the noise spreads out and doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI decided to manage thier noise entirely, so when they change the switching freuqency, it's only happening once when the charger starts sending a certain level of power. They probably only change it when the voltage changes, to make sure they can best accomodate the power. And then at lower voltage levels, I suspect they go down to a lower switching freuqency to save on electricity. They don't need to constantly switch up and down, because their aim isn't to spread noise out. </em>
+      <em>Sidenote: you might point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they do employ a variable switching frequency but only vary it by 20-50KHz. Constantly moving the switching freuqency up and down, so the noise doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI has no noise to begin with, so when they change the switching freuqency, it's only happening once (I suspect only when the requested voltage changes). They don't need to constantly switch up and down, because their aim is not to spread noise out. </em>
     rating: 1
     noise_rating: 1
     ripple_rating: 1
     overall_rating: 1
 
   - name: "Counterfeit Samsung"
-    img1: "/assets/images/Counerfeit Samsung 1.png"
-    img2: "/assets/images/Counerfeit Samsung 2.png"
+    img1: "/assets/images/Counerfeit Samsung 3.png"
+    img2: "/assets/images/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original resarcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evalueate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
@@ -249,13 +249,20 @@ devices:
 ## A Dozen Chargers in the Lab: Apple is Okay, but Not the Best
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
-*(As of 3/11/26 this page is still being finished, expect inaccuracies)*
+*(As of 3/14/26 this page is still being finished, expect inaccuracies)*
 
-Have you ever wondered about the quality of phone chargers? Whether  counterfeit chargers were secretly destroying your battery? That's what I'd wondered for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) one morning. I believe I was a freshman in college at the time when I read it. Most of it went over my head, but I did start thinking about what kinds of chargers I should keep around, and which I should avoid. 
+Have you ever wondered what makes a phone charger hihg-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was a freshman in college at the time, and most of it went right over my head, but the idea that you should test chargers stuck with me.
 
-Fast forward six years, and the story had been relegated to an occasional thought in my head. Ken's work only covered the USB A chargers at the time, not USB C. I wondered what modern chargers would be like if I tested them in the same way. I couldn't find anyone online who replicated Ken's work in the same way, it just felt like this information *needed* to be out there in the world but just didn't exist yet.
+Fast forward six years, and I decided to turn that idea into a project. Ken's work only covered the USB-A chargers at the time, and I wondered what modern USB-C chargers would be like if I tested them in the same way. After a lot of online research, I couldn't find anyone who replicated this work already. t just felt like this information *needed* to be out there in the world. So one day, during a conversation with my boss at work, I told him about this whole thing and we jokingly said I'd do the entire project and present my results at our next team meeting (we like to share what we do outside of work too).
 
-Having thought about it on and off for years, I had a conversastion with my manager at work one day, talking about our hobbies outside of work. I mentioned that now that I finished doing some extensive journaling (90,000 words), and coding a Comma 3X to work with my new car, I needed something else to do. We talked about the charger project and I told him that it would be a good project to work on. He said I should do it. I looked at him and sadi that I would. And like that, I devided it would happen. So two months later, here we are.
+Two months later, here we are.
+
+<br>
+
+<figure>
+  <img src="/assets/images/ken_ss.png" alt="Ken Shirriff's original charger teardown">
+  <figcaption>Ken Shirriff's original charger teardown article from 2012</figcaption>
+</figure>
 
 ---
 
@@ -263,23 +270,25 @@ Having thought about it on and off for years, I had a conversastion with my mana
 
 <!-- Briefly describe the collection of chargers — where they came from (official, counterfeit, old, new, etc.) -->
 
-I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well.
-
-To clarify some confusion in how I've been referring to them: USB A is the rectangular connector we used to have on old chargers, and USB C is the round, modern plug. 
+I tested nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
 
 ---
+<!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
+
+As it turns out, testing USB C cables is incredibly complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Now, there are modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
+
+If you weren't aware, the relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the cahrger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
+
+The relationship is like a water hose: The water company guarantees it comes to your house at 60psi. So it's always at 60psi, but how much you open the hose and let out that 60psi water is up to you. If you had a big enough hose, somehow, you could use so much water that the water company can't keep up. In that instance, the water pressure drops, and it doesn't shoot out of the hose like you're used to, it just starts to gently pour out. The same is true of power. If the device pulls *too much* current, Ohm's law says that, all else equal, the voltage must drop. Cheap chargers will just let this happen on their own. Well-made chargers do not let this happen, and instead supply at a constant voltage until they reach a limit and completely shut off.
+
+<br>
 
 ## How I Tested Them
 
-<!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
-As it turns out, testing USB C cables is incredibly complex. Ever since the USB C Power Delivery standard came out, a standard USB Charger is capable of putting out many different voltages.
+When ken did his work, he generally only had one voltage to test. Unfortunately for me, with USB C Power Delivery, I have up to 4 in each charger. And if I stumbled down the path of testing AVS or PPS, I'd have dozens.
 
-As a brief refrehser, these chargers are outputting a specific voltage and then a variable amount of current. So the device negotiates a voltage with the charger, and once they agree on that the charger just tries to maintain that specific voltage regardless of what current the device pulls. The device decides how much current to pull. The charger's job is to supply current at a constant voltage until the device asks for too much current, which the charger reacts to by shutting off.
-
-Well, with USB A, you only have one voltage to test. With USB C Power Delivery, you have up to 4. And with more modern extensinos of this standard coming online, new chargers (ones that I don't have) are supporting more and more voltages. Some offer dozens. 
-
-This means that my work will be like Ken's, except 2-4x more data points. Let's go.
+So for my project, I tested the same things as ken, except I took 2-4x more data points!
 
 
 ### Testing setup
@@ -289,9 +298,16 @@ My setup consisted of three distinct pieces:
 2. An electronic load
 3. A USB C Power Delivery decoy board
 
-I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board had a positive and negative terminal which were connected to the electronic load with small wires.
+I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board was connected to the electronic load with small wires.
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
+*NOTE: If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the defualt alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad even if they are high quality.*
+
+
+<figure style="max-width: 300px;">
+  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
+  <figcaption>My oiginal setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
+</figure>
 
 
 ---
@@ -361,6 +377,16 @@ I started by testing all the chargers at all their advertised voltages, then not
       border-color: #444;
     }
   }
+  html[data-theme="dark"] .stats-table th, html[data-theme="dark"] .stats-table td { border-color: #2a2a2a; }
+  html[data-theme="dark"] .stats-table th { background-color: #181818; }
+  html[data-theme="dark"] .stats-table td:nth-child(1),
+  html[data-theme="dark"] .stats-table td:nth-child(2) { background-color: rgba(255, 255, 255, 0.04); }
+  html[data-theme="dark"] .usba-badge { color: #888; border-color: #444; }
+  html[data-theme="light"] .stats-table th, html[data-theme="light"] .stats-table td { border-color: #dddddd; }
+  html[data-theme="light"] .stats-table th { background-color: #f2f2f2; }
+  html[data-theme="light"] .stats-table td:nth-child(1),
+  html[data-theme="light"] .stats-table td:nth-child(2) { background-color: rgba(0, 0, 0, 0.03); }
+  html[data-theme="light"] .usba-badge { color: #555; border-color: #aaa; }
 </style>
 
 
@@ -405,7 +431,7 @@ I started by testing all the chargers at all their advertised voltages, then not
 </div>
 
 
-## Oscilloscope Graphs
+
 
 <style>
   table {
@@ -443,6 +469,20 @@ I started by testing all the chargers at all their advertised voltages, then not
     table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
     table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
   }
+  html[data-theme="dark"] th, html[data-theme="dark"] td { border-color: #2a2a2a; }
+  html[data-theme="dark"] th { background-color: #181818; }
+  html[data-theme="dark"] table .bolt-5 { color: #42d773; -webkit-text-stroke: 1px #42d773; }
+  html[data-theme="dark"] table .bolt-4 { color: #8cd742; -webkit-text-stroke: 1px #8cd742; }
+  html[data-theme="dark"] table .bolt-3 { color: #eebd2b; -webkit-text-stroke: 1px #eebd2b; }
+  html[data-theme="dark"] table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
+  html[data-theme="dark"] table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
+  html[data-theme="light"] th, html[data-theme="light"] td { border-color: #dddddd; }
+  html[data-theme="light"] th { background-color: #f2f2f2; }
+  html[data-theme="light"] table .bolt-5 { color: #15933f; -webkit-text-stroke: 1px #15933f; }
+  html[data-theme="light"] table .bolt-4 { color: #7ad025; -webkit-text-stroke: 1px #7ad025; }
+  html[data-theme="light"] table .bolt-3 { color: #f2c336; -webkit-text-stroke: 1px #f2c336; }
+  html[data-theme="light"] table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
+  html[data-theme="light"] table .bolt-1 { color: #e02929; -webkit-text-stroke: 1px #e02929; }
 </style>
 
 ## Noise Ratings
@@ -593,6 +633,8 @@ I started by testing all the chargers at all their advertised voltages, then not
 </table>
 </div>
 
+## Oscilloscope Graphs
+
 <p>
 <style>
   body { overflow-x: hidden; }
@@ -700,6 +742,8 @@ I started by testing all the chargers at all their advertised voltages, then not
       color: rgba(255, 255, 255, 0.25);
     }
   }
+  html[data-theme="dark"] .card-title-above { color: rgba(255, 255, 255, 0.25); }
+  html[data-theme="light"] .card-title-above { color: rgba(0, 0, 0, 0.65); }
   .device-card {
     height: 565px;
     margin: 0;
@@ -789,6 +833,12 @@ I started by testing all the chargers at all their advertised voltages, then not
     .rating-badge-2 { background: rgba(250, 204, 21, 0.22); border-color: rgba(250, 204, 21, 0.55); color: #854d0e; }
     .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
   }
+  /* These badges sit on pastel card backgrounds so colors are the same in both themes */
+  html[data-theme="dark"] .rating-badge-5 { background: rgba(46, 204, 113, 0.22); border-color: rgba(46, 204, 113, 0.55); color: #145a30; }
+  html[data-theme="dark"] .rating-badge-4 { background: rgba(74, 222, 128, 0.22); border-color: rgba(74, 222, 128, 0.55); color: #166534; }
+  html[data-theme="dark"] .rating-badge-3 { background: rgba(134, 239, 172, 0.22); border-color: rgba(134, 239, 172, 0.55); color: #14532d; }
+  html[data-theme="dark"] .rating-badge-2 { background: rgba(250, 204, 21, 0.22); border-color: rgba(250, 204, 21, 0.55); color: #854d0e; }
+  html[data-theme="dark"] .rating-badge-1 { background: rgba(248, 113, 113, 0.22); border-color: rgba(248, 113, 113, 0.55); color: #991b1b; }
   .device-card figcaption {
     font-size: 0.85em;
     font-family: sans-serif;
@@ -1528,6 +1578,16 @@ I can't display the same graphs that Ken did without access to more specialized 
       background-color: rgba(255, 255, 255, 0.04);
     }
   }
+  html[data-theme="dark"] .overcurrent-table th, html[data-theme="dark"] .overcurrent-table td { border-color: #2a2a2a; }
+  html[data-theme="dark"] .overcurrent-table th { background-color: #181818; }
+  html[data-theme="dark"] .overcurrent-table td:nth-child(1),
+  html[data-theme="dark"] .overcurrent-table td:nth-child(2),
+  html[data-theme="dark"] .overcurrent-table td:nth-child(3) { background-color: rgba(255, 255, 255, 0.04); }
+  html[data-theme="light"] .overcurrent-table th, html[data-theme="light"] .overcurrent-table td { border-color: #dddddd; }
+  html[data-theme="light"] .overcurrent-table th { background-color: #f2f2f2; }
+  html[data-theme="light"] .overcurrent-table td:nth-child(1),
+  html[data-theme="light"] .overcurrent-table td:nth-child(2),
+  html[data-theme="light"] .overcurrent-table td:nth-child(3) { background-color: rgba(0, 0, 0, 0.03); }
 </style>
 
 <div class="table-wrapper">
@@ -1574,7 +1634,7 @@ And there you have it. Most chargers did well, and only experienced minor voltag
 
 Wow, that was a lot. Evaluating chargers seems quite difficult at first, but really isn't that hard. You don't need to be an electrical engineer to see the difference between a good and bad oscilloscope trace. The difficulty comes in interpreting the *why* behind most of these results. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers had noise at certain voltage/ current combinations and not others. Those led me down countless rabbitholes, and while interesting, they took a lot of time to research!
 
-I will say this, though: when you get into the details, testing USB C chargers involves a lot of graphs. So many of them. Chargers have so many voltages to support nowadays, which can sometimes carry their own distinct voltage traces on the oscilloscope screen. What's more, changing the current levels within those voltages is often what leads to the most change, which means that testing these requires you to look at the scope continuously while you cycle through all possible currents a typical device would use, [and in my case] stopping at the one that produces the most noise. It's a lot, but it's also quite rewarding.
+Anther thing that surprised me was just how many graphs were involved in this testing. So many of them. Chargers have so many voltages to support nowadays, which can sometimes carry their own distinct voltage traces on the oscilloscope screen. What's more, changing the current levels within those voltages is often what leads to the most change, which means that testing these requires you to look at the scope continuously while you cycle through all possible currents a typical device would use, [and in my case] stopping at the one that produces the most noise. It's a lot, but it's also quite rewarding.
 
 You can see from this testing that most modern, name-brand USB C chargers are fine. even the anker ones that I spent paragraphs whining about weren't that bad. Modern devices also do a great job of filtering out the excess noise, so most of these chargers would probably have no noticeable impact on a battery's long-term health. The USB C Power Delivery spec generally allows for 5% variation of voltage, which is about 250mV (the spec says that, for 5V of output, you are USB PD certified if you can supply between 4.75 and 5.5V). As you can see from my graphs, just about everything fits within that range, albeit very slightly for some.
 

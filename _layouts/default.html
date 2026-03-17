@@ -2,11 +2,127 @@
 <html lang="en">
 <head>
   {% include head.html %}
+  <style>
+    /* Theme toggle button */
+    .theme-toggle {
+      float: right;
+      margin-top: 1.25em;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #888;
+      background: linear-gradient(to right, #fff 50%, #333 50%);
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ----- Force DARK when data-theme="dark" ----- */
+    html[data-theme="dark"] body {
+      background: #111;
+      color: #bbb;
+    }
+    html[data-theme="dark"] a:link { color: #9bf; }
+    html[data-theme="dark"] a:visited { color: #a9f; }
+    html[data-theme="dark"] a:focus,
+    html[data-theme="dark"] a:hover { color: #9cf; }
+    html[data-theme="dark"] a:active { color: #f99; }
+    html[data-theme="dark"] blockquote,
+    html[data-theme="dark"] pre,
+    html[data-theme="dark"] kbd,
+    html[data-theme="dark"] .highlight {
+      background: #000;
+      box-shadow: 0 0 0.5em #333;
+    }
+    html[data-theme="dark"] blockquote { border-left-color: #333; }
+    html[data-theme="dark"] code,
+    html[data-theme="dark"] pre kbd { color: #9c6; }
+    html[data-theme="dark"] samp { color: #db0; }
+    html[data-theme="dark"] pre .cursor { background: #db0; color: #000; }
+    html[data-theme="dark"] kbd { border-color: #333; box-shadow: 0 0.15em 0.15em #333; }
+    html[data-theme="dark"] hr { border-bottom-color: #666; }
+    /* extra.css dark overrides */
+    html[data-theme="dark"] .soft img { opacity: 0.7; }
+    html[data-theme="dark"] .lightshadow img { box-shadow: none; }
+    html[data-theme="dark"] table, html[data-theme="dark"] thead,
+    html[data-theme="dark"] tr, html[data-theme="dark"] th,
+    html[data-theme="dark"] td, html[data-theme="dark"] .email { border-color: #666; }
+    html[data-theme="dark"] .light { display: none; }
+    html[data-theme="dark"] .dark { display: block; }
+    html[data-theme="dark"] .hl { color: #f9c; }
+    html[data-theme="dark"] .theme-toggle {
+      border-color: #aaa;
+      background: linear-gradient(to right, #ccc 50%, #222 50%);
+    }
+
+    /* ----- Force LIGHT when data-theme="light" ----- */
+    html[data-theme="light"] body {
+      background: #fff;
+      color: #333;
+    }
+    html[data-theme="light"] a:link { color: #00e; }
+    html[data-theme="light"] a:visited { color: #518; }
+    html[data-theme="light"] a:focus,
+    html[data-theme="light"] a:hover { color: #03f; }
+    html[data-theme="light"] a:active { color: #a00; }
+    html[data-theme="light"] blockquote,
+    html[data-theme="light"] pre,
+    html[data-theme="light"] kbd,
+    html[data-theme="light"] .highlight {
+      background: #eee;
+      box-shadow: none;
+    }
+    html[data-theme="light"] blockquote { border-left-color: #ccc; }
+    html[data-theme="light"] code,
+    html[data-theme="light"] pre kbd { color: #050; }
+    html[data-theme="light"] samp { color: #730; }
+    html[data-theme="light"] pre .cursor { background: #730; color: #eee; }
+    html[data-theme="light"] kbd { border-color: #ccc; box-shadow: 0 0.15em 0.15em #ccc; }
+    html[data-theme="light"] hr { border-bottom-color: #999; }
+    html[data-theme="light"] .soft img { opacity: 0.8; }
+    html[data-theme="light"] .lightshadow img { box-shadow: 0em 0em 0.5em #999; }
+    html[data-theme="light"] table, html[data-theme="light"] thead,
+    html[data-theme="light"] tr, html[data-theme="light"] th,
+    html[data-theme="light"] td { border-color: #999; }
+    html[data-theme="light"] .light { display: block; }
+    html[data-theme="light"] .dark { display: none; }
+    html[data-theme="light"] .hl { color: #808; }
+  </style>
+  <script>
+    // Apply saved theme immediately to avoid flash
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
 </head>
 <body>
 <main>
+<button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button>
 {{ content }}
 </main>
 {% include footer.html %}
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', function() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (!current) {
+        // First click: override to opposite of OS preference
+        html.setAttribute('data-theme', isDarkOS ? 'light' : 'dark');
+      } else if (current === 'dark') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+      }
+      localStorage.setItem('theme', html.getAttribute('data-theme'));
+    });
+  })();
+</script>
 </body>
 </html>
