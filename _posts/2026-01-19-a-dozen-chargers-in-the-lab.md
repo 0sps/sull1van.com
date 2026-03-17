@@ -246,7 +246,7 @@ devices:
     overall_rating: 1
 ---
 
-## A Dozen Chargers in the Lab: Apple is Okay, but Not the Best
+## A Dozen+ Chargers in the Lab: Apple is Okay, but Not the Best
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 *(As of 3/14/26 this page is still being finished, expect inaccuracies)*
@@ -275,20 +275,14 @@ Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I 
 ---
 <!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
-As it turns out, testing USB C cables is incredibly complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Now, there are modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
+As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Therea are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
 
-If you weren't aware, the relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the charger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
+The relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the charger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
 
 The relationship is like a water hose: The water company guarantees it comes to your house at 60psi. So it's always at 60psi, but how much you open the hose and let out that 60psi water is up to you. If you had a big enough hose, somehow, you could use so much water that the water company can't keep up. In that instance, the water pressure drops, and it doesn't shoot out of the hose like you're used to, it just starts to gently pour out. The same is true of power. If the device pulls *too much* current, Ohm's law says that, all else equal, the voltage must drop. Cheap chargers will just let this happen on their own. Well-made chargers do not let this happen, and instead supply at a constant voltage until they reach a limit and completely shut off.
 
 <br>
 
-## How I Tested Them
-
-
-When ken did his work, he generally only had one voltage to test. Unfortunately for me, with USB C Power Delivery, I have up to 4 in each charger. And if I stumbled down the path of testing AVS or PPS, I'd have dozens.
-
-So for my project, I tested the same things as ken, except I took 2-4x more data points!
 
 
 ### Testing setup
