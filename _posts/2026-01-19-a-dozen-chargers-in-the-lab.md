@@ -1591,21 +1591,22 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
       <th>Difference between advertised Current and Current at shutoff</th>
       <th>Difference between advertised Voltage and Voltage at shutoff</th>
       <th>Actual Power at Shutoff (W)</th>
+      <th>Difference between advertised Power and Power at Shutoff (W)</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
-    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
-    <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
+    <tr><td><strong>Vebner GaN</strong></td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td><td class="oc-pos">2.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td><td class="oc-pos">3.5</td></tr>
+    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td><td class="oc-pos">2.2</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td><td class="oc-pos">1.9</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td><td class="oc-pos">1.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td><td class="oc-pos">0.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td><td class="oc-pos">1.1</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td><td class="oc-neg">-0.2</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td><td class="oc-pos">0.2</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td><td class="oc-pos">0.7</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td><td class="oc-pos">0.8</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td><td class="oc-neg">-0.2</td></tr>
   </tbody>
 </table>
 </div>
