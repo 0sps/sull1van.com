@@ -275,11 +275,11 @@ Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I 
 ---
 <!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
 
-As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Therea are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For now, I just tested chargers according to the USB C PD spec.
+As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies four voltages they can choose from: 5V, 9V, 12V, 15V, 20V. Therea are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
-The relationship between voltage and current in chargers is worth explaining. Upon connecting to a charger, the devices read the charger's advertsied USB C PD voltage values, and then they request one. The charger then agrees to maintain *that specific voltage* until told otherwise by the device. It is now up to the device to pull as much current as it wants, and the charger to supply all the current the device needs. 
+The relationship between voltage and current in chargers is worth explaining. Upon connecting to a device, the charger will advertise its voltage options. The device will read that and then request one from the list. It's now on the charger to supply *that specific voltage* until told otherwise by the device. Since chargers can't exactly 'control' the current like they can with voltage, it's a mutual agreement between the charger and device that an excess amount of current won't be used. Most chargers don't supply more than 3A, and most devices won't request more than that either.
 
-The relationship is like a water hose: The water company guarantees it comes to your house at 60psi. So it's always at 60psi, but how much you open the hose and let out that 60psi water is up to you. If you had a big enough hose, somehow, you could use so much water that the water company can't keep up. In that instance, the water pressure drops, and it doesn't shoot out of the hose like you're used to, it just starts to gently pour out. The same is true of power. If the device pulls *too much* current, Ohm's law says that, all else equal, the voltage must drop. Cheap chargers will just let this happen on their own. Well-made chargers do not let this happen, and instead supply at a constant voltage until they reach a limit and completely shut off.
+What happens when a device tries to pull more? If the charger is high-quality, its overcurrent protection should be triggered and force it to shut down. If it is low quality, it might attempt to continue supplying power, either by dropping the voltage significantly (in accordance with Ohm's law) or actually attmeping to service the higher current at the original voltage and burn itself up. None of the chargers I tested did the latter, but some did allow their voltage to drop, which is not ideal.
 
 <br>
 
@@ -295,7 +295,7 @@ My setup consisted of three distinct pieces:
 I would plug the charger into the wall, conect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board was connected to the electronic load with small wires.
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
-*NOTE: If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the defualt alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad even if they are high quality.*
+*If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the defualt alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad on the scope even if they are high-quality.*
 
 
 <figure style="max-width: 300px;">
@@ -310,7 +310,9 @@ The Rigol DS1054Z was set up with its probe touching the positive terminal on th
 
 <!-- Introduce the interactive card viewer below. Something like "Scroll through the results below — click any card to expand the oscilloscope traces." -->
 
-I started by testing all the chargers at all their advertised voltages, then noticed that the waveforms looked *exactly the same* regardless of voltage. The only indicator of a differing waveform was current. So I therefore tried to take a lower voltage but pull differing currents until I got the worst looking graph. In that respect, the graphs I captured below should represent the worst state of that specific charger. The caveat here is that I only tested up to ~30W, and some chargers support up to 100W, but my wires and breakout boards weren't big enough to handle that kind of power.
+I started by collecting screenshots of the chargers at *all* their advertised voltages, but then noticed that the noise looked exactly the same regardless of voltage, so I stopped. Changing the voltage didn't meaningfully change the noise of any charger in my testing - only changing the current did. 
+
+So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increasing the current until I got the worst looking graph (Note that some chargers actually have cleaner output at higher current, so in those cases I used my best judgement to decide what current I screenshotted for the graphs below). In that respect, the graphs I captured below should represent the worst state of that specific charger during its intended use. 
 
 <style>
   .table-wrapper {
@@ -1530,11 +1532,17 @@ I started by testing all the chargers at all their advertised voltages, then not
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Chargers generally deal with excess current by one of two methods: 1) reducing the voltage, or 2) shutting off. Option 1 is due to the laws of physics and is seen in poorly regulated chargers, while option 2 is the best one. There is a third option, which is to do absolutely nothing and allow the higher current to be pulled, but this will lead to overheating and will force the charger to shut down rather quickly.
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. 
 
-In my testing, I set an electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in my testing, that is rarely what I got.
+Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics. The third, shitty option is to do absolutely nothing and allow the higher current to be pulled, attemping to keep the original voltage. This isn't really as much of a strategy as it is a lack of proper engineering, but it's possible.
 
-I can't display the same graphs that Ken did without access to more specialized equipment. However, I CAN tell you that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range. For that reason, I used multimeter-style testing to see the total value of the voltage and current at the point when the charger finally shut off. The ideal value here is having a constant voltage. You don't want any voltage drop, because that suggests the charger allowed more current out than it should have.
+During overcurrent testing, I set my electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in the table below, that is rarely what I got.
+
+Ken was able to display the complex relationship between voltage and current on beautiful time-based graphs. I don't have access to technology that can display the results in the same way. I CAN tell you, however, that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I you should have no problem accepting the values below as the true values of the voltage and current of the device at its shutoff period. 
+
+The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have, and dropped the current in response.
+
+*Last clarification for this testing: If you are asking "but how did you account for the resistance of the system?" the answer is that I didn't. I do know from testing that my Decoy board / electronic load setup has some minor resistance, but I put my voltmeter BEFORE them in the circuit, connecting it directly into the USB C cable right as it exits the charger. So in that respect I'm testing exactly what comes out of the charger.*
 
 <style>
   .overcurrent-table {
