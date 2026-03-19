@@ -1527,8 +1527,6 @@ So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increas
 
 
 <br>
----
-<br>
 
 ## Overcurrent Testing
 
@@ -1544,6 +1542,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 *Last clarification for this testing: If you are asking "but how did you account for the resistance of the system?" the answer is that I didn't. I do know from testing that my Decoy board / electronic load setup has some minor resistance, but I put my voltmeter BEFORE them in the circuit, connecting it directly into the USB C cable right as it exits the charger. So in that respect I'm testing exactly what comes out of the charger.*
 
+### Overcurrent Testing - Results Table
 <style>
   .overcurrent-table {
     border-collapse: collapse;
@@ -1560,9 +1559,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
   .overcurrent-table th {
     background-color: #f2f2f2;
   }
-  .overcurrent-table td:nth-child(1),
-  .overcurrent-table td:nth-child(2),
-  .overcurrent-table td:nth-child(3) {
+  .overcurrent-table td:nth-child(1) {
     background-color: rgba(0, 0, 0, 0.03);
   }
   .overcurrent-table td.oc-pos { color: #228B22; font-weight: 700; }
@@ -1574,22 +1571,16 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     .overcurrent-table th {
       background-color: #181818;
     }
-    .overcurrent-table td:nth-child(1),
-    .overcurrent-table td:nth-child(2),
-    .overcurrent-table td:nth-child(3) {
+    .overcurrent-table td:nth-child(1) {
       background-color: rgba(255, 255, 255, 0.04);
     }
   }
   html[data-theme="dark"] .overcurrent-table th, html[data-theme="dark"] .overcurrent-table td { border-color: #2a2a2a; }
   html[data-theme="dark"] .overcurrent-table th { background-color: #181818; }
-  html[data-theme="dark"] .overcurrent-table td:nth-child(1),
-  html[data-theme="dark"] .overcurrent-table td:nth-child(2),
-  html[data-theme="dark"] .overcurrent-table td:nth-child(3) { background-color: rgba(255, 255, 255, 0.04); }
+  html[data-theme="dark"] .overcurrent-table td:nth-child(1) { background-color: rgba(255, 255, 255, 0.04); }
   html[data-theme="light"] .overcurrent-table th, html[data-theme="light"] .overcurrent-table td { border-color: #dddddd; }
   html[data-theme="light"] .overcurrent-table th { background-color: #f2f2f2; }
-  html[data-theme="light"] .overcurrent-table td:nth-child(1),
-  html[data-theme="light"] .overcurrent-table td:nth-child(2),
-  html[data-theme="light"] .overcurrent-table td:nth-child(3) { background-color: rgba(0, 0, 0, 0.03); }
+  html[data-theme="light"] .overcurrent-table td:nth-child(1) { background-color: rgba(0, 0, 0, 0.03); }
 </style>
 
 <div class="table-wrapper">
@@ -1597,26 +1588,24 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
   <thead>
     <tr>
       <th>Adapter</th>
-      <th>Rated Voltage (V)</th>
-      <th>Rated Current (A)</th>
       <th>Difference between advertised Current and Current at shutoff</th>
       <th>Difference between advertised Voltage and Voltage at shutoff</th>
       <th>Actual Power at Shutoff (W)</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td>5</td><td>3</td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
-    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>5</td><td>3</td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td>5</td><td>3</td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td>5.2</td><td>3</td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td>5.2</td><td>1.8</td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>5</td><td>3</td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
-    <tr><td><strong>Eero 15W Charger</strong></td><td>5</td><td>3</td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td>5</td><td>2.1</td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
+    <tr><td><strong>Vebner GaN</strong></td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td>17.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td>18.5</td></tr>
+    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td>17.2</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td>16.9</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td>16.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td>15.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td>16.7</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td>9.1</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td>15.7</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td>15.7</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td>15.8</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td>10.3</td></tr>
   </tbody>
 </table>
 </div>
