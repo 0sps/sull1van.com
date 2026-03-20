@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A Dozen Chargers in the Lab"
-date: 2026-01-18
+date: 2026-01-19
 tags: [technology]
 devices:
   - name: "Macbook Pro M1"
