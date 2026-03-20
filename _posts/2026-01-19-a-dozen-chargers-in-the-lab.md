@@ -387,12 +387,23 @@ So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increas
 
 
 ## Expected/Actual Output
+Before we get into this table, I want to make one caveat: my setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. Luckily, the USB-C Power Delivery spec says that devices must indicate ALL voltages and max current values they allow. That is why I tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
+- 20V, up to 3.25 A (to reach max power of 65W)
+And it *also* supports:
+- 5V, up to 3 A
+- 9V, up to 3 A
+- 12V, up to 3 A
+- 15V, up to 3 A
+
+This isn't just hypothetical. All of the chargers below were configured in this way. Take this into account as I *did* test them at their max current for that specific voltage. 
+
+
 <div class="table-wrapper">
 <table class="stats-table">
   <thead>
     <tr>
       <th>Charger</th>
-      <th>Advertised Power (W)</th>
+      <th>Attempted To Pull (W)</th>
       <th>Actual Voltage (V)</th>
       <th>Actual Current (A)</th>
       <th>Actual Power (W)</th>
@@ -420,8 +431,8 @@ So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increas
     <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
     <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>15</td><td>14.82</td><td>1.03</td><td>15.22</td><td class="diff-pos">+0.22</td></tr>
-    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>15</td><td>15.00</td><td>1.03</td><td>15.4</td><td class="diff-pos">+0.40</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>15</td><td>15.02</td><td>1.01</td><td>15.17</td><td class="diff-pos">+0.17</td></tr>
+    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45</td><td>14.99</td><td>3.02</td><td>15.4</td><td class="diff-pos">+0.27</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>45</td><td>15.11</td><td>3.02</td><td>15.17</td><td class="diff-pos">+0.63</td></tr>
   </tbody>
 </table>
 </div>
