@@ -110,7 +110,7 @@ devices:
     caption: |
       Advertised at 30W, actual measured power was 29.5W. This one is good. At 5V1A, it has a messy power signature, with a lot of noise, but as soon as you crank it up to 7.5W it works just fine. I imagine this is because nobody at Apple expected people to use this charger for 5W of power, since it's USB C and marketed as a fast charger. They made a bet that no one will use this charger below 7.5W, and I agree with them. A smart play financially. 
       
-      I also tested this 7.5W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. While I aim to display the *worst* possible graphs here on this site, I displayed the 7.5W+ graph because in normal usage you will almost never encounter that noise. Solid charger.
+      I also tested this 7.5W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. Solid charger for typical use cases.
     rating: 4
     noise_rating: 3
     ripple_rating: 3
@@ -314,7 +314,7 @@ I started by collecting screenshots of the chargers at *all* their advertised vo
 
 Since changing the voltage didn't meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage / current combination in my graphs below.
 
-So for my testing, I usually went with the lowest voltage, usually 5 or 9 volts, tweaking the current until I got the worst looking graph. I considered all these voltage/current combinations for screenshot purposes, and attached a screenshot of what I believe to be the highest-noise configuration of voltage and current within a charger's intended use. 
+So for my testing, I usually went with the lowest voltage, usually 5 or 9 volts, tweaking the current until I got the worst looking graph. I considered all voltage/current combinations for screenshot purposes, and captured the screenshot of what I believe to be the highest-noise configuration of voltage and current within a charger's typical expected power output level. 
 
 In that respect, the graphs I captured below should represent the typical noise you would see if you used it to charge your phone. 
 
@@ -428,13 +428,13 @@ This isn't just hypothetical. All of the chargers below were configured in this 
     <tr><td><strong>Dealworthy Charger</strong></td><td>15</td><td>4.6</td><td>3.14</td><td>14.5</td><td class="diff-neg">-0.50</td></tr>
     <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td>4.74</td><td>2.43</td><td>11.54</td><td class="diff-neg">-0.46</td></tr>
     <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td>4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">+0.89</td></tr>
-    <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>5.05</td><td>3.03</td><td>15.30</td><td class="diff-neg">+0.30</td></tr>
+    <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>5.05</td><td>3.03</td><td>15.30</td><td class="diff-pos">+0.30</td></tr>
     <tr><td><strong>Anker ASPD053a</strong></td><td>27</td><td>8.88</td><td>3.02</td><td>26.82</td><td class="diff-neg">-0.18</td></tr>
     <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45</td><td>15.08</td><td>3.02</td><td>45.54</td><td class="diff-neg">+0.54</td></tr>
     <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45</td><td>14.82</td><td>3.03</td><td>44.90</td><td class="diff-pos">-0.09</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45</td><td>14.82</td><td>3.03</td><td>44.90</td><td class="diff-neg">-0.09</td></tr>
     <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45</td><td>14.99</td><td>3.02</td><td>45.26</td><td class="diff-pos">+0.26</td></tr>
     <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>45</td><td>15.11</td><td>3.02</td><td>45.63</td><td class="diff-pos">+0.63</td></tr>
   </tbody>
