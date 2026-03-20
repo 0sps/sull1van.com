@@ -9,6 +9,8 @@ devices:
     img2: "/assets/images/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
+      *Tested as a pure DC source to establish a baseline for what clean power looks like — batteries and devices with internal batteries produce no AC switching noise by nature, so a perfect score here is expected.*
+
       The MacBook Pro has the cleanest power signature of the devices I tested. This was to be expected, since a MacBook Pro is just pulling DC current from its internal battery and sending it out. No AC->DC conversion required. 
       
       There's also no high frequency switching noise, or any noticeable ripple. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
@@ -34,7 +36,7 @@ devices:
     img1: "/assets/images/Anker a1654 Maggo power bank.png"
     img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: "Again, another battery, so good power quality is to be expected. Nothing major here. No noise, clean power signature. This is a good one to have."
+    caption: "*Tested as a pure DC source to establish a baseline — batteries produce no AC switching noise by nature, so a perfect score here is expected.* Again, another battery, so good power quality is to be expected. Nothing major here. No noise, clean power signature. This is a good one to have."
     rating: 5
     noise_rating: 5
     ripple_rating: 4
@@ -60,10 +62,10 @@ devices:
       This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. It comes included with the Eero. Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC noise. It's got a sawtooth waveform, so there is noise, but it is pretty small. 
       
       Incredible charger, especially for its size.
-    rating: 5
+    rating: 4
     noise_rating: 5
     ripple_rating: 3
-    overall_rating: 5
+    overall_rating: 4
   - name: "AOHI GaN 100W Charger"
     img1: "/assets/images/AOHIGaN100w 1.png"
     img2: "/assets/images/AOHIGaN100w 3.png"
@@ -127,7 +129,7 @@ devices:
   - name: "iPhone 17 pro"
     img1: "/assets/images/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "This one is rated as over-performing, only advertising 4.5W but delivering more. That's not the entire story. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. I don't remember what it pulled when it was set up to deliver exactly 4.5 Watts. Either way, the iPhone wouldn't make a good power source, it has fairly noisy power signature. To be nice I ended up giving it 3 bolts."
+    caption: "*Tested as a pure DC source to establish a baseline — like the MacBook and Anker battery, this is a device with an internal battery, so AC switching noise is not a factor.* This one is rated as over-performing, only advertising 4.5W but delivering more. That's not the entire story. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. I don't remember what it pulled when it was set up to deliver exactly 4.5 Watts. Either way, the iPhone wouldn't make a good power source, it has fairly noisy power signature. To be nice I ended up giving it 3 bolts."
     rating: 3
     noise_rating: 3
     ripple_rating: "N/A"
@@ -148,7 +150,7 @@ devices:
     caption: "This one is genuinely bad. It gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks poorly regulated. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
     rating: 2
     noise_rating: 2
-    ripple_rating: 3
+    ripple_rating: 2
     overall_rating: 2
   - name: "Dealworthy Charger"
     img1: "/assets/images/Dealworthy 1.png"
@@ -497,6 +499,9 @@ This isn't just hypothetical. All of the chargers below were configured in this 
 </style>
 
 ## Noise Ratings
+
+A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise — roughly, 5 bolts is under ~80mV, 4 bolts is under ~100mV, 3 bolts is under ~160mV, 2 bolts is under ~250mV, and 1 bolt is anything above that. These are guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me. I looked at the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
+
 <div class="table-wrapper">
 <table>
   <thead>
@@ -590,7 +595,7 @@ This isn't just hypothetical. All of the chargers below were configured in this 
       <td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td>
       <td>164mV</td>
       <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
       <td><strong>Anker A121B 100W Charger</strong></td>
