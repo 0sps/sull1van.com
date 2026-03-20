@@ -89,7 +89,7 @@ devices:
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that made me mad simply because of how good it is. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage graph itself weren't great. Overall this is a solid charger to use."
+    caption: "This was another charger that surprised me simply because of how well it tested. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage graph itself weren't great. I would still avoid this as its lack of any major certification means it could be made using cheap, poorly regulated components. But during my testing it worked just fine."
     rating: 4
     noise_rating: 4
     ripple_rating: 3
@@ -310,9 +310,13 @@ The Rigol DS1054Z was set up with its probe touching the positive terminal on th
 
 <!-- Introduce the interactive card viewer below. Something like "Scroll through the results below — click any card to expand the oscilloscope traces." -->
 
-I started by collecting screenshots of the chargers at *all* their advertised voltages, but then noticed that the noise looked exactly the same regardless of voltage, so I stopped. Changing the voltage didn't meaningfully change the noise of any charger in my testing - only changing the current did. 
+I started by collecting screenshots of the chargers at *all* their advertised voltages, but then noticed that the noise looked exactly the same regardless of voltage, so I didn't take screenshots of these variations. This would give us nearly a dozen screenshots for every charger. 
 
-So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increasing the current until I got the worst looking graph (Note that some chargers actually have cleaner output at higher current, so in those cases I used my best judgement to decide what current I screenshotted for the graphs below). In that respect, the graphs I captured below should represent the worst state of that specific charger during its intended use. 
+Since changing the voltage didn't meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage / current combination in my graphs below.
+
+So for my testing, I usually went with the lowest voltage, usually 5 or 9 volts, tweaking the current until I got the worst looking graph. I considered all these voltage/current combinations for screenshot purposes, and attached a screenshot of what I believe to be the highest-noise configuration of voltage and current within a charger's intended use. 
+
+In that respect, the graphs I captured below should represent the typical noise you would see if you used it to charge your phone. 
 
 <style>
   .table-wrapper {
