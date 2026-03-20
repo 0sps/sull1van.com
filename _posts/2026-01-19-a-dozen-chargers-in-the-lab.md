@@ -68,6 +68,7 @@ devices:
     img1: "/assets/images/AOHIGaN100w 1.png"
     img2: "/assets/images/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
+    caption: |
       This one performed very well. It is marketed as a GaN charger, and uses some components that are so new they have never been used in consumer chargers before. So this charger really should be considered a flagship. For that reason, I'm a little disappointed the power signature isn't better. It IS very good, but for how bleeding-edge this charger is marketed out to me, it performs comparatively to chargers half its size and price.
 
       One future test I might do is examine the charger at higher power output. I didn't push it to the 100W limit in testing, but that is because I was using small wires that could have overheated. The charger might perform better at higher power output.
@@ -235,6 +236,7 @@ devices:
     img1: "/assets/images/Counerfeit Samsung 3.png"
     img2: "/assets/images/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
+    caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evaluate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
       
       Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be acceptable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it.
@@ -629,7 +631,6 @@ So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increas
 
 ## Oscilloscope Graphs
 
-<p>
 <style>
   body { overflow-x: hidden; }
   .device-scroller {
@@ -1521,20 +1522,19 @@ So for my testing, I went with the lowest voltage, usually 5 or 9 volts, increas
     });
   })();
 </script>
-</p>
 
 
 <br>
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics. The third, shitty option is to do absolutely nothing and allow the higher current to be pulled, attempting to keep the original voltage. This isn't really as much of a strategy as it is a lack of proper engineering, but it's possible.
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics. The third, shitty option is to do absolutely nothing and allow the higher current to be pulled, attempting (and failing) to keep the original voltage. This isn't really as much of a strategy as it is a lack of proper engineering, but it's possible.
 
 During overcurrent testing, I set my electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in the table below, that is rarely what I got.
 
 Ken was able to display the complex relationship between voltage and current on beautiful time-based graphs. I don't have access to technology that can display the results in the same way. I CAN tell you, however, that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, you should have no problem accepting the values below as the true values of the voltage and current of the device at its shutoff period. 
 
-The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have, and dropped the current in response.
+The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have.
 
 *Last clarification for this testing: If you are asking "but how did you account for the resistance of the system?" the answer is that I didn't. I do know from testing that my Decoy board / electronic load setup has some minor resistance, but I put my voltmeter BEFORE them in the circuit, connecting it directly into the USB C cable right as it exits the charger. So in that respect I'm testing exactly what comes out of the charger.*
 
