@@ -413,8 +413,8 @@ This isn't just hypothetical. All of the chargers below were configured in this 
   <tbody>
     <tr><td><strong>Eero 15W Charger</strong></td><td>15</td><td>4.7</td><td>3.0</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27</td><td>8.9</td><td>3.0</td><td>27.0</td><td class="diff-zero">0.00</td></tr>
-    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30</td><td>14.45</td><td>2.0</td><td>29.5</td><td class="diff-neg">-0.50</td></tr>
-    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>20</td><td>8.6</td><td>2.0</td><td>17.5</td><td class="diff-neg">-2.50</td></tr>
+    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>27</td><td>8.08</td><td>3.02</td><td>26.61</td><td class="diff-neg">-0.39</td></tr>
+    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>19.98 (9v 2.22a)</td><td>8.90</td><td>2.23</td><td>19.85</td><td class="diff-neg">-0.13</td></tr>
     <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>27</td><td>8.64</td><td>3.04</td><td>26.26</td><td class="diff-neg">-0.74</td></tr>
     <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.5</td><td>2.0</td><td>9.3</td><td class="diff-neg">-0.70</td></tr>
     <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.7</td><td>2.0</td><td>9.6</td><td class="diff-neg">-0.40</td></tr>
