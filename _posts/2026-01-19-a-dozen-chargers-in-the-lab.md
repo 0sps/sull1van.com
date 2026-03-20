@@ -430,7 +430,7 @@ This isn't just hypothetical. All of the chargers below were configured in this 
     <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td>4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">+0.89</td></tr>
     <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>5.05</td><td>3.03</td><td>15.30</td><td class="diff-pos">+0.30</td></tr>
     <tr><td><strong>Anker ASPD053a</strong></td><td>27</td><td>8.88</td><td>3.02</td><td>26.82</td><td class="diff-neg">-0.18</td></tr>
-    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45</td><td>15.08</td><td>3.02</td><td>45.54</td><td class="diff-neg">+0.54</td></tr>
+    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45</td><td>15.08</td><td>3.02</td><td>45.54</td><td class="diff-pos">+0.54</td></tr>
     <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
