@@ -430,7 +430,7 @@ This isn't just hypothetical. All of the chargers below were configured in this 
     <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>15</td><td>14.82</td><td>1.03</td><td>15.22</td><td class="diff-pos">+0.22</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45</td><td>14.82</td><td>3.03</td><td>15.22</td><td class="diff-pos">-0.09</td></tr>
     <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45</td><td>14.99</td><td>3.02</td><td>15.4</td><td class="diff-pos">+0.27</td></tr>
     <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>45</td><td>15.11</td><td>3.02</td><td>15.17</td><td class="diff-pos">+0.63</td></tr>
   </tbody>
