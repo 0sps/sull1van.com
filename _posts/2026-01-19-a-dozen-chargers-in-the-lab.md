@@ -1702,8 +1702,8 @@ I hope you enjoyed reading. This was genuinely such a pleasure to put together. 
 Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
 
 ### -Sean
-
+<br>
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
-  <figcaption>Me with Spencer. Best friends make good electrical testing partners!</figcaption>
+  <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
 </figure>
