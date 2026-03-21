@@ -330,7 +330,7 @@ For each charger, I tested it on several dimensions: Advertised power vs actual 
 ## Testing Setup
 
 
-As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
+As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery (PD) standard, which generally specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
 
 My setup consisted of three distinct pieces:
@@ -339,16 +339,17 @@ My setup consisted of three distinct pieces:
 3. A USB C Power Delivery decoy board
 4. A voltmeter
 
-I would plug the charger into the wall, connect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board was connected to the electronic load with small wires.
+I would plug the charger into the wall, connect it to the USB C decoy board via USB C, then connect the decoy board to the electronic load. 
+The purpose of the decoy board is to imitate a device and requests a specific USB C PD voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* 
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
 *If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the default alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad on the scope even if they are high-quality.*
 
 ### A note about resistance
 
-I learned late into the project that resistance could be artificially skewing my measurements. For that reason, I took steps to adjust. I used a voltmeter connected directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
+I learned during this project that resistance could be artificially skewing my measurements. For that reason, I used a voltmeter connected directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
 
-If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how low that is for a testing setup, especially considering USB C braided cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how reasonable that is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
 ### Rating system for Oscilloscope graphs - Noise and ripple
