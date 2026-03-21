@@ -281,7 +281,11 @@ I'd thought about this for years ever since I read a [blog post by one legendary
 
 While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it.
 
-Here's the short version of what I found out: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brands have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
+Here's the short version of what I found out: 
+- GaN chargers are among the best you can buy today, and the marketing around them IS real.
+- Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.
+- Common brands like Apple land solidly in the middle, but some smaller brands edge them out in quality. 
+- There is an extreme amount of variation even within a brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing unless you tested them.
 
 <br>
 
@@ -294,8 +298,7 @@ Here's the short version of what I found out: GaN chargers are among the best yo
 
 ## What I tested
 
-
-Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
+I wanted to get as much out of this project as I could, so just about two dozen USB C chargers were tested. Some USB A chargers were added in as well. I tested everything I could get my hands on, honestly.
 Chargers:
 - Anker ASPD053a USB C 
 - AOHI GaN 65W AOC-C019 
