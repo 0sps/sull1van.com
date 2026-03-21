@@ -74,7 +74,7 @@ devices:
     img2: "/assets/images/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really should be considered a flagship for how much effort they put into it. 
+      This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. 
       For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
 
       One future test I might do is examine the charger at higher power output. I didn't push it to the 100W limit in testing, but that is because I was using small wires that could have overheated. The charger might perform better at higher power output.
@@ -86,7 +86,7 @@ devices:
     img1: "/assets/images/Anker 637 magnetic charging station USB C.png"
     img2: "/assets/images/Anker 637 magnetic charging station USB A.png"
     bg: "hsl(120, 32%, 93%)"
-    caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. The main knock against this charger is voltage accuracy, since it measured 4.74V at a 5V target, which just below the USB-C PD minimum of 4.75V. It is technically out of spec."
+    caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. The main knock against this charger is voltage accuracy, since it measured 4.74V at a 5V target, which is just below the USB-C PD minimum of 4.75V. It is technically out of spec."
     rating: 5
     noise_rating: 5
     ripple_rating: 4
@@ -133,7 +133,7 @@ devices:
     img1: "/assets/images/Anker ASP053a 3.png"
     img2: "/assets/images/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "This charger was alright. It was a little noisy, and doesn't look extremely well regulated. There was some AC noise coming through, and there was also some ripple at the harmonics of the switching frequency (or what I assume to be the switching frequency). It looked like it had a spike roughly every 90KHz in the FFT at the bottom of the graph."
+    caption: "A middling performer. The voltage trace is noticeably wider than the top-tier chargers, indicating elevated high-frequency noise. The frequency spectrum shows repeating peaks at roughly 90KHz intervals, which I assume to be harmonics of the switching frequency. There is also visible ripple in the lower timeframe. Not awful, but not a charger I'd reach for if I had better options nearby."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -146,7 +146,7 @@ devices:
     caption: |
       *Tested as a pure DC source to establish a baseline. Like the MacBook and Anker battery, this is a device with an internal battery, so AC switching noise is not a factor.* 
       
-      This one is rated as over-performing, only advertising 4.5W but delivering more. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. Since it has a fairly noisy power signature, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts."
+      This one is rated as over-performing, only advertising 4.5W but delivering more. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. Since it has a fairly noisy power signature, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts.
     rating: 3
     noise_rating: 3
     ripple_rating: "N/A"
@@ -170,13 +170,13 @@ devices:
     img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
-
-
-
     rating: 2
     noise_rating: 2
     ripple_rating: 2
     overall_rating: 2
+
+
+    
   - name: "Dealworthy Charger"
     img1: "/assets/images/Dealworthy 1.png"
     img2: "/assets/images/Dealworthy 3.png"
@@ -188,7 +188,7 @@ devices:
     overall_rating: 1
 
 
-    
+
   - name: "Counterfeit AT&T"
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
@@ -235,7 +235,7 @@ devices:
     img1: "/assets/images/VEBNERgan.png"
     img2: "/assets/images/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Awful charging quality, but this is a fake GaN charger sold on Amazon from an alternative electronics company known as Vebner. They are a real company, but the truth around their GaN claims is questionable."
+    caption: "Being marketed as a GaN charger, this is another disappointment. The voltage trace is thick with noise and the frequency spectrum is elevated across the board, showing no serious attempt at filtering. Ripple is also visible in the lower timeframe. Whatever is inside this charger, it is not doing a good job."
     rating: 1
     noise_rating: 1
     ripple_rating: 1
