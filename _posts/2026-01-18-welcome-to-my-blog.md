@@ -7,38 +7,14 @@ tags: [meta, blogging]
 
 ## Introduction
 
-Welcome to my new blog! This is an example post to demonstrate the blog structure and styling.
+Welcome to my new blog! 
 
-## What You'll Find Here
+## Who am I
 
-I'll be writing about:
+I'm an industrial engineer currently living in the United States. I have passions for health, fitness, and technology, so I plan on writing about those here.
 
-- Technology and programming
-- Mathematics and algorithms
-- Interesting problems and solutions
-- Personal projects and experiments
 
-## Code Examples
-
-Here's a simple "Hello, World!" program in Python:
-
-```python
-def greet(name):
-    print(f"Hello, {name}!")
-
-if __name__ == "__main__":
-    greet("World")
-```
-
-## Formatting
-
-You can use **bold text**, *italic text*, and `inline code`. Lists work great too:
-
-1. First item
-2. Second item
-3. Third item
-
-## Conclusion
+## Other info
 
 This blog is built with Jekyll and deployed on Netlify. It uses a minimalist design inspired by clean, readable blogs that focus on content over flashy design.
 
