@@ -407,7 +407,7 @@ This isn't just hypothetical. All of the chargers below were configured in this 
 
 The **Actual Voltage** column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
 
-*(For added fun, I also tested a few batteries and DC-powered devices — they aren't directly comparable to AC chargers since they produce no switching noise by nature, but I've included them in grey below as a reference.)*
+<span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers since they produce no switching noise by nature, but I’ve included them in grey below as a reference.)</span>
 
 <div class="table-wrapper">
 <table class="stats-table">
@@ -507,7 +507,7 @@ The **Actual Voltage** column is highlighted <span style="color:#228B22; font-we
 
 A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise — roughly, 5 bolts is under ~80mV, 4 bolts is under ~100mV, 3 bolts is under ~160mV, 2 bolts is under ~250mV, and 1 bolt is anything above that. These are guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me. I looked at the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
 
-*(For added fun, I also tested a few batteries and DC-powered devices — they aren't directly comparable to AC chargers, but I've included them in grey below as a reference.)*
+<span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers, but I’ve included them in grey below as a reference.)</span>
 
 <div class="table-wrapper">
 <table>
