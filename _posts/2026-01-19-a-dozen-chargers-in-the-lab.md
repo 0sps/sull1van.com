@@ -451,6 +451,413 @@ Scroll through the cards and click any one to expand the full oscilloscope trace
 </style>
 
 
+
+<div class="device-scroller" id="deviceScroller">
+  {% for item in page.devices %}
+  <div class="card-column">
+    <div class="card-title-above">{{ item.name }}</div>
+    <div class="device-card" style="background: {{ item.bg }};">
+      <div class="vertical-title-bar">
+        <div class="vertical-title-text">{{ item.name }}</div>
+      </div>
+      <div class="device-content" onclick='openModal({{ item | jsonify | escape }}, this)'>
+        <div class="device-images">
+          {% if item.img1 %}
+          <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
+          {% endif %}
+          {% if item.img2 %}
+          <img src="{{ item.img2 }}" alt="{{ item.name }} 2">
+          {% endif %}
+        </div>
+        <div class="device-info">
+          <div class="device-rating rating-badge-{{ item.rating }}">
+            <span style="text-transform: uppercase; letter-spacing: 0.5px;">Overall rating:</span>
+            <span class="bolt-{{ item.rating }}" style="font-size: 1.2em; line-height: 1;">
+              {% assign rating_num = item.rating | plus: 0 %}
+              {% for i in (1..rating_num) %}⚡︎{% endfor %}
+            </span>
+          </div>
+          <figcaption>{{ item.caption | strip }}</figcaption>
+          <button class="expand-btn">Expand</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="custom-scroll-area">
+  <div class="custom-scroll-track" id="customTrack">
+    <div class="custom-scroll-thumb" id="customThumb"></div>
+  </div>
+</div>
+<div class="quality-labels-bar">
+  <span>←← BETTER</span>
+  <span>WORSE →→</span>
+</div>
+
+
+<div id="device-modal" onclick="closeModal()">
+  <span class="modal-dismiss-hint bottom">click anywhere to dismiss</span>
+  <div class="modal-wrapper" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div id="modal-title" class="modal-title"></div>
+      <button class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+    </div>
+    <div class="modal-container">
+      <div id="modal-content" class="modal-body">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(item, triggerBtn) {
+    const modal = document.getElementById('device-modal');
+    const content = document.getElementById('modal-content');
+
+    let imgsHtml = '';
+    if(item.img1) imgsHtml += `<a href="${item.img1}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img1}" alt="${item.name}"></a>`;
+    if(item.img2) imgsHtml += `<a href="${item.img2}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img2}" alt="${item.name}"></a>`;
+
+    document.getElementById('modal-title').textContent = item.name;
+
+    const getBolts = (rating) => {
+      if (rating === 'N/A' || rating === undefined || rating === null) return '<span style="color:#666; font-weight:700;">N/A</span>';
+      let b = '';
+      for (let i = 0; i < rating; i++) b += '⚡︎';
+      return `<span class="bolt-${rating}" style="font-size: 1.3em;">${b}</span>`;
+    };
+
+    const noiseBolts = getBolts(item.noise_rating);
+    const rippleBolts = getBolts(item.ripple_rating);
+    const overallBolts = getBolts(item.overall_rating);
+
+    content.innerHTML = `
+      <div class="modal-imgs">${imgsHtml}</div>
+      <div class="modal-text-panel">
+        <div class="modal-ratings-summary">
+          <div class="rating-item"><span class="label">Noise:</span> ${noiseBolts}</div>
+          <div class="rating-item"><span class="label">Ripple:</span> ${rippleBolts}</div>
+          <div class="rating-item"><span class="label">Overall:</span> ${overallBolts}</div>
+        </div>
+        <p>${(item.caption || '').trim()}</p>
+      </div>
+      <button class="modal-close-bottom" onclick="closeModal()">CLOSE</button>
+    `;
+
+    // Set transform-origin to the card's position so it appears to grow from there
+    const card = triggerBtn.closest('.device-card');
+    if (card) {
+      const rect = card.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      const container = modal.querySelector('.modal-container');
+      container.style.transformOrigin = `${originX}px ${originY}px`;
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Trigger animation on next frame
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        modal.classList.add('modal-open');
+      });
+    });
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('device-modal');
+    modal.classList.remove('modal-open');
+    // Wait for transition to finish before hiding
+    setTimeout(() => {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }, 350);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Backdrop hover: turn red when mouse is over the bare backdrop, not the modal content
+  const modalEl = document.getElementById('device-modal');
+  modalEl.addEventListener('mousemove', (e) => {
+    const wrapper = modalEl.querySelector('.modal-wrapper');
+    if (wrapper && wrapper.contains(e.target)) {
+      modalEl.classList.remove('modal-danger');
+    } else {
+      modalEl.classList.add('modal-danger');
+    }
+  });
+  modalEl.addEventListener('mouseleave', () => {
+    modalEl.classList.remove('modal-danger');
+  });
+
+  // ─── Custom Scrollbar Sync ───
+  (function() {
+    const scroller = document.getElementById('deviceScroller');
+    const track = document.getElementById('customTrack');
+    const thumb = document.getElementById('customThumb');
+    if (!scroller || !track || !thumb) return;
+
+    function updateThumb() {
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      if (scrollableWidth <= 0) {
+        thumb.style.display = 'none';
+        return;
+      }
+      thumb.style.display = 'block';
+      const trackWidth = track.clientWidth;
+      const thumbWidth = Math.max(60, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
+      const scrollPercent = scroller.scrollLeft / scrollableWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      thumb.style.width = thumbWidth + 'px';
+      thumb.style.left = (scrollPercent * maxThumbLeft) + 'px';
+    }
+
+    scroller.addEventListener('scroll', updateThumb);
+    window.addEventListener('resize', updateThumb);
+
+    // Drag support
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartLeft = 0;
+
+    thumb.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartLeft = parseFloat(thumb.style.left) || 0;
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStartX;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
+      const scrollPercent = newLeft / maxThumbLeft;
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+      }
+    });
+
+    // Click on track to jump
+    track.addEventListener('click', (e) => {
+      if (e.target === thumb) return;
+      const rect = track.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const targetLeft = clickX - thumbWidth / 2;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const scrollPercent = Math.max(0, Math.min(1, targetLeft / maxThumbLeft));
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    });
+
+    // Touch drag support
+    thumb.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartLeft = parseFloat(thumb.style.left) || 0;
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - dragStartX;
+      const trackWidth = track.clientWidth;
+      const thumbWidth = thumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
+      const scrollPercent = newLeft / maxThumbLeft;
+      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
+      scroller.scrollLeft = scrollPercent * scrollableWidth;
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Initial render
+    setTimeout(updateThumb, 100);
+    // Also update after images load
+    scroller.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', updateThumb);
+    });
+  })();
+</script>
+
+
+<br>
+
+### Oscilloscope Graphs - Results Table
+
+
+<div class="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Charger</th>
+      <th>Noise in mV</th>
+      <th>Noise Rating (Graph 1)</th>
+      <th>Ripple Rating (Graphs 2 &amp; 3)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="battery-row">
+      <td><strong>Macbook Pro M1</strong></td>
+      <td>24mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td>N/A</td>
+    </tr>
+    <tr class="battery-row">
+      <td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td>
+      <td>36mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Spigen PowerArc ArcStation Pro</strong></td>
+      <td>56mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>AOHI GaN 65W Charger</strong></td>
+      <td>60mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Eero 15W Charger</strong></td>
+      <td>60mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>AOHI 100w GaN Charger</strong></td>
+      <td>72mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker 637 Magnetic Charging Station</strong></td>
+      <td>76mV</td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td>
+      <td>84mV</td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple 96W Macbook Charger</strong></td>
+      <td>92mV</td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple 30W Retail Charger</strong></td>
+      <td>96mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker ASPD053a</strong></td>
+      <td>128mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr class="battery-row">
+      <td><strong>iPhone 17 pro</strong></td>
+      <td>136mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td><strong>Shargeek Macintosh Charger</strong></td>
+      <td>152mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td>
+      <td>164mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker A121B 100W Charger</strong></td>
+      <td>200mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Dealworthy Charger</strong></td>
+      <td>212mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Anker A121D 45W iPhone 17 Charger</strong></td>
+      <td>244mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td>
+      <td>260mV</td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Amazon Kindle Charger</strong></td>
+      <td>288mV</td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Apple HomePod Mini Charger</strong></td>
+      <td>308mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Vebner GaN 65W Charger</strong></td>
+      <td>332mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+    <tr>
+      <td><strong>Counterfeit Samsung</strong></td>
+      <td>468mV</td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
 ## Expected/Actual Output
 Before we get into this table, I want to make one caveat: my setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why I tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
 - 20V, up to 3.25 A (to reach max power of 65W)
@@ -1206,412 +1613,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
   }
 </style>
 
-
-
-
-<div class="device-scroller" id="deviceScroller">
-  {% for item in page.devices %}
-  <div class="card-column">
-    <div class="card-title-above">{{ item.name }}</div>
-    <div class="device-card" style="background: {{ item.bg }};">
-      <div class="vertical-title-bar">
-        <div class="vertical-title-text">{{ item.name }}</div>
-      </div>
-      <div class="device-content" onclick='openModal({{ item | jsonify | escape }}, this)'>
-        <div class="device-images">
-          {% if item.img1 %}
-          <img src="{{ item.img1 }}" alt="{{ item.name }} 1">
-          {% endif %}
-          {% if item.img2 %}
-          <img src="{{ item.img2 }}" alt="{{ item.name }} 2">
-          {% endif %}
-        </div>
-        <div class="device-info">
-          <div class="device-rating rating-badge-{{ item.rating }}">
-            <span style="text-transform: uppercase; letter-spacing: 0.5px;">Overall rating:</span>
-            <span class="bolt-{{ item.rating }}" style="font-size: 1.2em; line-height: 1;">
-              {% assign rating_num = item.rating | plus: 0 %}
-              {% for i in (1..rating_num) %}⚡︎{% endfor %}
-            </span>
-          </div>
-          <figcaption>{{ item.caption | strip }}</figcaption>
-          <button class="expand-btn">Expand</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-</div>
-
-<div class="custom-scroll-area">
-  <div class="custom-scroll-track" id="customTrack">
-    <div class="custom-scroll-thumb" id="customThumb"></div>
-  </div>
-</div>
-<div class="quality-labels-bar">
-  <span>←← BETTER</span>
-  <span>WORSE →→</span>
-</div>
-
-
-<div id="device-modal" onclick="closeModal()">
-  <span class="modal-dismiss-hint bottom">click anywhere to dismiss</span>
-  <div class="modal-wrapper" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <div id="modal-title" class="modal-title"></div>
-      <button class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
-    </div>
-    <div class="modal-container">
-      <div id="modal-content" class="modal-body">
-        <!-- Content injected by JS -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  function openModal(item, triggerBtn) {
-    const modal = document.getElementById('device-modal');
-    const content = document.getElementById('modal-content');
-
-    let imgsHtml = '';
-    if(item.img1) imgsHtml += `<a href="${item.img1}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img1}" alt="${item.name}"></a>`;
-    if(item.img2) imgsHtml += `<a href="${item.img2}" target="_blank" style="display:flex; flex:1; min-height:0;"><img src="${item.img2}" alt="${item.name}"></a>`;
-
-    document.getElementById('modal-title').textContent = item.name;
-
-    const getBolts = (rating) => {
-      if (rating === 'N/A' || rating === undefined || rating === null) return '<span style="color:#666; font-weight:700;">N/A</span>';
-      let b = '';
-      for (let i = 0; i < rating; i++) b += '⚡︎';
-      return `<span class="bolt-${rating}" style="font-size: 1.3em;">${b}</span>`;
-    };
-
-    const noiseBolts = getBolts(item.noise_rating);
-    const rippleBolts = getBolts(item.ripple_rating);
-    const overallBolts = getBolts(item.overall_rating);
-
-    content.innerHTML = `
-      <div class="modal-imgs">${imgsHtml}</div>
-      <div class="modal-text-panel">
-        <div class="modal-ratings-summary">
-          <div class="rating-item"><span class="label">Noise:</span> ${noiseBolts}</div>
-          <div class="rating-item"><span class="label">Ripple:</span> ${rippleBolts}</div>
-          <div class="rating-item"><span class="label">Overall:</span> ${overallBolts}</div>
-        </div>
-        <p>${(item.caption || '').trim()}</p>
-      </div>
-      <button class="modal-close-bottom" onclick="closeModal()">CLOSE</button>
-    `;
-
-    // Set transform-origin to the card's position so it appears to grow from there
-    const card = triggerBtn.closest('.device-card');
-    if (card) {
-      const rect = card.getBoundingClientRect();
-      const originX = rect.left + rect.width / 2;
-      const originY = rect.top + rect.height / 2;
-      const container = modal.querySelector('.modal-container');
-      container.style.transformOrigin = `${originX}px ${originY}px`;
-    }
-
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-
-    // Trigger animation on next frame
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        modal.classList.add('modal-open');
-      });
-    });
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('device-modal');
-    modal.classList.remove('modal-open');
-    // Wait for transition to finish before hiding
-    setTimeout(() => {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 350);
-  }
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // Backdrop hover: turn red when mouse is over the bare backdrop, not the modal content
-  const modalEl = document.getElementById('device-modal');
-  modalEl.addEventListener('mousemove', (e) => {
-    const wrapper = modalEl.querySelector('.modal-wrapper');
-    if (wrapper && wrapper.contains(e.target)) {
-      modalEl.classList.remove('modal-danger');
-    } else {
-      modalEl.classList.add('modal-danger');
-    }
-  });
-  modalEl.addEventListener('mouseleave', () => {
-    modalEl.classList.remove('modal-danger');
-  });
-
-  // ─── Custom Scrollbar Sync ───
-  (function() {
-    const scroller = document.getElementById('deviceScroller');
-    const track = document.getElementById('customTrack');
-    const thumb = document.getElementById('customThumb');
-    if (!scroller || !track || !thumb) return;
-
-    function updateThumb() {
-      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
-      if (scrollableWidth <= 0) {
-        thumb.style.display = 'none';
-        return;
-      }
-      thumb.style.display = 'block';
-      const trackWidth = track.clientWidth;
-      const thumbWidth = Math.max(60, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
-      const scrollPercent = scroller.scrollLeft / scrollableWidth;
-      const maxThumbLeft = trackWidth - thumbWidth;
-      thumb.style.width = thumbWidth + 'px';
-      thumb.style.left = (scrollPercent * maxThumbLeft) + 'px';
-    }
-
-    scroller.addEventListener('scroll', updateThumb);
-    window.addEventListener('resize', updateThumb);
-
-    // Drag support
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragStartLeft = 0;
-
-    thumb.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      dragStartX = e.clientX;
-      dragStartLeft = parseFloat(thumb.style.left) || 0;
-      document.body.style.userSelect = 'none';
-      document.body.style.cursor = 'grabbing';
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - dragStartX;
-      const trackWidth = track.clientWidth;
-      const thumbWidth = thumb.clientWidth;
-      const maxThumbLeft = trackWidth - thumbWidth;
-      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
-      const scrollPercent = newLeft / maxThumbLeft;
-      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
-      scroller.scrollLeft = scrollPercent * scrollableWidth;
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        document.body.style.userSelect = '';
-        document.body.style.cursor = '';
-      }
-    });
-
-    // Click on track to jump
-    track.addEventListener('click', (e) => {
-      if (e.target === thumb) return;
-      const rect = track.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const trackWidth = track.clientWidth;
-      const thumbWidth = thumb.clientWidth;
-      const targetLeft = clickX - thumbWidth / 2;
-      const maxThumbLeft = trackWidth - thumbWidth;
-      const scrollPercent = Math.max(0, Math.min(1, targetLeft / maxThumbLeft));
-      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
-      scroller.scrollLeft = scrollPercent * scrollableWidth;
-    });
-
-    // Touch drag support
-    thumb.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      dragStartX = e.touches[0].clientX;
-      dragStartLeft = parseFloat(thumb.style.left) || 0;
-      e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - dragStartX;
-      const trackWidth = track.clientWidth;
-      const thumbWidth = thumb.clientWidth;
-      const maxThumbLeft = trackWidth - thumbWidth;
-      const newLeft = Math.max(0, Math.min(maxThumbLeft, dragStartLeft + dx));
-      const scrollPercent = newLeft / maxThumbLeft;
-      const scrollableWidth = scroller.scrollWidth - scroller.clientWidth;
-      scroller.scrollLeft = scrollPercent * scrollableWidth;
-    }, { passive: true });
-
-    document.addEventListener('touchend', () => {
-      isDragging = false;
-    });
-
-    // Initial render
-    setTimeout(updateThumb, 100);
-    // Also update after images load
-    scroller.querySelectorAll('img').forEach(img => {
-      img.addEventListener('load', updateThumb);
-    });
-  })();
-</script>
-
-
-<br>
-
-### Oscilloscope Graphs - Results Table
-
-
-<div class="table-wrapper">
-<table>
-  <thead>
-    <tr>
-      <th>Charger</th>
-      <th>Noise in mV</th>
-      <th>Noise Rating (Graph 1)</th>
-      <th>Ripple Rating (Graphs 2 &amp; 3)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="battery-row">
-      <td><strong>Macbook Pro M1</strong></td>
-      <td>24mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td>N/A</td>
-    </tr>
-    <tr class="battery-row">
-      <td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td>
-      <td>36mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Spigen PowerArc ArcStation Pro</strong></td>
-      <td>56mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>AOHI GaN 65W Charger</strong></td>
-      <td>60mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Eero 15W Charger</strong></td>
-      <td>60mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>AOHI 100w GaN Charger</strong></td>
-      <td>72mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker 637 Magnetic Charging Station</strong></td>
-      <td>76mV</td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td>
-      <td>84mV</td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple 96W Macbook Charger</strong></td>
-      <td>92mV</td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-4">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple 30W Retail Charger</strong></td>
-      <td>96mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker ASPD053a</strong></td>
-      <td>128mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr class="battery-row">
-      <td><strong>iPhone 17 pro</strong></td>
-      <td>136mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td><strong>Shargeek Macintosh Charger</strong></td>
-      <td>152mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td>
-      <td>164mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker A121B 100W Charger</strong></td>
-      <td>200mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Dealworthy Charger</strong></td>
-      <td>212mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Anker A121D 45W iPhone 17 Charger</strong></td>
-      <td>244mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td>
-      <td>260mV</td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Amazon Kindle Charger</strong></td>
-      <td>288mV</td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Apple HomePod Mini Charger</strong></td>
-      <td>308mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-2">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Vebner GaN 65W Charger</strong></td>
-      <td>332mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-    <tr>
-      <td><strong>Counterfeit Samsung</strong></td>
-      <td>468mV</td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-      <td><span class="bolt-1">&#x26A1;&#xFE0E;</span></td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 <br>
