@@ -1617,7 +1617,7 @@ Ken was able to display the complex relationship between voltage and current on 
 
 The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have.
 
-
+*I don't have overcurrent results for all chargers in the table below. This will be updated as more test results become available.*
 
 ### Overcurrent Results Table
 <style>
@@ -1691,7 +1691,6 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 And there you have it. Most chargers did well, and only experienced minor voltage drops. A few of them allowed significantly higher current than advertised, and they seemed to handle it well, suggesting good engineering.
 
-*Some chargers are missing from this list due to me not taking enough screenshots; will update as new results are available*
 
 
 <br>
