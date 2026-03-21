@@ -326,7 +326,6 @@ For each charger, I tested it on several dimensions: Advertised power vs actual 
 
 As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
-<br>
 
 My setup consisted of three distinct pieces:
 1. An oscilloscope, specifically the Rigol DS1054Z
