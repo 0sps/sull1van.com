@@ -873,7 +873,7 @@ And it *also* supports:
 In this case, I'd do base level testing to see if I can get the charger to output its max power for a second or two. Then, for the oscilloscope traces, I would drop the device down to something like 9V and cycle through all its current levels. This is so that I could avoid overheating my breakout board. As stated earlier, *all* chargers showed similar noise profiles at their different voltages, so I am confident that the results you see below are reproducible, even if your device uses one voltage setting under or above what I did.
 
 
-The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
+The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
 
 <span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers since they produce no switching noise by nature, but I’ve included them in grey below as a reference.)</span>
 ### Expected/Actual Output Table
