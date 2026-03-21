@@ -1717,7 +1717,7 @@ Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but th
 
 The practical takeaway is more reassuring than the graphs might suggest. Since most modern devices filter noise internally, and *most* chargers I tested stay within the USB-C PD spec of ±5% voltage tolerance, even *with* all their noise, it's still unlikely to damage your battery. 
 
-I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electrical concepts, feel free to reach out and let me know. Contact is at the bottom of the page :)
+I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electrical concepts, feel free to reach out and let me know. Contact is on the About page.
 
 
 
