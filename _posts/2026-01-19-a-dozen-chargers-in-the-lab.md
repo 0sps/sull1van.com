@@ -87,7 +87,7 @@ devices:
     img2: "/assets/images/Anker 637 magnetic charging station USB A.png"
     bg: "hsl(120, 32%, 93%)"
     caption: "This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. The main knock against this charger is voltage accuracy, since it measured 4.74V at a 5V target, which is just below the USB-C PD minimum of 4.75V. It is technically out of spec."
-    rating: 5
+    rating: 4
     noise_rating: 5
     ripple_rating: 4
     overall_rating: 4
@@ -251,8 +251,6 @@ devices:
       Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, how it can bring endless joy and happiness to your life. But this charger is just awful. 
 
       The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and constant high-voltage spikes that you can see in the lower timeframe. Also, at that lower timeframe, it's unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but also just resembling noise. After some research, I suspect Anker actually did not use GaN technology at all but used traditional technology with aggressive frequency dithering to help ease the noise. This may not be the case but it is my suspicion. 
-
-      Either way, it is awful!
 
       <em>Sidenote: you might point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they do employ a variable switching frequency but only vary it by 20-50KHz. Constantly moving the switching frequency up and down, so the noise doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI has no noise to begin with, so when they change the switching frequency, it's only happening once (I suspect only when the requested voltage changes). They don't need to constantly switch up and down, because their aim is not to spread noise out. </em>
     rating: 1
