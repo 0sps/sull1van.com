@@ -251,7 +251,6 @@ devices:
 ## A Dozen+ Chargers in the Lab: Apple is Okay, but Not the Best
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
-*(As of 3/14/26 this page is still being finished, expect inaccuracies)*
 
 Have you ever wondered what makes a phone charger high-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was only 18 at the time, so most of it went over my head. I did think about it from time to time, though, and whether someone had done this for modern chargers.
 
@@ -1654,15 +1653,14 @@ And there you have it. Most chargers did well, and only experienced minor voltag
 
 ## Conclusion
 
-Wow, that was a lot. Evaluating chargers seems quite difficult at first, but really isn't that hard. You don't need to be an electrical engineer to see the difference between a good and bad oscilloscope trace. The difficulty comes in interpreting the *why* behind most of these results. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers had noise at certain voltage/ current combinations and not others. Those led me down countless rabbit holes, and while interesting, they took a lot of time to research!
+Wow, that was a lot. Evaluating chargers seemed quite difficult to me at first, but the whole project quickly turned in to something fun that I genuinely emjoyed doing. My favorite part about this is that you don't even need to be an electrical engineer to see the difference between good and bad chargers. The real difficulty in all this comes when you go past the results and try to learn *why* chargers behave in a certain way. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers exhibited noise at certain voltage/ current combinations and not others. I still don't have concrete answers to many of those questions.
 
-Another thing that surprised me was just how many graphs were involved in this testing. So many of them. Chargers have so many voltages to support nowadays, which can sometimes carry their own distinct voltage traces on the oscilloscope screen. What's more, changing the current levels within those voltages is often what leads to the most change, which means that testing these requires you to look at the scope continuously while you cycle through all possible currents a typical device would use, [and in my case] stopping at the one that produces the most noise. It's a lot, but it's also quite rewarding.
+Another thing that surprised me was just how many screenshots were involved in this testing. Chargers have so many supported voltages nowadays, so trying to test them thoroughly was exceedinly difficult. For each voltage, I had a huge range of current to play around in, usually 0-3A. Changing the current levels within those voltages is often what led to the biggest within-charger change in noise on the oscilloscope. I would usually step by 0.1A each time I tested a charger's operating range, so it was quite tedious.
 
-You can see from this testing that most modern, name-brand USB C chargers are fine. Even the Anker ones that I spent paragraphs whining about weren't that bad. Modern devices also do a great job of filtering out the excess noise, so most of these chargers would probably have no noticeable impact on a battery's long-term health. The USB C Power Delivery spec generally allows for 5% variation of voltage, which is about 250mV (the spec says that, for 5V of output, you are USB PD certified if you can supply between 4.75 and 5.5V). As you can see from my graphs, just about everything fits within that range, albeit very slightly for some.
+One real conclusion I wanted to point out is that, from all of this, you can see most modern chargers perform adequately well. Even when they're not, modern devices also do a great job of filtering out the excess noise, so most of these chargers would probably have no noticeable impact on a battery's long-term health. Since the USB C Power Delivery spec generally allows for 5% variation of voltage, just about everything I tested fits within that range, albeit very slightly for some.
 
-This was a lot of fun. I'm sure I made some simple mistakes and got things wrong, so feel free to reach out if you think any corrections or modifications could be made.
+This was a lot of fun to create, so I hope you enjoyed reading. I may try to update this with results form car chargers, which is my next step in the project. I'm sure I made some simple mistakes and got things wrong, so feel free to reach out if you think any corrections or modifications could be made. 
 
 
-Thanks for reading!
 
 ### -Sean
