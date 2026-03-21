@@ -886,32 +886,32 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
       <th>Actual Voltage (V)</th>
       <th>Actual Current (A)</th>
       <th>Actual Power (W)</th>
-      <th>Difference (W)</th>
+      <th>Passes Spec?</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Eero 15W Charger</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">4.76</td><td>2.91</td><td>13.85</td><td>-1.15</td></tr>
-    <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.9</td><td>3.0</td><td>27.0</td><td>0.00</td></tr>
-    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30 (20v, 1.5a)</td><td class="diff-pos">20.04</td><td>1.42</td><td>28.45</td><td>-1.54</td></tr>
-    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>19.98 (9v 2.22a)</td><td class="diff-pos">8.90</td><td>2.23</td><td>19.85</td><td>-0.13</td></tr>
-    <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.64</td><td>3.04</td><td>26.26</td><td>-0.74</td></tr>
-    <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-pos">5.04</td><td>2.02</td><td>10.18</td><td>+0.18</td></tr>
-    <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-neg">5.38</td><td>2.01</td><td>10.81</td><td>+0.81</td></tr>
-    <tr><td><strong>Counterfeit Samsung</strong></td><td>10 (5v, 2a)</td><td class="diff-neg">4.4</td><td>2.0</td><td>8.9</td><td>-1.10</td></tr>
-    <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36 (5.2v, 1.8a)</td><td class="diff-neg">5.30</td><td>1.81</td><td>9.59</td><td>+0.23</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5 (5v, 2.1a)</td><td class="diff-neg">4.5</td><td>2.13</td><td>9.6</td><td>-0.90</td></tr>
-    <tr><td><strong>Dealworthy Charger</strong></td><td>20 (12v, 1.67a)</td><td class="diff-pos">11.97</td><td>1.57</td><td>18.79</td><td>-1.25</td></tr>
-    <tr class="battery-row"><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td class="diff-neg">4.74</td><td>2.43</td><td>11.54</td><td>-0.46</td></tr>
-    <tr class="battery-row"><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td class="diff-pos">4.81</td><td>1.12</td><td>5.39</td><td>+0.89</td></tr>
-    <tr class="battery-row"><td><strong>Macbook Pro M1</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">5.05</td><td>3.03</td><td>15.30</td><td>+0.30</td></tr>
-    <tr><td><strong>Anker ASPD053a</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.88</td><td>3.02</td><td>26.82</td><td>-0.18</td></tr>
-    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">15.08</td><td>3.02</td><td>45.54</td><td>+0.54</td></tr>
-    <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.82</td><td>3.02</td><td>35.52</td><td>-0.48</td></tr>
-    <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15 (5v, 3a)</td><td class="diff-neg">4.74</td><td>3.04</td><td>14.4</td><td>-0.60</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.91</td><td>3.02</td><td>26.91</td><td>-0.09</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.82</td><td>3.03</td><td>44.90</td><td>-0.09</td></tr>
-    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.99</td><td>3.02</td><td>45.26</td><td>+0.26</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">12.13</td><td>3.02</td><td>36.63</td><td>+0.63</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">4.76</td><td>2.91</td><td>13.85</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.9</td><td>3.0</td><td>27.0</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30 (20v, 1.5a)</td><td class="diff-pos">20.04</td><td>1.42</td><td>28.45</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>19.98 (9v 2.22a)</td><td class="diff-pos">8.90</td><td>2.23</td><td>19.85</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.64</td><td>3.04</td><td>26.26</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-pos">5.04</td><td>2.02</td><td>10.18</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-neg">5.38</td><td>2.01</td><td>10.81</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td>10 (5v, 2a)</td><td class="diff-neg">4.4</td><td>2.0</td><td>8.9</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36 (5.2v, 1.8a)</td><td class="diff-neg">5.30</td><td>1.81</td><td>9.59</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5 (5v, 2.1a)</td><td class="diff-neg">4.5</td><td>2.13</td><td>9.6</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr><td><strong>Dealworthy Charger</strong></td><td>20 (12v, 1.67a)</td><td class="diff-pos">11.97</td><td>1.57</td><td>18.79</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr class="battery-row"><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td class="diff-neg">4.74</td><td>2.43</td><td>11.54</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr class="battery-row"><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td class="diff-pos">4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr class="battery-row"><td><strong>Macbook Pro M1</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">5.05</td><td>3.03</td><td>15.30</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Anker ASPD053a</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.88</td><td>3.02</td><td>26.82</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">15.08</td><td>3.02</td><td>45.54</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.82</td><td>3.02</td><td>35.52</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15 (5v, 3a)</td><td class="diff-neg">4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">&#x2717;</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.91</td><td>3.02</td><td>26.91</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.82</td><td>3.03</td><td>44.90</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.99</td><td>3.02</td><td>45.26</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">12.13</td><td>3.02</td><td>36.63</td><td class="diff-pos">&#x2713;</td></tr>
   </tbody>
 </table>
 </div>
