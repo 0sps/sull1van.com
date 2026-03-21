@@ -316,9 +316,9 @@ Chargers:
 I also tested a Macbook Pro M1, and iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
 
 For each charger, I tested it on several dimensions: Advertised power vs actual power, power quality, and overcurrent. 
-- The <strong>advertised power vs actual power </strong>tells you how well the charger can maintain its intended voltage while pulling its maximum current. 
-- <strong>Power quality</strong> means the amount of noise that appears on an oscilloscope. This comes in many forms, but the general idea is that each oscilloscope graph should be as flat as possible.
-- For overcurrent, I tested each device to see what was <strong>the current and voltage at its shutoff point</strong>. I took an electronic load through a series of current levels that were higher than what each charger indicated was its max. At its shutoff point, I noted down the current and voltage that were pulled. For this test, the ideal charger is one that can hold its voltage completely steady and then shut off.
+- The **advertised power vs actual power** tells you how well the charger can maintain its intended voltage while pulling its maximum current. 
+- **Power quality** means the amount of noise that appears on an oscilloscope. This comes in many forms, but the general idea is that each oscilloscope graph should be as flat as possible.
+- For overcurrent, I tested each device to see what was **the current and voltage at its shutoff point**. I took an electronic load through a series of current levels that were higher than what each charger indicated was its max. At its shutoff point, I noted down the current and voltage that were pulled. For this test, the ideal charger is one that can hold its voltage completely steady and then shut off.
 
 
 ## Testing Setup
