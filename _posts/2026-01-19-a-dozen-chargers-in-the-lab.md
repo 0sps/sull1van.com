@@ -1617,7 +1617,7 @@ Ken was able to display the complex relationship between voltage and current on 
 
 The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have.
 
-*Last clarification for this testing: If you are asking "but how did you account for the resistance of the system?" the answer is that I didn't. I do know from testing that my Decoy board / electronic load setup has some minor resistance, but I put my voltmeter BEFORE them in the circuit, connecting it directly into the USB cable right as it exits the charger. So, in that respect, I'm testing exactly what comes out of the charger.*
+
 
 ### Overcurrent Results Table
 <style>
