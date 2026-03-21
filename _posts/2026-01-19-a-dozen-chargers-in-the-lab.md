@@ -24,7 +24,7 @@ devices:
     img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows them to use different frequencies depending on how much power they need, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
+      Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -52,7 +52,7 @@ devices:
     caption: |
       I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. 
       
-      It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. The zoomed-out graph looks pretty similar to the one in this image, so i'm just showing you the zoomed in one here. Good charger. 
+      It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. The zoomed-out graph looks pretty similar to the one in this image, so I'm just showing you the zoomed in one here. Good charger. 
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -96,7 +96,7 @@ devices:
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that surprised me simply because of how well it tested. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage  itself weren't great. I would still avoid this as its lack of any major certification means it could be made using cheap, poorly regulated components. But during my testing it worked just fine."
+    caption: "This was another charger that surprised me simply because of how well it tested. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage itself wasn't great. I would still avoid this as its lack of any major certification means it could be made using cheap, poorly regulated components. But during my testing it worked just fine."
     rating: 4
     noise_rating: 4
     ripple_rating: 3
@@ -279,7 +279,7 @@ Have you ever wondered what makes a phone charger good or bad? Apple always says
 
 I'd thought about this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to degrade battery life and even cause other strange issues like touchscreen failure.
 
-While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine, and bounced ideas back and forth with him to figure out if this would be possible. He helped me complete some of the work below. Thanks, Spencer!
+While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine, and we bounced ideas back and forth until this project eventually came to life. He helped me complete some of the work below. Thanks, Spencer!
 
 
 Here's the short version of what I found out: 
@@ -319,7 +319,7 @@ Chargers:
 - Counterfeit Chinese Wall Adapter 10.5W WP2UWR
 - Counterfeit Samsung 10W EP-TA20JBE
 
-I also tested a Macbook Pro M1, and iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
+I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
 
 For each charger, I tested it on several dimensions: Advertised power vs actual power, power quality, and overcurrent. 
 - The **advertised power vs actual power** tells you how well the charger can maintain its intended voltage while pulling its maximum current. 
@@ -1615,7 +1615,7 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics.
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, chargers generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics.
 
 During overcurrent testing, I set my electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in the table below, that is rarely what I got.
 
