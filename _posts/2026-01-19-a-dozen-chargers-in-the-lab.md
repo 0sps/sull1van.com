@@ -110,7 +110,7 @@ devices:
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
-      Advertised at 30W, actual measured power was 29.5W. This one is good. At 5V1A, it has a messy power signature, with a lot of noise, but as soon as you crank it up to 7.5W it works just fine. I imagine this is because nobody at Apple expected people to use this charger for 5W of power, since it's USB C and marketed as a fast charger. They made a bet that no one will use this charger below 7.5W, and I agree with them. A smart play financially. 
+      Advertised at 30W, actual measured was 28.45W. This one is good. At 5V1A, it has a messy power signature, with a lot of noise, but as soon as you crank it up to 7.5W it works just fine. I imagine this is because nobody at Apple expected people to use this charger for 5W of power, since it's USB C and marketed as a fast charger. They made a bet that no one will use this charger below 7.5W, and I agree with them. A smart play financially. 
       
       I also tested this 7.5W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. Solid charger for typical use cases.
     rating: 4
@@ -147,7 +147,7 @@ devices:
     img1: "/assets/images/Govee 3.png"
     img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: "This one is genuinely bad. It gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks poorly regulated. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
+    caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
     rating: 2
     noise_rating: 2
     ripple_rating: 2
@@ -241,7 +241,7 @@ devices:
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evaluate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
       
-      Another issue I noticed was overcurrent. This was the only device I tested that would happily pump out more current than advertised. It achieved this by dropping the voltage to something disgustingly low, and definitely not a level that would be acceptable for a modern device. I knew this would be bad, but it's validating to have the graphs to show it.
+      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. This charger never truly turned off, opting instead to continually let the voltage drop until it was strikingly low.
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -404,6 +404,8 @@ And it *also* supports:
 This isn't just hypothetical. All of the chargers below were configured in this way. Take this into account as I *did* test them at their max current for that specific voltage. 
 
 
+The **Actual Voltage** column is highlighted **green** if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and **red** if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
+
 <div class="table-wrapper">
 <table class="stats-table">
   <thead>
@@ -417,28 +419,28 @@ This isn't just hypothetical. All of the chargers below were configured in this 
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Eero 15W Charger</strong></td><td>15</td><td>4.7</td><td>3.0</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
-    <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27</td><td>8.9</td><td>3.0</td><td>27.0</td><td class="diff-zero">0.00</td></tr>
-    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>27</td><td>8.08</td><td>3.02</td><td>26.61</td><td class="diff-neg">-0.39</td></tr>
-    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>19.98 (9v 2.22a)</td><td>8.90</td><td>2.23</td><td>19.85</td><td class="diff-neg">-0.13</td></tr>
-    <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>27</td><td>8.64</td><td>3.04</td><td>26.26</td><td class="diff-neg">-0.74</td></tr>
-    <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.5</td><td>2.0</td><td>9.3</td><td class="diff-neg">-0.70</td></tr>
-    <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10</td><td>4.7</td><td>2.0</td><td>9.6</td><td class="diff-neg">-0.40</td></tr>
-    <tr><td><strong>Counterfeit Samsung</strong></td><td>10</td><td>4.4</td><td>2.0</td><td>8.9</td><td class="diff-neg">-1.10</td></tr>
-    <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36</td><td>4.9</td><td>1.8</td><td>8.9</td><td class="diff-neg">-0.46</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5</td><td>4.5</td><td>2.13</td><td>9.6</td><td class="diff-neg">-0.90</td></tr>
-    <tr><td><strong>Dealworthy Charger</strong></td><td>15</td><td>4.6</td><td>3.14</td><td>14.5</td><td class="diff-neg">-0.50</td></tr>
-    <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td>4.74</td><td>2.43</td><td>11.54</td><td class="diff-neg">-0.46</td></tr>
-    <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td>4.81</td><td>1.12</td><td>5.39</td><td class="diff-pos">+0.89</td></tr>
-    <tr><td><strong>Macbook Pro M1</strong></td><td>15</td><td>5.05</td><td>3.03</td><td>15.30</td><td class="diff-pos">+0.30</td></tr>
-    <tr><td><strong>Anker ASPD053a</strong></td><td>27</td><td>8.88</td><td>3.02</td><td>26.82</td><td class="diff-neg">-0.18</td></tr>
-    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45</td><td>15.08</td><td>3.02</td><td>45.54</td><td class="diff-pos">+0.54</td></tr>
-    <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>15</td><td>4.93</td><td>3.03</td><td>14.99</td><td class="diff-neg">-0.01</td></tr>
-    <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15</td><td>4.74</td><td>3.04</td><td>14.4</td><td class="diff-neg">-0.60</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>15</td><td>4.54</td><td>3.04</td><td>13.79</td><td class="diff-neg">-1.21</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45</td><td>14.82</td><td>3.03</td><td>44.90</td><td class="diff-neg">-0.09</td></tr>
-    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45</td><td>14.99</td><td>3.02</td><td>45.26</td><td class="diff-pos">+0.26</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>45</td><td>15.11</td><td>3.02</td><td>45.63</td><td class="diff-pos">+0.63</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">4.76</td><td>2.91</td><td>13.85</td><td>-1.15</td></tr>
+    <tr><td><strong>Shargeek Macintosh Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.9</td><td>3.0</td><td>27.0</td><td>0.00</td></tr>
+    <tr><td><strong>Apple 30W Retail Charger</strong></td><td>30 (20v, 1.5a)</td><td class="diff-pos">20.04</td><td>1.42</td><td>28.45</td><td>-1.54</td></tr>
+    <tr><td><strong>Apple HomePod Mini Charger</strong></td><td>19.98 (9v 2.22a)</td><td class="diff-pos">8.90</td><td>2.23</td><td>19.85</td><td>-0.13</td></tr>
+    <tr><td><strong>Vebner GaN 65W Charger</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.64</td><td>3.04</td><td>26.26</td><td>-0.74</td></tr>
+    <tr><td><strong>Govee Power Supply</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-pos">5.04</td><td>2.02</td><td>10.18</td><td>+0.18</td></tr>
+    <tr><td><strong>Counterfeit AT&amp;T</strong><span class="usba-badge">USB A Only</span></td><td>10 (5v, 2a)</td><td class="diff-neg">5.38</td><td>2.01</td><td>10.81</td><td>+0.81</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td>10 (5v, 2a)</td><td class="diff-neg">4.4</td><td>2.0</td><td>8.9</td><td>-1.10</td></tr>
+    <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36 (5.2v, 1.8a)</td><td class="diff-neg">5.30</td><td>1.81</td><td>9.59</td><td>+0.23</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5 (5v, 2.1a)</td><td class="diff-neg">4.5</td><td>2.13</td><td>9.6</td><td>-0.90</td></tr>
+    <tr><td><strong>Dealworthy Charger</strong></td><td>20 (12v, 1.67a)</td><td class="diff-pos">11.97</td><td>1.57</td><td>18.79</td><td>-1.25</td></tr>
+    <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td class="diff-neg">4.74</td><td>2.43</td><td>11.54</td><td>-0.46</td></tr>
+    <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td class="diff-pos">4.81</td><td>1.12</td><td>5.39</td><td>+0.89</td></tr>
+    <tr><td><strong>Macbook Pro M1</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">5.05</td><td>3.03</td><td>15.30</td><td>+0.30</td></tr>
+    <tr><td><strong>Anker ASPD053a</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.88</td><td>3.02</td><td>26.82</td><td>-0.18</td></tr>
+    <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">15.08</td><td>3.02</td><td>45.54</td><td>+0.54</td></tr>
+    <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.82</td><td>3.02</td><td>35.52</td><td>-0.48</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station</strong></td><td>15 (5v, 3a)</td><td class="diff-neg">4.74</td><td>3.04</td><td>14.4</td><td>-0.60</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.91</td><td>3.02</td><td>26.91</td><td>-0.09</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.82</td><td>3.03</td><td>44.90</td><td>-0.09</td></tr>
+    <tr><td><strong>Anker A121B 100W Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.99</td><td>3.02</td><td>45.26</td><td>+0.26</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">12.13</td><td>3.02</td><td>36.63</td><td>+0.63</td></tr>
   </tbody>
 </table>
 </div>
