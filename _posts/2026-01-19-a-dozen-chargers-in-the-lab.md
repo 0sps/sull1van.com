@@ -552,7 +552,7 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
   html[data-theme="light"] table .bolt-1 { color: #e02929; -webkit-text-stroke: 1px #e02929; }
 </style>
 
-
+<br>
 
 ## Oscilloscope Graphs
 
@@ -1451,6 +1451,10 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
   })();
 </script>
 
+
+<br>
+
+## Noise Ratings
 
 
 <div class="table-wrapper">
