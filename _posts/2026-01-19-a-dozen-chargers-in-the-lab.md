@@ -1454,7 +1454,7 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 
 <br>
 
-### Noise Ratings Table
+### Oscilloscope Graphs - Results Table
 
 
 <div class="table-wrapper">
