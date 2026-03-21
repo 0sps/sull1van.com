@@ -76,7 +76,7 @@ devices:
     caption: |
       This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
 
-      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. Even though my load did not do this, and only requested 12V, the charger did a truly incredible thing: it ICREASED the voltage slightly above 12V as the current approached 3A. When I drew low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose each time, topping out at 12.36V when I pulled 3A. This got my electronic load to get even closer to 12 V input voltage. To my knowledge, this is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
+      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. Even though my load did not do this, and only requested 12V, the charger did a truly incredible thing: it INCREASED the voltage slightly above 12V as the current approached 3A. When I drew low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose each time, topping out at 12.36V when I pulled 3A. This got my electronic load to get even closer to 12 V input voltage. To my knowledge, this is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -279,7 +279,7 @@ Have you ever wondered what makes a phone charger high-quality? Whether cheaply 
 
  Ken's original work only covered USB-A chargers, so I have continued to wonder what modern USB-C chargers would look like under the same scrutiny. Before this project, all I knew was that USB C chargers would support far more power than the USB A chargers Ken tested. As I went in to the project, I learned there's much more to it!
 
-Here's the short version of what I found: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brads have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
+Here's the short version of what I found: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brands have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
 
 <br>
 
@@ -315,15 +315,16 @@ Chargers:
 
 I also tested a Macbook Pro M1, and iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
 
+For each charger, I tested it on several dimensions: Advertised power vs actual power, power quality, and overcurrent. 
+- The advertised power vs actual power tells you how well the charger can maintain its intended voltage while pulling its maximum current. 
+- Power quality means the amount of noise that appears on an oscilloscope. This comes in many forms, but the general idea is that each oscilloscope graph should be as flat as possible.
+- For overcurrent, I tested each device to see what was the current and voltage at its shutoff point. I took an electronic load through a series of current levels that were higher than what each charger indicated was its max. At its shutoff point, I noted down the current and voltage that were pulled. For this test, the ideal charger is one that can hold its voltage completely steady and then shut off.
 
----
+
+## Testing Setup
 
 
 As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
-
-The relationship between voltage and current in chargers is worth explaining. Upon connecting to a device, the charger will advertise its voltage options. The device will read that and then request one from the list. It's now on the charger to supply *that specific voltage* until told otherwise by the device. Since chargers can't exactly 'control' the current like they can with voltage, it's a mutual agreement between the charger and device that an excess amount of current won't be used. Most chargers don't supply more than 3A, and most devices won't request more than that either.
-
-What happens when a device tries to pull more? If the charger is high-quality, its overcurrent protection should be triggered and force it to shut down. If it is low quality, it might attempt to continue supplying power, either by dropping the voltage significantly (in accordance with Ohm's law) or actually attempting to service the higher current at the original voltage and burn itself up. None of the chargers I tested did the latter, but some did allow their voltage to drop, which is not ideal.
 
 <br>
 
@@ -345,7 +346,7 @@ I learned late into the project that resistance could be artificially skewing my
 If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how low that is for a testing setup, especially considering USB C braided cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
-### Rating system
+### Rating system for Oscilloscope graphs - Noise and ripple
 
 Each charger is rated 1 to 5 lightning bolts across three categories: noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
@@ -362,9 +363,6 @@ These are general guidelines, not hard cutoffs. I used my judgment for each char
   <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
 </figure>
 
-## Noise Ratings
-
-If you think a charger deserves one more bolt than I gave it, that's fair — a different oscilloscope, probe setup, or load condition could shift things in either direction. The thresholds are in the [rating system section above](#rating-system).
 
 ---
 
