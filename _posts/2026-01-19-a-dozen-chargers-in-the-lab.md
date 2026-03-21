@@ -389,6 +389,7 @@ In that respect, the graphs I captured below should represent the typical noise 
   html[data-theme="light"] .stats-table td:nth-child(1),
   html[data-theme="light"] .stats-table td:nth-child(2) { background-color: rgba(0, 0, 0, 0.03); }
   html[data-theme="light"] .usba-badge { color: #555; border-color: #aaa; }
+  tr.battery-row { opacity: 0.38; }
 </style>
 
 
@@ -405,6 +406,8 @@ This isn't just hypothetical. All of the chargers below were configured in this 
 
 
 The **Actual Voltage** column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
+
+*(For added fun, I also tested a few batteries and DC-powered devices — they aren't directly comparable to AC chargers since they produce no switching noise by nature, but I've included them in grey below as a reference.)*
 
 <div class="table-wrapper">
 <table class="stats-table">
@@ -430,9 +433,9 @@ The **Actual Voltage** column is highlighted <span style="color:#228B22; font-we
     <tr><td><strong>Amazon Kindle Charger</strong></td><td>9.36 (5.2v, 1.8a)</td><td class="diff-neg">5.30</td><td>1.81</td><td>9.59</td><td>+0.23</td></tr>
     <tr><td><strong>Counterfeit Chinese Wall Charger</strong><span class="usba-badge">USB A Only</span></td><td>10.5 (5v, 2.1a)</td><td class="diff-neg">4.5</td><td>2.13</td><td>9.6</td><td>-0.90</td></tr>
     <tr><td><strong>Dealworthy Charger</strong></td><td>20 (12v, 1.67a)</td><td class="diff-pos">11.97</td><td>1.57</td><td>18.79</td><td>-1.25</td></tr>
-    <tr><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td class="diff-neg">4.74</td><td>2.43</td><td>11.54</td><td>-0.46</td></tr>
-    <tr><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td class="diff-pos">4.81</td><td>1.12</td><td>5.39</td><td>+0.89</td></tr>
-    <tr><td><strong>Macbook Pro M1</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">5.05</td><td>3.03</td><td>15.30</td><td>+0.30</td></tr>
+    <tr class="battery-row"><td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td><td>12</td><td class="diff-neg">4.74</td><td>2.43</td><td>11.54</td><td>-0.46</td></tr>
+    <tr class="battery-row"><td><strong>iPhone 17 pro</strong></td><td>4.5</td><td class="diff-pos">4.81</td><td>1.12</td><td>5.39</td><td>+0.89</td></tr>
+    <tr class="battery-row"><td><strong>Macbook Pro M1</strong></td><td>15 (5v, 3a)</td><td class="diff-pos">5.05</td><td>3.03</td><td>15.30</td><td>+0.30</td></tr>
     <tr><td><strong>Anker ASPD053a</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.88</td><td>3.02</td><td>26.82</td><td>-0.18</td></tr>
     <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">15.08</td><td>3.02</td><td>45.54</td><td>+0.54</td></tr>
     <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.82</td><td>3.02</td><td>35.52</td><td>-0.48</td></tr>
@@ -504,6 +507,8 @@ The **Actual Voltage** column is highlighted <span style="color:#228B22; font-we
 
 A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise — roughly, 5 bolts is under ~80mV, 4 bolts is under ~100mV, 3 bolts is under ~160mV, 2 bolts is under ~250mV, and 1 bolt is anything above that. These are guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me. I looked at the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
 
+*(For added fun, I also tested a few batteries and DC-powered devices — they aren't directly comparable to AC chargers, but I've included them in grey below as a reference.)*
+
 <div class="table-wrapper">
 <table>
   <thead>
@@ -515,13 +520,13 @@ A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr class="battery-row">
       <td><strong>Macbook Pro M1</strong></td>
       <td>24mV</td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td>N/A</td>
     </tr>
-    <tr>
+    <tr class="battery-row">
       <td><strong>Anker 621 MAG GO 5000mAh Battery</strong></td>
       <td>36mV</td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
@@ -581,7 +586,7 @@ A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
-    <tr>
+    <tr class="battery-row">
       <td><strong>iPhone 17 pro</strong></td>
       <td>136mV</td>
       <td><span class="bolt-3">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
