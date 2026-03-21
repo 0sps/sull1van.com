@@ -64,7 +64,7 @@ devices:
     caption: |
       This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. It comes included with the Eero. Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC noise. It's got a sawtooth waveform, so there is noise, but it is pretty small. 
       
-      Incredible charger, especially for its size.
+      Good charger, especially for its size.
     rating: 4
     noise_rating: 5
     ripple_rating: 3
@@ -248,7 +248,7 @@ devices:
     caption: |
       Is this even GaN???
 
-      Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, etc. But this charger is just awful. 
+      Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, how it can bring endless joy and happiness to your life. But this charger is just awful. 
 
       The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and constant high-voltage spikes that you can see in the lower timeframe. Also, at that lower timeframe, it's unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but also just resembling noise. After some research, I suspect Anker actually did not use GaN technology at all but used traditional technology with aggressive frequency dithering to help ease the noise. This may not be the case but it is my suspicion. 
 
