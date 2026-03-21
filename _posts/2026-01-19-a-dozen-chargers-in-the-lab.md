@@ -343,7 +343,7 @@ I would plug the charger into the wall, connect it to the USB C decoy board via 
 The purpose of the decoy board is to imitate a device and requests a specific USB C PD voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* 
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
-*If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the default alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad on the scope even if they are high-quality.*
+*Tip: If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the default alligator ground clip will lead to extremely high noise ratings. Chargers will look bad on the scope even if they are high-quality.*
 
 ### A note about resistance
 
@@ -362,7 +362,7 @@ Each charger is rated 1 to 5 lightning bolts across three categories: noise, rip
 - 2 bolts: under approximately 250mV
 - 1 bolt: anything above that
 
-These are general guidelines, not hard cutoffs. I used my judgment for each charger based on the full picture — the shape of the waveform and the FFT spectrum, not just the raw mV reading.
+These are general guidelines, not hard cutoffs. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
 <figure style="max-width: 300px;">
   <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
@@ -374,7 +374,9 @@ These are general guidelines, not hard cutoffs. I used my judgment for each char
 
 ## The Results
 
-Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the highest-noise configuration I could reproduce for that charger — lowest voltage, highest current, worst-looking graph — so what you're seeing approximates the noise your device would actually experience during a real charge session. Changing the voltage didn't shift noise meaningfully in my testing; only the current did, which is why I only display one combination per charger.
+Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the highest-noise configuration I could reproduce for that charger, assuming typical power usage. 
+- I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
+- Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
 
 <style>
   .table-wrapper {
