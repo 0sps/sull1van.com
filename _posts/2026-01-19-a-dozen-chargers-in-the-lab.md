@@ -275,11 +275,13 @@ devices:
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 
-Have you ever wondered what makes a phone charger high-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was only 18, so most of it went over my head. But it stuck with me, and I kept periodically searching to see if anyone had done the same thing for modern USB-C chargers. Fast forward six years, and I still have yet to find anything.
+Have you ever wondered what makes a phone charger good or bad? Apple always says to use their certified chargers, but do you have to? Are there really any such things as bad chargers?
 
- Ken's original work only covered USB-A chargers, so I have continued to wonder what modern USB-C chargers would look like under the same scrutiny. Before this project, all I knew was that USB C chargers would support far more power than the USB A chargers Ken tested. As I went in to the project, I learned there's much more to it!
+I'd thought about this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to degrade battery life and even cause other strange issues like touchscreen failure.
 
-Here's the short version of what I found: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brands have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
+While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it.
+
+Here's the short version of what I found out: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brands have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
 
 <br>
 
