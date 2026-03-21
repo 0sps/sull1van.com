@@ -1619,7 +1619,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 *Last clarification for this testing: If you are asking "but how did you account for the resistance of the system?" the answer is that I didn't. I do know from testing that my Decoy board / electronic load setup has some minor resistance, but I put my voltmeter BEFORE them in the circuit, connecting it directly into the USB cable right as it exits the charger. So, in that respect, I'm testing exactly what comes out of the charger.*
 
-### Overcurrent Testing - Results Table
+### Overcurrent Results Table
 <style>
   .overcurrent-table {
     border-collapse: collapse;
