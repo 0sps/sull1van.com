@@ -505,7 +505,14 @@ The **Actual Voltage** column is highlighted <span style="color:#228B22; font-we
 
 ## Noise Ratings
 
-A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise — roughly, 5 bolts is under ~80mV, 4 bolts is under ~100mV, 3 bolts is under ~160mV, 2 bolts is under ~250mV, and 1 bolt is anything above that. These are guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me. I looked at the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
+A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise. Roughly:
+- 5 bolts is under ~80mV, 
+- 4 bolts is under ~100mV, 
+- 3 bolts is under ~160mV, 
+- 2 bolts is under ~250mV, 
+- and 1 bolt is anything above that. 
+
+These were the general guidelines I used, but they are not necessarily hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me, using the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
 
 <span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers, but I’ve included them in grey below as a reference.)</span>
 
