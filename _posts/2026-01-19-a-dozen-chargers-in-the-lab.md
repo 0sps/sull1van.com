@@ -362,7 +362,7 @@ Each charger is rated 1 to 5 lightning bolts across three categories: noise, rip
 - 2 bolts: under approximately 250mV
 - 1 bolt: anything above that
 
-These are general guidelines, not hard cutoffs. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
+These are just general guidelines. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
 <figure style="max-width: 300px;">
   <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
@@ -374,7 +374,7 @@ These are general guidelines, not hard cutoffs. I used my judgment for each char
 
 ## The Results
 
-Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the highest-noise configuration I could reproduce for that charger, assuming typical power usage. 
+Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the worst graph I could reproduce for that charger, assuming typical power usage. 
 - I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
 - Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
 
