@@ -378,6 +378,9 @@ Scroll through the cards and click any one to expand the full oscilloscope trace
 - I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
 - Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
 
+
+## Oscilloscope Graphs
+
 <style>
   .table-wrapper {
     width: 100%;
@@ -970,7 +973,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 
 <br>
 
-## Oscilloscope Graphs
 
 <style>
   body { overflow-x: hidden; }
