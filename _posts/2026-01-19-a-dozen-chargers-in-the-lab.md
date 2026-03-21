@@ -74,10 +74,9 @@ devices:
     img2: "/assets/images/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. 
-      For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
+      This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
 
-      One future test I might do is examine the charger at higher power output. I didn't push it to the 100W limit in testing, but that is because I was using small wires that could have overheated. The charger might perform better at higher power output.
+      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. Even though my load did not do this, and only requested 12V, the charger did a truly incredible thing: it ICREASED the voltage slightly above 12V as the current approached 3A. When I drew low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose each time, topping out at 12.36V when I pulled 3A. This got my electronic load to get even closer to 12 V input voltage. To my knowledge, this is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -265,7 +264,7 @@ devices:
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evaluate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
       
-      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. This charger never truly turned off, opting instead to continually let the voltage drop until it was strikingly low.
+      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. As I suspected, this charger let its voltage sag and allowed the current to rise nearly a whole amp above what it claims to support, until this 10W charger was pumping out nearly 14W. Yikes.
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -1659,6 +1658,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td class="oc-pos">0.7</td></tr>
     <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td class="oc-pos">0.8</td></tr>
     <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td class="oc-neg">-0.2</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td class="oc-pos">0.81</td><td class="oc-neg">-0.13</td><td class="oc-neg">3.73</td></tr>
   </tbody>
 </table>
 </div>
