@@ -1689,7 +1689,7 @@ Last thing: a huge shout out to my mechanical engineering friend Spencer, who he
 
 ### -Sean
 
-<figure style="max-width: 600px;">
-  <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%; align-items: center">
+<figure style="max-width: 600px; margin: 0 auto; text-align: center;">
+  <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
   <figcaption>Me with Spencer. Best friends make good electrical testing partners!</figcaption>
 </figure>
