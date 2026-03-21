@@ -297,6 +297,7 @@ Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I 
 
 ---
 
+## How It Works
 
 As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
@@ -329,16 +330,27 @@ If you're interested, the equivalent resistance of my voltmeter during testing w
   <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
 </figure>
 
+### Rating System
+
+Each charger is rated 1 to 5 lightning bolts across three categories: noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
+
+- 5 bolts: under approximately 80mV
+- 4 bolts: under approximately 100mV
+- 3 bolts: under approximately 160mV
+- 2 bolts: under approximately 250mV
+- 1 bolt: anything above that
+
+These are general guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture: the shape of the waveform and the FFT spectrum, not just the raw mV reading. A more detailed breakdown of the noise ratings is in the Noise Ratings section below.
+
 
 ---
 
 ## The Results
 
-<!-- Introduce the interactive card viewer below. Something like "Scroll through the results below — click any card to expand the oscilloscope traces." -->
 
+Scroll through the interactive cards below and click any card to expand the full oscilloscope traces. A note on how I selected which voltage and current combination to display:
 
-
-Since changing the voltage didn't meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage / current combination in my graphs below.
+Since changing the voltage did not meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage and current combination in my graphs below.
 
 So for my testing, I usually went with the lowest voltage, usually 5 or 9 volts, tweaking the current until I got the worst looking graph. I considered all voltage/current combinations for screenshot purposes, and captured the screenshot of what I believe to be the highest-noise configuration of voltage and current within a charger's typical expected power output level. 
 
