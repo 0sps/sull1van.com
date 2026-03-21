@@ -279,7 +279,8 @@ Have you ever wondered what makes a phone charger good or bad? Apple always says
 
 I'd thought about this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to degrade battery life and even cause other strange issues like touchscreen failure.
 
-While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it.
+While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine, and bounced ideas back and forth with him to figure out if this would be possible. He helped me complete some of the work below. Thanks, Spencer!
+
 
 Here's the short version of what I found out: 
 - GaN chargers are among the best you can buy today, and the marketing around them IS real.
@@ -1712,10 +1713,11 @@ The practical takeaway is more reassuring than the graphs might suggest. Since m
 
 I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electrical concepts, feel free to reach out and let me know. Contact is at the bottom of the page :)
 
-Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
+
 
 ### -Sean
 <br>
+Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
