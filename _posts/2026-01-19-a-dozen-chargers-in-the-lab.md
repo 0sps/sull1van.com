@@ -275,11 +275,11 @@ devices:
 
 <!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
 
-Have you ever wondered what makes a phone charger high-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was only 18 at the time, so most of it went over my head. I did think about it from time to time, though, and whether someone had done this for modern chargers.
+Have you ever wondered what makes a phone charger high-quality? Whether cheaply made, counterfeit chargers could secretly be destroying your battery? I'd wondered this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. I was only 18, so most of it went over my head. But it stuck with me, and I kept periodically searching to see if anyone had done the same thing for modern USB-C chargers. Fast forward six years, and I still have yet to find anything.
 
-Fast forward six years, and I decided to turn that idea into a project. Ken's work only covered the USB-A chargers at the time, and I wondered what modern USB-C chargers would be like if I tested them in the same way. After a lot of online research, I couldn't find anyone who replicated this work already. So one day, during a conversation with my boss at work, we talked about it and he egged me on. Even though it had nothing to do with our jobs, he was just as interested in the project as me, so I promised him I'd recreate Ken's work and let him know the results.
+ Ken's original work only covered USB-A chargers, so I have continued to wonder what modern USB-C chargers would look like under the same scrutiny. Before this project, all I knew was that USB C chargers would support far more power than the USB A chargers Ken tested. As I went in to the project, I learned there's much more to it!
 
-Enjoy!
+Here's the short version of what I found: GaN chargers are among the best you can buy today, and the marketing around them IS real, but a couple of cheap ones punched well above their price. Apple lands solidly in the middle, despite being among the best that Ken tested years ago, so other brads have  caught up in the time since. And lastly, some chargers were flat-out disappointing, like an Anker flagship that disappointed in virtually everything.
 
 <br>
 
@@ -290,16 +290,36 @@ Enjoy!
 
 ---
 
-## What I Tested
+## What I tested
 
 
-Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
+Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly. Here's the full list.
+Chargers:
+- Anker ASPD053a USB C 
+- AOHI GaN 65W AOC-C019 
+- AOHI GaN 100W AOC-C018 
+- Amazon Kindle 9W PS57CP 
+- SHARGEEK 35W Retro S035U  
+- Apple HomePod Mini A2305 (Same as Apple 20W Retail charger)
+- Apple 30W Retail A2164
+- Eero 15W C110011
+- Anker 100W A121B GaN Flagship
+- Anker Nano 45W A121D GaN Flagship
+- Spigen PowerArc ArcStation Pro 30W GaN PE2013UJ
+- Apple 96W Retail A2166
+- VEBNER 65W PD65U55
+- Govee 10W BI12T-050200-BdUU
+- Counterfeit AT&T 10W 'NA010050020'
+- Counterfeit Chinese Wall Adapter 10.5W WP2UWR
+- Counterfeit Samsung 10W EP-TA20JBE
+
+I also tested a Macbook Pro M1, and iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
+
 
 ---
 
-## How It Works
 
-As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
+As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
 The relationship between voltage and current in chargers is worth explaining. Upon connecting to a device, the charger will advertise its voltage options. The device will read that and then request one from the list. It's now on the charger to supply *that specific voltage* until told otherwise by the device. Since chargers can't exactly 'control' the current like they can with voltage, it's a mutual agreement between the charger and device that an excess amount of current won't be used. Most chargers don't supply more than 3A, and most devices won't request more than that either.
 
@@ -325,12 +345,7 @@ I learned late into the project that resistance could be artificially skewing my
 If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how low that is for a testing setup, especially considering USB C braided cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
-<figure style="max-width: 300px;">
-  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
-  <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
-</figure>
-
-### Rating System
+### Rating system
 
 Each charger is rated 1 to 5 lightning bolts across three categories: noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
@@ -340,21 +355,22 @@ Each charger is rated 1 to 5 lightning bolts across three categories: noise, rip
 - 2 bolts: under approximately 250mV
 - 1 bolt: anything above that
 
-These are general guidelines, not hard cutoffs. I used my best judgment for each charger based on the full picture: the shape of the waveform and the FFT spectrum, not just the raw mV reading. A more detailed breakdown of the noise ratings is in the Noise Ratings section below.
+These are general guidelines, not hard cutoffs. I used my judgment for each charger based on the full picture — the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
+<figure style="max-width: 300px;">
+  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
+  <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
+</figure>
+
+## Noise Ratings
+
+If you think a charger deserves one more bolt than I gave it, that's fair — a different oscilloscope, probe setup, or load condition could shift things in either direction. The thresholds are in the [rating system section above](#rating-system).
 
 ---
 
 ## The Results
 
-
-Scroll through the interactive cards below and click any card to expand the full oscilloscope traces. A note on how I selected which voltage and current combination to display:
-
-Since changing the voltage did not meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage and current combination in my graphs below.
-
-So for my testing, I usually went with the lowest voltage, usually 5 or 9 volts, tweaking the current until I got the worst looking graph. I considered all voltage/current combinations for screenshot purposes, and captured the screenshot of what I believe to be the highest-noise configuration of voltage and current within a charger's typical expected power output level. 
-
-In that respect, the graphs I captured below should represent the typical noise you would see if you used it to charge your phone. 
+Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the highest-noise configuration I could reproduce for that charger — lowest voltage, highest current, worst-looking graph — so what you're seeing approximates the noise your device would actually experience during a real charge session. Changing the voltage didn't shift noise meaningfully in my testing; only the current did, which is why I only display one combination per charger.
 
 <style>
   .table-wrapper {
@@ -539,16 +555,7 @@ The **Actual Voltage** column is highlighted <span style="color:#228B22; font-we
   html[data-theme="light"] table .bolt-1 { color: #e02929; -webkit-text-stroke: 1px #e02929; }
 </style>
 
-## Noise Ratings
 
-A quick note on the rating system: the bolt ratings (⚡ through ⚡⚡⚡⚡⚡) loosely map to measured peak-to-peak noise. Roughly:
-- 5 bolts is under ~80mV, 
-- 4 bolts is under ~100mV, 
-- 3 bolts is under ~160mV, 
-- 2 bolts is under ~250mV, 
-- and 1 bolt is anything above that. 
-
-These were the general guidelines I used, but they are not necessarily hard cutoffs. I used my best judgment for each charger based on the full picture the oscilloscope showed me, using the shape of the waveform and the FFT just as much as the raw mV number. If you look at a charger and think it deserves one more bolt than I gave it, that's completely reasonable. A different oscilloscope, probe setup, or load condition could shift things in either direction.
 
 <span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers, but I’ve included them in grey below as a reference.)</span>
 
@@ -1695,7 +1702,7 @@ Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but th
 
 The practical takeaway is more reassuring than the graphs might suggest. Since most modern devices filter noise internally, and *most* chargers I tested stay within the USB-C PD spec of ±5% voltage tolerance, even *with* all their noise, it's still unlikely to damage your battery. 
 
-I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electircal concepts, feel free to reach out and let me know. Contact is at the bottom of the page :)
+I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electrical concepts, feel free to reach out and let me know. Contact is at the bottom of the page :)
 
 Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
 
