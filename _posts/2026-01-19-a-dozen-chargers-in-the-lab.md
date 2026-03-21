@@ -292,12 +292,11 @@ Enjoy!
 
 ## What I Tested
 
-<!-- Briefly describe the collection of chargers — where they came from (official, counterfeit, old, new, etc.) -->
 
 Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
 
 ---
-<!-- Describe your methodology: the oscilloscope, what Vpp means, what noise/ripple means and why it matters, etc. A paragraph or two here will make the rest of the article make sense. -->
+
 
 As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery standard, which specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
 
@@ -307,19 +306,22 @@ What happens when a device tries to pull more? If the charger is high-quality, i
 
 <br>
 
-
-
-### Testing setup
-
 My setup consisted of three distinct pieces:
-1. An oscilloscope, specifically the Rigol DS1054Z,
+1. An oscilloscope, specifically the Rigol DS1054Z
 2. An electronic load
 3. A USB C Power Delivery decoy board
+4. A voltmeter
 
 I would plug the charger into the wall, connect it to the USB C decoy board via USB C. The decoy board imitates a device and requests a specific voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* From there, the decoy board was connected to the electronic load with small wires.
 
 The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
 *If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the default alligator ground clip will lead to extremely high noise ratings. Your chargers will look bad on the scope even if they are high-quality.*
+
+### A note about resistance
+
+I learned late into the project that resistance could be artificially skewing my measurements. For that reason, I took steps to adjust. I used a voltmeter connected directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
+
+If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how low that is for a testing setup, especially considering USB C braided cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
 <figure style="max-width: 300px;">
@@ -334,7 +336,7 @@ The Rigol DS1054Z was set up with its probe touching the positive terminal on th
 
 <!-- Introduce the interactive card viewer below. Something like "Scroll through the results below — click any card to expand the oscilloscope traces." -->
 
-I started by collecting screenshots of the chargers at *all* their advertised voltages, but then noticed that the noise looked exactly the same regardless of voltage, so I didn't take screenshots of these variations. This would give us nearly a dozen screenshots for every charger. 
+
 
 Since changing the voltage didn't meaningfully change the noise of any charger in my testing, only the current values did, I only display one voltage / current combination in my graphs below.
 
@@ -1677,14 +1679,17 @@ And there you have it. Most chargers did well, and only experienced minor voltag
 
 ## Conclusion
 
-Wow, that was a lot. Evaluating chargers seemed quite difficult to me at first, but the whole project quickly turned in to something fun that I genuinely emjoyed doing. My favorite part about this is that you don't even need to be an electrical engineer to see the difference between good and bad chargers. The real difficulty in all this comes when you go past the results and try to learn *why* chargers behave in a certain way. *Why* there are certain peaks in the FFT, *why* some scope traces looked fuzzy and others looked crisp, or *why* chargers exhibited noise at certain voltage/ current combinations and not others. I still don't have concrete answers to many of those questions.
+Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something fun, that I was excited to spend nights and weekends doing. What I liked most is that you don't need to be an electrical engineer to see the difference between good and bad chargers, since the oscilloscope makes it obvious. The real difficulty comes when you go past the what and try to understand the why: why certain peaks appear in the FFT, why some scope traces look as bad as they do, or why a charger that measured fine at 1A looked terrible at 2.5A. I still don't have great answers to all of those, but hope to learn more with time.
 
-Another thing that surprised me was just how many screenshots were involved in this testing. Chargers have so many supported voltages nowadays, so trying to test them thoroughly was exceedinly difficult. For each voltage, I had a huge range of current to play around in, usually 0-3A. Changing the current levels within those voltages is often what led to the biggest within-charger change in noise on the oscilloscope. I would usually step by 0.1A each time I tested a charger's operating range, so it was quite tedious.
+The practical takeaway is more reassuring than the graphs might suggest. Since most modern devices filter noise internally, and *most* chargers I tested stay within the USB-C PD spec of ±5% voltage tolerance, even *with* all their noise, it's still unlikely to damage your battery. 
 
-One real conclusion I wanted to point out is that, from all of this, you can see most modern chargers perform adequately well. Even when they're not, modern devices also do a great job of filtering out the excess noise, so most of these chargers would probably have no noticeable impact on a battery's long-term health. Since the USB C Power Delivery spec generally allows for 5% variation of voltage, just about everything I tested fits within that range, albeit very slightly for some.
+I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electircal concepts, feel free to reach out and let me know. Contact is at the bottom of the page :)
 
-This was a lot of fun to create, so I hope you enjoyed reading. I may try to update this with results form car chargers, which is my next step in the project. I'm sure I made some simple mistakes and got things wrong, so feel free to reach out if you think any corrections or modifications could be made. 
-
-
+Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
 
 ### -Sean
+
+<figure style="max-width: 300px;">
+  <img src="/assets/images/spencerandsean.HEIC" alt="Spencer and Sean" style="width: 100%;">
+  <figcaption>Me with Spencer. Best friends make good electrical testing partners!</figcaption>
+</figure>
