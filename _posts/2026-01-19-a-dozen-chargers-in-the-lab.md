@@ -293,7 +293,7 @@ Here's the short version of what I found: GaN chargers are among the best you ca
 ## What I tested
 
 
-Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly. Here's the full list.
+Nearly two dozen USB C chargers. I also added in some USB A chargers as well. I tested everything I could get my hands on, honestly.
 Chargers:
 - Anker ASPD053a USB C 
 - AOHI GaN 65W AOC-C019 
