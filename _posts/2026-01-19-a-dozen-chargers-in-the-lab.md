@@ -88,22 +88,22 @@ devices:
     caption: |
       This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. 
 
-      The main knock against this charger is the amount of voltage, not the quality of it. Since it measured 4.74V at a 5V target, which is just below the USB-C PD minimum of 4.75V, it is technically out of spec to be a USB charger."
-    rating: 4
+      The main knock against this charger is the amount of voltage, not the quality of it. Since it measured 4.74V at a 5V target, which is just below the USB-C PD minimum of 4.75V, it is technically out of spec to be a USB charger. For that reason, I had to remove all positive lightning bolts from its overall rating.
+    rating: 1
     noise_rating: 5
     ripple_rating: 4
-    overall_rating: 4
+    overall_rating: 1
 
 
   - name: "Counterfeit Chinese Wall Charger (USB A Only)"
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that surprised me simply because of how well it tested. It cost less than $10 and includes excellent power regulation. Low high-frequency noise and ripple. It also does a great job of providing the advertised power output. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage itself wasn't great. I would still avoid this as its lack of any major certification means it could be made using cheap, poorly regulated components. But during my testing it worked just fine."
-    rating: 4
+    caption: "This was another charger that surprised me simply because of how well it tested under the oscilloscope. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency ripple in the 50us graph, which I would be more concerned about if the voltage itself wasn't stable. In all, this charger would seem to be great. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger, and gives it an automatic 1-lightning-bolt rating."
+    rating: 1
     noise_rating: 4
     ripple_rating: 3
-    overall_rating: 4
+    overall_rating: 1
 
 
   - name: "Apple 96W Macbook Charger"
@@ -195,11 +195,11 @@ devices:
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: "Bad, and the graphs make it clear. On the longer timeframe the output almost passes at a glance — less obviously chaotic than the Govee — but zooming in reveals the problem: the waveform is dense with high-frequency noise, and the frequency spectrum shows severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V against a 5V target — well outside the 5.25V USB ceiling. Not a charger you want powering your devices."
-    rating: 2
+    caption: Bad, and the graphs make it clear. On the longer timeframe the output almost passes at a glance, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V against a 5V target, so it is also out of spec for a USB charger. Becuase it fell out of spec, I have to give it 1 lightning bolt.
+    rating: 1
     noise_rating: 1
     ripple_rating: 2
-    overall_rating: 2
+    overall_rating: 1
 
   - name: "Anker A121B 100W Charger"
     img1: "/assets/images/Anker A121B 100w 1.png"
@@ -217,7 +217,7 @@ devices:
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Another awful charger. Considering this ships as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. To compound things, the output voltage measured 5.30V against a 5V nominal target — above the 5.25V USB ceiling and therefore out of spec. If this is what Amazon ships with their reading device, they've set a low bar for power quality."
+    caption: "Another awful charger. Considering this ships as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V on its output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it an automatic 1 bolt."
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -265,9 +265,9 @@ devices:
     img2: "/assets/images/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. While the original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, I wanted to evaluate all my chargers on the same scale, so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? 
+      The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. The original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, but I wanted to evaluate all my chargers on the same scale so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? Even when I took the net voltage, it still failed other tests. It provided 4.4V when 5V was requested, so it doesn't even pass USB spec.
       
-      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. As I suspected, this charger let its voltage sag and allowed the current to rise nearly a whole amp above what it claims to support, until this 10W charger was pumping out nearly 14W. Yikes.
+      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. As I suspected, this charger let its voltage sag and allowed the current to rise nearly a whole amp above what it claims to support. This 10W charger was pumping out nearly 14W before it finally shut off. Yikes.
     rating: 1
     noise_rating: 1
     ripple_rating: 1
