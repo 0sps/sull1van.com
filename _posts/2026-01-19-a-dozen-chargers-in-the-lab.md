@@ -393,7 +393,7 @@ In that respect, the graphs I captured below should represent the typical noise 
 
 
 ## Expected/Actual Output
-Before we get into this table, I want to make one caveat: my setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. Luckily, the USB-C Power Delivery spec says that devices must indicate ALL voltages and max current values they allow. That is why I tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
+Before we get into this table, I want to make one caveat: my setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why I tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
 - 20V, up to 3.25 A (to reach max power of 65W)
 And it *also* supports:
 - 5V, up to 3 A
@@ -404,7 +404,7 @@ And it *also* supports:
 This isn't just hypothetical. All of the chargers below were configured in this way. Take this into account as I *did* test them at their max current for that specific voltage. 
 
 
-The **Actual Voltage** column is highlighted **green** if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and **red** if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
+The **Actual Voltage** column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V; a 9V output between 8.55V and 9.45V; a 12V output between 11.4V and 12.6V; a 15V output between 14.25V and 15.75V.
 
 <div class="table-wrapper">
 <table class="stats-table">
