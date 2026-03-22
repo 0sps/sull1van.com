@@ -86,13 +86,20 @@ devices:
       
       As you can tell, this is only the test of the USB C port. I didn't bother testing the noise of the USB A port for two reasons: one, they sit on the same circuit board so they likely share the same voltage regulation, and two, most people will not be using the USB A port on this.
 
-      One other interesting note about this charger: During overcurrent testing, it happily provided far above its rated current. I suspect it is because this specific charger allows up to 3.25 A fo
+      One other interesting note about this charger: During overcurrent testing, it happily provided far above its rated current. I suspect it is because this specific charger has these configurations:  
+      1) 5v 3a, 
+      2) 9v 3a, 
+      3) 12v 3a, 
+      4) 15v 3a, 
+      5) 20v 3.25a
+
+      As you can see, it will actually go above 3 A at the highest voltage. I think they just didn't think anyone would actually use over 3 A at the lower voltages. It was able to happily provide current all the way until shutoff that was within the +/- 5% of voltage spec, as per USB standards. So even though it pumps out way more current than advertised, I don't see it as a necessarily bad thing.
 
       
-    rating: 1
+    rating: 5
     noise_rating: 5
     ripple_rating: 4
-    overall_rating: 1
+    overall_rating: 5
 
 
   - name: "Counterfeit Chinese Wall Charger (USB A Only)"
@@ -1711,7 +1718,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td>0.35</td><td class="oc-pos">0.12</td><td class="oc-pos">2.2</td></tr>
     <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>0.44</td><td class="oc-neg">-0.09</td><td class="oc-pos">1.9</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td>0.7</td><td class="oc-neg">-0.22</td><td class="oc-pos">7.6</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>0.42</td><td class="oc-neg">-0.11</td><td class="oc-pos">1.7</td></tr>
+     <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>0.42</td><td class="oc-neg">-0.11</td><td class="oc-pos">1.7</td></tr>
     <tr><td><strong>Apple 30W Retail</strong></td><td>0.17</td><td class="oc-neg">-0.14</td><td class="oc-pos">0.4</td></tr>
     <tr><td><strong>Apple 96W</strong></td><td>0.46</td><td class="oc-neg">-0.37</td><td class="oc-pos">1.1</td></tr>
     <tr><td><strong>Amazon Kindle</strong></td><td>0.1</td><td class="oc-neg">-0.4</td><td class="oc-neg">-0.2</td></tr>
