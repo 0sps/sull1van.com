@@ -414,18 +414,18 @@ Scroll through the cards and click any one to expand the full oscilloscope trace
 - Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
 
 
-### How to read these graphs
+### How to read the screenshots below
 
 They look confusing at first glance, but you don't need to be an electrical engineer to understand these next graphs. Here is a quick primer on what you're looking at:
 
 - **The Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
 - **The Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT) analysis; it takes all the imperfections from the yellow line and sorts them by frequency. A large spike here means there's a significant amount of energy vibrating at that specific frequency.
-- **Noise vs. Ripple:** You'll see me use these terms often to describe the imperfections we see.
+- **Noise vs. Ripple:** You'll see me use these terms often to describe the imperfections we see. I'm trying to keep the same terminology as Ken, but I have admittedly less experince than him in this kind of work, so here is *my* understanding of these:
   - **Ripple** is the low-frequency, repeating waveform created by the switching action of the charger. In the yellow line, it looks like a repeating, rolling wave. In the purple FFT graph, ripple shows up as the primary, distinct peak at the charger's main switching frequency (e.g., 90KHz).
 
   - **Noise** is the high-frequency ringing and jitter that happens on top of that ripple. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, this noise shows up as repeating spikes (180KHz, 270KHz, etc.) or a chaotic, raised floor.
 
-  - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise and pass government emissions tests.
+  - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise.
 
 - **Good vs. Bad:** A high-quality charger produces a thin, flat yellow line with minimal action on the purple FFT graph (ideally just one sharp needle at its switching frequency). A poor-quality charger will have a thick, fuzzy yellow line (lots of jitter), obvious rolling waves (ripple), and many aggressive, evenly spaced harmonic spikes on the purple FFT graph.
 
