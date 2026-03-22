@@ -74,7 +74,7 @@ devices:
 
       The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. Even though my load did not do this, and only requested 12V, the charger did a truly incredible thing: it INCREASED the voltage slightly above 12V as the current approached 3A. When I drew low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose each time, topping out at 12.36V when I pulled 3A. This got my electronic load to get even closer to 12 V input voltage. To my knowledge, this is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
     rating: 5
-    noise_rating: 5
+    noise_rating: 4
     ripple_rating: 5
     overall_rating: 5
   - name: "Anker 637 Magnetic Charging Station 2 - USB C Port"
@@ -789,7 +789,7 @@ They look confusing at first glance, but you don't need to be an electrical engi
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
     </tr>
     <tr>
-      <td><strong>Anker 637 Magnetic Charging Station</strong></td>
+      <td><strong>Anker 637 Magnetic Charging Station 2 - USB C</strong></td>
       <td>76mV</td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
       <td><span class="bolt-5">&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;&#x26A1;&#xFE0E;</span></td>
@@ -1713,27 +1713,28 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td>0.42</td><td class="oc-pos">0.13</td><td class="oc-pos">2.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td>0.6</td><td class="oc-pos">0.13</td><td class="oc-pos">3.5</td></tr>
-    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td>0.35</td><td class="oc-pos">0.12</td><td class="oc-pos">2.2</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>0.44</td><td class="oc-neg">-0.09</td><td class="oc-pos">1.9</td></tr>
-    <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td>0.7</td><td class="oc-neg">-0.22</td><td class="oc-pos">7.6</td></tr>
-     <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td>0.42</td><td class="oc-neg">-0.11</td><td class="oc-pos">1.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td>0.17</td><td class="oc-neg">-0.14</td><td class="oc-pos">0.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td>0.46</td><td class="oc-neg">-0.37</td><td class="oc-pos">1.1</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td>0.1</td><td class="oc-neg">-0.4</td><td class="oc-neg">-0.2</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td>0.22</td><td class="oc-neg">-0.27</td><td class="oc-pos">0.2</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td>0.33</td><td class="oc-neg">-0.3</td><td class="oc-pos">0.7</td></tr>
-    <tr><td><strong>Eero 15W Charger</strong></td><td>0.36</td><td class="oc-neg">-0.31</td><td class="oc-pos">0.8</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td>0.23</td><td class="oc-neg">-0.57</td><td class="oc-neg">-0.2</td></tr>
-    <tr><td><strong>Counterfeit Samsung</strong></td><td>0.81</td><td class="oc-neg">-0.13</td><td class="oc-neg">3.73</td></tr>
+    <tr><td><strong>Vebner GaN</strong></td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td class="oc-pos">2.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td class="oc-pos">3.5</td></tr>
+    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td class="oc-pos">2.2</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td class="oc-pos">1.9</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td class="oc-pos">0.7</td><td class="oc-neg">-0.22</td><td class="oc-pos">7.6</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td class="oc-pos">1.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td class="oc-pos">0.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td class="oc-pos">1.1</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td class="oc-neg">-0.2</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td class="oc-pos">0.2</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td class="oc-pos">0.7</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td class="oc-pos">0.8</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td class="oc-neg">-0.2</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td class="oc-pos">0.81</td><td class="oc-neg">-0.13</td><td class="oc-pos">3.73</td></tr>
   </tbody>
 </table>
 </div>
 
 
+A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
+ad,
 
-The main issue from the table above is the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
 
 
 
