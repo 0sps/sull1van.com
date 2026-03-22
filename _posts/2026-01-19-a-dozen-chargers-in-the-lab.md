@@ -384,7 +384,7 @@ The Rigol DS1054Z was set up with its probe touching the positive terminal on th
 
 ### A note about resistance
 
-I learned during this project that resistance could be artificially skewing my measurements. For that reason, I used a voltmeter connected directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
+I learned during this project that resistance could be artificially skewing my measurements. To account for this, I connected my voltmeter directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
 
 If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how reasonable that is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
@@ -1672,6 +1672,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
 
+Also, while I did indicate above that most of my graphs looked like Ken's good graph, there were a few exceptions. I did the oscilloscope overcurrent testing first, where I hooked up each device to the oscilloscope and examined the overcurrent results. Afterward, I followed up and re-ran the tests one more time with a brand new multimeter. For that reason, we have brand new disappointing results for the Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero. I highlight these items specifically because their voltage drop approaches that +/- 5% threshold we have been using to evaluate if a charger is operating within proper limits. I will have to re-test their overcurrent on the oscilloscope now, because there is ample evidence that these chargers might actually look like the bad example from Ken's work. I will update this post if this is the case.
 
 
 
