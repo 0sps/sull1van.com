@@ -9,9 +9,7 @@ devices:
     img2: "/assets/images/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      *Tested as a pure DC source to establish a baseline for what clean power looks like — batteries and devices with internal batteries produce no AC switching noise by nature, so a perfect score here is expected.*
-
-      The MacBook Pro has the cleanest power signature of the devices I tested. This was to be expected, since a MacBook Pro is just pulling DC current from its internal battery and sending it out. No AC->DC conversion required. 
+      The MacBook Pro has the cleanest power signature of the devices I tested. This was to be expected since it's just pulling DC current from its internal battery and doesn't need to chop up AC power thousands of times per second.
       
       There's also no high frequency switching noise, or any noticeable ripple. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
     rating: 5
@@ -24,7 +22,7 @@ devices:
     img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt THE best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
+      Without a doubt the best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -37,9 +35,7 @@ devices:
     img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      *Tested as a pure DC source to establish a baseline. Batteries produce no AC switching noise by nature, so a perfect score here is expected.* 
-      
-      Generally a clean power signature, as expected from a battery. No switching noise, no ripple. The one small hiccup was in voltage accuracy: it measured 4.74V against a 5V target, just barely under the 4.75V USB-C PD floor. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in the table. The power quality itself is excellent.
+      Generally a clean power signature, as expected from a battery. No switching noise or ripple. The one small issue in my testing was that it measured 4.74V against a 5V target, just barely under the 4.75V USB-C PD floor. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in the table. The power quality itself is excellent.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -183,7 +179,10 @@ devices:
     img1: "/assets/images/Dealworthy 1.png"
     img2: "/assets/images/Dealworthy 3.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is.. but that is to be expected for something that costs $6. Lots of noise, poor regulation, and a lot of ripple. I suspect they are smearing the switching frequency using frequency dithering... something looks fishy. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger."
+    caption: |
+      Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is. Lots of noise, poor regulation, and a lot of ripple. 
+    
+      I suspect they are smearing the switching frequency using frequency dithering. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger.
     rating: 1
     noise_rating: 2
     ripple_rating: 2
@@ -380,6 +379,22 @@ These are just general guidelines. I used my judgment for each charger based on 
 Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the worst graph I could reproduce for that charger, assuming typical power usage. 
 - I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
 - Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
+
+
+### How to read these graphs
+
+They look confusing at first glance, but you don't need to be an electrical engineer to understand these next graphs. Here is a quick primer on what you're looking at:
+
+- **The Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
+- **The Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT) analysis; it takes all the imperfections from the yellow line and sorts them by frequency. A large spike here means there's a significant amount of energy vibrating at that specific frequency.
+- **Noise vs. Ripple:** You'll see me use these terms often to describe the imperfections we see.
+  - **Ripple** is the low-frequency, repeating waveform created by the switching action of the charger. In the yellow line, it looks like a repeating, rolling wave. In the purple FFT graph, ripple shows up as the primary, distinct peak at the charger's main switching frequency (e.g., 90KHz).
+
+  - **Noise** is the high-frequency ringing and jitter that happens on top of that ripple. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, this noise shows up as repeating spikes (180KHz, 270KHz, etc.) or a chaotic, raised floor.
+
+  - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise and pass government emissions tests.
+
+- **Good vs. Bad:** A high-quality charger produces a thin, flat yellow line with minimal action on the purple FFT graph (ideally just one sharp needle at its switching frequency). A poor-quality charger will have a thick, fuzzy yellow line (lots of jitter), obvious rolling waves (ripple), and many aggressive, evenly spaced harmonic spikes on the purple FFT graph.
 
 
 ## Oscilloscope Graphs
