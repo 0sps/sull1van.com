@@ -832,7 +832,7 @@ In this case, I'd do base level testing to see if I can get the charger to outpu
 
 The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
 
-<span style="color: #888; font-style: italic;">(For added fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers since they produce no switching noise by nature, but I’ve included them in grey below as a reference.)</span>
+<span style="color: #888; font-style: italic;">(For fun, I also tested a few batteries and DC-powered devices — they aren’t directly comparable to AC chargers since they produce no switching noise by nature, but I’ve included them in grey below as a reference.)</span>
 ### Expected/Actual Output Table
 <div class="table-wrapper">
 <table class="stats-table">
@@ -1591,7 +1591,7 @@ Ken was able to display the complex relationship between voltage and current on 
 </figure>
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/ken_bad.png" alt="Ken current 2" style="width: 100%;">
-  <figcaption>An example of a bad charger Ken tested. While I wasn't able to capture graphs like this and save them, what I can say is that my graphs all looked like the one above, not this one (with the exception of counterfeit samsung)</figcaption>
+  <figcaption>An example of a bad charger Ken tested. While I wasn't able to capture graphs like this and save them, what I can say is that my graphs all looked like the earlier one, not this one (with the exception of counterfeit samsung)</figcaption>
 </figure>
 
 
@@ -1670,9 +1670,10 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 </div>
 
 
-A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
+A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. There may have been an issue in testing or these chargers might not be as well-regulated.
 
-A new update: I re-ran the tests one more time with a brand new multimeter to show the results in this table. Upon reviewing, the Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero are all approaching that +/- 5% threshold we have been using to evaluate if a charger is operating within proper limits. I will re-test these chargers under my oscilloscope to ensure they look like Ken's good graph, and not his bad one. If they do look like his bad one, the table above has less validity. It would mean the charger is actually all over the place with its voltage, so me saying *"it delivered 5.2 Volts"* in the table above with no asterisk or note would be a disservice. It would be better to say, *"the voltmeter showed 5.2 Volts, but here is how noisy and messy and all over the place that voltage was."* 
+<span style="color: #888; font-style: italic;">
+A new update: I re-ran the tests one more time with a brand new multimeter to show the results in this table. Upon reviewing, the Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero are all approaching that +/- 5% threshold we have been using to evaluate if a charger is operating within proper limits. I will re-test these chargers under my oscilloscope to ensure they look like Ken's good graph, and not his bad one. If they do look like his bad one, the table above has less validity. It would mean the charger is actually all over the place with its voltage, so me saying *"it delivered 5.2 Volts"* in the table above with no asterisk or note would be a disservice. It would be better to say, *"the voltmeter showed 5.2 Volts, but here is how noisy and messy and all over the place that voltage was."* </span>
 
 
 
