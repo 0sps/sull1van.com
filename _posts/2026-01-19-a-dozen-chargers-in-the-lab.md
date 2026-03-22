@@ -362,6 +362,8 @@ For each charger, I tested it on several dimensions: Advertised power vs actual 
 - For overcurrent, I tested each device to see what was **the current and voltage at its shutoff point**. I took an electronic load through a series of current levels that were higher than what each charger indicated was its max. At its shutoff point, I noted down the current and voltage that were pulled. For this test, the ideal charger is one that can hold its voltage completely steady and then shut off.
 
 
+
+
 ## Testing Setup
 
 
@@ -425,7 +427,7 @@ They look confusing at first glance, but you don't need to be an electrical engi
 
   - **Noise** is the high-frequency ringing and jitter that happens on top of that ripple. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, this noise shows up as repeating spikes (180KHz, 270KHz, etc.) or a chaotic, raised floor.
 
-  - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise.
+  - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise. 
 
 - **Good vs. Bad:** A high-quality charger produces a thin, flat yellow line with minimal action on the purple FFT graph (ideally just one sharp needle at its switching frequency). A poor-quality charger will have a thick, fuzzy yellow line (lots of jitter), obvious rolling waves (ripple), and many aggressive, evenly spaced harmonic spikes on the purple FFT graph.
 
@@ -1581,7 +1583,17 @@ The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. 
 
 During overcurrent testing, I set my electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in the table below, that is rarely what I got.
 
-Ken was able to display the complex relationship between voltage and current on beautiful time-based graphs. I don't have access to technology that can display the results in the same way. I CAN tell you, however, that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, you should have no problem accepting the values below as the true values of the voltage and current of the device at its shutoff period. 
+Ken was able to display the complex relationship between voltage and current on beautiful time-based graphs. Unfortunately, I don't have access to technology that can display the results in the same way. I *can* tell you, however, that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I accept the values below as the true values of the voltage and current of the device at its shutoff period. 
+
+<figure style="max-width: 600px; text-align: center;">
+  <img src="/assets/images/load_example.png" alt="Ken current" style="width: 100%;">
+  <figcaption>A good example of Ken's overcurrent graphs. I wasn't able to recreate his setup like this.</figcaption>
+</figure>
+<figure style="max-width: 600px; text-align: center;">
+  <img src="/assets/images/ken_bad.png" alt="Ken current 2" style="width: 100%;">
+  <figcaption>An example of a bad charger Ken tested. While I wasn't able to capture graphs like this and save them, what I can say is that my graphs all looked like the one above, not this one (with the exception of counterfeit samsung)</figcaption>
+</figure>
+
 
 The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have.
 
