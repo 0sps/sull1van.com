@@ -925,7 +925,7 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
     <tr><td><strong>Anker ASPD053a</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.88</td><td>3.02</td><td>26.82</td><td class="diff-pos">&#x2713;</td></tr>
     <tr><td><strong>Apple 96W Macbook Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">15.08</td><td>3.02</td><td>45.54</td><td class="diff-pos">&#x2713;</td></tr>
     <tr><td><strong>AOHI 100W GaN Charger</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.82</td><td>3.02</td><td>35.52</td><td class="diff-pos">&#x2713;</td></tr>
-    <tr><td><strong>Anker 637 Magnetic Charging Station 1 - USB A port</strong><span class="usba-badge">USB A Only</span></td><td>12 (5v, 2.4a)</td><td class="diff-pos">5.13</td><td>2.42</td><td>12.41</td><td class="diff-pos">&#x2713;</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station 1 - USB A port</strong><span class="usba-badge">USB A</span></td><td>12 (5v, 2.4a)</td><td class="diff-pos">5.13</td><td>2.42</td><td>12.41</td><td class="diff-pos">&#x2713;</td></tr>
     <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td>36 (12v, 3a)</td><td class="diff-pos">11.79</td><td>3.02</td><td>35.65</td><td class="diff-pos">&#x2713;</td></tr>
     <tr><td><strong>Spigen PowerArc ArcStation Pro</strong></td><td>27 (9v, 3a)</td><td class="diff-pos">8.91</td><td>3.02</td><td>26.91</td><td class="diff-pos">&#x2713;</td></tr>
     <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td>45 (15v, 3a)</td><td class="diff-pos">14.82</td><td>3.03</td><td>44.90</td><td class="diff-pos">&#x2713;</td></tr>
