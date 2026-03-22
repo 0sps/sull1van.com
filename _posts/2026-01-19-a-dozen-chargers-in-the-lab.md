@@ -312,12 +312,12 @@ devices:
 
 Have you ever wondered if there are 'good' and 'bad' chargers? Is there really a difference between a $5 brick you get at an airport and a $30 one you order direct from a name brand? As it turns out, cheaply made chargers can operate far differently from name-brand ones, and can sometimes be dangerous to use.
 
-I'd thought about this topic for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to degrade battery life and even cause other strange issues like touchscreen failure.
+I'd thought about this topic for years ever since I read a [blog post by one Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to not only degrade battery life but cause other strange issues like touchscreen glitches.
 
-While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine who is a mechanical engineer, and we started bouncing ideas back and forth until this project eventually came to life. He helped me complete some of the work for this project - thank you Spencer!
+Most of his work went over my head at the time, but I kept thinking about whether anyone would recreate this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. There may very well be an article just like this, and if there is I'd love to find it! But since I haven't seen anything like that yet, I decided to figure out exactly what Ken did and try to recreate it. I reached out to a mechanical engineer friend, and we started bouncing ideas back and forth until this project eventually came to life. He helped me complete some of the work below - thank you, Spencer!
 
 
-Here's the short version of what I found out: 
+Here's the short version of what I found: 
 - GaN chargers are among the best you can buy today, and the marketing around them IS real.
 - Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.
 - Common brands like Apple generally do test favorably, but some smaller brands edge them out in quality. 
