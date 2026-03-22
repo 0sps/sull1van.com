@@ -1732,7 +1732,10 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 </div>
 
 
-And there you have it. Most chargers did well, and only experienced minor voltage drops. A few of them allowed significantly higher current than advertised, and they seemed to handle it well, suggesting good engineering.
+
+The main issue from the table above is the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
+
+
 
 
 
