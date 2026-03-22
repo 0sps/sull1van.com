@@ -25,7 +25,7 @@ devices:
     caption: |
       Without a doubt the best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
     rating: 5
-    noise_rating: 4
+    noise_rating: 5
     ripple_rating: 5
     overall_rating: 5
     noise_mv: 60
