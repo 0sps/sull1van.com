@@ -77,14 +77,14 @@ devices:
     noise_rating: 5
     ripple_rating: 5
     overall_rating: 5
-  - name: "Anker 637 Magnetic Charging Station"
+  - name: "Anker 637 Magnetic Charging Station 2 - USB C Port"
     img1: "/assets/images/Anker 637 magnetic charging station USB C.png"
-    img2: "/assets/images/Anker 637 magnetic charging station USB A.png"
+    img2: "/assets/images/Anker 637 magnetic charging station USB C 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. 
 
-      The main knock against this charger is the amount of voltage, not the quality of it. Since it measured 4.74V at a 5V target, which is just below the USB-C PD minimum of 4.75V, it is technically out of spec to be a USB charger. For that reason, I had to remove all positive lightning bolts from its overall rating.
+      
     rating: 1
     noise_rating: 5
     ripple_rating: 4
