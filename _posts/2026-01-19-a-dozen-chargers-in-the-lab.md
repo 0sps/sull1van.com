@@ -1698,7 +1698,7 @@ I hope you enjoyed reading. This was genuinely such a pleasure to put together. 
 
 ### -Sean
 <br>
-Last thing: a huge shout out to my good friend Spencer, who helped me at every step of the way! 
+Last thing: a huge shout out to both Ken and my good friend Spencer! I could not have done this without either of them.
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
