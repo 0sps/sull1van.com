@@ -1785,7 +1785,7 @@
         const CONFIG = {
             RECENT_LOGS_LIMIT: 5,
             FIREBASE_INIT_LIMIT: 60,
-            LOCAL_STORAGE_TTL: 24 * 60 * 60 * 1000, // 24 hours
+            LOCAL_STORAGE_TTL: 48 * 60 * 60 * 1000, // 48 hours
             HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
             SET_DELETION_LOG_SLICE: 15
@@ -2409,35 +2409,77 @@
         }
 
         function saveWorkoutProgress() {
-            const data = {
-                workoutDay: currentWorkoutDay,
-                exerciseData: currentExerciseData,
-                setCounts: currentSetCounts,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('workoutProgress', JSON.stringify(data));
+            try {
+                let allProgress = {};
+                const saved = localStorage.getItem('workoutProgress');
+                if (saved) {
+                    try {
+                        allProgress = JSON.parse(saved);
+                        // Prevent legacy object formats from breaking the dict format
+                        if (allProgress.hasOwnProperty('workoutDay')) {
+                            allProgress = {};
+                        }
+                    } catch (e) {}
+                }
+                allProgress[currentWorkoutDay] = {
+                    workoutDay: currentWorkoutDay, // kept inside for safety
+                    exerciseData: currentExerciseData,
+                    setCounts: currentSetCounts,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+            } catch(e) {
+                console.error('Error saving workout progress:', e);
+            }
         }
 
         function loadWorkoutProgress() {
             try {
                 const saved = localStorage.getItem('workoutProgress');
                 if (!saved) return false;
-                const data = JSON.parse(saved);
+                let allProgress = JSON.parse(saved);
 
-                // Migration: Handle transition from string-based days to indices
-                if (typeof data.workoutDay === 'string') {
-                    const legacyMap = { 'day1': 0, 'day2': 1, 'day3': 2, 'rest': 3, 'day4': 4, 'day5': 5, 'day6': 6 };
-                    data.workoutDay = legacyMap[data.workoutDay] ?? data.workoutDay;
+                // Handle legacy format (single workout object)
+                if (allProgress.hasOwnProperty('workoutDay')) {
+                    const legacyData = allProgress;
+                    allProgress = {};
+                    
+                    // Migrate string days to indices if needed
+                    if (typeof legacyData.workoutDay === 'string') {
+                        const legacyMap = { 'day1': 0, 'day2': 1, 'day3': 2, 'rest': 3, 'day4': 4, 'day5': 5, 'day6': 6 };
+                        legacyData.workoutDay = legacyMap[legacyData.workoutDay] ?? legacyData.workoutDay;
+                    }
+                    allProgress[legacyData.workoutDay] = {
+                        exerciseData: legacyData.exerciseData,
+                        setCounts: legacyData.setCounts,
+                        timestamp: legacyData.timestamp
+                    };
+                    localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
                 }
 
-                const age = Date.now() - data.timestamp;
-                if (age > CONFIG.LOCAL_STORAGE_TTL) {
-                    clearWorkoutProgress();
-                    return false;
+                const now = Date.now();
+                let hasChanges = false;
+                
+                // GC old items (> 48h)
+                for (const day in allProgress) {
+                    if (now - allProgress[day].timestamp > CONFIG.LOCAL_STORAGE_TTL) {
+                        delete allProgress[day];
+                        hasChanges = true;
+                    }
                 }
-                if (data.workoutDay === currentWorkoutDay) {
-                    currentExerciseData = data.exerciseData || {};
-                    currentSetCounts = data.setCounts || {};
+                
+                if (hasChanges) {
+                    if (Object.keys(allProgress).length === 0) {
+                        localStorage.removeItem('workoutProgress');
+                    } else {
+                        localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                    }
+                }
+
+                const currentData = allProgress[currentWorkoutDay];
+                if (currentData) {
+                    currentExerciseData = currentData.exerciseData || {};
+                    currentSetCounts = currentData.setCounts || {};
                     return true;
                 }
                 return false;
@@ -2448,7 +2490,27 @@
         }
 
         function clearWorkoutProgress() {
-            localStorage.removeItem('workoutProgress');
+            try {
+                const saved = localStorage.getItem('workoutProgress');
+                if (!saved) return;
+                let allProgress = JSON.parse(saved);
+
+                if (allProgress.hasOwnProperty('workoutDay')) {
+                    localStorage.removeItem('workoutProgress');
+                    return;
+                }
+
+                if (allProgress[currentWorkoutDay]) {
+                    delete allProgress[currentWorkoutDay];
+                    if (Object.keys(allProgress).length === 0) {
+                        localStorage.removeItem('workoutProgress');
+                    } else {
+                        localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                    }
+                }
+            } catch (e) {
+                console.error('Error clearing workout progress:', e);
+            }
         }
 
         function buildWorkoutCSV(logs) {
@@ -3479,7 +3541,23 @@
             }).join('');
             openModal('switchModal');
         }
-        function selectWorkoutDay(day) { currentWorkoutDay = day; currentExerciseData = {}; updateWorkoutDisplay(true); closeSwitchModal(); }
+        function selectWorkoutDay(day) { 
+            currentWorkoutDay = day;
+            // Clear in-memory state for the new day
+            currentExerciseData = {};
+            currentSetCounts = {};
+            // Update header labels (badge, name, meta)
+            const workout = getWorkoutData(currentWorkoutDay);
+            const isRest = workout.exercises.length === 0;
+            document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay + 1}`;
+            document.getElementById('workoutName').textContent = workout.name;
+            const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets || 0), 0);
+            document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${totalSets} Sets Total`;
+            // Restore cache for this day if it exists, then render once with correct data
+            loadWorkoutProgress();
+            renderExercises();
+            closeSwitchModal(); 
+        }
         function closeSwitchModal() { closeModal('switchModal'); }
         function toggleStatsDashboard() {
             const wrapper = document.getElementById('statsDashboardWrapper');
@@ -3503,6 +3581,9 @@
                         // Switch to today's workout if not showing it
                         currentWorkoutDay = todaysDay;
                         updateWorkoutDisplay(true);
+                        if (loadWorkoutProgress()) {
+                            renderExercises();
+                        }
                     }
                     document.querySelectorAll('.nav-tab[data-tab]').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
