@@ -219,7 +219,7 @@ devices:
     caption: "Another awful charger. Considering this ships as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V on its output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it an automatic 1 bolt."
     rating: 1
     noise_rating: 1
-    ripple_rating: 1
+    ripple_rating: 2
     overall_rating: 1
   - name: "Apple HomePod Mini Charger"
     img1: "/assets/images/Apple Homepod Mini.png"
