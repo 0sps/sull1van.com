@@ -82,7 +82,9 @@ devices:
     img2: "/assets/images/Anker 637 magnetic charging station USB C 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming. Some ripple is visible at the lower timeframe but stays modest compared to most of the poor performers in this group. 
+      This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming.
+      
+      As you can tell, this is only the test of the USB C port. I didn't bother testing the noise of the USB A port for two reasons: one, they sit on the same circuit board so they likely share the same voltage regulation, and two, most people will not be using the USB A port on this.
 
       
     rating: 1
