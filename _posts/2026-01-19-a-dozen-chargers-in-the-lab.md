@@ -321,7 +321,7 @@ Here's the short version of what I found:
 - GaN chargers are among the best you can buy today, and the marketing around them IS real.
 - Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.
 - Common brands like Apple generally do test favorably, but some smaller brands edge them out in quality. 
-- There is an extreme amount of variation even within a brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing unless you tested them.
+- There is an extreme amount of variation even within each brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.
 
 <br>
 
@@ -334,7 +334,7 @@ Here's the short version of what I found:
 
 ## What I tested
 
-To get as much out of this project as possible, I tested a lot of chargers. Mostly USB-C, but some USB A chargers were added in as well. Here's the full list:
+To get as much out of this project as possible, I tested a lot of chargers. They were mostly USB-C, but some USB A chargers were added in as well. Here's the full list:
 - Anker ASPD053a USB C 
 - Anker 637 Magnetic Charging Station (USB A port and USB C port)
 - AOHI GaN 65W AOC-C019 
@@ -355,12 +355,12 @@ To get as much out of this project as possible, I tested a lot of chargers. Most
 - Counterfeit Chinese Wall Adapter 10.5W WP2UWR
 - Counterfeit Samsung 10W EP-TA20JBE
 
-I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in results tables below.
+I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in the various results below.
 
-For each charger, I tested it on several dimensions: Advertised power vs actual power, power quality, and overcurrent. 
-- The **advertised power vs actual power** tells you how well the charger can maintain its intended voltage while pulling its maximum current. 
-- **Power quality** means the amount of noise that appears on an oscilloscope. This comes in many forms, but the general idea is that each oscilloscope graph should be as flat as possible.
-- For overcurrent, I tested each device to see what was **the current and voltage at its shutoff point**. I took an electronic load through a series of current levels that were higher than what each charger indicated was its max. At its shutoff point, I noted down the current and voltage that were pulled. For this test, the ideal charger is one that can hold its voltage completely steady and then shut off.
+For each charger, I tested it on several dimensions: Advertised power versus actual power, power quality, and overcurrent. 
+- Comparing **advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
+- **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise.
+- For **overcurrent**, I tested each device to see what was the current and voltage at its shutoff point. Using an electronic load, I took the chargers through a series of current levels that were higher than their indicated max. At the charger's shutoff point, I noted down what current and voltage were pulled. The ideal charger in this test one that can hold its voltage completely steady regardless of the current.
 
 
 
@@ -368,31 +368,32 @@ For each charger, I tested it on several dimensions: Advertised power vs actual 
 ## Testing Setup
 
 
-As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery (PD) standard, which generally specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are even more modern variants such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS) but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. I downloaded the full spec as well to see what kinds of testing results would be acceptable, too.
+As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery (PD) standard, which generally specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are modern variants of this that complicate things even more, such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS), but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. USB C PD also specifies that devices should be within +/- 5% of their advertised voltage in order to achieve certification (this is oversimplifying, but the general rule).
 
-
-My setup consisted of three distinct pieces:
+With this in mind, my setup consisted of a few different pieces:
 1. An oscilloscope, specifically the Rigol DS1054Z
 2. An electronic load
 3. A USB C Power Delivery decoy board
 4. A voltmeter
+5. Plenty of electrical wires and extra USB cables
 
-I would plug the charger into the wall, connect it to the USB C decoy board via USB C, then connect the decoy board to the electronic load. 
-The purpose of the decoy board is to imitate a device and requests a specific USB C PD voltage from the USB C charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* 
+I would plug the charger into the wall, connect it to the USB C decoy board, then connect the decoy board to the electronic load. The last part was accomplished using stray wires, however I ensured they were thick enough that their resistance would be low.
 
-The Rigol DS1054Z was set up with its probe touching the positive terminal on the decoy board, and its ground touching the negative terminal. I used the spring-based ground clip instead of the alligator ground clip for more accurate measurements.
-*Tip: If you want to do testing of your own, always use the spring ground clip. I learned the hard way that using the default alligator ground clip will lead to extremely high noise ratings. Chargers will look bad on the scope even if they are high-quality.*
+The interesting thing to me that was *not* apparent when I started this project was the use of a decoy board to imitate a device and request a specific voltage from the charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* This learning occurred shortly after Spencer and I started to test chargers, wondering why none of them were giving any current. We needed that decoy board.
+
+As for the scope, my Rigol DS1054Z was set up with its probe touching the positive and negative terminals on the decoy board. I used the spring-based ground clip instead of the alligator ground clip that came with the probe so that my noise readings would be lower.
+*Tip: If you want to do testing of your own, always use the spring ground clip. I learned well into this project that using the default alligator ground clip will lead to extremely high noise ratings. Avoid my mistake and save yourself the rework of testing every charger again by making sure you do this.*
 
 ### A note about resistance
 
-I learned during this project that resistance could be artificially skewing my measurements. To account for this, I connected my voltmeter directly to the charger's output terminal for ALL tables below, which is essentially every test aside from the noise/ripple with the oscilloscope. 
+One of the things I learned during this project was that resistance could be artificially skewing my measurements. The resistance of my board and cables themselves could have been falsely leading me to conclude these chargers were putting out low voltages. To account for this, I ensured each test was conducted with my voltmeter directly connect to the charger's output terminal.
 
-If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of how reasonable that is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of this level for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
 ### Rating system for Oscilloscope graphs - Noise and ripple
 
-Each charger is rated 1 to 5 lightning bolts across three categories: noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
+After conducting the oscilloscope tests, I rated each charger from 1 to 5 lightning bolts. The ratings include noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
 - 5 bolts: under approximately 80mV
 - 4 bolts: under approximately 100mV
