@@ -1659,7 +1659,6 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 
 A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. At high loads, these chargers may not be as well regulated.
-ad,
 
 
 
