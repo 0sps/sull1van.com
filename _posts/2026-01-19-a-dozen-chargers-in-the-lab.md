@@ -314,7 +314,7 @@ Have you ever wondered what makes a phone charger good or bad? Apple always says
 
 I'd thought about this for years ever since I read a [blog post by one legendary Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to degrade battery life and even cause other strange issues like touchscreen failure.
 
-While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine, and we bounced ideas back and forth until this project eventually came to life. He helped me complete some of the work below. Thanks, Spencer!
+While most of his work went over my head at the time, I kept thinking about whether anyone had recreated this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. For that reason, I decided to figure out exactly what Ken did, and to recreate it. I reached out to a good friend of mine who is a mechanical engineer, and we started bouncing ideas back and forth until this project eventually came to life. He helped me complete some of the work for this project - thank you Spencer!
 
 
 Here's the short version of what I found out: 
@@ -334,12 +334,13 @@ Here's the short version of what I found out:
 
 ## What I tested
 
-I wanted to get as much out of this project as I could, so just about two dozen USB C chargers were tested. Some USB A chargers were added in as well. I tested everything I could get my hands on, honestly.
-Chargers:
+To get as much out of this project as possible, I tested a lot of chargers. Mostly USB-C, but some USB A chargers were added in as well. Here's the full list:
 - Anker ASPD053a USB C 
+- Anker 637 Magnetic Charging Station (USB A port and USB C port)
 - AOHI GaN 65W AOC-C019 
 - AOHI GaN 100W AOC-C018 
 - Amazon Kindle 9W PS57CP 
+- Dealworthy 20W PYSD-20PCQ-1CU
 - SHARGEEK 35W Retro S035U  
 - Apple HomePod Mini A2305 (Same as Apple 20W Retail charger)
 - Apple 30W Retail A2164
@@ -1697,7 +1698,7 @@ I hope you enjoyed reading. This was genuinely such a pleasure to put together. 
 
 ### -Sean
 <br>
-Last thing: a huge shout out to my mechanical engineering friend Spencer, who helped me at every step of the way! 
+Last thing: a huge shout out to my good friend Spencer, who helped me at every step of the way! 
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
