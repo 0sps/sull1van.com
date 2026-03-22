@@ -256,7 +256,7 @@ devices:
       <em>Sidenote: you might point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they do employ a variable switching frequency but only vary it by 20-50KHz. Constantly moving the switching frequency up and down, so the noise doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI has no noise to begin with, so when they change the switching frequency, it's only happening once (I suspect only when the requested voltage changes). They don't need to constantly switch up and down, because their aim is not to spread noise out. </em>
     rating: 1
     noise_rating: 1
-    ripple_rating: 1
+    ripple_rating: 2
     overall_rating: 1
 
   - name: "Counterfeit Samsung"
