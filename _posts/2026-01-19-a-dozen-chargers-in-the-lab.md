@@ -220,7 +220,7 @@ devices:
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: Bad, and the graphs make it clear. On the longer timeframe the output almost passes at a glance, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V against a 5V target, so it is also out of spec for a USB charger. Becuase it fell out of spec, I have to give it 1 lightning bolt.
+    caption: Bad, and the graphs make it clear. On the longer timeframe the output almost passes at a glance, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. I will give it 1 lightning bolt.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -257,7 +257,7 @@ devices:
     caption: |
       Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of low-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
       
-      I was really surprised by this test. I also happened to have two of these chargers, one from a homepod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to do that. $20 can get you a much better charger than this.
+      I was really surprised by this test. I also happened to have two of these chargers, one from a HomePod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to do that. $20 can get you a much better charger than this.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -269,14 +269,17 @@ devices:
     img1: "/assets/images/VEBNERgan.png"
     img2: "/assets/images/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Being marketed as a GaN charger, this is another disappointment. The voltage trace is thick with noise and the frequency spectrum is elevated across the board, showing no serious attempt at filtering. Ripple is also visible in the lower timeframe. Whatever is inside this charger, it is not doing a good job."
+    caption: |
+      Being marketed as a GaN charger, this is another disappointment. The voltage has a lot of noise, 332mV to be exact, and the frequency spectrum is elevated across the board, showing no serious attempt at filtering. The voltage looks a little more concentrated than it does on the Apple HomePod Mini chart, suggesting to me that this charger might actually be a little better. But in terms of absolute noise, this is worse. 
+
+
     rating: 1
     noise_rating: 1
     ripple_rating: 1
     overall_rating: 1
     noise_mv: 332
 
-  - name: "Anker A121D 45w iPhone 17 charger"
+  - name: "Anker A121D 45W iPhone 17 charger"
     img1: "/assets/images/Anker A121D 45w iPhone 17 charger 1.png"
     img2: "/assets/images/Anker A121D 45w iPhone 17 charger 3.png"
     bg: "hsl(0, 32%, 93%)"
@@ -363,7 +366,7 @@ I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mA
 For each charger, I tested it on several dimensions: Advertised power versus actual power, power quality, and overcurrent. 
 - Comparing **advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
 - **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise. 
-- For **overcurrent**, I tested each device to see what was the current and voltage at its shutoff point. Using an electronic load, I took the chargers through a series of current levels that were higher than their indicated max. At the charger's shutoff point, I noted down what current and voltage were pulled. The ideal charger in this test one that can hold its voltage completely steady regardless of the current.
+- For **overcurrent**, I tested each device to see what was the current and voltage at its shutoff point. Using an electronic load, I took the chargers through a series of current levels that were higher than their indicated max. At the charger's shutoff point, I noted down what current and voltage were pulled. The ideal charger in this test is one that can hold its voltage completely steady regardless of the current.
 
 
 
@@ -389,7 +392,7 @@ As for the scope, my Rigol DS1054Z was set up with its probe touching the positi
 
 ### A note about resistance
 
-One of the things I learned during this project was that resistance could be artificially skewing my measurements. The resistance of my board and cables themselves could have been falsely leading me to conclude these chargers were putting out low voltages. To account for this, I ensured each test was conducted with my voltmeter directly connect to the charger's output terminal.
+One of the things I learned during this project was that resistance could be artificially skewing my measurements. The resistance of my board and cables themselves could have been falsely leading me to conclude these chargers were putting out low voltages. To account for this, I ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
 
 If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of this level for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
@@ -1696,7 +1699,7 @@ A new update: I re-ran the tests one more time with a brand new multimeter to sh
 
 ## Conclusion
 
-Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something fun, that I was excited to spend nights and weekends doing. What I liked most is that you don't need to be an electrical engineer to see the difference between good and bad chargers, since the oscilloscope makes it obvious. The real difficulty comes when you go past the what and try to understand the why: why certain peaks appear in the FFT, why some scope traces look as bad as they do, or why a charger that measured fine at 1A looked terrible at 2.5A. I still don't have great answers to all of those, but hope to learn more with time.
+Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something that made me excited to spend nights and weekends completing. What I liked most is that you don't need to be an electrical engineer to see the difference between good and bad chargers. The oscilloscope really does make it obvious when you look at it properly. The real difficulty in this work comes when you go past the what and try to understand the why: why certain peaks appear in the FFT, why some scope traces look as bad as they do, or why a charger that measured fine at 1A looked terrible at 2.5A. I still don't have great answers to all of those, but hope to learn more with time.
 
 The practical takeaway is more reassuring than the graphs might suggest. Since most modern devices filter noise internally, and *most* chargers I tested stay within the USB-C PD spec of ±5% voltage tolerance, even *with* all their noise, it's still unlikely to damage your battery. 
 
