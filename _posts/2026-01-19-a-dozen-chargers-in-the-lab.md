@@ -1586,9 +1586,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 </style>
 
 
-
-<br>
-
 ## Overcurrent Testing
 
 The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, chargers generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics.
