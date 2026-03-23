@@ -1709,6 +1709,6 @@ I hope you enjoyed reading. This was genuinely such a pleasure to put together. 
 <br>
 Last thing: a huge shout out to both Ken and my good friend Spencer! I could not have done this without either of them.
 <figure style="max-width: 600px; text-align: center;">
-  <img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;">
+  <a href= ""><img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;"></a>
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
 </figure>
