@@ -1674,7 +1674,7 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td class="oc-pos">0.7</td></tr>
     <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td class="oc-pos">0.8</td></tr>
     <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td class="oc-neg">-0.2</td></tr>
-    <tr><td><strong>Counterfeit Samsung</strong></td><td class="oc-pos">0.81</td><td class="oc-neg">-0.13</td><td class="oc-pos">3.73</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td class="oc-pos">0.81</td><td class="oc-neg">-1.2</td><td class="oc-pos">0.64</td></tr>
   </tbody>
 </table>
 </div>
@@ -1682,8 +1682,8 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 
 A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. There may have been an issue in testing or these chargers might not be as well-regulated.
 
-<span style="color: #888; font-style: italic;">
-A new update: I re-ran the tests one more time with a brand new multimeter to show the results in this table. Upon reviewing, the **Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero** are all approaching the +/- 5% voltage threshold for USB certification. I will re-test these chargers under my oscilloscope to ensure they look like Ken's good graph and not his bad one. If they do look like Ken's bad charger, it would mean these charger voltages are actually all over the place, so me saying *"it delivered 5.2 Volts"* in the table above with no asterisk or note would be a disservice. It would be better to say, *"the voltmeter showed 5.2 Volts, but here is how noisy and all over the place that voltage was."* </span>
+
+A new update: I re-ran the tests one more time with a brand new multimeter to show the results in this table. Upon reviewing, the **Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero** are all starting to break past the +/- 5% voltage threshold for USB certification. I re-rested them under the oscilloscope, and found some interesting results: while most of these chargers offered relatively focused voltage traces, usually ranging by about 0.1V, the counterfeit Samsung was the one outlier. This charger had such a noisy voltage trace that, near shutoff, it oscillated between 3.7 V, 0, and 8.5 V. This dangerous behavior was truly unique and not present in *any* of the other chargers I tested. When your phone or laptop attempts to pull too much current, this charger will start sending massive shockwaves of voltage. 
 
 
 
