@@ -359,7 +359,7 @@ I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mA
 
 For each charger, I tested it on several dimensions: Advertised power versus actual power, power quality, and overcurrent. 
 - Comparing **advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
-- **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise.
+- **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise. 
 - For **overcurrent**, I tested each device to see what was the current and voltage at its shutoff point. Using an electronic load, I took the chargers through a series of current levels that were higher than their indicated max. At the charger's shutoff point, I noted down what current and voltage were pulled. The ideal charger in this test one that can hold its voltage completely steady regardless of the current.
 
 
@@ -394,7 +394,8 @@ If you're interested, the equivalent resistance of my voltmeter during testing w
 ### Rating system for Oscilloscope graphs - Noise and ripple
 
 After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings include noise, ripple, as well as my gut-feeling overall score. 
-- Note that my 'ripple' in this article will be slightly different than Ken's. Ken was able to get very clean FFT traces which indicated the 60Hz and 120Hz 'ripple' noise effectively. With my scope, I was unable to see any large spikes at 60Hz and 120Hz. However, my FFT was very adept at finding **high-frequency** peaks, usually due to a charger's switching frequency. Some chargers have a switching frequency at 50KHz, for instance, and their FFT shows peaks at 50, 100, 150, and 200KHz. It is another kind of 'ripple', just like the 60Hz peak that Ken was looking for. So when you see my ripple ratings, this is what I am talking about.
+- Note that my 'ripple' in this article will be slightly different than Ken's. Ken was able to get very clean FFT traces which indicated the 60Hz and 120Hz 'ripple' noise effectively. With my scope, I found that my FFT was superiod at finding **high-frequency** peaks, since it has a mem depth of 24 million points. That's up to 24 million observations a second, perfect for capturing chargers that have high-freuqency noise in the kilohertz range. What I found was that some chargers have a switching frequency at 50KHz, for instance, and their FFT shows peaks at 50, 100, 150, and 200KHz. It is another kind of 'ripple', just like the 60Hz peak that Ken was looking for. 
+- I am of the belief that **my high-freuqncy noise work below not only expands upon, but goes into greater depth than Ken's original work**. Based on my observations, many chargers may have high-frequency noise, and this noise may not have been fully captured until now. For that reason, I believe, most of my chargers tested worse than the ones Ken examined. I believe this is due to my inclusino of that additional high-frequency noise.
 
 For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
