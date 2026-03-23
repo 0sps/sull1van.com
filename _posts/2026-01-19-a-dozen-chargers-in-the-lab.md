@@ -1588,11 +1588,12 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, chargers generally have two strategies to deal with this: 1) shut off completely, or 2) reduce the voltage. Option 1 is preferred, and option 2 is mostly available just due to the laws of physics.
+The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, chargers generally have two strategies to deal with this: 
+1) shut off completely, or 
+2) reduce the output voltage. 
+Option 1 is preferred in most cases. Option 2 is really just a consequence of not doing option 1. There is a third scenario, where the charger can somehow increase the current at the same voltage, but this would mean operating the device outside of its standard conditions, and would likely lead to it overheating.
 
-During overcurrent testing, I set my electronic load to keep pulling more and more current until the charger shut off. For nearly every charger I tested, it was rated for a max of 3 A. But as you'll see in the table below, that is rarely what I got.
-
-Ken was able to display the complex relationship between voltage and current on beautiful time-based graphs. Unfortunately, I don't have access to technology that can display the results in the same way. I *can* tell you, however, that all my voltage graphs were relatively tight during overcurrent testing, and I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I accept the values below as the true values of the voltage and current of the device at its shutoff period. 
+During my overcurrent testing, I set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, I lack that recording capability so my results are very simple. When I did conduct the overcurrent test on the oscilloscope, all my voltage graphs were relatively tight during overcurrent testing. I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I would say the values below are the true values of the voltage and current of the device at their shutoff period. 
 
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/load_example.png" alt="Ken current" style="width: 100%;">
