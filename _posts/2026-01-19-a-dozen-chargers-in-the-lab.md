@@ -395,7 +395,7 @@ If you're interested, the equivalent resistance of my voltmeter during testing w
 
 After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings include noise, ripple, as well as my gut-feeling overall score. 
 - Note that my 'ripple' in this article will be slightly different than Ken's. Ken was able to get very clean FFT traces which indicated the 60Hz and 120Hz 'ripple' noise effectively. With my scope, I found that my FFT was extremely good at finding **high-frequency** peaks, likely due to its memory depth of 24 million points. Some chargers have a switching frequency at 50KHz, for instance, and their FFT on my scope would show peaks at 50, 100, 150, and 200KHz. I consider this another kind of 'ripple', just like the 60Hz peak that Ken was looking for. 
-- I am of the belief that **my high-freuqncy noise work below not only expands upon, but goes into greater depth than Ken's original work**. Based on my observations, many chargers may have high-frequency noise, and this noise may not have been fully captured on the 100ms graph until now. For that reason, I believe, most of my chargers tested worse than the ones Ken examined. I believe this is due to my inclusion of that additional high-frequency noise which was present at every zoom level, 100ms or 1ms.
+- Due to this, most of my chargers will look worse than the ones Ken examined. I believe the inclusion of that additional high-frequency noise at every zoom level is the most honest way to display these chargers.
 
 For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
