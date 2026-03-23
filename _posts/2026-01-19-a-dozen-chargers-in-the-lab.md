@@ -244,7 +244,7 @@ devices:
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Another awful charger. Considering this ships as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V on its output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it an automatic 1 bolt."
+    caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V on its output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it an automatic 1 bolt."
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -254,7 +254,10 @@ devices:
     img1: "/assets/images/Apple Homepod Mini.png"
     img2: "/assets/images/Apple Homepod Mini 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Disappointing, especially given that this ships directly from Apple. The output is a noisy mess — the voltage trace is thick and irregular, and the frequency spectrum shows elevated noise across the board. At 308mV peak-to-peak, it ranks among the worst chargers in this entire test. Apple clearly did not apply the same engineering care here that they brought to the iPhone charger."
+    caption: |
+      Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of low-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
+      
+      I was really surprised by this test. I also happened to have two of these chargers, one from a homepod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to do that. $20 can get you a much better charger than this.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
