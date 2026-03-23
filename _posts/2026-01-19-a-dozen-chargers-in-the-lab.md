@@ -393,7 +393,10 @@ If you're interested, the equivalent resistance of my voltmeter during testing w
 
 ### Rating system for Oscilloscope graphs - Noise and ripple
 
-After conducting the oscilloscope tests, I rated each charger from 1 to 5 lightning bolts. The ratings include noise, ripple, and an overall score. The bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
+After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings include noise, ripple, as well as my gut-feeling overall score. 
+- Note that my 'ripple' in this article will be slightly different than Ken's. Ken was able to get very clean FFT traces which indicated the 60Hz and 120Hz 'ripple' noise effectively. With my scope, I was unable to see any large spikes at 60Hz and 120Hz. However, my FFT was very adept at finding **high-frequency** peaks, usually due to a charger's switching frequency. Some chargers have a switching frequency at 50KHz, for instance, and their FFT shows peaks at 50, 100, 150, and 200KHz. It is another kind of 'ripple', just like the 60Hz peak that Ken was looking for. So when you see my ripple ratings, this is what I am talking about.
+
+For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
 - 5 bolts: under approximately 80mV
 - 4 bolts: under approximately 100mV
@@ -425,9 +428,9 @@ They look confusing at first glance, but you don't need to be an electrical engi
 - **The Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
 - **The Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT) analysis; it takes all the imperfections from the yellow line and sorts them by frequency. A large spike here means there's a significant amount of energy vibrating at that specific frequency.
 - **Noise vs. Ripple:** You'll see me use these terms often to describe the imperfections we see. I'm trying to keep the same terminology as Ken, but I have admittedly less experince than him in this kind of work, so here is *my* understanding of these:
-  - **Ripple** is the low-frequency, repeating waveform created by the switching action of the charger. In the yellow line, it looks like a repeating, rolling wave. In the purple FFT graph, ripple shows up as the primary, distinct peak at the charger's main switching frequency (e.g., 90KHz).
+  - **Ripple** is the presence of a main, high-frequency spike on the FFT. For instance, if I see a significant peak at 90KHz and nowhere else, I would say the charger has ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, I would say the ripple is still at 90KHz, but the charger has a harmonic of that ripple at 180.
 
-  - **Noise** is the high-frequency ringing and jitter that happens on top of that ripple. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, this noise shows up as repeating spikes (180KHz, 270KHz, etc.) or a chaotic, raised floor.
+  - **Noise** is the low AND high-frequency ringing and jitter that happens on top of that ripple. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, this noise shows up as repeating spikes (180KHz, 270KHz, etc.) or a chaotic, raised floor. For my article, I will call these harmonics. They are a part of the overall noise, but are specifically attributed to that initial ripple on the charger.
 
   - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to smear its noise. 
 
