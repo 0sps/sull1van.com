@@ -9,7 +9,7 @@ devices:
     img2: "/assets/images/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      The MacBook Pro has the cleanest power signature of the devices I tested. This was to be expected since it's just pulling DC current from its internal battery and doesn't need to chop up AC power thousands of times per second.
+      The MacBook Pro had some of the cleanest power of the devices I tested. This is pretty unsurprising since it's just pulling DC current from its internal battery, and it doesn't have to chop up AC power like the chargers do.
       
       There's also no high frequency switching noise, or any noticeable ripple. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
     rating: 5
@@ -23,7 +23,7 @@ devices:
     img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt the best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so that switching frequency may be variable. But all in all, the best power supply I have ever seen.
+      Without a doubt the best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply I have ever seen.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -37,7 +37,7 @@ devices:
     img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Generally a clean power signature, as expected from a battery. No switching noise or ripple. The one small issue in my testing was that it measured 4.74V against a 5V target, just barely under the 4.75V USB-C PD floor. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in the table. The power quality itself is excellent.
+      No switching noise or ripple seen here. The one small issue in my testing was that it measured 4.74V, just barely under the 4.75V USB limit. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in my table. The power quality itself is excellent so I'll keep it at a high rating.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -49,9 +49,9 @@ devices:
     img2: "/assets/images/Spigen PowerArc 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      I was originally skeptical of this one, due to some prior tests that showed higher noise. This was marketed as one of the first GaN chargers, being released sometime back around 2023. Luckily my original test was flawed and subsequent runs proved that this is a very high quality charger. One of the best I've tested. 
+      I was originally skeptical of this one, due to my first few tests being pretty bad. Turns out it was an issue on my side, and all subsequent tests have been great. 
       
-      It's using a ~140KHz switching frequency, which is high enough that you can't see any ripple on the 50us graph. I zoomed out and there was a tiny amount of ripple, but not enough to be noticeable. The zoomed-out graph looks pretty similar to the one in this image, so I'm just showing you the zoomed in one here. Good charger. 
+      This was marketed as one of the first GaN chargers, having been released sometime back in 2023. It's using a ~140KHz switching frequency, which seems to be the only source of ripple on the 50us graph. I zoomed out and there was a tiny amount of additional noise on the FFT, but not eonugh to be truly noticeable. The zoomed-out graph looks pretty similar to the one in this image, so I'm just showing you the zoomed in one here. Good charger. 
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -62,9 +62,9 @@ devices:
     img2: "/assets/images/eero2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one made me mad. For such a random charger, one that you can't even purchase yourself, it is remarkably high quality. It comes included with the Eero. Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out the AC noise. It's got a sawtooth waveform, so there is noise, but it is pretty small. 
+      This one confused me. For such a random charger, one that you can't even purchase yourself, it is of pretty high quality. It comes included with Eero devices, and looks to be custom-built just for them. I'm not sure if Amazon/Eero bought this one off the shelf and rebranded it or it's their own circuit design.
       
-      Good charger, especially for its size.
+      Some ripple exists in the switching frequency, as you can see on the bottom graph, but it does a great job at filtering out most noise. It's got a sawtooth waveform, so there is noise, but it is pretty small. Good charger!
     rating: 4
     noise_rating: 5
     ripple_rating: 3
@@ -125,11 +125,11 @@ devices:
     img1: "/assets/images/apple96W3.png"
     img2: "/assets/images/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Not as good as I would expect for how expensive this charger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, which isn't that bad, but the graph does leave some things to be desired. The power signature is a little noisy with those intermittent peaks. Not sure what the charger is having issue with here. There seems to be more noise than I would have hoped."
-    rating: 4
+    caption: "Not as good as I would expect for how expensive this charger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, which isn't that bad, but the graph does leave some things to be desired. The power is a little noisy with those intermittent peaks. Not sure what the charger is having issues with here. There seems to be more noise than I would have hoped. It also delivered less voltage than advertised at its highest current limits, for example going down to 8.63V when I would try to pull 9V and 3A. Overall rating is a 3 just because of this voltage sag."
+    rating: 3
     noise_rating: 4
     ripple_rating: 4
-    overall_rating: 4
+    overall_rating: 3
     noise_mv: 92
 
 
@@ -138,9 +138,9 @@ devices:
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
-      Another decent Apple charger. At 5 Watts (5V, 1A), it has a pretty messy power signature with a lot of noise, but it flattens out to beautiful power at 7.5W and above. I imagine this is because nobody at Apple expected people to use this charger for 5W of power, being USB C. They likely made a bet that no one will use this charger below 7.5W, and I agree with them. A smart play financially. 
+      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but it flattens out to beautiful power at 7.5 W and above. I imagine this is because nobody at Apple expected people to use this charger for 5 W of power, being USB C. They likely made a bet that no one will use this charger below 7.5 W, and I agree with them. A smart play financially. 
       
-      I also tested this 7.5W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. Solid charger for typical use cases.
+      I also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. Solid charger for typical use cases.
     rating: 4
     noise_rating: 3
     ripple_rating: 3
@@ -152,7 +152,7 @@ devices:
     img1: "/assets/images/Anker ASP053a 3.png"
     img2: "/assets/images/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "A middling performer. The voltage trace is noticeably wider than the top-tier chargers, indicating elevated high-frequency noise. The frequency spectrum shows repeating peaks at roughly 90KHz intervals, which I assume to be harmonics of the switching frequency. There is also visible ripple in the lower timeframe. Not awful, but not a charger I'd reach for if I had better options nearby."
+    caption: "Not that impressive. The voltage is noticeably wider than a lot of my other chargers, indicating high-frequency noise. The frequency spectrum also shows repeating peaks at roughly 90KHz intervals, which I assume to be harmonics of the switching frequency ripple. Not awful, but not a charger I'd reach for if I had better options nearby."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -164,9 +164,7 @@ devices:
     img1: "/assets/images/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
     caption: |
-      *Tested as a pure DC source to establish a baseline. Like the MacBook and Anker battery, this is a device with an internal battery, so AC switching noise is not a factor.* 
-      
-      This one is rated as over-performing, only advertising 4.5W but delivering more. I configured my electronic load to pull as much current as it could before the iPhone shut off power, and that's how we got a little over 5 watts. Since it has a fairly noisy power signature, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts.
+      Since it is fairly noisy, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts.
     rating: 3
     noise_rating: 3
     ripple_rating: "N/A"
@@ -178,7 +176,7 @@ devices:
     img1: "/assets/images/Shargeek Fun Macintosh Charger.png"
     img2: "/assets/images/Shargeek Fun Macintosh Charger3.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Disappointed in this one honestly. For being nearly $30, and only pumping out 27W, this charger has a pretty awful power signature. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a wall of noise. I would stay away from using this to charge my devices."
+    caption: "Disappointed in this one. For being nearly $30, and only pumping out 27W, this charger isn't doing that well. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a lot of noise. I would stay away from using this to charge my devices."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -191,7 +189,7 @@ devices:
     img1: "/assets/images/Govee 3.png"
     img2: "/assets/images/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's not really a wall of noise but more like an ocean wave of noise. Not good."
+    caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's delivering something like an ocean wave of noise. Not good."
     rating: 2
     noise_rating: 2
     ripple_rating: 2
@@ -205,9 +203,9 @@ devices:
     img2: "/assets/images/Dealworthy 3.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      Dealworthy is a Target brand, and it's designed to be low cost. You can see that show up here with how awful it is. Lots of noise, poor regulation, and a lot of ripple. 
+      Dealworthy is a Target brand, and it's designed to be low cost. You can see just how cheaply it's been made by these graphs. Lots of noise, poor regulation, and a lot of ripple with harmonics all over the FFT.
     
-      I suspect they are smearing the switching frequency using frequency dithering. It's operating at 40KHz, as well, which is pretty low compared to the other chargers. I suspect it is going slightly above and slightly below 40KHz, but staying at 40KHz for the majority of the time. Maybe they have programmed in 3 operating frequencies and 40KHz is the main one. Either way, it's a cheap way to spread out the massive amount of noise they have in this charger.
+      Another thing I want to mention is that they appear to be smearing the switching frequency by doing some kind of frequency dithering. It's operating at 40KHz, but I suspect it is going slightly above and below that frequency to spread out the massive amount of noise it makes.
     rating: 1
     noise_rating: 2
     ripple_rating: 2
