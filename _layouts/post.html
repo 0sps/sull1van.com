@@ -44,9 +44,9 @@ layout: default
   #mini-toc-scrollbar {
     position: fixed;
     top: 80px;
-    right: 20px;
+    right: 15px;
     height: 250px;
-    width: 14px;
+    width: 24px; /* Wider hit area for better hovering */
     z-index: 9998;
     display: none;
     background: rgba(220, 220, 220, 0.4);
@@ -68,14 +68,14 @@ layout: default
     position: absolute;
     top: 6px;
     bottom: 6px;
-    right: 5px;
+    right: 10px;
     width: 4px;
     border-radius: 4px;
   }
   
   #mini-toc-thumb {
     position: absolute;
-    right: 3px;
+    right: 8px;
     width: 8px;
     background: #888;
     border-radius: 4px;
@@ -90,7 +90,7 @@ layout: default
 
   #mini-toc-thumb:hover, #mini-toc-thumb.active {
     width: 12px;
-    right: 1px;
+    right: 6px;
     background: #666;
   }
   
@@ -104,14 +104,14 @@ layout: default
 
   .mini-toc-tick {
     position: absolute;
-    right: 5px;
+    right: 10px;
     width: 12px;
-    height: 4px;
+    height: 3px;
     background: #bbb;
     border-radius: 2px;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(1);
+    transform-origin: right center;
     cursor: pointer;
-    transition: all 0.2s;
     z-index: 5;
   }
 
@@ -119,22 +119,12 @@ layout: default
     background: #666;
   }
 
-  .mini-toc-tick:hover {
-    width: 16px;
-    right: 3px;
-    background: #888;
-  }
-  
-  html[data-theme="dark"] .mini-toc-tick:hover {
-    background: #999;
-  }
-
   /* Grey highlighted active tick */
   .mini-toc-tick.active-tick {
     background: #777;
     width: 16px;
-    right: 3px;
-    height: 6px;
+    right: 8px;
+    height: 4px;
     z-index: 10;
   }
   
@@ -144,26 +134,23 @@ layout: default
 
   .mini-toc-label {
     position: absolute;
-    right: 28px;
+    right: 36px;
     transform: translateY(-50%) scale(0.5);
-    background: #fff;
-    color: #333;
-    padding: 6px 10px;
-    border-radius: 6px;
+    background: transparent;
+    padding: 0 8px;
     font-size: 14px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none; /* Let mouse interact with container only */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transform-origin: right center;
     font-family: inherit;
-    font-weight: 500;
+    font-weight: 600;
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.9), 0px 0px 2px rgba(255, 255, 255, 1);
   }
 
   html[data-theme="dark"] .mini-toc-label {
-    background: #2a2a2a;
-    color: #eee;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    background: transparent;
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.9), 0px 0px 2px rgba(0, 0, 0, 1);
   }
 </style>
 
@@ -216,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function closeLabels() {
     ticks.forEach(t => {
       const label = t.labelEl;
-      label.style.transition = 'opacity 0.3s, transform 0.3s';
+      label.style.transition = 'opacity 0.4s ease, transform 0.4s ease, top 0.4s ease';
       label.style.opacity = 0;
       label.style.transform = `translateY(-50%) scale(0.5)`;
     });
@@ -247,8 +234,12 @@ document.addEventListener("DOMContentLoaded", function() {
     ticks.forEach((t, i) => {
       const targetTop = t.target.getBoundingClientRect().top + scrollY;
       t.percent = targetTop / docHeight * 100;
-      t.element.style.top = t.percent + '%';
-      t.labelEl.style.top = t.percent + '%';
+      
+      // only automatically set positions if NOT hovering
+      if (!isHovering) {
+        t.element.style.top = t.percent + '%';
+        t.labelEl.style.top = t.percent + '%';
+      }
       
       const distFromTop = t.target.getBoundingClientRect().top;
       if (distFromTop <= 150) {
@@ -312,43 +303,73 @@ document.addEventListener("DOMContentLoaded", function() {
     clearTimeout(hoverTimeout);
     
     const rect = container.getBoundingClientRect();
-    const mouseY = e.clientY - rect.top;
+    const mouseY = Math.min(Math.max(0, e.clientY - rect.top), rect.height);
     
-    // calc positions
-    let closestIdx = -1;
-    let minD = Infinity;
-    ticks.forEach((t, i) => {
-      t.yOffset = (t.percent / 100) * rect.height;
-      const d = Math.abs(t.yOffset - mouseY);
-      if (d < minD) {
-        minD = d;
-        closestIdx = i;
-      }
-    });
+    const R = 90; // Effect radius in pixels
+    const M = 0.6; // Shift magnitude
 
     ticks.forEach((t, i) => {
-      const label = t.labelEl;
-      if (Math.abs(i - closestIdx) <= 1) {
-        const d = Math.abs(t.yOffset - mouseY);
-        // Map distance (0 to 60px) to scale/opacity
-        const factor = Math.max(0, 1 - (d / 60)); 
-        const scale = 0.65 + 0.35 * factor; // 0.65 to 1.0
-        const opac  = 0.4 + 0.6 * factor; // 0.4 to 1.0
+      const baseY = (t.percent / 100) * rect.height;
+      const dist = baseY - mouseY;
+      const absDist = Math.abs(dist);
+      
+      let shift = 0;
+      let scale = 1.0;
+      let labelScale = 0.5;
+      let labelOpac = 0.0;
+      
+      if (absDist < R) {
+        // physical displacement curve 
+        shift = M * (absDist - (absDist * absDist) / (2 * R)) * Math.sign(dist);
         
-        label.style.transition = 'none'; // Instant follow
-        label.style.transform = `translateY(-50%) scale(${scale})`;
-        label.style.opacity = opac;
-        label.style.zIndex = i === closestIdx ? 100 : 50;
+        const factor = 1 - (absDist / R); 
+        scale = 1.0 + 1.5 * factor; // Tick scales up to 2.5x original
+        
+        // Label mapped to inner radius
+        const labelFactor = Math.max(0, 1 - (absDist / 45));
+        labelScale = 0.6 + 0.4 * labelFactor;
+        labelOpac = labelFactor;
       } else {
-        label.style.transition = 'opacity 0.2s, transform 0.2s';
-        label.style.opacity = 0;
-        label.style.transform = `translateY(-50%) scale(0.5)`;
+        shift = (M * R / 2) * Math.sign(dist);
       }
+      
+      const finalY = baseY + shift;
+      
+      // Update Tick
+      t.element.style.transition = 'none';
+      t.element.style.transform = `translateY(-50%) scale(${scale})`;
+      t.element.style.top = finalY + 'px';
+      
+      // Update Label
+      const label = t.labelEl;
+      label.style.transition = 'none';
+      label.style.transform = `translateY(-50%) scale(${labelScale})`;
+      label.style.opacity = labelOpac;
+      label.style.top = finalY + 'px';
+      
+      const z = Math.round(100 - absDist);
+      t.element.style.zIndex = Math.max(z, t.element.classList.contains('active-tick') ? 10 : 5);
+      label.style.zIndex = z;
     });
   });
 
   container.addEventListener('mouseleave', () => {
     isHovering = false;
+    
+    // Smoothly restore tick properties
+    ticks.forEach(t => {
+      t.element.style.transition = 'top 0.3s ease, transform 0.3s ease';
+      t.element.style.top = t.percent + '%';
+      t.element.style.transform = 'translateY(-50%) scale(1)';
+      
+      const label = t.labelEl;
+      label.style.transition = 'top 0.3s ease, transform 0.3s ease, opacity 0.3s ease';
+      label.style.top = t.percent + '%';
+      if (parseFloat(label.style.opacity) > 0.1) {
+        label.style.transform = 'translateY(-50%) scale(0.8)';
+      }
+    });
+
     hoverTimeout = setTimeout(() => {
       closeLabels();
     }, 3000);
