@@ -232,8 +232,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let minDiff = Infinity;
     
     ticks.forEach((t, i) => {
-      const targetTop = t.target.getBoundingClientRect().top + scrollY;
-      t.percent = targetTop / docHeight * 100;
+      t.percent = (i / Math.max(1, ticks.length - 1)) * 100;
+      if (ticks.length === 1) t.percent = 50;
       
       // only automatically set positions if NOT hovering
       if (!isHovering) {
