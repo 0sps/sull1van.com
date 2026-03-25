@@ -38,3 +38,267 @@ layout: default
   <a href="{{ site.baseurl }}/tag/{{ tag | slugify }}.html">#{{ tag }}</a>{% unless forloop.last %} | {% endunless %}
   {% endfor %}
 </div>
+
+<!-- Mini TOC Scrollbar -->
+<style>
+  #mini-toc-scrollbar {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    height: 250px;
+    width: 14px;
+    z-index: 9998;
+    display: none;
+    background: rgba(220, 220, 220, 0.4);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+  
+  html[data-theme="dark"] #mini-toc-scrollbar {
+    background: rgba(60, 60, 60, 0.4);
+  }
+
+  @media (min-width: 800px) {
+    #mini-toc-scrollbar {
+      display: block; /* show on desktop */
+    }
+  }
+
+  #mini-toc-track {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    right: 5px;
+    width: 4px;
+    border-radius: 4px;
+  }
+  
+  #mini-toc-thumb {
+    position: absolute;
+    right: 3px;
+    width: 8px;
+    background: #888;
+    border-radius: 4px;
+    cursor: grab;
+    transition: width 0.15s, right 0.15s, background 0.15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  html[data-theme="dark"] #mini-toc-thumb {
+    background: #999;
+  }
+
+  #mini-toc-thumb:hover, #mini-toc-thumb.active {
+    width: 12px;
+    right: 1px;
+    background: #666;
+  }
+  
+  html[data-theme="dark"] #mini-toc-thumb:hover, html[data-theme="dark"] #mini-toc-thumb.active {
+    background: #aaa;
+  }
+
+  #mini-toc-thumb:active {
+    cursor: grabbing;
+  }
+
+  .mini-toc-tick {
+    position: absolute;
+    right: 5px;
+    width: 12px;
+    height: 4px;
+    background: #bbb;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 5;
+  }
+
+  html[data-theme="dark"] .mini-toc-tick {
+    background: #666;
+  }
+
+  .mini-toc-tick:hover {
+    width: 16px;
+    right: 3px;
+    background: #888;
+  }
+  
+  html[data-theme="dark"] .mini-toc-tick:hover {
+    background: #999;
+  }
+
+  .mini-toc-tick::after {
+    content: attr(data-title);
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: inherit;
+  }
+
+  html[data-theme="dark"] .mini-toc-tick::after {
+    background: #222;
+    color: #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+
+  .mini-toc-tick:hover::after, .mini-toc-tick.active-tick::after {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .mini-toc-tick.active-tick {
+    background: #ff5e5e;
+    width: 16px;
+    right: 3px;
+    height: 6px;
+    z-index: 10;
+  }
+  
+  html[data-theme="dark"] .mini-toc-tick.active-tick {
+    background: #ff7e7e;
+  }
+</style>
+
+<div id="mini-toc-scrollbar" title="Table of Contents">
+  <div id="mini-toc-track"></div>
+  <div id="mini-toc-ticks"></div>
+  <div id="mini-toc-thumb"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const headings = Array.from(document.querySelectorAll("main h1, main h2, main h3")).filter(h => h.innerText.trim() !== "");
+  if (headings.length < 2) return;
+
+  const container = document.getElementById("mini-toc-scrollbar");
+  const track = document.getElementById("mini-toc-track");
+  const thumb = document.getElementById("mini-toc-thumb");
+  const ticksContainer = document.getElementById("mini-toc-ticks");
+  
+  let isDragging = false;
+  let dragStartY = 0;
+  let dragStartScrollY = 0;
+  
+  const ticks = [];
+
+  headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = 'mini-toc-h-' + i;
+    const tick = document.createElement('div');
+    tick.className = 'mini-toc-tick';
+    tick.setAttribute('data-title', heading.innerText);
+    tick.addEventListener('click', () => {
+      heading.scrollIntoView({ behavior: 'smooth' });
+    });
+    ticksContainer.appendChild(tick);
+    ticks.push({ element: tick, target: heading });
+  });
+
+  function update() {
+    const docHeight = document.documentElement.scrollHeight;
+    const winHeight = window.innerHeight;
+    const scrollY = window.scrollY;
+    
+    // update thumb
+    const thumbTop = (scrollY / docHeight) * 100;
+    const thumbHeight = Math.max(5, (winHeight / docHeight) * 100);
+    
+    thumb.style.top = thumbTop + '%';
+    thumb.style.height = thumbHeight + '%';
+
+    // update active tick
+    let activeTickIndex = -1;
+    let minDiff = Infinity;
+    
+    ticks.forEach((t, i) => {
+      const targetTop = t.target.getBoundingClientRect().top + scrollY;
+      t.element.style.top = (targetTop / docHeight * 100) + '%';
+      
+      const distFromTop = t.target.getBoundingClientRect().top;
+      if (distFromTop <= 150) {
+        activeTickIndex = i;
+      }
+    });
+
+    // Handle case where we are at the very bottom
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10) {
+      activeTickIndex = ticks.length - 1;
+    }
+    
+    ticks.forEach((t, i) => {
+      if (i === activeTickIndex) {
+        t.element.classList.add('active-tick');
+      } else {
+        t.element.classList.remove('active-tick');
+      }
+    });
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        update();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive: true});
+  
+  window.addEventListener('resize', update, {passive: true});
+  setTimeout(update, 200);
+
+  // Dragging
+  thumb.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    dragStartY = e.clientY;
+    dragStartScrollY = window.scrollY;
+    thumb.classList.add('active');
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const docHeight = document.documentElement.scrollHeight;
+    const containerHeight = container.getBoundingClientRect().height;
+    
+    const deltaY = e.clientY - dragStartY;
+    const deltaScrollY = (deltaY / containerHeight) * docHeight;
+    
+    window.scrollTo(0, dragStartScrollY + deltaScrollY);
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      thumb.classList.remove('active');
+      document.body.style.userSelect = '';
+    }
+  });
+
+  // Track clicking
+  container.addEventListener('mousedown', (e) => {
+    if (e.target === thumb || e.target.classList.contains('mini-toc-tick')) return;
+    const rect = container.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const docHeight = document.documentElement.scrollHeight;
+    
+    const scrollTarget = (clickY / rect.height) * docHeight - (window.innerHeight / 2);
+    window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+  });
+
+});
+</script>
