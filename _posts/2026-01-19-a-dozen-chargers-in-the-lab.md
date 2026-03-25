@@ -1701,7 +1701,7 @@ Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but th
 
 The practical takeaway, in my opinion, is that most name-brand chargers of today are unlikely to damage your phone battery. Since modern devices filter noise internally, and the majority of these chagers stayed within that USB spec of ±5% voltage tolerance, they're unlikely to be a problem. Just avoid excessively cheap, no-name chargers and you should be fine. And that Anker flagship.. maybe avoid that one too.
 
-I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that may be a story of its own. If you have any suggestions to make, corrections to add, or just want to share something you found interesting, feel free to reach out and let me know. Contact is on the About page.
+I hope you enjoyed reading. This really was a pleasure to put together. Car chargers are next on my list, and I suspect that may be a story of its own. If you have any suggestions to make, corrections to add, or just want to share something you found interesting, feel free to reach out and let me know. Contact is on the About page.
 
 
 
