@@ -395,7 +395,8 @@ One of the things I learned during this project was that resistance could be art
 If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of this level for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
-### Rating system for Oscilloscope graphs - Noise and Switching Ripple
+### Rating system for Oscilloscope graphs 
+**Noise and Switching Ripple**
 
 After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings consider two separate factors: overall high-frequency noise (Vpp/spikes) and switching ripple. 
 - **Switching Ripple** refers to the high-frequency peaks (e.g., 50KHz, 100KHz) caused by the charger's internal oscillator continually charging and discharging. This differs from Ken's methodology, as he used the word **Ripple** specifically to mean the 120Hz line-frequency fluctuations caused by your household AC power. 
