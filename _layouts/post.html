@@ -46,7 +46,7 @@ layout: default
     top: 80px;
     right: 15px;
     height: 250px;
-    width: 24px;
+    width: 32px;
     z-index: 9998;
     display: none;
     background: rgba(220, 220, 220, 0.4);
@@ -79,18 +79,26 @@ layout: default
     }
   }
 
+  #mini-toc-inner {
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+  }
+
   #mini-toc-track {
     position: absolute;
-    top: 6px;
-    bottom: 6px;
-    right: 10px;
+    top: 0;
+    bottom: 0;
+    right: 14px;
     width: 4px;
     border-radius: 4px;
   }
   
   #mini-toc-thumb {
     position: absolute;
-    right: 8px;
+    right: 12px;
     width: 8px;
     background: #888;
     border-radius: 4px;
@@ -105,7 +113,7 @@ layout: default
 
   #mini-toc-thumb:hover, #mini-toc-thumb.active {
     width: 12px;
-    right: 6px;
+    right: 10px;
     background: #666;
   }
   
@@ -119,7 +127,7 @@ layout: default
 
   .mini-toc-tick {
     position: absolute;
-    right: 10px;
+    right: 14px;
     width: 12px;
     height: 3px;
     background: #bbb;
@@ -138,7 +146,7 @@ layout: default
   .mini-toc-tick.active-tick {
     background: #777;
     width: 16px;
-    right: 8px;
+    right: 12px;
     height: 4px;
     z-index: 10;
   }
@@ -149,7 +157,7 @@ layout: default
 
   .mini-toc-label {
     position: absolute;
-    right: 36px;
+    right: 44px;
     transform: translateY(-50%) scale(0.5);
     background: transparent;
     padding: 0 8px;
@@ -176,10 +184,12 @@ layout: default
 </style>
 
 <div id="mini-toc-scrollbar" title="Table of Contents">
-  <div id="mini-toc-track"></div>
-  <div id="mini-toc-ticks"></div>
-  <div id="mini-toc-labels"></div>
-  <div id="mini-toc-thumb"></div>
+  <div id="mini-toc-inner">
+    <div id="mini-toc-track"></div>
+    <div id="mini-toc-ticks"></div>
+    <div id="mini-toc-labels"></div>
+    <div id="mini-toc-thumb"></div>
+  </div>
 </div>
 
 <script>
@@ -328,8 +338,9 @@ document.addEventListener("DOMContentLoaded", function() {
     isHovering = true;
     clearTimeout(hoverTimeout);
     
-    const rect = container.getBoundingClientRect();
-    const mouseY = Math.min(Math.max(0, e.clientY - rect.top), rect.height);
+    const innerTrack = document.getElementById('mini-toc-inner');
+    const rect = innerTrack.getBoundingClientRect();
+    const mouseY = e.clientY - rect.top;
     
     const R = 90; // Effect radius in pixels
     const M = 0.6; // Shift magnitude
@@ -415,7 +426,8 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     const docHeight = document.documentElement.scrollHeight;
-    const containerHeight = container.getBoundingClientRect().height;
+    const innerTrack = document.getElementById('mini-toc-inner');
+    const containerHeight = innerTrack.getBoundingClientRect().height;
     
     const deltaY = e.clientY - dragStartY;
     const deltaScrollY = (deltaY / containerHeight) * docHeight;
@@ -434,11 +446,13 @@ document.addEventListener("DOMContentLoaded", function() {
   // Track clicking
   container.addEventListener('mousedown', (e) => {
     if (e.target === thumb || e.target.classList.contains('mini-toc-tick') || e.target.classList.contains('mini-toc-label')) return;
-    const rect = container.getBoundingClientRect();
+    const innerTrack = document.getElementById('mini-toc-inner');
+    const rect = innerTrack.getBoundingClientRect();
     const clickY = e.clientY - rect.top;
     const docHeight = document.documentElement.scrollHeight;
     
-    const scrollTarget = (clickY / rect.height) * docHeight - (window.innerHeight / 2);
+    const boundedY = Math.max(0, Math.min(rect.height, clickY));
+    const scrollTarget = (boundedY / rect.height) * docHeight - (window.innerHeight / 2);
     window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
   });
 
