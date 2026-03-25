@@ -1697,11 +1697,11 @@ A new update: I re-ran the tests one more time with a brand new multimeter to sh
 
 ## Conclusion
 
-Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something that made me excited to spend nights and weekends completing. What I liked most is that you don't need to be an electrical engineer to see the difference between good and bad chargers. The oscilloscope really does make it obvious when you look at it properly. The real difficulty in this work comes when you go past the what and try to understand the why: why certain peaks appear in the FFT, why some scope traces look as bad as they do, or why a charger that measured fine at 1A looked terrible at 2.5A. I still don't have great answers to all of those, but hope to learn more with time.
+Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something that genuinely excited me. What I liked most about this is that you don't need to be an electrical engineer to see the difference between good and bad chargers. The oscilloscope really does make it obvious. Things get confusing when you go past the 'what' and try to start understanding ths *why*. *Why* certain peaks appear in the FFT, *why* some scope traces look as bad as they do, or *why* a charger measured fine at 1A but looked terrible at 2.5A. I still don't have great answers to these, but hope to learn more with time.
 
-The practical takeaway is more reassuring than the graphs might suggest. Since most modern devices filter noise internally, and *most* chargers I tested stay within the USB-C PD spec of ±5% voltage tolerance, even *with* all their noise, it's still unlikely to damage your battery. 
+The practical takeaway, in my opinion, is that most name-brand chargers of today are unlikely to damage your phone battery. Since modern devices filter noise internally, and the majority of these chagers stayed within that USB spec of ±5% voltage tolerance, they're unlikely to be a problem. Just avoid excessively cheap, no-name chargers and you should be fine. And that Anker flagship.. maybe avoid that one too.
 
-I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that'll be a story of their own. If you think I rated something incorrectly or mixed up electrical concepts, feel free to reach out and let me know. Contact is on the About page.
+I hope you enjoyed reading. This was genuinely such a pleasure to put together. Car chargers are next on my list, and I suspect that may be a story of its own. If you have any suggestions to make, corrections to add, or just want to share something you found interesting, feel free to reach out and let me know. Contact is on the About page.
 
 
 
