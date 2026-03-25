@@ -50,7 +50,7 @@ layout: default
     z-index: 9998;
     display: none;
     background: rgba(220, 220, 220, 0.4);
-    border-radius: 8px;
+    border-radius: 16px; /* Perfect pill shape */
     backdrop-filter: blur(4px);
   }
 
@@ -127,13 +127,13 @@ layout: default
 
   .mini-toc-tick {
     position: absolute;
-    right: 14px;
+    right: 10px;
     width: 12px;
     height: 3px;
     background: #bbb;
     border-radius: 2px;
     transform: translateY(-50%) scale(1);
-    transform-origin: right center;
+    transform-origin: center center;
     cursor: pointer;
     z-index: 5;
   }
@@ -146,10 +146,11 @@ layout: default
   .mini-toc-tick.active-tick {
     background: #777;
     width: 16px;
-    right: 12px;
+    right: 8px;
     height: 4px;
     z-index: 10;
   }
+
   
   html[data-theme="dark"] .mini-toc-tick.active-tick {
     background: #aaa;
