@@ -46,14 +46,29 @@ layout: default
     top: 80px;
     right: 15px;
     height: 250px;
-    width: 24px; /* Wider hit area for better hovering */
+    width: 24px;
     z-index: 9998;
     display: none;
     background: rgba(220, 220, 220, 0.4);
     border-radius: 8px;
     backdrop-filter: blur(4px);
   }
+
+  /* Extended invisible catch-area so the mouse doesn't fall off when pointing at long text labels! */
+  #mini-toc-scrollbar::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    bottom: -20px;
+    right: 0;
+    width: 40px; 
+    z-index: -1;
+  }
   
+  #mini-toc-scrollbar.is-active-area::after {
+    width: 300px; /* Expands to cover the text labels */
+  }
+
   html[data-theme="dark"] #mini-toc-scrollbar {
     background: rgba(60, 60, 60, 0.4);
   }
@@ -291,6 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Mouse hover fisheye logic
   container.addEventListener('mouseenter', () => {
     isHovering = true;
+    container.classList.add('is-active-area');
     clearTimeout(hoverTimeout);
     if (initialLoadTimeout) {
       clearTimeout(initialLoadTimeout);
@@ -336,13 +352,13 @@ document.addEventListener("DOMContentLoaded", function() {
       const finalY = baseY + shift;
       
       // Update Tick
-      t.element.style.transition = 'none';
+      t.element.style.transition = 'transform 0.15s ease-out, top 0.1s ease-out';
       t.element.style.transform = `translateY(-50%) scale(${scale})`;
       t.element.style.top = finalY + 'px';
       
       // Update Label
       const label = t.labelEl;
-      label.style.transition = 'none';
+      label.style.transition = 'opacity 0.15s ease-out, transform 0.15s ease-out, top 0.1s ease-out';
       label.style.transform = `translateY(-50%) scale(${labelScale})`;
       label.style.opacity = labelOpac;
       label.style.top = finalY + 'px';
@@ -355,6 +371,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   container.addEventListener('mouseleave', () => {
     isHovering = false;
+    container.classList.remove('is-active-area');
     
     // Smoothly restore tick properties
     ticks.forEach(t => {
