@@ -60,7 +60,7 @@ layout: default
 
   @media (min-width: 800px) {
     #mini-toc-scrollbar {
-      display: block; /* show on desktop */
+      display: block;
     }
   }
 
@@ -129,38 +129,9 @@ layout: default
     background: #999;
   }
 
-  .mini-toc-tick::after {
-    content: attr(data-title);
-    position: absolute;
-    right: 22px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fff;
-    color: #333;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: opacity 0.2s, transform 0.2s;
-    font-family: inherit;
-  }
-
-  html[data-theme="dark"] .mini-toc-tick::after {
-    background: #222;
-    color: #eee;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  }
-
-  .mini-toc-tick:hover::after, .mini-toc-tick.active-tick::after {
-    opacity: 1;
-    transform: translateY(-50%) scale(1.05);
-  }
-
+  /* Grey highlighted active tick */
   .mini-toc-tick.active-tick {
-    background: #ff5e5e;
+    background: #777;
     width: 16px;
     right: 3px;
     height: 6px;
@@ -168,13 +139,38 @@ layout: default
   }
   
   html[data-theme="dark"] .mini-toc-tick.active-tick {
-    background: #ff7e7e;
+    background: #aaa;
+  }
+
+  .mini-toc-label {
+    position: absolute;
+    right: 28px;
+    transform: translateY(-50%) scale(0.5);
+    background: #fff;
+    color: #333;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none; /* Let mouse interact with container only */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform-origin: right center;
+    font-family: inherit;
+    font-weight: 500;
+  }
+
+  html[data-theme="dark"] .mini-toc-label {
+    background: #2a2a2a;
+    color: #eee;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   }
 </style>
 
 <div id="mini-toc-scrollbar" title="Table of Contents">
   <div id="mini-toc-track"></div>
   <div id="mini-toc-ticks"></div>
+  <div id="mini-toc-labels"></div>
   <div id="mini-toc-thumb"></div>
 </div>
 
@@ -187,24 +183,50 @@ document.addEventListener("DOMContentLoaded", function() {
   const track = document.getElementById("mini-toc-track");
   const thumb = document.getElementById("mini-toc-thumb");
   const ticksContainer = document.getElementById("mini-toc-ticks");
+  const labelsContainer = document.getElementById("mini-toc-labels");
   
   let isDragging = false;
   let dragStartY = 0;
   let dragStartScrollY = 0;
   
   const ticks = [];
+  let isHovering = false;
+  let hoverTimeout;
 
   headings.forEach((heading, i) => {
     if (!heading.id) heading.id = 'mini-toc-h-' + i;
+    
+    // Create tick
     const tick = document.createElement('div');
     tick.className = 'mini-toc-tick';
-    tick.setAttribute('data-title', heading.innerText);
     tick.addEventListener('click', () => {
       heading.scrollIntoView({ behavior: 'smooth' });
     });
     ticksContainer.appendChild(tick);
-    ticks.push({ element: tick, target: heading });
+    
+    // Create label
+    const label = document.createElement('div');
+    label.className = 'mini-toc-label';
+    label.innerText = heading.innerText;
+    labelsContainer.appendChild(label);
+
+    ticks.push({ element: tick, labelEl: label, target: heading, percent: 0, yOffset: 0 });
   });
+
+  function closeLabels() {
+    ticks.forEach(t => {
+      const label = t.labelEl;
+      label.style.transition = 'opacity 0.3s, transform 0.3s';
+      label.style.opacity = 0;
+      label.style.transform = `translateY(-50%) scale(0.5)`;
+    });
+  }
+
+  // Initial load timer
+  let initialLoadTimeout = setTimeout(() => {
+    if (!isHovering) closeLabels();
+    initialLoadTimeout = null;
+  }, 3000);
 
   function update() {
     const docHeight = document.documentElement.scrollHeight;
@@ -212,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const scrollY = window.scrollY;
     
     // update thumb
-    const thumbTop = (scrollY / docHeight) * 100;
+    const thumbTop = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
     const thumbHeight = Math.max(5, (winHeight / docHeight) * 100);
     
     thumb.style.top = thumbTop + '%';
@@ -224,7 +246,9 @@ document.addEventListener("DOMContentLoaded", function() {
     
     ticks.forEach((t, i) => {
       const targetTop = t.target.getBoundingClientRect().top + scrollY;
-      t.element.style.top = (targetTop / docHeight * 100) + '%';
+      t.percent = targetTop / docHeight * 100;
+      t.element.style.top = t.percent + '%';
+      t.labelEl.style.top = t.percent + '%';
       
       const distFromTop = t.target.getBoundingClientRect().top;
       if (distFromTop <= 150) {
@@ -232,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
-    // Handle case where we are at the very bottom
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10) {
       activeTickIndex = ticks.length - 1;
     }
@@ -244,6 +267,20 @@ document.addEventListener("DOMContentLoaded", function() {
         t.element.classList.remove('active-tick');
       }
     });
+
+    // If initial load timer is running and we are not hovering, just show the active label
+    if (initialLoadTimeout && !isHovering) {
+      ticks.forEach((t, i) => {
+        if (i === activeTickIndex) {
+          t.labelEl.style.transition = 'opacity 0.3s, transform 0.3s';
+          t.labelEl.style.opacity = 1;
+          t.labelEl.style.transform = `translateY(-50%) scale(1)`;
+        } else {
+          t.labelEl.style.opacity = 0;
+          t.labelEl.style.transform = `translateY(-50%) scale(0.5)`;
+        }
+      });
+    }
   }
 
   let ticking = false;
@@ -259,6 +296,63 @@ document.addEventListener("DOMContentLoaded", function() {
   
   window.addEventListener('resize', update, {passive: true});
   setTimeout(update, 200);
+
+  // Mouse hover fisheye logic
+  container.addEventListener('mouseenter', () => {
+    isHovering = true;
+    clearTimeout(hoverTimeout);
+    if (initialLoadTimeout) {
+      clearTimeout(initialLoadTimeout);
+      initialLoadTimeout = null;
+    }
+  });
+
+  container.addEventListener('mousemove', (e) => {
+    isHovering = true;
+    clearTimeout(hoverTimeout);
+    
+    const rect = container.getBoundingClientRect();
+    const mouseY = e.clientY - rect.top;
+    
+    // calc positions
+    let closestIdx = -1;
+    let minD = Infinity;
+    ticks.forEach((t, i) => {
+      t.yOffset = (t.percent / 100) * rect.height;
+      const d = Math.abs(t.yOffset - mouseY);
+      if (d < minD) {
+        minD = d;
+        closestIdx = i;
+      }
+    });
+
+    ticks.forEach((t, i) => {
+      const label = t.labelEl;
+      if (Math.abs(i - closestIdx) <= 1) {
+        const d = Math.abs(t.yOffset - mouseY);
+        // Map distance (0 to 60px) to scale/opacity
+        const factor = Math.max(0, 1 - (d / 60)); 
+        const scale = 0.65 + 0.35 * factor; // 0.65 to 1.0
+        const opac  = 0.4 + 0.6 * factor; // 0.4 to 1.0
+        
+        label.style.transition = 'none'; // Instant follow
+        label.style.transform = `translateY(-50%) scale(${scale})`;
+        label.style.opacity = opac;
+        label.style.zIndex = i === closestIdx ? 100 : 50;
+      } else {
+        label.style.transition = 'opacity 0.2s, transform 0.2s';
+        label.style.opacity = 0;
+        label.style.transform = `translateY(-50%) scale(0.5)`;
+      }
+    });
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isHovering = false;
+    hoverTimeout = setTimeout(() => {
+      closeLabels();
+    }, 3000);
+  });
 
   // Dragging
   thumb.addEventListener('mousedown', (e) => {
