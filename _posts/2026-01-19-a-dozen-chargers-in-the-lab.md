@@ -324,7 +324,7 @@ Most of his work went over my head at the time, but I kept thinking about whethe
 Here's the short version of what I found: 
 - GaN chargers are among the best you can buy today, and the marketing around them IS real.
 - Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.
-- Common brands like Apple generally do test favorably, but some smaller brands edge them out in quality. 
+- Common brands like Apple generally do test favorably, but some smaller brands edge them out. 
 - There is an extreme amount of variation even within each brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.
 
 <br>
@@ -338,7 +338,7 @@ Here's the short version of what I found:
 
 ## What I tested
 
-To get as much out of this project as possible, I tested a lot of chargers. They were mostly USB-C, but some USB A chargers were added in as well. Here's the full list:
+To get as much out of this project as possible, I tested a lot of chargers. Here's the full list:
 - Anker ASPD053a USB C 
 - Anker 637 Magnetic Charging Station (USB A port and USB C port)
 - AOHI GaN 65W AOC-C019 
@@ -361,10 +361,10 @@ To get as much out of this project as possible, I tested a lot of chargers. They
 
 I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in the various results below.
 
-For each charger, I tested it on several dimensions: Advertised power versus actual power, power quality, and overcurrent. 
-- Comparing **advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
+For each charger, I tested it on several dimensions: **Advertised power versus actual power, power quality, and overcurrent.**
+- **Advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
 - **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise. 
-- For **overcurrent**, I tested each device to see what was the current and voltage at its shutoff point. Using an electronic load, I took the chargers through a series of current levels that were higher than their indicated max. At the charger's shutoff point, I noted down what current and voltage were pulled. The ideal charger in this test is one that can hold its voltage completely steady regardless of the current.
+- **Overcurrent** shows how a charger behaves when a device tries to pull too much current. This is achieved by connecting a charger to an electronic load and having that load request more and more current until the device shuts off. It helps show how well-regulated a charger is, and if it is capable of protecting itself during load. 
 
 
 
@@ -381,9 +381,9 @@ With this in mind, my setup consisted of a few different pieces:
 4. A voltmeter
 5. Plenty of electrical wires and extra USB cables
 
-I would plug the charger into the wall, connect it to the USB C decoy board, then connect the decoy board to the electronic load. The last part was accomplished using stray wires, however I ensured they were thick enough that their resistance would be low.
+I would plug the charger into the wall, and connect it to a USB C Decoy Board which had an electronic load at the other end. The last part was accomplished using stray wires, however I ensured they were thick enough that their resistance would be low.
 
-The interesting thing to me that was *not* apparent when I started this project was the use of a decoy board to imitate a device and request a specific voltage from the charger. *Ken didn't need this piece since his chargers were constant voltage, but mine unfortunately do require it.* This learning occurred shortly after Spencer and I started to test chargers, wondering why none of them were giving any current. We needed that decoy board.
+I didn't even realize I would need a decoy board at first. Spencer and I just thought we could connect a charger to a load and see what happened. After multiple attempts where the chargers would produce no output, we learned that USB C chargers require negotiation before they will send pwoer. *I do not think Ken needed this piece since his chargers were constant voltage, but mine unfortunately do require it.* 
 
 As for the scope, my Rigol DS1054Z was set up with its probe touching the positive and negative terminals on the decoy board. I used the spring-based ground clip instead of the alligator ground clip that came with the probe so that my noise readings would be lower.
 *Tip: If you want to do testing of your own, always use the spring ground clip. I learned well into this project that using the default alligator ground clip will lead to extremely high noise ratings. Avoid my mistake and save yourself the rework of testing every charger again by making sure you do this.*
