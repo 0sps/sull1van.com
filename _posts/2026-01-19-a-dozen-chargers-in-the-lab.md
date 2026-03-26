@@ -11,7 +11,7 @@ devices:
     caption: |
       The MacBook Pro had some of the cleanest power of the devices I tested. This is pretty unsurprising since it's just pulling DC current from its internal battery, and it doesn't have to chop up AC power like the chargers do.
       
-      There's also no high frequency switching noise, or any noticeable ripple. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
+      There's also no high frequency switching noise. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -23,7 +23,7 @@ devices:
     img2: "/assets/images/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt the best AC power adapter. Very low noise, very low ripple, and the only noticeable peak in the FFT being the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply I have ever seen.
+      Without a doubt the best AC power adapter. Very low noise, very low ripple. The only noticeable peak in the FFT is the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply I have seen.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -64,7 +64,7 @@ devices:
     caption: |
       This one confused me. For such a random charger, one that you can't even purchase yourself, it is of pretty high quality. It comes included with Eero devices, and looks to be custom-built just for them. I'm not sure if Amazon/Eero bought this one off the shelf and rebranded it or it's their own circuit design.
       
-      Some switching ripple exists, as you can see on the bottom graph, but it does a great job at filtering out most other noise. It's got a sawtooth waveform, so there is noise, but it is pretty small. Good charger!
+      Some switching ripple exists, as you can see on the bottom graph, but it does a great job at filtering out most other noise. It also has a sawtooth waveform, so there is noise, but it is pretty small. Good charger!
     rating: 4
     noise_rating: 5
     ripple_rating: 3
@@ -77,7 +77,9 @@ devices:
     caption: |
       This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
 
-      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. Even though my load did not do this, and only requested 12V, the charger did a truly incredible thing: it INCREASED the voltage slightly above 12V as the current approached 3A. When I drew low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose each time, topping out at 12.36V when I pulled 3A. This got my electronic load to get even closer to 12 V input voltage. To my knowledge, this is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
+      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. I didn't test this, but it does have that capability.
+      
+      One truly interesting thing about this charger was how it managed its voltage. At low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose with current, topping out at 12.36V when I pulled 3A. This is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
     rating: 5
     noise_rating: 4
     ripple_rating: 5
@@ -113,7 +115,7 @@ devices:
     img1: "/assets/images/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that surprised me simply because of how well it tested under the oscilloscope. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency noise in the 50us graph, which I would be more concerned about if the voltage itself wasn't stable. In all, this charger would seem to be great. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger, and gives it an automatic 1-lightning-bolt rating."
+    caption: "This was another charger that surprised me simply because of how well it tested under the oscilloscope. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency noise in the 50us graph, which I would be more concerned about if the voltage itself wasn't stable. In all, this charger would seem to be great. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger. I give it 1 bolt because of this."
     rating: 1
     noise_rating: 4
     ripple_rating: 3
@@ -390,27 +392,27 @@ As for the scope, my Rigol DS1054Z was set up with its probe touching the positi
 
 ### A note about resistance
 
-One of the things I learned during this project was that resistance could be artificially skewing my measurements. The resistance of my board and cables themselves could have been falsely leading me to conclude these chargers were putting out low voltages. To account for this, I ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
+One of the things I learned during this project was that resistance could be artificially skewing my measurements. To account for this, I ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
 
-If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. I'm honestly proud of this level for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements I have below, since I connected directly to the charger output. However I am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
 
 ### Rating system for Oscilloscope graphs 
 **Noise and Switching Ripple**
 
 After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings consider two separate factors: overall high-frequency noise (Vpp/spikes) and switching ripple. 
-- **Switching Ripple** refers to the high-frequency peaks (e.g., 50KHz, 100KHz) caused by the charger's internal oscillator continually charging and discharging. This differs from Ken's methodology, as he used the word **Ripple** specifically to mean the 120Hz line-frequency fluctuations caused by your household AC power. 
-- With my scope of 24 million points of memory, my FFT was extremely good at capturing this switching ripple.
 - **Noise** includes the more chaotic high-frequency artifacts, large vertical spikes, and overall 'fuzziness' in the output. By measuring the overall peak-to-peak (Vpp) voltage, I can effectively rank the true Noise.
-- Due to the capture of this intense high-frequency data, most of my chargers will look incredibly dense and 'thick' compared to the ones Ken examined. I believe the inclusion of this raw high-frequency data at every zoom level is the most honest way to display these chargers.
+- **Switching Ripple** refers to the high-frequency peaks (e.g., 50KHz, 100KHz) caused by the charger's internal oscillator continually charging and discharging. This differs from Ken's methodology, as he used the word **Ripple** specifically to mean the 120Hz line-frequency fluctuations caused by your household AC power. 
+
+- Mst of my chargers look incredibly dense and 'thick' compared to the ones Ken examined. I believe this is becuase my scope has a memory depth of 24 million points, while the most I saw on Ken's graphs were around ~50,000 equivalent points of memory depth. I believe the inclusion of this raw high-frequency data at every zoom level is the most honest way to display these chargers. 
 
 For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
-- 5 bolts: under approximately 80mV
-- 4 bolts: under approximately 100mV
-- 3 bolts: under approximately 160mV
-- 2 bolts: under approximately 250mV
-- 1 bolt: anything above that
+- 1 bolt: over ~250mV
+- 2 bolts: under ~250mV
+- 3 bolts: under ~160mV
+- 4 bolts: under ~100mV
+- 5 bolts: under ~80mV
 
 These are just general guidelines. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
@@ -424,21 +426,21 @@ These are just general guidelines. I used my judgment for each charger based on 
 
 ## The Results
 
-Scroll through the cards and click any one to expand the full oscilloscope traces. Each card shows the worst graph I could reproduce for that charger, assuming typical power usage. 
+Scroll through the cards and click any one to expand the full oscilloscope graphs. Each card shows the worst graph I could reproduce for that charger, assuming typical power usage. 
 - I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
 - Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
 
 
-### How to read the screenshots below
+### A few more details on noise and ripple
 
 They look confusing at first glance, but you don't need to be an electrical engineer to understand these next graphs. Here is a quick primer on what you're looking at:
 
-- **The Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
-- **The Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT). It takes all the imperfections from the yellow line and sorts them by frequency. A large spike here would mean there is a significant amount of energy at that specific frequency.
+- **Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
+- **Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT). It takes all the imperfections from the yellow line and sorts them by frequency. A large spike here would mean there is a significant amount of energy at that specific frequency.
 - **Noise vs. Switching Ripple:** You'll see me use these terms often to describe the imperfections on these graphs. My definitions distinguish the two so I can rank them separately.
-  - **Switching Ripple** is the presence of a main, high-frequency spike (and its harmonics) on the FFT. This is caused by the natural charging and discharging cycle of the charger's internal circuit. For instance, if I see a significant peak at 90KHz and nowhere else, I would say the charger has its primary switching ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, that is the switching ripple and its harmonic at 180KHz. *(Note: Ken used the term **Line Ripple** to describe the lower 120Hz fluctuations caused by the AC wall input; I use Switching Ripple to focus purely on the oscillator!)*
+  - **Switching Ripple** is the presence of a main, high-frequency spike (and its harmonics) on the FFT. This is caused by the natural charging and discharging cycle of the charger's internal circuit. AC Chargers will swtich on and off many times per second to effectively create something that is DC current. For that reason, if I see a significant peak at 90KHz and nowhere else, for instance, I would say the charger has its primary switching ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, that is the switching ripple and its harmonic at 180KHz. *(Note: Ken used the term ripple to mean **Line Ripple**, to describe the lower 120Hz fluctuations caused by the AC wall input; I use Switching Ripple to focus purely on the oscillator!)*
 
-  - **Noise** includes the chaotic imperfections on the voltage graph measured in peak-to-peak voltage (Vpp). There are many different kinds of noise, including high-frequency vertical spikes, fuzzy blur, and general jitter. Because cheap chargers snap their power on and off violently, they create mathematical echoes called harmonics. In the purple FFT graph, excessive noise shows up as a chaotic, raised floor beneath the switching ripple.
+  - **Noise** includes any imperfections on the voltage graph measured in peak-to-peak voltage (Vpp). There are many different kinds of noise, including high-frequency vertical spikes, fuzzy blur, and general jitter. Switching ripple is one component of this.
 
   - **'Fuzzy' Blur**: If the yellow line looks incredibly thick or "fuzzy," it means the charger is constantly shifting its switching speed back and forth (frequency dithering) to dynamically smear its noise.
 
