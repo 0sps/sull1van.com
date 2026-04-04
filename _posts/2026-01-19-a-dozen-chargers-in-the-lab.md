@@ -127,7 +127,7 @@ devices:
     img1: "/assets/images/apple96W3.png"
     img2: "/assets/images/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Not as good as I would expect for how expensive this charger is. I don't believe this is a GaN based charger, but it is Apple, so I would expect high quality. The total noise is about 80mV, which isn't that bad, but the graph does leave some things to be desired. The power is a little noisy with those intermittent peaks. Not sure what the charger is having issues with here. There seems to be more noise than I would have hoped. It also delivered less voltage than advertised at its highest current limits, for example going down to 8.63V when I would try to pull 9V and 3A. Overall rating is a 3 just because of this voltage sag."
+    caption: "Good, but I would expect a little bit better for how expensive this charger is. I don't believe this is a GaN charger, but it is Apple, so it should be high quality. The total noise is low at 92mV, but there is some noise visible within those intermittent peaks when you go into the lower timeframe. There's also high-frequency ripple with plenty of harmonics. Lastly, it also delivered less voltage than advertised, going down to 8.63V when I would try to pull 9V and 3A. Overall rating is a 3 because of that high-frequency noise and the voltage sag. Again, not bad, but we should expect better for the price."
     rating: 3
     noise_rating: 4
     ripple_rating: 4
@@ -140,9 +140,11 @@ devices:
     img2: "/assets/images/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
-      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but it flattens out to beautiful power at 7.5 W and above. I imagine this is because nobody at Apple expected people to use this charger for 5 W of power, being USB C. They likely made a bet that no one will use this charger below 7.5 W, and I agree with them. A smart play financially. 
+      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. I imagine this happened because nobody at Apple expected customers to use this charger for 5 W of power, being USB C, and designed it accordingly. 
       
-      I also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. Solid charger for typical use cases.
+      I also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. 
+      
+      I'll give it an overall rating of a 4 as it's a solid charger for typical use cases - providing you don't trickle charge with it.
     rating: 4
     noise_rating: 3
     ripple_rating: 3
@@ -154,7 +156,7 @@ devices:
     img1: "/assets/images/Anker ASP053a 3.png"
     img2: "/assets/images/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Not that impressive. The voltage is noticeably wider than a lot of my other chargers, indicating high-frequency noise. The frequency spectrum also shows repeating peaks at roughly 90KHz intervals, which I assume to be harmonics of the switching frequency. Not awful, but not a charger I'd reach for if I had better options nearby."
+    caption: "Not that impressive. The voltage is noticeably noisier than a lot of my other chargers. The frequency spectrum also shows ripple with harmonics at roughly 90KHz intervals. Not awful, but not a charger I'd reach for if I had better options nearby."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -220,7 +222,7 @@ devices:
     img1: "/assets/images/Counterfeit ATnT 1.png"
     img2: "/assets/images/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: Bad, and the graphs make it clear. On the longer timeframe the output almost passes at a glance, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. I will give it 1 lightning bolt.
+    caption: Bad. A quick glance on the 5ms timeframe and the voltage almost looks normal, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. I will give it 1 lightning bolt.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -232,7 +234,9 @@ devices:
     img2: "/assets/images/Anker A121B 100w 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      It's better than its 45W cousin (the Anker A121D), but this charger isn't that great. It does push out the advertised voltage and current, but it does so with a wall of noise. Zooming in to the smaller timeframe is telling, as we can see little tiny voltage peaks every few microseconds. What a strange design from Anker, who claim this to be a GaN charger. It is clearly a cheaper unit.
+      This is a "GaN" flagship charger released by anker sometime in late 2025. They hype it up so much on their website that I was looking to be impressed. And after testing it, I can say I am definitely surprised! But not impressed.
+      
+      It's better than its 45W cousin (the Anker A121D), but this charger isn't that great. It does push out the advertised voltage and current, but it does so with a wall of noise. Zooming in to the smaller timeframe is telling, as we can see little tiny voltage peaks every few microseconds. What a strange design from Anker, who claim this to be a GaN charger. It is clearly not made that well.
     rating: 2
     noise_rating: 2
     ripple_rating: 2
@@ -244,7 +248,7 @@ devices:
     img1: "/assets/images/Amazon 1.png"
     img2: "/assets/images/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage trace is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V on its output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it an automatic 1 bolt."
+    caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V when I tested the output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it 1 bolt."
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -255,7 +259,7 @@ devices:
     img2: "/assets/images/Apple Homepod Mini 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of low-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
+      Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of both low-frequency and high-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
       
       I was really surprised by this test. I also happened to have two of these chargers, one from a HomePod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to do that. $20 can get you a much better charger than this.
     rating: 1
