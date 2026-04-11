@@ -2420,7 +2420,7 @@
                         if (allProgress.hasOwnProperty('workoutDay')) {
                             allProgress = {};
                         }
-                    } catch (e) {}
+                    } catch (e) { }
                 }
                 allProgress[currentWorkoutDay] = {
                     workoutDay: currentWorkoutDay, // kept inside for safety
@@ -2429,7 +2429,7 @@
                     timestamp: Date.now()
                 };
                 localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
-            } catch(e) {
+            } catch (e) {
                 console.error('Error saving workout progress:', e);
             }
         }
@@ -2444,7 +2444,7 @@
                 if (allProgress.hasOwnProperty('workoutDay')) {
                     const legacyData = allProgress;
                     allProgress = {};
-                    
+
                     // Migrate string days to indices if needed
                     if (typeof legacyData.workoutDay === 'string') {
                         const legacyMap = { 'day1': 0, 'day2': 1, 'day3': 2, 'rest': 3, 'day4': 4, 'day5': 5, 'day6': 6 };
@@ -2460,7 +2460,7 @@
 
                 const now = Date.now();
                 let hasChanges = false;
-                
+
                 // GC old items (> 48h)
                 for (const day in allProgress) {
                     if (now - allProgress[day].timestamp > CONFIG.LOCAL_STORAGE_TTL) {
@@ -2468,7 +2468,7 @@
                         hasChanges = true;
                     }
                 }
-                
+
                 if (hasChanges) {
                     if (Object.keys(allProgress).length === 0) {
                         localStorage.removeItem('workoutProgress');
@@ -3542,7 +3542,7 @@
             }).join('');
             openModal('switchModal');
         }
-        function selectWorkoutDay(day) { 
+        function selectWorkoutDay(day) {
             currentWorkoutDay = day;
             // Clear in-memory state for the new day
             currentExerciseData = {};
@@ -3557,7 +3557,7 @@
             // Restore cache for this day if it exists, then render once with correct data
             loadWorkoutProgress();
             renderExercises();
-            closeSwitchModal(); 
+            closeSwitchModal();
         }
         function closeSwitchModal() { closeModal('switchModal'); }
         function toggleStatsDashboard() {

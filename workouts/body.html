@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <title>BODY RATING | USAF PFRA</title>
+    <title>BODY | Sean's Log</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -55,11 +56,29 @@
             cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
         }
         .back-btn:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 2000;
+        }
+        .loading-spinner {
+            width: 50px; height: 50px; border: 3px solid var(--border);
+            border-top-color: var(--accent-primary); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-top: 20px; color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Page titles */
         .page-title {
             font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px;
             color: var(--accent-secondary); margin-bottom: 6px;
         }
         .page-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 40px; }
+
+        /* Section cards */
         .section-card {
             background: var(--bg-secondary); border: 1px solid var(--border);
             padding: 24px; margin-bottom: 24px;
@@ -70,6 +89,8 @@
             display: flex; align-items: center; gap: 12px;
         }
         .section-title::before { content: ''; width: 4px; height: 20px; background: var(--accent-primary); }
+
+        /* Form inputs */
         .form-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
         .form-group label {
@@ -85,6 +106,8 @@
             outline: none; border-color: var(--accent-primary);
         }
         .form-group input::placeholder { color: var(--text-muted); }
+
+        /* Toggle buttons */
         .toggle-row {
             display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
         }
@@ -99,6 +122,8 @@
         }
         .toggle-btn:hover { border-color: var(--accent-secondary); color: var(--text-primary); }
         .input-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* Buttons */
         .calc-btn {
             width: 100%; padding: 18px; background: var(--gradient-fire);
             color: var(--text-primary); font-family: 'Bebas Neue', sans-serif;
@@ -106,6 +131,147 @@
             transition: all 0.3s ease; margin-top: 8px;
         }
         .calc-btn:hover { box-shadow: 0 0 40px var(--accent-glow); transform: translateY(-2px); }
+        .calc-btn:disabled {
+            opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
+        }
+        .calc-btn.success-btn {
+            background: var(--success) !important; color: #000 !important;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6) !important;
+        }
+
+        .btn-load {
+            padding: 14px 32px; background: var(--bg-tertiary); border: 1px solid var(--border);
+            color: var(--text-secondary); font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem; letter-spacing: 2px; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase;
+        }
+        .btn-load:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+        .btn-load:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-load.loading { color: var(--warning); border-color: var(--warning); }
+
+        /* Measurement Grid */
+        .measurement-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px; margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .measurement-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .measurement-grid { grid-template-columns: 1fr; }
+        }
+        .measurement-group {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .measurement-group label {
+            font-size: 0.72rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .measurement-group input {
+            padding: 12px 14px; background: var(--bg-tertiary); border: 1px solid var(--border);
+            color: var(--text-primary); font-family: 'Space Mono', monospace; font-size: 0.95rem;
+            appearance: none; -webkit-appearance: none;
+        }
+        .measurement-group input:focus { outline: none; border-color: var(--accent-primary); }
+        .measurement-group input::placeholder { color: var(--text-muted); }
+        .measurement-group .unit-hint {
+            font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;
+        }
+        .height-display {
+            font-size: 0.82rem; color: var(--accent-secondary);
+            margin-top: 4px; min-height: 1.2em;
+        }
+
+        /* Unit Toggle */
+        .unit-toggle-row {
+            display: flex; gap: 8px; margin-bottom: 20px; align-items: center;
+        }
+        .unit-toggle-label {
+            font-size: 0.75rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 1px; margin-right: 8px;
+        }
+        .unit-btn {
+            padding: 6px 16px; background: var(--bg-tertiary); border: 1px solid var(--border);
+            color: var(--text-secondary); font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+            letter-spacing: 1px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .unit-btn.active {
+            background: rgba(255,61,0,0.15); border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+        .unit-btn:hover { border-color: var(--accent-secondary); color: var(--text-primary); }
+
+        /* Explore Data */
+        .explore-section { margin-top: 8px; }
+        .metric-picker {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+        }
+        .metric-btn {
+            padding: 8px 16px; background: var(--bg-tertiary); border: 1px solid var(--border);
+            color: var(--text-secondary); font-family: 'Space Mono', monospace; font-size: 0.75rem;
+            cursor: pointer; transition: all 0.2s ease; text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .metric-btn.active {
+            background: rgba(255,61,0,0.15); border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+        .metric-btn:hover { border-color: var(--accent-secondary); color: var(--text-primary); }
+
+        .load-bar {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .load-bar .date-range-hint {
+            font-size: 0.78rem; color: var(--text-muted);
+        }
+        .load-status {
+            font-size: 0.78rem; color: var(--text-muted); margin-left: auto;
+        }
+        .load-status.loaded { color: var(--success); }
+
+        .chart-container {
+            position: relative; width: 100%; height: 300px;
+            background: var(--bg-tertiary); border: 1px solid var(--border);
+            padding: 16px;
+        }
+        .chart-empty-state {
+            display: flex; align-items: center; justify-content: center;
+            height: 100%; flex-direction: column; gap: 12px;
+        }
+        .chart-empty-icon { font-size: 2.5rem; opacity: 0.3; }
+        .chart-empty-text { font-size: 0.82rem; color: var(--text-muted); text-align: center; }
+
+        /* Separator */
+        .section-separator {
+            border: none; border-top: 2px solid var(--border);
+            margin: 48px 0 40px;
+        }
+
+        /* Success Toast */
+        .success-toast {
+            position: fixed; bottom: 40px; left: 50%;
+            transform: translateX(-50%) translateY(150px);
+            opacity: 0; visibility: hidden;
+            background: var(--success); color: #000;
+            padding: 16px 40px; font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6); z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, visibility 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; min-width: 250px;
+        }
+        .success-toast.active {
+            transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible;
+        }
+        .toast-progress {
+            position: absolute; bottom: 0; right: 0; height: 4px;
+            background: #002e1a; width: 100%; transform-origin: right;
+        }
+        .success-toast.active .toast-progress { animation: toastProgress 3s linear forwards; }
+        @keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
+
+        /* PFRA Results (existing) */
         .results-panel {
             display: none; background: var(--bg-secondary); border: 1px solid var(--border);
             padding: 32px; margin-top: 24px;
@@ -175,6 +341,10 @@
     </style>
 </head>
 <body>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Loading...</p>
+</div>
 <div class="bg-pattern"></div>
 <div class="container">
     <header>
@@ -182,6 +352,100 @@
         <a href="app.html" class="back-btn">← Back</a>
     </header>
 
+    <!-- ============================================================ -->
+    <!-- BODY MEASUREMENTS SECTION (NEW)                              -->
+    <!-- ============================================================ -->
+    <div class="page-title">BODY MEASUREMENTS</div>
+    <div class="page-subtitle">Track your body composition over time · All fields optional</div>
+
+    <!-- Unit Toggle -->
+    <div class="unit-toggle-row">
+        <span class="unit-toggle-label">Units:</span>
+        <button class="unit-btn active" id="unitImperial" onclick="setUnits('imperial')">LBS / IN</button>
+        <button class="unit-btn" id="unitMetric" onclick="setUnits('metric')">KG / CM</button>
+    </div>
+
+    <!-- Measurement Entry -->
+    <div class="section-card">
+        <div class="section-title">Log Measurements</div>
+        <div class="measurement-grid">
+            <div class="measurement-group">
+                <label>Weight (<span class="weight-unit-label">lbs</span>)</label>
+                <input type="number" id="mWeight" placeholder="e.g. 185" step="0.1" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Height (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mHeight" placeholder="e.g. 72" step="0.5" min="0" oninput="updateHeightDisplay()">
+                <div class="height-display" id="heightDisplay"></div>
+            </div>
+            <div class="measurement-group">
+                <label>Right Wrist (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mRightWrist" placeholder="e.g. 7.25" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Waist (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mWaist" placeholder="e.g. 33" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Left Bicep (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mLeftBicep" placeholder="e.g. 15.5" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Right Bicep (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mRightBicep" placeholder="e.g. 15.75" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Chest (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mChest" placeholder="e.g. 42" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Left Calf (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mLeftCalf" placeholder="e.g. 15" step="0.25" min="0">
+            </div>
+            <div class="measurement-group">
+                <label>Right Calf (<span class="length-unit-label">in</span>)</label>
+                <input type="number" id="mRightCalf" placeholder="e.g. 15.25" step="0.25" min="0">
+            </div>
+        </div>
+        <button class="calc-btn" id="saveMeasurementsBtn" onclick="saveBodyMeasurements()">SAVE MEASUREMENTS</button>
+    </div>
+
+    <!-- Explore Data -->
+    <div class="section-card explore-section">
+        <div class="section-title">Explore Data</div>
+        <div class="metric-picker" id="metricPicker">
+            <button class="metric-btn active" data-metric="weight" onclick="selectMetric('weight')">Weight</button>
+            <button class="metric-btn" data-metric="height" onclick="selectMetric('height')">Height</button>
+            <button class="metric-btn" data-metric="waist" onclick="selectMetric('waist')">Waist</button>
+            <button class="metric-btn" data-metric="rightWrist" onclick="selectMetric('rightWrist')">R. Wrist</button>
+            <button class="metric-btn" data-metric="leftBicep" onclick="selectMetric('leftBicep')">L. Bicep</button>
+            <button class="metric-btn" data-metric="rightBicep" onclick="selectMetric('rightBicep')">R. Bicep</button>
+            <button class="metric-btn" data-metric="chest" onclick="selectMetric('chest')">Chest</button>
+            <button class="metric-btn" data-metric="leftCalf" onclick="selectMetric('leftCalf')">L. Calf</button>
+            <button class="metric-btn" data-metric="rightCalf" onclick="selectMetric('rightCalf')">R. Calf</button>
+        </div>
+        <div class="load-bar">
+            <button class="btn-load" id="loadDataBtn" onclick="loadBodyData()">LOAD DATA</button>
+            <span class="date-range-hint">Last 6 months</span>
+            <span class="load-status" id="loadStatus"></span>
+        </div>
+        <div class="chart-container" id="chartContainer">
+            <div class="chart-empty-state" id="chartEmptyState">
+                <div class="chart-empty-icon">📊</div>
+                <div class="chart-empty-text">Tap "Load Data" to fetch your measurements<br>and view trends over time.</div>
+            </div>
+            <canvas id="bodyChart" style="display:none;"></canvas>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SEPARATOR                                                     -->
+    <!-- ============================================================ -->
+    <hr class="section-separator">
+
+    <!-- ============================================================ -->
+    <!-- PFRA CALCULATOR (EXISTING — UNCHANGED)                        -->
+    <!-- ============================================================ -->
     <div class="page-title">BODY RATING FOR AIR FORCE ASSESSMENT</div>
     <div class="page-subtitle">USAF Physical Fitness Readiness Assessment (PFRA) · Effective 1 Mar 2026 · Reference Only</div>
 
@@ -305,6 +569,486 @@
     </div>
 </div>
 
+<!-- Success Toast -->
+<div id="successToast" class="success-toast">
+    MEASUREMENTS SAVED!
+    <div class="toast-progress"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FIREBASE AUTH + INIT                                          -->
+<!-- ============================================================ -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDocs, setDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+        authDomain: "workout-c7be0.firebaseapp.com",
+        projectId: "workout-c7be0",
+        storageBucket: "workout-c7be0.firebasestorage.app",
+        messagingSenderId: "625595909146",
+        appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Expose to global scope for non-module scripts
+    window.firebaseDb = db;
+    window.firebaseCollection = collection;
+    window.firebaseDoc = doc;
+    window.firebaseGetDocs = getDocs;
+    window.firebaseSetDoc = setDoc;
+    window.firebaseQuery = query;
+    window.firebaseOrderBy = orderBy;
+    window.firebaseWhere = where;
+    window.firebaseSignOut = signOut;
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            window.currentUser = user;
+            window.firebaseReady = true;
+            document.getElementById('loadingOverlay').style.display = 'none';
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    window.logout = async function () {
+        await signOut(auth);
+        window.location.href = 'index.html';
+    }
+</script>
+
+<!-- ============================================================ -->
+<!-- BODY MEASUREMENTS LOGIC                                       -->
+<!-- ============================================================ -->
+<script>
+// ============================================================================
+// STATE
+// ============================================================================
+let currentUnits = 'imperial'; // 'imperial' or 'metric'
+let selectedMetric = 'weight';
+let cachedBodyData = null; // Array of measurement docs from Firebase
+let bodyChart = null; // Chart.js instance
+
+// Metric definitions
+const METRICS = {
+    weight:     { label: 'Weight',       unitImperial: 'lbs', unitMetric: 'kg',  type: 'weight' },
+    height:     { label: 'Height',       unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    rightWrist: { label: 'Right Wrist',  unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    waist:      { label: 'Waist',        unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    leftBicep:  { label: 'Left Bicep',   unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    rightBicep: { label: 'Right Bicep',  unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    chest:      { label: 'Chest',        unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    leftCalf:   { label: 'Left Calf',    unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+    rightCalf:  { label: 'Right Calf',   unitImperial: 'in',  unitMetric: 'cm',  type: 'length' },
+};
+
+// ============================================================================
+// UNIT CONVERSION
+// ============================================================================
+function lbsToKg(lbs) { return lbs * 0.45359237; }
+function kgToLbs(kg) { return kg / 0.45359237; }
+function inToCm(inches) { return inches * 2.54; }
+function cmToIn(cm) { return cm / 2.54; }
+
+function convertToStorageUnits(value, type) {
+    // Convert from current display units to storage units (lbs / inches)
+    if (currentUnits === 'imperial') return value;
+    if (type === 'weight') return kgToLbs(value);
+    if (type === 'length') return cmToIn(value);
+    return value;
+}
+
+function convertFromStorageUnits(value, type) {
+    // Convert from storage units (lbs / inches) to current display units
+    if (currentUnits === 'imperial') return value;
+    if (type === 'weight') return lbsToKg(value);
+    if (type === 'length') return inToCm(value);
+    return value;
+}
+
+function getDisplayUnit(type) {
+    if (currentUnits === 'metric') {
+        return type === 'weight' ? 'kg' : 'cm';
+    }
+    return type === 'weight' ? 'lbs' : 'in';
+}
+
+// ============================================================================
+// UNIT TOGGLE
+// ============================================================================
+function setUnits(units) {
+    currentUnits = units;
+    document.getElementById('unitImperial').classList.toggle('active', units === 'imperial');
+    document.getElementById('unitMetric').classList.toggle('active', units === 'metric');
+
+    // Update all unit labels
+    const weightLabel = units === 'imperial' ? 'lbs' : 'kg';
+    const lengthLabel = units === 'imperial' ? 'in' : 'cm';
+    document.querySelectorAll('.weight-unit-label').forEach(el => el.textContent = weightLabel);
+    document.querySelectorAll('.length-unit-label').forEach(el => el.textContent = lengthLabel);
+
+    // Update placeholders
+    if (units === 'imperial') {
+        document.getElementById('mWeight').placeholder = 'e.g. 185';
+        document.getElementById('mHeight').placeholder = 'e.g. 72';
+        document.getElementById('mRightWrist').placeholder = 'e.g. 7.25';
+        document.getElementById('mWaist').placeholder = 'e.g. 33';
+        document.getElementById('mLeftBicep').placeholder = 'e.g. 15.5';
+        document.getElementById('mRightBicep').placeholder = 'e.g. 15.75';
+        document.getElementById('mChest').placeholder = 'e.g. 42';
+        document.getElementById('mLeftCalf').placeholder = 'e.g. 15';
+        document.getElementById('mRightCalf').placeholder = 'e.g. 15.25';
+    } else {
+        document.getElementById('mWeight').placeholder = 'e.g. 84';
+        document.getElementById('mHeight').placeholder = 'e.g. 183';
+        document.getElementById('mRightWrist').placeholder = 'e.g. 18.4';
+        document.getElementById('mWaist').placeholder = 'e.g. 84';
+        document.getElementById('mLeftBicep').placeholder = 'e.g. 39';
+        document.getElementById('mRightBicep').placeholder = 'e.g. 40';
+        document.getElementById('mChest').placeholder = 'e.g. 107';
+        document.getElementById('mLeftCalf').placeholder = 'e.g. 38';
+        document.getElementById('mRightCalf').placeholder = 'e.g. 39';
+    }
+
+    updateHeightDisplay();
+
+    // Re-render chart if data is loaded
+    if (cachedBodyData) {
+        renderChart(selectedMetric);
+    }
+}
+window.setUnits = setUnits;
+
+// ============================================================================
+// HEIGHT DISPLAY
+// ============================================================================
+function formatHeightFtIn(inches) {
+    const ft = Math.floor(inches / 12);
+    const remainIn = Math.round(inches % 12);
+    return `${ft}ft ${remainIn}in`;
+}
+
+function updateHeightDisplay() {
+    const displayEl = document.getElementById('heightDisplay');
+    const val = parseFloat(document.getElementById('mHeight').value);
+    if (!val || val <= 0) {
+        displayEl.textContent = '';
+        return;
+    }
+    // Convert to inches for display
+    const inches = currentUnits === 'metric' ? cmToIn(val) : val;
+    if (inches > 0 && inches < 120) {
+        displayEl.textContent = '= ' + formatHeightFtIn(inches);
+    } else {
+        displayEl.textContent = '';
+    }
+}
+window.updateHeightDisplay = updateHeightDisplay;
+
+// ============================================================================
+// SAVE MEASUREMENTS
+// ============================================================================
+async function saveBodyMeasurements() {
+    const btn = document.getElementById('saveMeasurementsBtn');
+
+    // Gather values
+    const fields = {
+        weight:     parseFloat(document.getElementById('mWeight').value) || null,
+        height:     parseFloat(document.getElementById('mHeight').value) || null,
+        rightWrist: parseFloat(document.getElementById('mRightWrist').value) || null,
+        waist:      parseFloat(document.getElementById('mWaist').value) || null,
+        leftBicep:  parseFloat(document.getElementById('mLeftBicep').value) || null,
+        rightBicep: parseFloat(document.getElementById('mRightBicep').value) || null,
+        chest:      parseFloat(document.getElementById('mChest').value) || null,
+        leftCalf:   parseFloat(document.getElementById('mLeftCalf').value) || null,
+        rightCalf:  parseFloat(document.getElementById('mRightCalf').value) || null,
+    };
+
+    // Check at least one field has data
+    const hasAnyData = Object.values(fields).some(v => v !== null && v > 0);
+    if (!hasAnyData) {
+        alert('Please enter at least one measurement.');
+        return;
+    }
+
+    // Convert to storage units (lbs / inches)
+    const storageFields = {};
+    for (const [key, val] of Object.entries(fields)) {
+        if (val !== null && val > 0) {
+            const type = METRICS[key].type;
+            storageFields[key] = Math.round(convertToStorageUnits(val, type) * 100) / 100;
+        } else {
+            storageFields[key] = null;
+        }
+    }
+
+    const docId = Date.now();
+    const doc = {
+        id: docId,
+        date: new Date().toISOString(),
+        userId: window.currentUser ? window.currentUser.uid : null,
+        ...storageFields,
+        updatedAt: new Date().toISOString()
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'SAVING...';
+
+    try {
+        const docRef = window.firebaseDoc(window.firebaseDb, 'bodyMeasurements', docId.toString());
+        await window.firebaseSetDoc(docRef, doc);
+
+        btn.textContent = 'SAVED!';
+        btn.classList.add('success-btn');
+        showSuccessToast();
+
+        // Clear form
+        document.querySelectorAll('.measurement-group input').forEach(input => input.value = '');
+        document.getElementById('heightDisplay').textContent = '';
+
+        // Invalidate cache so next load picks up new data
+        cachedBodyData = null;
+        document.getElementById('loadStatus').textContent = '';
+        document.getElementById('loadStatus').className = 'load-status';
+
+        setTimeout(() => {
+            btn.textContent = 'SAVE MEASUREMENTS';
+            btn.classList.remove('success-btn');
+            btn.disabled = false;
+        }, 2000);
+    } catch (error) {
+        console.error('Error saving body measurements:', error);
+        btn.textContent = 'ERROR — TRY AGAIN';
+        btn.disabled = false;
+        setTimeout(() => {
+            btn.textContent = 'SAVE MEASUREMENTS';
+        }, 3000);
+    }
+}
+window.saveBodyMeasurements = saveBodyMeasurements;
+
+// ============================================================================
+// LOAD DATA
+// ============================================================================
+async function loadBodyData() {
+    const btn = document.getElementById('loadDataBtn');
+    const statusEl = document.getElementById('loadStatus');
+
+    btn.disabled = true;
+    btn.classList.add('loading');
+    btn.textContent = 'LOADING...';
+    statusEl.textContent = 'Fetching...';
+    statusEl.className = 'load-status';
+
+    try {
+        // Query last 6 months
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const startDate = sixMonthsAgo.toISOString();
+
+        const q = window.firebaseQuery(
+            window.firebaseCollection(window.firebaseDb, 'bodyMeasurements'),
+            window.firebaseWhere('date', '>=', startDate),
+            window.firebaseOrderBy('date', 'asc')
+        );
+
+        const snapshot = await window.firebaseGetDocs(q);
+        cachedBodyData = [];
+        snapshot.forEach(doc => cachedBodyData.push({ id: doc.id, ...doc.data() }));
+
+        statusEl.textContent = `${cachedBodyData.length} records loaded`;
+        statusEl.className = 'load-status loaded';
+
+        btn.textContent = 'RELOAD DATA';
+        btn.classList.remove('loading');
+        btn.disabled = false;
+
+        // Render chart for current metric
+        renderChart(selectedMetric);
+    } catch (error) {
+        console.error('Error loading body data:', error);
+        statusEl.textContent = 'Error loading data';
+        statusEl.className = 'load-status';
+        btn.textContent = 'LOAD DATA';
+        btn.classList.remove('loading');
+        btn.disabled = false;
+    }
+}
+window.loadBodyData = loadBodyData;
+
+// ============================================================================
+// METRIC SELECTION
+// ============================================================================
+function selectMetric(metric) {
+    selectedMetric = metric;
+    document.querySelectorAll('.metric-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.metric === metric);
+    });
+
+    // If data is loaded, re-render chart
+    if (cachedBodyData) {
+        renderChart(metric);
+    }
+}
+window.selectMetric = selectMetric;
+
+// ============================================================================
+// CHART RENDERING
+// ============================================================================
+function renderChart(metric) {
+    const canvas = document.getElementById('bodyChart');
+    const emptyState = document.getElementById('chartEmptyState');
+
+    if (!cachedBodyData || cachedBodyData.length === 0) {
+        canvas.style.display = 'none';
+        emptyState.style.display = 'flex';
+        emptyState.querySelector('.chart-empty-text').textContent = 'No measurements found in the last 6 months.';
+        return;
+    }
+
+    // Filter records that have data for this metric
+    const filteredData = cachedBodyData.filter(d => d[metric] !== null && d[metric] !== undefined && d[metric] > 0);
+
+    if (filteredData.length === 0) {
+        canvas.style.display = 'none';
+        emptyState.style.display = 'flex';
+        emptyState.querySelector('.chart-empty-text').textContent = `No "${METRICS[metric].label}" data found in the last 6 months.`;
+        return;
+    }
+
+    emptyState.style.display = 'none';
+    canvas.style.display = 'block';
+
+    const metricInfo = METRICS[metric];
+    const displayUnit = getDisplayUnit(metricInfo.type);
+
+    const labels = filteredData.map(d => {
+        const date = new Date(d.date);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    });
+
+    const values = filteredData.map(d => {
+        const rawValue = d[metric];
+        const converted = convertFromStorageUnits(rawValue, metricInfo.type);
+        return Math.round(converted * 100) / 100;
+    });
+
+    // Destroy existing chart
+    if (bodyChart) {
+        bodyChart.destroy();
+    }
+
+    const ctx = canvas.getContext('2d');
+
+    // Create gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 280);
+    gradient.addColorStop(0, 'rgba(255, 61, 0, 0.3)');
+    gradient.addColorStop(1, 'rgba(255, 61, 0, 0.0)');
+
+    bodyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `${metricInfo.label} (${displayUnit})`,
+                data: values,
+                borderColor: '#ff3d00',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                pointBackgroundColor: '#ff6d3d',
+                pointBorderColor: '#ff3d00',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: '#ffbb00',
+                fill: true,
+                tension: 0.3,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 600,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#a0a0a5',
+                        font: { family: "'Space Mono', monospace", size: 11 },
+                        boxWidth: 12,
+                        boxHeight: 12,
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 17, 19, 0.95)',
+                    titleColor: '#ff6d3d',
+                    bodyColor: '#fff',
+                    borderColor: '#2a2a2d',
+                    borderWidth: 1,
+                    titleFont: { family: "'Bebas Neue', sans-serif", size: 14, weight: 'normal' },
+                    bodyFont: { family: "'Space Mono', monospace", size: 12 },
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            let val = context.parsed.y;
+                            let extra = '';
+                            if (metric === 'height') {
+                                // Always show ft/in conversion in tooltip
+                                const inches = currentUnits === 'metric' ? cmToIn(val) : val;
+                                extra = ` (${formatHeightFtIn(inches)})`;
+                            }
+                            return `${val} ${displayUnit}${extra}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#606065',
+                        font: { family: "'Space Mono', monospace", size: 10 },
+                        maxRotation: 45,
+                    },
+                    grid: { color: 'rgba(42, 42, 45, 0.4)' },
+                    border: { color: '#2a2a2d' }
+                },
+                y: {
+                    ticks: {
+                        color: '#606065',
+                        font: { family: "'Space Mono', monospace", size: 10 },
+                        callback: function(value) { return value + ' ' + displayUnit; }
+                    },
+                    grid: { color: 'rgba(42, 42, 45, 0.4)' },
+                    border: { color: '#2a2a2d' }
+                }
+            }
+        }
+    });
+}
+
+// ============================================================================
+// TOAST
+// ============================================================================
+function showSuccessToast() {
+    const toast = document.getElementById('successToast');
+    toast.classList.add('active');
+    setTimeout(() => toast.classList.remove('active'), 3000);
+}
+</script>
+
+<!-- ============================================================ -->
+<!-- PFRA CALCULATOR LOGIC (EXISTING — UNCHANGED)                  -->
+<!-- ============================================================ -->
 <script>
 // ============================================================================
 // SCORING TABLES — All values from USAF PFRA, effective 1 Mar 2026
