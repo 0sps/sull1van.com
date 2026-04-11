@@ -349,7 +349,10 @@
 <div class="container">
     <header>
         <div class="logo"><a href="app.html"><h1>SEAN'S LOG</h1></a></div>
-        <a href="app.html" class="back-btn">← Back</a>
+        <div id="authButtons">
+            <button class="back-btn" id="loginBtn" style="display: none; border-color: var(--success); color: var(--success);" onclick="login()">Login for Body Data</button>
+            <a href="app.html" class="back-btn">← Back</a>
+        </div>
     </header>
 
     <!-- ============================================================ -->
@@ -580,16 +583,16 @@
 <!-- ============================================================ -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
     import { getFirestore, collection, doc, getDocs, setDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
     const firebaseConfig = {
-        apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
-        authDomain: "workout-c7be0.firebaseapp.com",
-        projectId: "workout-c7be0",
-        storageBucket: "workout-c7be0.firebasestorage.app",
-        messagingSenderId: "625595909146",
-        appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        apiKey: "AIzaSyBsWzW3b-xc-2wB22-w9GUh1J75_FsqMTo",
+        authDomain: "bodydata-7a30d.firebaseapp.com",
+        projectId: "bodydata-7a30d",
+        storageBucket: "bodydata-7a30d.firebasestorage.app",
+        messagingSenderId: "266494792101",
+        appId: "1:266494792101:web:ed98ea3d19f59d2189184c"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -612,10 +615,23 @@
             window.currentUser = user;
             window.firebaseReady = true;
             document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('loginBtn').style.display = 'none';
         } else {
-            window.location.href = 'index.html';
+            // Show login button instead of redirecting
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('loginBtn').style.display = 'inline-block';
         }
     });
+
+    window.login = async function() {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Login failed:", error);
+            alert("Login failed. Check console for details.");
+        }
+    }
 
     window.logout = async function () {
         await signOut(auth);
@@ -852,8 +868,17 @@ async function loadBodyData() {
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
         const startDate = sixMonthsAgo.toISOString();
 
+        if (!window.currentUser) {
+            alert("Please login first.");
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            btn.textContent = 'LOAD DATA';
+            return;
+        }
+
         const q = window.firebaseQuery(
             window.firebaseCollection(window.firebaseDb, 'bodyMeasurements'),
+            window.firebaseWhere('userId', '==', window.currentUser.uid),
             window.firebaseWhere('date', '>=', startDate),
             window.firebaseOrderBy('date', 'asc')
         );
