@@ -612,10 +612,16 @@
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            window.currentUser = user;
-            window.firebaseReady = true;
-            document.getElementById('loadingOverlay').style.display = 'none';
-            document.getElementById('loginBtn').style.display = 'none';
+            if (user.email === 'sspsful@gmail.com') {
+                window.currentUser = user;
+                window.firebaseReady = true;
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'none';
+            } else {
+                alert("Unauthorized: Only sspsful@gmail.com can access this data.");
+                signOut(auth);
+                document.getElementById('loginBtn').style.display = 'inline-block';
+            }
         } else {
             // Show login button instead of redirecting
             document.getElementById('loadingOverlay').style.display = 'none';
