@@ -258,42 +258,18 @@
             display: flex;
         }
 
-        /* active card state (desktop) */
-        .test-card.active-card {
-            background: var(--surface2);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 1px var(--accent);
-        }
-
-        .test-card:hover {
-            background: var(--surface2);
-            border-color: var(--border2);
-        }
-
-        .section-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            text-transform: uppercase;
-            padding: 12px 0 4px;
-        }
-
         .test-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: var(--card-r);
-            padding: 14px 16px;
+            padding: 16px;
             cursor: pointer;
-            transition: border-color 0.18s, background 0.18s;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-        }
-
-        .test-card:active {
-            background: var(--surface2);
             border-color: var(--border2);
         }
 
@@ -1394,6 +1370,56 @@
             }
 
             const sections = [];
+            
+            // ── HERO WIDGET ──
+            const isSearching = document.getElementById('testSearch').value.trim() !== '';
+            if (!isSearching && activeCategory === 'All') {
+                let totalTestsCount = allTests.length;
+                let latestDateStr = '';
+                let totalOOR = 0;
+                
+                allTests.forEach(t => {
+                    if (t.points && t.points.length > 0) {
+                        const last = t.points[t.points.length - 1];
+                        if (!latestDateStr || last.date > latestDateStr) latestDateStr = last.date;
+                        
+                        if (t.type === 'qualitative') {
+                            if (qualStatus(last.rawResult) === 'reactive') totalOOR++;
+                        } else if (t.numericPts.length > 0) {
+                            const lastNum = t.numericPts[t.numericPts.length - 1];
+                            const rStr = lastNum.rawRange || t.range;
+                            const parsed = parseRange(rStr);
+                            if (parsed) {
+                                const stat = isInRange(lastNum.numVal, parsed);
+                                if (stat === 'high' || stat === 'low') totalOOR++;
+                            }
+                        }
+                    }
+                });
+
+                sections.push(`
+                <div class="hero-widget">
+                    <div class="hero-glow"></div>
+                    <div class="hero-content">
+                        <div class="hero-kpi">
+                            <div class="hero-kpi-val" style="color: ${totalOOR > 0 ? 'var(--red)' : 'var(--text)'}">${totalOOR}</div>
+                            <div class="hero-kpi-lbl">Out of Range</div>
+                        </div>
+                        <div class="hero-kpi-divider"></div>
+                        <div class="hero-kpi">
+                            <div class="hero-kpi-val c-text">${totalTestsCount}</div>
+                            <div class="hero-kpi-lbl">Biomarkers</div>
+                        </div>
+                        <div class="hero-kpi-divider"></div>
+                        <div class="hero-kpi">
+                            <div class="hero-kpi-val c-text" style="font-size:1.15rem; transform: translateY(2px);">${latestDateStr ? fmtDate(latestDateStr).replace(/,\s*/, '') : 'N/A'}</div>
+                            <div class="hero-kpi-lbl">Last Lab</div>
+                        </div>
+                    </div>
+                </div>
+                `);
+            }
+
             Object.entries(byCategory).forEach(([cat, tests]) => {
                 sections.push(`<div class="section-label">${cat}</div>`);
                 tests.forEach(t => {
