@@ -1707,11 +1707,6 @@
             const isGrid = layout.classList.contains('is-grid-view');
             document.getElementById('grid-icon').style.display = isGrid ? 'none' : 'block';
             document.getElementById('list-icon').style.display = isGrid ? 'block' : 'none';
-
-            localStorage.setItem('labs-view-mode', isGrid ? 'grid' : 'list');
-
-            // Refresh the current test if any, to ensure it renders correctly in the new layout
-            if (currentTestName) openTest(currentTestName, true);
         }
 
         window.toggleTheme = function () {
@@ -1723,7 +1718,7 @@
 
             refreshThemeCache();
             if (activeCategory) applyFilters();
-            if (currentTestName) openTest(currentTestName, true);
+            if (currentTestName) openTest(currentTestName);
 
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         };
@@ -1731,19 +1726,9 @@
         // ── INIT ─────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             refreshThemeCache();
-            const root = document.documentElement;
-            const isLight = root.classList.contains('light-mode');
+            const isLight = document.documentElement.classList.contains('light-mode');
             document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
             document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
-
-            // Load saved layout view mode
-            const savedView = localStorage.getItem('labs-view-mode');
-            if (savedView === 'grid' && isDesktop()) {
-               const layout = document.querySelector('.layout');
-               layout.classList.add('is-grid-view');
-               document.getElementById('grid-icon').style.display = 'none';
-               document.getElementById('list-icon').style.display = 'block';
-            }
         });
 
         // ── DATA & STATE ──────────────────────────────────────────────
@@ -1788,9 +1773,9 @@
             if (!result) return 'unknown';
             // Strip spaces and hyphens so "Non-Reactive" becomes "nonreactive"
             const r = String(result).toLowerCase().replace(/[\s-]/g, '');
-            // Check negative explicitly first.
-            if (QUAL_NEGATIVE.some(k => r === k || r.includes(k))) return 'clear';
-            if (QUAL_POSITIVE.some(k => r === k || r.includes(k))) return 'reactive';
+            // Always check negative strictly first. "nonreactive" contains "reactive".
+            if (QUAL_NEGATIVE.some(k => r.includes(k))) return 'clear';
+            if (QUAL_POSITIVE.some(k => r.includes(k))) return 'reactive';
             return 'unknown';
         }
 
@@ -1950,23 +1935,6 @@
                     const rp = sortedPoints.find(p => p.rawRange && isNaN(parseFloat(p.rawRange)));
                     if (rp) bestRange = rp.rawRange;
 
-                    // Determine OOR status once during load
-                    let isOOR = false;
-                    const lastPt = sortedPoints[sortedPoints.length - 1];
-                    if (lastPt) {
-                        if (type === 'qualitative') {
-                            if (qualStatus(lastPt.rawResult) === 'reactive') isOOR = true;
-                        } else if (numericPts.length > 0) {
-                            const lastNum = numericPts[numericPts.length - 1];
-                            const rStr = lastNum.rawRange || bestRange;
-                            const parsed = parseRange(rStr);
-                            if (parsed) {
-                                const stat = isInRange(lastNum.numVal, parsed);
-                                if (stat === 'high' || stat === 'low') isOOR = true;
-                            }
-                        }
-                    }
-
                     return {
                         name:       d.name,
                         unit:       d.unit  || null,
@@ -1975,7 +1943,6 @@
                         points:     sortedPoints,
                         numericPts: numericPts,
                         category:   categorize(d.name),
-                        isOOR:      isOOR
                     };
                 });
 
@@ -2066,9 +2033,20 @@
                 allTests.forEach(t => {
                     if (t.points && t.points.length > 0) {
                         const last = t.points[t.points.length - 1];
+                        // Use parseISODate for reliable cross-browser date comparison
                         if (!latestDateStr || parseISODate(last.date) > parseISODate(latestDateStr)) latestDateStr = last.date;
 
-                        if (t.isOOR) totalOOR++;
+                        if (t.type === 'qualitative') {
+                            if (qualStatus(last.rawResult) === 'reactive') totalOOR++;
+                        } else if (t.numericPts.length > 0) {
+                            const lastNum = t.numericPts[t.numericPts.length - 1];
+                            const rStr = lastNum.rawRange || t.range;
+                            const parsed = parseRange(rStr);
+                            if (parsed) {
+                                const stat = isInRange(lastNum.numVal, parsed);
+                                if (stat === 'high' || stat === 'low') totalOOR++;
+                            }
+                        }
                     }
                 });
 
@@ -2320,97 +2298,104 @@
             };
         }
 
-        function getKPIBoxHtml(label, val, sub, valClass = 'c-text', extraStyles = '') {
+        function getKPIHtml(t) {
+            const s = calcTestStats(t);
+
+            if (s.type === 'qualitative') {
+                return `
+                <div class="kpi-row grid-kpi-row">
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${s.totalCount}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
+                </div>`;
+            }
+
+            if (s.type === 'numeric-empty') {
+                return `
+                <div class="kpi-row grid-kpi-row">
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val c-text">—</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text">—</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Trend</div><div class="kpi-val c-text">—</div></div>
+                </div>`;
+            }
+
+            const trendHtml = s.trendArrowVal
+                ? `<div class="kpi-val ${s.trendVal === '=' ? 'c-text' : s.trendColorClass}">${s.trendVal === '=' ? 'No change' : s.trendArrowVal}</div><div class="kpi-sub" style="margin-top:2px;">vs ${s.prevDate}</div>`
+                : `<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>`;
+
             return `
-            <div class="kpi-box">
-                <div class="kpi-label">${label}</div>
-                <div class="kpi-val ${valClass}" style="${extraStyles}">${val}</div>
-                ${sub ? `<div class="kpi-sub" style="margin-top:2px;">${sub}</div>` : ''}
+            <div class="kpi-row grid-kpi-row">
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal} <span style="font-size:0.6rem;color:var(--muted)">${s.unit}</span></div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
             </div>`;
         }
 
-        function getKPIHtml(t) {
-            const s = calcTestStats(t);
-            let boxes = '';
-
-            if (s.type === 'qualitative') {
-                boxes += getKPIBoxHtml('Latest', s.latestLabel, s.latestDate, s.latestColorClass);
-                boxes += getKPIBoxHtml('Target Range', s.rangeText, 'Ref. interval', 'c-text', 'font-size:0.95rem;');
-                boxes += getKPIBoxHtml('Tests', s.totalCount, 'Total records');
-            } else if (s.type === 'numeric-empty') {
-                boxes += getKPIBoxHtml('Latest', '—', '', 'c-text');
-                boxes += getKPIBoxHtml('Target Range', '—', '', 'c-text');
-                boxes += getKPIBoxHtml('Trend', '—', '', 'c-text');
-            } else {
-                const latestVal = `${s.latestVal} <span style="font-size:0.6rem;color:var(--muted)">${s.unit}</span>`;
-                const trendVal = s.trendArrowVal || '—';
-                const trendSub = s.trendArrowVal ? `vs ${s.prevDate}` : 'Insufficient data';
-                const trendClass = s.trendVal === '=' ? 'c-text' : s.trendColorClass;
-
-                boxes += getKPIBoxHtml('Latest', latestVal, s.latestDate, s.latestColorClass);
-                boxes += getKPIBoxHtml('Target Range', s.rangeText, 'Ref. interval', 'c-text', 'font-size:0.95rem;');
-                boxes += getKPIBoxHtml('Trend', trendVal, trendSub, trendClass);
-            }
-
-            return `<div class="kpi-row grid-kpi-row">${boxes}</div>`;
-        }
-
-        function openTest(name, forceRefresh = false) {
+        function openTest(name) {
             const t = allTests.find(x => x.name === name);
             if (!t) return;
 
-            const layout = document.querySelector('.layout');
-            const isGridView = layout.classList.contains('is-grid-view');
+            if (isDesktop()) {
+                const layout = document.querySelector('.layout');
+                if (layout.classList.contains('is-grid-view')) {
+                    // Collapse any other open card first
+                    document.querySelectorAll('.test-card.expanded').forEach(el => {
+                        if (el.id !== `test-btn-${safeId(name)}`) {
+                            el.classList.remove('expanded');
+                            el.removeAttribute('data-grid-open');
+                            const container = el.querySelector('.grid-detail-container');
+                            if (container) setTimeout(() => container.remove(), 370);
+                        }
+                    });
 
-            if (isDesktop() && isGridView) {
-                const cardId = `test-btn-${safeId(name)}`;
-                const cardEl = document.getElementById(cardId);
-                
-                // Collapse any other open card first
-                document.querySelectorAll('.test-card.expanded').forEach(el => {
-                    if (el.id !== cardId) {
-                        collapseGridCard(el);
-                    }
-                });
+                    const cardId = `test-btn-${safeId(name)}`;
+                    const cardEl = document.getElementById(cardId);
+                    if (cardEl) {
+                        // Toggle: clicking an open card collapses it
+                        if (cardEl.hasAttribute('data-grid-open')) {
+                            cardEl.classList.remove('expanded');
+                            cardEl.removeAttribute('data-grid-open');
+                            const container = cardEl.querySelector('.grid-detail-container');
+                            if (container) cardEl._removeTimer = setTimeout(() => { container.remove(); cardEl._removeTimer = null; }, 370);
+                            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+                            currentTestName = null;
+                            return;
+                        }
 
-                if (cardEl) {
-                    const alreadyOpen = cardEl.hasAttribute('data-grid-open');
-                    if (alreadyOpen && !forceRefresh) {
-                        collapseGridCard(cardEl);
-                        currentTestName = null;
-                        return;
-                    }
+                        currentTestName = name;
+                        cardEl.setAttribute('data-grid-open', 'true');
+                        if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
-                    currentTestName = name;
-                    cardEl.setAttribute('data-grid-open', 'true');
-                    if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+                        if (cardEl._removeTimer) {
+                            clearTimeout(cardEl._removeTimer);
+                            cardEl._removeTimer = null;
+                        }
+                        const existingContainer = cardEl.querySelector('.grid-detail-container');
+                        if (existingContainer) existingContainer.remove();
 
-                    if (cardEl._removeTimer) {
-                        clearTimeout(cardEl._removeTimer);
-                        cardEl._removeTimer = null;
-                    }
-                    const existingContainer = cardEl.querySelector('.grid-detail-container');
-                    if (existingContainer) existingContainer.remove();
+                        // Build expanded content wrapper
+                        const gridDetail = document.createElement('div');
+                        gridDetail.className = 'grid-detail-container';
+                        const inner = document.createElement('div');
+                        inner.className = 'grid-detail-inner';
 
-                    const gridDetail = document.createElement('div');
-                    gridDetail.className = 'grid-detail-container';
-                    const inner = document.createElement('div');
-                    inner.className = 'grid-detail-inner';
+                        // Close button + KPI row (pure HTML — no canvas yet)
+                        inner.innerHTML = `
+                            <div class="grid-expand-header">
+                                <button class="detail-nav-btn" style="width:28px;height:28px;" onclick="event.stopPropagation();openTest('${escStr(t.name)}')" aria-label="Close detail">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            ${getKPIHtml(t)}
+                        `;
 
-                    inner.innerHTML = `
-                        <div class="grid-expand-header">
-                            <button class="detail-nav-btn" style="width:28px;height:28px;" onclick="event.stopPropagation();openTest('${escStr(t.name)}')" aria-label="Close detail">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                            </button>
-                        </div>
-                        ${getKPIHtml(t)}
-                    `;
+                        gridDetail.appendChild(inner);
+                        // Append to DOM BEFORE animating so content has layout
+                        cardEl.appendChild(gridDetail);
 
-                    gridDetail.appendChild(inner);
-                    cardEl.appendChild(gridDetail);
-
-                    void gridDetail.offsetWidth;
-                    cardEl.classList.add('expanded');
+                        // Force reflow, then trigger the 0fr → 1fr animation
+                        void gridDetail.offsetWidth;
+                        cardEl.classList.add('expanded');
 
                         // Render pure-HTML sections immediately (no canvas needed)
                         if (t.type === 'qualitative') {
@@ -2490,23 +2475,45 @@
         }
 
         function renderKPIs(t) {
-            const dc = document.getElementById('detailContent');
-            const kpiRow = dc.querySelector('.kpi-row');
-            if (kpiRow) kpiRow.outerHTML = getKPIHtml(t);
-        }
+            // Delegate all KPI computation to the shared stats engine.
+            const s = calcTestStats(t);
 
-        function collapseGridCard(el) {
-            el.classList.remove('expanded');
-            el.removeAttribute('data-grid-open');
-            const container = el.querySelector('.grid-detail-container');
-            if (container) {
-                if (el._removeTimer) clearTimeout(el._removeTimer);
-                el._removeTimer = setTimeout(() => {
-                    container.remove();
-                    el._removeTimer = null;
-                }, 370);
+            const latestEl  = document.getElementById('kpiLatest');
+            const latestDate = document.getElementById('kpiLatestDate');
+            const rangeEl   = document.getElementById('kpiRange');
+            const trendEl   = document.getElementById('kpiTrend');
+            const trendSub  = document.getElementById('kpiTrendSub');
+
+            if (s.type === 'qualitative') {
+                latestEl.textContent  = s.latestLabel;
+                latestEl.className    = 'kpi-val ' + s.latestColorClass;
+                latestDate.textContent = s.latestDate;
+                rangeEl.textContent   = s.rangeText;
+                rangeEl.className     = 'kpi-val c-text';
+                trendEl.textContent   = String(s.totalCount);
+                trendEl.className     = 'kpi-val c-text';
+                trendSub.textContent  = s.trendSub;
+                return;
             }
-            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+
+            if (s.type === 'numeric-empty') {
+                latestEl.textContent  = '—'; latestEl.className = 'kpi-val c-text';
+                latestDate.textContent = '';
+                rangeEl.textContent   = '—'; rangeEl.className  = 'kpi-val c-text';
+                trendEl.textContent   = '—'; trendEl.className  = 'kpi-val c-text';
+                trendSub.textContent  = '';
+                return;
+            }
+
+            // Numeric
+            latestEl.textContent  = s.latestVal;
+            latestEl.className    = 'kpi-val ' + s.latestColorClass;
+            latestDate.textContent = s.latestDate;
+            rangeEl.textContent   = s.rangeText;
+            rangeEl.className     = 'kpi-val c-text';
+            trendEl.textContent   = s.trendVal;
+            trendEl.className     = `kpi-val ${s.trendColorClass}`;
+            trendSub.textContent  = s.trendSub;
         }
 
         function renderGauge(t, container) {
