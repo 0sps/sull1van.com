@@ -444,12 +444,28 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            min-height: 0; /* required for grid-template-rows: 0fr collapse */
         }
 
         .grid-kpi-row {
-            margin-top: 16px;
-            padding-top: 16px;
+            margin-top: 0;
+            padding-top: 14px;
+            border-top: none;
+        }
+
+        /* Close-button strip at top of expanded grid detail */
+        .grid-expand-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 12px 0 4px;
+            margin-top: 8px;
             border-top: 1px solid var(--border);
+        }
+
+        /* No hover lift when a card is already expanded */
+        .test-card.expanded:hover {
+            transform: none;
         }
 
         .test-card::before {
@@ -1093,6 +1109,29 @@
             .layout.is-grid-view #panelList .hero-widget {
                 grid-column: 1 / -1;
                 margin-bottom: 0;
+            }
+
+            /* Expanded card spans full grid width so detail content has room */
+            .layout.is-grid-view #panelList .test-card.expanded {
+                grid-column: 1 / -1;
+                cursor: default;
+            }
+
+            /* Inside expanded grid cards, give sections desktop-style padding */
+            .layout.is-grid-view .grid-detail-inner .kpi-row {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 14px 0 10px;
+            }
+            .layout.is-grid-view .grid-detail-inner .range-bar-section,
+            .layout.is-grid-view .grid-detail-inner .std-timeline,
+            .layout.is-grid-view .grid-detail-inner .history-section,
+            .layout.is-grid-view .grid-detail-inner .chart-section,
+            .layout.is-grid-view .grid-detail-inner .detail-divider {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .layout.is-grid-view .grid-detail-inner .chart-inner {
+                height: 200px !important;
             }
 
             /* Full-height, no mobile stacking */
@@ -2003,62 +2042,76 @@
             if (isDesktop()) {
                 const layout = document.querySelector('.layout');
                 if (layout.classList.contains('is-grid-view')) {
+                    // Collapse any other open card first
                     document.querySelectorAll('.test-card.expanded').forEach(el => {
                         if (el.id !== `test-btn-${safeId(name)}`) {
                             el.classList.remove('expanded');
                             el.removeAttribute('data-grid-open');
                             const container = el.querySelector('.grid-detail-container');
-                            if (container) setTimeout(() => container.remove(), 300);
+                            if (container) setTimeout(() => container.remove(), 370);
                         }
                     });
 
                     const cardId = `test-btn-${safeId(name)}`;
                     const cardEl = document.getElementById(cardId);
                     if (cardEl) {
+                        // Toggle: clicking an open card collapses it
                         if (cardEl.hasAttribute('data-grid-open')) {
                             cardEl.classList.remove('expanded');
                             cardEl.removeAttribute('data-grid-open');
                             const container = cardEl.querySelector('.grid-detail-container');
-                            if (container) setTimeout(() => container.remove(), 300);
+                            if (container) setTimeout(() => container.remove(), 370);
+                            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
                             currentTestName = null;
                             return;
                         }
 
                         currentTestName = name;
-                        cardEl.classList.add('expanded');
                         cardEl.setAttribute('data-grid-open', 'true');
+                        if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
-                        const dyn = document.getElementById('detailDynamic');
-                        if (dyn) dyn.innerHTML = '';
-
+                        // Build expanded content wrapper
                         const gridDetail = document.createElement('div');
                         gridDetail.className = 'grid-detail-container';
-
                         const inner = document.createElement('div');
                         inner.className = 'grid-detail-inner';
-                        inner.innerHTML = getKPIHtml(t);
+
+                        // Close button + KPI row (pure HTML — no canvas yet)
+                        inner.innerHTML = `
+                            <div class="grid-expand-header">
+                                <button class="detail-nav-btn" style="width:28px;height:28px;" onclick="event.stopPropagation();openTest('${escStr(t.name)}')" aria-label="Close detail">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            ${getKPIHtml(t)}
+                        `;
+
                         gridDetail.appendChild(inner);
+                        // Append to DOM BEFORE animating so content has layout
+                        cardEl.appendChild(gridDetail);
 
-                        if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
+                        // Force reflow, then trigger the 0fr → 1fr animation
+                        void gridDetail.offsetWidth;
+                        cardEl.classList.add('expanded');
 
+                        // Render pure-HTML sections immediately (no canvas needed)
                         if (t.type === 'qualitative') {
                             renderSTDTimeline(t, inner);
                         } else {
                             if (t.numericPts.length > 0) {
                                 renderGauge(t, inner);
-                                if (t.numericPts.length > 1) {
-                                    renderTrendChart(t, inner);
-                                }
                             }
                             renderHistoryTable(t, inner);
                         }
 
-                        cardEl.appendChild(gridDetail);
-                        // Force reflow and expand
-                        void gridDetail.offsetWidth;
-                        setTimeout(()=> {
-                           cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                        }, 350);
+                        // Render Chart.js trend after animation ends so canvas has real dimensions
+                        setTimeout(() => {
+                            if (t.type !== 'qualitative' && t.numericPts.length > 1) {
+                                renderTrendChart(t, inner);
+                            }
+                            cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }, 380);
+
                         return;
                     }
                 }
