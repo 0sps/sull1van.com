@@ -2710,16 +2710,25 @@
 
         onAuthStateChanged(auth, user => {
             if (!user) {
-                // Show a non-intrusive login banner so the user can authenticate
-                const loadingEl = document.getElementById('loadingState');
-                if (loadingEl) {
-                    loadingEl.innerHTML = `
-                        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                            <div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
-                            <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'DM Mono',monospace;font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
-                        </div>`;
-                }
+                // Auto-trigger the Google popup immediately
+                signInWithPopup(auth, new GoogleAuthProvider())
+                    .then(() => {
+                        document.dispatchEvent(new Event('labs:reload'));
+                    })
+                    .catch(err => {
+                        // Popup was blocked or dismissed — show a fallback button
+                        console.warn('Auto sign-in failed, showing manual button:', err.code);
+                        const loadingEl = document.getElementById('loadingState');
+                        if (loadingEl) {
+                            loadingEl.innerHTML = `
+                                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
+                                    <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'DM Mono',monospace;font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
+                                    <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);opacity:0.6;">(popup blocked — click above to continue)</div>
+                                </div>`;
+                        }
+                    });
             }
         });
 
