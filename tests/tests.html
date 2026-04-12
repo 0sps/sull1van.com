@@ -34,7 +34,7 @@
             --accent: #4f9cf8;
             --pill-r: 12px;
             --card-r: 18px;
-            --top-bar-h: 69px;     /* B1: top-bar height — update here if padding changes */
+            --top-bar-h: 69px;
 
             --glass-bg: rgba(10, 11, 14, 0.88);
             --card-glass: rgba(255, 255, 255, 0.02);
@@ -207,7 +207,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
-            top: var(--top-bar-h); /* B1: derived from CSS var, not a magic pixel value */
+            top: var(--top-bar-h);
             z-index: 99;
             border-bottom: 1px solid var(--border);
         }
@@ -1512,7 +1512,6 @@
         }
 
         /* ── CHART HEIGHT ── */
-        /* B5: single source of truth for chart height — mobile base; desktop + grid override below */
         .chart-inner {
             position: relative;
             height: 220px;
@@ -1736,11 +1735,10 @@
         let currentTestName = null;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
-        let _dataLoaded = false;    // Bug#1 guard: prevent loadData() double-fire
+        let _dataLoaded = false;
 
         // Qualitative result normalization
         const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'nondetected', 'undetected', 'absent'];
-        // TD#7: removed 'none' — too broad, matched any result containing "none"
         const QUAL_POSITIVE = ['reactive', 'positive', 'detected', 'present'];
 
         function qualStatus(result) {
@@ -1753,7 +1751,6 @@
             return 'unknown';
         }
 
-        // B6: Centralised display helpers — change labels/colours in one place only
         function qualLabel(status)      { return status === 'clear' ? 'CLEAR' : status === 'reactive' ? '\u26a0 REACTIVE' : '?'; }
         function qualBadge(status)      { return status === 'clear' ? 'CLEAR' : status === 'reactive' ? 'REACTIVE' : 'UNKNOWN'; }
         function qualColorClass(status) { return status === 'clear' ? 'c-green' : status === 'reactive' ? 'c-red' : 'c-amber'; }
@@ -1762,7 +1759,6 @@
         // Category taxonomy
         const CATEGORIES = {
             'STDs': [
-                // TD#9: removed duplicate 'SYPHILIS' entry
                 'HIV', 'HEPATITIS', 'SYPHILIS', 'CHLAMYDIA', 'GONORRHEA', 'HSV', 'TRICHOMONAS'
             ],
             'Hormones': [
@@ -1788,7 +1784,6 @@
             ],
         };
 
-        // TD#8: tests where a higher value is better (↑ = good, ↓ = bad)
         const HIGHER_IS_BETTER = new Set([
             'HDL', 'HDL CHOLESTEROL', 'VIT D', 'VITAMIN D', 'GFR', 'TESTOSTERONE',
             'FERRITIN', 'B12', 'FOLATE', 'ALBUMIN', 'HGB', 'RBC'
@@ -1841,8 +1836,6 @@
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData() {
-            // Bug#1: only allow one successful load — prevents double-fire from
-            // DOMContentLoaded + labs:reload both running concurrently
             if (_dataLoaded) return;
             try {
                 // Wait for Firestore to be initialised by the Firebase module block below
@@ -1875,9 +1868,6 @@
                             rawResult:  rawResult,
                             numVal:     isNumeric && numVal !== null ? numVal : null,
                             isNumeric:  isNumeric,
-                            // Bug#2: reject integer rawRange values — these are spreadsheet
-                            // date serials (e.g. 54697) that corrupted the source JSON.
-                            // A valid range is always a string like "30-100" or "<5".
                             rawRange:   (p.rawRange && typeof p.rawRange === 'string') ? p.rawRange : null,
                             // preserve audit fields
                             testResultId: p.testResultId || null,
@@ -1920,7 +1910,7 @@
                 allTests = allTests.filter(Boolean);
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
-                _dataLoaded = true; // Bug#1: mark load complete so re-triggers are no-ops
+                _dataLoaded = true;
                 buildChips();
                 applyFilters();
                 document.getElementById('loadingState').remove();
@@ -2067,8 +2057,8 @@
             if (t.type === 'qualitative') {
                 // Most-recent status
                 const status = qualStatus(last.rawResult);
-                const badgeClass = qualBadgeClass(status); // B6: deduplicated helper
-                const badgeText = qualBadge(status);        // B6: deduplicated helper
+                const badgeClass = qualBadgeClass(status);
+                const badgeText = qualBadge(status);
                 const checkCount = t.points.filter(p => qualStatus(p.rawResult) === 'clear').length;
 
                 return `
@@ -2188,8 +2178,8 @@
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
                 const s = qualStatus(last.rawResult);
-                const lVal   = qualLabel(s);       // B6: deduplicated helper
-                const lClass = qualColorClass(s);  // B6: deduplicated helper
+                const lVal   = qualLabel(s);
+                const lClass = qualColorClass(s);
                 return `
                 <div class="kpi-row grid-kpi-row">
                     <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lClass}">${lVal}</div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(last.date)}</div></div>
@@ -2256,7 +2246,6 @@
                             cardEl.classList.remove('expanded');
                             cardEl.removeAttribute('data-grid-open');
                             const container = cardEl.querySelector('.grid-detail-container');
-                            // Bug#5: store timer ref on the element so rapid re-open can cancel it
                             if (container) cardEl._removeTimer = setTimeout(() => { container.remove(); cardEl._removeTimer = null; }, 370);
                             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
                             currentTestName = null;
@@ -2267,8 +2256,6 @@
                         cardEl.setAttribute('data-grid-open', 'true');
                         if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
-                        // Bug#5: cancel any in-flight remove timeout and clear existing
-                        // container so rapid clicks don't orphan duplicate DOM nodes.
                         if (cardEl._removeTimer) {
                             clearTimeout(cardEl._removeTimer);
                             cardEl._removeTimer = null;
@@ -2388,8 +2375,8 @@
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
                 const s = qualStatus(last.rawResult);
-                latestEl.textContent = qualLabel(s);                   // B6: deduplicated helper
-                latestEl.className = 'kpi-val ' + qualColorClass(s);   // B6: deduplicated helper
+                latestEl.textContent = qualLabel(s);
+                latestEl.className = 'kpi-val ' + qualColorClass(s);
                 latestDate.textContent = fmtDate(last.date);
                 rangeEl.textContent = 'Nonreactive';
                 rangeEl.className = 'kpi-val c-text';
@@ -2437,7 +2424,6 @@
                         trendEl.className = 'kpi-val c-text';
                         trendSub.textContent = 'No change';
                     } else {
-                        // TD#8: use HIGHER_IS_BETTER set instead of HDL-only hardcode
                         const good = trendIsGood(t.name, diff);
                         const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
                         trendEl.textContent = diff > 0 ? `+${formatVal(diff)}` : formatVal(diff);
@@ -2465,7 +2451,6 @@
             const hasMin = parsed.min !== undefined;
             const hasMax = parsed.max !== undefined;
             const rangeMin = hasMin ? parsed.min : 0;
-            // Bug#3: if val is 0 and no max, val*1.5 = 0 → trackRange = 0 → NaN layout.
             const rangeMax = hasMax ? parsed.max : (val * 1.5 || 1);
             const trackMin = rangeMin - (rangeMax - rangeMin) * 0.25;
             const trackMax = rangeMax + (rangeMax - rangeMin) * 0.25;
@@ -2536,7 +2521,6 @@
                 data: vals,
                 borderWidth: 2.5,
                 segment: {
-                    // Bug#4: renamed callback param from 'ctx' (shadows outer canvas ctx element)
                     borderColor: seg => pointColors[seg.p1DataIndex]
                 },
                 pointBackgroundColor: pointColors,
@@ -2555,7 +2539,7 @@
                         data: Array(labels.length).fill(parsed.min),
                         borderColor: 'rgba(255,255,255,0.15)',
                         borderWidth: 1,
-                        segment: { borderDash: () => [4, 4] }, // B4: Chart.js v4 requires borderDash inside segment
+                        segment: { borderDash: () => [4, 4] },
                         pointRadius: 0,
                         fill: false,
                         tension: 0,
@@ -2567,7 +2551,7 @@
                         data: Array(labels.length).fill(parsed.max),
                         borderColor: 'rgba(255,255,255,0.15)',
                         borderWidth: 1,
-                        segment: { borderDash: () => [4, 4] }, // B4: Chart.js v4 requires borderDash inside segment
+                        segment: { borderDash: () => [4, 4] },
                         pointRadius: 0,
                         fill: false,
                         tension: 0,
@@ -2713,8 +2697,6 @@
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
         function safeId(name) { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
-        // TD#13: proper HTML attribute encoder — previous escStr() only escaped single quotes,
-        // leaving double-quotes and backslashes able to break inline onclick attributes.
         function escStr(name) {
             return String(name)
                 .replace(/&/g, '&amp;')
@@ -2732,7 +2714,6 @@
         }
         function fmtDate(d) {
             if (!d) return '';
-            // B2: Normalise ISO-8601 (YYYY-MM-DD from Firestore) and slash (YYYY/MM/DD) formats
             const parts = d.replace(/-/g, '/').split('/');
             if (parts.length === 3) {
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -2800,14 +2781,11 @@
         window._labsLogin = async function () {
             try {
                 await signInWithPopup(auth, new GoogleAuthProvider());
-                // TD#6: dispatch labs:reload directly — the old window.loadData override was dead code
                 document.dispatchEvent(new Event('labs:reload'));
             } catch (err) {
                 console.error('Login failed', err);
             }
         };
-        // TD#6: removed dead window.loadData override — labs:reload listener on the
-        // non-module script calls the real loadData() function directly.
     </script>
 </body>
 
