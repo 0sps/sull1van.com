@@ -1032,8 +1032,38 @@
             display: none;
         }
 
+        .grid-toggle-btn {
+            display: none !important;
+        }
+
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
+            .grid-toggle-btn {
+                display: flex !important;
+            }
+            .layout.is-grid-view .desktop-sidebar {
+                width: 100%;
+                border-right: none;
+            }
+            .layout.is-grid-view .desktop-main {
+                display: none !important;
+            }
+            .layout.is-grid-view #panelList {
+                display: grid !important;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+                align-content: start;
+            }
+            .layout.is-grid-view #panelList .section-label {
+                grid-column: 1 / -1;
+                font-size: 0.82rem;
+                padding-top: 16px;
+                padding-left: 0;
+            }
+            .layout.is-grid-view #panelList .hero-widget {
+                grid-column: 1 / -1;
+                margin-bottom: 0;
+            }
 
             /* Full-height, no mobile stacking */
             body {
@@ -1321,7 +1351,15 @@
                 <div class="top-title">LABS</div>
                 <div class="top-subtitle">BIOMARKER TRACKER</div>
             </div>
-            <div class="top-spacer">
+            <div class="top-spacer" style="display:flex; gap: 8px;">
+                <button class="theme-toggle grid-toggle-btn" onclick="window.toggleLayout()" aria-label="Toggle Grid View">
+                    <svg id="list-icon" style="display:none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    <svg id="grid-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </button>
                 <button class="theme-toggle" onclick="window.toggleTheme()" aria-label="Toggle Dark/Light Mode">
                     <svg id="sun-icon" style="display:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1446,6 +1484,14 @@
         // ── THEME TOGGLE ─────────────────────────────────────────────
         if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
             document.documentElement.classList.add('light-mode');
+        }
+
+        window.toggleLayout = function() {
+            const layout = document.querySelector('.layout');
+            layout.classList.toggle('is-grid-view');
+            const isGrid = layout.classList.contains('is-grid-view');
+            document.getElementById('grid-icon').style.display = isGrid ? 'none' : 'block';
+            document.getElementById('list-icon').style.display = isGrid ? 'block' : 'none';
         }
 
         window.toggleTheme = function () {
@@ -1882,6 +1928,11 @@
             dc.style.flexDirection = 'column';
 
             if (isDesktop()) {
+                // If in grid view, revert to list view to show right panel
+                const layout = document.querySelector('.layout');
+                if (layout.classList.contains('is-grid-view')) {
+                    window.toggleLayout();
+                }
                 // Desktop: keep list visible, update detail in place
                 // Highlight active card
                 document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
