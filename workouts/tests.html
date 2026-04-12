@@ -207,10 +207,42 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      height: auto;
+      min-height: 0;
       transition: all 0.3s ease;
       position: relative;
     }
+
+        /* ── ACTION SHEET ── */
+        .action-sheet-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .action-sheet {
+            position: fixed; left: 0; right: 0; bottom: 0;
+            background: rgba(17, 19, 24, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 28px 28px 0 0;
+            padding: 16px 24px calc(env(safe-area-inset-bottom, 20px) + 20px);
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            border-top: 1px solid var(--border);
+        }
+        .action-sheet.visible { transform: translateY(0); }
+        .action-sheet-overlay.visible { opacity: 1; pointer-events: auto; }
+        
+        .sheet-handle { width: 40px; height: 5px; background: rgba(255,255,255,0.15); border-radius: 3px; margin: 0 auto 24px; }
+        .sheet-title { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .sheet-action { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border); font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 600; cursor: pointer; color: var(--text); transition: opacity 0.2s; }
+        .sheet-action:active { opacity: 0.6; }
+        .sheet-action:last-child { border-bottom: none; }
+        .sheet-action svg { color: var(--accent); }
 
         /* ── PANEL: TEST LIST ── */
         .panel-list {
@@ -1012,6 +1044,24 @@
 </head>
 
 <body>
+    
+    <!-- Action Sheet Overlay -->
+    <div class="action-sheet-overlay" id="actionSheetOverlay" onclick="toggleActionSheet(false)"></div>
+    <div class="action-sheet" id="actionSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">More Actions</div>
+        <div class="sheet-action" onclick="toggleActionSheet(false); alert('Analysis Report feature coming soon!');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Generate PDF Report
+        </div>
+        <div class="sheet-action" onclick="toggleActionSheet(false); alert('Goal Setting coming soon!');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/></svg>
+            Set Custom Target Baseline
+        </div>
+        <div class="sheet-action" style="color:var(--red);" onclick="toggleActionSheet(false)">
+            Cancel
+        </div>
+    </div>
 
     <!-- TOP BAR -->
     <div class="top-bar" id="globalTopBar">
@@ -1089,7 +1139,7 @@
                             <div class="detail-title" id="detailTitle">—</div>
                             <div class="detail-unit" id="detailUnit"></div>
                         </div>
-                        <button class="detail-nav-btn" aria-label="More Actions">
+                        <button class="detail-nav-btn" aria-label="More Actions" onclick="toggleActionSheet(true)">
                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                  <circle cx="12" cy="12" r="1"/>
                                  <circle cx="19" cy="12" r="1"/>
@@ -1137,12 +1187,14 @@
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
 
         // Qualitative result normalization
-        const QUAL_NEGATIVE = ['nonreactive', 'negative', 'not detected', 'absent', 'none'];
+        const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'absent', 'none'];
         const QUAL_POSITIVE = ['reactive', 'positive', 'detected', 'present'];
 
         function qualStatus(result) {
             if (!result) return 'unknown';
-            const r = String(result).toLowerCase().trim();
+            // Strip spaces and hyphens so "Non-Reactive" becomes "nonreactive"
+            const r = String(result).toLowerCase().replace(/[\s-]/g, '');
+            // Always check negative strictly first. "nonreactive" contains "reactive".
             if (QUAL_NEGATIVE.some(k => r.includes(k))) return 'clear';
             if (QUAL_POSITIVE.some(k => r.includes(k))) return 'reactive';
             return 'unknown';
@@ -1462,6 +1514,19 @@
                     }
                 });
             } catch (_) { }
+        }
+
+        // ── ACTION SHEET ─────────────────────────────────────────────
+        function toggleActionSheet(show) {
+            const sheet = document.getElementById('actionSheet');
+            const overlay = document.getElementById('actionSheetOverlay');
+            if (show) {
+                sheet.classList.add('visible');
+                overlay.classList.add('visible');
+            } else {
+                sheet.classList.remove('visible');
+                overlay.classList.remove('visible');
+            }
         }
 
         // ── OPEN TEST ────────────────────────────────────────────────
