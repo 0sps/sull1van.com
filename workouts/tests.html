@@ -2274,6 +2274,10 @@
                 document.getElementById('panelDetail').classList.add('visible');
                 document.getElementById('globalTopBar').style.display = 'none';
                 document.getElementById('globalSearchArea').style.display = 'none';
+
+                const dc = document.getElementById('detailContent');
+                dc.style.display = 'flex';
+                dc.style.flexDirection = 'column';
             }
 
             // Header
