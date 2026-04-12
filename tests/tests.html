@@ -1728,9 +1728,11 @@
         let currentTestName = null;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
+        let _dataLoaded = false;    // Bug#1 guard: prevent loadData() double-fire
 
         // Qualitative result normalization
-        const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'nondetected', 'undetected', 'absent', 'none'];
+        const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'nondetected', 'undetected', 'absent'];
+        // TD#7: removed 'none' — too broad, matched any result containing "none"
         const QUAL_POSITIVE = ['reactive', 'positive', 'detected', 'present'];
 
         function qualStatus(result) {
@@ -1746,7 +1748,8 @@
         // Category taxonomy
         const CATEGORIES = {
             'STDs': [
-                'HIV', 'HEPATITIS', 'SYPHILIS', 'CHLAMYDIA', 'GONORRHEA', 'HSV', 'TRICHOMONAS', 'SYPHILIS'
+                // TD#9: removed duplicate 'SYPHILIS' entry
+                'HIV', 'HEPATITIS', 'SYPHILIS', 'CHLAMYDIA', 'GONORRHEA', 'HSV', 'TRICHOMONAS'
             ],
             'Hormones': [
                 'TESTOSTERONE', 'TSH', 'FREE T4', 'T3', 'DHEA', 'CORTISOL', 'ESTROGEN', 'PROGESTERONE', 'LH', 'FSH'
@@ -1770,6 +1773,19 @@
                 'VIT', 'VITAMIN', 'ZINC', 'IRON', 'FERRITIN', 'B12', 'FOLATE'
             ],
         };
+
+        // TD#8: tests where a higher value is better (↑ = good, ↓ = bad)
+        const HIGHER_IS_BETTER = new Set([
+            'HDL', 'HDL CHOLESTEROL', 'VIT D', 'VITAMIN D', 'GFR', 'TESTOSTERONE',
+            'FERRITIN', 'B12', 'FOLATE', 'ALBUMIN', 'HGB', 'RBC'
+        ]);
+
+        function trendIsGood(testName, diff) {
+            if (diff === 0) return null;
+            const n = testName.toUpperCase();
+            const higherBetter = [...HIGHER_IS_BETTER].some(k => n.includes(k));
+            return higherBetter ? diff > 0 : diff < 0;
+        }
 
         function categorize(name) {
             if (!name || typeof name !== 'string') return 'Other';
@@ -1811,6 +1827,9 @@
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData() {
+            // Bug#1: only allow one successful load — prevents double-fire from
+            // DOMContentLoaded + labs:reload both running concurrently
+            if (_dataLoaded) return;
             try {
                 // Wait for Firestore to be initialised by the Firebase module block below
                 let attempts = 0;
@@ -1842,7 +1861,10 @@
                             rawResult:  rawResult,
                             numVal:     isNumeric && numVal !== null ? numVal : null,
                             isNumeric:  isNumeric,
-                            rawRange:   p.rawRange ? String(p.rawRange) : null,
+                            // Bug#2: reject integer rawRange values — these are spreadsheet
+                            // date serials (e.g. 54697) that corrupted the source JSON.
+                            // A valid range is always a string like "30-100" or "<5".
+                            rawRange:   (p.rawRange && typeof p.rawRange === 'string') ? p.rawRange : null,
                             // preserve audit fields
                             testResultId: p.testResultId || null,
                             lab:          p.lab          || null,
@@ -1884,6 +1906,7 @@
                 allTests = allTests.filter(Boolean);
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
+                _dataLoaded = true; // Bug#1: mark load complete so re-triggers are no-ops
                 buildChips();
                 applyFilters();
                 document.getElementById('loadingState').remove();
@@ -2178,7 +2201,9 @@
             let trendHtml = '<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>';
             if (prev) {
                 const diff = latest.numVal - prev.numVal;
-                const trendColor = diff > 0 ? (t.name.includes('HDL')?'c-green':'c-amber') : diff < 0 ? (t.name.includes('HDL')?'c-amber':'c-green') : 'c-text';
+                // TD#8: use HIGHER_IS_BETTER set instead of HDL-only hardcode
+                const good = trendIsGood(t.name, diff);
+                const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
                 const trendVal = (diff > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(diff));
                 trendHtml = `<div class="kpi-val ${diff===0?'c-text':trendColor}">${diff === 0 ? 'No change' : trendVal}</div>
                             <div class="kpi-sub" style="margin-top:2px;">vs ${fmtDate(prev.date)}</div>`;
@@ -2217,7 +2242,8 @@
                             cardEl.classList.remove('expanded');
                             cardEl.removeAttribute('data-grid-open');
                             const container = cardEl.querySelector('.grid-detail-container');
-                            if (container) setTimeout(() => container.remove(), 370);
+                            // Bug#5: store timer ref on the element so rapid re-open can cancel it
+                            if (container) cardEl._removeTimer = setTimeout(() => { container.remove(); cardEl._removeTimer = null; }, 370);
                             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
                             currentTestName = null;
                             return;
@@ -2226,6 +2252,15 @@
                         currentTestName = name;
                         cardEl.setAttribute('data-grid-open', 'true');
                         if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+
+                        // Bug#5: cancel any in-flight remove timeout and clear existing
+                        // container so rapid clicks don't orphan duplicate DOM nodes.
+                        if (cardEl._removeTimer) {
+                            clearTimeout(cardEl._removeTimer);
+                            cardEl._removeTimer = null;
+                        }
+                        const existingContainer = cardEl.querySelector('.grid-detail-container');
+                        if (existingContainer) existingContainer.remove();
 
                         // Build expanded content wrapper
                         const gridDetail = document.createElement('div');
@@ -2387,14 +2422,13 @@
                         trendEl.textContent = '=';
                         trendEl.className = 'kpi-val c-text';
                         trendSub.textContent = 'No change';
-                    } else if (diff > 0) {
-                        trendEl.textContent = `+${formatVal(diff)}`;
-                        trendEl.className = 'kpi-val c-red';
-                        trendSub.textContent = `↑ ${pct}%`;
                     } else {
-                        trendEl.textContent = formatVal(diff);
-                        trendEl.className = 'kpi-val c-green';
-                        trendSub.textContent = `↓ ${Math.abs(pct)}%`;
+                        // TD#8: use HIGHER_IS_BETTER set instead of HDL-only hardcode
+                        const good = trendIsGood(t.name, diff);
+                        const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
+                        trendEl.textContent = diff > 0 ? `+${formatVal(diff)}` : formatVal(diff);
+                        trendEl.className = `kpi-val ${trendColor}`;
+                        trendSub.textContent = `${diff > 0 ? '↑' : '↓'} ${Math.abs(pct)}%`;
                     }
                 } else {
                     trendEl.textContent = '—';
@@ -2417,7 +2451,8 @@
             const hasMin = parsed.min !== undefined;
             const hasMax = parsed.max !== undefined;
             const rangeMin = hasMin ? parsed.min : 0;
-            const rangeMax = hasMax ? parsed.max : val * 1.5;
+            // Bug#3: if val is 0 and no max, val*1.5 = 0 → trackRange = 0 → NaN layout.
+            const rangeMax = hasMax ? parsed.max : (val * 1.5 || 1);
             const trackMin = rangeMin - (rangeMax - rangeMin) * 0.25;
             const trackMax = rangeMax + (rangeMax - rangeMin) * 0.25;
             const trackRange = trackMax - trackMin;
@@ -2487,7 +2522,8 @@
                 data: vals,
                 borderWidth: 2.5,
                 segment: {
-                    borderColor: ctx => pointColors[ctx.p1DataIndex]
+                    // Bug#4: renamed callback param from 'ctx' (shadows outer canvas ctx element)
+                    borderColor: seg => pointColors[seg.p1DataIndex]
                 },
                 pointBackgroundColor: pointColors,
                 pointBorderColor: getCssVar('--bg'),
@@ -2663,7 +2699,16 @@
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
         function safeId(name) { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
-        function escStr(name) { return name.replace(/'/g, "\\'"); }
+        // TD#13: proper HTML attribute encoder — previous escStr() only escaped single quotes,
+        // leaving double-quotes and backslashes able to break inline onclick attributes.
+        function escStr(name) {
+            return String(name)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
         function formatVal(v) {
             if (v === null || v === undefined) return '—';
             if (Math.abs(v) >= 1000) return v.toFixed(0);
@@ -2739,18 +2784,14 @@
         window._labsLogin = async function () {
             try {
                 await signInWithPopup(auth, new GoogleAuthProvider());
-                // After login, re-trigger loadData which is already waiting for window._labsDb
-                window.loadData && window.loadData();
+                // TD#6: dispatch labs:reload directly — the old window.loadData override was dead code
+                document.dispatchEvent(new Event('labs:reload'));
             } catch (err) {
                 console.error('Login failed', err);
             }
         };
-
-        // Expose loadData globally so the login button can call it post-auth
-        window.loadData = function () {
-            // loadData is defined inside the non-module script — call it via DOMContentLoaded timing
-            document.dispatchEvent(new Event('labs:reload'));
-        };
+        // TD#6: removed dead window.loadData override — labs:reload listener on the
+        // non-module script calls the real loadData() function directly.
     </script>
 </body>
 
