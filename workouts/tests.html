@@ -13,6 +13,7 @@
     <style>
         :root {
             --bg: #0a0b0e;
+            --bg-gradient: radial-gradient(circle at top right, rgba(45, 80, 150, 0.14), transparent 55%), radial-gradient(circle at bottom left, rgba(120, 45, 150, 0.1), transparent 55%), var(--bg);
             --surface: #111318;
             --surface2: #181c23;
             --border: rgba(255, 255, 255, 0.07);
@@ -52,6 +53,7 @@
 
         :root.light-mode {
             --bg: #f9f9fb;
+            --bg-gradient: radial-gradient(circle at top right, rgba(50, 100, 240, 0.07), transparent 55%), radial-gradient(circle at bottom left, rgba(150, 50, 240, 0.06), transparent 55%), var(--bg);
             --surface: #ffffff;
             --surface2: #f2f3f7;
             --border: rgba(0, 0, 0, 0.08);
@@ -96,7 +98,9 @@
 
         html,
         body {
-            background: var(--bg);
+            background-color: var(--bg);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text);
             font-family: 'DM Sans', sans-serif;
             height: 100vh;
@@ -1006,14 +1010,14 @@
                 flex-direction: column;
                 height: 100%;
                 overflow: hidden;
-                background: var(--surface);
+                background: transparent;
             }
 
             .sidebar-top {
                 padding: 16px 16px 0;
                 flex-shrink: 0;
                 border-bottom: 1px solid var(--border);
-                background: var(--surface);
+                background: transparent;
                 width: 100%;
                 overflow: hidden;
             }
@@ -1066,7 +1070,7 @@
                 flex-direction: column;
                 height: 100%;
                 overflow: hidden;
-                background: var(--bg);
+                background: transparent;
             }
 
             .panel-detail {
