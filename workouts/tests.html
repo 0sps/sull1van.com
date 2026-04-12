@@ -172,7 +172,8 @@
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding: 10px 0 12px;
+            margin: 0 -18px;
+            padding: 10px 18px 12px 60px; /* 60px perfectly lines up with the indented "Search" text */
             scrollbar-width: none;
         }
 
@@ -880,9 +881,7 @@
             display: contents;
         }
 
-        .sidebar-top {
-            display: contents;
-        }
+
 
         /* Empty state hidden on mobile */
         .desktop-empty {
@@ -947,8 +946,9 @@
                 gap: 8px;
                 overflow-x: auto;
                 white-space: nowrap;
-                padding: 10px 0 12px;
-                width: 100%;
+                margin: 0 -16px;
+                padding: 10px 16px 12px 58px;
+                width: calc(100% + 32px);
                 scrollbar-width: none;
             }
             .chip-row::-webkit-scrollbar { display: none; }
