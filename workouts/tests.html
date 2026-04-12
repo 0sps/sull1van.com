@@ -1090,15 +1090,27 @@
             .layout.is-grid-view .desktop-sidebar {
                 width: 100%;
                 border-right: none;
+                overflow: hidden; /* keep sidebar scroll contained */
+            }
+
+            /* In grid mode the sidebar fills full height, panel-list scrolls */
+            .layout.is-grid-view .desktop-sidebar .sidebar-top {
+                padding: 14px 24px 0;
+            }
+
+            .layout.is-grid-view .desktop-sidebar .chip-row {
+                margin: 0 -24px;
+                padding: 10px 24px 12px;
             }
             .layout.is-grid-view .desktop-main {
                 display: none !important;
             }
             .layout.is-grid-view #panelList {
                 display: grid !important;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 16px;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 12px;
                 align-content: start;
+                padding: 20px 24px 40px;
             }
             .layout.is-grid-view #panelList .section-label {
                 grid-column: 1 / -1;
@@ -1111,17 +1123,129 @@
                 margin-bottom: 0;
             }
 
+            /* ── GRID CARD TILE STYLE ── */
+
+            /* Collapsed grid card: proper tile appearance */
+            .layout.is-grid-view #panelList .test-card:not(.expanded) {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                padding: 16px 18px;
+                min-height: 96px;
+                gap: 0;
+                border-radius: 16px;
+            }
+
+            /* Stack content vertically inside the tile */
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-inner {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            /* Name row: small + muted mono label */
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-left {
+                flex: none;
+                width: 100%;
+                gap: 2px;
+            }
+
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-name {
+                font-family: 'DM Mono', monospace;
+                font-size: 0.7rem;
+                font-weight: 400;
+                color: var(--muted);
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta {
+                font-size: 0.62rem;
+                gap: 6px;
+            }
+
+            /* Value + sparkline row at the bottom of the tile */
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0;
+                flex-shrink: 0;
+            }
+
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip {
+                font-size: 1.5rem;
+                font-weight: 700;
+                font-family: 'Syne', sans-serif;
+            }
+
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap {
+                width: 80px;
+                height: 34px;
+                flex-shrink: 0;
+            }
+
+            /* Badge cards (qualitative): bigger badge */
+            .layout.is-grid-view #panelList .test-card:not(.expanded) .status-badge {
+                font-size: 0.72rem;
+                padding: 5px 14px;
+            }
+
+            /* Hide the useless chevron in grid view */
+            .layout.is-grid-view #panelList .test-card .chevron {
+                display: none;
+            }
+
+            /* ── EXPANDED GRID CARD ── */
+
             /* Expanded card spans full grid width so detail content has room */
             .layout.is-grid-view #panelList .test-card.expanded {
                 grid-column: 1 / -1;
                 cursor: default;
+                background: var(--surface);
+                border-color: rgba(79, 156, 248, 0.25);
+                padding: 16px 20px;
             }
 
-            /* Inside expanded grid cards, give sections desktop-style padding */
+            /* Keep the collapsed header row horizontal + compact inside expanded card */
+            .layout.is-grid-view #panelList .test-card.expanded .test-card-inner {
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .layout.is-grid-view #panelList .test-card.expanded .test-card-name {
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: var(--text);
+                text-transform: none;
+                letter-spacing: 0;
+            }
+
+            .layout.is-grid-view #panelList .test-card.expanded .latest-chip {
+                font-size: 1rem;
+            }
+
+            .layout.is-grid-view #panelList .test-card.expanded .sparkline-wrap {
+                width: 52px;
+                height: 24px;
+            }
+
+            /* Inside expanded grid cards, reset padding to zero so sections fill full width */
             .layout.is-grid-view .grid-detail-inner .kpi-row {
                 grid-template-columns: repeat(3, 1fr);
-                padding: 14px 0 10px;
+                padding: 12px 0 10px;
+                gap: 10px;
             }
+
+            .layout.is-grid-view .grid-detail-inner .kpi-box {
+                padding: 12px 10px;
+            }
+
             .layout.is-grid-view .grid-detail-inner .range-bar-section,
             .layout.is-grid-view .grid-detail-inner .std-timeline,
             .layout.is-grid-view .grid-detail-inner .history-section,
@@ -1130,8 +1254,15 @@
                 padding-left: 0;
                 padding-right: 0;
             }
+
             .layout.is-grid-view .grid-detail-inner .chart-inner {
-                height: 200px !important;
+                height: 220px !important;
+            }
+
+            /* History table at full width */
+            .layout.is-grid-view .grid-detail-inner .history-header span:nth-child(1),
+            .layout.is-grid-view .grid-detail-inner .hist-date {
+                width: 110px;
             }
 
             /* Full-height, no mobile stacking */
