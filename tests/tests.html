@@ -1808,69 +1808,83 @@
             return 'normal';
         }
 
-        // ── LOAD DATA ────────────────────────────────────────────────
+        // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData() {
             try {
-                const resp = await fetch('./Blood_Tests_updated-2026-04-11-2242.json');
-                const raw = await resp.json();
+                // Wait for Firestore to be initialised by the Firebase module block below
+                let attempts = 0;
+                while (!window._labsDb && attempts < 50) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (!window._labsDb) throw new Error('Firebase did not initialise in time.');
 
-                const grouped = {};
-                raw.forEach(item => {
-                    const name = item.TestName;
-                    if (!grouped[name]) grouped[name] = { name, unit: null, range: null, points: [] };
+                const { getDocs, collection } = window._labsFirestore;
+                const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
 
-                    const numVal = cleanNumber(item.Result);
-                    const isNum = item['IsNumeric?'] === 1 || item['IsNumeric?'] === '1';
+                if (snapshot.empty) throw new Error('No documents found in the Labs collection.');
 
-                    // Pick up unit & range (first non-null)
-                    if (item.Units && !grouped[name].unit) grouped[name].unit = item.Units;
-                    if (item.NormalRange && !grouped[name].range) grouped[name].range = String(item.NormalRange);
+                // Map Firestore documents → internal format expected by the rest of the dashboard
+                allTests = snapshot.docs.map(docSnap => {
+                    const d = docSnap.data();
 
-                    grouped[name].points.push({
-                        date: item.Date,
-                        rawResult: item.Result,
-                        numVal: (isNum && numVal !== null) ? numVal : ((!isNum && numVal !== null) ? numVal : null),
-                        isNumeric: isNum,
-                        rawRange: item.NormalRange ? String(item.NormalRange) : null,
+                    // Normalise each point stored by the migration script
+                    const points = (d.points || []).map(p => {
+                        const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
+                        const numVal    = cleanNumber(rawResult);
+                        const isNumeric = d.type === 'numeric' ||
+                                          (d.type !== 'qualitative' && numVal !== null);
+                        return {
+                            date:       p.date,
+                            rawResult:  rawResult,
+                            numVal:     isNumeric && numVal !== null ? numVal : null,
+                            isNumeric:  isNumeric,
+                            rawRange:   p.rawRange ? String(p.rawRange) : null,
+                            // preserve audit fields
+                            testResultId: p.testResultId || null,
+                            lab:          p.lab          || null,
+                            sourceFile:   p.sourceFile   || null,
+                        };
                     });
-                });
 
-                // Sort by date, dedup (last wins), classify
-                allTests = Object.values(grouped).map(g => {
-                    g.points.sort((a, b) => new Date(a.date) - new Date(b.date));
-                    // dedup by date
+                    // Sort & dedup by date (last reading on a given date wins)
+                    points.sort((a, b) => new Date(a.date) - new Date(b.date));
                     const dmap = {};
-                    g.points.forEach(p => { dmap[p.date] = p; });
-                    g.points = Object.values(dmap).sort((a, b) => new Date(a.date) - new Date(b.date));
+                    points.forEach(p => { dmap[p.date] = p; });
+                    const sortedPoints = Object.values(dmap).sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                    // Determine type
-                    const numericPts = g.points.filter(p => p.isNumeric && p.numVal !== null);
-                    const qualPts = g.points.filter(p => !p.isNumeric);
+                    const numericPts = sortedPoints.filter(p => p.isNumeric && p.numVal !== null);
+                    const qualPts    = sortedPoints.filter(p => !p.isNumeric);
 
                     let type = 'numeric';
-                    if (numericPts.length === 0 && qualPts.length > 0) type = 'qualitative';
+                    if (numericPts.length === 0 && qualPts.length > 0)  type = 'qualitative';
                     else if (numericPts.length > 0 && qualPts.length === 0) type = 'numeric';
                     else type = 'mixed';
 
-                    g.type = type;
-                    g.numericPts = numericPts;
-                    g.category = categorize(g.name);
+                    // Best overall range string (prefer a real range string over a raw number)
+                    let bestRange = d.range ? String(d.range) : null;
+                    const rp = sortedPoints.find(p => p.rawRange && isNaN(parseFloat(p.rawRange)));
+                    if (rp) bestRange = rp.rawRange;
 
-                    // Best range string
-                    const rp = g.points.find(p => p.rawRange && isNaN(parseFloat(p.rawRange)));
-                    if (rp) g.range = rp.rawRange;
-
-                    return g;
+                    return {
+                        name:       d.name,
+                        unit:       d.unit  || null,
+                        range:      bestRange,
+                        type:       type,
+                        points:     sortedPoints,
+                        numericPts: numericPts,
+                        category:   categorize(d.name),
+                    };
                 });
 
-                // Sort: most data points first, then alpha
+                // Sort: most readings first, then alpha
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
                 buildChips();
                 applyFilters();
                 document.getElementById('loadingState').remove();
 
-                // Auto-select first test with multiple points on desktop
+                // Auto-select first multi-point test on desktop
                 if (isDesktop()) {
                     setTimeout(() => {
                         const firstMulti = allTests.find(t => t.numericPts && t.numericPts.length > 1);
@@ -1881,7 +1895,7 @@
 
             } catch (e) {
                 console.error(e);
-                document.getElementById('loadingState').innerHTML = '<span style="color:var(--red)">⚠ Failed to load data</span>';
+                document.getElementById('loadingState').innerHTML = '<span style="color:var(--red)">⚠ Failed to load data — ' + e.message + '</span>';
             }
         }
 
@@ -2666,6 +2680,64 @@
 
         // ── INIT ─────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', loadData);
+        // Re-triggered after Google sign-in (dispatched by the Firebase module below)
+        document.addEventListener('labs:reload', loadData);
+    </script>
+
+    <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
+    <script type="module">
+        import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged,
+                 signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
+        import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey:            'AIzaSyBsWzW3b-xc-2wB22-w9GUh1J75_FsqMTo',
+            authDomain:        'bodydata-7a30d.firebaseapp.com',
+            projectId:         'bodydata-7a30d',
+            storageBucket:     'bodydata-7a30d.firebasestorage.app',
+            messagingSenderId: '266494792101',
+            appId:             '1:266494792101:web:ed98ea3d19f59d2189184c'
+        };
+
+        const app  = initializeApp(firebaseConfig, 'labs');
+        const auth = getAuth(app);
+        const db   = Firestore.getFirestore(app);
+
+        // Expose Firestore helpers & db to the dashboard loadData() above
+        window._labsDb        = db;
+        window._labsFirestore = Firestore;
+
+        onAuthStateChanged(auth, user => {
+            if (!user) {
+                // Show a non-intrusive login banner so the user can authenticate
+                const loadingEl = document.getElementById('loadingState');
+                if (loadingEl) {
+                    loadingEl.innerHTML = `
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
+                            <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'DM Mono',monospace;font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
+                        </div>`;
+                }
+            }
+        });
+
+        window._labsLogin = async function () {
+            try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+                // After login, re-trigger loadData which is already waiting for window._labsDb
+                window.loadData && window.loadData();
+            } catch (err) {
+                console.error('Login failed', err);
+            }
+        };
+
+        // Expose loadData globally so the login button can call it post-auth
+        window.loadData = function () {
+            // loadData is defined inside the non-module script — call it via DOMContentLoaded timing
+            document.dispatchEvent(new Event('labs:reload'));
+        };
     </script>
 </body>
 
