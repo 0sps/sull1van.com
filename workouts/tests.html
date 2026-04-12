@@ -33,6 +33,58 @@
             --accent: #4f9cf8;
             --pill-r: 12px;
             --card-r: 18px;
+
+            --glass-bg: rgba(10, 11, 14, 0.88);
+            --card-glass: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --card-hover-border: rgba(255, 255, 255, 0.12);
+            --card-glow: rgba(255, 255, 255, 0.06);
+            --sheet-bg: rgba(17, 19, 24, 0.95);
+            --sheet-handle: rgba(255,255,255,0.15);
+            --detail-bg: rgba(10, 11, 14, 0.75);
+            --nav-btn-bg: rgba(255,255,255,0.06);
+            --nav-btn-active: rgba(255,255,255,0.12);
+            --icon-white: #ffffff;
+            --tooltip-bg: #181c23;
+            --chart-grid: rgba(255, 255, 255, 0.05);
+            --gauge-bg: #fff;
+        }
+
+        :root.light-mode {
+            --bg: #f9f9fb;
+            --surface: #ffffff;
+            --surface2: #f2f3f7;
+            --border: rgba(0, 0, 0, 0.08);
+            --border2: rgba(0, 0, 0, 0.12);
+            --text: #1a1b20;
+            --muted: #6b7280;
+            --faint: #c2c6ce;
+
+            --green: #059669;
+            --green-bg: rgba(16, 185, 129, 0.15);
+            --red: #e82a2a;
+            --red-bg: rgba(239, 68, 68, 0.12);
+            --amber: #d97706;
+            --amber-bg: rgba(245, 158, 11, 0.15);
+            --blue: #2563eb;
+            --blue-bg: rgba(59, 130, 246, 0.12);
+
+            --accent: #2563eb;
+
+            --glass-bg: rgba(249, 249, 251, 0.88);
+            --card-glass: rgba(0, 0, 0, 0.02);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --card-hover-border: rgba(0, 0, 0, 0.12);
+            --card-glow: rgba(0, 0, 0, 0.04);
+            --sheet-bg: rgba(255, 255, 255, 0.95);
+            --sheet-handle: rgba(0,0,0,0.15);
+            --detail-bg: rgba(249, 249, 251, 0.85);
+            --nav-btn-bg: rgba(0,0,0,0.04);
+            --nav-btn-active: rgba(0,0,0,0.08);
+            --icon-white: #1a1b20;
+            --tooltip-bg: #ffffff;
+            --chart-grid: rgba(0, 0, 0, 0.05);
+            --gauge-bg: var(--bg);
         }
 
         * {
@@ -59,7 +111,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(10, 11, 14, 0.88);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -117,14 +169,35 @@
             align-items: center;
         }
 
-        .spacer {
+        .top-spacer {
             width: 80px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--nav-btn-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .theme-toggle:active {
+            background: var(--nav-btn-active);
+            transform: scale(0.95);
         }
 
         /* ── SEARCH + FILTER ── */
         .search-area {
             padding: 14px 18px 0;
-            background: rgba(10, 11, 14, 0.88);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
@@ -1158,7 +1231,24 @@
                 <div class="top-title">LABS</div>
                 <div class="top-subtitle">BIOMARKER TRACKER</div>
             </div>
-            <div class="spacer"></div>
+            <div class="top-spacer">
+                <button class="theme-toggle" onclick="window.toggleTheme()" aria-label="Toggle Dark/Light Mode">
+                    <svg id="sun-icon" style="display:none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="moon-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1171,9 +1261,9 @@
             <!-- Search + chips (inside sidebar on desktop) -->
             <div class="sidebar-top search-area" id="globalSearchArea">
                 <div class="search-wrap">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <circle cx="7" cy="7" r="4.5" stroke="white" stroke-width="1.4" />
-                        <path d="M10.5 10.5L13 13" stroke="white" stroke-width="1.4" stroke-linecap="round" />
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--icon-white);">
+                        <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4" />
+                        <path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
                     </svg>
                     <input type="text" id="testSearch" placeholder="Search biomarkers..." oninput="onSearch()"
                         autocomplete="off">
@@ -1259,6 +1349,30 @@
     </div><!-- /layout -->
 
     <script>
+        // ── THEME TOGGLE ─────────────────────────────────────────────
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-mode');
+        }
+
+        window.toggleTheme = function() {
+            const root = document.documentElement;
+            root.classList.toggle('light-mode');
+            const isLight = root.classList.contains('light-mode');
+            document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
+            document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
+            
+            if (activeCategory) applyFilters();
+            if (currentTestName) openTest(currentTestName);
+
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLight = document.documentElement.classList.contains('light-mode');
+            document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
+            document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
+        });
+
         // ── DATA & STATE ──────────────────────────────────────────────
         let allTests = [];          // [{name, unit, range, type, dataPoints:[{date,value,rawResult,rawRange}]}]
         let filteredTests = [];
@@ -2053,6 +2167,9 @@
         }
 
         // ── UTILS ─────────────────────────────────────────────────────
+        function getCssVar(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
         function safeId(name) { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
         function escStr(name) { return name.replace(/'/g, "\\'"); }
         function formatVal(v) {
