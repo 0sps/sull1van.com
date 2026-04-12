@@ -476,18 +476,25 @@
     /* history table */
     .history-section { padding: 0 18px 40px; }
     .history-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-family: 'DM Mono', monospace;
       font-size: 0.65rem;
-      color: var(--muted);
+      color: var(--faint);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
+    .history-header span:nth-child(1) { width: 90px; flex-shrink: 0; }
+    .history-header span:nth-child(2) { flex: 1; }
+
     .history-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid var(--border);
     }
     .history-row:last-child { border-bottom: none; }
@@ -1315,7 +1322,11 @@
     container.insertAdjacentHTML('beforeend', `
       <div class="detail-divider" style="margin-top:8px;">All readings</div>
       <div class="history-section">
-        <div class="history-header">Date · Value · Change</div>
+        <div class="history-header">
+          <span>Date</span>
+          <span>Value</span>
+          <span>Change</span>
+        </div>
         ${rows}
       </div>
     `);
