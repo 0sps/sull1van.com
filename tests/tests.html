@@ -1772,6 +1772,7 @@
         };
 
         function categorize(name) {
+            if (!name || typeof name !== 'string') return 'Other';
             const n = name.toUpperCase();
             for (const [cat, keywords] of Object.entries(CATEGORIES)) {
                 if (keywords.some(k => n.includes(k))) return cat;
@@ -1827,6 +1828,8 @@
                 // Map Firestore documents → internal format expected by the rest of the dashboard
                 allTests = snapshot.docs.map(docSnap => {
                     const d = docSnap.data();
+                    // Skip any document that has no name field (malformed / placeholder)
+                    if (!d || !d.name) return null;
 
                     // Normalise each point stored by the migration script
                     const points = (d.points || []).map(p => {
@@ -1877,7 +1880,8 @@
                     };
                 });
 
-                // Sort: most readings first, then alpha
+                // Drop any null entries (malformed docs) then sort: most readings first, then alpha
+                allTests = allTests.filter(Boolean);
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
                 buildChips();
