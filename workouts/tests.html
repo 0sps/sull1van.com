@@ -1,693 +1,1357 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Tests Dashboard | Sean's Log</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <style>
-        :root {
-            --bg-grad-1: #ffb199;
-            --bg-grad-2: #ff0844;
-            --bg-grad-3: #8ec5fc;
-            --bg-grad-4: #e0c3fc;
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
-            --text-main: #1a1b26;
-            --text-secondary: #4a4b56;
-            --text-muted: #808191;
-            --accent: #ff3d00;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Labs | Sean's Log</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:       #0a0b0e;
+      --surface:  #111318;
+      --surface2: #181c23;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.12);
+      --text:     #eeeef0;
+      --muted:    #7a7f8e;
+      --faint:    #3a3f4e;
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      --green:    #1fcb7a;
+      --green-bg: rgba(31,203,122,0.12);
+      --red:      #f04e4e;
+      --red-bg:   rgba(240,78,78,0.12);
+      --amber:    #f5a623;
+      --amber-bg: rgba(245,166,35,0.12);
+      --blue:     #4f9cf8;
+      --blue-bg:  rgba(79,156,248,0.12);
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(120deg, var(--bg-grad-4) 0%, var(--bg-grad-3) 100%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+      --accent:   #4f9cf8;
+      --pill-r:   12px;
+      --card-r:   18px;
+    }
 
-        /* Abstract Blob Backgrounds */
-        .blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-        }
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 40vw;
-            height: 40vw;
-            background: rgba(255, 255, 255, 0.8);
-        }
-        .blob-2 {
-            bottom: -20%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: rgba(255, 177, 153, 0.6);
-        }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overscroll-behavior: none;
+    }
 
-        /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0 40px;
-        }
-        .logo a {
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-        }
-        .logo h1 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 2.2rem;
-            letter-spacing: -1px;
-            color: var(--text-main);
-            line-height: 1;
-        }
-        .logo .subtitle {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 4px;
-        }
-        .back-btn {
-            padding: 12px 24px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            color: var(--text-main);
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-transform: uppercase;
-            box-shadow: var(--glass-shadow);
-        }
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.7);
-            transform: translateY(-2px);
-            color: var(--accent);
-        }
+    /* ── HEADER ── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,11,14,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: env(safe-area-inset-top, 0px) 0 0;
+    }
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 8px 14px;
+      border: 1px solid rgba(79,156,248,0.3);
+      border-radius: 999px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .back-btn:active { background: rgba(79,156,248,0.1); }
 
-        /* Dashboard Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 30px;
-            flex-grow: 1;
-        }
-        @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .top-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-align: center;
+    }
+    .top-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .top-center { display: flex; flex-direction: column; gap: 1px; align-items: center; }
+    .spacer { width: 80px; }
 
-        /* Glass Card Base */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
+    /* ── SEARCH + FILTER ── */
+    .search-area {
+      padding: 14px 18px 0;
+      background: rgba(10,11,14,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 69px;
+      z-index: 99;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    #testSearch {
+      width: 100%;
+      padding: 11px 14px 11px 42px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--pill-r);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #testSearch:focus { border-color: var(--accent); }
+    #testSearch::placeholder { color: var(--muted); }
 
-        /* Sidebar - Test Selector */
-        .sidebar {
-            padding: 24px 20px;
-            max-height: calc(100vh - 150px);
-        }
-        .search-box {
-            width: 100%;
-            padding: 14px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.5);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-        .search-box:focus {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
-        }
-        
-        .test-list {
-            overflow-y: auto;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-right: 10px;
-        }
-        .test-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .test-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
-        .test-list::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 10px;
-        }
-        
-        .test-item {
-            padding: 14px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid transparent;
-        }
-        .test-item:hover {
-            background: rgba(255, 255, 255, 0.6);
-        }
-        .test-item.active {
-            background: #ffffff;
-            border-color: rgba(255, 255, 255, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .test-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            color: #111;
-        }
-        .test-meta {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-family: 'Space Mono', monospace;
-            display: flex;
-            justify-content: space-between;
-        }
+    /* category chips */
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 0 12px;
+      scrollbar-width: none;
+    }
+    .chip-row::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.18s;
+      user-select: none;
+    }
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
 
-        /* Main View */
-        .main-view {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .chart-title {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-        }
-        .chart-unit {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            font-family: 'Space Mono', monospace;
-            background: rgba(255,255,255,0.6);
-            padding: 6px 12px;
-            border-radius: 20px;
-            margin-left: 10px;
-            display: inline-block;
-        }
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 130px);
+    }
 
-        .chart-card {
-            flex-grow: 1;
-            min-height: 400px;
-            position: relative;
-        }
-        
-        /* KPI Grid */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        @media (max-width: 600px) {
-            .kpi-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .kpi-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: var(--glass-shadow);
-            padding: 24px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .kpi-card:hover {
-            transform: translateY(-5px);
-        }
-        .kpi-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .kpi-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -1px;
-        }
-        .kpi-sub {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-        .warning-text { color: #ff3d00; }
-        .success-text { color: #00b894; }
+    /* ── PANEL: TEST LIST ── */
+    .panel-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 12px 18px 30px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .panel-list.visible { display: flex; }
 
-        .loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            display: none;
-        }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      padding: 12px 0 4px;
+    }
 
-    </style>
+    .test-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-r);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .test-card:active { background: var(--surface2); border-color: var(--border2); }
+
+    .test-card-left { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+    .test-card-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .test-card-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+    }
+
+    .test-card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    /* inline sparkline */
+    .sparkline-wrap {
+      width: 64px;
+      height: 28px;
+    }
+
+    /* status badge */
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .badge-green { background: var(--green-bg); color: var(--green); }
+    .badge-red   { background: var(--red-bg);   color: var(--red);   }
+    .badge-amber { background: var(--amber-bg);  color: var(--amber); }
+
+    /* latest value chip on card */
+    .latest-chip {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* chevron */
+    .chevron {
+      color: var(--faint);
+      flex-shrink: 0;
+    }
+
+    /* ── PANEL: DETAIL VIEW ── */
+    .panel-detail {
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .panel-detail.visible { display: flex; }
+
+    .detail-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-back {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .detail-back:active { color: var(--text); }
+    .detail-title-block { flex: 1; min-width: 0; }
+    .detail-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .detail-unit {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    /* KPI row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 16px 18px;
+    }
+    .kpi-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      text-align: center;
+    }
+    .kpi-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .kpi-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .kpi-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* chart card */
+    .chart-section {
+      padding: 0 18px 16px;
+    }
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-r);
+      padding: 16px;
+    }
+    .chart-card canvas { display: block; }
+
+    /* range bar (gauge) */
+    .range-bar-section { padding: 0 18px 16px; }
+    .range-bar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-r);
+      padding: 16px 18px;
+    }
+    .range-bar-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .gauge-track {
+      position: relative;
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .gauge-fill-zone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 999px;
+    }
+    .gauge-marker {
+      position: absolute;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transform: translateX(-50%);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+      transition: left 0.5s cubic-bezier(.34,1.56,.64,1);
+    }
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* STD timeline */
+    .std-timeline {
+      padding: 0 18px 16px;
+    }
+    .std-timeline-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-r);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .std-timeline-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .std-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .std-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .std-bar {
+      flex: 1;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: all 0.3s;
+    }
+    .std-bar.clear {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(31,203,122,0.2);
+    }
+    .std-bar.reactive {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid rgba(240,78,78,0.2);
+    }
+    .std-bar.unknown {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid rgba(245,166,35,0.2);
+    }
+    .std-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .clear .std-dot  { background: var(--green); }
+    .reactive .std-dot { background: var(--red); }
+    .unknown .std-dot  { background: var(--amber); }
+
+    /* history table */
+    .history-section { padding: 0 18px 40px; }
+    .history-header {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .history-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .history-row:last-child { border-bottom: none; }
+    .hist-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      width: 90px;
+      flex-shrink: 0;
+    }
+    .hist-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      flex: 1;
+    }
+    .hist-delta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .delta-up   { background: var(--red-bg);   color: var(--red);   }
+    .delta-down { background: var(--green-bg);  color: var(--green); }
+    .delta-flat { background: var(--surface2);  color: var(--muted); }
+
+    /* Loading spinner */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      gap: 14px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border: 2px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* colors for kpi val */
+    .c-green { color: var(--green); }
+    .c-red   { color: var(--red); }
+    .c-amber { color: var(--amber); }
+    .c-text  { color: var(--text); }
+
+    /* SECTION DIVIDER in detail */
+    .detail-divider {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 18px 8px;
+    }
+
+    /* empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 8px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+    }
+
+    /* Scroll inertia for iOS */
+    .panel-list, .panel-detail { -webkit-overflow-scrolling: touch; }
+  </style>
 </head>
 <body>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
 
-    <div class="container">
-        <header>
-            <div class="logo">
-                <a href="app.html">
-                    <h1>BLOOD TESTS</h1>
-                    <div class="subtitle">Biomarker Visualization</div>
-                </a>
-            </div>
-            <a href="app.html" class="back-btn">← Back to App</a>
-        </header>
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="app.html" class="back-btn">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        App
+      </a>
+      <div class="top-center">
+        <div class="top-title">LABS</div>
+        <div class="top-subtitle">BIOMARKER TRACKER</div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
 
-        <div class="dashboard-grid">
-            <!-- Sidebar -->
-            <div class="glass-card sidebar">
-                <input type="text" class="search-box" id="testSearch" placeholder="Search tests..." oninput="filterTests()">
-                <div class="test-list" id="testList">
-                    <div style="padding: 20px; text-align: center; color: var(--text-muted);">Loading data...</div>
-                </div>
-            </div>
+  <!-- SEARCH + CHIPS -->
+  <div class="search-area">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="7" cy="7" r="4.5" stroke="white" stroke-width="1.4"/>
+        <path d="M10.5 10.5L13 13" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <input type="text" id="testSearch" placeholder="Search biomarkers..." oninput="onSearch()" autocomplete="off">
+    </div>
+    <div class="chip-row" id="chipRow"></div>
+  </div>
 
-            <!-- Main Vis -->
-            <div class="main-view">
-                <div class="glass-card chart-card">
-                    <div class="loader" id="chartLoader">Loading...</div>
-                    <div class="chart-header">
-                        <div>
-                            <h2 class="chart-title" id="chartTitle">Select a Test</h2>
-                            <span class="chart-unit" id="chartUnit" style="display:none;"></span>
-                        </div>
-                    </div>
-                    <div style="position: relative; height: 350px; width: 100%;">
-                        <canvas id="mainChart"></canvas>
-                    </div>
-                </div>
+  <!-- LAYOUT -->
+  <div class="layout">
 
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <div class="kpi-label">Latest Result</div>
-                        <div class="kpi-value" id="kpiLatest">-</div>
-                        <div class="kpi-sub" id="kpiLatestDate">No data</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Normal Range</div>
-                        <div class="kpi-value" id="kpiRange" style="font-size: 1.5rem; margin-top:10px;">-</div>
-                        <div class="kpi-sub">Reference</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Trend (vs Previous)</div>
-                        <div class="kpi-value" id="kpiTrend">-</div>
-                        <div class="kpi-sub" id="kpiTrendSub">Direction</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- LIST PANEL -->
+    <div class="panel-list visible" id="panelList">
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        Loading labs…
+      </div>
     </div>
 
-    <script>
-        let allTestsData = [];
-        let groupedData = {};
-        let currentChart = null;
+    <!-- DETAIL PANEL -->
+    <div class="panel-detail" id="panelDetail">
+      <div class="detail-header">
+        <button class="detail-back" onclick="goBack()">← Back</button>
+        <div class="detail-title-block">
+          <div class="detail-title" id="detailTitle">—</div>
+          <div class="detail-unit" id="detailUnit"></div>
+        </div>
+      </div>
 
-        // Parse noisy numbers like "<^0.3" or "54697" (sometimes ranges are messed up, but results usually have < or >)
-        function cleanNumber(str) {
-            if (str === null || str === undefined) return null;
-            let s = String(str);
-            s = s.replace(/[^0-9.\-]/g, ''); // strip non-numeric except . and -
-            let n = parseFloat(s);
-            return isNaN(n) ? null : n;
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi-box">
+          <div class="kpi-label">Latest</div>
+          <div class="kpi-val" id="kpiLatest">—</div>
+          <div class="kpi-sub" id="kpiLatestDate"></div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Range</div>
+          <div class="kpi-val" id="kpiRange" style="font-size:0.82rem;line-height:1.2;margin-top:2px;">—</div>
+          <div class="kpi-sub">Reference</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">vs Prev</div>
+          <div class="kpi-val" id="kpiTrend">—</div>
+          <div class="kpi-sub" id="kpiTrendSub"></div>
+        </div>
+      </div>
+
+      <!-- Dynamic content injected here -->
+      <div id="detailDynamic"></div>
+    </div>
+
+  </div>
+
+  <script>
+  // ── DATA & STATE ──────────────────────────────────────────────
+  let allTests = [];          // [{name, unit, range, type, dataPoints:[{date,value,rawResult,rawRange}]}]
+  let filteredTests = [];
+  let activeCategory = 'All';
+  let currentTestName = null;
+  let currentChart = null;
+  let sparklineCharts = {};   // id -> Chart instance (for cleanup)
+
+  // Qualitative result normalization
+  const QUAL_NEGATIVE = ['nonreactive','negative','not detected','absent','none'];
+  const QUAL_POSITIVE = ['reactive','positive','detected','present'];
+
+  function qualStatus(result) {
+    if (!result) return 'unknown';
+    const r = String(result).toLowerCase().trim();
+    if (QUAL_NEGATIVE.some(k => r.includes(k))) return 'clear';
+    if (QUAL_POSITIVE.some(k => r.includes(k))) return 'reactive';
+    return 'unknown';
+  }
+
+  // Category taxonomy
+  const CATEGORIES = {
+    'STDs': [
+      'HIV','HEPATITIS','SYPHILIS','CHLAMYDIA','GONORRHEA','HSV','TRICHOMONAS','SYPHILIS'
+    ],
+    'Hormones': [
+      'TESTOSTERONE','TSH','FREE T4','T3','DHEA','CORTISOL','ESTROGEN','PROGESTERONE','LH','FSH'
+    ],
+    'Metabolic': [
+      'GLUCOSE','HBA1C','HEMOGLOBIN A1C','INSULIN','TRIGLYCERIDES','CHOLESTEROL','HDL','LDL'
+    ],
+    'Liver': [
+      'ALT','AST','ALKALINE PHOSPHATASE','BILIRUBIN','ALBUMIN','TOTAL PROTEIN','GLOBULIN','A/G RATIO'
+    ],
+    'Kidney': [
+      'CREATININE','BUN','GFR','B/C RATIO','URINE'
+    ],
+    'CBC': [
+      'WBC','RBC','HGB','HCT','MCV','MCH','MCHC','PLT','RDW','NEU','LYMPH','MONO','EOS','BASO','IMMGRN','MPV','NRBC'
+    ],
+    'Electrolytes': [
+      'SODIUM','POTASSIUM','CHLORIDE','CO2','CALCIUM','PHOSPHATE','MAGNESIUM'
+    ],
+    'Vitamins': [
+      'VIT','VITAMIN','ZINC','IRON','FERRITIN','B12','FOLATE'
+    ],
+  };
+
+  function categorize(name) {
+    const n = name.toUpperCase();
+    for (const [cat, keywords] of Object.entries(CATEGORIES)) {
+      if (keywords.some(k => n.includes(k))) return cat;
+    }
+    return 'Other';
+  }
+
+  function cleanNumber(str) {
+    if (str === null || str === undefined) return null;
+    const s = String(str).replace(/[<>^=\s]/g, '').replace(/[^0-9.\-]/g, '');
+    const n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  }
+
+  function parseRange(rangeStr) {
+    if (!rangeStr || typeof rangeStr !== 'string') return null;
+    const r = rangeStr.trim();
+    // "min-max" - careful with negative numbers
+    const dash = r.match(/^([0-9.]+)\s*-\s*([0-9.]+)$/);
+    if (dash) return { min: parseFloat(dash[1]), max: parseFloat(dash[2]) };
+    // "<X" or "<=X"
+    const lt = r.match(/^<=?\s*([0-9.]+)$/);
+    if (lt) return { max: parseFloat(lt[1]) };
+    // ">X" or ">=X"
+    const gt = r.match(/^>=?\s*([0-9.]+)$/);
+    if (gt) return { min: parseFloat(gt[1]) };
+    return null;
+  }
+
+  function isInRange(val, parsed) {
+    if (!parsed) return null;
+    if (parsed.min !== undefined && val < parsed.min) return 'low';
+    if (parsed.max !== undefined && val > parsed.max) return 'high';
+    return 'normal';
+  }
+
+  // ── LOAD DATA ────────────────────────────────────────────────
+  async function loadData() {
+    try {
+      const resp = await fetch('./Blood_Tests_updated-2026-04-11-2242.json');
+      const raw = await resp.json();
+
+      const grouped = {};
+      raw.forEach(item => {
+        const name = item.TestName;
+        if (!grouped[name]) grouped[name] = { name, unit: null, range: null, points: [] };
+
+        const numVal = cleanNumber(item.Result);
+        const isNum = item['IsNumeric?'] === 1 || item['IsNumeric?'] === '1';
+
+        // Pick up unit & range (first non-null)
+        if (item.Units && !grouped[name].unit) grouped[name].unit = item.Units;
+        if (item.NormalRange && !grouped[name].range) grouped[name].range = String(item.NormalRange);
+
+        grouped[name].points.push({
+          date: item.Date,
+          rawResult: item.Result,
+          numVal: (isNum && numVal !== null) ? numVal : ((!isNum && numVal !== null) ? numVal : null),
+          isNumeric: isNum,
+          rawRange: item.NormalRange ? String(item.NormalRange) : null,
+        });
+      });
+
+      // Sort by date, dedup (last wins), classify
+      allTests = Object.values(grouped).map(g => {
+        g.points.sort((a, b) => new Date(a.date) - new Date(b.date));
+        // dedup by date
+        const dmap = {};
+        g.points.forEach(p => { dmap[p.date] = p; });
+        g.points = Object.values(dmap).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        // Determine type
+        const numericPts = g.points.filter(p => p.isNumeric && p.numVal !== null);
+        const qualPts    = g.points.filter(p => !p.isNumeric);
+
+        let type = 'numeric';
+        if (numericPts.length === 0 && qualPts.length > 0) type = 'qualitative';
+        else if (numericPts.length > 0 && qualPts.length === 0) type = 'numeric';
+        else type = 'mixed';
+
+        g.type = type;
+        g.numericPts = numericPts;
+        g.category = categorize(g.name);
+
+        // Best range string
+        const rp = g.points.find(p => p.rawRange && isNaN(parseFloat(p.rawRange)));
+        if (rp) g.range = rp.rawRange;
+
+        return g;
+      });
+
+      // Sort: most data points first, then alpha
+      allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
+
+      buildChips();
+      applyFilters();
+      document.getElementById('loadingState').remove();
+
+    } catch (e) {
+      console.error(e);
+      document.getElementById('loadingState').innerHTML = '<span style="color:var(--red)">⚠ Failed to load data</span>';
+    }
+  }
+
+  // ── CHIPS ────────────────────────────────────────────────────
+  function buildChips() {
+    const cats = ['All', ...Object.keys(CATEGORIES).filter(c =>
+      allTests.some(t => t.category === c)
+    ), 'Other'];
+
+    const row = document.getElementById('chipRow');
+    row.innerHTML = cats.map(c =>
+      `<div class="chip${c==='All'?' active':''}" data-cat="${c}" onclick="setCategory(this,'${c}')">${c}</div>`
+    ).join('');
+  }
+
+  function setCategory(el, cat) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    activeCategory = cat;
+    applyFilters();
+  }
+
+  // ── FILTER / RENDER LIST ────────────────────────────────────
+  function onSearch() { applyFilters(); }
+
+  function applyFilters() {
+    const term = document.getElementById('testSearch').value.toLowerCase();
+    filteredTests = allTests.filter(t => {
+      const catOk = activeCategory === 'All' || t.category === activeCategory;
+      const termOk = !term || t.name.toLowerCase().includes(term);
+      return catOk && termOk;
+    });
+    renderList();
+  }
+
+  function renderList() {
+    const panel = document.getElementById('panelList');
+
+    // Destroy old sparklines
+    Object.values(sparklineCharts).forEach(c => { try { c.destroy(); } catch(_){} });
+    sparklineCharts = {};
+
+    // Group by category
+    const byCategory = {};
+    filteredTests.forEach(t => {
+      if (!byCategory[t.category]) byCategory[t.category] = [];
+      byCategory[t.category].push(t);
+    });
+
+    if (filteredTests.length === 0) {
+      panel.innerHTML = '<div class="empty-state">No matching biomarkers</div>';
+      return;
+    }
+
+    const sections = [];
+    Object.entries(byCategory).forEach(([cat, tests]) => {
+      sections.push(`<div class="section-label">${cat}</div>`);
+      tests.forEach(t => {
+        sections.push(renderTestCard(t));
+      });
+    });
+
+    panel.innerHTML = sections.join('');
+
+    // Draw sparklines
+    filteredTests.forEach(t => {
+      if (t.type !== 'qualitative' && t.numericPts.length > 1) {
+        drawSparkline(t);
+      }
+    });
+  }
+
+  function renderTestCard(t) {
+    const id = safeId(t.name);
+    const last = t.points[t.points.length - 1];
+
+    if (t.type === 'qualitative') {
+      // Most-recent status
+      const status = qualStatus(last.rawResult);
+      const badgeClass = status === 'clear' ? 'badge-green' : status === 'reactive' ? 'badge-red' : 'badge-amber';
+      const badgeText  = status === 'clear' ? 'CLEAR' : status === 'reactive' ? 'REACTIVE' : 'UNKNOWN';
+      const checkCount = t.points.filter(p => qualStatus(p.rawResult) === 'clear').length;
+
+      return `
+      <div class="test-card" onclick="openTest('${escStr(t.name)}')">
+        <div class="test-card-left">
+          <div class="test-card-name">${t.name}</div>
+          <div class="test-card-meta">
+            <span>${t.points.length} ${t.points.length===1?'test':'tests'}</span>
+            <span>${checkCount}/${t.points.length} clear</span>
+          </div>
+        </div>
+        <div class="test-card-right">
+          <span class="status-badge ${badgeClass}">${badgeText}</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted)">${fmtDate(last.date)}</span>
+        </div>
+        <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
+          <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>`;
+    }
+
+    // Numeric
+    const latestNumPt = [...t.numericPts].reverse()[0];
+    const latestVal = latestNumPt ? latestNumPt.numVal : null;
+    const rangeStr = latestNumPt?.rawRange || t.range;
+    const parsed = parseRange(rangeStr);
+    const status = latestVal !== null ? isInRange(latestVal, parsed) : null;
+
+    let valColor = 'c-text';
+    if (status === 'low' || status === 'high') valColor = 'c-red';
+    else if (status === 'normal') valColor = 'c-green';
+
+    const displayVal = latestVal !== null ? formatVal(latestVal) : (last.rawResult ?? '—');
+
+    return `
+    <div class="test-card" onclick="openTest('${escStr(t.name)}')">
+      <div class="test-card-left">
+        <div class="test-card-name">${t.name}</div>
+        <div class="test-card-meta">
+          <span>${t.numericPts.length} ${t.numericPts.length===1?'reading':'readings'}</span>
+          ${rangeStr && typeof rangeStr === 'string' && !isNaN(Number(rangeStr)) === false ? `<span>${rangeStr}</span>` : ''}
+        </div>
+      </div>
+      <div class="test-card-right" style="gap:2px;">
+        <div class="latest-chip ${valColor}">${displayVal}</div>
+        ${t.numericPts.length > 1 ? `<canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas>` : ''}
+      </div>
+      <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
+        <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </div>`;
+  }
+
+  function drawSparkline(t) {
+    const id = safeId(t.name);
+    const canvas = document.getElementById(`spark-${id}`);
+    if (!canvas) return;
+
+    const vals = t.numericPts.map(p => p.numVal);
+    const rangeStr = t.numericPts[t.numericPts.length - 1]?.rawRange || t.range;
+    const parsed = parseRange(rangeStr);
+    const lastStatus = parsed ? isInRange(vals[vals.length - 1], parsed) : null;
+
+    const lineColor = lastStatus === 'normal' ? '#1fcb7a'
+                    : lastStatus === 'high' || lastStatus === 'low' ? '#f04e4e'
+                    : '#4f9cf8';
+
+    if (sparklineCharts[id]) {
+      try { sparklineCharts[id].destroy(); } catch(_){}
+    }
+
+    try {
+      sparklineCharts[id] = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: t.numericPts.map(p => p.date),
+          datasets: [{
+            data: vals,
+            borderColor: lineColor,
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.4,
+            fill: false,
+          }]
+        },
+        options: {
+          animation: false,
+          responsive: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: { x: { display: false }, y: { display: false } },
         }
+      });
+    } catch(_) {}
+  }
 
-        async function loadData() {
-            try {
-                const response = await fetch('./Blood_Tests_updated-2026-04-11-2242.json');
-                const rawData = await response.json();
-                
-                // Group by TestName
-                rawData.forEach(item => {
-                    // Check if numeric (or looks numeric even if flagged 0)
-                    let numVal = cleanNumber(item.Result);
-                    if (numVal !== null && (item["IsNumeric?"] === 1 || item["IsNumeric?"] === "1" || !isNaN(cleanNumber(item.Result)))) {
-                        if (!groupedData[item.TestName]) {
-                            groupedData[item.TestName] = {
-                                name: item.TestName,
-                                unit: item.Units,
-                                range: item.NormalRange,
-                                dataPoints: []
-                            };
-                        }
-                        
-                        groupedData[item.TestName].dataPoints.push({
-                            date: item.Date,
-                            value: numVal,
-                            rawResult: item.Result,
-                            rawRange: item.NormalRange
-                        });
-                    }
-                });
+  // ── OPEN TEST ────────────────────────────────────────────────
+  function openTest(name) {
+    const t = allTests.find(x => x.name === name);
+    if (!t) return;
+    currentTestName = name;
 
-                // Sort data points within each group by date ascending
-                Object.values(groupedData).forEach(group => {
-                    group.dataPoints.sort((a, b) => new Date(a.date) - new Date(b.date));
-                    // Deduplicate dates if needed (take average or latest on same day? Latest for now)
-                    let dedup = [];
-                    let dMap = {};
-                    group.dataPoints.forEach(pt => {
-                        dMap[pt.date] = pt; // overwrites with last one of the day
-                    });
-                    group.dataPoints = Object.values(dMap).sort((a, b) => new Date(a.date) - new Date(b.date));
-                });
+    // Switch panels
+    document.getElementById('panelList').classList.remove('visible');
+    document.getElementById('panelDetail').classList.add('visible');
 
-                // Filter out tests with only 1 data point to focus on trends
-                // Or just show all? Let's show all, but prioritize ones with > 1
-                allTestsData = Object.values(groupedData).sort((a, b) => b.dataPoints.length - a.dataPoints.length);
+    // Header
+    document.getElementById('detailTitle').textContent = t.name;
+    document.getElementById('detailUnit').textContent = t.unit || '';
 
-                renderTestList(allTestsData);
+    // KPIs
+    renderKPIs(t);
 
-                // Auto-select first test with multiple points
-                const multiPoint = allTestsData.find(t => t.dataPoints.length > 1);
-                if (multiPoint) {
-                    selectTest(multiPoint.name);
-                } else if (allTestsData.length > 0) {
-                    selectTest(allTestsData[0].name);
-                }
+    // Dynamic body
+    const dyn = document.getElementById('detailDynamic');
+    dyn.innerHTML = '';
 
-            } catch (err) {
-                console.error("Error loading data:", err);
-                document.getElementById('testList').innerHTML = `<div style="padding: 20px; color: #ff3d00;">Error: Could not load JSON data.</div>`;
-            }
+    if (currentChart) { try { currentChart.destroy(); } catch(_){} currentChart = null; }
+
+    if (t.type === 'qualitative') {
+      renderSTDTimeline(t, dyn);
+    } else {
+      if (t.numericPts.length > 0) {
+        renderGauge(t, dyn);
+        if (t.numericPts.length > 1) {
+          renderTrendChart(t, dyn);
         }
+      }
+      renderHistoryTable(t, dyn);
+    }
+  }
 
-        function renderTestList(tests) {
-            const container = document.getElementById('testList');
-            container.innerHTML = '';
-            
-            if (tests.length === 0) {
-                container.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--text-muted);">No tests found</div>`;
-                return;
-            }
+  function renderKPIs(t) {
+    const latestEl = document.getElementById('kpiLatest');
+    const latestDate = document.getElementById('kpiLatestDate');
+    const rangeEl = document.getElementById('kpiRange');
+    const trendEl = document.getElementById('kpiTrend');
+    const trendSub = document.getElementById('kpiTrendSub');
 
-            tests.forEach(test => {
-                const latest = test.dataPoints[test.dataPoints.length - 1];
-                let div = document.createElement('div');
-                div.className = 'test-item';
-                div.id = `test-btn-${test.name.replace(/[^a-zA-Z0-9]/g, '-')}`;
-                div.onclick = () => selectTest(test.name);
-                
-                div.innerHTML = `
-                    <div class="test-name">${test.name}</div>
-                    <div class="test-meta">
-                        <span>n=${test.dataPoints.length}</span>
-                        <span>Latest: ${latest.value}</span>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
+    // Latest
+    if (t.type === 'qualitative') {
+      const last = t.points[t.points.length - 1];
+      const s = qualStatus(last.rawResult);
+      latestEl.textContent = s === 'clear' ? 'CLEAR' : s === 'reactive' ? '⚠ REACTIVE' : '?';
+      latestEl.className = 'kpi-val ' + (s === 'clear' ? 'c-green' : s === 'reactive' ? 'c-red' : 'c-amber');
+      latestDate.textContent = fmtDate(last.date);
+      rangeEl.textContent = 'Nonreactive';
+      rangeEl.className = 'kpi-val c-text';
+      trendEl.textContent = `${t.points.length}`;
+      trendEl.className = 'kpi-val c-text';
+      trendSub.textContent = 'total tests';
+    } else {
+      const pts = t.numericPts;
+      if (pts.length === 0) {
+        latestEl.textContent = '—';
+        latestEl.className = 'kpi-val c-text';
+        latestDate.textContent = '';
+        rangeEl.textContent = '—';
+        rangeEl.className = 'kpi-val c-text';
+        trendEl.textContent = '—';
+        trendEl.className = 'kpi-val c-text';
+        trendSub.textContent = '';
+        return;
+      }
+
+      const last = pts[pts.length - 1];
+      const rangeStr = last.rawRange || t.range;
+      const parsed = parseRange(rangeStr);
+      const status = parsed ? isInRange(last.numVal, parsed) : null;
+
+      latestEl.textContent = formatVal(last.numVal);
+      latestEl.className = 'kpi-val ' + (status === 'normal' ? 'c-green' : status === 'high' || status === 'low' ? 'c-red' : 'c-text');
+      latestDate.textContent = fmtDate(last.date);
+
+      // Range display
+      if (rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr))) {
+        rangeEl.textContent = rangeStr;
+      } else {
+        rangeEl.textContent = '—';
+      }
+      rangeEl.className = 'kpi-val c-text';
+
+      // Trend
+      if (pts.length > 1) {
+        const prev = pts[pts.length - 2];
+        const diff = last.numVal - prev.numVal;
+        const pct = ((diff / (prev.numVal || 1)) * 100).toFixed(1);
+        if (Math.abs(diff) < 0.001) {
+          trendEl.textContent = '=';
+          trendEl.className = 'kpi-val c-text';
+          trendSub.textContent = 'No change';
+        } else if (diff > 0) {
+          trendEl.textContent = `+${formatVal(diff)}`;
+          trendEl.className = 'kpi-val c-red';
+          trendSub.textContent = `↑ ${pct}%`;
+        } else {
+          trendEl.textContent = formatVal(diff);
+          trendEl.className = 'kpi-val c-green';
+          trendSub.textContent = `↓ ${Math.abs(pct)}%`;
         }
+      } else {
+        trendEl.textContent = '—';
+        trendEl.className = 'kpi-val c-text';
+        trendSub.textContent = 'Need more';
+      }
+    }
+  }
 
-        function filterTests() {
-            const term = document.getElementById('testSearch').value.toLowerCase();
-            const filtered = allTestsData.filter(t => t.name.toLowerCase().includes(term));
-            renderTestList(filtered);
+  function renderGauge(t, container) {
+    const last = t.numericPts[t.numericPts.length - 1];
+    const rangeStr = last?.rawRange || t.range;
+    const parsed = parseRange(rangeStr);
+    if (!parsed) return;
+
+    const val = last.numVal;
+    const status = isInRange(val, parsed);
+
+    // Determine extent
+    const hasMin = parsed.min !== undefined;
+    const hasMax = parsed.max !== undefined;
+    const rangeMin = hasMin ? parsed.min : 0;
+    const rangeMax = hasMax ? parsed.max : val * 1.5;
+    const trackMin = rangeMin - (rangeMax - rangeMin) * 0.25;
+    const trackMax = rangeMax + (rangeMax - rangeMin) * 0.25;
+    const trackRange = trackMax - trackMin;
+
+    const zoneLeft = Math.max(0, ((rangeMin - trackMin) / trackRange) * 100);
+    const zoneRight = Math.min(100, ((rangeMax - trackMin) / trackRange) * 100);
+    const zoneWidth = zoneRight - zoneLeft;
+    const markerPct = Math.min(100, Math.max(0, ((val - trackMin) / trackRange) * 100));
+
+    const zoneColor = status === 'normal' ? 'rgba(31,203,122,0.35)' : 'rgba(79,156,248,0.2)';
+    const markerColor = status === 'normal' ? 'var(--green)' : status === 'high' || status === 'low' ? 'var(--red)' : 'var(--accent)';
+
+    container.insertAdjacentHTML('beforeend', `
+      <div class="range-bar-section">
+        <div class="range-bar-card">
+          <div class="range-bar-label">Position in range</div>
+          <div class="gauge-track">
+            <div class="gauge-fill-zone" style="left:${zoneLeft}%;width:${zoneWidth}%;background:${zoneColor};"></div>
+            <div class="gauge-marker" style="left:${markerPct}%;box-shadow:0 0 0 2px ${markerColor};"></div>
+          </div>
+          <div class="gauge-labels">
+            <span>${hasMin ? rangeMin : '—'}</span>
+            <span style="color:${markerColor};font-weight:500;">${formatVal(val)}</span>
+            <span>${hasMax ? rangeMax : '—'}</span>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  function renderTrendChart(t, container) {
+    const canvasId = 'trendChart_' + safeId(t.name);
+    container.insertAdjacentHTML('beforeend', `
+      <div class="detail-divider">Trend over time</div>
+      <div class="chart-section">
+        <div class="chart-card">
+          <div style="position:relative;height:220px;">
+            <canvas id="${canvasId}"></canvas>
+          </div>
+        </div>
+      </div>
+    `);
+
+    const labels = t.numericPts.map(p => fmtDate(p.date));
+    const vals   = t.numericPts.map(p => p.numVal);
+    const rangeStr = t.numericPts[t.numericPts.length-1]?.rawRange || t.range;
+    const parsed = parseRange(rangeStr);
+
+    // Point colors
+    const pointColors = vals.map((v, i) => {
+      if (!parsed) return '#4f9cf8';
+      const s = isInRange(v, parsed);
+      return s === 'normal' ? '#1fcb7a' : s === 'high' || s === 'low' ? '#f04e4e' : '#4f9cf8';
+    });
+
+    const lastStatus = parsed ? isInRange(vals[vals.length-1], parsed) : null;
+    const lineColor = lastStatus === 'normal' ? '#1fcb7a' : lastStatus ? '#f04e4e' : '#4f9cf8';
+
+    const ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+
+    const grd = ctx.getContext('2d').createLinearGradient(0, 0, 0, 220);
+    grd.addColorStop(0, lineColor + '33');
+    grd.addColorStop(1, lineColor + '00');
+
+    const datasets = [{
+      data: vals,
+      borderColor: lineColor,
+      borderWidth: 2.5,
+      pointBackgroundColor: pointColors,
+      pointBorderColor: '#0a0b0e',
+      pointBorderWidth: 1.5,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      fill: true,
+      backgroundColor: grd,
+      tension: 0.35,
+    }];
+
+    if (parsed) {
+      if (parsed.min !== undefined) {
+        datasets.push({
+          data: Array(labels.length).fill(parsed.min),
+          borderColor: 'rgba(255,255,255,0.15)',
+          borderWidth: 1,
+          borderDash: [4,4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+          label: 'Min',
+        });
+      }
+      if (parsed.max !== undefined) {
+        datasets.push({
+          data: Array(labels.length).fill(parsed.max),
+          borderColor: 'rgba(255,255,255,0.15)',
+          borderWidth: 1,
+          borderDash: [4,4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+          label: 'Max',
+        });
+      }
+    }
+
+    currentChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#181c23',
+            titleColor: '#eeeef0',
+            bodyColor: '#7a7f8e',
+            borderColor: 'rgba(255,255,255,0.1)',
+            borderWidth: 1,
+            padding: 10,
+            titleFont: { family: "'DM Mono', monospace", size: 11 },
+            bodyFont:  { family: "'DM Mono', monospace", size: 12 },
+            callbacks: {
+              title: items => items[0].label,
+              label: item => item.datasetIndex === 0
+                ? ` ${item.raw}${t.unit ? ' ' + t.unit : ''}`
+                : ` ${item.dataset.label}: ${item.raw}`,
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            border: { display: false },
+            ticks: {
+              color: '#7a7f8e',
+              font: { family: "'DM Mono', monospace", size: 10 },
+              maxRotation: 0,
+              maxTicksLimit: 6,
+            }
+          },
+          y: {
+            grid: { color: 'rgba(255,255,255,0.05)', drawBorder: false },
+            border: { display: false },
+            ticks: {
+              color: '#7a7f8e',
+              font: { family: "'DM Mono', monospace", size: 10 },
+            }
+          }
         }
+      }
+    });
+  }
 
-        function selectTest(testName) {
-            // Update UI selection
-            document.querySelectorAll('.test-item').forEach(el => el.classList.remove('active'));
-            let btnId = `test-btn-${testName.replace(/[^a-zA-Z0-9]/g, '-')}`;
-            let btn = document.getElementById(btnId);
-            if(btn) btn.classList.add('active');
+  function renderSTDTimeline(t, container) {
+    const rows = t.points.map(p => {
+      const status = qualStatus(p.rawResult);
+      const barClass = status === 'clear' ? 'clear' : status === 'reactive' ? 'reactive' : 'unknown';
+      const label = status === 'clear' ? '● Nonreactive / Clear'
+                  : status === 'reactive' ? '● Reactive / Detected'
+                  : `● ${p.rawResult}`;
+      return `
+        <div class="std-row">
+          <div class="std-date">${fmtDate(p.date)}</div>
+          <div class="std-bar ${barClass}">
+            <div class="std-dot"></div>${label}
+          </div>
+        </div>`;
+    }).join('');
 
-            const testData = groupedData[testName];
-            if (!testData) return;
+    container.insertAdjacentHTML('beforeend', `
+      <div class="std-timeline">
+        <div class="std-timeline-card">
+          <div class="std-timeline-label">Test history</div>
+          ${rows}
+        </div>
+      </div>
+    `);
+  }
 
-            document.getElementById('chartTitle').textContent = testData.name;
-            if (testData.unit) {
-                document.getElementById('chartUnit').style.display = 'inline-block';
-                document.getElementById('chartUnit').textContent = testData.unit;
-            } else {
-                document.getElementById('chartUnit').style.display = 'none';
-            }
+  function renderHistoryTable(t, container) {
+    const pts = t.type === 'qualitative' ? [] : t.numericPts;
+    if (pts.length === 0) return;
 
-            // Update KPIs
-            const latest = testData.dataPoints[testData.dataPoints.length - 1];
-            document.getElementById('kpiLatest').textContent = latest.value;
-            document.getElementById('kpiLatestDate').textContent = latest.date;
-            
-            // Clean up range display
-            let rStr = latest.rawRange || testData.range || "N/A";
-            // if range is a weird big number without dash, leave it, else show it
-            document.getElementById('kpiRange').textContent = rStr;
+    const rows = [...pts].reverse().map((p, i, arr) => {
+      const prev = arr[i + 1]; // reversed, so prev is next in array
+      const rangeStr = p.rawRange || t.range;
+      const parsed = parseRange(rangeStr);
+      const status = parsed ? isInRange(p.numVal, parsed) : null;
 
-            // Trend
-            let trendEl = document.getElementById('kpiTrend');
-            let trendSub = document.getElementById('kpiTrendSub');
-            if (testData.dataPoints.length > 1) {
-                const prev = testData.dataPoints[testData.dataPoints.length - 2];
-                const diff = latest.value - prev.value;
-                const pct = ((diff / prev.value) * 100).toFixed(1);
-                if (diff > 0) {
-                    trendEl.textContent = `+${diff.toFixed(2)}`;
-                    trendEl.className = 'kpi-value warning-text';
-                    trendSub.textContent = `Up ${pct}%`;
-                } else if (diff < 0) {
-                    trendEl.textContent = `${diff.toFixed(2)}`;
-                    trendEl.className = 'kpi-value success-text';
-                    trendSub.textContent = `Down ${Math.abs(pct)}%`;
-                } else {
-                    trendEl.textContent = `0.0`;
-                    trendEl.className = 'kpi-value';
-                    trendSub.textContent = `No change`;
-                }
-            } else {
-                trendEl.textContent = `-`;
-                trendEl.className = 'kpi-value';
-                trendSub.textContent = `Need more data`;
-            }
-
-            drawChart(testData);
+      let deltaHtml = '';
+      if (prev) {
+        const diff = p.numVal - prev.numVal;
+        if (Math.abs(diff) < 0.001) {
+          deltaHtml = `<span class="hist-delta delta-flat">=</span>`;
+        } else if (diff > 0) {
+          deltaHtml = `<span class="hist-delta delta-up">↑ +${formatVal(diff)}</span>`;
+        } else {
+          deltaHtml = `<span class="hist-delta delta-down">↓ ${formatVal(diff)}</span>`;
         }
+      }
 
-        function drawChart(testData) {
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            
-            if (currentChart) {
-                currentChart.destroy();
-            }
+      const valColor = status === 'normal' ? 'c-green' : status === 'high' || status === 'low' ? 'c-red' : 'c-text';
 
-            const labels = testData.dataPoints.map(pt => pt.date);
-            const data = testData.dataPoints.map(pt => pt.value);
+      return `
+        <div class="history-row">
+          <div class="hist-date">${fmtDate(p.date)}</div>
+          <div class="hist-val ${valColor}">${formatVal(p.numVal)}</div>
+          ${deltaHtml}
+        </div>`;
+    }).join('');
 
-            // Create gradient for the line
-            let gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientFill.addColorStop(0, "rgba(255, 61, 0, 0.4)");
-            gradientFill.addColorStop(1, "rgba(255, 61, 0, 0.0)");
+    container.insertAdjacentHTML('beforeend', `
+      <div class="detail-divider" style="margin-top:8px;">All readings</div>
+      <div class="history-section">
+        <div class="history-header">Date · Value · Change</div>
+        ${rows}
+      </div>
+    `);
+  }
 
-            let datasets = [{
-                label: testData.unit ? `Result (${testData.unit})` : 'Result',
-                data: data,
-                borderColor: '#ff3d00',
-                borderWidth: 3,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: '#ff3d00',
-                pointBorderWidth: 2,
-                pointRadius: 5,
-                pointHoverRadius: 8,
-                fill: true,
-                backgroundColor: gradientFill,
-                tension: 0.4
-            }];
+  // ── NAVIGATION ───────────────────────────────────────────────
+  function goBack() {
+    document.getElementById('panelDetail').classList.remove('visible');
+    document.getElementById('panelList').classList.add('visible');
+    if (currentChart) { try { currentChart.destroy(); } catch(_){} currentChart = null; }
+    currentTestName = null;
+  }
 
-            // Parse Normal Range to draw dashed lines if it looks like "min-max"
-            let range = testData.dataPoints[testData.dataPoints.length - 1].rawRange || testData.range;
-            if (range && typeof range === 'string' && range.includes('-')) {
-                let parts = range.split('-');
-                let min = parseFloat(parts[0]);
-                let max = parseFloat(parts[1]);
-                if (!isNaN(min) && !isNaN(max)) {
-                    datasets.push({
-                        label: 'Max Reference',
-                        data: Array(labels.length).fill(max),
-                        borderColor: 'rgba(0, 0, 0, 0.2)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0
-                    });
-                    datasets.push({
-                        label: 'Min Reference',
-                        data: Array(labels.length).fill(min),
-                        borderColor: 'rgba(0, 0, 0, 0.2)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0
-                    });
-                }
-            } else if (range && typeof range === 'string' && range.startsWith('<')) {
-                let max = parseFloat(range.replace(/[^0-9.]/g, ''));
-                if (!isNaN(max)) {
-                    datasets.push({
-                        label: 'Max Reference',
-                        data: Array(labels.length).fill(max),
-                        borderColor: 'rgba(0, 0, 0, 0.2)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0
-                    });
-                }
-            }
+  // ── UTILS ─────────────────────────────────────────────────────
+  function safeId(name)  { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
+  function escStr(name)  { return name.replace(/'/g, "\\'"); }
+  function formatVal(v)  {
+    if (v === null || v === undefined) return '—';
+    if (Math.abs(v) >= 1000) return v.toFixed(0);
+    if (Number.isInteger(v)) return String(v);
+    const s = v.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+    return s;
+  }
+  function fmtDate(d) {
+    if (!d) return '';
+    const parts = d.split('/');
+    if (parts.length === 3) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const m = parseInt(parts[1]) - 1;
+      return `${months[m]} '${parts[0].slice(2)}`;
+    }
+    return d;
+  }
 
-            currentChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    family: "'Inter', sans-serif"
-                                }
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                            titleColor: '#1a1b26',
-                            bodyColor: '#4a4b56',
-                            borderColor: 'rgba(0,0,0,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            titleFont: { size: 14, family: "'Inter', sans-serif" },
-                            bodyFont: { size: 14, family: "'Space Mono', monospace" },
-                            displayColors: true,
-                            boxPadding: 4
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                font: {
-                                    family: "'Space Mono', monospace",
-                                    size: 11
-                                }
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.05)',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                font: {
-                                    family: "'Space Mono', monospace",
-                                    size: 11
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Init
-        document.addEventListener('DOMContentLoaded', loadData);
-
-    </script>
+  // ── INIT ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', loadData);
+  </script>
 </body>
 </html>
