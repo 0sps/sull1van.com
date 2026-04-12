@@ -1445,12 +1445,13 @@
             if (!t) return;
             currentTestName = name;
 
+            document.getElementById('desktopEmpty').style.display = 'none';
+            const dc = document.getElementById('detailContent');
+            dc.style.display = 'flex';
+            dc.style.flexDirection = 'column';
+
             if (isDesktop()) {
                 // Desktop: keep list visible, update detail in place
-                document.getElementById('desktopEmpty').style.display = 'none';
-                const dc = document.getElementById('detailContent');
-                dc.style.display = 'flex';
-                dc.style.flexDirection = 'column';
                 // Highlight active card
                 document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
                 const cardId = `test-btn-${safeId(name)}`;
