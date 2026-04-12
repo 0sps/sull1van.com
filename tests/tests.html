@@ -1716,26 +1716,54 @@
             document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
             document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
 
+            refreshThemeCache();
             if (activeCategory) applyFilters();
             if (currentTestName) openTest(currentTestName);
 
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         };
 
+        // ── INIT ─────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
+            refreshThemeCache();
             const isLight = document.documentElement.classList.contains('light-mode');
             document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
             document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
         });
 
         // ── DATA & STATE ──────────────────────────────────────────────
-        let allTests = [];          // [{name, unit, range, type, dataPoints:[{date,value,rawResult,rawRange}]}]
+        let allTests = [];          // [{name, unit, range, type, points, numericPts, category}]
         let filteredTests = [];
         let activeCategory = 'All';
         let currentTestName = null;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
         let _dataLoaded = false;
+
+        // ── THEME COLOR CACHE ─────────────────────────────────────────
+        // Populated once on init and refreshed on every theme toggle.
+        // Avoids calling getComputedStyle() inside tight render loops.
+        let themeCache = {};
+        const THEME_VARS = [
+            '--green', '--red', '--accent', '--muted', '--text', '--bg',
+            '--tooltip-bg', '--card-border', '--chart-grid'
+        ];
+        function refreshThemeCache() {
+            const style = getComputedStyle(document.documentElement);
+            THEME_VARS.forEach(v => { themeCache[v] = style.getPropertyValue(v).trim(); });
+        }
+
+        // ── SAFE ISO DATE PARSER ──────────────────────────────────────
+        // new Date('YYYY-MM-DD') is UTC in all browsers; this returns a
+        // local-midnight Date so sort order and display stay consistent.
+        function parseISODate(str) {
+            if (!str) return new Date(NaN);
+            const parts = String(str).split('-');
+            if (parts.length === 3) {
+                return new Date(+parts[0], +parts[1] - 1, +parts[2]);
+            }
+            return new Date(str); // fallback for unexpected formats
+        }
 
         // Qualitative result normalization
         const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'nondetected', 'undetected', 'absent'];
@@ -1834,15 +1862,26 @@
             return 'normal';
         }
 
+        // ── FIREBASE READINESS PROMISE ────────────────────────────────
+        // Created here (classic script) so it exists before the module
+        // script runs. The module resolves it once Firestore is initialised.
+        window._labsDbPromise = new Promise(resolve => { window._labsDbResolve = resolve; });
+
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData() {
             if (_dataLoaded) return;
             try {
-                // Wait for Firestore to be initialised by the Firebase module block below
-                let attempts = 0;
-                while (!window._labsDb && attempts < 50) {
-                    await new Promise(r => setTimeout(r, 100));
-                    attempts++;
+                // Wait for Firestore to be ready via the Promise the Firebase module block resolves.
+                // Falls back gracefully if the module fails to set the promise.
+                if (window._labsDbPromise) {
+                    await window._labsDbPromise;
+                } else {
+                    // Legacy fallback: poll briefly in case module hasn't created the promise yet
+                    let attempts = 0;
+                    while (!window._labsDb && attempts < 50) {
+                        await new Promise(r => setTimeout(r, 100));
+                        attempts++;
+                    }
                 }
                 if (!window._labsDb) throw new Error('Firebase did not initialise in time.');
 
@@ -1876,11 +1915,12 @@
                         };
                     });
 
-                    // Sort & dedup by date (last reading on a given date wins)
-                    points.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    // Sort & dedup by date (last reading on a given date wins).
+                    // parseISODate() avoids Safari UTC-vs-local coercion of YYYY-MM-DD strings.
+                    points.sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
                     const dmap = {};
                     points.forEach(p => { dmap[p.date] = p; });
-                    const sortedPoints = Object.values(dmap).sort((a, b) => new Date(a.date) - new Date(b.date));
+                    const sortedPoints = Object.values(dmap).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
 
                     const numericPts = sortedPoints.filter(p => p.isNumeric && p.numVal !== null);
                     const qualPts    = sortedPoints.filter(p => !p.isNumeric);
@@ -1993,7 +2033,8 @@
                 allTests.forEach(t => {
                     if (t.points && t.points.length > 0) {
                         const last = t.points[t.points.length - 1];
-                        if (!latestDateStr || last.date > latestDateStr) latestDateStr = last.date;
+                        // Use parseISODate for reliable cross-browser date comparison
+                        if (!latestDateStr || parseISODate(last.date) > parseISODate(latestDateStr)) latestDateStr = last.date;
 
                         if (t.type === 'qualitative') {
                             if (qualStatus(last.rawResult) === 'reactive') totalOOR++;
@@ -2126,12 +2167,16 @@
             const parsed = parseRange(rangeStr);
             const lastStatus = parsed ? isInRange(vals[vals.length - 1], parsed) : null;
 
-            const lineColor = lastStatus === 'normal' ? getCssVar('--green')
-                : lastStatus === 'high' || lastStatus === 'low' ? getCssVar('--red')
-                    : getCssVar('--accent');
+            // Use cached theme colors — no getComputedStyle reflow per sparkline
+            const lineColor = lastStatus === 'normal' ? themeCache['--green']
+                : lastStatus === 'high' || lastStatus === 'low' ? themeCache['--red']
+                : themeCache['--accent'];
 
+            // Destroy any existing Chart instance for this id before creating a new one.
+            // Prevents ghost instances when the list re-renders rapidly (e.g. fast search input).
             if (sparklineCharts[id]) {
                 try { sparklineCharts[id].destroy(); } catch (_) { }
+                delete sparklineCharts[id];
             }
 
             try {
@@ -2174,48 +2219,114 @@
         // ── OPEN TEST ────────────────────────────────────────────────
         function isDesktop() { return window.innerWidth >= 900; }
 
-        function getKPIHtml(t) {
+        // ── KPI STATS ENGINE ──────────────────────────────────────────
+        // Single source of truth for KPI data. Both the grid HTML renderer
+        // (getKPIHtml) and the DOM mutator (renderKPIs) consume this object
+        // so logic changes only need to be made in one place.
+        function calcTestStats(t) {
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
-                const s = qualStatus(last.rawResult);
-                const lVal   = qualLabel(s);
-                const lClass = qualColorClass(s);
-                return `
-                <div class="kpi-row grid-kpi-row">
-                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lClass}">${lVal}</div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(last.date)}</div></div>
-                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">Nonreactive</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
-                    <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${t.points.length}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
-                </div>`;
-            }
-            
-            const pts = t.numericPts;
-            const latest = pts[pts.length - 1];
-            const prev = pts.length > 1 ? pts[pts.length - 2] : null;
-            const lVal = formatVal(latest.numVal);
-            const hasRange = !!(latest.rawRange || t.range);
-            
-            let lColor = 'c-text';
-            const parsed = parseRange(latest.rawRange || t.range);
-            if (parsed) {
-                const stat = isInRange(latest.numVal, parsed);
-                if (stat === 'normal') lColor = 'c-green';
-                else if (stat === 'low' || stat === 'high') lColor = 'c-red';
+                const status = qualStatus(last.rawResult);
+                return {
+                    type: 'qualitative',
+                    latestLabel: qualLabel(status),
+                    latestColorClass: qualColorClass(status),
+                    latestDate: fmtDate(last.date),
+                    rangeText: 'Nonreactive',
+                    totalCount: t.points.length,
+                    // trend fields unused for qualitative but kept for consistency
+                    trendVal: null,
+                    trendColorClass: 'c-text',
+                    trendSub: 'total tests',
+                };
             }
 
-            let trendHtml = '<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>';
+            const pts = t.numericPts;
+            if (pts.length === 0) {
+                return {
+                    type: 'numeric-empty',
+                    latestLabel: '—', latestColorClass: 'c-text', latestDate: '',
+                    rangeText: '—', unit: t.unit || '',
+                    trendVal: '—', trendColorClass: 'c-text', trendSub: '',
+                };
+            }
+
+            const latest = pts[pts.length - 1];
+            const prev   = pts.length > 1 ? pts[pts.length - 2] : null;
+            const rangeStr = latest.rawRange || t.range;
+            const parsed   = parseRange(rangeStr);
+            const status   = parsed ? isInRange(latest.numVal, parsed) : null;
+
+            const latestColorClass = status === 'normal' ? 'c-green'
+                : (status === 'high' || status === 'low') ? 'c-red'
+                : 'c-text';
+
+            const rangeText = (rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)))
+                ? rangeStr : '—';
+
+            let trendVal = '—', trendColorClass = 'c-text', trendSub = 'Need more';
+            let trendPct = null;
             if (prev) {
                 const diff = latest.numVal - prev.numVal;
-                const good = trendIsGood(t.name, diff);
-                const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
-                const trendVal = (diff > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(diff));
-                trendHtml = `<div class="kpi-val ${diff===0?'c-text':trendColor}">${diff === 0 ? 'No change' : trendVal}</div>
-                            <div class="kpi-sub" style="margin-top:2px;">vs ${fmtDate(prev.date)}</div>`;
+                if (Math.abs(diff) < 0.001) {
+                    trendVal = '=';
+                    trendSub = 'No change';
+                } else {
+                    const good = trendIsGood(t.name, diff);
+                    trendColorClass = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
+                    // Full detail view: signed value  (+1.23 / -0.5)
+                    trendVal = diff > 0 ? `+${formatVal(diff)}` : formatVal(diff);
+                    trendPct = ((diff / (prev.numVal || 1)) * 100).toFixed(1);
+                    trendSub = `${diff > 0 ? '↑' : '↓'} ${Math.abs(trendPct)}%`;
+                }
             }
+
+            return {
+                type: 'numeric',
+                latestVal: formatVal(latest.numVal),
+                latestColorClass,
+                latestDate: fmtDate(latest.date),
+                rangeText,
+                unit: t.unit || '',
+                trendVal,
+                trendColorClass,
+                trendSub,
+                // Raw diff arrow variant used in grid card compact view
+                trendArrowVal: prev ? ((latest.numVal - prev.numVal) > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(latest.numVal - prev.numVal)) : null,
+                prevDate: prev ? fmtDate(prev.date) : null,
+                totalCount: pts.length,
+            };
+        }
+
+        function getKPIHtml(t) {
+            const s = calcTestStats(t);
+
+            if (s.type === 'qualitative') {
+                return `
+                <div class="kpi-row grid-kpi-row">
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${s.totalCount}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
+                </div>`;
+            }
+
+            if (s.type === 'numeric-empty') {
+                return `
+                <div class="kpi-row grid-kpi-row">
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val c-text">—</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text">—</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Trend</div><div class="kpi-val c-text">—</div></div>
+                </div>`;
+            }
+
+            const trendHtml = s.trendArrowVal
+                ? `<div class="kpi-val ${s.trendVal === '=' ? 'c-text' : s.trendColorClass}">${s.trendVal === '=' ? 'No change' : s.trendArrowVal}</div><div class="kpi-sub" style="margin-top:2px;">vs ${s.prevDate}</div>`
+                : `<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>`;
 
             return `
             <div class="kpi-row grid-kpi-row">
-                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lColor}">${lVal} <span style="font-size:0.6rem;color:var(--muted)">${t.unit||''}</span></div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(latest.date)}</div></div>
-                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${hasRange ? (latest.rawRange || t.range) : '—'}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal} <span style="font-size:0.6rem;color:var(--muted)">${s.unit}</span></div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                 <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
             </div>`;
         }
@@ -2364,77 +2475,45 @@
         }
 
         function renderKPIs(t) {
-            const latestEl = document.getElementById('kpiLatest');
+            // Delegate all KPI computation to the shared stats engine.
+            const s = calcTestStats(t);
+
+            const latestEl  = document.getElementById('kpiLatest');
             const latestDate = document.getElementById('kpiLatestDate');
-            const rangeEl = document.getElementById('kpiRange');
-            const trendEl = document.getElementById('kpiTrend');
-            const trendSub = document.getElementById('kpiTrendSub');
+            const rangeEl   = document.getElementById('kpiRange');
+            const trendEl   = document.getElementById('kpiTrend');
+            const trendSub  = document.getElementById('kpiTrendSub');
 
-            // Latest
-            if (t.type === 'qualitative') {
-                const last = t.points[t.points.length - 1];
-                const s = qualStatus(last.rawResult);
-                latestEl.textContent = qualLabel(s);
-                latestEl.className = 'kpi-val ' + qualColorClass(s);
-                latestDate.textContent = fmtDate(last.date);
-                rangeEl.textContent = 'Nonreactive';
-                rangeEl.className = 'kpi-val c-text';
-                trendEl.textContent = `${t.points.length}`;
-                trendEl.className = 'kpi-val c-text';
-                trendSub.textContent = 'total tests';
-            } else {
-                const pts = t.numericPts;
-                if (pts.length === 0) {
-                    latestEl.textContent = '—';
-                    latestEl.className = 'kpi-val c-text';
-                    latestDate.textContent = '';
-                    rangeEl.textContent = '—';
-                    rangeEl.className = 'kpi-val c-text';
-                    trendEl.textContent = '—';
-                    trendEl.className = 'kpi-val c-text';
-                    trendSub.textContent = '';
-                    return;
-                }
-
-                const last = pts[pts.length - 1];
-                const rangeStr = last.rawRange || t.range;
-                const parsed = parseRange(rangeStr);
-                const status = parsed ? isInRange(last.numVal, parsed) : null;
-
-                latestEl.textContent = formatVal(last.numVal);
-                latestEl.className = 'kpi-val ' + (status === 'normal' ? 'c-green' : status === 'high' || status === 'low' ? 'c-red' : 'c-text');
-                latestDate.textContent = fmtDate(last.date);
-
-                // Range display
-                if (rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr))) {
-                    rangeEl.textContent = rangeStr;
-                } else {
-                    rangeEl.textContent = '—';
-                }
-                rangeEl.className = 'kpi-val c-text';
-
-                // Trend
-                if (pts.length > 1) {
-                    const prev = pts[pts.length - 2];
-                    const diff = last.numVal - prev.numVal;
-                    const pct = ((diff / (prev.numVal || 1)) * 100).toFixed(1);
-                    if (Math.abs(diff) < 0.001) {
-                        trendEl.textContent = '=';
-                        trendEl.className = 'kpi-val c-text';
-                        trendSub.textContent = 'No change';
-                    } else {
-                        const good = trendIsGood(t.name, diff);
-                        const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
-                        trendEl.textContent = diff > 0 ? `+${formatVal(diff)}` : formatVal(diff);
-                        trendEl.className = `kpi-val ${trendColor}`;
-                        trendSub.textContent = `${diff > 0 ? '↑' : '↓'} ${Math.abs(pct)}%`;
-                    }
-                } else {
-                    trendEl.textContent = '—';
-                    trendEl.className = 'kpi-val c-text';
-                    trendSub.textContent = 'Need more';
-                }
+            if (s.type === 'qualitative') {
+                latestEl.textContent  = s.latestLabel;
+                latestEl.className    = 'kpi-val ' + s.latestColorClass;
+                latestDate.textContent = s.latestDate;
+                rangeEl.textContent   = s.rangeText;
+                rangeEl.className     = 'kpi-val c-text';
+                trendEl.textContent   = String(s.totalCount);
+                trendEl.className     = 'kpi-val c-text';
+                trendSub.textContent  = s.trendSub;
+                return;
             }
+
+            if (s.type === 'numeric-empty') {
+                latestEl.textContent  = '—'; latestEl.className = 'kpi-val c-text';
+                latestDate.textContent = '';
+                rangeEl.textContent   = '—'; rangeEl.className  = 'kpi-val c-text';
+                trendEl.textContent   = '—'; trendEl.className  = 'kpi-val c-text';
+                trendSub.textContent  = '';
+                return;
+            }
+
+            // Numeric
+            latestEl.textContent  = s.latestVal;
+            latestEl.className    = 'kpi-val ' + s.latestColorClass;
+            latestDate.textContent = s.latestDate;
+            rangeEl.textContent   = s.rangeText;
+            rangeEl.className     = 'kpi-val c-text';
+            trendEl.textContent   = s.trendVal;
+            trendEl.className     = `kpi-val ${s.trendColorClass}`;
+            trendSub.textContent  = s.trendSub;
         }
 
         function renderGauge(t, container) {
@@ -2499,15 +2578,20 @@
             const rangeStr = t.numericPts[t.numericPts.length - 1]?.rawRange || t.range;
             const parsed = parseRange(rangeStr);
 
-            // Point colors
-            const pointColors = vals.map((v, i) => {
-                if (!parsed) return getCssVar('--accent');
+            // Point colors — use cached theme vars (no getComputedStyle reflow per point)
+            const pointColors = vals.map(v => {
+                if (!parsed) return themeCache['--accent'];
                 const s = isInRange(v, parsed);
-                return s === 'normal' ? getCssVar('--green') : s === 'high' || s === 'low' ? getCssVar('--red') : getCssVar('--accent');
+                return s === 'normal' ? themeCache['--green']
+                    : s === 'high' || s === 'low' ? themeCache['--red']
+                    : themeCache['--accent'];
             });
 
             const lastStatus = parsed ? isInRange(vals[vals.length - 1], parsed) : null;
-            const lineColor = lastStatus === 'normal' ? getCssVar('--green') : lastStatus ? getCssVar('--red') : getCssVar('--accent');
+            // Use cached theme colors to avoid getComputedStyle reflow on every chart render
+            const lineColor = lastStatus === 'normal' ? themeCache['--green']
+                : lastStatus ? themeCache['--red']
+                : themeCache['--accent'];
 
             const ctx = document.getElementById(canvasId);
             if (!ctx) return;
@@ -2569,10 +2653,10 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: getCssVar('--tooltip-bg'),
-                            titleColor: getCssVar('--text'),
-                            bodyColor: getCssVar('--muted'),
-                            borderColor: getCssVar('--card-border'),
+                            backgroundColor: themeCache['--tooltip-bg'],
+                            titleColor: themeCache['--text'],
+                            bodyColor: themeCache['--muted'],
+                            borderColor: themeCache['--card-border'],
                             borderWidth: 1,
                             padding: 10,
                             titleFont: { family: "'DM Mono', monospace", size: 11 },
@@ -2590,17 +2674,17 @@
                             grid: { display: false },
                             border: { display: false },
                             ticks: {
-                                color: getCssVar('--muted'),
+                                color: themeCache['--muted'],
                                 font: { family: "'DM Mono', monospace", size: 10 },
                                 maxRotation: 0,
                                 maxTicksLimit: 6,
                             }
                         },
                         y: {
-                            grid: { color: getCssVar('--chart-grid'), drawBorder: false },
+                            grid: { color: themeCache['--chart-grid'], drawBorder: false },
                             border: { display: false },
                             ticks: {
-                                color: getCssVar('--muted'),
+                                color: themeCache['--muted'],
                                 font: { family: "'DM Mono', monospace", size: 10 },
                             }
                         }
@@ -2692,8 +2776,10 @@
         }
 
         // ── UTILS ─────────────────────────────────────────────────────
+        // getCssVar kept for any one-off reads (e.g. gauge marker color);
+        // hot render paths must use themeCache instead.
         function getCssVar(name) {
-            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return themeCache[name] ?? getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
         function safeId(name) { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
         function escStr(name) {
@@ -2749,9 +2835,11 @@
         const auth = getAuth(app);
         const db   = Firestore.getFirestore(app);
 
-        // Expose Firestore helpers & db to the dashboard loadData() above
+        // Expose Firestore helpers & db, and resolve the readiness promise so
+        // loadData() can await it cleanly instead of polling with setTimeout.
         window._labsDb        = db;
         window._labsFirestore = Firestore;
+        if (window._labsDbResolve) window._labsDbResolve();
 
         onAuthStateChanged(auth, user => {
             if (!user) {
