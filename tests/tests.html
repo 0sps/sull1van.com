@@ -34,6 +34,7 @@
             --accent: #4f9cf8;
             --pill-r: 12px;
             --card-r: 18px;
+            --top-bar-h: 69px;     /* B1: top-bar height — update here if padding changes */
 
             --glass-bg: rgba(10, 11, 14, 0.88);
             --card-glass: rgba(255, 255, 255, 0.02);
@@ -206,7 +207,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
-            top: 69px;
+            top: var(--top-bar-h); /* B1: derived from CSS var, not a magic pixel value */
             z-index: 99;
             border-bottom: 1px solid var(--border);
         }
@@ -1509,6 +1510,13 @@
                 grid-template-columns: repeat(4, 1fr);
             }
         }
+
+        /* ── CHART HEIGHT ── */
+        /* B5: single source of truth for chart height — mobile base; desktop + grid override below */
+        .chart-inner {
+            position: relative;
+            height: 220px;
+        }
     </style>
 </head>
 
@@ -1744,6 +1752,12 @@
             if (QUAL_POSITIVE.some(k => r.includes(k))) return 'reactive';
             return 'unknown';
         }
+
+        // B6: Centralised display helpers — change labels/colours in one place only
+        function qualLabel(status)      { return status === 'clear' ? 'CLEAR' : status === 'reactive' ? '\u26a0 REACTIVE' : '?'; }
+        function qualBadge(status)      { return status === 'clear' ? 'CLEAR' : status === 'reactive' ? 'REACTIVE' : 'UNKNOWN'; }
+        function qualColorClass(status) { return status === 'clear' ? 'c-green' : status === 'reactive' ? 'c-red' : 'c-amber'; }
+        function qualBadgeClass(status) { return status === 'clear' ? 'badge-green' : status === 'reactive' ? 'badge-red' : 'badge-amber'; }
 
         // Category taxonomy
         const CATEGORIES = {
@@ -2053,8 +2067,8 @@
             if (t.type === 'qualitative') {
                 // Most-recent status
                 const status = qualStatus(last.rawResult);
-                const badgeClass = status === 'clear' ? 'badge-green' : status === 'reactive' ? 'badge-red' : 'badge-amber';
-                const badgeText = status === 'clear' ? 'CLEAR' : status === 'reactive' ? 'REACTIVE' : 'UNKNOWN';
+                const badgeClass = qualBadgeClass(status); // B6: deduplicated helper
+                const badgeText = qualBadge(status);        // B6: deduplicated helper
                 const checkCount = t.points.filter(p => qualStatus(p.rawResult) === 'clear').length;
 
                 return `
@@ -2098,7 +2112,7 @@
             <div class="test-card-name">${t.name}</div>
             <div class="test-card-meta">
               <span>${t.numericPts.length} ${t.numericPts.length === 1 ? 'reading' : 'readings'}</span>
-              ${rangeStr && typeof rangeStr === 'string' && !isNaN(Number(rangeStr)) === false ? `<span>${rangeStr}</span>` : ''}
+              ${rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)) ? `<span>${rangeStr}</span>` : ''} 
             </div>
           </div>
           <div class="test-card-right" style="gap:2px;">
@@ -2174,8 +2188,8 @@
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
                 const s = qualStatus(last.rawResult);
-                const lVal = s === 'clear' ? 'CLEAR' : s === 'reactive' ? '⚠ REACTIVE' : '?';
-                const lClass = s === 'clear' ? 'c-green' : s === 'reactive' ? 'c-red' : 'c-amber';
+                const lVal   = qualLabel(s);       // B6: deduplicated helper
+                const lClass = qualColorClass(s);  // B6: deduplicated helper
                 return `
                 <div class="kpi-row grid-kpi-row">
                     <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lClass}">${lVal}</div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(last.date)}</div></div>
@@ -2374,8 +2388,8 @@
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
                 const s = qualStatus(last.rawResult);
-                latestEl.textContent = s === 'clear' ? 'CLEAR' : s === 'reactive' ? '⚠ REACTIVE' : '?';
-                latestEl.className = 'kpi-val ' + (s === 'clear' ? 'c-green' : s === 'reactive' ? 'c-red' : 'c-amber');
+                latestEl.textContent = qualLabel(s);                   // B6: deduplicated helper
+                latestEl.className = 'kpi-val ' + qualColorClass(s);   // B6: deduplicated helper
                 latestDate.textContent = fmtDate(last.date);
                 rangeEl.textContent = 'Nonreactive';
                 rangeEl.className = 'kpi-val c-text';
@@ -2489,7 +2503,7 @@
       <div class="detail-divider">Trend over time</div>
       <div class="chart-section">
         <div class="chart-card">
-          <div class="chart-inner" style="position:relative;height:220px;">
+          <div class="chart-inner"> 
             <canvas id="${canvasId}"></canvas>
           </div>
         </div>
@@ -2541,7 +2555,7 @@
                         data: Array(labels.length).fill(parsed.min),
                         borderColor: 'rgba(255,255,255,0.15)',
                         borderWidth: 1,
-                        borderDash: [4, 4],
+                        segment: { borderDash: () => [4, 4] }, // B4: Chart.js v4 requires borderDash inside segment
                         pointRadius: 0,
                         fill: false,
                         tension: 0,
@@ -2553,7 +2567,7 @@
                         data: Array(labels.length).fill(parsed.max),
                         borderColor: 'rgba(255,255,255,0.15)',
                         borderWidth: 1,
-                        borderDash: [4, 4],
+                        segment: { borderDash: () => [4, 4] }, // B4: Chart.js v4 requires borderDash inside segment
                         pointRadius: 0,
                         fill: false,
                         tension: 0,
@@ -2718,10 +2732,12 @@
         }
         function fmtDate(d) {
             if (!d) return '';
-            const parts = d.split('/');
+            // B2: Normalise ISO-8601 (YYYY-MM-DD from Firestore) and slash (YYYY/MM/DD) formats
+            const parts = d.replace(/-/g, '/').split('/');
             if (parts.length === 3) {
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 const m = parseInt(parts[1]) - 1;
+                if (m < 0 || m > 11) return d; // guard against malformed month
                 return `${months[m]} '${parts[0].slice(2)}`;
             }
             return d;
