@@ -2205,7 +2205,6 @@
             let trendHtml = '<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>';
             if (prev) {
                 const diff = latest.numVal - prev.numVal;
-                // TD#8: use HIGHER_IS_BETTER set instead of HDL-only hardcode
                 const good = trendIsGood(t.name, diff);
                 const trendColor = good === null ? 'c-text' : good ? 'c-green' : 'c-red';
                 const trendVal = (diff > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(diff));
