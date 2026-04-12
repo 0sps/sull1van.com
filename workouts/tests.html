@@ -1606,10 +1606,10 @@
           <div class="gauge-track">
             <div class="gauge-fill-zone" style="left:${zoneLeft}%;width:${zoneWidth}%;background:${zoneColor};"></div>
             <div class="gauge-marker" style="left:${markerPct}%;box-shadow:0 0 0 2px ${markerColor};"></div>
+            <div style="position:absolute; top:20px; left:${markerPct}%; transform:translateX(-50%); color:${markerColor}; font-weight:700; font-family:'Syne', sans-serif; font-size:1.15rem;">${formatVal(val)}</div>
           </div>
-          <div class="gauge-labels">
+          <div class="gauge-labels" style="margin-top:22px;">
             <span>${hasMin ? rangeMin : '—'}</span>
-            <span style="color:${markerColor};font-weight:500;">${formatVal(val)}</span>
             <span>${hasMax ? rangeMax : '—'}</span>
           </div>
         </div>
@@ -1654,8 +1654,10 @@
 
             const datasets = [{
                 data: vals,
-                borderColor: lineColor,
                 borderWidth: 2.5,
+                segment: {
+                    borderColor: ctx => pointColors[ctx.p1DataIndex]
+                },
                 pointBackgroundColor: pointColors,
                 pointBorderColor: '#0a0b0e',
                 pointBorderWidth: 1.5,
