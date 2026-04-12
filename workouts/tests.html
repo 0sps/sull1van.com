@@ -414,12 +414,42 @@
             padding: 16px;
             cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+            flex-direction: column;
+            gap: 0;
             position: relative;
             overflow: hidden;
             transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .test-card-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 12px;
+        }
+
+        .grid-detail-container {
+            width: 100%;
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .test-card.expanded .grid-detail-container {
+            grid-template-rows: 1fr;
+        }
+
+        .grid-detail-inner {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-kpi-row {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
         }
 
         .test-card::before {
@@ -1810,20 +1840,22 @@
 
                 return `
       <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" onclick="openTest('${escStr(t.name)}')">
-        <div class="test-card-left">
-          <div class="test-card-name">${t.name}</div>
-          <div class="test-card-meta">
-            <span>${t.points.length} ${t.points.length === 1 ? 'test' : 'tests'}</span>
-            <span>${checkCount}/${t.points.length} clear</span>
-          </div>
+        <div class="test-card-inner">
+            <div class="test-card-left">
+              <div class="test-card-name">${t.name}</div>
+              <div class="test-card-meta">
+                <span>${t.points.length} ${t.points.length === 1 ? 'test' : 'tests'}</span>
+                <span>${checkCount}/${t.points.length} clear</span>
+              </div>
+            </div>
+            <div class="test-card-right">
+              <span class="status-badge ${badgeClass}">${badgeText}</span>
+              <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted)">${fmtDate(last.date)}</span>
+            </div>
+            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
+              <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
         </div>
-        <div class="test-card-right">
-          <span class="status-badge ${badgeClass}">${badgeText}</span>
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted)">${fmtDate(last.date)}</span>
-        </div>
-        <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
-          <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
       </div>`;
             }
 
@@ -1842,20 +1874,22 @@
 
             return `
     <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" onclick="openTest('${escStr(t.name)}')">
-      <div class="test-card-left">
-        <div class="test-card-name">${t.name}</div>
-        <div class="test-card-meta">
-          <span>${t.numericPts.length} ${t.numericPts.length === 1 ? 'reading' : 'readings'}</span>
-          ${rangeStr && typeof rangeStr === 'string' && !isNaN(Number(rangeStr)) === false ? `<span>${rangeStr}</span>` : ''}
-        </div>
+      <div class="test-card-inner">
+          <div class="test-card-left">
+            <div class="test-card-name">${t.name}</div>
+            <div class="test-card-meta">
+              <span>${t.numericPts.length} ${t.numericPts.length === 1 ? 'reading' : 'readings'}</span>
+              ${rangeStr && typeof rangeStr === 'string' && !isNaN(Number(rangeStr)) === false ? `<span>${rangeStr}</span>` : ''}
+            </div>
+          </div>
+          <div class="test-card-right" style="gap:2px;">
+            <div class="latest-chip ${valColor}">${displayVal}</div>
+            ${t.numericPts.length > 1 ? `<canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas>` : ''}
+          </div>
+          <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
+            <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
       </div>
-      <div class="test-card-right" style="gap:2px;">
-        <div class="latest-chip ${valColor}">${displayVal}</div>
-        ${t.numericPts.length > 1 ? `<canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas>` : ''}
-      </div>
-      <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
-        <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
     </div>`;
         }
 
@@ -1917,30 +1951,129 @@
         // ── OPEN TEST ────────────────────────────────────────────────
         function isDesktop() { return window.innerWidth >= 900; }
 
+        function getKPIHtml(t) {
+            if (t.type === 'qualitative') {
+                const last = t.points[t.points.length - 1];
+                const s = qualStatus(last.rawResult);
+                const lVal = s === 'clear' ? 'CLEAR' : s === 'reactive' ? '⚠ REACTIVE' : '?';
+                const lClass = s === 'clear' ? 'c-green' : s === 'reactive' ? 'c-red' : 'c-amber';
+                return `
+                <div class="kpi-row grid-kpi-row">
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lClass}">${lVal}</div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(last.date)}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">Nonreactive</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${t.points.length}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
+                </div>`;
+            }
+            
+            const pts = t.numericPts;
+            const latest = pts[pts.length - 1];
+            const prev = pts.length > 1 ? pts[pts.length - 2] : null;
+            const lVal = formatVal(latest.numVal);
+            const hasRange = !!(latest.rawRange || t.range);
+            
+            let lColor = 'c-text';
+            const parsed = parseRange(latest.rawRange || t.range);
+            if (parsed) {
+                const stat = isInRange(latest.numVal, parsed);
+                if (stat === 'normal') lColor = 'c-green';
+                else if (stat === 'low' || stat === 'high') lColor = 'c-red';
+            }
+
+            let trendHtml = '<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>';
+            if (prev) {
+                const diff = latest.numVal - prev.numVal;
+                const trendColor = diff > 0 ? (t.name.includes('HDL')?'c-green':'c-amber') : diff < 0 ? (t.name.includes('HDL')?'c-amber':'c-green') : 'c-text';
+                const trendVal = (diff > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(diff));
+                trendHtml = `<div class="kpi-val ${diff===0?'c-text':trendColor}">${diff === 0 ? 'No change' : trendVal}</div>
+                            <div class="kpi-sub" style="margin-top:2px;">vs ${fmtDate(prev.date)}</div>`;
+            }
+
+            return `
+            <div class="kpi-row grid-kpi-row">
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${lColor}">${lVal} <span style="font-size:0.6rem;color:var(--muted)">${t.unit||''}</span></div><div class="kpi-sub" style="margin-top:2px;">${fmtDate(latest.date)}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${hasRange ? (latest.rawRange || t.range) : '—'}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
+            </div>`;
+        }
+
         function openTest(name) {
             const t = allTests.find(x => x.name === name);
             if (!t) return;
-            currentTestName = name;
-
-            document.getElementById('desktopEmpty').style.display = 'none';
-            const dc = document.getElementById('detailContent');
-            dc.style.display = 'flex';
-            dc.style.flexDirection = 'column';
 
             if (isDesktop()) {
-                // If in grid view, revert to list view to show right panel
                 const layout = document.querySelector('.layout');
                 if (layout.classList.contains('is-grid-view')) {
-                    window.toggleLayout();
+                    document.querySelectorAll('.test-card.expanded').forEach(el => {
+                        if (el.id !== `test-btn-${safeId(name)}`) {
+                            el.classList.remove('expanded');
+                            el.removeAttribute('data-grid-open');
+                            const container = el.querySelector('.grid-detail-container');
+                            if (container) setTimeout(() => container.remove(), 300);
+                        }
+                    });
+
+                    const cardId = `test-btn-${safeId(name)}`;
+                    const cardEl = document.getElementById(cardId);
+                    if (cardEl) {
+                        if (cardEl.hasAttribute('data-grid-open')) {
+                            cardEl.classList.remove('expanded');
+                            cardEl.removeAttribute('data-grid-open');
+                            const container = cardEl.querySelector('.grid-detail-container');
+                            if (container) setTimeout(() => container.remove(), 300);
+                            currentTestName = null;
+                            return;
+                        }
+
+                        currentTestName = name;
+                        cardEl.classList.add('expanded');
+                        cardEl.setAttribute('data-grid-open', 'true');
+
+                        const dyn = document.getElementById('detailDynamic');
+                        if (dyn) dyn.innerHTML = '';
+
+                        const gridDetail = document.createElement('div');
+                        gridDetail.className = 'grid-detail-container';
+
+                        const inner = document.createElement('div');
+                        inner.className = 'grid-detail-inner';
+                        inner.innerHTML = getKPIHtml(t);
+                        gridDetail.appendChild(inner);
+
+                        if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
+
+                        if (t.type === 'qualitative') {
+                            renderSTDTimeline(t, inner);
+                        } else {
+                            if (t.numericPts.length > 0) {
+                                renderGauge(t, inner);
+                                if (t.numericPts.length > 1) {
+                                    renderTrendChart(t, inner);
+                                }
+                            }
+                            renderHistoryTable(t, inner);
+                        }
+
+                        cardEl.appendChild(gridDetail);
+                        // Force reflow and expand
+                        void gridDetail.offsetWidth;
+                        setTimeout(()=> {
+                           cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }, 350);
+                        return;
+                    }
                 }
-                // Desktop: keep list visible, update detail in place
-                // Highlight active card
+
+                currentTestName = name;
+                document.getElementById('desktopEmpty').style.display = 'none';
+                const dc = document.getElementById('detailContent');
+                dc.style.display = 'flex';
+                dc.style.flexDirection = 'column';
+
                 document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
                 const cardId = `test-btn-${safeId(name)}`;
                 const cardEl = document.getElementById(cardId);
                 if (cardEl) {
                     cardEl.classList.add('active-card');
-                    // Scroll card into view within sidebar
                     cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                 }
             } else {
