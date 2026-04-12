@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Tests Dashboard | Sean's Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-grad-1: #ffb199;
+            --bg-grad-2: #ff0844;
+            --bg-grad-3: #8ec5fc;
+            --bg-grad-4: #e0c3fc;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            --text-main: #1a1b26;
+            --text-secondary: #4a4b56;
+            --text-muted: #808191;
+            --accent: #ff3d00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(120deg, var(--bg-grad-4) 0%, var(--bg-grad-3) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Abstract Blob Backgrounds */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: rgba(255, 177, 153, 0.6);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px;
+        }
+        .logo a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+        .logo h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            line-height: 1;
+        }
+        .logo .subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+        .back-btn {
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            color: var(--text-main);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: var(--glass-shadow);
+        }
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+            color: var(--accent);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glass Card Base */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sidebar - Test Selector */
+        .sidebar {
+            padding: 24px 20px;
+            max-height: calc(100vh - 150px);
+        }
+        .search-box {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.5);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        
+        .test-list {
+            overflow-y: auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 10px;
+        }
+        .test-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .test-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .test-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+        }
+        
+        .test-item {
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+        }
+        .test-item:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .test-item.active {
+            background: #ffffff;
+            border-color: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .test-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #111;
+        }
+        .test-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Main View */
+        .main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .chart-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+        .chart-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            background: rgba(255,255,255,0.6);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .chart-card {
+            flex-grow: 1;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .kpi-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 24px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+        .kpi-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+        .kpi-sub {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .warning-text { color: #ff3d00; }
+        .success-text { color: #00b894; }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="app.html">
+                    <h1>BLOOD TESTS</h1>
+                    <div class="subtitle">Biomarker Visualization</div>
+                </a>
+            </div>
+            <a href="app.html" class="back-btn">← Back to App</a>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Sidebar -->
+            <div class="glass-card sidebar">
+                <input type="text" class="search-box" id="testSearch" placeholder="Search tests..." oninput="filterTests()">
+                <div class="test-list" id="testList">
+                    <div style="padding: 20px; text-align: center; color: var(--text-muted);">Loading data...</div>
+                </div>
+            </div>
+
+            <!-- Main Vis -->
+            <div class="main-view">
+                <div class="glass-card chart-card">
+                    <div class="loader" id="chartLoader">Loading...</div>
+                    <div class="chart-header">
+                        <div>
+                            <h2 class="chart-title" id="chartTitle">Select a Test</h2>
+                            <span class="chart-unit" id="chartUnit" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 350px; width: 100%;">
+                        <canvas id="mainChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Latest Result</div>
+                        <div class="kpi-value" id="kpiLatest">-</div>
+                        <div class="kpi-sub" id="kpiLatestDate">No data</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Normal Range</div>
+                        <div class="kpi-value" id="kpiRange" style="font-size: 1.5rem; margin-top:10px;">-</div>
+                        <div class="kpi-sub">Reference</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Trend (vs Previous)</div>
+                        <div class="kpi-value" id="kpiTrend">-</div>
+                        <div class="kpi-sub" id="kpiTrendSub">Direction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allTestsData = [];
+        let groupedData = {};
+        let currentChart = null;
+
+        // Parse noisy numbers like "<^0.3" or "54697" (sometimes ranges are messed up, but results usually have < or >)
+        function cleanNumber(str) {
+            if (str === null || str === undefined) return null;
+            let s = String(str);
+            s = s.replace(/[^0-9.\-]/g, ''); // strip non-numeric except . and -
+            let n = parseFloat(s);
+            return isNaN(n) ? null : n;
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch('./Blood_Tests_updated-2026-04-11-2242.json');
+                const rawData = await response.json();
+                
+                // Group by TestName
+                rawData.forEach(item => {
+                    // Check if numeric (or looks numeric even if flagged 0)
+                    let numVal = cleanNumber(item.Result);
+                    if (numVal !== null && (item["IsNumeric?"] === 1 || item["IsNumeric?"] === "1" || !isNaN(cleanNumber(item.Result)))) {
+                        if (!groupedData[item.TestName]) {
+                            groupedData[item.TestName] = {
+                                name: item.TestName,
+                                unit: item.Units,
+                                range: item.NormalRange,
+                                dataPoints: []
+                            };
+                        }
+                        
+                        groupedData[item.TestName].dataPoints.push({
+                            date: item.Date,
+                            value: numVal,
+                            rawResult: item.Result,
+                            rawRange: item.NormalRange
+                        });
+                    }
+                });
+
+                // Sort data points within each group by date ascending
+                Object.values(groupedData).forEach(group => {
+                    group.dataPoints.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    // Deduplicate dates if needed (take average or latest on same day? Latest for now)
+                    let dedup = [];
+                    let dMap = {};
+                    group.dataPoints.forEach(pt => {
+                        dMap[pt.date] = pt; // overwrites with last one of the day
+                    });
+                    group.dataPoints = Object.values(dMap).sort((a, b) => new Date(a.date) - new Date(b.date));
+                });
+
+                // Filter out tests with only 1 data point to focus on trends
+                // Or just show all? Let's show all, but prioritize ones with > 1
+                allTestsData = Object.values(groupedData).sort((a, b) => b.dataPoints.length - a.dataPoints.length);
+
+                renderTestList(allTestsData);
+
+                // Auto-select first test with multiple points
+                const multiPoint = allTestsData.find(t => t.dataPoints.length > 1);
+                if (multiPoint) {
+                    selectTest(multiPoint.name);
+                } else if (allTestsData.length > 0) {
+                    selectTest(allTestsData[0].name);
+                }
+
+            } catch (err) {
+                console.error("Error loading data:", err);
+                document.getElementById('testList').innerHTML = `<div style="padding: 20px; color: #ff3d00;">Error: Could not load JSON data.</div>`;
+            }
+        }
+
+        function renderTestList(tests) {
+            const container = document.getElementById('testList');
+            container.innerHTML = '';
+            
+            if (tests.length === 0) {
+                container.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--text-muted);">No tests found</div>`;
+                return;
+            }
+
+            tests.forEach(test => {
+                const latest = test.dataPoints[test.dataPoints.length - 1];
+                let div = document.createElement('div');
+                div.className = 'test-item';
+                div.id = `test-btn-${test.name.replace(/[^a-zA-Z0-9]/g, '-')}`;
+                div.onclick = () => selectTest(test.name);
+                
+                div.innerHTML = `
+                    <div class="test-name">${test.name}</div>
+                    <div class="test-meta">
+                        <span>n=${test.dataPoints.length}</span>
+                        <span>Latest: ${latest.value}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function filterTests() {
+            const term = document.getElementById('testSearch').value.toLowerCase();
+            const filtered = allTestsData.filter(t => t.name.toLowerCase().includes(term));
+            renderTestList(filtered);
+        }
+
+        function selectTest(testName) {
+            // Update UI selection
+            document.querySelectorAll('.test-item').forEach(el => el.classList.remove('active'));
+            let btnId = `test-btn-${testName.replace(/[^a-zA-Z0-9]/g, '-')}`;
+            let btn = document.getElementById(btnId);
+            if(btn) btn.classList.add('active');
+
+            const testData = groupedData[testName];
+            if (!testData) return;
+
+            document.getElementById('chartTitle').textContent = testData.name;
+            if (testData.unit) {
+                document.getElementById('chartUnit').style.display = 'inline-block';
+                document.getElementById('chartUnit').textContent = testData.unit;
+            } else {
+                document.getElementById('chartUnit').style.display = 'none';
+            }
+
+            // Update KPIs
+            const latest = testData.dataPoints[testData.dataPoints.length - 1];
+            document.getElementById('kpiLatest').textContent = latest.value;
+            document.getElementById('kpiLatestDate').textContent = latest.date;
+            
+            // Clean up range display
+            let rStr = latest.rawRange || testData.range || "N/A";
+            // if range is a weird big number without dash, leave it, else show it
+            document.getElementById('kpiRange').textContent = rStr;
+
+            // Trend
+            let trendEl = document.getElementById('kpiTrend');
+            let trendSub = document.getElementById('kpiTrendSub');
+            if (testData.dataPoints.length > 1) {
+                const prev = testData.dataPoints[testData.dataPoints.length - 2];
+                const diff = latest.value - prev.value;
+                const pct = ((diff / prev.value) * 100).toFixed(1);
+                if (diff > 0) {
+                    trendEl.textContent = `+${diff.toFixed(2)}`;
+                    trendEl.className = 'kpi-value warning-text';
+                    trendSub.textContent = `Up ${pct}%`;
+                } else if (diff < 0) {
+                    trendEl.textContent = `${diff.toFixed(2)}`;
+                    trendEl.className = 'kpi-value success-text';
+                    trendSub.textContent = `Down ${Math.abs(pct)}%`;
+                } else {
+                    trendEl.textContent = `0.0`;
+                    trendEl.className = 'kpi-value';
+                    trendSub.textContent = `No change`;
+                }
+            } else {
+                trendEl.textContent = `-`;
+                trendEl.className = 'kpi-value';
+                trendSub.textContent = `Need more data`;
+            }
+
+            drawChart(testData);
+        }
+
+        function drawChart(testData) {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            const labels = testData.dataPoints.map(pt => pt.date);
+            const data = testData.dataPoints.map(pt => pt.value);
+
+            // Create gradient for the line
+            let gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientFill.addColorStop(0, "rgba(255, 61, 0, 0.4)");
+            gradientFill.addColorStop(1, "rgba(255, 61, 0, 0.0)");
+
+            let datasets = [{
+                label: testData.unit ? `Result (${testData.unit})` : 'Result',
+                data: data,
+                borderColor: '#ff3d00',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#ff3d00',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                fill: true,
+                backgroundColor: gradientFill,
+                tension: 0.4
+            }];
+
+            // Parse Normal Range to draw dashed lines if it looks like "min-max"
+            let range = testData.dataPoints[testData.dataPoints.length - 1].rawRange || testData.range;
+            if (range && typeof range === 'string' && range.includes('-')) {
+                let parts = range.split('-');
+                let min = parseFloat(parts[0]);
+                let max = parseFloat(parts[1]);
+                if (!isNaN(min) && !isNaN(max)) {
+                    datasets.push({
+                        label: 'Max Reference',
+                        data: Array(labels.length).fill(max),
+                        borderColor: 'rgba(0, 0, 0, 0.2)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0
+                    });
+                    datasets.push({
+                        label: 'Min Reference',
+                        data: Array(labels.length).fill(min),
+                        borderColor: 'rgba(0, 0, 0, 0.2)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0
+                    });
+                }
+            } else if (range && typeof range === 'string' && range.startsWith('<')) {
+                let max = parseFloat(range.replace(/[^0-9.]/g, ''));
+                if (!isNaN(max)) {
+                    datasets.push({
+                        label: 'Max Reference',
+                        data: Array(labels.length).fill(max),
+                        borderColor: 'rgba(0, 0, 0, 0.2)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0
+                    });
+                }
+            }
+
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Inter', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            titleColor: '#1a1b26',
+                            bodyColor: '#4a4b56',
+                            borderColor: 'rgba(0,0,0,0.1)',
+                            borderWidth: 1,
+                            padding: 12,
+                            titleFont: { size: 14, family: "'Inter', sans-serif" },
+                            bodyFont: { size: 14, family: "'Space Mono', monospace" },
+                            displayColors: true,
+                            boxPadding: 4
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Space Mono', monospace",
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Space Mono', monospace",
+                                    size: 11
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', loadData);
+
+    </script>
+</body>
+</html>
