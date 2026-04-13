@@ -3123,12 +3123,7 @@
 
         function removeResultRow(id) {
             const row = document.getElementById(`add-row-${id}`);
-            if (row) {
-                row.style.transition = 'opacity 0.2s, transform 0.2s';
-                row.style.opacity = '0';
-                row.style.transform = 'translateX(20px)';
-                setTimeout(() => row.remove(), 200);
-            }
+            if (row) row.remove();
         }
 
         function openAddSheet() {
