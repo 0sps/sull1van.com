@@ -2109,6 +2109,7 @@
         // Created here (classic script) so it exists before the module
         // script runs. The module resolves it once Firestore is initialised.
         window._labsDbPromise = new Promise(resolve => { window._labsDbResolve = resolve; });
+        window._labsAuthPromise = new Promise(resolve => { window._labsAuthResolve = resolve; });
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData(forceRefresh = false) {
@@ -2160,17 +2161,12 @@
                     panel.innerHTML = '<div class="loading-state" id="loadingState"><div class="spinner"></div>Refreshing from cloud…</div>';
                 }
 
-                // Wait for Firestore to be ready
-                if (window._labsDbPromise) {
-                    await window._labsDbPromise;
-                } else {
-                    let attempts = 0;
-                    while (!window._labsDb && attempts < 50) {
-                        await new Promise(r => setTimeout(r, 100));
-                        attempts++;
-                    }
-                }
-                if (!window._labsDb) throw new Error('Firebase did not initialise in time.');
+                // Wait for Firestore and Auth to be ready
+                if (window._labsDbPromise) await window._labsDbPromise;
+                if (window._labsAuthPromise) await window._labsAuthPromise;
+
+                if (!window._labsDb) throw new Error('Firebase did not initialise.');
+                if (!window._labsUser) throw new Error('You must be signed in to view this data.');
 
                 const { getDocs, collection } = window._labsFirestore;
                 const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
@@ -3254,7 +3250,10 @@
 
             try {
                 if (!window._labsDb || !window._labsFirestore) {
-                    throw new Error('Firebase is not ready. Please refresh and try again.');
+                    throw new Error('Firebase is not ready.');
+                }
+                if (!window._labsUser) {
+                    throw new Error('You must be signed in to save data.');
                 }
 
                 const { getDocs, collection, query, where, doc, updateDoc, arrayUnion, setDoc } = window._labsFirestore;
@@ -3336,8 +3335,8 @@
 
     <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
     <script type="module">
-        import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
-        import { getAuth, onAuthStateChanged,
+        import { initializeApp, getApps, getApp }         from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut,
                  signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
 
@@ -3350,44 +3349,46 @@
             appId:             '1:266494792101:web:ed98ea3d19f59d2189184c'
         };
 
-        const app  = initializeApp(firebaseConfig, 'labs');
+        // Use default app to share auth state with other pages like body.html
+        const app = (getApps().length === 0) ? initializeApp(firebaseConfig) : getApp();
         const auth = getAuth(app);
         const db   = Firestore.getFirestore(app);
 
-        // Expose Firestore helpers & db, and resolve the readiness promise so
-        // loadData() can await it cleanly instead of polling with setTimeout.
         window._labsDb        = db;
         window._labsFirestore = Firestore;
         if (window._labsDbResolve) window._labsDbResolve();
 
         onAuthStateChanged(auth, user => {
-            if (!user) {
-                // Auto-trigger the Google popup immediately
-                signInWithPopup(auth, new GoogleAuthProvider())
-                    .then(() => {
-                        document.dispatchEvent(new Event('labs:reload'));
-                    })
-                    .catch(err => {
-                        // Popup was blocked or dismissed — show a fallback button
-                        console.warn('Auto sign-in failed, showing manual button:', err.code);
-                        const loadingEl = document.getElementById('loadingState');
-                        if (loadingEl) {
-                            loadingEl.innerHTML = `
-                                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                    <div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
-                                    <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'DM Mono',monospace;font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
-                                    <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);opacity:0.6;">(popup blocked — click above to continue)</div>
-                                </div>`;
-                        }
-                    });
+            if (user) {
+                // Consistency check with body.html email restriction
+                if (user.email === 'sspsful@gmail.com') {
+                    window._labsUser = user;
+                    // Resolve the auth promise so loadData can proceed
+                    if (window._labsAuthResolve) window._labsAuthResolve();
+                    document.dispatchEvent(new Event('labs:reload'));
+                } else {
+                    alert("Unauthorized: Access restricted to sspsful@gmail.com");
+                    signOut(auth);
+                }
+            } else {
+                // Not logged in — clear user and wait for sign in
+                window._labsUser = null;
+                const loadingEl = document.getElementById('loadingState');
+                if (loadingEl) {
+                    loadingEl.innerHTML = `
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
+                            <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'DM Mono',monospace;font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
+                        </div>`;
+                }
             }
         });
 
         window._labsLogin = async function () {
             try {
                 await signInWithPopup(auth, new GoogleAuthProvider());
-                document.dispatchEvent(new Event('labs:reload'));
+                // onAuthStateChanged will handle the rest
             } catch (err) {
                 console.error('Login failed', err);
             }
