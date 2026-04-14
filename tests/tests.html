@@ -2352,7 +2352,9 @@
                         const arrow = diff > 0 ? '↑' : '↓';
                         const sign  = diff > 0 ? '+' : '';
                         const cls   = good === null ? 'delta-flat' : good ? 'delta-down' : 'delta-up';
-                        deltaHtml = `<span class="hist-delta ${cls}">${arrow} ${sign}${formatVal(diff)}</span>`;
+                        // Use Math.abs so the badge shows "↓ 0.1" not "↓ -0.1"
+                        // (the arrow already signals direction; the minus sign is redundant)
+                        deltaHtml = `<span class="hist-delta ${cls}">${arrow} ${sign}${formatVal(Math.abs(diff))}</span>`;
                     }
                 }
 
