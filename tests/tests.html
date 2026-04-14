@@ -1413,7 +1413,7 @@
             if (!rangeStr || typeof rangeStr !== 'string') return null;
             const r = rangeStr.trim();
             // "min-max" - careful with negative numbers
-            const dash = r.match(/^([0-9.]+)\s*-\s*([0-9.]+)$/);
+            const dash = r.match(/^(-?[0-9.]+)\s*-\s*([0-9.]+)$/); // allow negative min (e.g. "-0.5-2.0")
             if (dash) return { min: parseFloat(dash[1]), max: parseFloat(dash[2]) };
             // "<X" or "<=X"
             const lt = r.match(/^<=?\s*([0-9.]+)$/);
@@ -1492,7 +1492,9 @@
                 if (window._labsAuthPromise) await window._labsAuthPromise;
 
                 if (!window._labsDb) throw new Error('Firebase did not initialise.');
-                if (!window._labsUser) throw new Error('You must be signed in to view this data.');
+                // If there is no signed-in user, return silently — the Firebase module's
+                // onAuthStateChanged handler is responsible for showing the sign-in UI.
+                if (!window._labsUser) return;
 
                 const { getDocs, collection } = window._labsFirestore;
                 const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
@@ -1528,7 +1530,10 @@
                     let type = (numericPts.length === 0 && qualPts.length > 0) ? 'qualitative' : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
 
                     let bestRange = d.range ? String(d.range) : null;
-                    const rp = sortedPoints.find(p => p.rawRange && isNaN(parseFloat(p.rawRange)));
+                    // Prefer a per-point rawRange only when it actually parses as a range.
+                    // The old isNaN(parseFloat(...)) check also matched qualitative strings like
+                    // 'Nonreactive', which broke parseRange for numeric tests.
+                    const rp = sortedPoints.find(p => p.rawRange && parseRange(p.rawRange) !== null);
                     if (rp) bestRange = rp.rawRange;
 
                     return {
@@ -1601,6 +1606,10 @@
         function renderList() {
             const panel = document.getElementById('panelList');
 
+            // Destroy any open detail chart (covers grid-card charts) BEFORE clearing the DOM,
+            // otherwise Chart.js holds a reference to a detached canvas (memory leak).
+            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+
             // Destroy old sparklines
             Object.values(sparklineCharts).forEach(c => { try { c.destroy(); } catch (_) { } });
             sparklineCharts = {};
@@ -1661,7 +1670,7 @@
                         </div>
                         <div class="hero-kpi-divider"></div>
                         <div class="hero-kpi">
-                            <div class="hero-kpi-val c-text" style="font-size:1.15rem; transform: translateY(2px);">${latestDateStr ? fmtDate(latestDateStr).replace(/,\s*/, '') : 'N/A'}</div>
+                            <div class="hero-kpi-val c-text" style="font-size:1.15rem; transform: translateY(2px);">${latestDateStr ? fmtDate(latestDateStr) : 'N/A'}</div>
                             <div class="hero-kpi-lbl">Last Lab</div>
                         </div>
                     </div>
@@ -1699,7 +1708,7 @@
                 const checkCount = t.points.filter(p => qualStatus(p.rawResult) === 'clear').length;
 
                 return `
-      <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" onclick="openTest('${escStr(t.name)}')">
+      <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
         <div class="test-card-inner">
             <div class="test-card-left">
               <div class="test-card-name">${t.name}</div>
@@ -1733,7 +1742,7 @@
             const displayVal = latestVal !== null ? formatVal(latestVal) : (last.rawResult ?? '—');
 
             return `
-    <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" onclick="openTest('${escStr(t.name)}')">
+    <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
       <div class="test-card-inner">
           <div class="test-card-left">
             <div class="test-card-name">${t.name}</div>
@@ -1978,7 +1987,7 @@
                         // Close button + KPI row (pure HTML — no canvas yet)
                         inner.innerHTML = `
                             <div class="grid-expand-header">
-                                <button class="detail-nav-btn" style="width:28px;height:28px;" onclick="event.stopPropagation();openTest('${escStr(t.name)}')" aria-label="Close detail">
+                                <button class="detail-nav-btn" style="width:28px;height:28px;" data-testname="${escStr(t.name)}" onclick="event.stopPropagation();openTest(this.dataset.testname)" aria-label="Close detail">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
                                 </button>
                             </div>
@@ -2003,8 +2012,12 @@
                             renderHistoryTable(t, inner);
                         }
 
-                        // Render Chart.js trend after animation ends so canvas has real dimensions
+                        // Render Chart.js trend after animation ends so canvas has real dimensions.
+                        // Capture the test name now; if the card is collapsed before the timer
+                        // fires, bail — otherwise we'd inject a chart into a detached DOM node.
+                        const _expandedName = name;
                         setTimeout(() => {
+                            if (currentTestName !== _expandedName || !inner.isConnected) return;
                             if (t.type !== 'qualitative' && t.numericPts.length > 1) {
                                 renderTrendChart(t, inner);
                             }
@@ -2013,6 +2026,8 @@
 
                         return;
                     }
+                    // Card element not found (e.g. filtered out): don't fall through to sidebar code.
+                    return;
                 }
 
                 currentTestName = name;
@@ -2330,10 +2345,14 @@
                     const diff = p.numVal - prev.numVal;
                     if (Math.abs(diff) < 0.001) {
                         deltaHtml = `<span class="hist-delta delta-flat">=</span>`;
-                    } else if (diff > 0) {
-                        deltaHtml = `<span class="hist-delta delta-up">↑ +${formatVal(diff)}</span>`;
                     } else {
-                        deltaHtml = `<span class="hist-delta delta-down">↓ ${formatVal(diff)}</span>`;
+                        // Honour HIGHER_IS_BETTER so the history table agrees with the KPI trend row.
+                        // delta-down (green) = good change; delta-up (red) = bad change.
+                        const good  = trendIsGood(t.name, diff);
+                        const arrow = diff > 0 ? '↑' : '↓';
+                        const sign  = diff > 0 ? '+' : '';
+                        const cls   = good === null ? 'delta-flat' : good ? 'delta-down' : 'delta-up';
+                        deltaHtml = `<span class="hist-delta ${cls}">${arrow} ${sign}${formatVal(diff)}</span>`;
                     }
                 }
 
@@ -2602,13 +2621,16 @@
                         const docRef = snap.docs[0].ref;
                         await updateDoc(docRef, { points: arrayUnion(newPoint) });
                     } else {
-                        // New test — create a new document
+                        // New test — create a new document.
+                        // Infer type from the entered value so qualitative results
+                        // (e.g. "Nonreactive") are not silently stored as numeric.
                         const newDocRef = doc(collection(window._labsDb, 'Labs'));
+                        const inferredType = cleanNumber(entry.value) !== null ? 'numeric' : 'qualitative';
                         await setDoc(newDocRef, {
                             name: entry.name,
                             unit: null,
                             range: null,
-                            type: 'numeric',
+                            type: inferredType,
                             points: [newPoint],
                         });
                     }
@@ -2625,10 +2647,8 @@
                 _dataLoaded = false;
                 loadData(true);
 
-                // Show success toast
-                const toast = document.getElementById('successToast');
-                toast.classList.add('visible');
-                setTimeout(() => toast.classList.remove('visible'), 3000);
+                // Show success toast via shared helper (preserves the SVG icon node)
+                showSuccessToast('Saved!');
 
             } catch (e) {
                 console.error('Save failed:', e);
@@ -2648,7 +2668,13 @@
         // ── SUCCESS TOAST ─────────────────────────────────────────────
         function showSuccessToast(message) {
             const toast = document.getElementById('successToast');
-            toast.textContent = message || 'Saved!';
+            // Update only the text node — setting textContent would wipe the SVG icon.
+            const textNode = [...toast.childNodes].find(
+                n => n.nodeType === Node.TEXT_NODE && n.textContent.trim()
+            );
+            if (textNode) {
+                textNode.textContent = ' ' + (message || 'Saved!');
+            }
             toast.classList.add('visible');
             setTimeout(() => toast.classList.remove('visible'), 3000);
         }
@@ -2694,10 +2720,16 @@
                 } else {
                     alert("Unauthorized: Access restricted to sspsful@gmail.com");
                     signOut(auth);
+                    // Always resolve the auth promise so loadData's await doesn't hang forever.
+                    // loadData will see _labsUser === null and return silently.
+                    if (window._labsAuthResolve) window._labsAuthResolve();
                 }
             } else {
-                // Not logged in — clear user and wait for sign in
+                // Not logged in — clear user and show sign-in UI.
+                // Resolve the auth promise so any pending loadData call can unblock and
+                // return early (instead of hanging on the unresolved promise forever).
                 window._labsUser = null;
+                if (window._labsAuthResolve) window._labsAuthResolve();
                 const loadingEl = document.getElementById('loadingState');
                 if (loadingEl) {
                     loadingEl.innerHTML = `
