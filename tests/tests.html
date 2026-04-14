@@ -161,6 +161,54 @@
             pointer-events: none;
         }
 
+        /* ── SUN ── */
+        .sun-container {
+            position: fixed;
+            top: 12%; right: 12%;
+            width: 200px; height: 200px;
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 2s ease, transform 2s ease;
+        }
+        :root.light-mode .sun-container { opacity: 0.6; }
+
+        .sun {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px; height: 140px;
+            background: radial-gradient(circle, #ffffff 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            box-shadow:
+                0 0 80px 20px rgba(255, 204, 51, 0.4),
+                0 0 150px 40px rgba(255, 204, 51, 0.2);
+            z-index: 2;
+        }
+
+        .sun-rays {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px; height: 1200px;
+            background:
+                radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%),
+                conic-gradient(from 0deg,
+                    transparent 0deg,
+                    rgba(255,255,255,0.05) 30deg,
+                    transparent 60deg,
+                    rgba(255,255,255,0.03) 90deg,
+                    transparent 180deg);
+            border-radius: 50%;
+            animation: rotate-rays 60s linear infinite reverse;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes rotate-rays {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         /* ── FLOATING HEADER ── */
         .top-bar {
             position: fixed;
@@ -1042,6 +1090,10 @@
     <div class="ios-bg-wrapper" id="iosBgWrapper"></div>
     <div class="nebula"></div>
     <div class="vignette"></div>
+    <div class="sun-container" id="sun">
+        <div class="sun"></div>
+        <div class="sun-rays"></div>
+    </div>
     <div class="grain"></div>
 
     <!-- Action Sheet Overlay -->
