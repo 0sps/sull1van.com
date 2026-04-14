@@ -569,8 +569,9 @@
 
         .detail-title-block { flex: 1; min-width: 0; text-align: center; }
         .detail-title {
-            font-family: var(--font-heading); font-size: 18px; font-weight: 700;
+            font-family: var(--font-heading); font-size: 20px; font-weight: 800;
             color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            text-transform: uppercase; letter-spacing: -0.2px;
         }
         .detail-unit { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); }
 
@@ -1184,7 +1185,7 @@
     </div>
 
     <!-- Spacer pushes layout below floating header -->
-    <div class="layout-pusher"></div>
+    <div class="layout-pusher" id="globalPusher"></div>
 
     <!-- LAYOUT -->
     <div class="layout">
@@ -2049,6 +2050,7 @@
                 document.getElementById('panelDetail').classList.add('visible');
                 document.getElementById('globalTopBar').style.display = 'none';
                 document.getElementById('globalSearchArea').style.display = 'none';
+                document.getElementById('globalPusher').style.display = 'none';
 
                 const dc = document.getElementById('detailContent');
                 dc.style.display = 'flex';
@@ -2386,6 +2388,7 @@
             document.getElementById('panelList').classList.add('visible');
             document.getElementById('globalTopBar').style.display = '';
             document.getElementById('globalSearchArea').style.display = '';
+            document.getElementById('globalPusher').style.display = '';
             if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
             currentTestName = null;
         }
