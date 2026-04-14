@@ -3335,7 +3335,7 @@
 
     <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
     <script type="module">
-        import { initializeApp, getApps, getApp }         from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
+        import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
         import { getAuth, onAuthStateChanged, signOut,
                  signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
@@ -3349,8 +3349,7 @@
             appId:             '1:266494792101:web:ed98ea3d19f59d2189184c'
         };
 
-        // Use default app to share auth state with other pages like body.html
-        const app = (getApps().length === 0) ? initializeApp(firebaseConfig) : getApp();
+        const app  = initializeApp(firebaseConfig, 'labs');
         const auth = getAuth(app);
         const db   = Firestore.getFirestore(app);
 
