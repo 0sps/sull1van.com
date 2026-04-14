@@ -590,9 +590,7 @@
             padding: calc(env(safe-area-inset-top, 0px) + 16px) 20px 14px;
             display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100;
-            background: rgba(0,6,18,0.72);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-bottom: 0.5px solid var(--ios-separator);
+            background: transparent;
         }
 
 
@@ -894,7 +892,6 @@
 
             .detail-header {
                 padding: 24px 32px 18px;
-                border-bottom: 0.5px solid var(--ios-separator);
                 position: sticky; top: 0;
                 justify-content: flex-start; gap: 16px;
             }
