@@ -735,6 +735,65 @@
         .desktop-empty { display: none; }
         .grid-toggle-btn { display: none !important; }
 
+        /* ── GRID VIEW (GLOBAL) ── */
+        .layout.is-grid-view #panelList {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px; align-content: start;
+            padding: 16px 16px 100px;
+        }
+        @media (min-width: 900px) {
+            .layout.is-grid-view #panelList {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 14px; padding: 20px 24px 60px;
+            }
+        }
+        .layout.is-grid-view #panelList .section-label { grid-column: 1 / -1; font-size: 10px; padding-top: 16px; padding-left: 0; }
+        .layout.is-grid-view #panelList .hero-widget   { grid-column: 1 / -1; margin-bottom: 0; }
+
+        /* Collapsed grid tile */
+        .layout.is-grid-view #panelList .test-card:not(.expanded) {
+            border-radius: 20px; padding: 18px; min-height: 100px; gap: 0;
+        }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-left  { flex: none; width: 100%; gap: 2px; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-name  { font-size: 13px; font-weight: 700; color: var(--text-secondary); white-space: normal; overflow: visible; text-overflow: clip; text-transform: uppercase; letter-spacing: 0.5px; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta  { font-size: 11px; gap: 6px; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta span:first-child { display: none; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right { flex-direction: row; align-items: center; justify-content: space-between; gap: 0; flex-shrink: 0; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip     { font-size: 26px; font-weight: 700; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap  { width: 70px; height: 32px; flex-shrink: 0; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap canvas { width: 100% !important; height: 100% !important; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .status-badge    { font-size: 11px; padding: 5px 12px; }
+        .layout.is-grid-view #panelList .test-card .chevron { display: none; }
+
+        /* Expanded grid card */
+        .layout.is-grid-view #panelList .test-card.expanded {
+            cursor: default; border-radius: 20px; padding: 18px;
+            background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
+            border-color: rgba(10,132,255,0.38);
+            box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset;
+        }
+        .layout.is-grid-view .grid-detail-inner .kpi-row   { grid-template-columns: repeat(3,1fr); padding: 10px 0 8px; gap: 6px; }
+        .layout.is-grid-view .grid-detail-inner .kpi-box   { padding: 10px 8px; border-radius: 12px; }
+        .layout.is-grid-view .grid-detail-inner .kpi-label { font-size: 9px; }
+        .layout.is-grid-view .grid-detail-inner .kpi-val   { font-size: 17px; }
+        .layout.is-grid-view .grid-detail-inner .kpi-sub   { font-size: 10px; }
+        .layout.is-grid-view .grid-detail-inner .range-bar-section,
+        .layout.is-grid-view .grid-detail-inner .std-timeline,
+        .layout.is-grid-view .grid-detail-inner .history-section,
+        .layout.is-grid-view .grid-detail-inner .chart-section,
+        .layout.is-grid-view .grid-detail-inner .detail-divider { padding-left: 0; padding-right: 0; }
+        .layout.is-grid-view .grid-detail-inner .range-bar-card,
+        .layout.is-grid-view .grid-detail-inner .std-timeline-card,
+        .layout.is-grid-view .grid-detail-inner .chart-card { padding: 12px 14px; }
+        .layout.is-grid-view .grid-detail-inner .chart-inner { height: 180px !important; }
+        .layout.is-grid-view .grid-detail-inner .history-section { padding-bottom: 6px; }
+        .layout.is-grid-view .grid-detail-inner .history-header span:nth-child(1),
+        .layout.is-grid-view .grid-detail-inner .hist-date { width: 68px; }
+        .layout.is-grid-view .grid-detail-inner .hist-val   { font-size: 15px; }
+        .layout.is-grid-view .grid-detail-inner .hist-delta { font-size: 10px; }
+
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
             .grid-toggle-btn { display: flex !important; }
@@ -743,55 +802,6 @@
             .layout.is-grid-view .desktop-sidebar .sidebar-top { padding: 14px 24px 0; }
             .layout.is-grid-view .desktop-sidebar .chip-row { margin: 0 -24px; padding: 10px 24px 12px; }
             .layout.is-grid-view .desktop-main { display: none !important; }
-            .layout.is-grid-view #panelList {
-                display: grid !important;
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-                gap: 14px; align-content: start;
-                padding: 20px 24px 60px;
-            }
-            .layout.is-grid-view #panelList .section-label { grid-column: 1 / -1; font-size: 10px; padding-top: 16px; padding-left: 0; }
-            .layout.is-grid-view #panelList .hero-widget   { grid-column: 1 / -1; margin-bottom: 0; }
-
-            /* Collapsed grid tile */
-            .layout.is-grid-view #panelList .test-card:not(.expanded) {
-                border-radius: 20px; padding: 18px; min-height: 100px; gap: 0;
-            }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-inner { flex-direction: column; align-items: stretch; gap: 14px; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-left  { flex: none; width: 100%; gap: 2px; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-name  { font-size: 10px; font-weight: 700; color: var(--text-secondary); white-space: normal; overflow: visible; text-overflow: clip; text-transform: uppercase; letter-spacing: 0.5px; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta  { font-size: 11px; gap: 6px; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right { flex-direction: row; align-items: center; justify-content: space-between; gap: 0; flex-shrink: 0; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip     { font-size: 28px; font-weight: 700; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap  { width: 80px; height: 34px; flex-shrink: 0; }
-            .layout.is-grid-view #panelList .test-card:not(.expanded) .status-badge    { font-size: 11px; padding: 5px 12px; }
-            .layout.is-grid-view #panelList .test-card .chevron { display: none; }
-
-            /* Expanded grid card */
-            .layout.is-grid-view #panelList .test-card.expanded {
-                cursor: default; border-radius: 20px; padding: 18px;
-                background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
-                border-color: rgba(10,132,255,0.38);
-                box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset;
-            }
-            .layout.is-grid-view .grid-detail-inner .kpi-row   { grid-template-columns: repeat(3,1fr); padding: 10px 0 8px; gap: 6px; }
-            .layout.is-grid-view .grid-detail-inner .kpi-box   { padding: 10px 8px; border-radius: 12px; }
-            .layout.is-grid-view .grid-detail-inner .kpi-label { font-size: 9px; }
-            .layout.is-grid-view .grid-detail-inner .kpi-val   { font-size: 17px; }
-            .layout.is-grid-view .grid-detail-inner .kpi-sub   { font-size: 10px; }
-            .layout.is-grid-view .grid-detail-inner .range-bar-section,
-            .layout.is-grid-view .grid-detail-inner .std-timeline,
-            .layout.is-grid-view .grid-detail-inner .history-section,
-            .layout.is-grid-view .grid-detail-inner .chart-section,
-            .layout.is-grid-view .grid-detail-inner .detail-divider { padding-left: 0; padding-right: 0; }
-            .layout.is-grid-view .grid-detail-inner .range-bar-card,
-            .layout.is-grid-view .grid-detail-inner .std-timeline-card,
-            .layout.is-grid-view .grid-detail-inner .chart-card { padding: 12px 14px; }
-            .layout.is-grid-view .grid-detail-inner .chart-inner { height: 180px !important; }
-            .layout.is-grid-view .grid-detail-inner .history-section { padding-bottom: 6px; }
-            .layout.is-grid-view .grid-detail-inner .history-header span:nth-child(1),
-            .layout.is-grid-view .grid-detail-inner .hist-date { width: 68px; }
-            .layout.is-grid-view .grid-detail-inner .hist-val   { font-size: 15px; }
-            .layout.is-grid-view .grid-detail-inner .hist-delta { font-size: 10px; }
 
             body { overflow: hidden; }
 
@@ -1823,7 +1833,7 @@
           </div>
           <div class="test-card-right" style="gap:2px;">
             <div class="latest-chip ${valColor}">${displayVal}</div>
-            ${t.numericPts.length > 1 ? `<canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas>` : ''}
+            ${t.numericPts.length > 1 ? `<div class="sparkline-wrap"><canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas></div>` : ''}
           </div>
           <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
             <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
