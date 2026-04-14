@@ -1058,6 +1058,44 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: calc(32px + env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+            backdrop-filter: blur(30px) saturate(140%) brightness(0.9);
+            -webkit-backdrop-filter: blur(30px) saturate(140%) brightness(0.9);
+            display: flex;
+            gap: 8px;
+            padding: 6px;
+            border-radius: 30px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1.2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-tab {
+            padding: 10px 24px;
+            border-radius: 24px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s var(--spring);
+        }
+
+        .nav-tab.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-family: var(--font-heading);
+        }
     </style>
 </head>
 
@@ -1267,6 +1305,12 @@
 
     </div><!-- /layout -->
 
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-tab active" id="tabList" onclick="setLayoutView(false)">List</button>
+        <button class="nav-tab" id="tabGrid" onclick="setLayoutView(true)">Grid</button>
+    </div>
+
     <script>
         // ── DAY / NIGHT TOGGLE ────────────────────────────────────────
         // Restores persisted state on load (default: day)
@@ -1276,10 +1320,35 @@
 
         window.toggleLayout = function() {
             const layout = document.querySelector('.layout');
-            layout.classList.toggle('is-grid-view');
-            const isGrid = layout.classList.contains('is-grid-view');
-            document.getElementById('grid-icon').style.display = isGrid ? 'none' : 'block';
-            document.getElementById('list-icon').style.display = isGrid ? 'block' : 'none';
+            const isGrid = !layout.classList.contains('is-grid-view');
+            setLayoutView(isGrid);
+        };
+
+        window.setLayoutView = function(isGrid) {
+            const layout = document.querySelector('.layout');
+            if (isGrid) {
+                layout.classList.add('is-grid-view');
+            } else {
+                layout.classList.remove('is-grid-view');
+            }
+
+            const gridIconStyle = document.getElementById('grid-icon') ? document.getElementById('grid-icon').style : null;
+            const listIconStyle = document.getElementById('list-icon') ? document.getElementById('list-icon').style : null;
+
+            if (gridIconStyle) gridIconStyle.display = isGrid ? 'none' : 'block';
+            if (listIconStyle) listIconStyle.display = isGrid ? 'block' : 'none';
+
+            const tabList = document.getElementById('tabList');
+            const tabGrid = document.getElementById('tabGrid');
+            if (tabList && tabGrid) {
+                if (isGrid) {
+                    tabGrid.classList.add('active');
+                    tabList.classList.remove('active');
+                } else {
+                    tabList.classList.add('active');
+                    tabGrid.classList.remove('active');
+                }
+            }
         };
 
         window.toggleTheme = function () {
