@@ -368,6 +368,17 @@
         #testSearch:focus { background: rgba(10,132,255,0.07); border-color: rgba(10,132,255,0.38); }
         #testSearch::placeholder { color: var(--text-secondary); }
 
+        .search-clear {
+            position: absolute; right: 10px; top: 50%;
+            transform: translateY(-50%);
+            width: 24px; height: 24px;
+            display: none; align-items: center; justify-content: center;
+            color: var(--text-secondary); cursor: pointer;
+            border-radius: 50%; transition: all 0.2s;
+        }
+        .search-clear:active { background: rgba(255,255,255,0.1); transform: translateY(-50%) scale(0.9); }
+        .search-clear.visible { display: flex; }
+
         /* chips */
         .chip-row {
             display: flex; gap: 8px; overflow-x: auto;
@@ -400,6 +411,7 @@
             overflow-y: auto; -webkit-overflow-scrolling: touch;
             padding-top: calc(84px + env(safe-area-inset-top));
         }
+        .layout.in-detail { padding-top: 0; }
 
         /* ── ACTION SHEET ── */
         .action-sheet-overlay {
@@ -1280,6 +1292,11 @@
                         <path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
                     </svg>
                     <input type="text" id="testSearch" placeholder="Search biomarkers..." oninput="onSearch()" autocomplete="off">
+                    <div class="search-clear" id="searchClearBtn" onclick="clearSearch()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
+                    </div>
                 </div>
                 <div class="chip-row" id="chipRow"></div>
             </div>
@@ -1727,7 +1744,23 @@
         }
 
         // ── FILTER / RENDER LIST ────────────────────────────────────
-        function onSearch() { applyFilters(); }
+        function onSearch() {
+            const val = document.getElementById('testSearch').value;
+            const clearBtn = document.getElementById('searchClearBtn');
+            if (clearBtn) {
+                if (val) clearBtn.classList.add('visible');
+                else clearBtn.classList.remove('visible');
+            }
+            applyFilters();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('testSearch');
+            if (input) {
+                input.value = '';
+                onSearch();
+            }
+        }
 
         function applyFilters() {
             const term = document.getElementById('testSearch').value.toLowerCase();
@@ -2132,6 +2165,13 @@
                 }
             } else {
                 // Mobile: swap panels
+                const layout = document.querySelector('.layout');
+                layout.classList.add('in-detail');
+                layout.scrollTop = 0;
+
+                const bottomNav = document.querySelector('.bottom-nav');
+                if (bottomNav) bottomNav.style.display = 'none';
+
                 document.getElementById('panelList').classList.remove('visible');
                 document.getElementById('panelDetail').classList.add('visible');
                 document.getElementById('globalTopBar').style.display = 'none';
@@ -2470,6 +2510,13 @@
         // ── NAVIGATION ───────────────────────────────────────────────
         function goBack() {
             if (isDesktop()) return; // no back on desktop
+            const layout = document.querySelector('.layout');
+            layout.classList.remove('in-detail');
+            layout.scrollTop = 0;
+
+            const bottomNav = document.querySelector('.bottom-nav');
+            if (bottomNav) bottomNav.style.display = '';
+
             document.getElementById('panelDetail').classList.remove('visible');
             document.getElementById('panelList').classList.add('visible');
             document.getElementById('globalTopBar').style.display = '';
