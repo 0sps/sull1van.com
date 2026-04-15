@@ -336,6 +336,7 @@
         .layout-pusher {
             height: calc(84px + env(safe-area-inset-top));
             flex-shrink: 0;
+            display: none;
         }
 
         /* ── SEARCH + FILTER ── */
@@ -397,6 +398,7 @@
             display: flex; flex-direction: column;
             flex: 1; min-height: 0; position: relative;
             overflow-y: auto; -webkit-overflow-scrolling: touch;
+            padding-top: calc(84px + env(safe-area-inset-top));
         }
 
         /* ── ACTION SHEET ── */
@@ -848,12 +850,15 @@
             .top-bar-inner { padding: 0 22px; }
             .top-title { font-size: 20px; }
 
+            .layout-pusher { display: block; }
+
             .search-area { position: static; padding: 0; background: none; }
 
             .layout {
                 flex-direction: row;
                 height: calc(100dvh - calc(84px + env(safe-area-inset-top)));
                 overflow: hidden;
+                padding-top: 0;
             }
 
             .desktop-sidebar {
