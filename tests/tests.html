@@ -1576,6 +1576,7 @@
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
         let _dataLoaded = false;
+        let _loadingInProgress = false;
 
         // ── THEME COLOR CACHE ─────────────────────────────────────────
         // Populated once on init and refreshed on every theme toggle.
@@ -1719,6 +1720,13 @@
 
             if (_dataLoaded && !forceRefresh) return;
 
+            // Concurrency guard
+            if (_loadingInProgress) {
+                console.log('loadData: Load already in progress, skipping.');
+                return;
+            }
+            _loadingInProgress = true;
+
             try {
                 // Fetch from Firebase (no local cache — data is encrypted at rest)
                 const loadingEl = document.getElementById('loadingState');
@@ -1727,17 +1735,38 @@
                 } else {
                     // Re-create loading state if it was removed
                     const panel = document.getElementById('panelList');
-                    panel.innerHTML = '<div class="loading-state" id="loadingState"><div class="spinner"></div>Refreshing from cloud…</div>';
+                    if (panel) panel.innerHTML = '<div class="loading-state" id="loadingState"><div class="spinner"></div>Refreshing from cloud…</div>';
                 }
 
                 // Wait for Firestore and Auth to be ready
+                console.log('loadData: Waiting for readiness promises...');
                 if (window._labsDbPromise) await window._labsDbPromise;
                 if (window._labsAuthPromise) await window._labsAuthPromise;
+                console.log('loadData: Readiness achieved. User:', window._labsUser?.email);
 
                 if (!window._labsDb) throw new Error('Firebase did not initialise.');
-                // If there is no signed-in user, return silently — the Firebase module's
-                // onAuthStateChanged handler is responsible for showing the sign-in UI.
-                if (!window._labsUser) return;
+                
+                // If there is no signed-in user, return silently
+                if (!window._labsUser) {
+                    console.log('loadData: No user, cleaning up spinner.');
+                    const finalLoadingEl = document.getElementById('loadingState');
+                    if (finalLoadingEl && finalLoadingEl.textContent.includes('Refreshing')) {
+                        finalLoadingEl.remove();
+                    }
+                    _loadingInProgress = false;
+                    return;
+                }
+
+                // If user exists but no key yet, we are waiting for vault unlock.
+                if (!window._labsKey) {
+                    console.log('loadData: User present but no key. Waiting for vault.');
+                    const loadingEl = document.getElementById('loadingState');
+                    if (loadingEl) {
+                        loadingEl.innerHTML = '<div class="spinner"></div>Waiting for vault unlock…';
+                    }
+                    _loadingInProgress = false;
+                    return;
+                }
 
                 const { getDocs, collection } = window._labsFirestore;
                 const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
@@ -1804,8 +1833,10 @@
                     }, 150);
                 }
 
+                _loadingInProgress = false;
             } catch (e) {
                 console.error(e);
+                _loadingInProgress = false;
                 const errEl = document.getElementById('loadingState');
                 if (errEl) {
                     errEl.innerHTML = '<span style="color:var(--red)">⚠ Failed to load — ' + e.message + '</span>';
@@ -3176,28 +3207,35 @@
 
         onAuthStateChanged(auth, async user => {
             window._labsAuthReady = true;
+            
             if (user) {
                 console.log('Auth: User detected', user.email);
+                window._labsUser = user;
+                
+                // Resolve the auth promise immediately so loadData can progress to the "Waiting for Vault" state.
+                if (window._labsAuthResolve) window._labsAuthResolve();
+
                 if (user.email === 'sspsful@gmail.com') {
                     try {
-                        const key        = await acquireKey(db);
-                        window._labsKey  = key;
-                        window._labsUser = user;
+                        // This might block for user input
+                        const key = await acquireKey(db);
+                        window._labsKey = key;
+                        // Reload data now that we have the key
+                        loadData(true);
+                        document.dispatchEvent(new Event('labs:reload'));
                     } catch (err) {
                         console.error('Key acquisition failed:', err);
-                        window._labsUser = null;
                     }
-                    if (window._labsAuthResolve) window._labsAuthResolve();
-                    document.dispatchEvent(new Event('labs:reload'));
                 } else {
                     alert('Unauthorized: Access restricted to sspsful@gmail.com');
                     signOut(auth);
-                    if (window._labsAuthResolve) window._labsAuthResolve();
                 }
             } else {
                 console.log('Auth: No user');
                 window._labsUser = null;
+                window._labsKey  = null;
                 if (window._labsAuthResolve) window._labsAuthResolve();
+                
                 const loadingEl = document.getElementById('loadingState');
                 if (loadingEl) {
                     loadingEl.innerHTML = `
