@@ -1577,6 +1577,7 @@
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
         let _dataLoaded = false;
         let _loadingInProgress = false;
+        let _vaultDataCache = null;
 
         // ── THEME COLOR CACHE ─────────────────────────────────────────
         // Populated once on init and refreshed on every theme toggle.
@@ -1716,6 +1717,7 @@
                     'checking_vault_status': 'Checking your secure vault…',
                     'prompting_vault_password': 'Waiting for vault unlock…',
                     'waiting_for_vault': 'Waiting for vault unlock…',
+                    'migrating_legacy_data': 'Migrating your vault data…',
                     'fetching_data': 'Fetching your labs…',
                     'vault_error': 'Vault error (check password)',
                     'auth_redirect_start': 'Opening Google sign-in…'
@@ -1755,6 +1757,124 @@
                     }
                 }, 100);
             });
+        }
+
+        function getVaultDocRef() {
+            const { doc } = window._labsFirestore;
+            return doc(window._labsDb, 'vault', 'main');
+        }
+
+        function buildUiTestsFromVault(rawTests) {
+            return (rawTests || []).map(rawTest => {
+                if (!rawTest || !rawTest.name) return null;
+
+                const points = Array.isArray(rawTest.points) ? rawTest.points.map(p => {
+                    const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
+                    const numVal    = cleanNumber(rawResult);
+                    const isNumeric = rawTest.type === 'numeric' || (rawTest.type !== 'qualitative' && numVal !== null);
+                    return {
+                        date: p.date,
+                        rawResult,
+                        numVal: isNumeric && numVal !== null ? numVal : null,
+                        isNumeric,
+                        rawRange: (p.rawRange && typeof p.rawRange === 'string') ? p.rawRange : null,
+                        testResultId: p.testResultId || null,
+                        lab: p.lab || null,
+                        sourceFile: p.sourceFile || null,
+                    };
+                }) : [];
+
+                points.sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+                const dmap = {};
+                points.forEach(p => { dmap[p.date] = p; });
+                const sortedPoints = Object.values(dmap).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+
+                const numericPts = sortedPoints.filter(p => p.isNumeric && p.numVal !== null);
+                const qualPts    = sortedPoints.filter(p => !p.isNumeric);
+                const type = (numericPts.length === 0 && qualPts.length > 0)
+                    ? 'qualitative'
+                    : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
+
+                let bestRange = rawTest.range ? String(rawTest.range) : null;
+                const rp = [...sortedPoints].reverse().find(p => p.rawRange && parseRange(p.rawRange) !== null);
+                if (rp) bestRange = rp.rawRange;
+
+                return {
+                    name: rawTest.name,
+                    unit: rawTest.unit || null,
+                    range: bestRange,
+                    type,
+                    points: sortedPoints,
+                    numericPts,
+                    category: categorize(rawTest.name),
+                };
+            }).filter(Boolean);
+        }
+
+        async function persistVaultData(vaultData) {
+            const { setDoc } = window._labsFirestore;
+            const vaultRef = getVaultDocRef();
+            const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, vaultData);
+            await setDoc(vaultRef, {
+                schemaVersion: 1,
+                encryptedPayload,
+                iv,
+                updatedAt: new Date().toISOString(),
+            });
+            _vaultDataCache = vaultData;
+        }
+
+        async function migrateLegacyLabsToVault() {
+            const { getDocs, collection } = window._labsFirestore;
+            updateBoot('migrating_legacy_data');
+
+            const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
+            const legacyTests = (await Promise.all(snapshot.docs.map(async docSnap => {
+                const d = docSnap.data();
+                if (!d || !d.name) return null;
+
+                const rawPoints = (d.encryptedPoints && d.iv)
+                    ? await window._labsDecryptValue(window._labsKey, d.encryptedPoints, d.iv)
+                    : (d.points || []);
+
+                return {
+                    name: d.name,
+                    unit: d.unit || null,
+                    range: d.range || null,
+                    type: d.type || null,
+                    points: Array.isArray(rawPoints) ? rawPoints : [],
+                };
+            }))).filter(Boolean);
+
+            const vaultData = {
+                schemaVersion: 1,
+                tests: legacyTests,
+                migratedFrom: 'Labs',
+                migratedAt: new Date().toISOString(),
+            };
+
+            await persistVaultData(vaultData);
+            return vaultData;
+        }
+
+        async function loadVaultData() {
+            const { getDoc } = window._labsFirestore;
+            const vaultRef = getVaultDocRef();
+            const vaultSnap = await getDoc(vaultRef);
+
+            if (vaultSnap.exists()) {
+                const data = vaultSnap.data() || {};
+                if (data.encryptedPayload && data.iv) {
+                    const vaultData = await window._labsDecryptValue(window._labsKey, data.encryptedPayload, data.iv);
+                    _vaultDataCache = vaultData;
+                    return vaultData;
+                }
+                const fallback = { schemaVersion: 1, tests: Array.isArray(data.tests) ? data.tests : [] };
+                _vaultDataCache = fallback;
+                return fallback;
+            }
+
+            return migrateLegacyLabsToVault();
         }
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
@@ -1819,54 +1939,8 @@
 
                 updateBoot('fetching_data');
 
-                const { getDocs, collection } = window._labsFirestore;
-                const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
-
-                if (snapshot.empty) throw new Error('No documents found in the Labs collection.');
-
-                allTests = (await Promise.all(snapshot.docs.map(async docSnap => {
-                    const d = docSnap.data();
-                    if (!d || !d.name) return null;
-
-                    const rawPoints = (d.encryptedPoints && d.iv)
-                        ? await window._labsDecryptValue(window._labsKey, d.encryptedPoints, d.iv)
-                        : (d.points || []);
-                    const points = rawPoints.map(p => {
-                        const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
-                        const numVal    = cleanNumber(rawResult);
-                        const isNumeric = d.type === 'numeric' || (d.type !== 'qualitative' && numVal !== null);
-                        return {
-                            date: p.date, rawResult,
-                            numVal: isNumeric && numVal !== null ? numVal : null,
-                            isNumeric,
-                            rawRange: (p.rawRange && typeof p.rawRange === 'string') ? p.rawRange : null,
-                            testResultId: p.testResultId || null,
-                            lab: p.lab || null,
-                            sourceFile: p.sourceFile || null,
-                        };
-                    });
-
-                    points.sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
-                    const dmap = {};
-                    points.forEach(p => { dmap[p.date] = p; });
-                    const sortedPoints = Object.values(dmap).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
-
-                    const numericPts = sortedPoints.filter(p => p.isNumeric && p.numVal !== null);
-                    const qualPts    = sortedPoints.filter(p => !p.isNumeric);
-                    let type = (numericPts.length === 0 && qualPts.length > 0) ? 'qualitative' : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
-
-                    let bestRange = d.range ? String(d.range) : null;
-                    // Prefer a per-point rawRange only when it actually parses as a range.
-                    // The old isNaN(parseFloat(...)) check also matched qualitative strings like
-                    // 'Nonreactive', which broke parseRange for numeric tests.
-                    const rp = [...sortedPoints].reverse().find(p => p.rawRange && parseRange(p.rawRange) !== null);
-                    if (rp) bestRange = rp.rawRange;
-
-                    return {
-                        name: d.name, unit: d.unit || null, range: bestRange, type,
-                        points: sortedPoints, numericPts, category: categorize(d.name),
-                    };
-                }))).filter(Boolean);
+                const vaultData = await loadVaultData();
+                allTests = buildUiTestsFromVault(vaultData.tests);
 
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
@@ -2910,13 +2984,10 @@
                     throw new Error('You must be signed in to save data.');
                 }
 
-                const { getDocs, getDoc, collection, query, where, doc, updateDoc, setDoc, deleteField } = window._labsFirestore;
+                const vaultData = _vaultDataCache || await loadVaultData();
+                const tests = Array.isArray(vaultData.tests) ? [...vaultData.tests] : [];
 
-                // For each entry, find the matching document in Firestore and append the new point
                 for (const entry of entries) {
-                    const q = query(collection(window._labsDb, 'Labs'), where('name', '==', entry.name));
-                    const snap = await getDocs(q);
-
                     const newPoint = {
                         date: dateVal,
                         rawResult: entry.value,
@@ -2925,37 +2996,31 @@
                         testResultId: `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
                     };
 
-                    if (!snap.empty) {
-                        // Document exists — read, decrypt, append, re-encrypt, write
-                        const docRef   = snap.docs[0].ref;
-                        const existing = await getDoc(docRef);
-                        const ed       = existing.data();
-                        let currentPts = [];
-                        if (ed.encryptedPoints && ed.iv) {
-                            currentPts = await window._labsDecryptValue(window._labsKey, ed.encryptedPoints, ed.iv);
-                        } else if (ed.points) {
-                            currentPts = ed.points;
-                        }
+                    const existingIndex = tests.findIndex(test => test && test.name === entry.name);
+
+                    if (existingIndex >= 0) {
+                        const existing = tests[existingIndex];
+                        const currentPts = Array.isArray(existing.points) ? [...existing.points] : [];
                         currentPts.push(newPoint);
-                        const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, currentPts);
-                        const updates = { encryptedPoints: encryptedPayload, iv };
-                        if (ed.points !== undefined) updates.points = deleteField();
-                        await updateDoc(docRef, updates);
+                        tests[existingIndex] = { ...existing, points: currentPts };
                     } else {
-                        // New test — create a new document with encrypted points
-                        const newDocRef    = doc(collection(window._labsDb, 'Labs'));
                         const inferredType = cleanNumber(entry.value) !== null ? 'numeric' : 'qualitative';
-                        const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, [newPoint]);
-                        await setDoc(newDocRef, {
+                        tests.push({
                             name: entry.name,
                             unit: null,
                             range: null,
                             type: inferredType,
-                            encryptedPoints: encryptedPayload,
-                            iv,
+                            points: [newPoint],
                         });
                     }
                 }
+
+                const nextVaultData = {
+                    ...vaultData,
+                    schemaVersion: 1,
+                    tests,
+                };
+                await persistVaultData(nextVaultData);
 
                 // Success — close drawer, invalidate cache, reload data, show toast
                 closeAddSheet();
@@ -3209,25 +3274,6 @@
                 const { encryptedPayload: encryptedKeyCheck, iv: keyCheckIv } = await createKeyCheck(key);
                 await setDoc(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
                 await cacheKey(key);
-
-                // Migrate any existing plaintext docs
-                const snapshot  = await getDocs(collection(db, 'Labs'));
-                const plainDocs = snapshot.docs.filter(d => d.data().points !== undefined);
-                if (plainDocs.length > 0) {
-                    _showEncryptProgress('Preparing\u2026', 0);
-                    for (let i = 0; i < plainDocs.length; i++) {
-                        const ds = plainDocs[i];
-                        _showEncryptProgress(
-                            `Encrypting your data\u2026 ${i + 1}/${plainDocs.length}`,
-                            Math.round((i / plainDocs.length) * 100)
-                        );
-                        const { encryptedPayload, iv } = await encryptValue(key, ds.data().points);
-                        await updateDoc(ds.ref, { encryptedPoints: encryptedPayload, iv, points: deleteField() });
-                    }
-                    _showEncryptProgress('Done!', 100);
-                    await new Promise(r => setTimeout(r, 700));
-                    _hideEncryptProgress();
-                }
 
                 return key;
 
