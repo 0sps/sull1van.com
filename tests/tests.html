@@ -1706,8 +1706,21 @@
         function updateBoot(step, data = {}) {
             Object.assign(window._labsBoot, { phase: step, ...data });
             console.log(`[BOOT] ${step}`, data);
-            const statusEl = document.getElementById('bootStatus');
-            if (statusEl) statusEl.textContent = `Boot: ${step}`;
+            
+            // Try to update UI if we are in a loading state
+            const loadingEl = document.getElementById('loadingState');
+            if (loadingEl && !window._labsKey) {
+                const statusMap = {
+                    'waiting_for_firebase': 'Connecting to cloud…',
+                    'waiting_for_vault': 'Waiting for vault unlock…',
+                    'fetching_data': 'Fetching your labs…',
+                    'vault_error': 'Vault error (check password)',
+                    'ready_for_auth_check': 'Authenticating…'
+                };
+                if (statusMap[step]) {
+                    loadingEl.innerHTML = `<div class="spinner"></div>${statusMap[step]}`;
+                }
+            }
         }
 
         window.onerror = function(msg, url, line, col, error) {
@@ -1749,8 +1762,8 @@
 
             if (_dataLoaded && !forceRefresh) return;
 
-            // Concurrency guard
-            if (_loadingInProgress) {
+            // Concurrency guard - but allow forceRefresh (e.g. after vault unlock) to proceed
+            if (_loadingInProgress && !forceRefresh) {
                 console.log('loadData: Load already in progress, skipping.');
                 return;
             }
@@ -3245,20 +3258,30 @@
             onAuthStateChanged(auth, async user => {
                 window._labsAuthReady = true;
 
+                // Eligibility check: Web Crypto API
+                if (!(window.crypto && crypto.subtle)) {
+                    const msg = "Your browser doesn't support the required encryption (Web Crypto API). Please use a modern browser or turn off Private Mode.";
+                    updateBoot('crypto_unsupported');
+                    const errEl = document.getElementById('loadingState');
+                    if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ ${msg}</div>`;
+                    return;
+                }
+
                 if (user) {
                     updateBoot('auth_user_detected', { email: user.email });
                     window._labsUser = user;
 
-                    if (user.email === 'sspsful@gmail.com') {
+                    if (user.email && user.email.toLowerCase() === 'sspsful@gmail.com') {
                         try {
                             const key = await acquireKey(db);
                             updateBoot('vault_unlocked');
                             window._labsKey = key;
                             loadData(true);
-                            document.dispatchEvent(new Event('labs:reload'));
                         } catch (err) {
                             updateBoot('vault_error', { msg: err.message });
                             console.error('Key acquisition failed:', err);
+                            const errEl = document.getElementById('loadingState');
+                            if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${err.message}</div>`;
                         }
                     } else {
                         updateBoot('auth_unauthorized');
