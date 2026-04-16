@@ -3281,19 +3281,18 @@
                     }
                 }
             });
+            window._labsLogin = async function () {
+                try {
+                    await signInWithPopup(auth, new GoogleAuthProvider());
+                    // onAuthStateChanged will handle the rest
+                } catch (err) {
+                    console.error('Login failed', err);
+                }
+            };
         } catch (e) {
             updateBoot('module_error', { msg: e.message });
             console.error('Module init failed:', e);
         }
-
-        window._labsLogin = async function () {
-            try {
-                await signInWithPopup(auth, new GoogleAuthProvider());
-                // onAuthStateChanged will handle the rest
-            } catch (err) {
-                console.error('Login failed', err);
-            }
-        };
     </script>
 </body>
 
