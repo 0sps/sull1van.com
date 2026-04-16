@@ -1103,6 +1103,86 @@
         .confirm-btn-primary   { background: var(--ios-blue); color: #fff; box-shadow: 0 4px 16px rgba(10,132,255,0.32); }
         .confirm-btn-danger    { background: var(--ios-red);  color: #fff; box-shadow: 0 4px 16px rgba(255,69,58,0.32); }
 
+        /* ── VAULT PASSWORD MODAL ─────────────────────────────────── */
+        .vault-overlay {
+            position: fixed; inset: 0; z-index: 9000;
+            background: rgba(0,0,0,0.72);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .vault-overlay.visible { opacity: 1; pointer-events: auto; }
+        .vault-dialog {
+            background: rgba(22,24,36,0.95);
+            border: var(--glass-border);
+            border-top: var(--glass-border-top);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--glass-shadow), 0 24px 64px rgba(0,0,0,0.6);
+            padding: 28px 24px 24px;
+            width: 100%; max-width: 360px;
+            display: flex; flex-direction: column; gap: 14px;
+            transform: scale(0.92);
+            transition: transform 0.28s var(--spring);
+        }
+        .vault-overlay.visible .vault-dialog { transform: scale(1); }
+        .vault-icon {
+            width: 52px; height: 52px; border-radius: 16px;
+            background: rgba(10,132,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--ios-blue); margin: 0 auto 4px;
+        }
+        .vault-title {
+            font-family: var(--font-heading); font-size: 19px; font-weight: 700;
+            color: var(--text-primary); text-align: center;
+        }
+        .vault-subtitle {
+            font-family: var(--font-body); font-size: 13px;
+            color: var(--text-secondary); text-align: center; line-height: 1.5;
+        }
+        .vault-warning {
+            font-family: var(--font-body); font-size: 12px;
+            color: var(--ios-amber); text-align: center; line-height: 1.5;
+            background: rgba(255,159,10,0.08); border-radius: 10px; padding: 10px 14px;
+        }
+        .vault-input {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px; padding: 13px 16px;
+            color: var(--text-primary);
+            font-family: var(--font-body); font-size: 16px;
+            outline: none; width: 100%;
+            transition: border-color 0.2s;
+        }
+        .vault-input:focus { border-color: var(--ios-blue); }
+        .vault-input.error { border-color: var(--ios-red); }
+        .vault-error {
+            font-family: var(--font-body); font-size: 13px;
+            color: var(--ios-red); text-align: center; display: none;
+        }
+        .vault-error.visible { display: block; }
+        .vault-btn {
+            width: 100%; padding: 14px; border-radius: 14px; border: none;
+            font-family: var(--font-body); font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .vault-btn:active { transform: scale(0.97); }
+        .vault-btn-primary {
+            background: var(--ios-blue); color: #fff;
+            box-shadow: 0 4px 16px rgba(10,132,255,0.32);
+        }
+        .vault-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .vault-progress-bar-track {
+            height: 4px; background: rgba(255,255,255,0.08);
+            border-radius: 999px; overflow: hidden;
+        }
+        .vault-progress-bar-fill {
+            height: 100%; background: var(--ios-blue);
+            border-radius: 999px; width: 0%;
+            transition: width 0.3s ease;
+        }
+
         /* ── SUCCESS TOAST ── */
         .success-toast {
             position: fixed;
@@ -1234,6 +1314,36 @@
             <div class="confirm-title" id="confirmTitle"></div>
             <div class="confirm-body" id="confirmBody"></div>
             <div class="confirm-actions" id="confirmActions"></div>
+        </div>
+    </div>
+
+    <!-- Vault Password Modal -->
+    <div class="vault-overlay" id="vaultOverlay">
+        <div class="vault-dialog">
+            <div class="vault-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="vault-title" id="vaultTitle"></div>
+            <div class="vault-subtitle" id="vaultSubtitle"></div>
+            <input class="vault-input" id="vaultPassword" type="password" placeholder="Password" autocomplete="current-password">
+            <input class="vault-input" id="vaultConfirm" type="password" placeholder="Confirm password" autocomplete="new-password">
+            <div class="vault-warning" id="vaultWarning">&#x26A0; This password cannot be recovered. If you forget it, your data will be unrecoverable.</div>
+            <div class="vault-error" id="vaultError"></div>
+            <button class="vault-btn vault-btn-primary" id="vaultSubmit"></button>
+        </div>
+    </div>
+
+    <!-- Encryption Progress Overlay -->
+    <div class="vault-overlay" id="encryptProgressOverlay">
+        <div class="vault-dialog" style="text-align:center;">
+            <div class="vault-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="vault-title">Encrypting Your Data</div>
+            <div class="vault-subtitle" id="encryptProgressText">Preparing&#x2026;</div>
+            <div class="vault-progress-bar-track">
+                <div class="vault-progress-bar-fill" id="encryptProgressBar"></div>
+            </div>
         </div>
     </div>
 
@@ -1604,39 +1714,8 @@
 
             if (_dataLoaded && !forceRefresh) return;
 
-            const CACHE_KEY = 'labs_cache_v1';
-            const CACHE_TIME_KEY = 'labs_cache_time';
-            const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
-
             try {
-                const cachedData = localStorage.getItem(CACHE_KEY);
-                const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-                const now = Date.now();
-
-                // 1. Try Cache First (if not forcing a refresh)
-                if (!forceRefresh && cachedData && cachedTime) {
-                    const age = now - parseInt(cachedTime);
-                    if (age < ONE_YEAR_MS) {
-                        allTests = JSON.parse(cachedData);
-                        _dataLoaded = true;
-                        buildChips();
-                        applyFilters();
-                        const loadingEl = document.getElementById('loadingState');
-                        if (loadingEl) loadingEl.remove();
-
-                        // Auto-select on desktop if nothing selected
-                        if (isDesktop() && !currentTestName) {
-                            setTimeout(() => {
-                                const firstMulti = allTests.find(t => t.numericPts && t.numericPts.length > 1);
-                                if (firstMulti) openTest(firstMulti.name);
-                                else if (allTests.length > 0) openTest(allTests[0].name);
-                            }, 150);
-                        }
-                        return;
-                    }
-                }
-
-                // 2. Cache Miss or Force Refresh: Fetch from Firebase
+                // Fetch from Firebase (no local cache — data is encrypted at rest)
                 const loadingEl = document.getElementById('loadingState');
                 if (loadingEl) {
                     loadingEl.innerHTML = '<div class="spinner"></div>Refreshing from cloud…';
@@ -1660,11 +1739,14 @@
 
                 if (snapshot.empty) throw new Error('No documents found in the Labs collection.');
 
-                allTests = snapshot.docs.map(docSnap => {
+                allTests = (await Promise.all(snapshot.docs.map(async docSnap => {
                     const d = docSnap.data();
                     if (!d || !d.name) return null;
 
-                    const points = (d.points || []).map(p => {
+                    const rawPoints = (d.encryptedPoints && d.iv)
+                        ? await window._labsDecryptValue(window._labsKey, d.encryptedPoints, d.iv)
+                        : (d.points || []);
+                    const points = rawPoints.map(p => {
                         const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
                         const numVal    = cleanNumber(rawResult);
                         const isNumeric = d.type === 'numeric' || (d.type !== 'qualitative' && numVal !== null);
@@ -1699,13 +1781,9 @@
                         name: d.name, unit: d.unit || null, range: bestRange, type,
                         points: sortedPoints, numericPts, category: categorize(d.name),
                     };
-                }).filter(Boolean);
+                }))).filter(Boolean);
 
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
-
-                // 3. Update Cache
-                localStorage.setItem(CACHE_KEY, JSON.stringify(allTests));
-                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
 
                 _dataLoaded = true;
                 buildChips();
@@ -2743,7 +2821,7 @@
                     throw new Error('You must be signed in to save data.');
                 }
 
-                const { getDocs, collection, query, where, doc, updateDoc, arrayUnion, setDoc } = window._labsFirestore;
+                const { getDocs, getDoc, collection, query, where, doc, updateDoc, setDoc, deleteField } = window._labsFirestore;
 
                 // For each entry, find the matching document in Firestore and append the new point
                 for (const entry of entries) {
@@ -2759,21 +2837,33 @@
                     };
 
                     if (!snap.empty) {
-                        // Document exists — append the new point
-                        const docRef = snap.docs[0].ref;
-                        await updateDoc(docRef, { points: arrayUnion(newPoint) });
+                        // Document exists — read, decrypt, append, re-encrypt, write
+                        const docRef   = snap.docs[0].ref;
+                        const existing = await getDoc(docRef);
+                        const ed       = existing.data();
+                        let currentPts = [];
+                        if (ed.encryptedPoints && ed.iv) {
+                            currentPts = await window._labsDecryptValue(window._labsKey, ed.encryptedPoints, ed.iv);
+                        } else if (ed.points) {
+                            currentPts = ed.points;
+                        }
+                        currentPts.push(newPoint);
+                        const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, currentPts);
+                        const updates = { encryptedPoints: encryptedPayload, iv };
+                        if (ed.points !== undefined) updates.points = deleteField();
+                        await updateDoc(docRef, updates);
                     } else {
-                        // New test — create a new document.
-                        // Infer type from the entered value so qualitative results
-                        // (e.g. "Nonreactive") are not silently stored as numeric.
-                        const newDocRef = doc(collection(window._labsDb, 'Labs'));
+                        // New test — create a new document with encrypted points
+                        const newDocRef    = doc(collection(window._labsDb, 'Labs'));
                         const inferredType = cleanNumber(entry.value) !== null ? 'numeric' : 'qualitative';
+                        const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, [newPoint]);
                         await setDoc(newDocRef, {
                             name: entry.name,
                             unit: null,
                             range: null,
                             type: inferredType,
-                            points: [newPoint],
+                            encryptedPoints: encryptedPayload,
+                            iv,
                         });
                     }
                 }
@@ -2783,9 +2873,6 @@
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save Results';
 
-                // Invalidate cache so next load pulls fresh data
-                localStorage.removeItem('labs_cache_v1');
-                localStorage.removeItem('labs_cache_time');
                 _dataLoaded = false;
                 loadData(true);
 
@@ -2834,6 +2921,235 @@
                  signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
 
+        // ─── Crypto helpers (inlined from crypto.js) ──────────────────────────────
+        const _PBKDF2_ITER    = 310_000;   // OWASP recommended minimum (2023)
+        const _KEY_LEN        = 256;
+        const _CACHE_KEY      = 'health_enc_key';
+        const _CACHE_EXPIRY   = 'health_enc_key_expiry';
+        const _CACHE_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
+        const _KC_SENTINEL    = 'health-enc-v1-ok';
+
+        function _bufToB64(buf) {
+            return btoa(String.fromCharCode(...new Uint8Array(buf)));
+        }
+        function _b64ToBuf(b64) {
+            const bin = atob(b64);
+            const out = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+            return out.buffer;
+        }
+
+        function generateSalt() {
+            return _bufToB64(crypto.getRandomValues(new Uint8Array(16)));
+        }
+
+        async function deriveKeyForCache(password, saltB64) {
+            const enc = new TextEncoder();
+            const km  = await crypto.subtle.importKey(
+                'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']
+            );
+            return crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: _b64ToBuf(saltB64), iterations: _PBKDF2_ITER, hash: 'SHA-256' },
+                km, { name: 'AES-GCM', length: _KEY_LEN }, true, ['encrypt', 'decrypt']
+            );
+        }
+
+        async function encryptValue(key, value) {
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const ct = await crypto.subtle.encrypt(
+                { name: 'AES-GCM', iv }, key,
+                new TextEncoder().encode(JSON.stringify(value))
+            );
+            return { encryptedPayload: _bufToB64(ct), iv: _bufToB64(iv) };
+        }
+
+        async function decryptValue(key, encryptedPayload, iv) {
+            const pt = await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: _b64ToBuf(iv) }, key, _b64ToBuf(encryptedPayload)
+            );
+            return JSON.parse(new TextDecoder().decode(pt));
+        }
+
+        async function createKeyCheck(key) { return encryptValue(key, _KC_SENTINEL); }
+
+        async function verifyKey(key, enc, iv) {
+            try { return await decryptValue(key, enc, iv) === _KC_SENTINEL; } catch { return false; }
+        }
+
+        async function cacheKey(key) {
+            try {
+                const raw = await crypto.subtle.exportKey('raw', key);
+                localStorage.setItem(_CACHE_KEY, _bufToB64(raw));
+                localStorage.setItem(_CACHE_EXPIRY, String(Date.now() + _CACHE_DURATION));
+            } catch (e) { console.warn('Key cache failed:', e); }
+        }
+
+        async function loadCachedKey() {
+            const exp = localStorage.getItem(_CACHE_EXPIRY);
+            if (!exp || Date.now() > +exp) {
+                localStorage.removeItem(_CACHE_KEY);
+                localStorage.removeItem(_CACHE_EXPIRY);
+                return null;
+            }
+            const raw = localStorage.getItem(_CACHE_KEY);
+            if (!raw) return null;
+            try {
+                return crypto.subtle.importKey(
+                    'raw', _b64ToBuf(raw),
+                    { name: 'AES-GCM', length: _KEY_LEN }, true, ['encrypt', 'decrypt']
+                );
+            } catch { return null; }
+        }
+
+        // Expose crypto utils to the classic script (used in loadData + executeFirebaseSave)
+        window._labsEncryptValue = encryptValue;
+        window._labsDecryptValue = decryptValue;
+
+        // ─── Vault modal helpers ───────────────────────────────────────────────────
+        function _setupVaultModal({ isFirstRun }) {
+            const $ = id => document.getElementById(id);
+            $('vaultTitle').textContent    = isFirstRun ? 'Secure Your Health Data'  : 'Enter Vault Password';
+            $('vaultSubtitle').textContent = isFirstRun
+                ? 'Create a vault password to encrypt your biomarker data.'
+                : 'Your health data is encrypted. Enter your password to unlock.';
+            $('vaultConfirm').style.display = isFirstRun ? '' : 'none';
+            $('vaultWarning').style.display  = isFirstRun ? '' : 'none';
+            $('vaultSubmit').textContent     = isFirstRun ? 'Create Vault' : 'Unlock';
+            $('vaultSubmit').disabled        = false;
+            $('vaultPassword').value         = '';
+            $('vaultConfirm').value          = '';
+            $('vaultError').classList.remove('visible');
+            $('vaultPassword').classList.remove('error');
+            $('vaultConfirm').classList.remove('error');
+            $('vaultOverlay').classList.add('visible');
+            setTimeout(() => $('vaultPassword').focus(), 80);
+        }
+
+        // Returns a Promise that resolves with the entered password once client-side
+        // validation passes and the user clicks submit. The modal stays open on failure.
+        function _waitVaultSubmit(isFirstRun) {
+            return new Promise(resolve => {
+                const $ = id => document.getElementById(id);
+                function attempt() {
+                    const pw   = $('vaultPassword').value;
+                    const conf = $('vaultConfirm').value;
+                    $('vaultError').classList.remove('visible');
+                    $('vaultPassword').classList.remove('error');
+                    $('vaultConfirm').classList.remove('error');
+                    if (!pw) {
+                        $('vaultError').textContent = 'Please enter a password.';
+                        $('vaultError').classList.add('visible');
+                        $('vaultPassword').classList.add('error');
+                        return;
+                    }
+                    if (isFirstRun && pw.length < 8) {
+                        $('vaultError').textContent = 'Password must be at least 8 characters.';
+                        $('vaultError').classList.add('visible');
+                        $('vaultPassword').classList.add('error');
+                        return;
+                    }
+                    if (isFirstRun && pw !== conf) {
+                        $('vaultError').textContent = 'Passwords do not match.';
+                        $('vaultError').classList.add('visible');
+                        $('vaultConfirm').classList.add('error');
+                        return;
+                    }
+                    $('vaultSubmit').disabled    = true;
+                    $('vaultSubmit').textContent = isFirstRun ? 'Creating\u2026' : 'Verifying\u2026';
+                    $('vaultSubmit').onclick     = null;
+                    $('vaultPassword').onkeydown = null;
+                    $('vaultConfirm').onkeydown  = null;
+                    resolve(pw);
+                }
+                $('vaultSubmit').onclick     = attempt;
+                $('vaultPassword').onkeydown = e => { if (e.key === 'Enter') attempt(); };
+                $('vaultConfirm').onkeydown  = e => { if (e.key === 'Enter') attempt(); };
+            });
+        }
+
+        function _showVaultError(msg) {
+            const $ = id => document.getElementById(id);
+            $('vaultError').textContent = msg;
+            $('vaultError').classList.add('visible');
+            $('vaultPassword').classList.add('error');
+            $('vaultPassword').value     = '';
+            $('vaultSubmit').disabled    = false;
+            $('vaultSubmit').textContent = 'Unlock';
+            $('vaultPassword').focus();
+        }
+
+        function _showEncryptProgress(text, pct) {
+            document.getElementById('encryptProgressOverlay').classList.add('visible');
+            document.getElementById('encryptProgressText').textContent    = text;
+            document.getElementById('encryptProgressBar').style.width     = pct + '%';
+        }
+        function _hideEncryptProgress() {
+            document.getElementById('encryptProgressOverlay').classList.remove('visible');
+        }
+
+        // ─── Key acquisition flow ──────────────────────────────────────────────────
+        async function acquireKey(db) {
+            // 1. Try 30-day cached key first
+            const cached = await loadCachedKey();
+            if (cached) return cached;
+
+            const { getDoc, setDoc, doc, getDocs, collection, updateDoc, deleteField } = Firestore;
+            const metaRef  = doc(db, 'meta', 'encryption');
+            const metaSnap = await getDoc(metaRef);
+
+            if (!metaSnap.exists()) {
+                // ── First run: create vault ──────────────────────────────────────
+                _setupVaultModal({ isFirstRun: true });
+                const password = await _waitVaultSubmit(true);
+                document.getElementById('vaultOverlay').classList.remove('visible');
+
+                const saltB64 = generateSalt();
+                const key     = await deriveKeyForCache(password, saltB64);
+                const { encryptedPayload: encryptedKeyCheck, iv: keyCheckIv } = await createKeyCheck(key);
+                await setDoc(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
+                await cacheKey(key);
+
+                // Migrate any existing plaintext docs
+                const snapshot  = await getDocs(collection(db, 'Labs'));
+                const plainDocs = snapshot.docs.filter(d => d.data().points !== undefined);
+                if (plainDocs.length > 0) {
+                    _showEncryptProgress('Preparing\u2026', 0);
+                    for (let i = 0; i < plainDocs.length; i++) {
+                        const ds = plainDocs[i];
+                        _showEncryptProgress(
+                            `Encrypting your data\u2026 ${i + 1}/${plainDocs.length}`,
+                            Math.round((i / plainDocs.length) * 100)
+                        );
+                        const { encryptedPayload, iv } = await encryptValue(key, ds.data().points);
+                        await updateDoc(ds.ref, { encryptedPoints: encryptedPayload, iv, points: deleteField() });
+                    }
+                    _showEncryptProgress('Done!', 100);
+                    await new Promise(r => setTimeout(r, 700));
+                    _hideEncryptProgress();
+                }
+
+                return key;
+
+            } else {
+                // ── Returning user: unlock vault ─────────────────────────────────
+                const { passwordSalt, encryptedKeyCheck, keyCheckIv } = metaSnap.data();
+                _setupVaultModal({ isFirstRun: false });
+
+                while (true) {
+                    const password  = await _waitVaultSubmit(false);
+                    const candidate = await deriveKeyForCache(password, passwordSalt);
+                    const ok        = await verifyKey(candidate, encryptedKeyCheck, keyCheckIv);
+                    if (ok) {
+                        await cacheKey(candidate);
+                        document.getElementById('vaultOverlay').classList.remove('visible');
+                        return candidate;
+                    }
+                    _showVaultError('Incorrect password. Please try again.');
+                }
+            }
+        }
+
+        // ─── Firebase init ─────────────────────────────────────────────────────────
         const firebaseConfig = {
             apiKey:            'AIzaSyBsWzW3b-xc-2wB22-w9GUh1J75_FsqMTo',
             authDomain:        'bodydata-7a30d.firebaseapp.com',
@@ -2851,25 +3167,29 @@
         window._labsFirestore = Firestore;
         if (window._labsDbResolve) window._labsDbResolve();
 
-        onAuthStateChanged(auth, user => {
+        onAuthStateChanged(auth, async user => {
             if (user) {
-                // Consistency check with body.html email restriction
                 if (user.email === 'sspsful@gmail.com') {
-                    window._labsUser = user;
-                    // Resolve the auth promise so loadData can proceed
+                    try {
+                        // Key acquisition blocks until the user provides their vault password.
+                        // _labsAuthResolve is called only after the key is ready, so loadData
+                        // is guaranteed to find window._labsKey set when it proceeds.
+                        const key        = await acquireKey(db);
+                        window._labsKey  = key;
+                        window._labsUser = user;
+                    } catch (err) {
+                        console.error('Key acquisition failed:', err);
+                        window._labsUser = null;
+                    }
                     if (window._labsAuthResolve) window._labsAuthResolve();
                     document.dispatchEvent(new Event('labs:reload'));
                 } else {
-                    alert("Unauthorized: Access restricted to sspsful@gmail.com");
+                    alert('Unauthorized: Access restricted to sspsful@gmail.com');
                     signOut(auth);
-                    // Always resolve the auth promise so loadData's await doesn't hang forever.
-                    // loadData will see _labsUser === null and return silently.
                     if (window._labsAuthResolve) window._labsAuthResolve();
                 }
             } else {
                 // Not logged in — clear user and show sign-in UI.
-                // Resolve the auth promise so any pending loadData call can unblock and
-                // return early (instead of hanging on the unresolved promise forever).
                 window._labsUser = null;
                 if (window._labsAuthResolve) window._labsAuthResolve();
                 const loadingEl = document.getElementById('loadingState');
