@@ -1017,12 +1017,19 @@
         .add-rows-container { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 
         .add-result-row { display: flex; gap: 10px; align-items: center; }
+        .add-name-field {
+            flex: 1.3;
+            min-width: 0;
+            position: relative;
+        }
         .add-result-row input.add-test-name {
+            width: 100%;
             flex: 1.3; min-width: 0; padding: 12px 14px;
             background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15);
             border-radius: 14px; color: var(--text-primary);
             font-family: var(--font-body); font-size: 14px; outline: none;
             transition: border-color 0.2s;
+            text-transform: uppercase;
         }
         .add-result-row input.add-test-name:focus { border-color: rgba(10,132,255,0.5); }
         .add-result-row input.add-test-result {
@@ -1050,6 +1057,44 @@
             border: none; background: none; transition: opacity 0.2s;
         }
         .add-row-btn:active { opacity: 0.5; }
+
+        .add-name-suggestions {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 180px;
+            overflow-y: auto;
+            padding: 8px;
+            background: rgba(18,22,34,0.96);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-radius: 14px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+            z-index: 5;
+        }
+        .add-name-suggestions.visible { display: flex; }
+        .add-name-suggestion {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .add-name-suggestion:active,
+        .add-name-suggestion:hover {
+            background: rgba(10,132,255,0.14);
+        }
 
         .add-save-btn {
             width: 100%; padding: 16px;
@@ -1824,39 +1869,6 @@
             _vaultDataCache = vaultData;
         }
 
-        async function migrateLegacyLabsToVault() {
-            const { getDocs, collection } = window._labsFirestore;
-            updateBoot('migrating_legacy_data');
-
-            const snapshot = await getDocs(collection(window._labsDb, 'Labs'));
-            const legacyTests = (await Promise.all(snapshot.docs.map(async docSnap => {
-                const d = docSnap.data();
-                if (!d || !d.name) return null;
-
-                const rawPoints = (d.encryptedPoints && d.iv)
-                    ? await window._labsDecryptValue(window._labsKey, d.encryptedPoints, d.iv)
-                    : (d.points || []);
-
-                return {
-                    name: d.name,
-                    unit: d.unit || null,
-                    range: d.range || null,
-                    type: d.type || null,
-                    points: Array.isArray(rawPoints) ? rawPoints : [],
-                };
-            }))).filter(Boolean);
-
-            const vaultData = {
-                schemaVersion: 1,
-                tests: legacyTests,
-                migratedFrom: 'Labs',
-                migratedAt: new Date().toISOString(),
-            };
-
-            await persistVaultData(vaultData);
-            return vaultData;
-        }
-
         async function loadVaultData() {
             const { getDoc } = window._labsFirestore;
             const vaultRef = getVaultDocRef();
@@ -1874,7 +1886,7 @@
                 return fallback;
             }
 
-            return migrateLegacyLabsToVault();
+            throw new Error('Encrypted vault data was not found. Please verify that vault/main exists in Firestore.');
         }
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
@@ -2808,21 +2820,82 @@
         // ── ADD RESULT DRAWER ─────────────────────────────────────────
         let _addSheetRowCounter = 0;
 
+        function normalizeTestName(name) {
+            return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase();
+        }
+
         function getTestNames() {
             // Build a sorted, unique list of all known test names for the dropdown
             if (allTests && allTests.length > 0) {
-                return allTests.map(t => t.name).sort((a, b) => a.localeCompare(b));
+                return [...new Set(allTests.map(t => normalizeTestName(t.name)))].sort((a, b) => a.localeCompare(b));
             }
             return [];
         }
 
-        function buildTestDatalist() {
-            const names = getTestNames();
-            let opts = '';
-            names.forEach(n => {
-                opts += `<option value="${escStr(n)}"></option>`;
+        function getMatchingTestNames(query, limit = 8) {
+            const normalizedQuery = normalizeTestName(query);
+            if (!normalizedQuery) return [];
+            return getTestNames()
+                .filter(name => name.includes(normalizedQuery))
+                .slice(0, limit);
+        }
+
+        function closeAllNameSuggestions(exceptId = null) {
+            document.querySelectorAll('.add-name-suggestions').forEach(el => {
+                if (exceptId && el.id === exceptId) return;
+                el.classList.remove('visible');
+                el.innerHTML = '';
             });
-            return opts;
+        }
+
+        function renderNameSuggestions(rowId, matches) {
+            const suggestionBox = document.getElementById(`add-suggestions-${rowId}`);
+            if (!suggestionBox) return;
+            if (!matches.length) {
+                suggestionBox.classList.remove('visible');
+                suggestionBox.innerHTML = '';
+                return;
+            }
+
+            suggestionBox.innerHTML = matches.map(name => `
+                <button type="button" class="add-name-suggestion" onclick="selectTestNameSuggestion(${rowId}, '${escStr(name)}')">${name}</button>
+            `).join('');
+            suggestionBox.classList.add('visible');
+        }
+
+        function handleTestNameInput(rowId) {
+            const input = document.getElementById(`add-test-name-${rowId}`);
+            if (!input) return;
+
+            const cursorAtEnd = input.selectionStart === input.value.length;
+            const normalized = input.value.toUpperCase();
+            if (input.value !== normalized) {
+                input.value = normalized;
+                if (cursorAtEnd) {
+                    input.setSelectionRange(normalized.length, normalized.length);
+                }
+            }
+
+            const matches = getMatchingTestNames(input.value)
+                .filter(name => name !== normalizeTestName(input.value));
+            closeAllNameSuggestions(`add-suggestions-${rowId}`);
+            renderNameSuggestions(rowId, matches);
+        }
+
+        function selectTestNameSuggestion(rowId, value) {
+            const input = document.getElementById(`add-test-name-${rowId}`);
+            if (!input) return;
+            input.value = normalizeTestName(value);
+            closeAllNameSuggestions();
+            input.focus();
+        }
+
+        function handleTestNameBlur(rowId) {
+            setTimeout(() => {
+                const input = document.getElementById(`add-test-name-${rowId}`);
+                if (input) input.value = normalizeTestName(input.value);
+                closeAllNameSuggestions();
+            }, 120);
         }
 
         function addResultRow() {
@@ -2832,7 +2905,20 @@
             div.className = 'add-result-row';
             div.id = `add-row-${id}`;
             div.innerHTML = `
-                <input type="text" list="testsDatalist" placeholder="Test name…" class="add-test-name">
+                <div class="add-name-field">
+                    <input
+                        type="text"
+                        placeholder="Test name…"
+                        class="add-test-name"
+                        id="add-test-name-${id}"
+                        autocomplete="off"
+                        autocapitalize="characters"
+                        oninput="handleTestNameInput(${id})"
+                        onfocus="handleTestNameInput(${id})"
+                        onblur="handleTestNameBlur(${id})"
+                    >
+                    <div class="add-name-suggestions" id="add-suggestions-${id}"></div>
+                </div>
                 <input type="text" placeholder="Result…" class="add-test-result">
                 <button class="add-row-remove" onclick="removeResultRow(${id})" aria-label="Remove row">×</button>
             `;
@@ -2851,8 +2937,7 @@
             const container = document.getElementById('addRowsContainer');
             container.innerHTML = '';
             _addSheetRowCounter = 0;
-
-            document.getElementById('testsDatalist').innerHTML = buildTestDatalist();
+            closeAllNameSuggestions();
 
             // Add one blank row to start
             addResultRow();
@@ -2944,7 +3029,7 @@
             for (const row of rows) {
                 const sel = row.querySelector('.add-test-name');
                 const inp = row.querySelector('.add-test-result');
-                const name = sel ? sel.value.trim() : '';
+                const name = sel ? normalizeTestName(sel.value) : '';
                 const val = inp ? inp.value.trim() : '';
                 if (name && val) entries.push({ name, value: val });
             }
@@ -2996,13 +3081,17 @@
                         testResultId: `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
                     };
 
-                    const existingIndex = tests.findIndex(test => test && test.name === entry.name);
+                    const existingIndex = tests.findIndex(test => test && normalizeTestName(test.name) === entry.name);
 
                     if (existingIndex >= 0) {
                         const existing = tests[existingIndex];
                         const currentPts = Array.isArray(existing.points) ? [...existing.points] : [];
                         currentPts.push(newPoint);
-                        tests[existingIndex] = { ...existing, points: currentPts };
+                        tests[existingIndex] = {
+                            ...existing,
+                            name: entry.name,
+                            points: currentPts
+                        };
                     } else {
                         const inferredType = cleanNumber(entry.value) !== null ? 'numeric' : 'qualitative';
                         tests.push({
