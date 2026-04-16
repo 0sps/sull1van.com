@@ -1017,24 +1017,22 @@
         .add-rows-container { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 
         .add-result-row { display: flex; gap: 10px; align-items: center; }
-        .add-result-row select {
-            flex: 1.3; min-width: 0; padding: 12px 34px 12px 14px;
+        .add-result-row input.add-test-name {
+            flex: 1.3; min-width: 0; padding: 12px 14px;
             background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15);
             border-radius: 14px; color: var(--text-primary);
             font-family: var(--font-body); font-size: 14px; outline: none;
-            transition: border-color 0.2s; -webkit-appearance: none; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 12px center;
+            transition: border-color 0.2s;
         }
-        .add-result-row select:focus { border-color: rgba(10,132,255,0.5); }
-        .add-result-row input[type='text'] {
+        .add-result-row input.add-test-name:focus { border-color: rgba(10,132,255,0.5); }
+        .add-result-row input.add-test-result {
             flex: 1; min-width: 0; padding: 12px 14px;
             background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15);
             border-radius: 14px; color: var(--text-primary);
             font-family: var(--font-body); font-size: 16px; outline: none;
             transition: border-color 0.2s;
         }
-        .add-result-row input[type='text']:focus { border-color: rgba(10,132,255,0.5); }
+        .add-result-row input.add-test-result:focus { border-color: rgba(10,132,255,0.5); }
 
         .add-row-remove {
             width: 32px; height: 32px; border-radius: 50%;
@@ -1299,6 +1297,7 @@
         <div class="add-field-group">
             <div class="add-field-label">Results</div>
             <div class="add-rows-container" id="addRowsContainer"></div>
+            <datalist id="testsDatalist"></datalist>
         </div>
         <button class="add-row-btn" id="addRowBtn" onclick="addResultRow()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -1658,6 +1657,7 @@
         function trendIsGood(testName, diff) {
             if (diff === 0) return null;
             const n = testName.toUpperCase();
+            if (n.includes('NON-HDL') || n.includes('NON HDL')) return diff < 0;
             const higherBetter = [...HIGHER_IS_BETTER].some(k => n.includes(k));
             return higherBetter ? diff > 0 : diff < 0;
         }
@@ -1774,7 +1774,7 @@
                     // Prefer a per-point rawRange only when it actually parses as a range.
                     // The old isNaN(parseFloat(...)) check also matched qualitative strings like
                     // 'Nonreactive', which broke parseRange for numeric tests.
-                    const rp = sortedPoints.find(p => p.rawRange && parseRange(p.rawRange) !== null);
+                    const rp = [...sortedPoints].reverse().find(p => p.rawRange && parseRange(p.rawRange) !== null);
                     if (rp) bestRange = rp.rawRange;
 
                     return {
@@ -2101,7 +2101,7 @@
                 trendColorClass,
                 trendSub,
                 // Raw diff arrow variant used in grid card compact view
-                trendArrowVal: prev ? ((latest.numVal - prev.numVal) > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(latest.numVal - prev.numVal)) : null,
+                trendArrowVal: prev ? (Math.abs(latest.numVal - prev.numVal) < 0.001 ? '= 0' : ((latest.numVal - prev.numVal) > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(latest.numVal - prev.numVal))) : null,
                 prevDate: prev ? fmtDate(prev.date) : null,
                 totalCount: pts.length,
             };
@@ -2655,11 +2655,11 @@
             return [];
         }
 
-        function buildTestSelect() {
+        function buildTestDatalist() {
             const names = getTestNames();
-            let opts = '<option value="" disabled selected>Select test…</option>';
+            let opts = '';
             names.forEach(n => {
-                opts += `<option value="${escStr(n)}">${escStr(n)}</option>`;
+                opts += `<option value="${escStr(n)}"></option>`;
             });
             return opts;
         }
@@ -2671,8 +2671,8 @@
             div.className = 'add-result-row';
             div.id = `add-row-${id}`;
             div.innerHTML = `
-                <select>${buildTestSelect()}</select>
-                <input type="text" placeholder="Result…">
+                <input type="text" list="testsDatalist" placeholder="Test name…" class="add-test-name">
+                <input type="text" placeholder="Result…" class="add-test-result">
                 <button class="add-row-remove" onclick="removeResultRow(${id})" aria-label="Remove row">×</button>
             `;
             container.appendChild(div);
@@ -2691,6 +2691,8 @@
             container.innerHTML = '';
             _addSheetRowCounter = 0;
 
+            document.getElementById('testsDatalist').innerHTML = buildTestDatalist();
+
             // Add one blank row to start
             addResultRow();
 
@@ -2702,9 +2704,9 @@
         function addSheetHasData() {
             const rows = document.querySelectorAll('#addRowsContainer .add-result-row');
             for (const row of rows) {
-                const sel = row.querySelector('select');
-                const inp = row.querySelector('input');
-                if ((sel && sel.value) || (inp && inp.value.trim())) return true;
+                const sel = row.querySelector('.add-test-name');
+                const inp = row.querySelector('.add-test-result');
+                if ((sel && sel.value.trim()) || (inp && inp.value.trim())) return true;
             }
             return false;
         }
@@ -2779,9 +2781,9 @@
             const rows = document.querySelectorAll('#addRowsContainer .add-result-row');
             const entries = [];
             for (const row of rows) {
-                const sel = row.querySelector('select');
-                const inp = row.querySelector('input');
-                const name = sel ? sel.value : '';
+                const sel = row.querySelector('.add-test-name');
+                const inp = row.querySelector('.add-test-result');
+                const name = sel ? sel.value.trim() : '';
                 const val = inp ? inp.value.trim() : '';
                 if (name && val) entries.push({ name, value: val });
             }
