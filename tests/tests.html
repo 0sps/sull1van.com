@@ -1701,10 +1701,15 @@
         }
 
         // ── FIREBASE READINESS PROMISE ────────────────────────────────
-        // Created here (classic script) so it exists before the module
-        // script runs. The module resolves it once Firestore is initialised.
-        window._labsDbPromise = new Promise(resolve => { window._labsDbResolve = resolve; });
-        window._labsAuthPromise = new Promise(resolve => { window._labsAuthResolve = resolve; });
+        // Resilient to timing: if Firebase is already ready, resolve immediately.
+        window._labsDbPromise = new Promise(resolve => {
+            if (window._labsDb) resolve();
+            window._labsDbResolve = resolve;
+        });
+        window._labsAuthPromise = new Promise(resolve => {
+            if (window._labsAuthReady) resolve();
+            window._labsAuthResolve = resolve;
+        });
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData(forceRefresh = false) {
@@ -3170,12 +3175,11 @@
         if (window._labsDbResolve) window._labsDbResolve();
 
         onAuthStateChanged(auth, async user => {
+            window._labsAuthReady = true;
             if (user) {
+                console.log('Auth: User detected', user.email);
                 if (user.email === 'sspsful@gmail.com') {
                     try {
-                        // Key acquisition blocks until the user provides their vault password.
-                        // _labsAuthResolve is called only after the key is ready, so loadData
-                        // is guaranteed to find window._labsKey set when it proceeds.
                         const key        = await acquireKey(db);
                         window._labsKey  = key;
                         window._labsUser = user;
@@ -3191,7 +3195,7 @@
                     if (window._labsAuthResolve) window._labsAuthResolve();
                 }
             } else {
-                // Not logged in — clear user and show sign-in UI.
+                console.log('Auth: No user');
                 window._labsUser = null;
                 if (window._labsAuthResolve) window._labsAuthResolve();
                 const loadingEl = document.getElementById('loadingState');
