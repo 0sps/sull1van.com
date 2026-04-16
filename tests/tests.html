@@ -1712,10 +1712,13 @@
             if (loadingEl && !window._labsKey) {
                 const statusMap = {
                     'waiting_for_firebase': 'Connecting to cloud…',
+                    'ready_for_auth_check': 'Authenticating…',
+                    'checking_vault_status': 'Checking your secure vault…',
+                    'prompting_vault_password': 'Waiting for vault unlock…',
                     'waiting_for_vault': 'Waiting for vault unlock…',
                     'fetching_data': 'Fetching your labs…',
                     'vault_error': 'Vault error (check password)',
-                    'ready_for_auth_check': 'Authenticating…'
+                    'auth_redirect_start': 'Opening Google sign-in…'
                 };
                 if (statusMap[step]) {
                     loadingEl.innerHTML = `<div class="spinner"></div>${statusMap[step]}`;
@@ -3003,8 +3006,8 @@
     <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
     <script type="module">
         import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
-        import { getAuth, onAuthStateChanged, signOut,
-                 signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
+        import { getAuth, onAuthStateChanged, signOut, getRedirectResult,
+                 signInWithPopup, signInWithRedirect, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
 
         // ─── Crypto helpers (inlined from crypto.js) ──────────────────────────────
@@ -3108,7 +3111,13 @@
             $('vaultPassword').classList.remove('error');
             $('vaultConfirm').classList.remove('error');
             $('vaultOverlay').classList.add('visible');
-            setTimeout(() => $('vaultPassword').focus(), 80);
+            updateBoot('prompting_vault_password', { mode: isFirstRun ? 'create' : 'unlock' });
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    try { $('vaultPassword').focus({ preventScroll: true }); }
+                    catch { $('vaultPassword').focus(); }
+                });
+            });
         }
 
         // Returns a Promise that resolves with the entered password once client-side
@@ -3181,7 +3190,13 @@
 
             const { getDoc, setDoc, doc, getDocs, collection, updateDoc, deleteField } = Firestore;
             const metaRef  = doc(db, 'meta', 'encryption');
-            const metaSnap = await getDoc(metaRef);
+            updateBoot('checking_vault_status');
+            const metaSnap = await Promise.race([
+                getDoc(metaRef),
+                new Promise((_, reject) => setTimeout(() => {
+                    reject(new Error('Timed out while checking your vault. Please retry on a stable connection.'));
+                }, 12000))
+            ]);
 
             if (!metaSnap.exists()) {
                 // ── First run: create vault ──────────────────────────────────────
@@ -3236,6 +3251,12 @@
         }
 
         // ─── Firebase init ─────────────────────────────────────────────────────────
+        function _shouldUseRedirectLogin() {
+            const ua = navigator.userAgent || '';
+            const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+            return /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || coarsePointer;
+        }
+
         const firebaseConfig = {
             apiKey:            'AIzaSyBsWzW3b-xc-2wB22-w9GUh1J75_FsqMTo',
             authDomain:        'bodydata-7a30d.firebaseapp.com',
@@ -3254,6 +3275,15 @@
             window._labsDb = db;
             window._labsFirestore = Firestore;
             updateBoot('firebase_initialized');
+
+            getRedirectResult(auth).catch(err => {
+                console.error('Redirect login failed', err);
+                updateBoot('vault_error', { msg: err.message });
+                const errEl = document.getElementById('loadingState');
+                if (errEl) {
+                    errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Sign-in failed: ${err.message}</div>`;
+                }
+            });
 
             onAuthStateChanged(auth, async user => {
                 window._labsAuthReady = true;
@@ -3306,10 +3336,20 @@
             });
             window._labsLogin = async function () {
                 try {
-                    await signInWithPopup(auth, new GoogleAuthProvider());
+                    const provider = new GoogleAuthProvider();
+                    if (_shouldUseRedirectLogin()) {
+                        updateBoot('auth_redirect_start');
+                        await signInWithRedirect(auth, provider);
+                        return;
+                    }
+                    await signInWithPopup(auth, provider);
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
                     console.error('Login failed', err);
+                    const loadingEl = document.getElementById('loadingState');
+                    if (loadingEl) {
+                        loadingEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Sign-in failed: ${err.message}</div>`;
+                    }
                 }
             };
         } catch (e) {
