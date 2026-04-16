@@ -2876,8 +2876,7 @@
                 }
             }
 
-            const matches = getMatchingTestNames(input.value)
-                .filter(name => name !== normalizeTestName(input.value));
+            const matches = getMatchingTestNames(input.value);
             closeAllNameSuggestions(`add-suggestions-${rowId}`);
             renderNameSuggestions(rowId, matches);
         }
