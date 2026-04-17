@@ -40,24 +40,30 @@
     },
     {
       "id": "ethics-professional-practice",
-      "sourceTopics": [],
-      "keywords": ["ethic", "licensure", "contract", "legal", "regulatory", "professional responsibility", "public protection"],
+      "sourceTopics": ["Ethics and Professional Practice", "Societal Considerations", "Intellectual Property", "Patents", "Trade Secrets"],
+      "keywords": ["ethic", "licensure", "contract", "legal", "regulatory", "professional responsibility", "public protection", "intellectual property", "patent", "trade secret", "societal"],
+      "sourceTopicSubtopicOverrides": {
+        "Societal Considerations": "Public protection and regulatory issues",
+        "Intellectual Property": "Professional, ethical, and legal responsibility",
+        "Patents": "Professional, ethical, and legal responsibility",
+        "Trade Secrets": "Professional, ethical, and legal responsibility"
+      },
       "subtopicRules": [
         {
           "name": "Codes of ethics and licensure",
-          "keywords": ["ethic", "licensure", "nspe", "code of ethics"]
+          "keywords": ["ethic", "licensure", "nspe", "code of ethics", "responsible charge", "sign and seal", "seal", "licensed", "licensee", "board", "disciplinary action", "felony", "competence", "qualified", "title", "professional engineer", "engineer title"]
         },
         {
           "name": "Agreements and contracts",
-          "keywords": ["contract", "agreement", "offer", "acceptance"]
+          "keywords": ["contract", "agreement", "offer", "acceptance", "proposal", "bid", "waiver", "liability waiver", "compensation from two parties"]
         },
         {
           "name": "Professional, ethical, and legal responsibility",
-          "keywords": ["legal responsibility", "liability", "professional responsibility", "duty"]
+          "keywords": ["legal responsibility", "liability", "professional responsibility", "duty", "intellectual property", "patent", "trade secret", "confidential", "ownership", "conflict of interest", "disclose", "disclosure", "client consent", "objective", "truthful", "misrepresentation", "false", "rumor", "gratuity", "gift", "vendor", "political contribution", "interested party", "expert witness", "trademark", "copyright", "proprietary"]
         },
         {
           "name": "Public protection and regulatory issues",
-          "keywords": ["public protection", "regulatory", "regulation", "safety regulation"]
+          "keywords": ["public protection", "regulatory", "regulation", "safety regulation", "societal", "public welfare", "public safety", "unsafe", "hazard", "building department", "regulatory authority", "epa", "emission", "toxin", "environmental", "wetland", "ecosystem", "sustainability", "school project", "foundation", "retain", "report violation"]
         }
       ]
     },

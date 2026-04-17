@@ -10,6 +10,16 @@ SOURCE_PATH = ROOT / "fe_exam_questions.json"
 OUTPUT_PATH = ROOT / "data" / "question_bank_summary.json"
 
 
+def iter_subtopics(topic):
+    nested_subtopics = topic.get("subtopics")
+    if isinstance(nested_subtopics, list) and nested_subtopics:
+        return nested_subtopics
+    direct_questions = topic.get("questions", [])
+    if direct_questions:
+        return [{"subtopic": topic.get("subtopic") or topic.get("topic") or "General", "questions": direct_questions}]
+    return []
+
+
 def main() -> None:
     payload = json.loads(SOURCE_PATH.read_text())
     topics = payload.get("topics", [])
@@ -22,7 +32,7 @@ def main() -> None:
     for topic in topics:
       subtopic_entries = []
       topic_question_count = 0
-      for subtopic in topic.get("subtopics", []):
+      for subtopic in iter_subtopics(topic):
         questions = subtopic.get("questions", [])
         mc_count = 0
         fr_count = 0

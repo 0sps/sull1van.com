@@ -1,10 +1,10 @@
 {
-  "totalQuestions": 1199,
+  "totalQuestions": 1225,
   "questionTypes": {
     "open": 381,
-    "mcq": 818
+    "mcq": 844
   },
-  "sourceTopicCount": 17,
+  "sourceTopicCount": 22,
   "sourceTopics": [
     {
       "name": "Basic Electrical Engineering",
@@ -1145,6 +1145,66 @@
           "openCount": 0
         }
       ]
+    },
+    {
+      "name": "Ethics and Professional Practice",
+      "questionCount": 19,
+      "subtopics": [
+        {
+          "name": "Ethics and Professional Practice",
+          "questionCount": 19,
+          "mcqCount": 19,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Societal Considerations",
+      "questionCount": 3,
+      "subtopics": [
+        {
+          "name": "Societal Considerations",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Intellectual Property",
+      "questionCount": 1,
+      "subtopics": [
+        {
+          "name": "Intellectual Property",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Patents",
+      "questionCount": 2,
+      "subtopics": [
+        {
+          "name": "Patents",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Trade Secrets",
+      "questionCount": 1,
+      "subtopics": [
+        {
+          "name": "Trade Secrets",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        }
+      ]
     }
   ],
   "uniqueTags": [
@@ -1280,6 +1340,7 @@
     "Equations of State (EOS)",
     "Equilibrium Requirements",
     "Ergonomics",
+    "Ethics and Professional Practice",
     "Evapotranspiration Rates for Grasses",
     "Excavation",
     "Exergy (Availability)",

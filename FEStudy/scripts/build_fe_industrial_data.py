@@ -35,6 +35,16 @@ def detect_question_type(question):
     return "open"
 
 
+def iter_subtopics(topic):
+    nested_subtopics = topic.get("subtopics")
+    if isinstance(nested_subtopics, list) and nested_subtopics:
+        return nested_subtopics
+    direct_questions = topic.get("questions", [])
+    if direct_questions:
+        return [{"subtopic": topic.get("subtopic") or topic.get("topic") or "General", "questions": direct_questions}]
+    return []
+
+
 def match_section(question_blob, source_topic, section_rules):
     best_rule = None
     best_score = 0
@@ -49,7 +59,11 @@ def match_section(question_blob, source_topic, section_rules):
     return best_rule if best_score > 0 else None
 
 
-def match_subtopic(question_blob, subtopic_rules):
+def match_subtopic(question_blob, subtopic_rules, section_rule=None, source_topic=None):
+    if section_rule and source_topic:
+        override = section_rule.get("sourceTopicSubtopicOverrides", {}).get(source_topic)
+        if override:
+            return override
     best_name = None
     best_score = -1
     for rule in subtopic_rules:
@@ -86,7 +100,7 @@ def main():
 
     for source_topic in raw_payload.get("topics", []):
         source_topic_name = source_topic.get("topic", "Unknown")
-        for source_subtopic in source_topic.get("subtopics", []):
+        for source_subtopic in iter_subtopics(source_topic):
             source_subtopic_name = source_subtopic.get("subtopic", "Unknown")
             for question in source_subtopic.get("questions", []):
                 question_text = question.get("question", "")
@@ -117,7 +131,12 @@ def main():
 
                 section_id = section_rule["id"]
                 section = section_lookup[section_id]
-                official_subtopic = match_subtopic(blob, section_rule.get("subtopicRules", []))
+                official_subtopic = match_subtopic(
+                    blob,
+                    section_rule.get("subtopicRules", []),
+                    section_rule=section_rule,
+                    source_topic=source_topic_name,
+                )
                 choices = question.get("choices", {})
                 normalized_question = {
                     "id": question.get("id"),
