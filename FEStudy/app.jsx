@@ -25,6 +25,14 @@ function computeEstimatedScore(correct, answered) {
   return Math.round(accuracy * (0.35 + 0.65 * confidence) * 100);
 }
 
+function formatQuestionHeading(question, index) {
+  const rawId = question.id || "";
+  const hasGeneratedId = rawId.includes(":");
+  if (!hasGeneratedId) return rawId || `Question ${index + 1}`;
+  const sourceLabel = question.sourceSubtopic || question.officialSubtopic || "Practice Question";
+  return `Question ${index + 1} • ${sourceLabel}`;
+}
+
 function getCoverageLabel(questionCount) {
   if (questionCount === 0) return "No coverage yet";
   if (questionCount < 5) return "Thin coverage";
@@ -670,7 +678,7 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
             <span className="pill">{question.officialSubtopic}</span>
             <span className="pill">{question.type === "mcq" ? "Multiple choice" : "Self-graded"}</span>
           </div>
-          <h2>{question.id}</h2>
+          <h2>{formatQuestionHeading(question, currentIndex)}</h2>
           <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
 
           {question.type === "mcq" ? (
