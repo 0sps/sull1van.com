@@ -3,10 +3,10 @@
 import json
 from collections import Counter
 from pathlib import Path
+from question_bank_loader import load_question_bank
 
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE_PATH = ROOT / "fe_exam_questions.json"
 OUTPUT_PATH = ROOT / "data" / "question_bank_summary.json"
 
 
@@ -21,7 +21,7 @@ def iter_subtopics(topic):
 
 
 def main() -> None:
-    payload = json.loads(SOURCE_PATH.read_text())
+    payload = load_question_bank(ROOT)
     topics = payload.get("topics", [])
 
     unique_tags = set()

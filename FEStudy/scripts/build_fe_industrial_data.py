@@ -3,10 +3,10 @@
 import json
 from collections import defaultdict
 from pathlib import Path
+from question_bank_loader import load_question_bank
 
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE_PATH = ROOT / "fe_exam_questions.json"
 BLUEPRINT_PATH = ROOT / "data" / "fe_industrial_blueprint.json"
 MAP_PATH = ROOT / "data" / "question_topic_map.json"
 SUMMARY_PATH = ROOT / "data" / "question_bank_summary.json"
@@ -87,7 +87,7 @@ def build_section_lookup(sections):
 
 
 def main():
-    raw_payload = json.loads(SOURCE_PATH.read_text())
+    raw_payload = load_question_bank(ROOT)
     blueprint = json.loads(BLUEPRINT_PATH.read_text())
     mapping = json.loads(MAP_PATH.read_text())
     sections = blueprint["sections"]

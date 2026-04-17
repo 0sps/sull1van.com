@@ -1,28 +1,28 @@
 {
   "exam": "FE Industrial and Systems",
   "totalSourceQuestions": 1225,
-  "mappedQuestionCount": 1118,
-  "unmatchedQuestionCount": 107,
+  "mappedQuestionCount": 915,
+  "unmatchedQuestionCount": 121,
   "sections": [
     {
       "id": "mathematics",
       "title": "Mathematics",
       "questionRange": "6-9",
-      "mappedQuestionCount": 75,
-      "mcqCount": 40,
+      "mappedQuestionCount": 79,
+      "mcqCount": 44,
       "openCount": 35,
       "subtopicCoverage": [
         {
           "name": "Analytic geometry",
-          "count": 28
+          "count": 29
         },
         {
           "name": "Calculus",
-          "count": 34
+          "count": 35
         },
         {
           "name": "Linear algebra",
-          "count": 13
+          "count": 15
         }
       ]
     },
@@ -30,21 +30,21 @@
       "id": "engineering-sciences",
       "title": "Engineering Sciences",
       "questionRange": "4-6",
-      "mappedQuestionCount": 565,
-      "mcqCount": 449,
-      "openCount": 116,
+      "mappedQuestionCount": 439,
+      "mcqCount": 338,
+      "openCount": 101,
       "subtopicCoverage": [
         {
           "name": "Thermodynamics and fluid mechanics",
-          "count": 250
+          "count": 212
         },
         {
           "name": "Statics, dynamics, and materials",
-          "count": 234
+          "count": 214
         },
         {
           "name": "Electricity and electrical circuits",
-          "count": 81
+          "count": 13
         }
       ]
     },
@@ -58,7 +58,7 @@
       "subtopicCoverage": [
         {
           "name": "Codes of ethics and licensure",
-          "count": 13
+          "count": 18
         },
         {
           "name": "Agreements and contracts",
@@ -66,11 +66,11 @@
         },
         {
           "name": "Professional, ethical, and legal responsibility",
-          "count": 5
+          "count": 2
         },
         {
           "name": "Public protection and regulatory issues",
-          "count": 5
+          "count": 3
         }
       ]
     },
@@ -88,7 +88,7 @@
         },
         {
           "name": "Evaluation of alternatives",
-          "count": 5
+          "count": 6
         },
         {
           "name": "Cost analyses",
@@ -96,7 +96,7 @@
         },
         {
           "name": "Depreciation and taxes",
-          "count": 13
+          "count": 12
         }
       ]
     },
@@ -110,11 +110,11 @@
       "subtopicCoverage": [
         {
           "name": "Probabilities",
-          "count": 39
+          "count": 38
         },
         {
           "name": "Probability distributions and functions",
-          "count": 16
+          "count": 17
         },
         {
           "name": "Estimation, confidence intervals, and hypothesis testing",
@@ -134,13 +134,13 @@
       "id": "modeling-quantitative-analysis",
       "title": "Modeling & Quantitative Analysis",
       "questionRange": "9-14",
-      "mappedQuestionCount": 21,
-      "mcqCount": 21,
+      "mappedQuestionCount": 2,
+      "mcqCount": 2,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Data, logic development, and analytics",
-          "count": 21
+          "count": 2
         },
         {
           "name": "Linear programming and optimization",
@@ -182,13 +182,13 @@
       "id": "manufacturing-service-production-systems",
       "title": "Manufacturing, Service & Production Systems",
       "questionRange": "9-14",
-      "mappedQuestionCount": 1,
-      "mcqCount": 1,
+      "mappedQuestionCount": 2,
+      "mcqCount": 2,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Manufacturing processes",
-          "count": 0
+          "count": 1
         },
         {
           "name": "Manufacturing and service systems",
@@ -212,17 +212,17 @@
       "id": "facilities-supply-chain",
       "title": "Facilities & Supply Chain",
       "questionRange": "9-14",
-      "mappedQuestionCount": 249,
-      "mcqCount": 57,
-      "openCount": 192,
+      "mappedQuestionCount": 190,
+      "mcqCount": 26,
+      "openCount": 164,
       "subtopicCoverage": [
         {
           "name": "Flow, layout, and location analysis",
-          "count": 206
+          "count": 149
         },
         {
           "name": "Capacity analysis",
-          "count": 14
+          "count": 12
         },
         {
           "name": "Supply chain management and design",
@@ -235,8 +235,8 @@
       "title": "Human Factors, Ergonomics & Safety",
       "questionRange": "8-12",
       "mappedQuestionCount": 25,
-      "mcqCount": 24,
-      "openCount": 1,
+      "mcqCount": 23,
+      "openCount": 2,
       "subtopicCoverage": [
         {
           "name": "Human factors",
@@ -278,13 +278,13 @@
       "id": "quality",
       "title": "Quality",
       "questionRange": "9-14",
-      "mappedQuestionCount": 11,
-      "mcqCount": 11,
+      "mappedQuestionCount": 10,
+      "mcqCount": 10,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Quality management, planning, assurance, and systems",
-          "count": 10
+          "count": 9
         },
         {
           "name": "Quality control",
@@ -296,13 +296,13 @@
       "id": "systems-engineering-analysis-design",
       "title": "Systems Engineering, Analysis & Design",
       "questionRange": "8-12",
-      "mappedQuestionCount": 18,
-      "mcqCount": 18,
+      "mappedQuestionCount": 15,
+      "mcqCount": 15,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Requirements analysis and systems design",
-          "count": 17
+          "count": 14
         },
         {
           "name": "Functional analysis and configuration management",
@@ -325,7 +325,7 @@
   ],
   "unmatchedSample": [
     {
-      "id": "0837. Nernst Equation",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0001",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -334,7 +334,7 @@
       "type": "mcq"
     },
     {
-      "id": "0836. Faraday\u2019s Equation",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0002",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -343,7 +343,7 @@
       "type": "mcq"
     },
     {
-      "id": "0835. Faraday\u2019s Equation",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0003",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -352,7 +352,7 @@
       "type": "mcq"
     },
     {
-      "id": "0829. Solubility Product Constant",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0004",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -361,7 +361,7 @@
       "type": "mcq"
     },
     {
-      "id": "0828. Solubility Product Constant",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0005",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -370,7 +370,7 @@
       "type": "mcq"
     },
     {
-      "id": "0827. Equilibrium Constant of a Chemical Reaction",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0006",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -379,7 +379,7 @@
       "type": "mcq"
     },
     {
-      "id": "0826. Equilibrium Constant of a Chemical Reaction",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0007",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -388,7 +388,7 @@
       "type": "mcq"
     },
     {
-      "id": "0825. Molality of Solutions",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0008",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -397,7 +397,7 @@
       "type": "mcq"
     },
     {
-      "id": "0824. Molarity of Solutions",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0009",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -406,7 +406,7 @@
       "type": "mcq"
     },
     {
-      "id": "0823. Molar Volume of an Ideal Gas",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0010",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -415,7 +415,7 @@
       "type": "mcq"
     },
     {
-      "id": "0822. Avogadro\u2019s Number",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0011",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Definitions (Chemistry)",
       "tags": [
@@ -424,43 +424,43 @@
       "type": "mcq"
     },
     {
-      "id": "0834. Acids, Bases, and pH",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0001",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Acids, Bases, and pH",
       "tags": [
-        "Acids, Bases, and pH"
+        "Acids Bases And Ph"
       ],
       "type": "mcq"
     },
     {
-      "id": "0832. Acids, Bases, and pH",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0003",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Acids, Bases, and pH",
       "tags": [
-        "Acids, Bases, and pH"
+        "Acids Bases And Ph"
       ],
       "type": "mcq"
     },
     {
-      "id": "0831. Acids, Bases, and pH",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0004",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Acids, Bases, and pH",
       "tags": [
-        "Acids, Bases, and pH"
+        "Acids Bases And Ph"
       ],
       "type": "mcq"
     },
     {
-      "id": "0830. Acids, Bases, and pH",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0005",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Acids, Bases, and pH",
       "tags": [
-        "Acids, Bases, and pH"
+        "Acids Bases And Ph"
       ],
       "type": "mcq"
     },
     {
-      "id": "0842. Bioconversion",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:bioconversion:0001",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Bioconversion",
       "tags": [
@@ -469,7 +469,7 @@
       "type": "mcq"
     },
     {
-      "id": "0841. Bioconversion",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:bioconversion:0002",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Bioconversion",
       "tags": [
@@ -478,7 +478,7 @@
       "type": "mcq"
     },
     {
-      "id": "0839. Electrochemistry",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:electrochemistry:0001",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Electrochemistry",
       "tags": [
@@ -487,7 +487,7 @@
       "type": "mcq"
     },
     {
-      "id": "0838. Electrochemistry",
+      "id": "fe_chemistry_and_biology:chemistry-and-biology:electrochemistry:0002",
       "sourceTopic": "Chemistry and Biology",
       "sourceSubtopic": "Electrochemistry",
       "tags": [
@@ -496,27 +496,27 @@
       "type": "mcq"
     },
     {
-      "id": "0782. Selected Properties of Air",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0001",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
         "Air Pollution",
-        "Selected Properties of Air"
+        "Selected Properties Of Air"
       ],
       "type": "mcq"
     },
     {
-      "id": "0781. Selected Properties of Air",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0002",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
         "Air Pollution",
-        "Selected Properties of Air"
+        "Selected Properties Of Air"
       ],
       "type": "mcq"
     },
     {
-      "id": "0766. Incineration",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0003",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -526,7 +526,7 @@
       "type": "mcq"
     },
     {
-      "id": "0764. Electrostatic Precipitator Efficiency",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0005",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -536,7 +536,7 @@
       "type": "mcq"
     },
     {
-      "id": "0763. Electrostatic Precipitator Efficiency",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0006",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -546,7 +546,7 @@
       "type": "mcq"
     },
     {
-      "id": "0762. Baghouse",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0007",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -556,7 +556,7 @@
       "type": "mcq"
     },
     {
-      "id": "0761. Cyclone Collection (Particle Removal) Efficiency",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0008",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -566,7 +566,7 @@
       "type": "mcq"
     },
     {
-      "id": "0760. Cyclone 50% Collection Efficiency for Particle Diameter",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0009",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -576,7 +576,7 @@
       "type": "mcq"
     },
     {
-      "id": "0759. Cyclone Effective Number of Turns Approximation",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0010",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -586,7 +586,7 @@
       "type": "mcq"
     },
     {
-      "id": "0758. Air Pollution",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0011",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -595,7 +595,7 @@
       "type": "mcq"
     },
     {
-      "id": "0757. Air Pollution",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0012",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -604,7 +604,7 @@
       "type": "mcq"
     },
     {
-      "id": "0756. Air Pollution",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0013",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -613,7 +613,7 @@
       "type": "mcq"
     },
     {
-      "id": "0755. Effective Stack Height",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0014",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -622,7 +622,7 @@
       "type": "mcq"
     },
     {
-      "id": "0754. Atmospheric Dispersion Modeling (Gaussian)",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0015",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -631,7 +631,7 @@
       "type": "mcq"
     },
     {
-      "id": "0753. Air Pollution",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0016",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -640,7 +640,7 @@
       "type": "mcq"
     },
     {
-      "id": "0752. Air Pollution",
+      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0017",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Air Pollution",
       "tags": [
@@ -649,152 +649,152 @@
       "type": "mcq"
     },
     {
-      "id": "0814. Vadose Zone Penetration",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0001",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Vadose Zone Penetration"
       ],
       "type": "mcq"
     },
     {
-      "id": "0813. Vadose Zone Penetration",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0002",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Vadose Zone Penetration"
       ],
       "type": "mcq"
     },
     {
-      "id": "0795. Steady-State Reactor Parameters (Constant Density Systems)",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0003",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
-        "Steady-State Reactor Parameters (Constant Density Systems)"
+        "Fate And Transport",
+        "Steady State Reactor Parameters Constant Density Systems"
       ],
       "type": "mcq"
     },
     {
-      "id": "0793. Soil Water Partition Coefficient",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0005",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Partition Coefficients"
       ],
       "type": "mcq"
     },
     {
-      "id": "0792. Soil Water Partition Coefficient",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0006",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Partition Coefficients"
       ],
       "type": "mcq"
     },
     {
-      "id": "0791. Octanol-Water Partition Coefficient",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0007",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Partition Coefficients"
       ],
       "type": "mcq"
     },
     {
-      "id": "0790. Bioconcentration Factor BCF",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0008",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Partition Coefficients"
       ],
       "type": "mcq"
     },
     {
-      "id": "0789. Kinetic Temperature Corrections",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0009",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0788. BOD Exertion",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0010",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0787. BOD Exertion",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0011",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0786. Stream Modeling",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0012",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0785. Stream Modeling",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0013",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0784. Mass Calculations",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0014",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Mass Calculations"
       ],
       "type": "mcq"
     },
     {
-      "id": "0783. Stream Modeling",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0015",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Mass Calculations",
         "Microbial Kinetics"
       ],
       "type": "mcq"
     },
     {
-      "id": "0731. Monod Kinetics \u2013 Substrate Limited Growth",
+      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0016",
       "sourceTopic": "Environmental Engineering",
       "sourceSubtopic": "Fate and Transport",
       "tags": [
-        "Fate and Transport",
+        "Fate And Transport",
         "Microbial Kinetics"
       ],
       "type": "mcq"
