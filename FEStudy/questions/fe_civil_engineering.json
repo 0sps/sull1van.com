@@ -33,7 +33,7 @@
         {
           "question": "Two soils are classified as A-6 with \\(GI = 8\\) and A-6 with \\(GI = 15\\). Which soil is less suitable as a subgrade?",
           "choices": {},
-          "answer": "A",
+          "answer": "A-6 with GI = 15",
           "references": [
             "FE Reference Handbook 10.5 – P266"
           ],
@@ -82,7 +82,7 @@
         {
           "question": "A soil has 62% passing the No. 200 sieve, liquid limit \\(LL = 60\\), and plasticity index \\(PI = 22\\). Determine whether the soil is classified as A-7-5 or A-7-6.",
           "choices": {},
-          "answer": "A",
+          "answer": "A-7-6",
           "references": [
             "FE Reference Handbook 10.5 – P266"
           ],
@@ -94,7 +94,7 @@
         {
           "question": "A soil has 48% passing the No. 200 sieve, liquid limit \\(LL = 34\\), and plasticity index \\(PI = 8\\). Determine the AASHTO soil classification.",
           "choices": {},
-          "answer": "A",
+          "answer": "A-4",
           "references": [
             "FE Reference Handbook 10.5 – P266"
           ],
@@ -106,7 +106,7 @@
         {
           "question": "A soil has 28% passing the No. 200 sieve, 45% passing the No. 40 sieve, liquid limit \\(LL = 32\\), and plasticity index \\(PI = 6\\). Determine the AASHTO soil classification.",
           "choices": {},
-          "answer": "A",
+          "answer": "A-2-4",
           "references": [
             "FE Reference Handbook 10.5 – P266"
           ],
@@ -264,7 +264,7 @@
         {
           "question": "A strip footing is founded at depth \\(D_f = 1.0\\ \\text{m}\\). Use \\(c = 20\\ \\text{kPa}\\), \\(\\gamma’ = 10.0\\ \\text{kN/m}^3\\), \\(N_c = 30\\), \\(N_q = 18\\), and \\(N_\\gamma = 22\\). If the ultimate bearing capacity is \\(q_{ULT} = 1200\\ \\text{kPa}\\), determine the footing width \\(B\\).",
           "choices": {},
-          "answer": "B",
+          "answer": "\\(B = 3.82\\ \\text{m}\\)",
           "references": [
             "FE Reference Handbook 10.5 – P264"
           ],
@@ -276,7 +276,7 @@
         {
           "question": "A strip footing has an ultimate bearing capacity \\(q_{ULT} = 900\\ \\text{kPa}\\). Use \\(\\gamma’ = 11.0\\ \\text{kN/m}^3\\), \\(D_f = 1.0\\ \\text{m}\\), \\(B = 2.0\\ \\text{m}\\), \\(N_c = 25\\), \\(N_q = 15\\), and \\(N_\\gamma = 18\\). Determine the soil cohesion \\(c\\).",
           "choices": {},
-          "answer": "C",
+          "answer": "\\(c = 21.5\\ \\text{kPa}\\)",
           "references": [
             "FE Reference Handbook 10.5 – P264"
           ],
@@ -946,7 +946,7 @@
         {
           "question": "In open-channel hydraulics, what are conjugate (sequent) depths?",
           "choices": {},
-          "answer": "A",
+          "answer": "Two flow depths in the same open channel that have the same momentum function for the same discharge, often occurring as sequent depths across a hydraulic jump.",
           "references": [
             "FE Reference Handbook 10.5 – P296:",
             "FE Reference Handbook 10.5 – P296"
@@ -1738,7 +1738,7 @@
         {
           "question": "A freeway segment has the following observed conditions:\nFree-flow speed, \\( FFS = 65\\ \\text{mph} \\)\n\nBase demand, \\( v_p = 1200\\ \\text{pc/h/ln} \\)\nDetermine its Level of Service (LOS).",
           "choices": {},
-          "answer": "C",
+          "answer": "LOS C.",
           "references": [
             "FE Reference Handbook 10.5 – P304 – 306"
           ],

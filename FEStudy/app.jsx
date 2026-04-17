@@ -161,6 +161,7 @@ function App() {
   const questionsBySection = useMemo(() => groupQuestionsBySection(data), [data]);
   const [progress, setProgress] = useState(() => readProgress(data));
   const [view, setView] = useState({ name: "dashboard" });
+  const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -285,9 +286,26 @@ function App() {
   }
 
   function resetProgress() {
-    if (!window.confirm("Reset all saved progress for this browser?")) return;
     const next = getDefaultProgress(data);
     setProgress(next);
+    setIsResetDialogOpen(false);
+  }
+
+  useEffect(() => {
+    if (!isResetDialogOpen) return undefined;
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") {
+        setIsResetDialogOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [isResetDialogOpen]);
+
+  function openResetDialog() {
+    setIsResetDialogOpen(true);
   }
 
   return (
@@ -311,7 +329,7 @@ function App() {
               <button className="button-ghost" onClick={handleImportClick}>
                 Import progress JSON
               </button>
-              <button className="button-ghost" onClick={resetProgress}>
+              <button className="button-ghost" onClick={openResetDialog}>
                 Reset progress
               </button>
               <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
@@ -373,6 +391,28 @@ function App() {
         {data.coverageReport.unmatchedQuestionCount}. Topics with low coverage can still track progress, but they may
         need more source material later.
       </div>
+
+      {isResetDialogOpen ? (
+        <div className="dialog-backdrop" onClick={() => setIsResetDialogOpen(false)}>
+          <div className="dialog-card" role="dialog" aria-modal="true" aria-labelledby="reset-progress-title" onClick={(event) => event.stopPropagation()}>
+            <div className="mini-label">Progress reset</div>
+            <h2 id="reset-progress-title" className="dialog-title">
+              Clear all saved progress for this browser?
+            </h2>
+            <p className="sidebar-note" style={{ marginTop: 0 }}>
+              This will wipe your topic scores, answered-question history, and diagnostic status for this device only.
+            </p>
+            <div className="toolbar dialog-actions">
+              <button className="button-ghost" onClick={() => setIsResetDialogOpen(false)}>
+                Keep my progress
+              </button>
+              <button className="button button-danger" onClick={resetProgress}>
+                Reset everything
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -769,16 +809,18 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
                   </a>
                 ) : null}
                 <button
-                  className="button"
+                  className="button result-button result-button-primary"
                   onClick={() => recordAndAdvance(question.type === "mcq" ? selectedChoice === question.answer : true)}
                 >
-                  {currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}
+                  <span>{currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}</span>
+                  <span className="shortcut-badge">ENTER</span>
                 </button>
                 <button
-                  className="button-ghost"
+                  className="button-ghost result-button result-button-ghost"
                   onClick={() => recordAndAdvance(false)}
                 >
-                  I missed it
+                  <span>I missed it</span>
+                  <span className="shortcut-badge">SPACE</span>
                 </button>
               </div>
             </div>
