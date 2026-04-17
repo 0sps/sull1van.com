@@ -162,7 +162,10 @@ function App() {
   const [progress, setProgress] = useState(() => readProgress(data));
   const [view, setView] = useState({ name: "dashboard" });
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
+  const [resetDialogSelection, setResetDialogSelection] = useState("keep");
   const fileInputRef = useRef(null);
+  const keepProgressButtonRef = useRef(null);
+  const resetEverythingButtonRef = useRef(null);
 
   useEffect(() => {
     persistProgress(progress);
@@ -295,16 +298,47 @@ function App() {
     if (!isResetDialogOpen) return undefined;
 
     function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
       if (event.key === "Escape") {
+        event.preventDefault();
         setIsResetDialogOpen(false);
+        return;
+      }
+
+      if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+        event.preventDefault();
+        setResetDialogSelection((current) => (current === "keep" ? "reset" : "keep"));
+        return;
+      }
+
+      if (event.key === "Enter" || event.code === "Space") {
+        event.preventDefault();
+        if (resetDialogSelection === "keep") {
+          setIsResetDialogOpen(false);
+        } else {
+          resetProgress();
+        }
       }
     }
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [isResetDialogOpen]);
+  }, [isResetDialogOpen, resetDialogSelection]);
+
+  useEffect(() => {
+    if (!isResetDialogOpen) return undefined;
+
+    const selectedButton = resetDialogSelection === "keep" ? keepProgressButtonRef.current : resetEverythingButtonRef.current;
+    selectedButton?.focus();
+    return undefined;
+  }, [isResetDialogOpen, resetDialogSelection]);
 
   function openResetDialog() {
+    setResetDialogSelection("keep");
     setIsResetDialogOpen(true);
   }
 
@@ -380,6 +414,7 @@ function App() {
         <SessionView
           view={view}
           progress={progress}
+          isResetDialogOpen={isResetDialogOpen}
           onBack={() => setView(view.sectionId ? { name: "topic", sectionId: view.sectionId } : { name: "dashboard" })}
           onFinish={finishSession}
           onRecord={(question, wasCorrect) => setProgress((current) => updateProgress(current, question, wasCorrect))}
@@ -394,19 +429,38 @@ function App() {
 
       {isResetDialogOpen ? (
         <div className="dialog-backdrop" onClick={() => setIsResetDialogOpen(false)}>
-          <div className="dialog-card" role="dialog" aria-modal="true" aria-labelledby="reset-progress-title" onClick={(event) => event.stopPropagation()}>
+          <div
+            className="dialog-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-progress-title"
+            aria-describedby="reset-progress-description"
+            onClick={(event) => event.stopPropagation()}
+          >
             <div className="mini-label">Progress reset</div>
             <h2 id="reset-progress-title" className="dialog-title">
               Clear all saved progress for this browser?
             </h2>
-            <p className="sidebar-note" style={{ marginTop: 0 }}>
+            <p id="reset-progress-description" className="sidebar-note" style={{ marginTop: 0 }}>
               This will wipe your topic scores, answered-question history, and diagnostic status for this device only.
             </p>
             <div className="toolbar dialog-actions">
-              <button className="button-ghost" onClick={() => setIsResetDialogOpen(false)}>
+              <button
+                ref={keepProgressButtonRef}
+                className={`button-ghost dialog-option ${resetDialogSelection === "keep" ? "is-selected" : ""}`}
+                onMouseEnter={() => setResetDialogSelection("keep")}
+                onFocus={() => setResetDialogSelection("keep")}
+                onClick={() => setIsResetDialogOpen(false)}
+              >
                 Keep my progress
               </button>
-              <button className="button button-danger" onClick={resetProgress}>
+              <button
+                ref={resetEverythingButtonRef}
+                className={`button button-danger dialog-option ${resetDialogSelection === "reset" ? "is-selected" : ""}`}
+                onMouseEnter={() => setResetDialogSelection("reset")}
+                onFocus={() => setResetDialogSelection("reset")}
+                onClick={resetProgress}
+              >
                 Reset everything
               </button>
             </div>
@@ -629,7 +683,7 @@ function TopicDetail({ section, progress, questionCount, onBack, onPractice }) {
   );
 }
 
-function SessionView({ view, progress, onBack, onFinish, onRecord }) {
+function SessionView({ view, progress, isResetDialogOpen, onBack, onFinish, onRecord }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -655,6 +709,10 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
 
   useEffect(() => {
     function handleKeydown(event) {
+      if (isResetDialogOpen) {
+        return;
+      }
+
       const targetTag = event.target?.tagName;
       if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
         return;
@@ -687,7 +745,7 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, revealed, selectedChoice, currentIndex, view.questions.length]);
+  }, [question, revealed, selectedChoice, currentIndex, view.questions.length, isResetDialogOpen]);
 
   if (!view.questions.length) {
     return (

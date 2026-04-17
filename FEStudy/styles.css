@@ -481,6 +481,19 @@ select {
   margin-top: 18px;
 }
 
+.dialog-option {
+  position: relative;
+}
+
+.dialog-option.is-selected {
+  outline: 3px solid rgba(15, 118, 110, 0.34);
+  outline-offset: 3px;
+}
+
+.dialog-option.button-danger.is-selected {
+  outline-color: rgba(181, 74, 38, 0.32);
+}
+
 .button-danger {
   background: linear-gradient(135deg, #b54a26, #94351b);
   box-shadow: 0 12px 24px rgba(148, 53, 27, 0.22);
