@@ -613,6 +613,42 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
     renderMath();
   }, [question, revealed]);
 
+  useEffect(() => {
+    function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (!question) {
+        return;
+      }
+
+      const key = event.key.toUpperCase();
+      const availableChoices = question.type === "mcq" ? Object.keys(question.choices || {}) : [];
+
+      if (question.type === "mcq" && !revealed && availableChoices.includes(key)) {
+        event.preventDefault();
+        submitChoice(key);
+        return;
+      }
+
+      if ((revealed || question.type === "open") && event.key === "Enter") {
+        event.preventDefault();
+        recordAndAdvance(question.type === "mcq" ? selectedChoice === question.answer : true);
+        return;
+      }
+
+      if ((revealed || question.type === "open") && event.code === "Space") {
+        event.preventDefault();
+        recordAndAdvance(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [question, revealed, selectedChoice, currentIndex, view.questions.length]);
+
   if (!view.questions.length) {
     return (
       <div className="content-grid">
@@ -669,6 +705,13 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
           <p className="muted" style={{ marginBottom: 0 }}>
             Question {currentIndex + 1} of {view.questions.length}
           </p>
+          <p className="muted" style={{ marginTop: 10, marginBottom: 0 }}>
+            {question.type === "mcq"
+              ? revealed
+                ? "Keyboard: Enter = I got it, Space = I missed it"
+                : "Keyboard: press A, B, C, or D to answer"
+              : "Keyboard: Enter = I got it, Space = I missed it"}
+          </p>
         </div>
       </aside>
 
@@ -712,6 +755,11 @@ function SessionView({ view, progress, onBack, onFinish, onRecord }) {
 
           {revealed || question.type === "open" ? (
             <div className="answer-panel">
+              {question.type === "mcq" && revealed ? (
+                <div className="mini-label" style={{ color: selectedChoice === question.answer ? "#1f7a4d" : "#b33a3a", marginBottom: 8 }}>
+                  {selectedChoice === question.answer ? "Correct" : `Incorrect · Correct answer: ${question.answer}`}
+                </div>
+              ) : null}
               <div className="mini-label">Answer</div>
               <div dangerouslySetInnerHTML={{ __html: question.answer }} />
               <div className="toolbar" style={{ marginTop: 14 }}>
