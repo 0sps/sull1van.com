@@ -1,0 +1,143 @@
+{
+  "exam": "FE Industrial and Systems",
+  "sections": [
+    {
+      "id": "mathematics",
+      "title": "Mathematics",
+      "questionRange": "6-9",
+      "subtopics": [
+        "Analytic geometry",
+        "Calculus",
+        "Linear algebra"
+      ]
+    },
+    {
+      "id": "engineering-sciences",
+      "title": "Engineering Sciences",
+      "questionRange": "4-6",
+      "subtopics": [
+        "Thermodynamics and fluid mechanics",
+        "Statics, dynamics, and materials",
+        "Electricity and electrical circuits"
+      ]
+    },
+    {
+      "id": "ethics-professional-practice",
+      "title": "Ethics & Professional Practice",
+      "questionRange": "4-6",
+      "subtopics": [
+        "Codes of ethics and licensure",
+        "Agreements and contracts",
+        "Professional, ethical, and legal responsibility",
+        "Public protection and regulatory issues"
+      ]
+    },
+    {
+      "id": "engineering-economics",
+      "title": "Engineering Economics",
+      "questionRange": "9-14",
+      "subtopics": [
+        "Discounted cash flows",
+        "Evaluation of alternatives",
+        "Cost analyses",
+        "Depreciation and taxes"
+      ]
+    },
+    {
+      "id": "probability-statistics",
+      "title": "Probability & Statistics",
+      "questionRange": "10-15",
+      "subtopics": [
+        "Probabilities",
+        "Probability distributions and functions",
+        "Estimation, confidence intervals, and hypothesis testing",
+        "Linear regression",
+        "Design of experiments"
+      ]
+    },
+    {
+      "id": "modeling-quantitative-analysis",
+      "title": "Modeling & Quantitative Analysis",
+      "questionRange": "9-14",
+      "subtopics": [
+        "Data, logic development, and analytics",
+        "Linear programming and optimization",
+        "Stochastic models and simulation"
+      ]
+    },
+    {
+      "id": "engineering-management",
+      "title": "Engineering Management",
+      "questionRange": "8-12",
+      "subtopics": [
+        "Principles and tools",
+        "Project management",
+        "Performance measurement",
+        "Decision making and risk"
+      ]
+    },
+    {
+      "id": "manufacturing-service-production-systems",
+      "title": "Manufacturing, Service & Production Systems",
+      "questionRange": "9-14",
+      "subtopics": [
+        "Manufacturing processes",
+        "Manufacturing and service systems",
+        "Forecasting",
+        "Planning and scheduling",
+        "Process improvements"
+      ]
+    },
+    {
+      "id": "facilities-supply-chain",
+      "title": "Facilities & Supply Chain",
+      "questionRange": "9-14",
+      "subtopics": [
+        "Flow, layout, and location analysis",
+        "Capacity analysis",
+        "Supply chain management and design"
+      ]
+    },
+    {
+      "id": "human-factors-ergonomics-safety",
+      "title": "Human Factors, Ergonomics & Safety",
+      "questionRange": "8-12",
+      "subtopics": [
+        "Human factors",
+        "Safety and industrial hygiene",
+        "Ergonomics"
+      ]
+    },
+    {
+      "id": "work-design",
+      "title": "Work Design",
+      "questionRange": "7-11",
+      "subtopics": [
+        "Methods analysis",
+        "Work measurement",
+        "Learning curves"
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Quality",
+      "questionRange": "9-14",
+      "subtopics": [
+        "Quality management, planning, assurance, and systems",
+        "Quality control"
+      ]
+    },
+    {
+      "id": "systems-engineering-analysis-design",
+      "title": "Systems Engineering, Analysis & Design",
+      "questionRange": "8-12",
+      "subtopics": [
+        "Requirements analysis and systems design",
+        "Functional analysis and configuration management",
+        "Risk management",
+        "Life-cycle engineering",
+        "Reliability engineering"
+      ]
+    }
+  ]
+}

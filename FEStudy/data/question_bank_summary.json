@@ -1,0 +1,1576 @@
+{
+  "totalQuestions": 1199,
+  "questionTypes": {
+    "open": 381,
+    "mcq": 818
+  },
+  "sourceTopicCount": 17,
+  "sourceTopics": [
+    {
+      "name": "Basic Electrical Engineering",
+      "questionCount": 80,
+      "subtopics": [
+        {
+          "name": "Electrical Fundamentals \u2192 Electrostatics",
+          "questionCount": 11,
+          "mcqCount": 1,
+          "openCount": 10
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Voltage",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Current",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Magnetic Fields",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Induced Voltage",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Resistivity",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Fundamentals \u2192 Capacitors and Inductors",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 Ohm\u2019s Law",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 Power Absorbed by a Resistive Element",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 Kirchhoff\u2019s Laws",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 Source Equivalents",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 Maximum Power-Transfer Theorem",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "DC Circuits \u2192 RC and RL Transients",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "AC Circuits \u2192 Average Value",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "AC Circuits \u2192 Effective or RMS Values",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "AC Circuits \u2192 Phasor Transforms of Sinusoids",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "AC Circuits \u2192 Resonance",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Power Systems \u2192 Complex Power",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Power Systems \u2192 Balanced Three-Phase (3-\u03c6) Systems",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Power Systems \u2192 Transformers (Ideal)",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Power Systems \u2192 Voltage Regulation",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Rotating Machines and Devices",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Chemistry and Biology",
+      "questionCount": 21,
+      "subtopics": [
+        {
+          "name": "Definitions (Chemistry)",
+          "questionCount": 11,
+          "mcqCount": 11,
+          "openCount": 0
+        },
+        {
+          "name": "Acids, Bases, and pH",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Bioconversion",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Electrochemistry",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Civil Engineering",
+      "questionCount": 247,
+      "subtopics": [
+        {
+          "name": "Geotechnical Engineering",
+          "questionCount": 59,
+          "mcqCount": 7,
+          "openCount": 52
+        },
+        {
+          "name": "Hydrology/Water Resources",
+          "questionCount": 64,
+          "mcqCount": 7,
+          "openCount": 57
+        },
+        {
+          "name": "Transportation",
+          "questionCount": 40,
+          "mcqCount": 7,
+          "openCount": 33
+        },
+        {
+          "name": "Surveying",
+          "questionCount": 10,
+          "mcqCount": 1,
+          "openCount": 9
+        },
+        {
+          "name": "Construction",
+          "questionCount": 15,
+          "mcqCount": 2,
+          "openCount": 13
+        },
+        {
+          "name": "Structural Analysis \u2192 Influence Lines for Beams and Trusses",
+          "questionCount": 6,
+          "mcqCount": 5,
+          "openCount": 1
+        },
+        {
+          "name": "Structural Analysis \u2192 Beam Stiffness and Moment Carryover",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Analysis \u2192 Truss Deflection by Unit Load Method",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Analysis \u2192 Frame Deflection by Unit Load Method",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Analysis \u2192 Elementary Statically Indeterminate Structures by Force Method of Analysis",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Analysis \u2192 Member Fixed-End Moments",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Analysis \u2192 Stability, Determinacy, and Classification of Structures",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Design \u2192 Loads",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Structural Design \u2192 Design of Reinforced Concrete Components",
+          "questionCount": 23,
+          "mcqCount": 1,
+          "openCount": 22
+        },
+        {
+          "name": "Structural Design \u2192 Design of Steel Components",
+          "questionCount": 6,
+          "mcqCount": 1,
+          "openCount": 5
+        }
+      ]
+    },
+    {
+      "name": "Dynamics",
+      "questionCount": 59,
+      "subtopics": [
+        {
+          "name": "Particle Kinematics",
+          "questionCount": 26,
+          "mcqCount": 7,
+          "openCount": 19
+        },
+        {
+          "name": "Particle Kinetics",
+          "questionCount": 3,
+          "mcqCount": 1,
+          "openCount": 2
+        },
+        {
+          "name": "Principle of Work and Energy",
+          "questionCount": 13,
+          "mcqCount": 0,
+          "openCount": 13
+        },
+        {
+          "name": "Impulse and Momentum",
+          "questionCount": 3,
+          "mcqCount": 0,
+          "openCount": 3
+        },
+        {
+          "name": "Impact",
+          "questionCount": 4,
+          "mcqCount": 1,
+          "openCount": 3
+        },
+        {
+          "name": "Friction",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Plane Motion of a Rigid Body (Equations of Motion)",
+          "questionCount": 7,
+          "mcqCount": 2,
+          "openCount": 5
+        }
+      ]
+    },
+    {
+      "name": "Engineering Economics",
+      "questionCount": 52,
+      "subtopics": [
+        {
+          "name": "Time Value of Money",
+          "questionCount": 16,
+          "mcqCount": 13,
+          "openCount": 3
+        },
+        {
+          "name": "Non-Annual Compounding",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Breakeven Analysis",
+          "questionCount": 6,
+          "mcqCount": 5,
+          "openCount": 1
+        },
+        {
+          "name": "Inflation",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Depreciation",
+          "questionCount": 8,
+          "mcqCount": 5,
+          "openCount": 3
+        },
+        {
+          "name": "Book Value",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Taxation",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Capitalized Costs",
+          "questionCount": 2,
+          "mcqCount": 1,
+          "openCount": 1
+        },
+        {
+          "name": "Bonds",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Rate-of-Return",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Benefit-Cost Analysis",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Economic Decision Trees",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Engineering Probability and Statistics",
+      "questionCount": 75,
+      "subtopics": [
+        {
+          "name": "Dispersion, Mean, Median, and Mode Values",
+          "questionCount": 14,
+          "mcqCount": 1,
+          "openCount": 13
+        },
+        {
+          "name": "Permutations and Combinations",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Laws of Probability",
+          "questionCount": 12,
+          "mcqCount": 0,
+          "openCount": 12
+        },
+        {
+          "name": "Probability Functions, Distributions, and Expected Values",
+          "questionCount": 18,
+          "mcqCount": 18,
+          "openCount": 0
+        },
+        {
+          "name": "Propagation of Error",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Linear Regression and Goodness of Fit",
+          "questionCount": 13,
+          "mcqCount": 10,
+          "openCount": 3
+        },
+        {
+          "name": "Confidence Intervals, Sample Distributions, and Sample Size",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Test Statistics",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Environmental Engineering",
+      "questionCount": 110,
+      "subtopics": [
+        {
+          "name": "Air Pollution",
+          "questionCount": 18,
+          "mcqCount": 17,
+          "openCount": 1
+        },
+        {
+          "name": "Indoor Air Quality",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Fate and Transport",
+          "questionCount": 16,
+          "mcqCount": 16,
+          "openCount": 0
+        },
+        {
+          "name": "Landfill",
+          "questionCount": 8,
+          "mcqCount": 7,
+          "openCount": 1
+        },
+        {
+          "name": "Population Modeling",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Radiation (Environmental Engineering)",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Sampling and Monitoring",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Wastewater Treatment and Technologies",
+          "questionCount": 13,
+          "mcqCount": 13,
+          "openCount": 0
+        },
+        {
+          "name": "Water Treatment Technologies",
+          "questionCount": 25,
+          "mcqCount": 25,
+          "openCount": 0
+        },
+        {
+          "name": "Energy",
+          "questionCount": 11,
+          "mcqCount": 11,
+          "openCount": 0
+        },
+        {
+          "name": "Sustainability",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Fluid Mechanics",
+      "questionCount": 68,
+      "subtopics": [
+        {
+          "name": "Definitions (Fluid Mechanics)",
+          "questionCount": 4,
+          "mcqCount": 1,
+          "openCount": 3
+        },
+        {
+          "name": "Characteristics of a Static Liquid",
+          "questionCount": 10,
+          "mcqCount": 0,
+          "openCount": 10
+        },
+        {
+          "name": "Principles of One-Dimensional Fluid Flow",
+          "questionCount": 2,
+          "mcqCount": 1,
+          "openCount": 1
+        },
+        {
+          "name": "Fluid Flow Characterization",
+          "questionCount": 5,
+          "mcqCount": 0,
+          "openCount": 5
+        },
+        {
+          "name": "Consequences of Fluid Flow",
+          "questionCount": 7,
+          "mcqCount": 1,
+          "openCount": 6
+        },
+        {
+          "name": "Characteristics of Selected Flow Configurations",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "The Impulse-Momentum Principle",
+          "questionCount": 7,
+          "mcqCount": 7,
+          "openCount": 0
+        },
+        {
+          "name": "Compressible Flow",
+          "questionCount": 7,
+          "mcqCount": 7,
+          "openCount": 0
+        },
+        {
+          "name": "Fluid Flow Machinery",
+          "questionCount": 9,
+          "mcqCount": 9,
+          "openCount": 0
+        },
+        {
+          "name": "Fluid Flow Measurement",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Dimensional Homogeneity",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Aerodynamics",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Heat Transfer",
+      "questionCount": 72,
+      "subtopics": [
+        {
+          "name": "Conduction",
+          "questionCount": 30,
+          "mcqCount": 30,
+          "openCount": 0
+        },
+        {
+          "name": "Convection",
+          "questionCount": 24,
+          "mcqCount": 24,
+          "openCount": 0
+        },
+        {
+          "name": "Radiation",
+          "questionCount": 7,
+          "mcqCount": 7,
+          "openCount": 0
+        },
+        {
+          "name": "Heat Exchangers",
+          "questionCount": 11,
+          "mcqCount": 11,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Instrumentation, Measurement, and Control",
+      "questionCount": 36,
+      "subtopics": [
+        {
+          "name": "Temperature Sensors",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Strain Transducers",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Wheatstone Bridge",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Sampling",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Analog-to-Digital Conversion",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Measurement Uncertainty",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Control Systems",
+          "questionCount": 16,
+          "mcqCount": 16,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Materials Science / Structure of Matter",
+      "questionCount": 22,
+      "subtopics": [
+        {
+          "name": "Corrosion",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Diffusion",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Thermal and Mechanical Processing",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Properties of Materials",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        },
+        {
+          "name": "Composite Materials",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Hardenability",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Concrete",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Thermal Properties",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Binary Phase Diagrams",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Mathematics",
+      "questionCount": 75,
+      "subtopics": [
+        {
+          "name": "Straight Line",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Quadratic Equation",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Quadric Surface (Sphere)",
+          "questionCount": 2,
+          "mcqCount": 1,
+          "openCount": 1
+        },
+        {
+          "name": "Logarithms",
+          "questionCount": 1,
+          "mcqCount": 0,
+          "openCount": 1
+        },
+        {
+          "name": "Algebra of Complex Numbers",
+          "questionCount": 3,
+          "mcqCount": 0,
+          "openCount": 3
+        },
+        {
+          "name": "Trigonometry",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Mensuration of Areas and Volumes",
+          "questionCount": 11,
+          "mcqCount": 7,
+          "openCount": 4
+        },
+        {
+          "name": "Differential Calculus",
+          "questionCount": 16,
+          "mcqCount": 3,
+          "openCount": 13
+        },
+        {
+          "name": "Integral Calculus",
+          "questionCount": 9,
+          "mcqCount": 4,
+          "openCount": 5
+        },
+        {
+          "name": "Progression and Series",
+          "questionCount": 4,
+          "mcqCount": 1,
+          "openCount": 3
+        },
+        {
+          "name": "Differential Equations",
+          "questionCount": 2,
+          "mcqCount": 1,
+          "openCount": 1
+        },
+        {
+          "name": "Matrices",
+          "questionCount": 5,
+          "mcqCount": 3,
+          "openCount": 2
+        },
+        {
+          "name": "Vectors",
+          "questionCount": 5,
+          "mcqCount": 3,
+          "openCount": 2
+        },
+        {
+          "name": "Numerical Methods",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Mechanical Engineering",
+      "questionCount": 73,
+      "subtopics": [
+        {
+          "name": "Intermediate- and Long-Length Columns",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "HVAC",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Cycles and Processes",
+          "questionCount": 6,
+          "mcqCount": 6,
+          "openCount": 0
+        },
+        {
+          "name": "Mechanical Design and Analysis \u2192 Springs",
+          "questionCount": 11,
+          "mcqCount": 11,
+          "openCount": 0
+        },
+        {
+          "name": "Mechanical Design and Analysis \u2192 Bearings",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Mechanical Design and Analysis \u2192 Power Screws",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Mechanical Design and Analysis \u2192 Power Transmission",
+          "questionCount": 12,
+          "mcqCount": 12,
+          "openCount": 0
+        },
+        {
+          "name": "Mechanical Design and Analysis \u2192 Joining Methods",
+          "questionCount": 14,
+          "mcqCount": 14,
+          "openCount": 0
+        },
+        {
+          "name": "Failure Theories \u2192 Static Loading Failure Theories",
+          "questionCount": 5,
+          "mcqCount": 2,
+          "openCount": 3
+        },
+        {
+          "name": "Failure Theories \u2192 Variable Loading Failure Theories",
+          "questionCount": 10,
+          "mcqCount": 8,
+          "openCount": 2
+        }
+      ]
+    },
+    {
+      "name": "Mechanics of Materials",
+      "questionCount": 80,
+      "subtopics": [
+        {
+          "name": "Uniaxial Stress-Strain",
+          "questionCount": 13,
+          "mcqCount": 13,
+          "openCount": 0
+        },
+        {
+          "name": "Thermal Deformations",
+          "questionCount": 2,
+          "mcqCount": 0,
+          "openCount": 2
+        },
+        {
+          "name": "Cylindrical Pressure Vessel",
+          "questionCount": 2,
+          "mcqCount": 1,
+          "openCount": 1
+        },
+        {
+          "name": "Stress and Strain",
+          "questionCount": 10,
+          "mcqCount": 10,
+          "openCount": 0
+        },
+        {
+          "name": "Torsion",
+          "questionCount": 6,
+          "mcqCount": 4,
+          "openCount": 2
+        },
+        {
+          "name": "Beams",
+          "questionCount": 35,
+          "mcqCount": 34,
+          "openCount": 1
+        },
+        {
+          "name": "Columns",
+          "questionCount": 10,
+          "mcqCount": 10,
+          "openCount": 0
+        },
+        {
+          "name": "Elastic Strain Energy",
+          "questionCount": 2,
+          "mcqCount": 0,
+          "openCount": 2
+        }
+      ]
+    },
+    {
+      "name": "Safety",
+      "questionCount": 22,
+      "subtopics": [
+        {
+          "name": "Safety Data Sheet (SDS)",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Flammability",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Granular Storage and Process Safety",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Electrical Safety",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Risk Assessment/Toxicology",
+          "questionCount": 7,
+          "mcqCount": 7,
+          "openCount": 0
+        },
+        {
+          "name": "Chemical Compatibility Chart",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Detailed Corrosion Data on Construction Materials",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Concentrations of Vaporized Liquids",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Ergonomics",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Incidence Variable Values",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Noise Pollution",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Statics",
+      "questionCount": 46,
+      "subtopics": [
+        {
+          "name": "Resultant (Two Dimensions)",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Resolution of a Force",
+          "questionCount": 1,
+          "mcqCount": 1,
+          "openCount": 0
+        },
+        {
+          "name": "Moments (Couples)",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Systems of Forces",
+          "questionCount": 14,
+          "mcqCount": 14,
+          "openCount": 0
+        },
+        {
+          "name": "Centroids of Masses, Areas, Lengths, and Volumes",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Moment of Inertia",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        },
+        {
+          "name": "Radius of Gyration",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        },
+        {
+          "name": "Screw Thread",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Belt Friction",
+          "questionCount": 2,
+          "mcqCount": 2,
+          "openCount": 0
+        },
+        {
+          "name": "Statically Determinate Truss",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Thermodynamics",
+      "questionCount": 61,
+      "subtopics": [
+        {
+          "name": "Properties of Single-Component Systems",
+          "questionCount": 4,
+          "mcqCount": 0,
+          "openCount": 4
+        },
+        {
+          "name": "PVT Behavior",
+          "questionCount": 10,
+          "mcqCount": 1,
+          "openCount": 9
+        },
+        {
+          "name": "First Law of Thermodynamics",
+          "questionCount": 11,
+          "mcqCount": 1,
+          "openCount": 10
+        },
+        {
+          "name": "Basic Cycles",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        },
+        {
+          "name": "Psychrometrics",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        },
+        {
+          "name": "Second Law of Thermodynamics",
+          "questionCount": 8,
+          "mcqCount": 8,
+          "openCount": 0
+        },
+        {
+          "name": "Heats of Reaction",
+          "questionCount": 5,
+          "mcqCount": 5,
+          "openCount": 0
+        },
+        {
+          "name": "Phase Relations",
+          "questionCount": 3,
+          "mcqCount": 3,
+          "openCount": 0
+        },
+        {
+          "name": "Refrigeration and HVAC",
+          "questionCount": 4,
+          "mcqCount": 4,
+          "openCount": 0
+        }
+      ]
+    }
+  ],
+  "uniqueTags": [
+    "AASHTO Soil Classification",
+    "AC Circuits",
+    "Acids, Bases, and pH",
+    "Activated Carbon Adsorption",
+    "Activated Sludge",
+    "Addition of Two Matrices",
+    "Aerodynamics",
+    "Air Pollution",
+    "Air Stripping",
+    "Algebra of Complex Numbers",
+    "Analog-to-Digital Conversion",
+    "Approximate Solution for Solid with Sudden Convection",
+    "Archimedes Principle and Buoyancy",
+    "Area Formulas",
+    "Arithmetic Progression",
+    "Average Value",
+    "Baghouse",
+    "Balanced Three-Phase Systems",
+    "Barometers",
+    "Basic Cycles",
+    "Basic Freeway Segment Highway Capacity",
+    "Basic Heat-Transfer Rate Equations",
+    "Beam Stiffness and Moment Carryover",
+    "Beams",
+    "Beams - Flexure",
+    "Beams - Shear",
+    "Bearings",
+    "Belt Friction",
+    "Benefit-Cost Analysis",
+    "Binary Phase Diagrams",
+    "Binomial Distribution",
+    "Bioconversion",
+    "Boiling",
+    "Bonds",
+    "Book Value",
+    "Break-Through Time for Leachate to Penetrate a Clay Liner",
+    "Breakeven Analysis",
+    "Brittle Materials",
+    "CPM Precedence Relationships",
+    "Capacitors and Inductors",
+    "Capitalized Costs",
+    "Carnot Cycle",
+    "Centroids of Masses, Areas, Lengths, and Volumes",
+    "Characteristics of Selected Flow Configurations",
+    "Characteristics of a Static Liquid",
+    "Chemical Compatibility Chart",
+    "Circular Pipe Head Loss Equation",
+    "Circular Sector",
+    "Clapeyron Equation",
+    "Clarifier",
+    "Clausius-Clapeyron Equation",
+    "Closed Thermodynamic System",
+    "Coagulation Equations",
+    "Coefficient of Concavity",
+    "Coefficient of Performance (COP)",
+    "Coefficient of Uniformity",
+    "Columns",
+    "Combustion",
+    "Combustion Processes",
+    "Compaction",
+    "Complex Power",
+    "Composite Materials",
+    "Composite Plane Wall",
+    "Compressible Flow",
+    "Compression Index",
+    "Concentrations of Vaporized Liquids",
+    "Concrete",
+    "Conduction",
+    "Conduction Through a Cylindrical Wall",
+    "Conduction Through a Plane Wall",
+    "Confidence Interval for Slope",
+    "Confidence Intervals",
+    "Confidence Intervals, Sample Distributions, and Sample Size",
+    "Conic Sections",
+    "Consequences of Fluid Flow",
+    "Consolidation Settlement",
+    "Constant Acceleration",
+    "Constant Entropy Processes",
+    "Construction",
+    "Continuity Equation",
+    "Control Systems",
+    "Convection",
+    "Convection Resistance",
+    "Corrosion",
+    "Crash Rates at Intersections",
+    "Crash Rates for Roadway Segments",
+    "Critical Hydraulic Gradient",
+    "Critical Insulation Radius",
+    "Cross Product",
+    "Current",
+    "Cycles and Processes",
+    "Cyclone",
+    "Cylindrical Pressure Vessel",
+    "Cylindrical Wall Conduction Resistance",
+    "DC Circuits",
+    "Darcy's Law",
+    "Definitions (Chemistry)",
+    "Definitions (Fluid Mechanics)",
+    "Depreciation",
+    "Design of Reinforced Concrete Components",
+    "Design of Steel Components",
+    "Detailed Corrosion Data on Construction Materials",
+    "Determinants",
+    "Differential Calculus",
+    "Differential Equations",
+    "Diffusion",
+    "Dimensional Homogeneity",
+    "Disinfection",
+    "Dispersion, Mean, Median, and Mode Values",
+    "Dot Product",
+    "Ductile Materials",
+    "Dupuit's Formula",
+    "Earned-Value Analysis",
+    "Earthwork Formulas",
+    "Economic Decision Trees",
+    "Effective or RMS Values",
+    "Elastic Strain Energy",
+    "Electrical Fundamentals",
+    "Electrical Safety",
+    "Electrochemistry",
+    "Electrostatic Fields",
+    "Electrostatic Precipitator Efficiency",
+    "Electrostatics",
+    "Elementary Statically Indeterminate Structures by Force Method of Analysis",
+    "Endurance Limit Modifying Factors",
+    "Endurance Limit for Steels",
+    "Energy",
+    "Engineering Strain",
+    "Entropy",
+    "Equations of State (EOS)",
+    "Equilibrium Requirements",
+    "Ergonomics",
+    "Evapotranspiration Rates for Grasses",
+    "Excavation",
+    "Exergy (Availability)",
+    "External Flow",
+    "Factor of Safety Against Seepage Liquefaction",
+    "Failure Theories",
+    "Fate and Transport",
+    "Filtration Equations",
+    "Fins",
+    "Fire Hydrant Discharging to Atmosphere",
+    "Fire Sprinkler Discharge",
+    "First Law of Thermodynamics",
+    "Flammability",
+    "Flow in Noncircular Conduits",
+    "Fluid Flow Characterization",
+    "Fluid Flow Machinery",
+    "Fluid Flow Measurement",
+    "Forces on Submerged Surfaces and the Center of Pressure",
+    "Formula for Calculating Rated Capacity at 20 psi from Fire Hydrant",
+    "Frame Deflection by Unit Load Method",
+    "Friction",
+    "Geometric Progression",
+    "Geotechnical Engineering",
+    "Gibbs Phase Rule",
+    "Granular Storage and Process Safety",
+    "Gravity Model",
+    "Greenshields Model",
+    "HVAC",
+    "Hardenability",
+    "Hazen-Williams Equation",
+    "Head Loss Due to Flow",
+    "Heat Exchangers",
+    "Heats of Reaction",
+    "Highway Pavement Design",
+    "Horizontal Curves",
+    "Horizontal Stress Profiles and Forces",
+    "Hydraulic Conductivity/Permeability",
+    "Hydraulic Jump",
+    "Hydrologic Mass Balance (Budget)",
+    "Hydrology/Water Resources",
+    "Hydropower",
+    "Hyperbola",
+    "Ideal Gas",
+    "Ideal Gas Mixtures",
+    "Identity Matrix",
+    "Impact",
+    "Implicit Differentiation",
+    "Impulse and Momentum",
+    "Incidence Variable Values",
+    "Incineration",
+    "Indefinite Integrals",
+    "Indoor Air Quality",
+    "Induced Voltage",
+    "Inflation",
+    "Influence Lines for Beams and Trusses",
+    "Integral Calculus",
+    "Intermediate- and Long-Length Columns",
+    "Internal Flow",
+    "Irreversibility",
+    "Joining Methods",
+    "Kinematics of a Rigid Body",
+    "Kinetic Energy",
+    "Kirchhoff's Laws",
+    "L'Hospital's Rule",
+    "Lake Classification",
+    "Landfill",
+    "Latitudes and Departures",
+    "Laws of Probability",
+    "Least Squares",
+    "Lime-Soda Softening Equations",
+    "Linear Regression and Goodness of Fit",
+    "Live Load Reduction",
+    "Load Combinations",
+    "Loads",
+    "Loads Combinations",
+    "Logarithms",
+    "Logit Models",
+    "MACRS",
+    "Magnetic Fields",
+    "Manning's Equation",
+    "Manometers",
+    "Mass Calculations",
+    "Mass Moment of Inertia",
+    "Material Balance",
+    "Matrices",
+    "Maximum Power-Transfer Theorem",
+    "Mean",
+    "Measurement Uncertainty",
+    "Mechanical Design and Analysis",
+    "Median",
+    "Member Fixed-End Moments",
+    "Mensuration of Areas and Volumes",
+    "Microbial Kinetics",
+    "Minimum Heat Flux",
+    "Mode",
+    "Modified Goodman Theory",
+    "Modulus of Elasticity",
+    "Modulus of Elasticity of Concrete",
+    "Moment of Inertia",
+    "Moments (Couples)",
+    "Momentum Depth Diagram",
+    "Multiplication of Two Matrices",
+    "Municipal Solid Wastes (MSW)",
+    "NRCS/SCS Formula",
+    "Natural (Free) Convection",
+    "Net Energy Exchange by Radiation between Two Bodies",
+    "Newton's Method for Root Extraction",
+    "Noise Pollution",
+    "Non-Annual Compounding",
+    "Normal Distribution",
+    "Normal and Tangential Components",
+    "Norminal Shear Strength",
+    "Nuclear",
+    "Numerical Integration",
+    "Numerical Methods",
+    "Numerical Solution of Ordinary Differential Equations",
+    "Ohm's Law",
+    "One-Dimensional Motion of a Particle (Constant Mass)",
+    "Open-Channel Flow and/or Pipe Flow of Water",
+    "Open-System Exergy (Availability)",
+    "Otto Cycle",
+    "PVT Behavior",
+    "Pan Evaporation",
+    "Parabola",
+    "Particle Curvilinear Motion",
+    "Particle Kinematics",
+    "Particle Kinetics",
+    "Particle Rectilinear Motion",
+    "Partition Coefficients",
+    "Peak Heat Flux",
+    "Percent Reduction in Area (RA)",
+    "Percent of Outdoor Air",
+    "Permutations and Combinations",
+    "Phase Relations",
+    "Phase Relationships",
+    "Phasor Transforms of Sinusoids",
+    "Phosphorus Removal Equations",
+    "Plane Circular Motion",
+    "Plane Motion of a Rigid Body (Equations of Motion)",
+    "Plasticity Index",
+    "Point of Inflection",
+    "Poisson's ratio",
+    "Polar Coordinate System",
+    "Population Modeling",
+    "Population Variance",
+    "Potential Energy",
+    "Power Absorbed by a Resistive Element",
+    "Power Screws",
+    "Power Systems",
+    "Power Transmission",
+    "Power and Efficiency",
+    "Pressure",
+    "Principal Stresses",
+    "Principle of Work and Energy",
+    "Principles of One-Dimensional Fluid Flow",
+    "Probability Functions, Distributions, and Expected Values",
+    "Progression and Series",
+    "Projectile Motion",
+    "Propagation of Error",
+    "Properties for Two-Phase (vapor-liquid) Systems",
+    "Properties of Materials",
+    "Properties of Single-Component Systems",
+    "Psychrometrics",
+    "Quadratic Equation",
+    "Quadric Surface (Sphere)",
+    "RC and RL Transients",
+    "Radiation",
+    "Radiation (Environmental Engineering)",
+    "Radius of Gyration",
+    "Rankine Cycle",
+    "Rate-of-Return",
+    "Rational Formula",
+    "Real Gas",
+    "Recompression Index",
+    "Refrigeration and HVAC",
+    "Relative Motion",
+    "Removal and Inactivation Requirements",
+    "Resistivity",
+    "Resistors in Series and Parallel",
+    "Resolution of a Force",
+    "Resonance",
+    "Resultant (Two Dimensions)",
+    "Retaining Walls",
+    "Reverse Osmosis",
+    "Reynolds Number",
+    "Right Circular Cone",
+    "Right Circular Cylinder",
+    "Rigid Body Rotation About a Fixed Axis",
+    "Risk Assessment/Toxicology",
+    "Rotating Machines (General)",
+    "Rotating Machines and Devices",
+    "Runoff",
+    "Safety Data Sheet (SDS)",
+    "Sample Coefficient of Variation",
+    "Sample Correlation Coefficient and Coefficient of Determination",
+    "Sample Geometric Mean",
+    "Sample Range",
+    "Sample Root-Mean-Square Value",
+    "Sample Standard Deviation",
+    "Sample Variance",
+    "Sampling",
+    "Sampling and Monitoring",
+    "Screw Thread",
+    "Second Law of Thermodynamics",
+    "Selected Properties of Air",
+    "Settling Equations",
+    "Shape Factor (View Factor, Configuration Factor) Relations",
+    "Short Columns",
+    "Sight Distance",
+    "Similitude",
+    "Singly-Reinforced Beams",
+    "Slope Failure Along Planar Surface",
+    "Soderberg Theory",
+    "Soil Stress",
+    "Solar",
+    "Source Equivalents",
+    "Specific Energy",
+    "Specific Volume",
+    "Spiral Transition Length",
+    "Springs",
+    "Stability, Determinacy, and Classification of Structures",
+    "Standard Deviation",
+    "Static Loading Failure Theories",
+    "Statically Determinate Truss",
+    "Steady-Flow Systems",
+    "Steady-State Reactor Parameters (Constant Density Systems)",
+    "Steel Beams",
+    "Stopping Sight Distance",
+    "Straight Line",
+    "Straight Line Method",
+    "Strain Transducers",
+    "Stress",
+    "Stress and Strain",
+    "Stress, Pressure, and Viscosity",
+    "Stresses in Beams",
+    "Structural Analysis",
+    "Structural Design",
+    "Structural Number Equation",
+    "Surface Tension and Capillarity",
+    "Surface Water System Hydrologic Budget",
+    "Surveying",
+    "Sustainability",
+    "Systems of Forces",
+    "Taxation",
+    "Temperature Sensors",
+    "Tension Members",
+    "Test Statistics",
+    "The Central Limit Theorem",
+    "The Derivative",
+    "The Impulse-Momentum Principle",
+    "Thermal Deformations",
+    "Thermal Properties",
+    "Thermal Resistance",
+    "Thermal Strain",
+    "Thermal and Mechanical Processing",
+    "Thin-walled",
+    "Time Value of Money",
+    "Torsion",
+    "Torsional Strain",
+    "Traffic Flow Relationships",
+    "Traffic Safety Equations",
+    "Traffic Signal Timing",
+    "Transformers (Ideal)",
+    "Transient Conduction Using the Lumped Capacitance Model",
+    "Transmissivity",
+    "Transportation",
+    "Trigonometry",
+    "True Stress",
+    "Truss Deflection by Unit Load Method",
+    "Ultimate Bearing Capacity",
+    "Uniaxial Loading and Deformation",
+    "Uniaxial Stress-Strain",
+    "Unified Soil Classification System (USCS)",
+    "Unit Hydrograph",
+    "Vadose Zone Penetration",
+    "Variable Loading Failure Theories",
+    "Vectors",
+    "Vertical Curves",
+    "Vertical Stress Profiles",
+    "Vertical Stress Profiles with Surcharge",
+    "Voltage",
+    "Voltage Regulation",
+    "Wastes with Fuel Value",
+    "Wastewater Treatment and Technologies",
+    "Water Treatment Technologies",
+    "Weighted Arithmetic Mean",
+    "Weir Formulas",
+    "Well Drawdown",
+    "Wheatstone Bridge",
+    "Wind",
+    "Work",
+    "and Viscosity"
+  ]
+}
