@@ -25,6 +25,20 @@ function computeEstimatedScore(correct, answered) {
   return Math.round(accuracy * (0.35 + 0.65 * confidence) * 100);
 }
 
+function getCoverageLabel(questionCount) {
+  if (questionCount === 0) return "No coverage yet";
+  if (questionCount < 5) return "Thin coverage";
+  if (questionCount < 15) return "Light coverage";
+  return "Healthy coverage";
+}
+
+function getRecommendationReason(metrics, questionCount) {
+  if (metrics.score == null) return "Unassessed and ready for a quick baseline.";
+  if (questionCount < 5) return "Low readiness, but question coverage is still thin.";
+  if (metrics.score < 60) return "One of your weakest mapped areas with enough questions to improve fast.";
+  return "Good place to build confidence with available question depth.";
+}
+
 function getDefaultProgress(data) {
   const topicProgress = {};
   const subtopicProgress = {};
@@ -356,6 +370,12 @@ function App() {
 }
 
 function Dashboard({ data, progress, questionsBySection, recommendations, onOpenTopic, onStartPractice, onStartDiagnostic }) {
+  const [expandedSections, setExpandedSections] = useState({});
+
+  function toggleSection(sectionId) {
+    setExpandedSections((current) => ({ ...current, [sectionId]: !current[sectionId] }));
+  }
+
   return (
     <div className="content-grid">
       <aside className="stack">
@@ -372,6 +392,7 @@ function Dashboard({ data, progress, questionsBySection, recommendations, onOpen
                 <p className="muted" style={{ marginBottom: 10 }}>
                   {questionCount} mapped questions available
                 </p>
+                <p className="reason-text">{getRecommendationReason(metrics, questionCount)}</p>
                 <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
                   Open topic
                 </button>
@@ -404,8 +425,11 @@ function Dashboard({ data, progress, questionsBySection, recommendations, onOpen
         {data.sections.map((section) => {
           const metrics = getSectionMetrics(section, progress);
           const questionCount = questionsBySection[section.id]?.length || 0;
+          const isThinCoverage = questionCount < 5;
+          const isExpanded = !!expandedSections[section.id];
+          const coverageLabel = getCoverageLabel(questionCount);
           return (
-            <article key={section.id} className="topic-card">
+            <article key={section.id} className={`topic-card ${isThinCoverage ? "is-thin" : ""}`}>
               <div className="topic-header">
                 <div>
                   <div className="mini-label">
@@ -413,9 +437,12 @@ function Dashboard({ data, progress, questionsBySection, recommendations, onOpen
                   </div>
                   <h3>{section.title}</h3>
                 </div>
-                <span className="pill">
-                  {metrics.score == null ? "Not yet assessed" : `${metrics.score}% ready`}
-                </span>
+                <div className="toolbar">
+                  <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
+                    {metrics.score == null ? "Not yet assessed" : `${metrics.score}% ready`}
+                  </span>
+                  <span className={`pill ${isThinCoverage ? "warn" : "subtle"}`}>{coverageLabel}</span>
+                </div>
               </div>
 
               <div className="score-bar">
@@ -433,10 +460,20 @@ function Dashboard({ data, progress, questionsBySection, recommendations, onOpen
                   <button className="button-ghost" onClick={() => onStartPractice(section.id, null, true)} disabled={questionCount === 0}>
                     Test me on this topic
                   </button>
+                  <button className="nav-chip subtopic-toggle" onClick={() => toggleSection(section.id)}>
+                    {isExpanded ? "Hide subtopics" : "Show more"}
+                  </button>
                 </div>
               </div>
 
-              <div className="subtopic-list">
+              {isThinCoverage ? (
+                <div className="coverage-note">
+                  This section has limited mapped source material right now, so its score is less representative than the
+                  stronger-covered sections.
+                </div>
+              ) : null}
+
+              <div className={`subtopic-list compact ${isExpanded ? "" : "mobile-collapsed"}`}>
                 {section.subtopicCoverage.map((subtopic) => {
                   const subMetrics = getSubtopicMetrics(progress, section.id, subtopic.name);
                   return (
@@ -474,6 +511,7 @@ function Dashboard({ data, progress, questionsBySection, recommendations, onOpen
 
 function TopicDetail({ section, progress, questionCount, onBack, onPractice }) {
   const metrics = getSectionMetrics(section, progress);
+  const isThinCoverage = questionCount < 5;
   return (
     <div className="content-grid">
       <aside className="stack">
@@ -491,6 +529,11 @@ function TopicDetail({ section, progress, questionCount, onBack, onPractice }) {
           <div className="pill" style={{ marginTop: 10 }}>
             {metrics.score == null ? "Not assessed" : `${metrics.score}% estimated`}
           </div>
+          {isThinCoverage ? (
+            <div className="coverage-note">
+              Coverage is thin here, so use these questions as a light check-in rather than a full representation of the topic.
+            </div>
+          ) : null}
         </div>
       </aside>
 

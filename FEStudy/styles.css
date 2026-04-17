@@ -165,14 +165,14 @@ select {
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  transition: box-shadow 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
 .button:hover,
 .button-ghost:hover,
 .choice-button:hover,
 .nav-chip:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .button {
@@ -202,6 +202,18 @@ select {
   padding: 22px;
 }
 
+.topic-card.is-thin {
+  background:
+    linear-gradient(180deg, rgba(255, 250, 242, 0.92), rgba(244, 236, 224, 0.92)),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(164, 129, 86, 0.045),
+      rgba(164, 129, 86, 0.045) 10px,
+      rgba(255, 255, 255, 0.06) 10px,
+      rgba(255, 255, 255, 0.06) 20px
+    );
+}
+
 .topic-card h3 {
   margin: 10px 0 12px;
   font-size: 1.3rem;
@@ -229,6 +241,16 @@ select {
   background: rgba(15, 118, 110, 0.1);
   color: #0f5c56;
   font-size: 0.9rem;
+}
+
+.pill.warn {
+  background: rgba(191, 102, 24, 0.12);
+  color: #8c4f14;
+}
+
+.pill.subtle {
+  background: rgba(76, 54, 29, 0.08);
+  color: var(--muted);
 }
 
 .score-bar {
@@ -262,6 +284,10 @@ select {
 
 .subtopic-list {
   margin-top: 16px;
+}
+
+.subtopic-list.compact {
+  gap: 10px;
 }
 
 .subtopic-row {
@@ -361,6 +387,27 @@ select {
   color: var(--muted);
 }
 
+.reason-text {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.coverage-note {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(191, 102, 24, 0.08);
+  color: #7a491d;
+  border: 1px solid rgba(191, 102, 24, 0.14);
+  font-size: 0.93rem;
+}
+
+.subtopic-toggle {
+  display: none;
+}
+
 .file-input {
   display: none;
 }
@@ -373,5 +420,21 @@ select {
 
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .topic-card {
+    padding: 18px;
+  }
+
+  .subtopic-toggle {
+    display: inline-flex;
+  }
+
+  .subtopic-list.mobile-collapsed .subtopic-row:nth-child(n + 3) {
+    display: none;
+  }
+
+  .toolbar {
+    gap: 10px;
   }
 }
