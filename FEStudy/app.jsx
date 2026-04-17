@@ -733,7 +733,7 @@ function SessionView({ view, progress, isResetDialogOpen, onBack, onFinish, onRe
 
       if ((revealed || question.type === "open") && event.key === "Enter") {
         event.preventDefault();
-        recordAndAdvance(question.type === "mcq" ? selectedChoice === question.answer : true);
+        recordAndAdvance(true);
         return;
       }
 
@@ -868,7 +868,7 @@ function SessionView({ view, progress, isResetDialogOpen, onBack, onFinish, onRe
                 ) : null}
                 <button
                   className="button result-button result-button-primary"
-                  onClick={() => recordAndAdvance(question.type === "mcq" ? selectedChoice === question.answer : true)}
+                  onClick={() => recordAndAdvance(true)}
                 >
                   <span>{currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}</span>
                   <span className="shortcut-badge">ENTER</span>
