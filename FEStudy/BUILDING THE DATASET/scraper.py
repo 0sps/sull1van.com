@@ -137,14 +137,23 @@ def clean(text):
     return text.strip()
 
 
-def extract_answer_letter(text):
-    """Extract single letter answer (A/B/C/D) from answer text."""
-    text = text.strip()
-    # Look for patterns like "A", "Answer: B", "The answer is C", "(D)"
-    m = re.search(r'\b([A-D])\b', text)
-    if m:
-        return m.group(1)
-    return text[:200] if text else ""
+def strip_answer_prefix(text):
+    return re.sub(r'^\*?\*?answer\*?\*?\s*[:\-]?\s*', '', clean(text), flags=re.I).strip()
+
+
+def extract_answer_value(text, prefer_choice_letter=False):
+    """Return either the MCQ letter or the full answer text for open-response items."""
+    normalized = strip_answer_prefix(text)
+    if not normalized:
+        return ""
+    if prefer_choice_letter:
+        m = re.fullmatch(r'\(?\s*([A-D])\s*\)?\.?', normalized, re.I)
+        if m:
+            return m.group(1).upper()
+        m = re.match(r'^([A-D])(?:\s|$)', normalized, re.I)
+        if m and not re.match(r'^[A-D]\s*=', normalized, re.I):
+            return m.group(1).upper()
+    return normalized[:300]
 
 
 def parse_choices_from_ol(ol_tag):
@@ -252,7 +261,7 @@ def parse_problem_card(card):
             sum_text = clean(node_to_text(summary))
             ans_text = sum_text + " " + ans_text
 
-        answer = extract_answer_letter(ans_text)
+        answer = extract_answer_value(ans_text, prefer_choice_letter=bool(choices))
         if not answer:
             answer = clean(ans_text)[:500]
 
@@ -333,7 +342,7 @@ def parse_flat_paragraph(article_soup):
 
                 # Answer pattern
                 if re.match(r'^\s*(answer|ans|solution)\s*[:\.]?\s*([A-D])', next_text, re.I):
-                    answer = extract_answer_letter(next_text)
+                    answer = extract_answer_value(next_text, prefer_choice_letter=bool(choices))
                     i += 1
                     continue
 
@@ -342,7 +351,7 @@ def parse_flat_paragraph(article_soup):
                     summary = next_child.find("summary")
                     if summary:
                         ans_text = clean(node_to_text(summary))
-                        answer = extract_answer_letter(ans_text)
+                        answer = extract_answer_value(ans_text, prefer_choice_letter=bool(choices))
                     i += 1
                     continue
 

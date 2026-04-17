@@ -132,14 +132,23 @@ def clean(text):
     return text.strip()
 
 
-def extract_answer_letter(text):
-    """Pull A/B/C/D from answer text."""
-    text = clean(text)
-    # Pattern: "Answer: A" or just "A" or "(A)"
-    m = re.search(r'(?:answer\s*[:\-]?\s*)?\b([A-D])\b', text, re.I)
-    if m:
-        return m.group(1).upper()
-    return clean(text)[:300]
+def strip_answer_prefix(text):
+    return re.sub(r'^\*?\*?answer\*?\*?\s*[:\-]?\s*', '', clean(text), flags=re.I).strip()
+
+
+def extract_answer_value(text, prefer_choice_letter=False):
+    """Return either a choice letter for MCQ items or the full answer text for open-response items."""
+    normalized = strip_answer_prefix(text)
+    if not normalized:
+        return ""
+    if prefer_choice_letter:
+        m = re.fullmatch(r'\(?\s*([A-D])\s*\)?\.?', normalized, re.I)
+        if m:
+            return m.group(1).upper()
+        m = re.match(r'^([A-D])(?:\s|$)', normalized, re.I)
+        if m and not re.match(r'^[A-D]\s*=', normalized, re.I):
+            return m.group(1).upper()
+    return normalized[:300]
 
 
 # ─────────────────────────────────────────────
@@ -206,7 +215,7 @@ def parse_problem_card(card):
             for p in solution_body.find_all("p"):
                 p_text = clean(node_to_text(p))
                 if re.match(r'\*?\*?answer\*?\*?', p_text, re.I):
-                    answer = extract_answer_letter(p_text)
+                    answer = extract_answer_value(p_text, prefer_choice_letter=bool(choices))
                     break
 
             # Extract references
@@ -293,7 +302,7 @@ def parse_flat_article(article):
         # If previous line was a bare "Answer:" label, this line IS the answer value
         if expecting_answer_content:
             expecting_answer_content = False
-            answer = extract_answer_letter(text) or clean(text)[:300]
+            answer = extract_answer_value(text, prefer_choice_letter=bool(choices))
             in_solution = True
             in_question = False
             continue
@@ -311,7 +320,7 @@ def parse_flat_article(article):
         if re.search(r'^\*?\*?answer\*?\*?\s*[:\-]', text_lower.strip()):
             answer_text = re.sub(r'^\*?\*?answer\*?\*?\s*[:\-]\s*', '', text, flags=re.I)
             if answer_text.strip():
-                answer = extract_answer_letter(answer_text) or clean(answer_text)[:300]
+                answer = extract_answer_value(answer_text, prefer_choice_letter=bool(choices))
                 in_solution = True
                 in_question = False
             else:
@@ -332,7 +341,7 @@ def parse_flat_article(article):
             for p in solution_body.find_all("p"):
                 p_text = clean(node_to_text(p))
                 if re.match(r'\*?\*?answer\*?\*?', p_text, re.I):
-                    answer = extract_answer_letter(p_text)
+                    answer = extract_answer_value(p_text, prefer_choice_letter=bool(choices))
                     break
             for p in solution_body.find_all(["p", "li"]):
                 p_text = clean(node_to_text(p))

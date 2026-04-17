@@ -12381,7 +12381,7 @@
         {
           "question": "A rectangle with dimensions \\(9\\) in by \\(12\\) in fits exactly inside a circle so that all four vertices lie on the circle. Determine the circumference of the circle.",
           "choices": {},
-          "answer": "C",
+          "answer": "\\( C = 15\\pi\\ \\text{in} \\).",
           "references": [
             "FE Reference Handbook 10.5 \u2013 P40"
           ],
@@ -12834,7 +12834,7 @@
         {
           "question": "Evaluate the indefinite integral\n\n\\[\n\n\\int (5\\cos x \u2013 2\\sin x)\\,dx.\n\n\\]",
           "choices": {},
-          "answer": "C",
+          "answer": "\\(5\\sin x + 2\\cos x + C\\)",
           "references": [
             "FE Reference Handbook 10.5, P50\n\nMathematics \u2013 Integral Calculus"
           ],
@@ -12847,7 +12847,7 @@
         {
           "question": "Evaluate the integral:\n\n\\[\n\n\\int \\sin(2x)\\,dx.\n\n\\]",
           "choices": {},
-          "answer": "C",
+          "answer": "\\(-\\dfrac{1}{2}\\cos(2x) + C\\)",
           "references": [
             "FE Reference Handbook 10.5, P48, P50:\n\nMathematics \u2013 Integral Calculus\n\nIntegration by Substitution (Clive Newstead, Carnegie Mellon University)\n\nIntegration by Substitution Workbook (MathCentre)"
           ],
@@ -13056,7 +13056,7 @@
         {
           "question": "Add the following matrices:\n\\[\n\nA =\n\n\\begin{bmatrix}\n\n1 & 2 & 3 \\\\\n\n4 & 5 & 6\n\n\\end{bmatrix},\n\n\\\\\n\nB =\n\n\\begin{bmatrix}\n\n7 & 8 & 9 \\\\\n\n1 & 0 & -1\n\n\\end{bmatrix}.\n\n\\]",
           "choices": {},
-          "answer": "A",
+          "answer": "\\[\n\nA + B =\n\n\\begin{bmatrix}\n\n8 & 10 & 12 \\\\\n\n5 & 5 & 5\n\n\\end{bmatrix}.\n\n\\]",
           "references": [
             "FE Reference Handbook 10.5, P58:\n\nMathematics \u2013 Matrices \u2013 Addition of Two Matrices"
           ],
@@ -13128,7 +13128,7 @@
         {
           "question": "Given\n\n\\[\n\n\\mathbf{A} = 2\\mathbf{i} \u2013 \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} = \\mathbf{i} + 2\\mathbf{j} \u2013 \\mathbf{k},\n\n\\]\n\nfind the cross product \\(\\mathbf{A} \\times \\mathbf{B}\\).",
           "choices": {},
-          "answer": "A",
+          "answer": "\\( \\mathbf{A} \\times \\mathbf{B} = -5\\mathbf{i} + 5\\mathbf{j} + 5\\mathbf{k} \\)",
           "references": [
             "FE Reference Handbook 10.5, P60:\n\nMathematics \u2013 Vectors \u2013 Cross Product"
           ],
@@ -13141,7 +13141,7 @@
         {
           "question": "Given\n\n\\[\n\n\\begin{align}\n\n\\mathbf{A} &= 2\\mathbf{i} \u2013 \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} &= -\\mathbf{i} + 4\\mathbf{j} + 2\\mathbf{k},\n\n\\end{align}\n\n\\]\n\nfind the dot product \\(\\mathbf{A} \\cdot \\mathbf{B}\\).",
           "choices": {},
-          "answer": "A",
+          "answer": "\\( \\mathbf{A} \\cdot \\mathbf{B} = 0 \\)",
           "references": [
             "FE Reference Handbook 10.5, P60:\n\nMathematics \u2013 Vectors"
           ],
