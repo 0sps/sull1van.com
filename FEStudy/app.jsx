@@ -587,7 +587,7 @@ function App() {
   }
 
   function startDiagnostic() {
-    const diagnosticQuestions = data.questions.filter((question) => question.type === "mcq");
+    const diagnosticQuestions = data.questions;
     openTestSetupDialog({
       mode: "diagnostic",
       title: "Diagnostic",
