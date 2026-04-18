@@ -551,11 +551,18 @@
             display: flex; flex-direction: column;
             align-items: flex-end; gap: 5px; flex-shrink: 0;
         }
+        .latest-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
         .latest-chip-wrap {
             display: inline-flex;
             align-items: baseline;
             justify-content: flex-end;
             gap: 6px;
+            min-height: 24px;
         }
         .test-card-unit-row {
             min-height: 18px;
@@ -905,6 +912,7 @@
         .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-name  { font-size: 13px; font-weight: 700; color: var(--text-secondary); white-space: normal; overflow: visible; text-overflow: clip; text-transform: uppercase; letter-spacing: 0.5px; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta  { display: none; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right { flex-direction: row; align-items: center; justify-content: space-between; gap: 0; flex-shrink: 0; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-stack { align-items: flex-end; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip     { font-size: 26px; font-weight: 700; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip-unit { font-size: 24px; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap  { width: 70px; height: 32px; flex-shrink: 0; }
@@ -1791,6 +1799,7 @@
         }
 
         function getInlineLatestUnitHtml(test) {
+            if (test?.type === 'qualitative') return '';
             const unitText = getDisplayUnitText(test);
             return unitText ? `<span class="latest-chip-unit">${escStr(unitText)}</span>` : '';
         }
@@ -2670,11 +2679,13 @@
             </div>
           </div>
           <div class="test-card-right" style="gap:2px;">
-            <div class="latest-chip-wrap">
-              <div class="latest-chip ${valColor}">${displayVal}</div>
-              ${getInlineLatestUnitHtml(t)}
+            <div class="latest-stack">
+              <div class="latest-chip-wrap">
+                <div class="latest-chip ${valColor}">${displayVal}</div>
+                ${getInlineLatestUnitHtml(t)}
+              </div>
+              ${t.numericPts.length > 1 ? `<div class="sparkline-wrap"><canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas></div>` : ''}
             </div>
-            ${t.numericPts.length > 1 ? `<div class="sparkline-wrap"><canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas></div>` : ''}
           </div>
           <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
             <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
