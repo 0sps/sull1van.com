@@ -5,52 +5,60 @@
       "subtopic": "Properties of Single-Component Systems",
       "questions": [
         {
-          "question": "A rigid vessel contains \\(5\\ \\text{m}^3\\) of a water–vapor mixture at a pressure of \\(1.0021\\ \\text{MPa}\\) with a quality of \\(x_1 = 0.80\\). The vessel is cooled at constant volume until the pressure drops to  \\(0.4154\\ \\text{MPa}\\). Determine the final mass (kg) of vapor and the final mass (kg) of liquid in the vessel.",
+          "question": "A rigid vessel contains \\(5\\ \\text{m}^3\\) of a water\u2013vapor mixture at a pressure of \\(1.0021\\ \\text{MPa}\\) with a quality of \\(x_1 = 0.80\\). The vessel is cooled at constant volume until the pressure drops to  \\(0.4154\\ \\text{MPa}\\). Determine the final mass (kg) of vapor and the final mass (kg) of liquid in the vessel.",
           "choices": {},
           "answer": "\\( m_g \\) = 11.2 kg \n\n \\( m_f \\) = 21.0 kg",
           "references": [
-            "FE Reference Handbook 10.5 – P143"
+            "FE Reference Handbook 10.5 \u2013 P143"
           ],
           "tags": [
             "Properties For Two Phase Vapor Liquid Systems",
             "Properties Of Single Component Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A tank contains saturated liquid water at a pressure of \\(0.4154\\ \\text{MPa}\\). The total volume of the liquid is \\(0.85\\ \\text{m}^3\\). Heat is added at constant pressure until the water becomes completely vaporized. Determine the final volume \\(V_2\\) in \\(\\text{m}^3\\) of the vapor.",
           "choices": {},
           "answer": "\\(V_2 = 350\\ \\text{m}^3\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143"
+            "FE Reference Handbook 10.5 \u2013 P143"
           ],
           "tags": [
             "Properties For Two Phase Vapor Liquid Systems",
             "Properties Of Single Component Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A saturated water–vapor mixture is at \\(140^\\circ\\text{C}\\). The quality of the mixture is  \\(x = 0.40\\). Determine the specific volume \\(v\\) in   \\(\\text{m}^3/\\text{kg}\\).",
+          "question": "A saturated water\u2013vapor mixture is at \\(140^\\circ\\text{C}\\). The quality of the mixture is  \\(x = 0.40\\). Determine the specific volume \\(v\\) in   \\(\\text{m}^3/\\text{kg}\\).",
           "choices": {},
           "answer": "\\(v = 0.204\\ \\text{m}^3/\\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143"
+            "FE Reference Handbook 10.5 \u2013 P143"
           ],
           "tags": [
             "Properties For Two Phase Vapor Liquid Systems",
             "Properties Of Single Component Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A rigid tank contains a saturated water–vapor mixture at a temperature of  \\(150^\\circ\\text{C}\\). The quality of the mixture is \\(x = 0.75\\). Determine the specific volume \\(v\\) in \\(\\text{m}^3/\\text{kg}\\).",
+          "question": "A rigid tank contains a saturated water\u2013vapor mixture at a temperature of  \\(150^\\circ\\text{C}\\). The quality of the mixture is \\(x = 0.75\\). Determine the specific volume \\(v\\) in \\(\\text{m}^3/\\text{kg}\\).",
           "choices": {},
           "answer": "\\(v = 0.295\\ \\text{m}^3/\\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 P143:\n\nThermodynamics – Properties of Single-Component Systems – Properties for Two-Phase (vapor-liquid) Systems"
+            "FE Reference Handbook 10.5 P143:\n\nThermodynamics \u2013 Properties of Single-Component Systems \u2013 Properties for Two-Phase (vapor-liquid) Systems"
           ],
           "tags": [
             "Properties For Two Phase Vapor Liquid Systems",
             "Properties Of Single Component Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -68,121 +76,141 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P143"
+            "FE Reference Handbook 10.5 \u2013 P143"
           ],
           "tags": [
             "Ideal Gas",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the Van der Waals constant \\(a\\) for Argon given its critical properties: \\(P_c = 4.87\\ \\text{MPa}\\), \\(T_c = 150.8\\ \\text{K}\\). Use the Universal Gas Constant \\(\\overline{R} = 8.314\\ \\text{kJ}/(\\text{kmol}\\cdot\\text{K})\\).",
           "choices": {},
           "answer": "\\(a \\approx 136.2\\ \\text{kPa} \\cdot (\\text{m}^3/\\text{kmol})^2 \\)",
           "references": [
-            "FE Reference Handbook 10.5 – P145"
+            "FE Reference Handbook 10.5 \u2013 P145"
           ],
           "tags": [
             "Equations Of State Eos",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Determine the Van der Waals constant \\(b\\) for Nitrogen (\\(N_2\\)).The critical constants for nitrogen are \\(P_c = 3.39\\ \\text{MPa}\\) and \\(T_c = 126.2\\ \\text{K}\\). The Universal Gas Constant is \\(\\overline{R} = 8.314\\ \\text{kJ}/(\\text{kmol}\\cdot\\text{K})\\).",
           "choices": {},
           "answer": "\\(b = 0.039\\ \\text{m}^3/\\text{kmol}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P145"
+            "FE Reference Handbook 10.5 \u2013 P145"
           ],
           "tags": [
             "Equations Of State Eos",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Nitrogen (\\(N_2\\)) is stored in a rigid container at a pressure of \\(P = 10\\ \\text{MPa}\\) and a temperature of \\(T = 150\\ \\text{K}\\). The critical constants for nitrogen are \\(P_c = 3.39\\ \\text{MPa}\\) and \\(T_c = 126.2\\ \\text{K}\\). The specific gas constant for nitrogen is \\(R = 0.2968\\ \\text{kJ}/(\\text{kg}\\cdot\\text{K})\\). Using the Generalized Compressibility Chart, determine the specific volume \\(v\\) of the nitrogen at this state.",
           "choices": {},
           "answer": "\\(v \\approx 0.00245\\ \\text{m}^3/\\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P145"
+            "FE Reference Handbook 10.5 \u2013 P145"
           ],
           "tags": [
             "Pvt Behavior",
             "Real Gas"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A laboratory chamber has interior dimensions of \\(8\\ \\text{m} \\times 5\\ \\text{m} \\times 3\\ \\text{m}\\). The chamber is maintained at a gage pressure of \\(15\\ \\text{kPa}\\), and the atmospheric pressure is \\(100\\ \\text{kPa}\\). The air temperature inside the chamber is \\(32^\\circ\\text{C}\\).\n\nAssuming the molecular weight of air is \\(M_{\\text{air}} = 29\\ \\text{kg/kmol}\\), determine the mass of air contained in the chamber.",
           "choices": {},
           "answer": "\\(m \\approx 158\\ \\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143, 144"
+            "FE Reference Handbook 10.5 \u2013 P143, 144"
           ],
           "tags": [
             "Ideal Gas Mixtures",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rigid air receiver (storage tank) has a volume of \\(0.80\\ \\text{m}^3\\). Initially, it contains air at an absolute pressure of \\(100\\ \\text{kPa}\\) and a temperature of  \\(20^\\circ\\text{C}\\).\n\nA compressor then fills the tank with more air until the gage pressure in the tank is \\(700\\ \\text{kPa}\\). At the final state, the air temperature in the tank is \\(60^\\circ\\text{C}\\). \n\nAssuming air behaves as an ideal gas and has a molecular weight of  \\(M_{\\text{air}} = 28.97\\ \\text{kg/kmol}\\), determine the mass of air added to the tank in kilograms.",
           "choices": {},
           "answer": "\\(\\Delta m \\approx 5.75\\ \\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143, 144"
+            "FE Reference Handbook 10.5 \u2013 P143, 144"
           ],
           "tags": [
             "Ideal Gas Mixtures",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rigid pressure vessel has a fixed volume of \\(3.5\\ \\text{m}^3\\). The vessel contains nitrogen gas at an initial temperature of \\(20^\\circ\\text{C}\\) and a pressure of \\(150\\ \\text{kPa}\\). The gas is heated in the sealed vessel until the pressure reaches \\(900\\ \\text{kPa}\\). Assuming nitrogen behaves as an ideal gas and the mass in the vessel remains constant, determine the final temperature of the gas in degrees Celsius.",
           "choices": {},
           "answer": "\\(T_2 = 1485^\\circ\\text{C}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143"
+            "FE Reference Handbook 10.5 \u2013 P143"
           ],
           "tags": [
             "Ideal Gas",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A high–pressure storage cylinder for compressed natural gas (CNG) has an inner diameter of \\(0.30\\ \\text{m}\\) and an internal length of \\(1.2\\ \\text{m}\\). The cylinder is initially evacuated and then filled with gas until the gage pressure reaches \\(20\\ \\text{MPa}\\) at a temperature of \\(35^\\circ\\text{C}\\).\nTake the atmospheric pressure as \\(100\\ \\text{kPa}\\), and assume the gas is pure methane with molecular weight \\(M = 16\\ \\text{kg/kmol}\\). Assuming ideal-gas behavior, determine the mass of gas contained in the cylinder in kilograms.",
+          "question": "A high\u2013pressure storage cylinder for compressed natural gas (CNG) has an inner diameter of \\(0.30\\ \\text{m}\\) and an internal length of \\(1.2\\ \\text{m}\\). The cylinder is initially evacuated and then filled with gas until the gage pressure reaches \\(20\\ \\text{MPa}\\) at a temperature of \\(35^\\circ\\text{C}\\).\nTake the atmospheric pressure as \\(100\\ \\text{kPa}\\), and assume the gas is pure methane with molecular weight \\(M = 16\\ \\text{kg/kmol}\\). Assuming ideal-gas behavior, determine the mass of gas contained in the cylinder in kilograms.",
           "choices": {},
           "answer": "\\(m = 10.7\\ \\text{kg}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143, 144"
+            "FE Reference Handbook 10.5 \u2013 P143, 144"
           ],
           "tags": [
             "Ideal Gas Mixtures",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A turbocharger compresses ambient air from an inlet pressure of \\(p_1 = 95\\ \\text{kPa}\\) to an outlet pressure of \\(p_2 = 550\\ \\text{kPa}\\) in a rapid, adiabatic, and isentropic process. The inlet air temperature is \\(T_1 = 35^\\circ\\text{C}\\). Assume that air behaves as an ideal gas with a specific heat ratio \\(k = 1.4\\). Determine the final air temperature in degrees Celsius.",
           "choices": {},
           "answer": "\\(T_2 = 235^\\circ\\text{C}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143, 144"
+            "FE Reference Handbook 10.5 \u2013 P143, 144"
           ],
           "tags": [
             "Constant Entropy Processes",
             "Ideal Gas",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A gas mixture is analyzed gravimetrically and found to contain 3 kg of nitrogen \\((N_2)\\), 5 kg of oxygen \\((O_2)\\), and 2 kg of carbon monoxide \\((CO)\\). Treating each component as an ideal gas, determine the gas constant  \\(R_{\\text{mix}}\\) of the mixture in \\(\\text{kJ/(kg·K)}\\).",
+          "question": "A gas mixture is analyzed gravimetrically and found to contain 3 kg of nitrogen \\((N_2)\\), 5 kg of oxygen \\((O_2)\\), and 2 kg of carbon monoxide \\((CO)\\). Treating each component as an ideal gas, determine the gas constant  \\(R_{\\text{mix}}\\) of the mixture in \\(\\text{kJ/(kg\u00b7K)}\\).",
           "choices": {},
-          "answer": "\\(R_{\\text{mix}} = 0.277\\ \\text{kJ/(kg·K)}\\)",
+          "answer": "\\(R_{\\text{mix}} = 0.277\\ \\text{kJ/(kg\u00b7K)}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P143, 144"
+            "FE Reference Handbook 10.5 \u2013 P143, 144"
           ],
           "tags": [
             "Ideal Gas Mixtures",
             "Pvt Behavior"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -200,24 +228,28 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Two kilograms of Nitrogen gas expand in a piston-cylinder device at a constant pressure of \\(500\\ \\text{kPa}\\). The initial specific volume is \\(0.1\\ \\text{m}^3/\\text{kg}\\) and the final specific volume is \\(0.2\\ \\text{m}^3/\\text{kg}\\). During the process, \\(150\\ \\text{kJ}\\) of heat is added to the system. Determine the change in internal energy (\\(\\Delta U\\)) of the nitrogen.\nA) \\(50\\ \\text{kJ}\\) \n\n B) \\(100\\ \\text{kJ}\\) \n\n C) \\(150\\ \\text{kJ}\\) \n\n D) \\(250\\ \\text{kJ}\\)",
           "choices": {},
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P146"
+            "FE Reference Handbook 10.5 \u2013 P146"
           ],
           "tags": [
             "Closed Thermodynamic System",
             "First Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Steam enters a nozzle with an enthalpy of \\(3,000\\ \\text{kJ/kg}\\) and a velocity of \\(50\\ \\text{m/s}\\). It exits with a velocity of \\(600\\ \\text{m/s}\\). Neglecting heat transfer and potential energy, determine the specific enthalpy of the steam at the exit.\nA) \\(2,642\\ \\text{kJ/kg}\\) \n\n B) \\(2,821\\ \\text{kJ/kg}\\) \n\n C) \\(3,179\\ \\text{kJ/kg}\\) \n\n D) \\(3,357\\ \\text{kJ/kg}\\)",
@@ -227,104 +259,122 @@
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air enters a compressor at \\(298\\ \\text{K}\\) and leaves at \\(500\\ \\text{K}\\). The mass flow rate of air is \\(0.5\\ \\text{kg/s}\\). Assume air behaves as an ideal gas with constant specific heats (\\(C_p = 1.005\\ \\text{kJ/kg}\\cdot\\text{K}\\), \\(C_v = 0.718\\ \\text{kJ/kg}\\cdot\\text{K}\\)). The compressor is adiabatic and kinetic/potential energy changes are negligible. Determine the power input required.\nA) \\(72.5\\ \\text{kW}\\) \n\n B) \\(101.0\\ \\text{J/s}\\) \n\n C) \\(101.5\\ \\text{kW}\\) \n\n D) \\(203.0\\ \\text{kW}\\)",
           "choices": {},
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Refrigerant-134a is cooled by water in a condenser (heat exchanger). The refrigerant enters at \\(10\\ \\text{kg/min}\\) with an enthalpy change of \\(\\Delta h_R = -150\\ \\text{kJ/kg}\\) (loss). Cooling water enters at \\(20\\ \\text{kg/min}\\). Assume the heat exchanger is insulated from the surroundings. What is the enthalpy change of the cooling water (\\(\\Delta h_w\\))?\nA) \\(30\\ \\text{kJ/kg}\\)\n\nB) \\(75\\ \\text{kJ/kg}\\)\n\nC) \\(150\\ \\text{kJ/kg}\\)\n\nD) \\(300\\ \\text{kJ/kg}\\)",
           "choices": {},
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Steam enters a nozzle at \\(400^\\circ\\text{C}\\) and \\(800\\ \\text{kPa}\\) with a velocity of \\(10\\ \\text{m/s}\\). It leaves at \\(300\\ \\text{kPa}\\) and \\(200^\\circ\\text{C}\\). The inlet enthalpy is \\(3267\\ \\text{kJ/kg}\\) and the exit enthalpy is \\(2865\\ \\text{kJ/kg}\\). Neglecting heat transfer and potential energy changes, determine the exit velocity of the steam.\nA) \\(28.4\\ \\text{m/s}\\)\n\nB) \\(804\\ \\text{m/s}\\)\n\nC) \\(897\\ \\text{m/s}\\)\n\nD) \\(804,000\\ \\text{m/s}\\)",
           "choices": {},
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Refrigerant-134a flows through a throttling valve. Assuming the process is adiabatic and potential/kinetic energy changes are negligible, which property remains constant across the valve?\nA) Pressure\n\nB) Temperature\n\nC) Enthalpy\n\nD) Entropy",
           "choices": {},
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P148:",
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148:",
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A closed piston-cylinder device contains a gas. During a process, \\(50\\ \\text{kJ}\\) of heat is added to the system, and the system does \\(20\\ \\text{kJ}\\) of work on the surroundings. What is the change in internal energy (\\(\\Delta U\\)) of the system?\nA) \\(-30\\ \\text{kJ}\\)\n\nB) \\(30\\ \\text{kJ}\\)\n\nC) \\(70\\ \\text{kJ}\\)\n\nD) \\(-70\\ \\text{kJ}\\)",
           "choices": {},
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P146"
+            "FE Reference Handbook 10.5 \u2013 P146"
           ],
           "tags": [
             "Closed Thermodynamic System",
             "First Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Steam enters an adiabatic turbine at a rate of \\(10\\ \\text{kg/s}\\). The inlet enthalpy is \\(h_{i} = 3200\\ \\text{kJ/kg}\\), and the exit enthalpy is \\(h_{e} = 2100\\ \\text{kJ/kg}\\). Neglecting changes in kinetic and potential energy, determine the power output of the turbine.\nA) \\(1,100\\ \\text{kW}\\)\n\nB) \\(-11,000\\ \\text{kW}\\)\n\nC) \\(11,000\\ \\text{kW}\\)\n\nD) \\(53,000\\ \\text{kW}\\)",
           "choices": {},
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "First Law Of Thermodynamics",
             "Steady Flow Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "One kilogram of saturated water–steam mixture is initially at \\(70^\\circ\\text{C}\\) with a quality of \\(x = 0.25\\). From the steam table, the saturation pressure at \\(70^\\circ\\text{C}\\) is \\(31.19\\ \\text{kPa}\\) and the specific volumes are  \\(v_f = 0.001023\\ \\text{m}^3/\\text{kg}\\) and \\(v_g = 5.042\\ \\text{m}^3/\\text{kg}\\). The mixture is heated at this constant pressure of \\(31.19\\ \\text{kPa}\\) until the temperature reaches \\(200^\\circ\\text{C}\\), at which point the steam is superheated. For the superheated state, assume ideal-gas behavior with \\(R = 0.4615\\ \\text{kPa·m}^3/(\\text{kg·K}) \\). Using ideal-gas approximation for the final state, determine the work done (kJ) during the constant-pressure heating process.",
+          "question": "One kilogram of saturated water\u2013steam mixture is initially at \\(70^\\circ\\text{C}\\) with a quality of \\(x = 0.25\\). From the steam table, the saturation pressure at \\(70^\\circ\\text{C}\\) is \\(31.19\\ \\text{kPa}\\) and the specific volumes are  \\(v_f = 0.001023\\ \\text{m}^3/\\text{kg}\\) and \\(v_g = 5.042\\ \\text{m}^3/\\text{kg}\\). The mixture is heated at this constant pressure of \\(31.19\\ \\text{kPa}\\) until the temperature reaches \\(200^\\circ\\text{C}\\), at which point the steam is superheated. For the superheated state, assume ideal-gas behavior with \\(R = 0.4615\\ \\text{kPa\u00b7m}^3/(\\text{kg\u00b7K}) \\). Using ideal-gas approximation for the final state, determine the work done (kJ) during the constant-pressure heating process.",
           "choices": {},
           "answer": "\\(W = 179\\ \\text{kJ}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P146"
+            "FE Reference Handbook 10.5 \u2013 P146"
           ],
           "tags": [
             "Closed Thermodynamic System",
             "First Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A vertical cylinder with an inner diameter of \\(0.12\\ \\text{m}\\) initially contains  \\(150\\ \\text{cm}^3\\) of water at \\(70^\\circ\\text{C}\\). A \\(40\\ \\text{kg}\\) frictionless piston rests on top of the water and is exposed to the atmosphere. The system is slowly heated until the water temperature reaches \\(220^\\circ\\text{C}\\). Assume the following:\nAtmospheric pressure: \\(p_{\\text{atm}} = 101\\ \\text{kPa}\\)\n\nWater at \\(70^\\circ\\text{C}\\) behaves as a compressed liquid with  \\(v_f(70^\\circ\\text{C}) = 0.00103\\ \\text{m}^3/\\text{kg}\\)\n\nThe final state at \\(220^\\circ\\text{C}\\) is superheated steam that can be approximated as an ideal gas with \\(R = 0.4615\\ \\text{kPa·m}^3/(\\text{kg·K})\\)\nDetermine the work in kJ done by the water during this process.",
+          "question": "A vertical cylinder with an inner diameter of \\(0.12\\ \\text{m}\\) initially contains  \\(150\\ \\text{cm}^3\\) of water at \\(70^\\circ\\text{C}\\). A \\(40\\ \\text{kg}\\) frictionless piston rests on top of the water and is exposed to the atmosphere. The system is slowly heated until the water temperature reaches \\(220^\\circ\\text{C}\\). Assume the following:\nAtmospheric pressure: \\(p_{\\text{atm}} = 101\\ \\text{kPa}\\)\n\nWater at \\(70^\\circ\\text{C}\\) behaves as a compressed liquid with  \\(v_f(70^\\circ\\text{C}) = 0.00103\\ \\text{m}^3/\\text{kg}\\)\n\nThe final state at \\(220^\\circ\\text{C}\\) is superheated steam that can be approximated as an ideal gas with \\(R = 0.4615\\ \\text{kPa\u00b7m}^3/(\\text{kg\u00b7K})\\)\nDetermine the work in kJ done by the water during this process.",
           "choices": {},
           "answer": "\\(W = 33.2\\ \\text{kJ}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P146"
+            "FE Reference Handbook 10.5 \u2013 P146"
           ],
           "tags": [
             "Closed Thermodynamic System",
             "First Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -342,12 +392,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P171"
+            "FE Reference Handbook 10.5 \u2013 P171"
           ],
           "tags": [
             "Basic Cycles",
             "Rankine Cycle"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "The ideal Otto cycle consists of four processes. Which of the following correctly describes the heat addition and heat rejection processes in this cycle?",
@@ -359,12 +411,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P171"
+            "FE Reference Handbook 10.5 \u2013 P171"
           ],
           "tags": [
             "Basic Cycles",
             "Otto Cycle"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A heat pump is used to heat a house in winter and maintains a COP of \\(3.5\\). If the same cycle were used as an air conditioner (refrigerator) in summer operating between the same temperature limits, what would be its Coefficient of Performance?",
@@ -376,12 +430,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Basic Cycles",
             "Coefficient Of Performance Cop"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A refrigerator operates on a reversed Carnot cycle between reservoirs at temperatures of \\(25^\\circ\\text{C}\\) and \\(-10^\\circ\\text{C}\\). What is the maximum theoretical Coefficient of Performance (\\(\\text{COP}_R\\))?",
@@ -393,12 +449,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Basic Cycles",
             "Coefficient Of Performance Cop"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A heat engine receives heat from a source at a rate of \\(1000\\ \\text{kJ/min}\\) and rejects waste heat to a sink at a rate of \\(400\\ \\text{kJ/min}\\). Determine the thermal efficiency and the power output of this engine.",
@@ -410,11 +468,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "Basic Cycles"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A commercial refrigerator with a Coefficient of Performance (COP) of \\(3.2\\) is required to provide a cooling load of \\(10\\ \\text{tons}\\) of refrigeration. Determine the power input required to operate the compressor.",
@@ -426,12 +486,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "Basic Cycles",
             "Coefficient Of Performance Cop"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A heat engine operates on a Carnot cycle between a high-temperature source at \\(600^\\circ\\text{C}\\) and a low-temperature sink at \\(40^\\circ\\text{C}\\). What is the maximum theoretical thermal efficiency of this engine?",
@@ -443,12 +505,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P148"
+            "FE Reference Handbook 10.5 \u2013 P148"
           ],
           "tags": [
             "Basic Cycles",
             "Carnot Cycle"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A Carnot heat pump is used to maintain a house at \\(22^\\circ\\text{C}\\) during the winter when the outside temperature is \\(-5^\\circ\\text{C}\\). Determine the maximum Coefficient of Performance ( \\( COP_c \\) ) of this heat pump.",
@@ -460,12 +524,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Basic Cycles",
             "Coefficient Of Performance Cop"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -483,11 +549,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An HVAC system operates in a high-altitude location where the atmospheric pressure is \\(80\\ \\text{kPa}\\). Air is at \\(25^\\circ\\text{C}\\) with a relative humidity of \\(50\\%\\). Given that the saturation pressure of water (\\(P_g\\)) at \\(25^\\circ\\text{C}\\) is \\(3.169\\ \\text{kPa}\\), calculate the humidity ratio (\\(\\omega\\)).",
@@ -499,11 +567,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Hot, dry air at \\(95^\\circ\\text{F}\\) dry bulb and \\(70^\\circ\\text{F}\\) wet bulb passes through an evaporative cooler (adiabatic saturation process) until the relative humidity reaches \\(80\\%\\). What is the final dry-bulb temperature?",
@@ -515,14 +585,16 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P175"
+            "FE Reference Handbook 10.5 \u2013 P175"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "Air at \\(50^\\circ\\text{F}\\) dry-bulb and \\(80\\%\\) relative humidity is heated sensibly to a final temperature of \\(90^\\circ\\text{F}\\) and \\( 21\\%\\) relative humidity. Determine the heat added per pound of dry air (\\(q = h_2 – h_1\\)).",
+          "question": "Air at \\(50^\\circ\\text{F}\\) dry-bulb and \\(80\\%\\) relative humidity is heated sensibly to a final temperature of \\(90^\\circ\\text{F}\\) and \\( 21\\%\\) relative humidity. Determine the heat added per pound of dry air (\\(q = h_2 \u2013 h_1\\)).",
           "choices": {
             "A": "\\(5.2\\ \\text{Btu/lbm}\\)",
             "B": "\\(9.8\\ \\text{Btu/lbm}\\)",
@@ -531,11 +603,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P175"
+            "FE Reference Handbook 10.5 \u2013 P175"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air at \\(50^\\circ\\text{F}\\) dry-bulb and \\(80\\%\\) relative humidity is heated sensibly to a final temperature of \\(90^\\circ\\text{F}\\). What is the new relative humidity?",
@@ -547,11 +621,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P175"
+            "FE Reference Handbook 10.5 \u2013 P175"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air at \\(24^\\circ\\text{C}\\) dry-bulb and \\(60\\%\\) relative humidity is cooled at constant pressure. Determine the dew-point temperature (\\(T_{dp}\\)).",
@@ -563,11 +639,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P174"
+            "FE Reference Handbook 10.5 \u2013 P174"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Measured air conditions are \\(30^\\circ\\text{C}\\) dry-bulb and \\(20^\\circ\\text{C}\\) wet-bulb. What is the approximate relative humidity?",
@@ -579,12 +657,14 @@
           },
           "answer": "B",
           "references": [
-            "ASHRAE Psychrometric Chart No. 1 (metric units) （FE Reference Handbook 10.5 – P174）:",
-            "FE Reference Handbook 10.5 – P174"
+            "ASHRAE Psychrometric Chart No. 1 (metric units) \uff08FE Reference Handbook 10.5 \u2013 P174\uff09:",
+            "FE Reference Handbook 10.5 \u2013 P174"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Moist air exists at a dry-bulb temperature of \\( 25^\\circ\\text{C}\\) and a relative humidity of \\(50\\%\\). Determine the specific enthalpy (\\(h\\)) of the air mixture.",
@@ -596,12 +676,14 @@
           },
           "answer": "B",
           "references": [
-            "ASHRAE Psychrometric Chart No. 1 (metric units) （FE Reference Handbook 10.5 – P174）:",
-            "FE Reference Handbook 10.5 – P174"
+            "ASHRAE Psychrometric Chart No. 1 (metric units) \uff08FE Reference Handbook 10.5 \u2013 P174\uff09:",
+            "FE Reference Handbook 10.5 \u2013 P174"
           ],
           "tags": [
             "Psychrometrics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -619,12 +701,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P150"
+            "FE Reference Handbook 10.5 \u2013 P150"
           ],
           "tags": [
             "Entropy",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "On a Temperature-Entropy (T-s) diagram, an actual (adiabatic but irreversible) expansion process in a turbine is represented by a line that:",
@@ -636,12 +720,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P150"
+            "FE Reference Handbook 10.5 \u2013 P150"
           ],
           "tags": [
             "Entropy",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Heat is transferred from a reservoir at \\(600\\ \\text{K}\\) to a reservoir at \\(300\\ \\text{K}\\). The total entropy generation (\\(\\Delta S_{total}\\)) for this process is calculated to be \\(2.0\\ \\text{kJ/K}\\). If the environmental dead state temperature is \\(T_L = 298\\ \\text{K}\\), determine the Irreversibility (\\(I\\)) of this process.",
@@ -653,16 +739,18 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P151"
+            "FE Reference Handbook 10.5 \u2013 P151"
           ],
           "tags": [
             "Exergy Availability",
             "Irreversibility",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "Steam enters a turbine with a specific enthalpy \\(h = 3200\\ \\text{kJ/kg}\\) and specific entropy \\(s = 7.0\\ \\text{kJ/kg}\\cdot\\text{K}\\). The environmental “dead state” conditions are \\(T_L = 298\\ \\text{K}\\) (\\(25^\\circ\\text{C}\\)), \\(P_L = 100\\ \\text{kPa}\\), \\(h_L = 105\\ \\text{kJ/kg}\\), and \\(s_L = 0.36\\ \\text{kJ/kg}\\cdot\\text{K}\\). Neglecting kinetic and potential energy, calculate the specific flow exergy (availability, \\(\\Psi\\)) of the steam at the inlet.",
+          "question": "Steam enters a turbine with a specific enthalpy \\(h = 3200\\ \\text{kJ/kg}\\) and specific entropy \\(s = 7.0\\ \\text{kJ/kg}\\cdot\\text{K}\\). The environmental \u201cdead state\u201d conditions are \\(T_L = 298\\ \\text{K}\\) (\\(25^\\circ\\text{C}\\)), \\(P_L = 100\\ \\text{kPa}\\), \\(h_L = 105\\ \\text{kJ/kg}\\), and \\(s_L = 0.36\\ \\text{kJ/kg}\\cdot\\text{K}\\). Neglecting kinetic and potential energy, calculate the specific flow exergy (availability, \\(\\Psi\\)) of the steam at the inlet.",
           "choices": {
             "A": "\\(1116\\ \\text{kJ/kg}\\)",
             "B": "\\(1980\\ \\text{kJ/kg}\\)",
@@ -671,13 +759,15 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P151"
+            "FE Reference Handbook 10.5 \u2013 P151"
           ],
           "tags": [
             "Exergy Availability",
             "Open System Exergy Availability",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air (ideal gas, \\(k=1.4\\)) is compressed isentropically from \\(100\\ \\text{kPa}\\) and \\(300\\ \\text{K}\\) to \\(500\\ \\text{kPa}\\). Calculate the final temperature.",
@@ -689,12 +779,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P144, 150"
+            "FE Reference Handbook 10.5 \u2013 P144, 150"
           ],
           "tags": [
             "Entropy",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A \\(5\\ \\text{kg}\\) block of copper with a specific heat capacity of \\(0.385\\ \\text{kJ/kg}\\cdot\\text{K}\\) is heated from \\(27^\\circ\\text{C}\\) to \\(127^\\circ\\text{C}\\). Determine the total change in entropy of the copper block.",
@@ -706,12 +798,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P150"
+            "FE Reference Handbook 10.5 \u2013 P150"
           ],
           "tags": [
             "Entropy",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An isolated system undergoes an irreversible process. Which of the following statements correctly describes the change in total entropy (\\(\\Delta S_{total}\\))?",
@@ -723,12 +817,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P150"
+            "FE Reference Handbook 10.5 \u2013 P150"
           ],
           "tags": [
             "Entropy",
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An inventor claims to have developed a heat engine that receives \\(500\\ \\text{kJ}\\) of heat from a geothermal source at \\(150^\\circ\\text{C}\\) and produces \\(500\\ \\text{kJ}\\) of work output per cycle, rejecting no waste heat to the surroundings. Which statement correctly evaluates this claim?",
@@ -740,12 +836,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P149:",
-            "FE Reference Handbook 10.5 – P149"
+            "FE Reference Handbook 10.5 \u2013 P149:",
+            "FE Reference Handbook 10.5 \u2013 P149"
           ],
           "tags": [
             "Second Law Of Thermodynamics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -763,12 +861,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P151",
-            "FE Reference Handbook 10.5 – P151"
+            "FE Reference Handbook 10.5 \u2013 P151",
+            "FE Reference Handbook 10.5 \u2013 P151"
           ],
           "tags": [
             "Heats Of Reaction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Determine the standard enthalpy of combustion (\\(\\Delta H_r^\\circ\\)) for the reaction: \\(CO(g) + \\frac{1}{2}O_2(g) \\rightarrow CO_2(g)\\).\nGiven Standard Enthalpies of Formation (\\(\\Delta H_f^\\circ\\)):\n\\(CO(g) = -110.5\\ \\text{kJ/mol}\\)\n\n\\(CO_2(g) = -393.5\\ \\text{kJ/mol}\\)\n\n\\(O_2(g) = 0\\ \\text{kJ/mol}\\)",
@@ -780,11 +880,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P152"
+            "FE Reference Handbook 10.5 \u2013 P152"
           ],
           "tags": [
             "Heats Of Reaction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A combustion process utilizes \\(25\\ \\text{kg}\\) of air for every \\(1\\ \\text{kg}\\) of fuel. If the stoichiometric (theoretical) air-fuel ratio is calculated to be \\(17.2\\), determine the percent excess air.",
@@ -796,12 +898,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P152"
+            "FE Reference Handbook 10.5 \u2013 P152"
           ],
           "tags": [
             "Combustion Processes",
             "Heats Of Reaction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the stoichiometric air-fuel ratio by mass for Methane (\\(CH_4\\)). Assume the molecular weight of air is \\(29\\ \\text{kg/kmol}\\) and Methane is \\(16\\ \\text{kg/kmol}\\).",
@@ -813,12 +917,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P152"
+            "FE Reference Handbook 10.5 \u2013 P152"
           ],
           "tags": [
             "Combustion Processes",
             "Heats Of Reaction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Propane (\\(C_3H_8\\)) burns completely with the stoichiometric amount of air. Determining the coefficient of the nitrogen (\\(N_2\\)) term in the balanced product equation.",
@@ -830,12 +936,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P152"
+            "FE Reference Handbook 10.5 \u2013 P152"
           ],
           "tags": [
             "Combustion Processes",
             "Heats Of Reaction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -853,12 +961,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P154"
+            "FE Reference Handbook 10.5 \u2013 P154"
           ],
           "tags": [
             "Clausius Clapeyron Equation",
             "Phase Relations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Using the Clapeyron equation, determine the slope of the saturation pressure-temperature curve \\((dP/dT)_{sat}\\) for a substance at a state where \\(T = 300\\ \\text{K}\\), \\(h_{fg} = 2000\\ \\text{kJ/kg}\\), and the change in specific volume upon vaporization \\(v_{fg} = 2.5\\ \\text{m}^3/\\text{kg}\\).",
@@ -870,12 +980,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P154"
+            "FE Reference Handbook 10.5 \u2013 P154"
           ],
           "tags": [
             "Clapeyron Equation",
             "Phase Relations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Determine the number of degrees of freedom (\\(F\\)) for pure liquid water in equilibrium with its vapor (a saturated liquid-vapor mixture).",
@@ -887,12 +999,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P154"
+            "FE Reference Handbook 10.5 \u2013 P154"
           ],
           "tags": [
             "Gibbs Phase Rule",
             "Phase Relations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -910,11 +1024,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P173"
+            "FE Reference Handbook 10.5 \u2013 P173"
           ],
           "tags": [
             "Refrigeration And Hvac"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A two-stage heat pump operates with the following specific enthalpies:\n\\(h_1 = 410\\ \\text{kJ/kg}\\)\n\n\\(h_2 = 450\\ \\text{kJ/kg}\\)\n\n\\(h_3 = 250\\ \\text{kJ/kg}\\)\n\n\\(h_5 = 240\\ \\text{kJ/kg}\\)\n\n\\(h_6 = 280\\ \\text{kJ/kg}\\)\nAssume the mass flow rates are the same in each stage. Calculate the Coefficient of Performance for the heat pump (\\(COP_{HP}\\)).",
@@ -926,11 +1042,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P172"
+            "FE Reference Handbook 10.5 \u2013 P172"
           ],
           "tags": [
             "Refrigeration And Hvac"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An air refrigeration cycle operates between specific enthalpy limits. The enthalpy values are:\n\\(h_1 = 200\\ \\text{kJ/kg}\\) (at compressor inlet)\n\n\\(h_2 = 350\\ \\text{kJ/kg}\\) (at compressor exit)\n\n\\(h_3 = 280\\ \\text{kJ/kg}\\) (at turbine inlet)\n\n\\(h_4 = 140\\ \\text{kJ/kg}\\) (at turbine exit)\nDetermine the Coefficient of Performance (\\(COP_{ref}\\)) for this cycle.",
@@ -942,11 +1060,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P173"
+            "FE Reference Handbook 10.5 \u2013 P173"
           ],
           "tags": [
             "Refrigeration And Hvac"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Consider a two-stage refrigeration cycle with a flash chamber. Assume the mass flow rates are the same in each stage. The specific enthalpies at the key state points are given as:\n\\(h_1 = 410\\ \\text{kJ/kg}\\)\n\n\\(h_2 = 450\\ \\text{kJ/kg}\\)\n\n\\(h_5 = 240\\ \\text{kJ/kg}\\)\n\n\\(h_6 = 280\\ \\text{kJ/kg}\\)\n\n\\(h_8 = 140\\ \\text{kJ/kg}\\)\nCalculate the Coefficient of Performance for the refrigerator (\\(COP_{ref}\\)).",
@@ -958,11 +1078,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P172"
+            "FE Reference Handbook 10.5 \u2013 P172"
           ],
           "tags": [
             "Refrigeration And Hvac"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     }

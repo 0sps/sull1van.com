@@ -14,11 +14,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P19"
+            "FE Reference Handbook 10.5 \u2013 P19"
           ],
           "tags": [
             "Safety Data Sheet Sds"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -36,11 +38,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P21"
+            "FE Reference Handbook 10.5 \u2013 P21"
           ],
           "tags": [
             "Flammability"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A gas mixture consists of 50% Methane (LFL = 5.0) and 50% Propane (LFL = 2.1) by volume. Most nearly, what is the Lower Flammable Limit (LFL) of this mixture?",
@@ -52,11 +56,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P21"
+            "FE Reference Handbook 10.5 \u2013 P21"
           ],
           "tags": [
             "Flammability"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -74,12 +80,14 @@
           },
           "answer": "B",
           "references": [
-            "Refer to FE Reference Handbook 10.5 – Page 21",
-            "FE Reference Handbook 10.5 – P21"
+            "Refer to FE Reference Handbook 10.5 \u2013 Page 21",
+            "FE Reference Handbook 10.5 \u2013 P21"
           ],
           "tags": [
             "Granular Storage And Process Safety"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -88,20 +96,22 @@
       "subtopic": "Electrical Safety",
       "questions": [
         {
-          "question": "A worker comes into contact with a 60-Hz AC electrical circuit. According to the “Effects of Electrical Current on the Human Body” table, which current range corresponds to the “Let-go” threshold where a person can still voluntarily release the energized conductor?",
+          "question": "A worker comes into contact with a 60-Hz AC electrical circuit. According to the \u201cEffects of Electrical Current on the Human Body\u201d table, which current range corresponds to the \u201cLet-go\u201d threshold where a person can still voluntarily release the energized conductor?",
           "choices": {
-            "A": "1 mA – 3 mA",
-            "B": "6 mA – 16 mA",
-            "C": "18 mA – 30 mA",
+            "A": "1 mA \u2013 3 mA",
+            "B": "6 mA \u2013 16 mA",
+            "C": "18 mA \u2013 30 mA",
             "D": "Over 50 mA"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P22"
+            "FE Reference Handbook 10.5 \u2013 P22"
           ],
           "tags": [
             "Electrical Safety"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -120,14 +130,16 @@
           "answer": "D",
           "references": [
             "Handbook Reference:",
-            "FE Reference Handbook 10.5 – Page 23"
+            "FE Reference Handbook 10.5 \u2013 Page 23"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
-          "question": "A worker’s forearms (Surface Area \\( SA = 2,000\\ \\mathrm{cm^2} \\)) are in contact with wastewater containing a chemical at a concentration of \\( 5.0\\ \\mathrm{mg/L} \\). The chemical-specific permeability constant (\\( PC \\)) is \\( 0.001\\ \\mathrm{cm/hr} \\). The exposure occurs for 1 hour/day (\\( ET \\)), 250 days/year (\\( EF \\)) over 10 years (\\( ED \\)). The worker’s body weight (\\( BW \\)) is 70 kg, and the averaging time (\\( AT \\)) is 3,650 days (10 years). Using the handbook formula for Dermal contact with water, most nearly, what is the Absorbed Dose (AD)?",
+          "question": "A worker\u2019s forearms (Surface Area \\( SA = 2,000\\ \\mathrm{cm^2} \\)) are in contact with wastewater containing a chemical at a concentration of \\( 5.0\\ \\mathrm{mg/L} \\). The chemical-specific permeability constant (\\( PC \\)) is \\( 0.001\\ \\mathrm{cm/hr} \\). The exposure occurs for 1 hour/day (\\( ET \\)), 250 days/year (\\( EF \\)) over 10 years (\\( ED \\)). The worker\u2019s body weight (\\( BW \\)) is 70 kg, and the averaging time (\\( AT \\)) is 3,650 days (10 years). Using the handbook formula for Dermal contact with water, most nearly, what is the Absorbed Dose (AD)?",
           "choices": {
             "A": "\\( 9.8 \\times 10^{-5}\\ \\mathrm{mg/kg\\text{-}day} \\)",
             "B": "\\( 2.5 \\times 10^{-2}\\ \\mathrm{mg/kg\\text{-}day} \\)",
@@ -136,14 +148,16 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – Page 28"
+            "FE Reference Handbook 10.5 \u2013 Page 28"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
-          "question": "A chemical has a Cancer Slope Factor of \\( 0.055\\ (\\mathrm{mg/kg\\text{-}day})^{-1} \\). If a resident’s calculated Chronic Daily Intake (CDI) is \\( 0.004\\ \\mathrm{mg/kg\\text{-}day} \\), most nearly, what is the estimated incremental lifetime cancer risk?",
+          "question": "A chemical has a Cancer Slope Factor of \\( 0.055\\ (\\mathrm{mg/kg\\text{-}day})^{-1} \\). If a resident\u2019s calculated Chronic Daily Intake (CDI) is \\( 0.004\\ \\mathrm{mg/kg\\text{-}day} \\), most nearly, what is the estimated incremental lifetime cancer risk?",
           "choices": {
             "A": "\\( 2.2 \\times 10^{-4} \\)",
             "B": "\\( 1.4 \\times 10^{-2} \\)",
@@ -152,11 +166,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – Page 25"
+            "FE Reference Handbook 10.5 \u2013 Page 25"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A chronic toxicity study establishes a No-Observed-Adverse-Effect Level (NOAEL) of \\( 50\\ \\mathrm{mg/kg\\text{-}day} \\) for a substance. To derive a human Reference Dose (RfD), uncertainty factors for interspecies variation (\\( 10 \\)) and intraspecies variation (\\( 10 \\)) are applied. Most nearly, what is the resulting RfD?",
@@ -168,11 +184,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – Page 25"
+            "FE Reference Handbook 10.5 \u2013 Page 25"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A child (15 kg) plays in soil contaminated with lead at a concentration of \\( 400\\ \\mathrm{mg/kg} \\). The child ingests \\( 200\\ \\mathrm{mg} \\) of soil per day for 350 days per year over a 6-year period. Assume the fraction ingested from the contaminated source (FI) is 1.0. Most nearly, what is the Chronic Daily Intake (CDI) for this child over the exposure duration?",
@@ -184,11 +202,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – Page 28"
+            "FE Reference Handbook 10.5 \u2013 Page 28"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Workers in a facility are exposed to toluene vapors. The average daily intake concentration is calculated to be \\( 0.03\\ \\mathrm{mg/kg\\text{-}day} \\). The Reference Dose (RfD) for toluene is \\( 0.08\\ \\mathrm{mg/kg\\text{-}day} \\). Most nearly, what is the Hazard Index (HI) for this exposure?",
@@ -200,22 +220,26 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – Page 25"
+            "FE Reference Handbook 10.5 \u2013 Page 25"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A groundwater supply is contaminated with arsenic at a concentration of \\( 0.05\\ \\mathrm{mg/L} \\). An adult resident (70 kg) consumes 2.0 L of this water daily for 20 years. The Cancer Slope Factor (CSF) for arsenic is \\( 1.5\\ (\\mathrm{mg/kg\\text{-}day})^{-1} \\). Assume the averaging time for carcinogens is 70 years (25,550 days). Most nearly, what is the excess lifetime cancer risk for this resident?\n\\( 1.5 \\times 10^{-5} \\)\n\n\\( 6.1 \\times 10^{-4} \\)\n\n\\( 4.3 \\times 10^{-4} \\)\n\n\\( 2.1 \\times 10^{-3} \\)",
           "choices": {},
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – Page 24, 28"
+            "FE Reference Handbook 10.5 \u2013 Page 24, 28"
           ],
           "tags": [
             "Risk Assessment Toxicology"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -233,11 +257,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P26"
+            "FE Reference Handbook 10.5 \u2013 P26"
           ],
           "tags": [
             "Chemical Compatibility Chart"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -255,11 +281,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P27"
+            "FE Reference Handbook 10.5 \u2013 P27"
           ],
           "tags": [
             "Detailed Corrosion Data On Construction Materials"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -277,11 +305,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P30"
+            "FE Reference Handbook 10.5 \u2013 P30"
           ],
           "tags": [
             "Concentrations Of Vaporized Liquids"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -299,11 +329,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P31"
+            "FE Reference Handbook 10.5 \u2013 P31"
           ],
           "tags": [
             "Ergonomics"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Ergonomics"
         },
         {
           "question": "A worker performs a lifting task with a frequency of 1 lift per minute (\\( F = 1 \\)). The duration of the task is 45 minutes. The vertical location of the hands is 20 inches. What is the Frequency Multiplier (FM)?",
@@ -315,11 +347,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P31"
+            "FE Reference Handbook 10.5 \u2013 P31"
           ],
           "tags": [
             "Ergonomics"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Ergonomics"
         }
       ]
     },
@@ -337,11 +371,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P33"
+            "FE Reference Handbook 10.5 \u2013 P33"
           ],
           "tags": [
             "Incidence Variable Values"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A plant with 100 employees (Total hours worked \\( T = 200,000 \\)) has 8 recordable incidents. Most nearly, what is the Total injury/illness incidence rate (IR)?",
@@ -353,11 +389,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P33"
+            "FE Reference Handbook 10.5 \u2013 P33"
           ],
           "tags": [
             "Incidence Variable Values"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -375,11 +413,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P33"
+            "FE Reference Handbook 10.5 \u2013 P33"
           ],
           "tags": [
             "Noise Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A worker is exposed to \\( 90\\ \\mathrm{dBA} \\) for 4 hours and \\( 95\\ \\mathrm{dBA} \\) for 3 hours. Mst nearly, what is the total noise dose \\( D \\)?",
@@ -391,11 +431,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P34"
+            "FE Reference Handbook 10.5 \u2013 P34"
           ],
           "tags": [
             "Noise Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A pump operating as a point source generates a sound pressure level (SPL) of \\( 92\\ \\mathrm{dBA} \\) at a distance of \\( 10\\ \\mathrm{ft} \\). Most nearly, what is the sound pressure level at a distance of \\( 40\\ \\mathrm{ft} \\)?",
@@ -407,11 +449,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P33"
+            "FE Reference Handbook 10.5 \u2013 P33"
           ],
           "tags": [
             "Noise Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     }

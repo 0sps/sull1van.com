@@ -14,11 +14,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resultant Two Dimensions"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Given the three concurrent forces shown in the graph below, calculate the magnitude of the resultant force and its direction with respect to the positive x-axis. The values are most nearly:\n[Resultant of Three Forces](https://journey2pe.com/wp-content/uploads/2024/12/0105.png)",
@@ -30,11 +32,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resultant Two Dimensions"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Given the three concurrent coplanar forces shown in the figure below, the magnitude and direction (relative to the positive x-axis) of the resultant force are most nearly:\n[Resultant of Three Forces](https://journey2pe.com/wp-content/uploads/2024/12/0104.png)",
@@ -46,11 +50,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resultant Two Dimensions"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Two static forces of \\( 400\\,\\mathrm{N} \\) and \\( 800\\,\\mathrm{N} \\) act concurrently on a point as shown in the figure. The angle between the two applied forces is \\( 45^\\circ \\). The magnitude and direction (relative to the \\( 800\\,\\mathrm{N} \\) force) of the resultant force are most nearly:\n[Resultant of Two Forces](https://journey2pe.com/wp-content/uploads/2024/12/0102.png)",
@@ -62,11 +68,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resultant Two Dimensions"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Two concurrent forces are acting at a point as shown below. The first force has a magnitude of \\( 420 \\, \\mathrm{N} \\) and the second force is \\( 600 \\, \\mathrm{N} \\). The angle between the two forces is \\( 60^\\circ \\).\n[Concurrent Forces Diagram](https://journey2pe.com/wp-content/uploads/2024/08/0082-1.png)\nWhat are the magnitude and the direction of the resultant force (with respect to the \\( 600 \\, \\mathrm{N} \\) force), respectively?",
@@ -78,11 +86,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resultant Two Dimensions"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -100,11 +110,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Resolution Of A Force"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -115,18 +127,20 @@
         {
           "question": "A couple is formed by a force \\( F \\) with components \\( F_x = 3 \\ \\mathrm{N} \\), \\( F_y = 4 \\ \\mathrm{N} \\), and \\( F_z = -2 \\ \\mathrm{N} \\) applied at point \\( A(2, 0, 1) \\ \\mathrm{m} \\), and a force \\( -F \\) applied at point \\( B(0, 3, 0) \\ \\mathrm{m} \\). What is the resulting moment vector of this couple?",
           "choices": {
-            "A": "\\( -2\\mathbf{i} – 7\\mathbf{j} – 17\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)",
+            "A": "\\( -2\\mathbf{i} \u2013 7\\mathbf{j} \u2013 17\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)",
             "B": "\\( 2\\mathbf{i} + 7\\mathbf{j} + 17\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)",
-            "C": "\\( 6\\mathbf{i} + 12\\mathbf{j} – 0\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)",
-            "D": "\\( 2\\mathbf{i} – 3\\mathbf{j} + 1\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)"
+            "C": "\\( 6\\mathbf{i} + 12\\mathbf{j} \u2013 0\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)",
+            "D": "\\( 2\\mathbf{i} \u2013 3\\mathbf{j} + 1\\mathbf{k} \\ \\mathrm{N \\cdot m} \\)"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Moments Couples"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A system of forces acts on a structural plate. The system consists of two forces: \\( 50 \\ \\mathrm{N} \\) acting at coordinates \\( (0, 5) \\ \\mathrm{m} \\) in the positive x-direction, and \\( -50 \\ \\mathrm{N} \\) acting at coordinates \\( (0, -5) \\ \\mathrm{m} \\) in the negative x-direction. What is the magnitude of the couple?",
@@ -138,11 +152,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Moments Couples"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -151,7 +167,7 @@
       "subtopic": "Systems of Forces",
       "questions": [
         {
-          "question": "A \\( 50\\,\\mathrm{N} \\) sphere is supported by two rigid, frictionless planes as shown in the figure. Plane \\( AB \\) is inclined at an angle of \\( 30^\\circ \\) to the horizontal, while plane \\( AC \\) is perfectly vertical. The most nearly correct magnitudes of the reaction forces exerted by the planes on the sphere are:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 550 480\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red-large\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"red\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"480\" width=\"550\"></rect>\n<rect fill=\"lightgrey\" height=\"320\" stroke=\"black\" stroke-width=\"2\" width=\"20\" x=\"350\" y=\"50\"></rect>\n<rect fill=\"lightgrey\" height=\"20\" stroke=\"black\" stroke-width=\"2\" transform=\"rotate(30, 350, 350)\" width=\"320\" x=\"50\" y=\"350\"></rect>\n<circle cx=\"350\" cy=\"350\" fill=\"lightblue\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"270\" cy=\"211.4\" fill=\"lightblue\" r=\"80\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"350\" y1=\"350\" y2=\"350\"></line>\n<path d=\"M 280 350 A 70 70 0 0 1 289.4 315\" fill=\"none\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" x=\"245\" y=\"335\">30°</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"360\" y=\"35\">C</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"375\" y=\"375\">A</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"70\" y=\"190\">B</text>\n<line marker-end=\"url(#arrow-red-large)\" stroke=\"red\" stroke-width=\"3\" x1=\"480\" x2=\"350\" y1=\"211.4\" y2=\"211.4\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"28\" font-style=\"italic\" x=\"495\" y=\"220\">R<tspan baseline-shift=\"sub\" font-size=\"20\">AC</tspan></text>\n<line marker-end=\"url(#arrow-red-large)\" stroke=\"red\" stroke-width=\"3\" x1=\"155\" x2=\"230\" y1=\"411\" y2=\"281\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"28\" font-style=\"italic\" x=\"100\" y=\"440\">R<tspan baseline-shift=\"sub\" font-size=\"20\">AB</tspan></text>\n</svg>",
+          "question": "A \\( 50\\,\\mathrm{N} \\) sphere is supported by two rigid, frictionless planes as shown in the figure. Plane \\( AB \\) is inclined at an angle of \\( 30^\\circ \\) to the horizontal, while plane \\( AC \\) is perfectly vertical. The most nearly correct magnitudes of the reaction forces exerted by the planes on the sphere are:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 550 480\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red-large\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"red\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"480\" width=\"550\"></rect>\n<rect fill=\"lightgrey\" height=\"320\" stroke=\"black\" stroke-width=\"2\" width=\"20\" x=\"350\" y=\"50\"></rect>\n<rect fill=\"lightgrey\" height=\"20\" stroke=\"black\" stroke-width=\"2\" transform=\"rotate(30, 350, 350)\" width=\"320\" x=\"50\" y=\"350\"></rect>\n<circle cx=\"350\" cy=\"350\" fill=\"lightblue\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"270\" cy=\"211.4\" fill=\"lightblue\" r=\"80\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"350\" y1=\"350\" y2=\"350\"></line>\n<path d=\"M 280 350 A 70 70 0 0 1 289.4 315\" fill=\"none\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" x=\"245\" y=\"335\">30\u00b0</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"360\" y=\"35\">C</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"375\" y=\"375\">A</text>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"70\" y=\"190\">B</text>\n<line marker-end=\"url(#arrow-red-large)\" stroke=\"red\" stroke-width=\"3\" x1=\"480\" x2=\"350\" y1=\"211.4\" y2=\"211.4\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"28\" font-style=\"italic\" x=\"495\" y=\"220\">R<tspan baseline-shift=\"sub\" font-size=\"20\">AC</tspan></text>\n<line marker-end=\"url(#arrow-red-large)\" stroke=\"red\" stroke-width=\"3\" x1=\"155\" x2=\"230\" y1=\"411\" y2=\"281\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"28\" font-style=\"italic\" x=\"100\" y=\"440\">R<tspan baseline-shift=\"sub\" font-size=\"20\">AB</tspan></text>\n</svg>",
           "choices": {
             "A": "\\( R_{AB} = 57.7\\,\\mathrm{N},\\ R_{AC} = 28.9\\,\\mathrm{N} \\)",
             "B": "\\( R_{AB} = 86.6\\,\\mathrm{N},\\ R_{AC} = 50.0\\,\\mathrm{N} \\)",
@@ -160,12 +176,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the most nearly correct horizontal and vertical reaction components at supports \\( A \\) and \\( C \\) for the three-hinged arch shown below. The arch has an internal hinge at point \\( B \\).\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"50 50 950 450\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"red\"></path>\n</marker>\n<pattern height=\"8\" id=\"hatch\" patterntransform=\"rotate(-45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"white\" height=\"450\" width=\"950\" x=\"50\" y=\"50\"></rect>\n<path d=\"M 200,300 Q 520,-100 840,300\" fill=\"none\" stroke=\"lightblue\" stroke-width=\"6\"></path>\n<circle cx=\"200\" cy=\"300\" fill=\"white\" r=\"5\" stroke=\"black\" stroke-width=\"2\"></circle>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" x=\"170\" y=\"285\">A</text>\n<circle cx=\"520\" cy=\"100\" fill=\"white\" r=\"5\" stroke=\"black\" stroke-width=\"2\"></circle>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" x=\"540\" y=\"90\">B</text>\n<circle cx=\"840\" cy=\"300\" fill=\"white\" r=\"5\" stroke=\"black\" stroke-width=\"2\"></circle>\n<text font-family=\"sans-serif\" font-size=\"24\" font-weight=\"bold\" x=\"855\" y=\"285\">C</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"2.5\" x1=\"200\" x2=\"280\" y1=\"200\" y2=\"200\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"120\" y=\"195\">P<tspan baseline-shift=\"sub\" font-size=\"16\">1</tspan> = 10 kN</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"2.5\" x1=\"680\" x2=\"680\" y1=\"100\" y2=\"140\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"580\" y=\"90\">P<tspan baseline-shift=\"sub\" font-size=\"16\">2</tspan> = 20 kN</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"red\" stroke-width=\"2\" x1=\"120\" x2=\"180\" y1=\"300\" y2=\"300\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"120\" y=\"285\">R<tspan baseline-shift=\"sub\" font-size=\"16\">Ax</tspan></text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"red\" stroke-width=\"2\" x1=\"200\" x2=\"200\" y1=\"380\" y2=\"340\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"145\" y=\"375\">R<tspan baseline-shift=\"sub\" font-size=\"16\">Ay</tspan></text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"red\" stroke-width=\"2\" x1=\"920\" x2=\"860\" y1=\"300\" y2=\"300\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"880\" y=\"285\">R<tspan baseline-shift=\"sub\" font-size=\"16\">Cx</tspan></text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"red\" stroke-width=\"2\" x1=\"840\" x2=\"840\" y1=\"380\" y2=\"340\"></line>\n<text fill=\"red\" font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"860\" y=\"375\">R<tspan baseline-shift=\"sub\" font-size=\"16\">Cy</tspan></text>\n<polygon fill=\"lightblue\" points=\"200,300 188,324 212,324\" stroke=\"black\" stroke-width=\"1.5\"></polygon>\n<rect fill=\"url(#hatch)\" height=\"12\" stroke=\"none\" width=\"48\" x=\"176\" y=\"324\"></rect>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"176\" x2=\"224\" y1=\"324\" y2=\"324\"></line>\n<polygon fill=\"lightblue\" points=\"840,300 828,324 852,324\" stroke=\"black\" stroke-width=\"1.5\"></polygon>\n<rect fill=\"url(#hatch)\" height=\"12\" stroke=\"none\" width=\"48\" x=\"816\" y=\"324\"></rect>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"816\" x2=\"864\" y1=\"324\" y2=\"324\"></line>\n<path d=\"M 200 352 L 200 408 M 300 352 L 300 408 M 520 352 L 520 408 M 680 352 L 680 408 M 840 352 L 840 408\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"200\" x2=\"300\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" x=\"250\" y=\"370\">2.5 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"300\" x2=\"520\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" x=\"410\" y=\"370\">5.5 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"520\" x2=\"680\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" x=\"600\" y=\"370\">4 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"680\" x2=\"840\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" x=\"760\" y=\"370\">4 m</text>\n<path d=\"M 200 412 L 200 468 M 840 412 L 840 468\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"200\" x2=\"840\" y1=\"440\" y2=\"440\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" x=\"520\" y=\"435\">16 m</text>\n<path d=\"M 112 300 L 168 300 M 112 200 L 168 200 M 112 100 L 168 100\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"140\" x2=\"140\" y1=\"300\" y2=\"200\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" transform=\"translate(130, 250) rotate(-90)\">2.5 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"140\" x2=\"140\" y1=\"200\" y2=\"100\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" transform=\"translate(130, 150) rotate(-90)\">2.5 m</text>\n<path d=\"M 532 300 L 588 300 M 532 100 L 588 100\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"560\" x2=\"560\" y1=\"300\" y2=\"100\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" transform=\"translate(550, 200) rotate(-90)\">5 m</text>\n<path d=\"M 852 300 L 908 300 M 852 140 L 908 140\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"880\" x2=\"880\" y1=\"300\" y2=\"140\"></line>\n<text font-family=\"sans-serif\" font-size=\"18\" font-style=\"italic\" text-anchor=\"middle\" transform=\"translate(870, 220) rotate(-90)\">4 m</text>\n</svg>",
@@ -177,12 +195,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A cantilever beam with a fixed support at \\( A \\) is subjected to a combination of loads as shown in the figure below. Determine the magnitude of a single equivalent resultant force (\\( F_R \\)) and its location (\\( x_R \\)), measured from support \\( A \\), that produces the exact same reaction force and moment at the fixed support.\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto 20px auto;\" viewbox=\"100 210 600 350\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n<pattern height=\"8\" id=\"hatch\" patterntransform=\"rotate(-45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"white\" height=\"350\" width=\"600\" x=\"100\" y=\"210\"></rect>\n<rect fill=\"url(#hatch)\" height=\"120\" stroke=\"none\" width=\"20\" x=\"130\" y=\"280\"></rect>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"150\" x2=\"150\" y1=\"280\" y2=\"400\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"170\" y=\"325\">A</text>\n<rect fill=\"lightgrey\" height=\"20\" stroke=\"black\" stroke-width=\"1.5\" width=\"520\" x=\"150\" y=\"330\"></rect>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"2\" x1=\"270\" x2=\"270\" y1=\"250\" y2=\"330\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"270\" y=\"240\">P = 50 kN</text>\n<polygon fill=\"lightgreen\" fill-opacity=\"0.3\" points=\"470,330 670,330 470,250\" stroke=\"none\"></polygon>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"470\" x2=\"470\" y1=\"250\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"510\" x2=\"510\" y1=\"266\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"550\" x2=\"550\" y1=\"282\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"590\" x2=\"590\" y1=\"298\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"630\" x2=\"630\" y1=\"314\" y2=\"330\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"490\" y=\"235\">w<tspan baseline-shift=\"sub\" font-size=\"12\">max</tspan> = 10 kN/m</text>\n<path d=\"M 350,390 Q 410,350 350,310\" fill=\"none\" marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"390\" y=\"300\">M = 20 kNm</text>\n<path d=\"M 150 422 L 150 478 M 270 422 L 270 478 M 350 422 L 350 478 M 470 422 L 470 478 M 670 422 L 670 478\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"270\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"270\" x2=\"350\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"350\" x2=\"470\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"470\" x2=\"670\" y1=\"450\" y2=\"450\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"210\" y=\"440\">3 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"310\" y=\"440\">2 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"410\" y=\"440\">3 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"570\" y=\"440\">5 m</text>\n<path d=\"M 150 482 L 150 538 M 670 482 L 670 538\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"670\" y1=\"510\" y2=\"510\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"410\" y=\"500\">13 m</text>\n</svg>",
@@ -194,12 +214,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A cantilever beam with a total length of \\( 13\\,\\mathrm{m} \\) has a fixed support at left end \\( A \\) and is subjected to the following loads:\nA downward point load of \\( P = 50\\,\\mathrm{kN} \\) located \\( 3\\,\\mathrm{m} \\) from \\( A \\).\n\nA counterclockwise concentrated moment of \\( M = 20\\,\\mathrm{kN \\cdot m} \\) located \\( 5\\,\\mathrm{m} \\) from \\( A \\).\n\nA triangular distributed load acting over the last \\( 5\\,\\mathrm{m} \\) of the beam. It has a maximum intensity of \\( w_{\\text{max}} = 10\\,\\mathrm{kN/m} \\) at \\( 8\\,\\mathrm{m} \\) from \\( A \\) and tapers down to \\( 0\\,\\mathrm{kN/m} \\) at the free end \\( B \\) (\\( 13\\,\\mathrm{m} \\) from \\( A \\)).\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto 20px auto;\" viewbox=\"100 210 600 350\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n<pattern height=\"8\" id=\"hatch\" patterntransform=\"rotate(-45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"white\" height=\"350\" width=\"600\" x=\"100\" y=\"210\"></rect>\n<rect fill=\"url(#hatch)\" height=\"120\" stroke=\"none\" width=\"20\" x=\"130\" y=\"280\"></rect>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"150\" x2=\"150\" y1=\"280\" y2=\"400\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"170\" y=\"325\">A</text>\n<rect fill=\"lightgrey\" height=\"20\" stroke=\"black\" stroke-width=\"1.5\" width=\"520\" x=\"150\" y=\"330\"></rect>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"2\" x1=\"270\" x2=\"270\" y1=\"250\" y2=\"330\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"270\" y=\"240\">P = 50 kN</text>\n<polygon fill=\"lightgreen\" fill-opacity=\"0.3\" points=\"470,330 670,330 470,250\" stroke=\"none\"></polygon>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"470\" x2=\"470\" y1=\"250\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"510\" x2=\"510\" y1=\"266\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"550\" x2=\"550\" y1=\"282\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"590\" x2=\"590\" y1=\"298\" y2=\"330\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"630\" x2=\"630\" y1=\"314\" y2=\"330\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"490\" y=\"235\">w<tspan baseline-shift=\"sub\" font-size=\"12\">max</tspan> = 10 kN/m</text>\n<path d=\"M 350,390 Q 410,350 350,310\" fill=\"none\" marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"390\" y=\"300\">M = 20 kNm</text>\n<path d=\"M 150 422 L 150 478 M 270 422 L 270 478 M 350 422 L 350 478 M 470 422 L 470 478 M 670 422 L 670 478\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"270\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"270\" x2=\"350\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"350\" x2=\"470\" y1=\"450\" y2=\"450\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"470\" x2=\"670\" y1=\"450\" y2=\"450\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"210\" y=\"440\">3 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"310\" y=\"440\">2 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"410\" y=\"440\">3 m</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"570\" y=\"440\">5 m</text>\n<path d=\"M 150 482 L 150 538 M 670 482 L 670 538\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"670\" y1=\"510\" y2=\"510\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"410\" y=\"500\">13 m</text>\n</svg>\nThe vertical reaction force (\\( R_A \\)) and the reaction moment (\\( M_A \\)) at the fixed support \\( A \\) are most nearly:",
@@ -211,12 +233,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A simply supported beam with a total span of \\( 12\\,\\mathrm{m} \\) is subjected to a \\( 50\\,\\mathrm{kN} \\) point load located \\( 3\\,\\mathrm{m} \\) from the left support (A). Additionally, a triangular distributed load acts over the right half of the beam. It has a maximum intensity of \\( 10\\,\\mathrm{kN/m} \\) starting at the midspan (\\( 6\\,\\mathrm{m} \\) from A) and tapers down to \\( 0\\,\\mathrm{kN/m} \\) at the right support (B). The most nearly correct vertical reaction forces at supports A and B are:\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0119.png)",
@@ -228,12 +252,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A load of \\( 100\\,\\mathrm{kg} \\) is suspended by two cables, \\( AC \\) and \\( BC \\), as shown in the figure. The most nearly correct tension forces in cables \\( AC \\) and \\( BC \\) are:\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0118.png)",
@@ -245,12 +271,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the most nearly correct horizontal and vertical reaction components at supports A (pin) and B (roller) for the given truss. Assume the horizontal distance between supports A and B is \\( 4\\,\\mathrm{m} \\), and the \\( 20\\,\\mathrm{kN} \\) horizontal force is applied at a vertical height of \\( 8\\,\\mathrm{m} \\) above support A.\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0117.png)",
@@ -262,12 +290,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the most nearly correct horizontal and vertical reaction components at supports A and B for the given cable system.\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0116.png)",
@@ -279,12 +309,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A beam is subjected to a point load of \\( 10\\,\\mathrm{kN} \\) acting at a \\( 45^\\circ \\) angle and a triangular distributed load with a maximum intensity of \\( 10\\,\\mathrm{kN/m} \\), as shown in the figure below. Determine the most nearly correct vertical reactions at support A (pin) and support B (roller).\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0115.png)",
@@ -296,12 +328,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A structural frame is subjected to a \\( 10\\,\\mathrm{kip} \\) point load applied at an angle of \\( 60^\\circ \\) as shown in the figure. The horizontal distance from the fixed support A to the load application point is \\( 12\\,\\mathrm{ft} \\), and the vertical offset is \\( 3.5\\,\\mathrm{ft} \\). The magnitude and direction of the reaction moment at the fixed support A are most nearly:\n[figure](https://journey2pe.com/wp-content/uploads/2025/01/0114.png)",
@@ -313,12 +347,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A simply supported beam with a \\( 14\\,\\mathrm{ft} \\) span is subjected to a uniformly distributed load of \\( 5\\,\\mathrm{kips/ft} \\) over the first \\( 8\\,\\mathrm{ft} \\) from the left support and a concentrated point load of \\( 30\\,\\mathrm{kips} \\) located \\( 10\\,\\mathrm{ft} \\) from the left support. The vertical reaction forces \\( R_A \\) (left support) and \\( R_B \\) (right support) are most nearly:\n[Equilibrium Requirements](https://journey2pe.com/wp-content/uploads/2025/01/0112.png)",
@@ -330,12 +366,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A simply supported beam with a \\( 10\\,\\mathrm{ft} \\) span is subjected to a triangular distributed load that increases from \\( 0\\,\\mathrm{kips/ft} \\) at support A (left) to \\( 20\\,\\mathrm{kips/ft} \\) at support B (right). The vertical reaction forces \\( R_A \\) and \\( R_B \\) are most nearly:\n[Equilibrium Requirements](https://journey2pe.com/wp-content/uploads/2025/01/0111.png)",
@@ -347,12 +385,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A static system is subjected to point loads as shown in the figure below. For the system to remain in static equilibrium, the required magnitude of the applied force \\( P \\) is most nearly:\n[Equilibrium Requirements](https://journey2pe.com/wp-content/uploads/2025/01/0107.png)",
@@ -364,12 +404,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A structural component is subjected to a system of point loads as shown in the figure. For the given loading condition, the support must provide a clockwise resisting moment of \\( 25\\,\\mathrm{kN \\cdot m} \\) to maintain static equilibrium. The structure is subjected to a \\( 80\\,\\mathrm{kN} \\) force, an unknown force \\( F \\), and a \\( 20\\,\\mathrm{kN} \\) force at the locations indicated. The required magnitude and direction of force \\( F \\) to achieve this equilibrium state is most nearly:\n[Loading Condition Diagram](https://journey2pe.com/wp-content/uploads/2024/09/0085.png)",
@@ -381,12 +423,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P94"
+            "FE Reference Handbook 10.5 \u2013 P94"
           ],
           "tags": [
             "Equilibrium Requirements",
             "Systems Of Forces"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -395,7 +439,7 @@
       "subtopic": "Centroids of Masses, Areas, Lengths, and Volumes",
       "questions": [
         {
-          "question": "Determine the \\( x \\)-coordinate of the centroid (\\( x_c \\)) for the shaded area bounded by the parabolic curve \\( y = 0.25x^2 \\), the x-axis, and the vertical line \\( x = 4 \\ \\mathrm{m} \\).\n<svg style=\"max-width: 450px;\" viewbox=\"0 0 400 300\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<pattern height=\"8\" id=\"hatch-blue\" patterntransform=\"rotate(45 0 0)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#aaccff\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n<marker id=\"arrow-axis\" markerheight=\"7\" markerwidth=\"10\" orient=\"auto\" refx=\"9\" refy=\"3.5\">\n<polygon fill=\"black\" points=\"0 0, 10 3.5, 0 7\"></polygon>\n</marker>\n</defs>\n<path d=\"M 100 250 Q 200 250 300 50 L 300 250 Z\" fill=\"url(#hatch-blue)\" stroke=\"blue\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<rect fill=\"rgba(255,0,0,0.5)\" height=\"112.5\" stroke=\"red\" stroke-width=\"1\" width=\"10\" x=\"240\" y=\"137.5\"></rect>\n<text fill=\"white\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\" text-anchor=\"middle\" transform=\"rotate(-90 245,193)\" x=\"245\" y=\"193\">dA</text>\n<line stroke=\"red\" stroke-width=\"1\" x1=\"240\" x2=\"250\" y1=\"260\" y2=\"260\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"12\" font-style=\"italic\" text-anchor=\"middle\" x=\"245\" y=\"275\">dx</text>\n<line marker-end=\"url(#arrow-axis)\" stroke=\"black\" stroke-width=\"2\" x1=\"80\" x2=\"350\" y1=\"250\" y2=\"250\"></line>\n<line marker-end=\"url(#arrow-axis)\" stroke=\"black\" stroke-width=\"2\" x1=\"100\" x2=\"100\" y1=\"270\" y2=\"30\"></line>\n<text font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"355\" y=\"255\">x</text>\n<text font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"85\" y=\"35\">y</text>\n<text font-family=\"Arial\" font-size=\"14\" font-style=\"italic\" x=\"85\" y=\"265\">0</text>\n<text fill=\"blue\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"180\" y=\"130\">y = 0.25x²</text>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"300\" x2=\"300\" y1=\"250\" y2=\"255\"></line>\n<text font-family=\"Arial\" font-size=\"14\" text-anchor=\"middle\" x=\"300\" y=\"270\">x = 4 m</text>\n</svg>",
+          "question": "Determine the \\( x \\)-coordinate of the centroid (\\( x_c \\)) for the shaded area bounded by the parabolic curve \\( y = 0.25x^2 \\), the x-axis, and the vertical line \\( x = 4 \\ \\mathrm{m} \\).\n<svg style=\"max-width: 450px;\" viewbox=\"0 0 400 300\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<pattern height=\"8\" id=\"hatch-blue\" patterntransform=\"rotate(45 0 0)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#aaccff\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n<marker id=\"arrow-axis\" markerheight=\"7\" markerwidth=\"10\" orient=\"auto\" refx=\"9\" refy=\"3.5\">\n<polygon fill=\"black\" points=\"0 0, 10 3.5, 0 7\"></polygon>\n</marker>\n</defs>\n<path d=\"M 100 250 Q 200 250 300 50 L 300 250 Z\" fill=\"url(#hatch-blue)\" stroke=\"blue\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<rect fill=\"rgba(255,0,0,0.5)\" height=\"112.5\" stroke=\"red\" stroke-width=\"1\" width=\"10\" x=\"240\" y=\"137.5\"></rect>\n<text fill=\"white\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\" text-anchor=\"middle\" transform=\"rotate(-90 245,193)\" x=\"245\" y=\"193\">dA</text>\n<line stroke=\"red\" stroke-width=\"1\" x1=\"240\" x2=\"250\" y1=\"260\" y2=\"260\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"12\" font-style=\"italic\" text-anchor=\"middle\" x=\"245\" y=\"275\">dx</text>\n<line marker-end=\"url(#arrow-axis)\" stroke=\"black\" stroke-width=\"2\" x1=\"80\" x2=\"350\" y1=\"250\" y2=\"250\"></line>\n<line marker-end=\"url(#arrow-axis)\" stroke=\"black\" stroke-width=\"2\" x1=\"100\" x2=\"100\" y1=\"270\" y2=\"30\"></line>\n<text font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"355\" y=\"255\">x</text>\n<text font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"85\" y=\"35\">y</text>\n<text font-family=\"Arial\" font-size=\"14\" font-style=\"italic\" x=\"85\" y=\"265\">0</text>\n<text fill=\"blue\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"180\" y=\"130\">y = 0.25x\u00b2</text>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"300\" x2=\"300\" y1=\"250\" y2=\"255\"></line>\n<text font-family=\"Arial\" font-size=\"14\" text-anchor=\"middle\" x=\"300\" y=\"270\">x = 4 m</text>\n</svg>",
           "choices": {
             "A": "\\( 2.00 \\ \\mathrm{m} \\)",
             "B": "\\( 2.67 \\ \\mathrm{m} \\)",
@@ -404,11 +448,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Centroids Of Masses Areas Lengths And Volumes"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A composite section consists of a rectangle and a triangle, as shown in the figure. The rectangle has a width of \\( 5\\,\\mathrm{in} \\) and a height of \\( 4\\,\\mathrm{in} \\), while the attached triangle has a horizontal height (base) of \\( 2\\,\\mathrm{in} \\) and a vertical base of \\( 4\\,\\mathrm{in} \\). The coordinates \\( (\\bar{x}, \\bar{y}) \\) for the centroid of the entire composite section, measured from the bottom-left corner, are most nearly:\n[Centroid of Section](https://journey2pe.com/wp-content/uploads/2025/04/0140.png)",
@@ -420,11 +466,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Centroids Of Masses Areas Lengths And Volumes"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -442,11 +490,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the symmetric T-section shown in the figure, determine the most nearly correct moment of inertia with respect to its centroidal x-axis (\\( I_x \\)).\n<svg style=\"max-width: 350px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 450 600\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"600\" width=\"450\"></rect>\n<polygon fill=\"#ADD8E6\" points=\"100,100 300,100 300,140 220,140 220,500 180,500 180,140 100,140\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"380\" y1=\"248.6\" y2=\"248.6\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"370\" y=\"238.6\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"200\" x2=\"200\" y1=\"540\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"215\" y=\"55\">y</text>\n<path d=\"M 100,45 L 100,75 M 300,45 L 300,75\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"100\" x2=\"200\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"150\" y=\"52\">5</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"200\" x2=\"300\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"52\">5</text>\n<path d=\"M 310,100 L 360,100 M 310,140 L 360,140 M 310,500 L 360,500\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"100\" y2=\"140\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"end\" x=\"325\" y=\"125\">2</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"140\" y2=\"500\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" transform=\"rotate(-90, 325, 320)\" x=\"325\" y=\"320\">18</text>\n<path d=\"M 180,520 L 180,560 M 220,520 L 220,560\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"140\" x2=\"180\" y1=\"540\" y2=\"540\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"260\" x2=\"220\" y1=\"540\" y2=\"540\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"200\" y=\"545\">2</text>\n</svg>",
@@ -458,11 +508,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the hollow circular section shown in the figure, determine the most nearly correct moment of inertia (\\( I \\)) and radius of gyration (\\( r \\)) with respect to its centroidal axis. The section has the following dimensions:\nOuter Diameter = \\( 6\\,\\mathrm{m} \\)\n\nWall Thickness = \\( 0.5\\,\\mathrm{m} \\)\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 450 450\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"450\" width=\"450\"></rect>\n<circle cx=\"225\" cy=\"200\" fill=\"lightblue\" r=\"150\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"225\" cy=\"200\" fill=\"white\" r=\"125\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"35\" x2=\"415\" y1=\"200\" y2=\"200\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"405\" y=\"185\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"225\" x2=\"225\" y1=\"390\" y2=\"10\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"240\" y=\"25\">y</text>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"75\" x2=\"75\" y1=\"210\" y2=\"430\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"375\" x2=\"375\" y1=\"210\" y2=\"430\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"75\" x2=\"375\" y1=\"410\" y2=\"410\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"225\" y=\"400\">Outer Diameter = 6 m</text>\n<line marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"315\" x2=\"365\" y1=\"95\" y2=\"50\"></line>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"365\" x2=\"420\" y1=\"50\" y2=\"50\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"392\" y=\"42\">t = 0.5 m</text>\n</svg>",
@@ -474,12 +526,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P95, 96"
+            "FE Reference Handbook 10.5 \u2013 P95, 96"
           ],
           "tags": [
             "Moment Of Inertia",
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the symmetric I-section shown in the figure, determine the most nearly correct moment of inertia with respect to its centroidal y-axis (\\( I_y \\)). The section consists of a web and two identical flanges with the following dimensions:\nFlanges (Top and Bottom): Width = \\( 10\\,\\mathrm{in} \\), Thickness = \\( 2\\,\\mathrm{in} \\)\n\nWeb: Width = \\( 2\\,\\mathrm{in} \\), Height = \\( 16\\,\\mathrm{in} \\)\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 20px auto;\" viewbox=\"0 0 500 700\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"700\" width=\"500\"></rect>\n<rect fill=\"lightblue\" height=\"40\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"150\"></rect>\n<rect fill=\"lightblue\" height=\"320\" stroke=\"black\" stroke-width=\"2\" width=\"40\" x=\"230\" y=\"190\"></rect>\n<rect fill=\"lightblue\" height=\"40\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"510\"></rect>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"60\" x2=\"440\" y1=\"350\" y2=\"350\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"430\" y=\"340\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"630\" y2=\"70\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"260\" y=\"75\">y</text>\n<path d=\"M 150,140 L 150,90 M 230,140 L 230,90 M 270,140 L 270,90 M 350,140 L 350,90\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"230\" y1=\"110\" y2=\"110\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"230\" x2=\"270\" y1=\"110\" y2=\"110\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"270\" x2=\"350\" y1=\"110\" y2=\"110\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"190\" y=\"100\">4</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"250\" y=\"100\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"310\" y=\"100\">4</text>\n<path d=\"M 150,560 L 150,610 M 250,560 L 250,610 M 350,560 L 350,610\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"250\" y1=\"590\" y2=\"590\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"350\" y1=\"590\" y2=\"590\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"200\" y=\"580\">5</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"300\" y=\"580\">5</text>\n<path d=\"M 360,150 L 410,150 M 360,190 L 410,190 M 280,350 L 410,350 M 360,510 L 410,510 M 360,550 L 410,550\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"150\" y2=\"190\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"190\" y2=\"350\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"350\" y2=\"510\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"510\" y2=\"550\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 170)\" x=\"380\" y=\"170\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 270)\" x=\"380\" y=\"270\">8</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 430)\" x=\"380\" y=\"430\">8</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 530)\" x=\"380\" y=\"530\">2</text>\n</svg>",
@@ -491,11 +545,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the moment of inertia of the symmetric I-section with respect to the centroidal x-axis. The section has the following dimensions:\nFlange: Width = \\( 10 \\, \\mathrm{in} \\), Thickness = \\( 2 \\, \\mathrm{in} \\)\n\nWeb: Width = \\( 2 \\, \\mathrm{in} \\), Height = \\( 16 \\, \\mathrm{in} \\)\n\nTotal Height = \\( 20 \\, \\mathrm{in} \\)\n[I-section diagram](https://journey2pe.com/wp-content/uploads/2025/04/0137-1.png)\nThe moment of inertia is most nearly:",
@@ -507,11 +563,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the symmetric T-section shown in the figure, determine the most nearly correct moment of inertia with respect to its centroidal y-axis (\\( I_y \\)).\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 450 600\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"600\" width=\"450\"></rect>\n<polygon fill=\"#ADD8E6\" points=\"100,100 300,100 300,140 220,140 220,500 180,500 180,140 100,140\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"380\" y1=\"500\" y2=\"500\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"370\" y=\"480\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"200\" x2=\"200\" y1=\"540\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"215\" y=\"45\">y</text>\n<path d=\"M 100,45 L 100,75 M 300,45 L 300,75\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"100\" x2=\"200\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"150\" y=\"52\">5</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"200\" x2=\"300\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"52\">5</text>\n<path d=\"M 310,100 L 360,100 M 310,140 L 360,140 M 310,500 L 360,500\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"100\" y2=\"140\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"end\" x=\"325\" y=\"125\">2</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"140\" y2=\"500\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" transform=\"rotate(-90, 325, 320)\" x=\"325\" y=\"320\">18</text>\n<path d=\"M 180,520 L 180,560 M 220,520 L 220,560\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"140\" x2=\"180\" y1=\"540\" y2=\"540\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"260\" x2=\"220\" y1=\"540\" y2=\"540\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"200\" y=\"545\">2</text>\n</svg>",
@@ -523,11 +581,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the rectangular area shown in the figure, the moment of inertia about the x-axis (\\( I_x \\)) is most nearly:\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 400\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"axisArrow\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n<marker id=\"dimArrowStart\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"0\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 10 0 L 0 5 L 10 10 z\" fill=\"black\"></path>\n</marker>\n<marker id=\"dimArrowEnd\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<line marker-end=\"url(#axisArrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"60\" y1=\"380\" y2=\"20\"></line>\n<line marker-end=\"url(#axisArrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"460\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"45\" y=\"30\">y</text>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"445\" y=\"370\">x</text>\n<rect fill=\"#d3d3d3\" height=\"250\" stroke=\"black\" stroke-width=\"1.5\" width=\"200\" x=\"160\" y=\"55\"></rect>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"60\" x2=\"160\" y1=\"180\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"110\" y=\"170\">2m</text>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"160\" x2=\"360\" y1=\"180\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"260\" y=\"170\">4m</text>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"55\" y2=\"55\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"305\" y2=\"305\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"380\" y2=\"380\"></line>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"410\" x2=\"410\" y1=\"55\" y2=\"305\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" transform=\"rotate(-90 395 180)\" x=\"395\" y=\"180\">5m</text>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"410\" x2=\"410\" y1=\"305\" y2=\"380\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" transform=\"rotate(-90 395 342.5)\" x=\"395\" y=\"342.5\">1.5m</text>\n</svg>",
@@ -539,11 +599,13 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the rectangular area shown in the figure, the moment of inertia about the y-axis (\\( I_y \\)) is most nearly:\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 400\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"axisArrow\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n<marker id=\"dimArrowStart\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"0\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 10 0 L 0 5 L 10 10 z\" fill=\"black\"></path>\n</marker>\n<marker id=\"dimArrowEnd\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<line marker-end=\"url(#axisArrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"60\" y1=\"380\" y2=\"20\"></line>\n<line marker-end=\"url(#axisArrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"460\" y1=\"380\" y2=\"380\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"45\" y=\"30\">y</text>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"445\" y=\"370\">x</text>\n<rect fill=\"#d3d3d3\" height=\"250\" stroke=\"black\" stroke-width=\"1.5\" width=\"200\" x=\"160\" y=\"55\"></rect>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"60\" x2=\"160\" y1=\"180\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"110\" y=\"170\">2m</text>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"160\" x2=\"360\" y1=\"180\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" x=\"260\" y=\"170\">4m</text>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"55\" y2=\"55\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"305\" y2=\"305\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"370\" x2=\"430\" y1=\"380\" y2=\"380\"></line>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"410\" x2=\"410\" y1=\"55\" y2=\"305\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" transform=\"rotate(-90 395 180)\" x=\"395\" y=\"180\">5m</text>\n<line marker-end=\"url(#dimArrowEnd)\" marker-start=\"url(#dimArrowStart)\" stroke=\"black\" stroke-width=\"1\" x1=\"410\" x2=\"410\" y1=\"305\" y2=\"380\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"16\" font-style=\"italic\" text-anchor=\"middle\" transform=\"rotate(-90 395 342.5)\" x=\"395\" y=\"342.5\">1.5m</text>\n</svg>",
@@ -555,11 +617,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P95"
+            "FE Reference Handbook 10.5 \u2013 P95"
           ],
           "tags": [
             "Moment Of Inertia"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -577,11 +641,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the hollow circular section shown in the figure, determine the most nearly correct moment of inertia (\\( I \\)) and radius of gyration (\\( r \\)) with respect to its centroidal axis. The section has the following dimensions:\nOuter Diameter = \\( 6\\,\\mathrm{m} \\)\n\nWall Thickness = \\( 0.5\\,\\mathrm{m} \\)\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 450 450\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"450\" width=\"450\"></rect>\n<circle cx=\"225\" cy=\"200\" fill=\"lightblue\" r=\"150\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"225\" cy=\"200\" fill=\"white\" r=\"125\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"35\" x2=\"415\" y1=\"200\" y2=\"200\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"405\" y=\"185\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"225\" x2=\"225\" y1=\"390\" y2=\"10\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"240\" y=\"25\">y</text>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"75\" x2=\"75\" y1=\"210\" y2=\"430\"></line>\n<line stroke=\"black\" stroke-width=\"1\" x1=\"375\" x2=\"375\" y1=\"210\" y2=\"430\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"75\" x2=\"375\" y1=\"410\" y2=\"410\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"225\" y=\"400\">Outer Diameter = 6 m</text>\n<line marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"315\" x2=\"365\" y1=\"95\" y2=\"50\"></line>\n<line stroke=\"black\" stroke-width=\"1.5\" x1=\"365\" x2=\"420\" y1=\"50\" y2=\"50\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"392\" y=\"42\">t = 0.5 m</text>\n</svg>",
@@ -593,12 +659,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P95, 96"
+            "FE Reference Handbook 10.5 \u2013 P95, 96"
           ],
           "tags": [
             "Moment Of Inertia",
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "For the symmetric T-section shown in the figure, determine the most nearly correct radius of gyration with respect to its centroidal x-axis (\\( r_x \\)).\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 600\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"600\" width=\"500\"></rect>\n<rect fill=\"lightblue\" height=\"40\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"100\"></rect>\n<rect fill=\"lightblue\" height=\"360\" stroke=\"black\" stroke-width=\"2\" width=\"40\" x=\"230\" y=\"140\"></rect>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"60\" x2=\"440\" y1=\"248\" y2=\"248\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"430\" y=\"238\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"550\" y2=\"50\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"265\" y=\"65\">y</text>\n<path d=\"M 150,90 L 150,40 M 230,90 L 230,40 M 270,90 L 270,40 M 350,90 L 350,40\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"230\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"230\" x2=\"270\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"270\" x2=\"350\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"190\" y=\"50\">4</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"250\" y=\"50\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"310\" y=\"50\">4</text>\n<path d=\"M 360,100 L 410,100 M 360,140 L 410,140 M 280,500 L 410,500\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"100\" y2=\"140\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"140\" y2=\"500\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 125)\" x=\"380\" y=\"125\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 320)\" x=\"380\" y=\"320\">18</text>\n</svg>",
@@ -610,11 +678,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the most nearly correct radius of gyration with respect to the centroidal y-axis (\\( r_y \\)) for the symmetric I-section shown below. The section consists of a web and two identical flanges with the following dimensions:\nFlanges (Top and Bottom): Width = \\( 10\\,\\mathrm{in} \\), Thickness = \\( 2\\,\\mathrm{in} \\)\n\nWeb: Width = \\( 2\\,\\mathrm{in} \\), Height = \\( 16\\,\\mathrm{in} \\)\n<svg style=\"max-width: 500px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 700\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"700\" width=\"500\"></rect>\n<rect fill=\"lightblue\" height=\"40\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"150\"></rect>\n<rect fill=\"lightblue\" height=\"320\" stroke=\"black\" stroke-width=\"2\" width=\"40\" x=\"230\" y=\"190\"></rect>\n<rect fill=\"lightblue\" height=\"40\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"510\"></rect>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"60\" x2=\"440\" y1=\"350\" y2=\"350\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"430\" y=\"340\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"630\" y2=\"70\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" font-style=\"italic\" x=\"265\" y=\"85\">y</text>\n<path d=\"M 150,140 L 150,90 M 230,140 L 230,90 M 270,140 L 270,90 M 350,140 L 350,90\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"230\" y1=\"110\" y2=\"110\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"230\" x2=\"270\" y1=\"110\" y2=\"110\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"270\" x2=\"350\" y1=\"110\" y2=\"110\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"190\" y=\"100\">4</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"250\" y=\"100\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"310\" y=\"100\">4</text>\n<path d=\"M 150,560 L 150,610 M 250,560 L 250,610 M 350,560 L 350,610\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"250\" y1=\"590\" y2=\"590\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"350\" y1=\"590\" y2=\"590\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"200\" y=\"580\">5</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" x=\"300\" y=\"580\">5</text>\n<path d=\"M 360,150 L 410,150 M 360,190 L 410,190 M 280,350 L 410,350 M 360,510 L 410,510 M 360,550 L 410,550\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"150\" y2=\"190\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"190\" y2=\"350\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"350\" y2=\"510\"></line>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"390\" x2=\"390\" y1=\"510\" y2=\"550\"></line>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 170)\" x=\"380\" y=\"170\">2</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 270)\" x=\"380\" y=\"270\">8</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 430)\" x=\"380\" y=\"430\">8</text>\n<text font-family=\"sans-serif\" font-size=\"20\" text-anchor=\"middle\" transform=\"rotate(-90, 380, 530)\" x=\"380\" y=\"530\">2</text>\n</svg>",
@@ -626,11 +696,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Determine the most nearly correct radius of gyration with respect to the centroidal y-axis (\\( r_y \\)) for the symmetric T-section shown below. The section consists of a flange and a web with the following dimensions:\nFlange: Width = \\( 10\\,\\mathrm{in} \\), Thickness = \\( 2\\,\\mathrm{in} \\)\n\nWeb: Width = \\( 2\\,\\mathrm{in} \\), Height = \\( 18\\,\\mathrm{in} \\)\n<svg style=\"max-width: 450px; width: 100%; height: auto; display: block; margin: 0 auto;\" viewbox=\"0 0 450 600\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"600\" width=\"450\"></rect>\n<polygon fill=\"#ADD8E6\" points=\"100,100 300,100 300,140 220,140 220,500 180,500 180,140 100,140\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"380\" y1=\"500\" y2=\"500\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"370\" y=\"480\">x</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-dasharray=\"8,4\" stroke-width=\"1.5\" x1=\"200\" x2=\"200\" y1=\"540\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"215\" y=\"55\">y</text>\n<path d=\"M 100,45 L 100,75 M 300,45 L 300,75\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"100\" x2=\"200\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"150\" y=\"52\">5</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"200\" x2=\"300\" y1=\"60\" y2=\"60\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"52\">5</text>\n<path d=\"M 310,100 L 360,100 M 310,140 L 360,140 M 310,500 L 360,500\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"100\" y2=\"140\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"end\" x=\"325\" y=\"125\">2</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"140\" y2=\"500\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" transform=\"rotate(-90, 325, 320)\" x=\"325\" y=\"320\">18</text>\n<path d=\"M 180,520 L 180,560 M 220,520 L 220,560\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"140\" x2=\"180\" y1=\"540\" y2=\"540\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"260\" x2=\"220\" y1=\"540\" y2=\"540\"></line>\n<text alignment-baseline=\"middle\" font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"200\" y=\"545\">2</text>\n</svg>",
@@ -642,11 +714,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Radius Of Gyration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -655,7 +729,7 @@
       "subtopic": "Friction",
       "questions": [
         {
-          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on a flat horizontal surface. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). A horizontal force of \\( 10\\,\\mathrm{kN} \\) is applied to the centroid of the block. If the coefficient of static friction between the block and the surface is \\( \\mu_s = 0.25 \\), which of the following statements is most nearly correct regarding the block’s impending motion?\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 350\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"350\" width=\"500\"></rect>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"50\" x2=\"450\" y1=\"250\" y2=\"250\"></line>\n<path d=\"M 70 250 L 50 270 M 110 250 L 90 270 M 150 250 L 130 270 M 190 250 L 170 270 M 230 250 L 210 270 M 270 250 L 250 270 M 310 250 L 290 270 M 350 250 L 330 270 M 390 250 L 370 270 M 430 250 L 410 270\" stroke=\"gray\" stroke-width=\"1.5\"></path>\n<rect fill=\"lightblue\" height=\"200\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"50\"></rect>\n<circle cx=\"250\" cy=\"150\" fill=\"black\" r=\"4\"></circle>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"150\" y2=\"220\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"260\" y=\"210\">W</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"140\" y1=\"150\" y2=\"150\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"100\" y=\"135\">10 kN</text>\n<line marker-end=\"url(#arrow)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"250\" x2=\"170\" y1=\"250\" y2=\"250\"></line>\n<text fill=\"#d32f2f\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"180\" y=\"280\">F<tspan baseline-shift=\"sub\" font-size=\"12\">s</tspan></text>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"250\" y2=\"180\"></line>\n<text fill=\"#1976d2\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"230\" y=\"195\">N</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"30\" y2=\"30\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"22\">1 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"370\" x2=\"370\" y1=\"50\" y2=\"250\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"start\" x=\"380\" y=\"155\">1 m</text>\n</svg>",
+          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on a flat horizontal surface. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). A horizontal force of \\( 10\\,\\mathrm{kN} \\) is applied to the centroid of the block. If the coefficient of static friction between the block and the surface is \\( \\mu_s = 0.25 \\), which of the following statements is most nearly correct regarding the block\u2019s impending motion?\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 350\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"350\" width=\"500\"></rect>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"50\" x2=\"450\" y1=\"250\" y2=\"250\"></line>\n<path d=\"M 70 250 L 50 270 M 110 250 L 90 270 M 150 250 L 130 270 M 190 250 L 170 270 M 230 250 L 210 270 M 270 250 L 250 270 M 310 250 L 290 270 M 350 250 L 330 270 M 390 250 L 370 270 M 430 250 L 410 270\" stroke=\"gray\" stroke-width=\"1.5\"></path>\n<rect fill=\"lightblue\" height=\"200\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"50\"></rect>\n<circle cx=\"250\" cy=\"150\" fill=\"black\" r=\"4\"></circle>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"150\" y2=\"220\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"260\" y=\"210\">W</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"140\" y1=\"150\" y2=\"150\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"100\" y=\"135\">10 kN</text>\n<line marker-end=\"url(#arrow)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"250\" x2=\"170\" y1=\"250\" y2=\"250\"></line>\n<text fill=\"#d32f2f\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"180\" y=\"280\">F<tspan baseline-shift=\"sub\" font-size=\"12\">s</tspan></text>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"250\" y2=\"180\"></line>\n<text fill=\"#1976d2\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"230\" y=\"195\">N</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"30\" y2=\"30\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"22\">1 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"370\" x2=\"370\" y1=\"50\" y2=\"250\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"start\" x=\"380\" y=\"155\">1 m</text>\n</svg>",
           "choices": {
             "A": "The block will not move; the maximum static friction force is \\( 6.13\\,\\mathrm{kN} \\).",
             "B": "The block will move; the maximum static friction force is \\( 6.13\\,\\mathrm{kN} \\).",
@@ -664,14 +738,16 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Friction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
-          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on an inclined plane. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). The coefficient of static friction between the block and the incline is \\( \\mu_s = 0.3 \\). Determine the most nearly correct critical angle (\\( \\theta \\)) at which the block begins to slide.\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 400 300\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowEnd\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"300\" width=\"400\"></rect>\n<line stroke=\"black\" stroke-dasharray=\"6,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"250\"></line>\n<line stroke=\"black\" stroke-width=\"3\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"140\"></line>\n<path d=\"M 120 250 A 70 70 0 0 0 115.7 225.8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"130\" y=\"240\">θ</text>\n<g transform=\"translate(50, 250) rotate(-20)\">\n<rect fill=\"lightblue\" height=\"60\" stroke=\"black\" stroke-width=\"2\" width=\"60\" x=\"120\" y=\"-60\"></rect>\n<circle cx=\"150\" cy=\"-30\" fill=\"black\" r=\"3\"></circle>\n<line marker-end=\"url(#arrowEnd)\" stroke=\"black\" stroke-width=\"1.5\" transform=\"rotate(20, 150, -30)\" x1=\"150\" x2=\"150\" y1=\"-30\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" transform=\"rotate(20, 150, -30)\" x=\"160\" y=\"35\">W</text>\n</g>\n</svg>",
+          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on an inclined plane. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). The coefficient of static friction between the block and the incline is \\( \\mu_s = 0.3 \\). Determine the most nearly correct critical angle (\\( \\theta \\)) at which the block begins to slide.\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 400 300\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowEnd\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"300\" width=\"400\"></rect>\n<line stroke=\"black\" stroke-dasharray=\"6,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"250\"></line>\n<line stroke=\"black\" stroke-width=\"3\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"140\"></line>\n<path d=\"M 120 250 A 70 70 0 0 0 115.7 225.8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"130\" y=\"240\">\u03b8</text>\n<g transform=\"translate(50, 250) rotate(-20)\">\n<rect fill=\"lightblue\" height=\"60\" stroke=\"black\" stroke-width=\"2\" width=\"60\" x=\"120\" y=\"-60\"></rect>\n<circle cx=\"150\" cy=\"-30\" fill=\"black\" r=\"3\"></circle>\n<line marker-end=\"url(#arrowEnd)\" stroke=\"black\" stroke-width=\"1.5\" transform=\"rotate(20, 150, -30)\" x1=\"150\" x2=\"150\" y1=\"-30\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" transform=\"rotate(20, 150, -30)\" x=\"160\" y=\"35\">W</text>\n</g>\n</svg>",
           "choices": {
             "A": "\\( 16.7^\\circ \\)",
             "B": "\\( 30.0^\\circ \\)",
@@ -680,11 +756,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P96"
+            "FE Reference Handbook 10.5 \u2013 P96"
           ],
           "tags": [
             "Friction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A \\( 10 \\, \\mathrm{kg} \\) block starting from rest slides down a \\( 28^\\circ \\) inclined plane. After \\( 12 \\, \\mathrm{s} \\), the block reaches a velocity of \\( 18 \\, \\mathrm{m/s} \\). Determine the kinetic coefficient of friction between the block and the inclined surface.",
@@ -696,11 +774,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P108"
+            "FE Reference Handbook 10.5 \u2013 P108"
           ],
           "tags": [
             "Friction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -718,11 +798,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Screw Thread"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "An engineer applies an external moment of \\( M = 40 \\ \\mathrm{N \\cdot m} \\) to the axis of a square-thread screw-jack to tighten it. The mean thread radius is \\( r = 0.02 \\ \\mathrm{m} \\), the pitch angle is \\( \\alpha = 5^{\\circ} \\), and the friction angle is \\( \\phi = 10^{\\circ} \\). What is the maximum load \\( P \\) on the jack applied along the line of the axis that can be lifted?",
@@ -734,11 +816,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Screw Thread"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A square-thread screw-jack is used to raise a machine part. The load on the jack applied along and on the line of the axis is \\( P = 10,000 \\ \\mathrm{N} \\). The mean thread radius is \\( r = 0.025 \\ \\mathrm{m} \\) and the pitch angle of the thread is \\( \\alpha = 4^{\\circ} \\). If the appropriate coefficient of static friction is \\( \\mu = 0.15 \\), what external moment \\( M \\) applied to the axis of the screw is required for screw tightening?",
@@ -750,11 +834,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Screw Thread"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -772,11 +858,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Belt Friction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A worker is using a rope wrapped around a fixed cylindrical post to safely hold a heavy load. The load creates a force of \\( F_1 = 3,000 \\ \\mathrm{N} \\) in the direction of impending motion. The rope is wrapped around the post for exactly one full turn. If the coefficient of static friction between the rope and the post is \\( \\mu = 0.30 \\), what is the minimum force \\( F_2 \\) the worker must apply to resist the impending motion?",
@@ -788,11 +876,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Belt Friction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -810,11 +900,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Statically Determinate Truss"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A planar Pratt-style truss is subjected to a horizontal load of \\( 15 \\ \\mathrm{kN} \\) at joint \\( D \\) and a vertical point load of \\( 40 \\ \\mathrm{kN} \\) at joint \\( B \\). It is supported by a pin at \\( A \\) and a roller at \\( C \\). Determine the internal axial force in the diagonal member \\( BF \\).\n<svg style=\"max-width: 600px;\" viewbox=\"0 0 500 320\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowhead-p1\" markerheight=\"7\" markerwidth=\"10\" orient=\"auto\" refx=\"9\" refy=\"3.5\">\n<polygon fill=\"red\" points=\"0 0, 10 3.5, 0 7\"></polygon>\n</marker>\n</defs>\n<g stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\">\n<line x1=\"100\" x2=\"250\" y1=\"250\" y2=\"250\"></line> <line x1=\"250\" x2=\"400\" y1=\"250\" y2=\"250\"></line> <line x1=\"100\" x2=\"250\" y1=\"50\" y2=\"50\"></line> <line x1=\"250\" x2=\"400\" y1=\"50\" y2=\"50\"></line> <line x1=\"100\" x2=\"100\" y1=\"250\" y2=\"50\"></line> <line x1=\"250\" x2=\"250\" y1=\"250\" y2=\"50\"></line> <line x1=\"400\" x2=\"400\" y1=\"250\" y2=\"50\"></line> <line x1=\"100\" x2=\"250\" y1=\"250\" y2=\"50\"></line> <line x1=\"250\" x2=\"400\" y1=\"250\" y2=\"50\"></line> </g>\n<g fill=\"white\" stroke=\"black\" stroke-width=\"2\">\n<circle cx=\"100\" cy=\"250\" r=\"5\"></circle> <circle cx=\"250\" cy=\"250\" r=\"5\"></circle> <circle cx=\"400\" cy=\"250\" r=\"5\"></circle> <circle cx=\"100\" cy=\"50\" r=\"5\"></circle> <circle cx=\"250\" cy=\"50\" r=\"5\"></circle> <circle cx=\"400\" cy=\"50\" r=\"5\"></circle> </g>\n<polygon fill=\"none\" points=\"100,255 85,280 115,280\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"75\" x2=\"125\" y1=\"280\" y2=\"280\"></line>\n<path d=\"M 80 280 L 73 290 M 90 280 L 83 290 M 100 280 L 93 290 M 110 280 L 103 290 M 120 280 L 113 290\" stroke=\"black\" stroke-width=\"1\"></path>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"400\" x2=\"400\" y1=\"255\" y2=\"260\"></line>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"380\" x2=\"420\" y1=\"260\" y2=\"260\"></line>\n<circle cx=\"390\" cy=\"270\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"410\" cy=\"270\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"370\" x2=\"430\" y1=\"280\" y2=\"280\"></line>\n<path d=\"M 375 280 L 368 290 M 385 280 L 378 290 M 395 280 L 388 290 M 405 280 L 398 290 M 415 280 L 408 290 M 425 280 L 418 290\" stroke=\"black\" stroke-width=\"1\"></path>\n<line marker-end=\"url(#arrowhead-p1)\" stroke=\"red\" stroke-width=\"2\" x1=\"30\" x2=\"90\" y1=\"50\" y2=\"50\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" x=\"35\" y=\"40\">15 kN</text>\n<line marker-end=\"url(#arrowhead-p1)\" stroke=\"red\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"180\" y2=\"240\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" x=\"260\" y=\"210\">40 kN</text>\n<g fill=\"black\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\">\n<text x=\"75\" y=\"245\">A</text>\n<text x=\"230\" y=\"245\">B</text>\n<text x=\"415\" y=\"245\">C</text>\n<text x=\"75\" y=\"45\">D</text>\n<text x=\"245\" y=\"35\">E</text>\n<text x=\"415\" y=\"45\">F</text>\n</g>\n<g stroke=\"black\" stroke-width=\"1\">\n<line x1=\"440\" x2=\"465\" y1=\"50\" y2=\"50\"></line>\n<line x1=\"440\" x2=\"465\" y1=\"250\" y2=\"250\"></line>\n<line x1=\"455\" x2=\"455\" y1=\"50\" y2=\"250\"></line>\n<text fill=\"black\" font-family=\"Arial\" font-size=\"14\" x=\"470\" y=\"155\">4 m</text>\n<line x1=\"100\" x2=\"100\" y1=\"300\" y2=\"315\"></line>\n<line x1=\"250\" x2=\"250\" y1=\"300\" y2=\"315\"></line>\n<line x1=\"400\" x2=\"400\" y1=\"300\" y2=\"315\"></line>\n<line x1=\"100\" x2=\"250\" y1=\"310\" y2=\"310\"></line>\n<line x1=\"250\" x2=\"400\" y1=\"310\" y2=\"310\"></line>\n<text fill=\"black\" font-family=\"Arial\" font-size=\"14\" text-anchor=\"middle\" x=\"175\" y=\"305\">3 m</text>\n<text fill=\"black\" font-family=\"Arial\" font-size=\"14\" text-anchor=\"middle\" x=\"325\" y=\"305\">3 m</text>\n</g>\n</svg>",
@@ -826,11 +918,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Statically Determinate Truss"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A planar roof truss is subjected to a horizontal wind load \\( P \\) at the apex joint \\( D \\). It is supported by a pin at joint \\( A \\) and a roller at joint \\( C \\). Determine the internal axial force in the vertical member \\( BD \\).\n<svg style=\"max-width: 600px;\" viewbox=\"0 0 500 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowhead-p2\" markerheight=\"7\" markerwidth=\"10\" orient=\"auto\" refx=\"9\" refy=\"3.5\">\n<polygon fill=\"red\" points=\"0 0, 10 3.5, 0 7\"></polygon>\n</marker>\n</defs>\n<g stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\">\n<line x1=\"100\" x2=\"250\" y1=\"200\" y2=\"200\"></line> <line x1=\"250\" x2=\"400\" y1=\"200\" y2=\"200\"></line> <line x1=\"100\" x2=\"250\" y1=\"200\" y2=\"50\"></line> <line x1=\"400\" x2=\"250\" y1=\"200\" y2=\"50\"></line> <line x1=\"250\" x2=\"250\" y1=\"200\" y2=\"50\"></line> </g>\n<g fill=\"white\" stroke=\"black\" stroke-width=\"2\">\n<circle cx=\"100\" cy=\"200\" r=\"5\"></circle> <circle cx=\"250\" cy=\"200\" r=\"5\"></circle> <circle cx=\"400\" cy=\"200\" r=\"5\"></circle> <circle cx=\"250\" cy=\"50\" r=\"5\"></circle> </g>\n<polygon fill=\"none\" points=\"100,205 85,230 115,230\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"75\" x2=\"125\" y1=\"230\" y2=\"230\"></line>\n<path d=\"M 80 230 L 73 240 M 90 230 L 83 240 M 100 230 L 93 240 M 110 230 L 103 240 M 120 230 L 113 240\" stroke=\"black\" stroke-width=\"1\"></path>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"400\" x2=\"400\" y1=\"205\" y2=\"210\"></line>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"380\" x2=\"420\" y1=\"210\" y2=\"210\"></line>\n<circle cx=\"390\" cy=\"220\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"410\" cy=\"220\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"370\" x2=\"430\" y1=\"230\" y2=\"230\"></line>\n<path d=\"M 375 230 L 368 240 M 385 230 L 378 240 M 395 230 L 388 240 M 405 230 L 398 240 M 415 230 L 408 240 M 425 230 L 418 240\" stroke=\"black\" stroke-width=\"1\"></path>\n<line marker-end=\"url(#arrowhead-p2)\" stroke=\"red\" stroke-width=\"2\" x1=\"180\" x2=\"240\" y1=\"50\" y2=\"50\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" x=\"200\" y=\"40\">P</text>\n<g fill=\"black\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\">\n<text x=\"75\" y=\"195\">A</text>\n<text x=\"255\" y=\"225\">B</text>\n<text x=\"415\" y=\"195\">C</text>\n<text x=\"255\" y=\"40\">D</text>\n</g>\n</svg>",
@@ -842,11 +936,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Statically Determinate Truss"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A planar truss is loaded by a single vertical force \\( P \\) at joint \\( E \\). It is supported by a pin at \\( A \\) and a roller at \\( C \\). Determine the total number of zero-force members in this truss.\n<svg style=\"max-width: 600px;\" viewbox=\"0 0 500 280\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowhead-p1\" markerheight=\"7\" markerwidth=\"10\" orient=\"auto\" refx=\"9\" refy=\"3.5\">\n<polygon fill=\"red\" points=\"0 0, 10 3.5, 0 7\"></polygon>\n</marker>\n</defs>\n<g stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\">\n<line x1=\"100\" x2=\"250\" y1=\"200\" y2=\"200\"></line> <line x1=\"250\" x2=\"400\" y1=\"200\" y2=\"200\"></line> <line x1=\"100\" x2=\"250\" y1=\"100\" y2=\"100\"></line> <line x1=\"250\" x2=\"400\" y1=\"100\" y2=\"100\"></line> <line x1=\"100\" x2=\"100\" y1=\"200\" y2=\"100\"></line> <line x1=\"250\" x2=\"250\" y1=\"200\" y2=\"100\"></line> <line x1=\"400\" x2=\"400\" y1=\"200\" y2=\"100\"></line> <line x1=\"100\" x2=\"250\" y1=\"200\" y2=\"100\"></line> <line x1=\"400\" x2=\"250\" y1=\"200\" y2=\"100\"></line> </g>\n<g fill=\"white\" stroke=\"black\" stroke-width=\"2\">\n<circle cx=\"100\" cy=\"200\" r=\"5\"></circle> <circle cx=\"250\" cy=\"200\" r=\"5\"></circle> <circle cx=\"400\" cy=\"200\" r=\"5\"></circle> <circle cx=\"100\" cy=\"100\" r=\"5\"></circle> <circle cx=\"250\" cy=\"100\" r=\"5\"></circle> <circle cx=\"400\" cy=\"100\" r=\"5\"></circle> </g>\n<polygon fill=\"none\" points=\"100,205 85,230 115,230\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"75\" x2=\"125\" y1=\"230\" y2=\"230\"></line>\n<path d=\"M 80 230 L 73 240 M 90 230 L 83 240 M 100 230 L 93 240 M 110 230 L 103 240 M 120 230 L 113 240\" stroke=\"black\" stroke-width=\"1\"></path>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"400\" x2=\"400\" y1=\"205\" y2=\"210\"></line>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"380\" x2=\"420\" y1=\"210\" y2=\"210\"></line>\n<circle cx=\"390\" cy=\"220\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"410\" cy=\"220\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"370\" x2=\"430\" y1=\"230\" y2=\"230\"></line>\n<path d=\"M 375 230 L 368 240 M 385 230 L 378 240 M 395 230 L 388 240 M 405 230 L 398 240 M 415 230 L 408 240 M 425 230 L 418 240\" stroke=\"black\" stroke-width=\"1\"></path>\n<line marker-end=\"url(#arrowhead-p1)\" stroke=\"red\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"40\" y2=\"90\"></line>\n<text fill=\"red\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" x=\"260\" y=\"70\">P</text>\n<g fill=\"black\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\">\n<text x=\"75\" y=\"195\">A</text>\n<text x=\"255\" y=\"225\">B</text>\n<text x=\"415\" y=\"195\">C</text>\n<text x=\"75\" y=\"95\">D</text>\n<text x=\"225\" y=\"85\">E</text>\n<text x=\"415\" y=\"95\">F</text>\n</g>\n</svg>",
@@ -858,11 +954,13 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Statically Determinate Truss"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A unit moving load travels horizontally along the bottom chord (from joint \\(A\\) to joint \\(E\\)) of the planar Warren truss shown below. Determine the value of the influence line for the axial force in member \\(CD\\) when the unit load is located exactly at joint \\(C\\). Assume tension is positive and compression is negative.\n<svg style=\"max-width: 600px;\" viewbox=\"0 0 500 300\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<g stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\">\n<line x1=\"100\" x2=\"250\" y1=\"220\" y2=\"220\"></line> <line x1=\"250\" x2=\"400\" y1=\"220\" y2=\"220\"></line> <line x1=\"175\" x2=\"325\" y1=\"120\" y2=\"120\"></line> <line x1=\"100\" x2=\"175\" y1=\"220\" y2=\"120\"></line> <line x1=\"175\" x2=\"250\" y1=\"120\" y2=\"220\"></line> <line x1=\"250\" x2=\"325\" y1=\"220\" y2=\"120\"></line> <line x1=\"325\" x2=\"400\" y1=\"120\" y2=\"220\"></line> </g>\n<g fill=\"white\" stroke=\"black\" stroke-width=\"2\">\n<circle cx=\"100\" cy=\"220\" r=\"5\"></circle> <circle cx=\"250\" cy=\"220\" r=\"5\"></circle> <circle cx=\"400\" cy=\"220\" r=\"5\"></circle> <circle cx=\"175\" cy=\"120\" r=\"5\"></circle> <circle cx=\"325\" cy=\"120\" r=\"5\"></circle> </g>\n<polygon fill=\"none\" points=\"100,225 85,250 115,250\" stroke=\"black\" stroke-width=\"2\"></polygon>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"75\" x2=\"125\" y1=\"250\" y2=\"250\"></line>\n<path d=\"M 80 250 L 73 260 M 90 250 L 83 260 M 100 250 L 93 260 M 110 250 L 103 260 M 120 250 L 113 260\" stroke=\"black\" stroke-width=\"1\"></path>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"380\" x2=\"420\" y1=\"225\" y2=\"225\"></line>\n<circle cx=\"390\" cy=\"235\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<circle cx=\"410\" cy=\"235\" fill=\"none\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"370\" x2=\"430\" y1=\"245\" y2=\"245\"></line>\n<path d=\"M 375 245 L 368 255 M 385 245 L 378 255 M 395 245 L 388 255 M 405 245 L 398 255 M 415 245 L 408 255 M 425 245 L 418 255\" stroke=\"black\" stroke-width=\"1\"></path>\n<g fill=\"black\" font-family=\"Arial\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\">\n<text x=\"80\" y=\"215\">A</text>\n<text x=\"245\" y=\"245\">C</text>\n<text x=\"415\" y=\"215\">E</text>\n<text x=\"170\" y=\"105\">B</text>\n<text x=\"320\" y=\"105\">D</text>\n</g>\n<g stroke=\"black\" stroke-width=\"1\">\n<line x1=\"430\" x2=\"455\" y1=\"120\" y2=\"120\"></line>\n<line x1=\"430\" x2=\"455\" y1=\"220\" y2=\"220\"></line>\n<line x1=\"445\" x2=\"445\" y1=\"120\" y2=\"220\"></line>\n<text fill=\"black\" font-family=\"Arial\" font-size=\"14\" x=\"460\" y=\"175\">4 m</text>\n<line x1=\"100\" x2=\"100\" y1=\"270\" y2=\"295\"></line>\n<line x1=\"175\" x2=\"175\" y1=\"270\" y2=\"295\"></line>\n<line x1=\"250\" x2=\"250\" y1=\"270\" y2=\"295\"></line>\n<line x1=\"325\" x2=\"325\" y1=\"270\" y2=\"295\"></line>\n<line x1=\"400\" x2=\"400\" y1=\"270\" y2=\"295\"></line>\n<line x1=\"100\" x2=\"175\" y1=\"285\" y2=\"285\"></line>\n<line x1=\"175\" x2=\"250\" y1=\"285\" y2=\"285\"></line>\n<line x1=\"250\" x2=\"325\" y1=\"285\" y2=\"285\"></line>\n<line x1=\"325\" x2=\"400\" y1=\"285\" y2=\"285\"></line>\n</g>\n<g fill=\"black\" font-family=\"Arial\" font-size=\"14\" text-anchor=\"middle\">\n<text x=\"137.5\" y=\"280\">3 m</text>\n<text x=\"212.5\" y=\"280\">3 m</text>\n<text x=\"287.5\" y=\"280\">3 m</text>\n<text x=\"362.5\" y=\"280\">3 m</text>\n</g>\n</svg>",
@@ -874,11 +972,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P97"
+            "FE Reference Handbook 10.5 \u2013 P97"
           ],
           "tags": [
             "Statically Determinate Truss"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     }

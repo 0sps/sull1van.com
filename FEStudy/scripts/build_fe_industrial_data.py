@@ -9,7 +9,6 @@ from question_bank_loader import load_question_bank
 ROOT = Path(__file__).resolve().parent.parent
 BLUEPRINT_PATH = ROOT / "data" / "fe_industrial_blueprint.json"
 MAP_PATH = ROOT / "data" / "question_topic_map.json"
-OVERRIDES_PATH = ROOT / "data" / "question_taxonomy_overrides.json"
 SUMMARY_PATH = ROOT / "data" / "question_bank_summary.json"
 NORMALIZED_JSON_PATH = ROOT / "data" / "normalized-question-bank.json"
 APP_DATA_JS_PATH = ROOT / "data" / "app-data.js"
@@ -87,20 +86,6 @@ def build_section_lookup(sections):
     return {section["id"]: section for section in sections}
 
 
-def load_assignment_overrides():
-    if not OVERRIDES_PATH.exists():
-        return {}
-    payload = json.loads(OVERRIDES_PATH.read_text())
-    assignments = payload.get("assignments", [])
-    return {
-        assignment["questionId"]: {
-            "sectionId": assignment["sectionId"],
-            "officialSubtopic": assignment["officialSubtopic"],
-        }
-        for assignment in assignments
-    }
-
-
 def main():
     raw_payload = load_question_bank(ROOT)
     blueprint = json.loads(BLUEPRINT_PATH.read_text())
@@ -108,7 +93,6 @@ def main():
     sections = blueprint["sections"]
     section_lookup = build_section_lookup(sections)
     section_rules = mapping["sectionRules"]
-    assignment_overrides = load_assignment_overrides()
 
     normalized_questions = []
     unmatched_questions = []
@@ -121,23 +105,24 @@ def main():
             for question in source_subtopic.get("questions", []):
                 question_text = question.get("question", "")
                 tags = question.get("tags", [])
-                blob = normalize_text(
-                    [
-                        source_topic_name,
-                        source_subtopic_name,
-                        question.get("id", ""),
-                        question_text,
-                        " ".join(tags),
-                    ]
-                )
                 question_type = detect_question_type(question)
-                override = assignment_overrides.get(question.get("id"))
 
-                if override:
-                    section_id = override["sectionId"]
+                # Priority 1: inline fields baked into the source question
+                if question.get("sectionId") and question.get("officialSubtopic"):
+                    section_id = question["sectionId"]
                     section = section_lookup[section_id]
-                    official_subtopic = override["officialSubtopic"]
+                    official_subtopic = question["officialSubtopic"]
                 else:
+                    # Priority 2: keyword heuristic fallback
+                    blob = normalize_text(
+                        [
+                            source_topic_name,
+                            source_subtopic_name,
+                            question.get("id", ""),
+                            question_text,
+                            " ".join(tags),
+                        ]
+                    )
                     section_rule = match_section(blob, source_topic_name, section_rules)
 
                     if not section_rule:

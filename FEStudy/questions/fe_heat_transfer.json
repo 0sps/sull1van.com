@@ -17,7 +17,9 @@
           "tags": [
             "Approximate Solution For Solid With Sudden Convection",
             "Conduction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A long cylinder is cooling in a medium such that the Biot number is calculated to be \\(Bi = 1.0\\). Determine \\(\\zeta_1\\) and \\(C_1\\).",
@@ -29,12 +31,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P206"
+            "FE Reference Handbook 10.5 \u2013 P206"
           ],
           "tags": [
             "Approximate Solution For Solid With Sudden Convection",
             "Conduction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A large plane wall of thickness \\(2L = 0.2\\ \\text{m}\\) (\\(L = 0.1\\ \\text{m}\\)) has a thermal diffusivity of \\(\\alpha = 1 \\times 10^{-5}\\ \\text{m}^2/\\text{s}\\). What is the Fourier number (\\(Fo\\)) at time \\(t = 5\\ \\text{minutes}\\)?",
@@ -46,12 +50,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P206"
+            "FE Reference Handbook 10.5 \u2013 P206"
           ],
           "tags": [
             "Approximate Solution For Solid With Sudden Convection",
             "Conduction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A 2 kg steel block (\\(c = 500\\ \\text{J}/(\\text{kg}\\cdot\\text{K})\\)) is initially at \\(400^\\circ\\text{C}\\). It is quenched in an oil bath at \\(50^\\circ\\text{C}\\). Assuming the lumped capacitance model is valid, what is the total amount of heat energy (\\(Q_{total}\\)) transferred from the block to the oil when the block reaches thermal equilibrium?",
@@ -63,12 +69,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Conduction",
             "Transient Conduction Using The Lumped Capacitance Model"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A copper pin fin (\\(k = 400\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) has a diameter of \\(2\\ \\text{mm}\\) and a length of \\(20\\ \\text{mm}\\). The base temperature is \\(100^\\circ\\text{C}\\) and the ambient air is \\(20^\\circ\\text{C}\\) with \\(h = 25\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Using the adiabatic tip assumption with corrected length, calculate the heat loss from the fin.",
@@ -80,29 +88,33 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P208"
+            "FE Reference Handbook 10.5 \u2013 P208"
           ],
           "tags": [
             "Conduction",
             "Fins"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A cylindrical pin fin made of aluminum (\\(k = 200\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) has a diameter of \\(D = 5\\ \\text{mm}\\). The convection heat transfer coefficient is \\(h = 40\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the fin parameter \\(m\\).",
           "choices": {
-            "A": "4.0 m⁻¹",
-            "B": "6.3 m⁻¹",
-            "C": "12.6 m⁻¹",
-            "D": "40.0 m⁻¹"
+            "A": "4.0 m\u207b\u00b9",
+            "B": "6.3 m\u207b\u00b9",
+            "C": "12.6 m\u207b\u00b9",
+            "D": "40.0 m\u207b\u00b9"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P208"
+            "FE Reference Handbook 10.5 \u2013 P208"
           ],
           "tags": [
             "Conduction",
             "Fins"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A steam pipe is covered with insulation. The pipe can be modeled as a cylindrical wall with an inner radius \\(r_1 = 0.05\\ \\text{m}\\), an outer radius \\(r_2 = 0.10\\ \\text{m}\\), and a length \\(L = 5\\ \\text{m}\\). The thermal conductivity of the insulation is \\(k = 0.5\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The inner surface temperature is \\(150^\\circ\\text{C}\\) and the outer surface temperature is \\(50^\\circ\\text{C}\\). Calculate the rate of heat loss from the pipe.",
@@ -114,12 +126,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Two aluminum plates (\\(k = 240\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)), each \\(2\\ \\text{cm}\\) thick, are bolted together. The contact pressure results in a thermal contact conductance of \\(h_c = 10,000\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\) at the interface. The outer surface of the first plate is at \\(400^\\circ\\text{C}\\), and the outer surface of the second plate is at \\(300^\\circ\\text{C}\\). Calculate the rate of heat transfer per unit area (heat flux) through the plates.",
@@ -131,15 +145,17 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A “pin fin” (cylindrical cross-section) has a diameter \\(D = 10\\ \\text{mm}\\) and a length \\(L = 40\\ \\text{mm}\\). When performing heat transfer calculations using the corrected length method described in the NCEES Handbook, what is the value of \\(L_c\\)?",
+          "question": "A \u201cpin fin\u201d (cylindrical cross-section) has a diameter \\(D = 10\\ \\text{mm}\\) and a length \\(L = 40\\ \\text{mm}\\). When performing heat transfer calculations using the corrected length method described in the NCEES Handbook, what is the value of \\(L_c\\)?",
           "choices": {
             "A": "40.0 mm",
             "B": "42.5 mm",
@@ -148,12 +164,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P208"
+            "FE Reference Handbook 10.5 \u2013 P208"
           ],
           "tags": [
             "Conduction",
             "Fins"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rectangular aluminum fin (\\(k = 200\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) has a thickness of \\(2\\ \\text{mm}\\), a length of \\(50\\ \\text{mm}\\), and a width of \\(1\\ \\text{m}\\). The base temperature is \\(150^\\circ\\text{C}\\) and the fluid temperature is \\(50^\\circ\\text{C}\\) with \\(h = 50\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Assuming  negligible heat transfer from tip, calculate the heat transfer rate from the fin.",
@@ -165,29 +183,33 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P208"
+            "FE Reference Handbook 10.5 \u2013 P208"
           ],
           "tags": [
             "Conduction",
             "Fins"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A large plane wall of thickness \\(2L = 0.1\\ \\text{m}\\) is initially at a uniform temperature of \\(T_i = 300^\\circ\\text{C}\\). It is suddenly exposed to convection on both sides with \\(T_\\infty = 30^\\circ\\text{C}\\) and \\(h = 400\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). The properties of the wall are \\(k = 20\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\) and \\(\\alpha = 1 \\times 10^{-5}\\ \\text{m}^2/\\text{s}\\). Calculate the temperature at the midplane (\\(T_0\\)) after \\(125\\ \\text{s}\\).",
           "choices": {
-            "A": "165.4°C",
-            "B": "188.7°C",
-            "C": "238.7°C",
-            "D": "270.0°C"
+            "A": "165.4\u00b0C",
+            "B": "188.7\u00b0C",
+            "C": "238.7\u00b0C",
+            "D": "270.0\u00b0C"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P206"
+            "FE Reference Handbook 10.5 \u2013 P206"
           ],
           "tags": [
             "Approximate Solution For Solid With Sudden Convection",
             "Conduction"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Which of the following conditions must be satisfied for the lumped capacitance method to be considered valid for transient heat transfer analysis?",
@@ -199,13 +221,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P205:",
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205:",
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Conduction",
             "Transient Conduction Using The Lumped Capacitance Model"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A small copper ball (\\(\\rho = 8900\\ \\text{kg/m}^3\\), \\(c_p = 380\\ \\text{J}/(\\text{kg}\\cdot\\text{K})\\)) with a diameter of \\(10\\ \\text{mm}\\) is initially at \\(250^\\circ\\text{C}\\). It is dropped into an oil bath at \\(30^\\circ\\text{C}\\) with \\(h = 40\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Assuming the lumped capacitance model is valid, calculate the time constant (\\(\\tau\\)) for this cooling process.",
@@ -217,12 +241,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Conduction",
             "Transient Conduction Using The Lumped Capacitance Model"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A solid steel sphere with a diameter of \\(12\\ \\text{mm}\\) is cooling in air. The thermal conductivity of steel is \\(k = 40\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\) and the convection coefficient is \\(h = 20\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the Biot number (\\(Bi\\)) for this process.",
@@ -234,12 +260,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Conduction",
             "Transient Conduction Using The Lumped Capacitance Model"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A steam pipe with an outer diameter of \\(60\\ \\text{mm}\\) is covered with insulation having a thermal conductivity \\(k = 0.15\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The convection heat transfer coefficient to the surrounding air is \\(h = 10\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). If the thickness of the insulation is increased from \\(5\\ \\text{mm}\\) to \\(10\\ \\text{mm}\\), how is the heat transfer rate affected?",
@@ -251,47 +279,53 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A plane wall with a thickness of \\(L = 0.1\\ \\text{m}\\) and thermal conductivity \\(k = 1.0\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\) separates two fluids. Fluid 1 is at \\(T_{\\infty,1} = 200^\\circ\\text{C}\\) with \\(h_1 = 50\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Fluid 2 is at \\(T_{\\infty,2} = 50^\\circ\\text{C}\\) with \\(h_2 = 20\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the total thermal resistance per unit area (\\(R_{total}\\)) for this system.",
           "choices": {
-            "A": "0.05 m²·K/W",
-            "B": "0.12 m²·K/W",
-            "C": "0.17 m²·K/W",
-            "D": "0.25 m²·K/W"
+            "A": "0.05 m\u00b2\u00b7K/W",
+            "B": "0.12 m\u00b2\u00b7K/W",
+            "C": "0.17 m\u00b2\u00b7K/W",
+            "D": "0.25 m\u00b2\u00b7K/W"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A composite wall is composed of three layers. Layer 1 has \\(R_1 = 0.5\\ \\text{K/W}\\), Layer 2 has \\(R_2 = 1.0\\ \\text{K/W}\\), and Layer 3 has \\(R_3 = 0.5\\ \\text{K/W}\\). If the temperature of the outer surface of Layer 1 is \\(400^\\circ\\text{C}\\) and the outer surface of Layer 3 is \\(100^\\circ\\text{C}\\), what is the temperature drop across Layer 2?",
           "choices": {
-            "A": "75°C",
-            "B": "150°C",
-            "C": "200°C",
-            "D": "300°C"
+            "A": "75\u00b0C",
+            "B": "150\u00b0C",
+            "C": "200\u00b0C",
+            "D": "300\u00b0C"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Composite Plane Wall",
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An insulating material is needed to limit heat loss through a wall to \\(200\\ \\text{W/m}^2\\). The temperature difference across the insulation is \\(50^\\circ\\text{C}\\). If the thermal conductivity of the material is \\(k = 0.04\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\), what is the minimum required thickness?",
@@ -303,47 +337,53 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P203"
+            "FE Reference Handbook 10.5 \u2013 P203"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Plane Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Heat is flowing through a large plate with a thickness of \\(L = 50\\ \\text{mm}\\). The thermal conductivity is \\(k = 15\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The rate of heat transfer per unit area is measured to be \\(\\frac{\\dot{Q} }{A} = 6000\\ \\text{W/m}^2\\). If the hotter surface is at \\(120^\\circ\\text{C}\\), what is the temperature of the colder surface?",
           "choices": {
-            "A": "80°C",
-            "B": "90°C",
-            "C": "100°C",
-            "D": "110°C"
+            "A": "80\u00b0C",
+            "B": "90\u00b0C",
+            "C": "100\u00b0C",
+            "D": "110\u00b0C"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P203"
+            "FE Reference Handbook 10.5 \u2013 P203"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Plane Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A plane wall (\\(k = 0.8\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) is \\(20\\ \\text{cm}\\) thick. The inner surface is kept at \\(150^\\circ\\text{C}\\). The outer surface is exposed to air at \\(20^\\circ\\text{C}\\) with a convection coefficient of \\(h = 10\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the temperature of the outer surface (\\(T_s\\)).",
           "choices": {
-            "A": "38.5°C",
-            "B": "57.1°C",
-            "C": "65.2°C",
-            "D": "112.5°C"
+            "A": "38.5\u00b0C",
+            "B": "57.1\u00b0C",
+            "C": "65.2\u00b0C",
+            "D": "112.5\u00b0C"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P203"
+            "FE Reference Handbook 10.5 \u2013 P203"
           ],
           "tags": [
             "Basic Heat Transfer Rate Equations",
             "Conduction",
             "Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A steel pipe (\\(k = 50\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) has an inner radius of \\(2\\ \\text{cm}\\) and an outer radius of \\(2.5\\ \\text{cm}\\). It is covered with a layer of insulation (\\(k = 0.1\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) that is \\(1\\ \\text{cm}\\) thick. The pipe is \\(10\\ \\text{m}\\) long. If the inner surface temperature of the pipe is \\(200^\\circ\\text{C}\\) and the outer surface temperature of the insulation is \\(30^\\circ\\text{C}\\), what is the total heat loss rate?",
@@ -355,13 +395,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A hot water pipe (\\(r_{outer} = 2\\ \\text{cm}\\)) is covered with insulation (\\(k = 0.1\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) having an outer radius of \\(4\\ \\text{cm}\\). The length is \\(10\\ \\text{m}\\). The convection heat transfer coefficient on the outer surface is \\(h = 10\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the total thermal resistance (\\(R_{total}\\)) of the insulation and convection.",
@@ -373,12 +415,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A copper wire has a radius of \\(r_{wire} = 3\\ \\text{mm}\\). It is covered with insulation that has a critical radius of \\(r_{cr} = 10\\ \\text{mm}\\). If the thickness of the insulation is increased such that the outer radius goes from \\(5\\ \\text{mm}\\) to \\(7\\ \\text{mm}\\), what happens to the heat transfer rate?",
@@ -390,13 +434,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall",
             "Critical Insulation Radius"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An electric wire is being covered with plastic insulation having a thermal conductivity of \\(k_{ins} = 0.15\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The wire is exposed to air with a convection heat transfer coefficient of \\(h_\\infty = 15\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the critical radius of insulation (\\(r_{cr}\\)).",
@@ -408,13 +454,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall",
             "Critical Insulation Radius"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A steam pipe is covered with a layer of insulation. The insulation has an inner radius of \\(r_1 = 5\\ \\text{cm}\\), an outer radius of \\(r_2 = 10\\ \\text{cm}\\), and a thermal conductivity of \\(k = 0.05\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The length of the pipe is \\(L = 1\\ \\text{m}\\). What is the thermal resistance of this insulation layer?",
@@ -426,13 +474,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Cylindrical Wall Conduction Resistance",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A steel pipe (\\(k = 50\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) with a length of \\(50\\ \\text{m}\\) has an inner radius \\(r_1 = 0.05\\ \\text{m}\\) and an outer radius \\(r_2 = 0.06\\ \\text{m}\\). The inner surface temperature is \\(150^\\circ\\text{C}\\) and the outer surface temperature is \\(140^\\circ\\text{C}\\). Calculate the rate of heat loss \\(\\dot{Q}\\) through the pipe wall.",
@@ -444,12 +494,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Cylindrical Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A window glass with a surface area of \\(A = 1.5\\ \\text{m}^2\\) is exposed to outside air. The convection heat transfer coefficient is \\(h = 25\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). What is the thermal resistance due to convection on the outside surface?",
@@ -461,13 +513,15 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P204"
+            "FE Reference Handbook 10.5 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Convection Resistance",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Consider a composite wall with two layers, A and B, in series. The total heat transfer rate is determined to be \\(\\dot{Q} = 1167\\ \\text{W}\\). The inner layer (A) has a thermal resistance of \\(R_A = 0.1\\ \\text{K/W}\\) and the inner surface temperature is \\(T_1 = 1000\\ \\text{K}\\). What is the temperature at the interface between Layer A and Layer B?",
@@ -479,13 +533,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P205"
+            "FE Reference Handbook 10.5 \u2013 P205"
           ],
           "tags": [
             "Composite Plane Wall",
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A furnace wall consists of two layers. Layer A (Firebrick) has \\(R_A = 0.1\\ \\text{K/W}\\). Layer B (Insulating brick) has \\(R_B = 0.5\\ \\text{K/W}\\). The inner surface temperature is \\(1000\\ \\text{K}\\) and the outer surface temperature is \\(300\\ \\text{K}\\). What is the rate of heat loss \\(\\dot{Q}\\) through the composite wall?",
@@ -497,29 +553,33 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.3 – P204"
+            "FE Reference Handbook 10.3 \u2013 P204"
           ],
           "tags": [
             "Conduction",
             "Thermal Resistance"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A large concrete wall has a thickness of \\(L = 0.2\\ \\text{m}\\) and a thermal conductivity of \\(k = 1.2\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\). The temperature on one surface of the wall is measured to be \\(25^\\circ\\text{C}\\), and the temperature on the other surface is \\(5^\\circ\\text{C}\\). Calculate the rate of heat transfer through the wall per unit surface area.",
           "choices": {
-            "A": "60 W/m²",
-            "B": "120 W/m²",
-            "C": "150 W/m²",
-            "D": "240 W/m²"
+            "A": "60 W/m\u00b2",
+            "B": "120 W/m\u00b2",
+            "C": "150 W/m\u00b2",
+            "D": "240 W/m\u00b2"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P203"
+            "FE Reference Handbook 10.5 \u2013 P203"
           ],
           "tags": [
             "Conduction",
             "Conduction Through A Plane Wall"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -537,13 +597,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P212"
+            "FE Reference Handbook 10.5 \u2013 P212"
           ],
           "tags": [
             "Boiling",
             "Convection",
             "Minimum Heat Flux"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A heater with a specific geometry is used to boil water at 1 atm. The following properties are given:\nCharacteristic length, \\(L = 0.05\\ \\mathrm{m}\\)\n\nLiquid density, \\(\\rho_l = 958\\ \\mathrm{kg/m^3}\\)\n\nVapor density, \\(\\rho_v = 0.6\\ \\mathrm{kg/m^3}\\)\n\nSurface tension, \\(\\sigma = 0.059\\ \\mathrm{N/m}\\)\nCalculate the dimensionless characteristic length \\(L^*\\).",
@@ -555,13 +617,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P211"
+            "FE Reference Handbook 10.5 \u2013 P211"
           ],
           "tags": [
             "Boiling",
             "Convection",
             "Peak Heat Flux"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Saturated liquid boils on the outer surface of a horizontal cylinder heater. The following information is provided:\nHeater geometry: Horizontal cylinder\n\nDimensionless characteristic length, \\(L^* = 5.0\\)\nDetermine the value of the constant \\(C_{cr}\\) for this setup.",
@@ -573,16 +637,18 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P211"
+            "FE Reference Handbook 10.5 \u2013 P211"
           ],
           "tags": [
             "Boiling",
             "Convection",
             "Peak Heat Flux"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "Water at 1 atm (\\(T_{sat} = 100^\\circ \\mathrm{C}\\)) is heated by a submerged horizontal surface maintained at \\(T_s = 112^\\circ \\mathrm{C}\\). Based on the “Typical boiling curve for water at one atmosphere” provided in the NCEES FE Reference Handbook 10.5, identify the boiling regime occurring at the surface.",
+          "question": "Water at 1 atm (\\(T_{sat} = 100^\\circ \\mathrm{C}\\)) is heated by a submerged horizontal surface maintained at \\(T_s = 112^\\circ \\mathrm{C}\\). Based on the \u201cTypical boiling curve for water at one atmosphere\u201d provided in the NCEES FE Reference Handbook 10.5, identify the boiling regime occurring at the surface.",
           "choices": {
             "A": "Free Convection Boiling",
             "B": "Nucleate Boiling",
@@ -591,12 +657,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P211"
+            "FE Reference Handbook 10.5 \u2013 P211"
           ],
           "tags": [
             "Boiling",
             "Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A horizontal cylinder loses heat to the surrounding air. The Rayleigh number based on the diameter is \\(Ra_D = 5 \\times 10^5\\). Calculate the average Nusselt number \\(\\overline{Nu}_D\\) .",
@@ -608,12 +676,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P213"
+            "FE Reference Handbook 10.5 \u2013 P213"
           ],
           "tags": [
             "Convection",
             "Natural Free Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Estimate the Critical Heat Flux (CHF) for a liquid boiling on a large horizontal heater. The constants are \\(C_{cr} = 0.15\\), \\(h_{fg} = 2257\\ \\mathrm{kJ/kg}\\), \\(\\rho_v = 0.59\\ \\mathrm{kg/m^3}\\), \\(\\sigma = 0.059\\ \\mathrm{N/m}\\), \\(g = 9.81\\ \\mathrm{m/s^2}\\), and \\(\\rho_l = 958\\ \\mathrm{kg/m^3}\\).",
@@ -625,13 +695,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P211"
+            "FE Reference Handbook 10.5 \u2013 P211"
           ],
           "tags": [
             "Boiling",
             "Convection",
             "Peak Heat Flux"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air flows over a sphere with a Reynolds number \\(Re_D = 10,000\\) and Prandtl number \\(Pr = 0.7\\). Calculate the Nusselt number \\( \\overline{Nu_D} \\).",
@@ -643,12 +715,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "External Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A long horizontal cylinder loses heat via natural convection. The Rayleigh number based on diameter is \\(Ra_D = 10^6\\). Calculate the average Nusselt number \\(\\overline{Nu}_D\\) using the coefficients provided in the NCEES FE Reference Handbook 10.5.",
@@ -660,12 +734,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P214"
+            "FE Reference Handbook 10.5 \u2013 P214"
           ],
           "tags": [
             "Convection",
             "Natural Free Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A vertical flat plate is subjected to natural convection in air. The Rayleigh number based on length is \\(Ra_L = 5 \\times 10^5\\). Calculate the average Nusselt number \\(\\overline{Nu}_L\\).",
@@ -677,12 +753,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P213"
+            "FE Reference Handbook 10.5 \u2013 P213"
           ],
           "tags": [
             "Convection",
             "Natural Free Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Liquid sodium flows through a circular tube maintained at a constant wall temperature. The flow has \\(Re_D Pr = 400\\). Calculate the Nusselt number \\(Nu_D\\).",
@@ -694,12 +772,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air flows over a sphere (\\(Re_D = 10,000, Pr = 0.7\\)). Calculate \\(Nu_D\\).",
@@ -711,12 +791,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "External Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Water flows in an annulus with an inner diameter \\(D_i = 30\\ \\mathrm{mm}\\) and an outer diameter \\(D_o = 50\\ \\mathrm{mm}\\). Calculate the hydraulic diameter \\(D_h\\).",
@@ -728,12 +810,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Oil (\\(Pr = 500\\)) flows in a laminar state (\\(Re_D = 100\\)) in a tube with \\(D/L = 0.02\\). The viscosity ratio term \\( \\mu_b  / \\mu_s = 1.0 \\). Calculate \\(Nu_D\\) using the Sieder-Tate correlation for the combined entry length.",
@@ -745,12 +829,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A fluid flows through a \\(2\\ \\text{cm}\\) diameter tube. The flow is turbulent (\\(Re_D = 20,000\\), \\(Pr = 10\\)). The viscosity correction factor \\((\\mu_b/\\mu_s)^{0.14}\\) is 1.10. The thermal conductivity of the fluid is \\(k = 0.6\\ \\mathrm{W/(m\\cdot K)}\\). Calculate the convection heat transfer coefficient \\(h\\) using the Sieder-Tate correlation.",
@@ -762,12 +848,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Hot oil (\\(Pr = 50\\)) is cooled in a tube (\\(Re_D = 25,000\\)). The viscosity ratio is \\(\\mu_b / \\mu_s = 0.25\\). Calculate \\(Nu_D\\) using the Sieder-Tate equation.",
@@ -779,12 +867,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Engine oil flows through a heated tube (\\(Re_D = 12,000\\), \\(Pr = 80\\)). The viscosity ratio is \\(\\mu_b/\\mu_s = 0.48/0.15 = 3.2\\). Calculate \\(Nu_D\\) using the Sieder-Tate correlation.",
@@ -796,12 +886,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Liquid mercury (\\(Pr = 0.025\\)) flows through a tube with a Reynolds number \\(Re_D = 20,000\\). The tube wall is maintained at a constant surface temperature. Determine the Nusselt number (\\(Nu_D\\)).",
@@ -813,12 +905,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air flows through a rectangular duct with dimensions \\(0.2\\ \\text{m}\\) by \\(0.4\\ \\text{m}\\). To use standard correlations for circular tubes, the characteristic length (hydraulic diameter, \\(D_h\\)) must be calculated. What is the value of \\(D_h\\)?",
@@ -830,12 +924,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Hot oil (\\(Pr = 50\\)) flows through a cooling tube with \\(Re_D = 20,000\\). The oil is being cooled by the tube walls. Calculate the Nusselt number (\\(Nu_D\\)) using the Dittus-Boelter correlation.",
@@ -847,12 +943,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Water (\\(Pr = 5.0\\)) flows through a tube with a Reynolds number \\(Re_D = 40,000\\). The water enters at \\(20^\\circ\\text{C}\\) and the tube wall is heated to \\(60^\\circ\\text{C}\\). Using the Dittus-Boelter equation, calculate the Nusselt number (\\(Nu_D\\)).",
@@ -864,12 +962,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P210"
+            "FE Reference Handbook 10.5 \u2013 P210"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Water flows through a small diameter tube with \\(Re_D = 1800\\). The tube wall is subjected to a uniform surface heat flux. Calculate the Nusselt number (\\(Nu_D\\)) assuming the flow is fully developed.",
@@ -881,12 +981,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Engine oil flows through a circular tube of diameter \\(D = 0.02\\ \\text{m}\\). The Reynolds number is calculated to be \\(Re_D = 1500\\). The tube surface is maintained at a uniform constant temperature. Determine the Nusselt number (\\(Nu_D\\)) for fully developed conditions.",
@@ -898,12 +1000,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "Internal Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air flows in cross flow over a cylinder of diameter \\(D\\). The Reynolds number is calculated to be \\(Re_D = 20,000\\). The Prandtl number is \\(0.7\\). Determine the Nusselt number (\\(\\overline{Nu}_D\\)).",
@@ -915,12 +1019,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "External Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Air flows parallel over a smooth flat plate of length \\(L = 0.5\\ \\text{m}\\) with a velocity of \\(5\\ \\text{m/s}\\). The density of the air is \\(\\rho = 1.2\\ \\text{kg/m}^3\\) and the dynamic viscosity is \\(\\mu = 1.8 \\times 10^{-5}\\ \\text{kg}/(\\text{m}\\cdot\\text{s})\\). The Prandtl number is \\(Pr = 0.7\\). Calculate the average Nusselt number (\\(\\overline{Nu}_L\\)) for the entire plate.",
@@ -932,30 +1038,34 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P209"
+            "FE Reference Handbook 10.5 \u2013 P209"
           ],
           "tags": [
             "Convection",
             "External Flow"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A plane wall (\\(k = 0.8\\ \\text{W}/(\\text{m}\\cdot\\text{K})\\)) is \\(20\\ \\text{cm}\\) thick. The inner surface is kept at \\(150^\\circ\\text{C}\\). The outer surface is exposed to air at \\(20^\\circ\\text{C}\\) with a convection coefficient of \\(h = 10\\ \\text{W}/(\\text{m}^2\\cdot\\text{K})\\). Calculate the temperature of the outer surface (\\(T_s\\)).",
           "choices": {
-            "A": "38.5°C",
-            "B": "57.1°C",
-            "C": "65.2°C",
-            "D": "112.5°C"
+            "A": "38.5\u00b0C",
+            "B": "57.1\u00b0C",
+            "C": "65.2\u00b0C",
+            "D": "112.5\u00b0C"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P203"
+            "FE Reference Handbook 10.5 \u2013 P203"
           ],
           "tags": [
             "Basic Heat Transfer Rate Equations",
             "Conduction",
             "Convection"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -973,12 +1083,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P217"
+            "FE Reference Handbook 10.5 \u2013 P217"
           ],
           "tags": [
             "Net Energy Exchange By Radiation Between Two Bodies",
             "Radiation"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An electronic component is cooled by radiation to the surrounding casing. The following data are provided:\nComponent surface temperature, \\(T_1 = 80^\\circ\\mathrm{C}\\)\n\nCasing temperature, \\(T_2 = 25^\\circ\\mathrm{C}\\)\n\nEmissivity of the component, \\(\\varepsilon = 0.85\\)\n\nComponent surface area, \\(A = 0.002\\ \\mathrm{m^2}\\)\nCalculate the heat transfer rate by radiation.",
@@ -990,12 +1102,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P217"
+            "FE Reference Handbook 10.5 \u2013 P217"
           ],
           "tags": [
             "Net Energy Exchange By Radiation Between Two Bodies",
             "Radiation"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A small polished metal sphere (\\(\\varepsilon = 0.1\\)) with a surface area of \\(A = 0.05\\ \\mathrm{m^2}\\) is suspended in a large vacuum chamber. The sphere is at \\(T_1 = 500\\ \\mathrm{K}\\) and the chamber walls are at \\(T_2 = 300\\ \\mathrm{K}\\). The Stefan-Boltzmann constant is \\(\\sigma = 5.67 \\times 10^{-8}\\ \\mathrm{W/(m^2 \\cdot K^4)}\\). Calculate the net radiation heat loss from the sphere.",
@@ -1007,12 +1121,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P217"
+            "FE Reference Handbook 10.5 \u2013 P217"
           ],
           "tags": [
             "Net Energy Exchange By Radiation Between Two Bodies",
             "Radiation"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A hemispherical surface (Surface 1) is placed on a flat circular base (Surface 2) to form a closed enclosure. Which of the following view factors is correct if the flat base is a non-self-viewing surface (\\(F_{22} = 0\\))?",
@@ -1024,12 +1140,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P216"
+            "FE Reference Handbook 10.5 \u2013 P216"
           ],
           "tags": [
             "Radiation",
             "Shape Factor View Factor Configuration Factor Relations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A diffuse, opaque surface is irradiated with a total heat flux of \\(G = 1,000\\ \\mathrm{W/m^2}\\). The surface has the following properties:\nReflectivity, \\(\\rho = 0.35\\)\n\nTransmissivity, \\(\\tau = 0\\) (Opaque)\n\nThe surface is assumed to be a gray body.\nCalculate the emissivity (\\(\\varepsilon\\)) of the surface.",
@@ -1041,11 +1159,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P216"
+            "FE Reference Handbook 10.5 \u2013 P216"
           ],
           "tags": [
             "Radiation"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A thin radiation shield (\\(\\epsilon_3 = 0.1\\)) is placed between two large parallel plates. Plate 1 has \\(\\epsilon_1 = 0.8\\) and Plate 2 has \\(\\epsilon_2 = 0.8\\). The plates are at temperatures \\(T_1 = 1000\\ \\mathrm{K}\\) and \\(T_2 = 500\\ \\mathrm{K}\\). View Factor \\(F=1\\). Determine the net radiant heat flux \\(\\dot{q}_{12}\\) between the plates with the shield in place.",
@@ -1057,12 +1177,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P218"
+            "FE Reference Handbook 10.5 \u2013 P218"
           ],
           "tags": [
             "Net Energy Exchange By Radiation Between Two Bodies",
             "Radiation"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Two black surfaces exchange heat by radiation. Surface 1 has an area \\(A_1 = 2\\ \\mathrm{m^2}\\) and Surface 2 has an area \\(A_2 = 4\\ \\mathrm{m^2}\\). The view factor from Surface 1 to Surface 2 is \\(F_{12} = 0.6\\). Determine the view factor \\(F_{21}\\) from Surface 2 to Surface 1 using the reciprocity relation found in the NCEES FE Reference Handbook 10.5.",
@@ -1074,12 +1196,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P216"
+            "FE Reference Handbook 10.5 \u2013 P216"
           ],
           "tags": [
             "Radiation",
             "Shape Factor View Factor Configuration Factor Relations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -1097,11 +1221,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A counter-flow concentric tube heat exchanger is designed such that the heat capacity rates of the hot and cold fluids are balanced (matched), meaning \\(C_h = C_c\\). The heat exchanger has \\(NTU = 2.5\\). Calculate the effectiveness (\\(\\varepsilon\\)).",
@@ -1113,11 +1239,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A counter-flow concentric tube heat exchanger is used for heat recovery. The following parameters are determined:\nHeat capacity ratio, \\(C_r = 0.60\\)\n\nNumber of Transfer Units, \\(NTU = 1.5\\)\nCalculate the effectiveness (\\(\\varepsilon\\)) for this counter-flow arrangement.",
@@ -1129,11 +1257,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A concentric tube heat exchanger is being analyzed for its performance. The design specifications provide the following parameters:\nOverall heat transfer coefficient, \\(U = 450\\ \\mathrm{W/(m^2 \\cdot K)}\\)\n\nHeat transfer surface area, \\(A = 12\\ \\mathrm{m^2}\\)\n\nHot fluid mass flow rate, \\(\\dot{m}_h = 1.2\\ \\mathrm{kg/s}\\) \n\nHot fluid specific heat, \\(c_{p,h} = 2,200\\ \\mathrm{J/kg \\cdot K}\\)\n\nCold fluid mass flow rate, \\(\\dot{m}_c = 0.8\\ \\mathrm{kg/s}\\)\n\nCold fluid specific heat,\\(c_{p,c} = 4,180\\ \\mathrm{J/kg \\cdot K}\\)\nCalculate the Number of Transfer Units (\\(NTU\\)) for this heat exchanger.",
@@ -1145,11 +1275,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A concentric tube heat exchanger is used to heat water with hot oil. To determine the maximum possible heat transfer rate, the heat capacity rates must be evaluated. The following data are provided:\nHot oil mass flow rate, \\(\\dot{m}_h = 0.5\\ \\mathrm{kg/s}\\)\n\nHot oil specific heat, \\(c_{p,h} = 2,100\\ \\mathrm{J/(kg \\cdot K)}\\)\n\nCold water mass flow rate, \\(\\dot{m}_c = 0.2\\ \\mathrm{kg/s}\\)\n\nCold water specific heat, \\(c_{p,c} = 4,180\\ \\mathrm{J/(kg \\cdot K)}\\)\n\nHot oil inlet temperature, \\(T_{Hi} = 150^\\circ\\mathrm{C}\\)\n\nCold water inlet temperature, \\(T_{Ci} = 30^\\circ\\mathrm{C}\\)\nCalculate the maximum possible heat transfer rate, \\(\\dot{Q}_{max}\\).",
@@ -1161,11 +1293,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A parallel-flow heat exchanger is used to cool an exhaust gas stream using water. The temperatures at the inlets and outlets are given as follows:\nHot gas inlet temperature, \\(T_{Hi} = 450^\\circ\\mathrm{C}\\)\n\nHot gas outlet temperature, \\(T_{Ho} = 250^\\circ\\mathrm{C}\\)\n\nCold water inlet temperature, \\(T_{Ci} = 40^\\circ\\mathrm{C}\\)\n\nCold water outlet temperature, \\(T_{Co} = 100^\\circ\\mathrm{C}\\)\nCalculate the Log Mean Temperature Difference (\\(\\Delta T_{lm}\\)) for this parallel-flow configuration.",
@@ -1177,11 +1311,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P214"
+            "FE Reference Handbook 10.5 \u2013 P214"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "In a heat exchanger, a hot oil stream is used to heat a cold water stream. The heat exchanger is well-insulated from the environment. The following data are provided:\nHot oil mass flow rate, \\(\\dot{m}_H = 2.0\\ \\mathrm{kg/s}\\)\n\nHot oil specific heat, \\(c_{p,H} = 2,100\\ \\mathrm{J/(kg \\cdot K)}\\)\n\nHot oil inlet temperature, \\(T_{Hi} = 120^\\circ\\mathrm{C}\\)\n\nHot oil outlet temperature, \\(T_{Ho} = 70^\\circ\\mathrm{C}\\)\n\nCold water mass flow rate, \\(\\dot{m}_C = 1.5\\ \\mathrm{kg/s}\\)\n\nCold water specific heat, \\(c_{p,C} = 4,180\\ \\mathrm{J/(kg \\cdot K)}\\)\n\nCold water inlet temperature, \\(T_{Ci} = 20^\\circ\\mathrm{C}\\)\nCalculate the outlet temperature of the cold water, \\(T_{Co}\\).",
@@ -1193,11 +1329,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P214"
+            "FE Reference Handbook 10.5 \u2013 P214"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A parallel flow double-pipe heat exchanger has \\(NTU = 2.0\\) and a heat capacity ratio \\(C_r = C_{min}/C_{max} = 0.5\\). Calculate the effectiveness \\(\\epsilon\\) of the heat exchanger.",
@@ -1209,11 +1347,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P215"
+            "FE Reference Handbook 10.5 \u2013 P215"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A counterflow heat exchanger operates with the following temperatures: Hot fluid inlet \\(T_{Hi} = 100^\\circ \\mathrm{C}\\), Hot fluid outlet \\(T_{Ho} = 60^\\circ \\mathrm{C}\\), Cold fluid inlet \\(T_{Ci} = 20^\\circ \\mathrm{C}\\), and Cold fluid outlet \\(T_{Co} = 50^\\circ \\mathrm{C}\\). Calculate the Log-Mean Temperature Difference \\(\\Delta T_{lm}\\).",
@@ -1225,11 +1365,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P214"
+            "FE Reference Handbook 10.5 \u2013 P214"
           ],
           "tags": [
             "Heat Exchangers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     }

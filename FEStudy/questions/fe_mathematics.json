@@ -5,39 +5,43 @@
       "subtopic": "Straight Line",
       "questions": [
         {
-          "question": "A reference line in a standard Cartesian coordinate system is defined by the equation \\( 4x – 5y = 10 \\). Which of the following equations represents a secondary line that is strictly perpendicular to the reference line and passes through the coordinate point \\( (-2, 3) \\)?",
+          "question": "A reference line in a standard Cartesian coordinate system is defined by the equation \\( 4x \u2013 5y = 10 \\). Which of the following equations represents a secondary line that is strictly perpendicular to the reference line and passes through the coordinate point \\( (-2, 3) \\)?",
           "choices": {
             "A": "\\( 5x + 4y = 2 \\)",
-            "B": "\\( 4x – 5y = -23 \\)",
-            "C": "\\( 5x – 4y = -22 \\)",
+            "B": "\\( 4x \u2013 5y = -23 \\)",
+            "C": "\\( 5x \u2013 4y = -22 \\)",
             "D": "\\( 4x + 5y = 7 \\)"
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Straight Line"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A straight line on a Cartesian coordinate plane passes through the points \\( (2, 3) \\) and \\( (6, 1) \\). The equation of this line is most nearly:",
           "choices": {
             "A": "\\( x + 2y = 8 \\)",
-            "B": "\\( x – 2y = -4 \\)",
+            "B": "\\( x \u2013 2y = -4 \\)",
             "C": "\\( 2x + y = 7 \\)",
-            "D": "\\( 2x – y = 1 \\)"
+            "D": "\\( 2x \u2013 y = 1 \\)"
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Straight Line"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "Two straight lines are parallel:\nLine A: \\( 3x – 5y + 1 = 0 \\)\n\nLine B: \\( kx + 4y + 5 = 0 \\)\nThe value of \\( k \\) is most nearly:",
+          "question": "Two straight lines are parallel:\nLine A: \\( 3x \u2013 5y + 1 = 0 \\)\n\nLine B: \\( kx + 4y + 5 = 0 \\)\nThe value of \\( k \\) is most nearly:",
           "choices": {
             "A": "\\( -\\dfrac{15}{4} \\)",
             "B": "\\( -\\dfrac{12}{5} \\)",
@@ -46,27 +50,31 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Straight Line"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A straight line passes through the points \\( (3,4) \\) and \\( (8,9) \\). The general equation of the line is most nearly:",
           "choices": {
-            "A": "\\( x + y – 1 = 0 \\)",
-            "B": "\\( x – y – 1 = 0 \\)",
-            "C": "\\( x – y + 1 = 0 \\)",
+            "A": "\\( x + y \u2013 1 = 0 \\)",
+            "B": "\\( x \u2013 y \u2013 1 = 0 \\)",
+            "C": "\\( x \u2013 y + 1 = 0 \\)",
             "D": "\\( x + y + 1 = 0 \\)"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Straight Line"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -75,7 +83,7 @@
       "subtopic": "Quadratic Equation",
       "questions": [
         {
-          "question": "The intersection points on the x-axis and y-axis of the equation \\( y = x^2 – 4x + 4 \\) are most nearly:",
+          "question": "The intersection points on the x-axis and y-axis of the equation \\( y = x^2 \u2013 4x + 4 \\) are most nearly:",
           "choices": {
             "A": "\\( (2, 0) \\) and \\( (0, 4) \\)",
             "B": "\\( (-2, 0) \\) and \\( (0, -4) \\)",
@@ -84,14 +92,16 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Quadratic Equation"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "The roots of the equation \\( y = x^2 – 5x + 4 \\) are most nearly:",
+          "question": "The roots of the equation \\( y = x^2 \u2013 5x + 4 \\) are most nearly:",
           "choices": {
             "A": "\\( x_1 = -1, x_2 = -4 \\)",
             "B": "\\( x_1 = 1, x_2 = -4 \\)",
@@ -100,11 +110,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P36"
+            "FE Reference Handbook 10.5 \u2013 P36"
           ],
           "tags": [
             "Quadratic Equation"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -117,11 +129,13 @@
           "choices": {},
           "answer": "\\((x-2)^{2} + (y+3)^{2} + (z-4)^{2} = 25\\)",
           "references": [
-            "FE Reference Handbook 10.5 P36:\n\nMathematics – Quadric Surface (SPHERE)"
+            "FE Reference Handbook 10.5 P36:\n\nMathematics \u2013 Quadric Surface (SPHERE)"
           ],
           "tags": [
             "Quadric Surface Sphere"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A spherical pressure vessel is being designed for chemical gas storage at an industrial facility. If the internal radius of the sphere is exactly \\( 5\\,\\mathrm{ft} \\), the internal volume capacity of the vessel is most nearly:",
@@ -133,12 +147,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P41"
+            "FE Reference Handbook 10.5 \u2013 P41"
           ],
           "tags": [
             "Mensuration Of Areas And Volumes",
             "Quadric Surface Sphere"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -147,15 +163,17 @@
       "subtopic": "Logarithms",
       "questions": [
         {
-          "question": "Which expression is equivalent to\n\n\\(\n\n3\\ln x – \\ln(x+1)\n\n\\)?\nA. \\(\\ln\\left(\\dfrac{x^{3}}{x+1}\\right)\\)\n\nB. \\(\\ln\\left(\\dfrac{x+1}{x^{3}}\\right)\\)\n\nC. \\(\\ln(x^3 + x)\\)\n\nD. \\(3x – (x+1)\\)",
+          "question": "Which expression is equivalent to\n\n\\(\n\n3\\ln x \u2013 \\ln(x+1)\n\n\\)?\nA. \\(\\ln\\left(\\dfrac{x^{3}}{x+1}\\right)\\)\n\nB. \\(\\ln\\left(\\dfrac{x+1}{x^{3}}\\right)\\)\n\nC. \\(\\ln(x^3 + x)\\)\n\nD. \\(3x \u2013 (x+1)\\)",
           "choices": {},
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5, P36: \n\nMathematics – Logarithms"
+            "FE Reference Handbook 10.5, P36: \n\nMathematics \u2013 Logarithms"
           ],
           "tags": [
             "Logarithms"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -171,7 +189,9 @@
           "tags": [
             "Algebra Of Complex Numbers",
             "Polar Coordinate System"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
           "question": "A point is given in polar form as \\((r,\\theta) = \\left(4,\\dfrac{\\pi}{6}\\right)\\).\n\nDetermine its Cartesian coordinates \\((x,y)\\).",
@@ -181,17 +201,21 @@
           "tags": [
             "Algebra Of Complex Numbers",
             "Polar Coordinate System"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
-          "question": "A curve is represented in polar coordinates by the equation\n\n\\[\n\nr = 5\\cos\\theta – 4\\sin\\theta.\n\n\\]\n\nWrite an equivalent equation of this curve in Cartesian coordinates \\((x,y)\\).",
+          "question": "A curve is represented in polar coordinates by the equation\n\n\\[\n\nr = 5\\cos\\theta \u2013 4\\sin\\theta.\n\n\\]\n\nWrite an equivalent equation of this curve in Cartesian coordinates \\((x,y)\\).",
           "choices": {},
-          "answer": "\\[\n\nx^{2} + y^{2} – 5x + 4y = 0\n\n\\]",
+          "answer": "\\[\n\nx^{2} + y^{2} \u2013 5x + 4y = 0\n\n\\]",
           "references": [],
           "tags": [
             "Algebra Of Complex Numbers",
             "Polar Coordinate System"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         }
       ]
     },
@@ -209,14 +233,16 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P39"
+            "FE Reference Handbook 10.5 \u2013 P39"
           ],
           "tags": [
             "Trigonometry"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "For the triangle shown, the length of side \\( a \\) is most nearly:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 20px auto;\" viewbox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\">\n<style>\n.line { stroke: black; stroke-width: 2; fill: none; }\n.label { font-family: serif; font-size: 14px; font-style: italic; }\n.node-label { font-family: sans-serif; font-size: 14px; font-weight: bold; }\n</style>\n<polygon class=\"line\" fill=\"#fdfdfd\" points=\"40,120 200,120 90,33.4\"></polygon>\n<text class=\"node-label\" x=\"25\" y=\"125\">A</text>\n<text class=\"node-label\" x=\"210\" y=\"125\">B</text>\n<text class=\"node-label\" x=\"85\" y=\"25\">C</text>\n<text class=\"label\" x=\"15\" y=\"75\">b = 5 cm</text>\n<text class=\"label\" x=\"100\" y=\"140\">c = 8 cm</text>\n<text class=\"label\" x=\"155\" y=\"75\">a</text>\n<path d=\"M 60,120 A 20,20 0 0,0 50,102.7\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"65\" y=\"112\">60°</text>\n</svg>",
+          "question": "For the triangle shown, the length of side \\( a \\) is most nearly:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 20px auto;\" viewbox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\">\n<style>\n.line { stroke: black; stroke-width: 2; fill: none; }\n.label { font-family: serif; font-size: 14px; font-style: italic; }\n.node-label { font-family: sans-serif; font-size: 14px; font-weight: bold; }\n</style>\n<polygon class=\"line\" fill=\"#fdfdfd\" points=\"40,120 200,120 90,33.4\"></polygon>\n<text class=\"node-label\" x=\"25\" y=\"125\">A</text>\n<text class=\"node-label\" x=\"210\" y=\"125\">B</text>\n<text class=\"node-label\" x=\"85\" y=\"25\">C</text>\n<text class=\"label\" x=\"15\" y=\"75\">b = 5 cm</text>\n<text class=\"label\" x=\"100\" y=\"140\">c = 8 cm</text>\n<text class=\"label\" x=\"155\" y=\"75\">a</text>\n<path d=\"M 60,120 A 20,20 0 0,0 50,102.7\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"65\" y=\"112\">60\u00b0</text>\n</svg>",
           "choices": {
             "A": "\\( 6\\,\\mathrm{cm} \\)",
             "B": "\\( 7\\,\\mathrm{cm} \\)",
@@ -225,14 +251,16 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P38"
+            "FE Reference Handbook 10.5 \u2013 P38"
           ],
           "tags": [
             "Trigonometry"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "For the triangle shown, the length of side \\( b \\) is most nearly:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 20px auto;\" viewbox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\">\n<style>\n.line { stroke: black; stroke-width: 2; fill: none; }\n.label { font-family: serif; font-size: 14px; font-style: italic; }\n.node-label { font-family: sans-serif; font-size: 14px; font-weight: bold; }\n</style>\n<polygon class=\"line\" fill=\"#fdfdfd\" points=\"20,120 213.2,120 142.5,49.3\"></polygon>\n<text class=\"node-label\" x=\"5\" y=\"125\">A</text>\n<text class=\"node-label\" x=\"220\" y=\"125\">B</text>\n<text class=\"node-label\" x=\"138\" y=\"40\">C</text>\n<text class=\"label\" x=\"180\" y=\"80\">a = 10 m</text>\n<text class=\"label\" x=\"60\" y=\"80\">b</text>\n<path d=\"M 45,120 A 25,25 0 0,0 41.65,107.5\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"50\" y=\"115\">30°</text>\n<path d=\"M 188.2,120 A 25,25 0 0,1 195.5,102.3\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"160\" y=\"115\">45°</text>\n</svg>",
+          "question": "For the triangle shown, the length of side \\( b \\) is most nearly:\n<svg style=\"max-width: 300px; width: 100%; height: auto; display: block; margin: 20px auto;\" viewbox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\">\n<style>\n.line { stroke: black; stroke-width: 2; fill: none; }\n.label { font-family: serif; font-size: 14px; font-style: italic; }\n.node-label { font-family: sans-serif; font-size: 14px; font-weight: bold; }\n</style>\n<polygon class=\"line\" fill=\"#fdfdfd\" points=\"20,120 213.2,120 142.5,49.3\"></polygon>\n<text class=\"node-label\" x=\"5\" y=\"125\">A</text>\n<text class=\"node-label\" x=\"220\" y=\"125\">B</text>\n<text class=\"node-label\" x=\"138\" y=\"40\">C</text>\n<text class=\"label\" x=\"180\" y=\"80\">a = 10 m</text>\n<text class=\"label\" x=\"60\" y=\"80\">b</text>\n<path d=\"M 45,120 A 25,25 0 0,0 41.65,107.5\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"50\" y=\"115\">30\u00b0</text>\n<path d=\"M 188.2,120 A 25,25 0 0,1 195.5,102.3\" fill=\"none\" stroke=\"black\"></path>\n<text font-family=\"sans-serif\" font-size=\"12\" x=\"160\" y=\"115\">45\u00b0</text>\n</svg>",
           "choices": {
             "A": "\\( 10.0\\,\\mathrm{m} \\)",
             "B": "\\( 12.2\\,\\mathrm{m} \\)",
@@ -241,11 +269,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P38"
+            "FE Reference Handbook 10.5 \u2013 P38"
           ],
           "tags": [
             "Trigonometry"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -258,27 +288,31 @@
           "choices": {},
           "answer": "\\( C = 15\\pi\\ \\text{in} \\).",
           "references": [
-            "FE Reference Handbook 10.5 – P40"
+            "FE Reference Handbook 10.5 \u2013 P40"
           ],
           "tags": [
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "For the hyperbola\n\n\\(\n\n\\frac{x^{2}}{9} – \\frac{y^{2}}{16} = 1,\n\n\\)\n\ndetermine its coordinates of its foci.",
+          "question": "For the hyperbola\n\n\\(\n\n\\frac{x^{2}}{9} \u2013 \\frac{y^{2}}{16} = 1,\n\n\\)\n\ndetermine its coordinates of its foci.",
           "choices": {},
           "answer": "foci: \\((5,0)\\) and \\((-5,0)\\)",
           "references": [
-            "FE Reference Handbook 10.5, P45.\n\n    Mathematics – Mensuration of Areas and Volumes – Conic Sections"
+            "FE Reference Handbook 10.5, P45.\n\n    Mathematics \u2013 Mensuration of Areas and Volumes \u2013 Conic Sections"
           ],
           "tags": [
             "Conic Sections",
             "Hyperbola",
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
-          "question": "Determine the eccentricity of the hyperbola\n\n\\(\n\n\\frac{x^{2}}{9} – \\frac{y^{2}}{16} = 1.\n\n\\)",
+          "question": "Determine the eccentricity of the hyperbola\n\n\\(\n\n\\frac{x^{2}}{9} \u2013 \\frac{y^{2}}{16} = 1.\n\n\\)",
           "choices": {},
           "answer": "\\(\\dfrac{5}{3}\\)",
           "references": [],
@@ -286,7 +320,9 @@
             "Conic Sections",
             "Hyperbola",
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A vertical cylindrical water tank has an inside diameter of 60 cm and a height of 100 cm.\n\nIf 15 gallons of water are poured into the empty tank, determine how many centimeters the water level will rise.",
@@ -296,7 +332,9 @@
           "tags": [
             "Mensuration Of Areas And Volumes",
             "Right Circular Cylinder"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A parabolic reflector is being modeled for a telecommunications project. The cross-section of the reflector is defined by the equation \\( 3y^2 = 18x \\). Based on the standard geometric properties of a parabola, the directrix is most nearly:",
@@ -308,13 +346,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P44"
+            "FE Reference Handbook 10.5 \u2013 P44"
           ],
           "tags": [
             "Conic Sections",
             "Mensuration Of Areas And Volumes",
             "Parabola"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A parabolic reflector is being modeled for a telecommunications project. The cross-section of the reflector is defined by the equation \\( 3y^2 = 18x \\). Based on the standard geometric properties of a parabola, the coordinates of the focus are most nearly:",
@@ -326,13 +366,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P44"
+            "FE Reference Handbook 10.5 \u2013 P44"
           ],
           "tags": [
             "Conic Sections",
             "Mensuration Of Areas And Volumes",
             "Parabola"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A spherical pressure vessel is being designed for chemical gas storage at an industrial facility. If the internal radius of the sphere is exactly \\( 5\\,\\mathrm{ft} \\), the internal volume capacity of the vessel is most nearly:",
@@ -344,12 +386,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P41"
+            "FE Reference Handbook 10.5 \u2013 P41"
           ],
           "tags": [
             "Mensuration Of Areas And Volumes",
             "Quadric Surface Sphere"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A circular sector has a radius of \\( 7 \\, \\mathrm{cm} \\) and an arc length of \\( 15 \\, \\mathrm{cm} \\). The approximate area of the circular sector is most nearly:",
@@ -361,12 +405,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P41"
+            "FE Reference Handbook 10.5 \u2013 P41"
           ],
           "tags": [
             "Circular Sector",
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "A right circular cone has a vertical height of \\( 5 \\, \\mathrm{m} \\) and a base diameter of \\( 4 \\, \\mathrm{m} \\). The approximate total surface area of the cone, including both the side and the base, is most nearly:",
@@ -378,12 +424,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P43"
+            "FE Reference Handbook 10.5 \u2013 P43"
           ],
           "tags": [
             "Mensuration Of Areas And Volumes",
             "Right Circular Cone"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "Determine the equations of the directrices of the ellipse defined by the equation \\( 24x^2 + 18y^2 = 432 \\). The directrices of the ellipse are most nearly:",
@@ -395,12 +443,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P44"
+            "FE Reference Handbook 10.5 \u2013 P44"
           ],
           "tags": [
             "Conic Sections",
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "Determine the coordinates of the foci of the ellipse described by the equation \\( 24x^2 + 18y^2 = 432 \\). The coordinates of the foci are most nearly:",
@@ -412,12 +462,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P44"
+            "FE Reference Handbook 10.5 \u2013 P44"
           ],
           "tags": [
             "Conic Sections",
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         },
         {
           "question": "Determine the area of the region inside the circle \\( x^2 + y^2 = 25 \\) and outside the ellipse \\( \\frac{x^2}{20} + \\frac{y^2}{12} = 1 \\).\n[Area between Circle and Ellipse](https://journey2pe.com/wp-content/uploads/2025/05/0040.png)",
@@ -429,11 +481,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P44"
+            "FE Reference Handbook 10.5 \u2013 P44"
           ],
           "tags": [
             "Mensuration Of Areas And Volumes"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Analytic geometry"
         }
       ]
     },
@@ -442,91 +496,105 @@
       "subtopic": "Differential Calculus",
       "questions": [
         {
-          "question": "Find the derivative of \\( f(x) = x^{2/3} + \\dfrac{1}{\\sqrt{x}} – \\dfrac{7}{x} \\)",
+          "question": "Find the derivative of \\( f(x) = x^{2/3} + \\dfrac{1}{\\sqrt{x}} \u2013 \\dfrac{7}{x} \\)",
           "choices": {},
-          "answer": "\\(\\dfrac{2}{3\\sqrt[3]{x}} – \\dfrac{1}{2\\sqrt{x^{3}}} + \\dfrac{7}{x^{2}}\\)",
+          "answer": "\\(\\dfrac{2}{3\\sqrt[3]{x}} \u2013 \\dfrac{1}{2\\sqrt{x^{3}}} + \\dfrac{7}{x^{2}}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P49"
+            "FE Reference Handbook 10.5 \u2013 P49"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of the function:\n\\[\n\nf(x) = \\ln\\!\\bigl(\\ln(2x + 1)\\bigr)\n\n\\]",
           "choices": {},
           "answer": "\\[\n\nf'(x) = \\dfrac{2}{\\left(2x + 1\\right)\\,\\ln(2x + 1)}\n\n\\]",
           "references": [
-            "FE Reference Handbook 10.5 – P49"
+            "FE Reference Handbook 10.5 \u2013 P49"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of the function \\(f(x) = \\ln(1 + \\sin 3x)\\).",
           "choices": {},
           "answer": "\\(f'(x) = \\dfrac{3\\cos 3x}{\\,1+\\sin 3x\\,}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P49"
+            "FE Reference Handbook 10.5 \u2013 P49"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Determine the value of \\(\\dfrac{dy}{dx}\\) given that the variables \\(x\\) and \\(y\\) satisfy the relation:\n\\[\n\n\\frac{5}{y} = \\frac{15}{x + y}\n\n\\]",
           "choices": {},
           "answer": "\\(\\dfrac{1}{2}\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P46"
+            "FE Reference Handbook 10.5 \u2013 P46"
           ],
           "tags": [
             "Differential Calculus",
             "Implicit Differentiation"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of \\( \\dfrac{d^{2}y}{dx^{2}} \\), if \\( y = \\sin x \\).",
           "choices": {},
           "answer": "\\( -\\,y \\)",
           "references": [
-            "FE Reference Handbook 10.5 – P49"
+            "FE Reference Handbook 10.5 \u2013 P49"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Find the maximum value of the function\n\n\\[\n\nf(x) = x^{3} – 3x^{2} – 9x + 5.\n\n\\]",
+          "question": "Find the maximum value of the function\n\n\\[\n\nf(x) = x^{3} \u2013 3x^{2} \u2013 9x + 5.\n\n\\]",
           "choices": {},
           "answer": "\\(10\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P46"
+            "FE Reference Handbook 10.5 \u2013 P46"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Find the minimum value of the function:\n\\[\n\nf(x) = x^{3} – 3x^{2} – 9x + 5.\n\n\\]",
+          "question": "Find the minimum value of the function:\n\\[\n\nf(x) = x^{3} \u2013 3x^{2} \u2013 9x + 5.\n\n\\]",
           "choices": {},
           "answer": "\\(-22\\)",
           "references": [
-            "FE Reference Handbook 10.5 – P46"
+            "FE Reference Handbook 10.5 \u2013 P46"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Determine the slope of the tangent at point (2, 25/3) to the curve:\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} – 2x + 1\n\n\\]",
+          "question": "Determine the slope of the tangent at point (2, 25/3) to the curve:\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} \u2013 2x + 1\n\n\\]",
           "choices": {},
           "answer": "12",
           "references": [
@@ -535,87 +603,101 @@
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Determine the \\(x\\)-coordinate of the point of inflection of the curve\n\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} – 2x + 1\n\n\\]",
+          "question": "Determine the \\(x\\)-coordinate of the point of inflection of the curve\n\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} \u2013 2x + 1\n\n\\]",
           "choices": {},
           "answer": "x = -3/4",
           "references": [
-            "FE Reference Handbook 10.5, P46:\n\nMathematics – Differential Calculus – The Derivative – Point of Inflection"
+            "FE Reference Handbook 10.5, P46:\n\nMathematics \u2013 Differential Calculus \u2013 The Derivative \u2013 Point of Inflection"
           ],
           "tags": [
             "Differential Calculus",
             "Point Of Inflection",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of the function \\(f(x) = (x^{3} + 2)e^{2x}\\).",
           "choices": {},
           "answer": "\\(f'(x) = (3x^{2})e^{2x} + (2e^{2x})(x^{3}+2)\\)",
           "references": [
-            "FE Reference Handbook 10.5, P49:\n\nMathematics – Differential Calculus – The Derivative"
+            "FE Reference Handbook 10.5, P49:\n\nMathematics \u2013 Differential Calculus \u2013 The Derivative"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of the function \\(f(x) = x^{4}e^{x}\\).",
           "choices": {},
           "answer": "\\(f'(x) = x^{4}e^{x} + 4x^{3}e^{x}\\)",
           "references": [
-            "FE Reference Handbook 10.5, P49:\n\nMathematics – Differential Calculus – The Derivative"
+            "FE Reference Handbook 10.5, P49:\n\nMathematics \u2013 Differential Calculus \u2013 The Derivative"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "For the curve\n\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} – 2x + 1\n\n\\]\n\nFind the \\(x\\)-coordinates of the points at which the tangent to the curve are parallel to the \\(x\\)-axis.",
+          "question": "For the curve\n\n\\[\n\ny = \\frac{2}{3}x^{3} + \\frac{3}{2}x^{2} \u2013 2x + 1\n\n\\]\n\nFind the \\(x\\)-coordinates of the points at which the tangent to the curve are parallel to the \\(x\\)-axis.",
           "choices": {},
           "answer": "-2 and 0.5",
           "references": [
-            "FE Reference Handbook 10.5, P46:\n\nMathematics – Differential Calculus"
+            "FE Reference Handbook 10.5, P46:\n\nMathematics \u2013 Differential Calculus"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the derivative of the function \\(f(x) = \\cos^{2} x\\).",
           "choices": {},
           "answer": "\\(f'(x) = -2\\sin x\\cos x\\)",
           "references": [
-            "FE Reference Handbook 10.5 P49 – Rule 9:\n\nMathematics – Differential Calculus – The Derivative"
+            "FE Reference Handbook 10.5 P49 \u2013 Rule 9:\n\nMathematics \u2013 Differential Calculus \u2013 The Derivative"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Determine the derivative \\( \\dfrac{dy}{dx} \\) for the following equation:\n\\[\n\nx^2 y – e^{2x} = \\sin y\n\n\\]",
+          "question": "Determine the derivative \\( \\dfrac{dy}{dx} \\) for the following equation:\n\\[\n\nx^2 y \u2013 e^{2x} = \\sin y\n\n\\]",
           "choices": {
-            "A": "\\( \\dfrac{2e^{2x} – 2xy}{x^2 – \\cos y} \\)",
+            "A": "\\( \\dfrac{2e^{2x} \u2013 2xy}{x^2 \u2013 \\cos y} \\)",
             "B": "\\( \\dfrac{2e^{2x} + 2xy}{x^2 + \\cos y} \\)",
-            "C": "\\( \\dfrac{e^{2x} – 2xy}{x^2 – \\cos y} \\)",
-            "D": "\\( \\dfrac{2e^{2x} – 2x}{x^2 – \\cos y} \\)"
+            "C": "\\( \\dfrac{e^{2x} \u2013 2xy}{x^2 \u2013 \\cos y} \\)",
+            "D": "\\( \\dfrac{2e^{2x} \u2013 2x}{x^2 \u2013 \\cos y} \\)"
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P49"
+            "FE Reference Handbook 10.5 \u2013 P49"
           ],
           "tags": [
             "Differential Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Determine the limit of the following expression as \\( x \\) approaches \\( 1 \\):\n\\[\n\n\\lim_{x \\to 1} \\frac{x^2 + 3x – 4}{x^2 + 2x – 3}\n\n\\]",
+          "question": "Determine the limit of the following expression as \\( x \\) approaches \\( 1 \\):\n\\[\n\n\\lim_{x \\to 1} \\frac{x^2 + 3x \u2013 4}{x^2 + 2x \u2013 3}\n\n\\]",
           "choices": {
             "A": "\\( 0 \\)",
             "B": "\\( 1 \\)",
@@ -624,12 +706,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P48"
+            "FE Reference Handbook 10.5 \u2013 P48"
           ],
           "tags": [
             "Differential Calculus",
             "Lhospitals Rule"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "If \\( y = 2x^3 + 4x^2z + 6xz^2 + 7z^3 + 10 \\), the second partial derivative with respect to \\( x \\), \\( \\frac{\\partial^2 y}{\\partial x^2} \\), is most nearly:",
@@ -641,12 +725,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P46"
+            "FE Reference Handbook 10.5 \u2013 P46"
           ],
           "tags": [
             "Differential Calculus",
             "The Derivative"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         }
       ]
     },
@@ -657,62 +743,72 @@
         {
           "question": "Evaluate the definite integral\n\n\\[\n\n\\int_{0}^{1} x e^{-x}\\,dx.\n\n\\]",
           "choices": {},
-          "answer": "\\(1 – \\dfrac{2}{e}\\)",
+          "answer": "\\(1 \u2013 \\dfrac{2}{e}\\)",
           "references": [
-            "FE Reference Handbook 10.3, P50\n\nMathematics – Integral Calculus"
+            "FE Reference Handbook 10.3, P50\n\nMathematics \u2013 Integral Calculus"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Evaluate the definite integral\n\n\\[\n\n\\int_{1}^{3} \\left( \\frac{x^{3}-4}{x^{2}} \\right)\\,dx.\n\n\\]",
           "choices": {},
           "answer": "\\(\\dfrac{4}{3}\\)",
           "references": [
-            "FE Reference Handbook 10.5, P50\n\nMathematics – Integral Calculus"
+            "FE Reference Handbook 10.5, P50\n\nMathematics \u2013 Integral Calculus"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Evaluate the indefinite integral\n\n\\[\n\n\\int (5\\cos x – 2\\sin x)\\,dx.\n\n\\]",
+          "question": "Evaluate the indefinite integral\n\n\\[\n\n\\int (5\\cos x \u2013 2\\sin x)\\,dx.\n\n\\]",
           "choices": {},
           "answer": "\\(5\\sin x + 2\\cos x + C\\)",
           "references": [
-            "FE Reference Handbook 10.5, P50\n\nMathematics – Integral Calculus"
+            "FE Reference Handbook 10.5, P50\n\nMathematics \u2013 Integral Calculus"
           ],
           "tags": [
             "Indefinite Integrals",
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Evaluate the integral:\n\n\\[\n\n\\int \\sin(2x)\\,dx.\n\n\\]",
           "choices": {},
           "answer": "\\(-\\dfrac{1}{2}\\cos(2x) + C\\)",
           "references": [
-            "FE Reference Handbook 10.5, P48, P50:\n\nMathematics – Integral Calculus\n\nIntegration by Substitution (Clive Newstead, Carnegie Mellon University)\n\nIntegration by Substitution Workbook (MathCentre)"
+            "FE Reference Handbook 10.5, P48, P50:\n\nMathematics \u2013 Integral Calculus\n\nIntegration by Substitution (Clive Newstead, Carnegie Mellon University)\n\nIntegration by Substitution Workbook (MathCentre)"
           ],
           "tags": [
             "Indefinite Integrals",
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "A region is located in the first quadrant, and is bounded by the line \\(y = 1\\),\n\nthe curve \\(x = y^{2}\\), and the \\(y\\)-axis? Find the area of the region.",
           "choices": {},
           "answer": "\\(\\dfrac{1}{3}\\)",
           "references": [
-            "FE Reference Handbook 10.5 P50:\n\nMathematics – Integral Calculus"
+            "FE Reference Handbook 10.5 P50:\n\nMathematics \u2013 Integral Calculus"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Determine the approximate area bounded by the curves \\( y = 9 – x^2 \\) and \\( y = -1 + x^2 \\).",
+          "question": "Determine the approximate area bounded by the curves \\( y = 9 \u2013 x^2 \\) and \\( y = -1 + x^2 \\).",
           "choices": {
             "A": "14.9",
             "B": "29.8",
@@ -721,11 +817,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P50"
+            "FE Reference Handbook 10.5 \u2013 P50"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "Find the area of the region bounded by the curve \\( y = \\dfrac{1}{x^3} \\), the x-axis, and the vertical lines \\( x = 2 \\) and \\( x = 6 \\). The area is most nearly:",
@@ -737,27 +835,31 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P50"
+            "FE Reference Handbook 10.5 \u2013 P50"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "Find the indefinite integral of the following expression:\n\\[\n\nx^4 + x – 2\n\n\\]\nThe result is most nearly:",
+          "question": "Find the indefinite integral of the following expression:\n\\[\n\nx^4 + x \u2013 2\n\n\\]\nThe result is most nearly:",
           "choices": {
-            "A": "\\( \\dfrac{x^5}{5} + \\dfrac{x^2}{2} – 2x + C \\)",
+            "A": "\\( \\dfrac{x^5}{5} + \\dfrac{x^2}{2} \u2013 2x + C \\)",
             "B": "\\( 4x^3 + 1 + C \\)",
-            "C": "\\( \\dfrac{x^5}{5} + x^2 – 2x + C \\)",
-            "D": "\\( \\dfrac{x^4}{4} + \\dfrac{x^2}{2} – 2x + C \\)"
+            "C": "\\( \\dfrac{x^5}{5} + x^2 \u2013 2x + C \\)",
+            "D": "\\( \\dfrac{x^4}{4} + \\dfrac{x^2}{2} \u2013 2x + C \\)"
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P50"
+            "FE Reference Handbook 10.5 \u2013 P50"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "The area of the shaded portion of the figure shown below is most nearly:\n[Figure showing the shaded area](https://journey2pe.com/wp-content/uploads/2024/08/0006pic.png)",
@@ -769,11 +871,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P50"
+            "FE Reference Handbook 10.5 \u2013 P50"
           ],
           "tags": [
             "Integral Calculus"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         }
       ]
     },
@@ -786,36 +890,42 @@
           "choices": {},
           "answer": "\\(759\\)",
           "references": [
-            "FE Reference Handbook 10.5, P51:\n\nMathematics – Progression and Series – Arithmetic Progression"
+            "FE Reference Handbook 10.5, P51:\n\nMathematics \u2013 Progression and Series \u2013 Arithmetic Progression"
           ],
           "tags": [
             "Arithmetic Progression",
             "Progression And Series"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "For the following geometric progression, the value of the 25th term is most nearly:\n\\(3,\\, 6,\\, 12,\\, 24,\\, \\ldots\\)",
           "choices": {},
           "answer": "\\(3 \\times 2^{24}\\)",
           "references": [
-            "FE Reference Handbook 10.5, P51:\n\nMathematics – Progression and Series – Geometric Progression"
+            "FE Reference Handbook 10.5, P51:\n\nMathematics \u2013 Progression and Series \u2013 Geometric Progression"
           ],
           "tags": [
             "Geometric Progression",
             "Progression And Series"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "For the following geometric progression, what is the sum of the first 12 terms?\n\\(5,\\, 10,\\, 20,\\, 40,\\, \\ldots\\)",
           "choices": {},
           "answer": "20475",
           "references": [
-            "FE Reference Handbook 10.5, P51:\n\nMathematics – Progression and Series – Geometric Progression"
+            "FE Reference Handbook 10.5, P51:\n\nMathematics \u2013 Progression and Series \u2013 Geometric Progression"
           ],
           "tags": [
             "Geometric Progression",
             "Progression And Series"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
           "question": "In the following arithmetic sequence, what is the value of the 22nd term?\n\\[\n\n3, 6, 9, \\ldots\n\n\\]\nThe 22nd term is most nearly:",
@@ -827,11 +937,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P51"
+            "FE Reference Handbook 10.5 \u2013 P51"
           ],
           "tags": [
             "Progression And Series"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         }
       ]
     },
@@ -844,14 +956,16 @@
           "choices": {},
           "answer": "\\(y(t) = 3e^{-7t}\\)",
           "references": [
-            "FE Reference Handbook 10.5 P52:\n\nMathematics – Differential Equations – First-Order Linear Homogeneous Differential Equations with Constant Coefficients"
+            "FE Reference Handbook 10.5 P52:\n\nMathematics \u2013 Differential Equations \u2013 First-Order Linear Homogeneous Differential Equations with Constant Coefficients"
           ],
           "tags": [
             "Differential Equations"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         },
         {
-          "question": "What is the general solution to the following first-order differential equation?\n\\[\n\ny’ + 4y = 0\n\n\\]",
+          "question": "What is the general solution to the following first-order differential equation?\n\\[\n\ny\u2019 + 4y = 0\n\n\\]",
           "choices": {
             "A": "\\( y = Ce^{4x} \\)",
             "B": "\\( y = Ce^{-4x} \\)",
@@ -860,11 +974,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P52"
+            "FE Reference Handbook 10.5 \u2013 P52"
           ],
           "tags": [
             "Differential Equations"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Calculus"
         }
       ]
     },
@@ -877,24 +993,28 @@
           "choices": {},
           "answer": "\\[\n\nI =\n\n\\begin{bmatrix}\n\n1 & 0 & 0 \\\\\n\n0 & 1 & 0 \\\\\n\n0 & 0 & 1\n\n\\end{bmatrix}.\n\n\\]",
           "references": [
-            "FE Reference Handbook 10.5, P58:\n\nMathematics – Matrices – Identity Matrix"
+            "FE Reference Handbook 10.5, P58:\n\nMathematics \u2013 Matrices \u2013 Identity Matrix"
           ],
           "tags": [
             "Identity Matrix",
             "Matrices"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
           "question": "Add the following matrices:\n\\[\n\nA =\n\n\\begin{bmatrix}\n\n1 & 2 & 3 \\\\\n\n4 & 5 & 6\n\n\\end{bmatrix},\n\n\\\\\n\nB =\n\n\\begin{bmatrix}\n\n7 & 8 & 9 \\\\\n\n1 & 0 & -1\n\n\\end{bmatrix}.\n\n\\]",
           "choices": {},
           "answer": "\\[\n\nA + B =\n\n\\begin{bmatrix}\n\n8 & 10 & 12 \\\\\n\n5 & 5 & 5\n\n\\end{bmatrix}.\n\n\\]",
           "references": [
-            "FE Reference Handbook 10.5, P58:\n\nMathematics – Matrices – Addition of Two Matrices"
+            "FE Reference Handbook 10.5, P58:\n\nMathematics \u2013 Matrices \u2013 Addition of Two Matrices"
           ],
           "tags": [
             "Addition Of Two Matrices",
             "Matrices"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
           "question": "Determine the determinant of the following \\( 3 \\times 3 \\) matrix \\( A \\):\n\\[\n\nA = \\begin{bmatrix}\n\n4 & 2 & 6 \\\\\n\n3 & 5 & 1 \\\\\n\n8 & 1 & 3\n\n\\end{bmatrix}\n\n\\]\nThe determinant of matrix \\( A \\) is most nearly:",
@@ -906,12 +1026,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P59"
+            "FE Reference Handbook 10.5 \u2013 P59"
           ],
           "tags": [
             "Determinants",
             "Matrices"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
           "question": "Compute the product \\( C = AB \\):\n\\[\n\nA = \\begin{bmatrix}\n\n1 & 2 \\\\\n\n4 & 3 \\\\\n\n5 & 0\n\n\\end{bmatrix},\n\n\\quad\n\nB = \\begin{bmatrix}\n\n7 & 8 \\\\\n\n6 & 9\n\n\\end{bmatrix}.\n\n\\]\nThe resulting matrix \\( C \\) is:",
@@ -923,12 +1045,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P58"
+            "FE Reference Handbook 10.5 \u2013 P58"
           ],
           "tags": [
             "Matrices",
             "Multiplication Of Two Matrices"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
           "question": "Given the matrix\n\\[\n\nA = \\begin{bmatrix}\n\n4 & 3 \\\\\n\n2 & 5\n\n\\end{bmatrix},\n\n\\]\nand its adjoint\n\\[\n\n\\operatorname{adj}(A) = \\begin{bmatrix}\n\n5 & -3 \\\\\n\n-2 & 4\n\n\\end{bmatrix},\n\n\\]\nthe inverse of \\( A \\) is most nearly:",
@@ -940,11 +1064,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P58, 59"
+            "FE Reference Handbook 10.5 \u2013 P58, 59"
           ],
           "tags": [
             "Matrices"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         }
       ]
     },
@@ -953,31 +1079,35 @@
       "subtopic": "Vectors",
       "questions": [
         {
-          "question": "Given\n\n\\[\n\n\\mathbf{A} = 2\\mathbf{i} – \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} = \\mathbf{i} + 2\\mathbf{j} – \\mathbf{k},\n\n\\]\n\nfind the cross product \\(\\mathbf{A} \\times \\mathbf{B}\\).",
+          "question": "Given\n\n\\[\n\n\\mathbf{A} = 2\\mathbf{i} \u2013 \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} = \\mathbf{i} + 2\\mathbf{j} \u2013 \\mathbf{k},\n\n\\]\n\nfind the cross product \\(\\mathbf{A} \\times \\mathbf{B}\\).",
           "choices": {},
           "answer": "\\( \\mathbf{A} \\times \\mathbf{B} = -5\\mathbf{i} + 5\\mathbf{j} + 5\\mathbf{k} \\)",
           "references": [
-            "FE Reference Handbook 10.5, P60:\n\nMathematics – Vectors – Cross Product"
+            "FE Reference Handbook 10.5, P60:\n\nMathematics \u2013 Vectors \u2013 Cross Product"
           ],
           "tags": [
             "Cross Product",
             "Vectors"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
-          "question": "Given\n\n\\[\n\n\\begin{align}\n\n\\mathbf{A} &= 2\\mathbf{i} – \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} &= -\\mathbf{i} + 4\\mathbf{j} + 2\\mathbf{k},\n\n\\end{align}\n\n\\]\n\nfind the dot product \\(\\mathbf{A} \\cdot \\mathbf{B}\\).",
+          "question": "Given\n\n\\[\n\n\\begin{align}\n\n\\mathbf{A} &= 2\\mathbf{i} \u2013 \\mathbf{j} + 3\\mathbf{k}, \\\\\n\n\\mathbf{B} &= -\\mathbf{i} + 4\\mathbf{j} + 2\\mathbf{k},\n\n\\end{align}\n\n\\]\n\nfind the dot product \\(\\mathbf{A} \\cdot \\mathbf{B}\\).",
           "choices": {},
           "answer": "\\( \\mathbf{A} \\cdot \\mathbf{B} = 0 \\)",
           "references": [
-            "FE Reference Handbook 10.5, P60:\n\nMathematics – Vectors"
+            "FE Reference Handbook 10.5, P60:\n\nMathematics \u2013 Vectors"
           ],
           "tags": [
             "Dot Product",
             "Vectors"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
-          "question": "Two vectors are given below. Find the angle between these two vectors (in degrees). The angle is most nearly:\n\\[\n\n\\begin{align*}\n\n\\mathbf{A} &= 3\\mathbf{i} – 2\\mathbf{j} + 4\\mathbf{k} \\\\[6pt]\n\n\\mathbf{B} &= -\\mathbf{i} + 5\\mathbf{j} + 2\\mathbf{k}\n\n\\end{align*}\n\n\\]",
+          "question": "Two vectors are given below. Find the angle between these two vectors (in degrees). The angle is most nearly:\n\\[\n\n\\begin{align*}\n\n\\mathbf{A} &= 3\\mathbf{i} \u2013 2\\mathbf{j} + 4\\mathbf{k} \\\\[6pt]\n\n\\mathbf{B} &= -\\mathbf{i} + 5\\mathbf{j} + 2\\mathbf{k}\n\n\\end{align*}\n\n\\]",
           "choices": {
             "A": "\\( 80.2^\\circ \\)",
             "B": "\\( 82.2^\\circ \\)",
@@ -986,14 +1116,16 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P60"
+            "FE Reference Handbook 10.5 \u2013 P60"
           ],
           "tags": [
             "Vectors"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
-          "question": "What is the approximate length of the resultant of the following three vectors?\n\\[\n\n\\begin{align*}\n\n\\mathbf{A}_1 &= 4\\mathbf{i} + 5\\mathbf{j} – 6\\mathbf{k} \\\\\n\n\\mathbf{A}_2 &= 8\\mathbf{i} + 3\\mathbf{j} + 2\\mathbf{k} \\\\\n\n\\mathbf{A}_3 &= -14\\mathbf{i} – 10\\mathbf{j} + 3\\mathbf{k}\n\n\\end{align*}\n\n\\]",
+          "question": "What is the approximate length of the resultant of the following three vectors?\n\\[\n\n\\begin{align*}\n\n\\mathbf{A}_1 &= 4\\mathbf{i} + 5\\mathbf{j} \u2013 6\\mathbf{k} \\\\\n\n\\mathbf{A}_2 &= 8\\mathbf{i} + 3\\mathbf{j} + 2\\mathbf{k} \\\\\n\n\\mathbf{A}_3 &= -14\\mathbf{i} \u2013 10\\mathbf{j} + 3\\mathbf{k}\n\n\\end{align*}\n\n\\]",
           "choices": {
             "A": "\\( 3 \\)",
             "B": "\\( 5 \\)",
@@ -1002,27 +1134,31 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P59"
+            "FE Reference Handbook 10.5 \u2013 P59"
           ],
           "tags": [
             "Vectors"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         },
         {
-          "question": "A plane is determined by the following two vectors:\n\\[\n\n\\begin{align*}\n\n\\mathbf{A} &= 3\\mathbf{i} + 5\\mathbf{j} \\\\[6pt]\n\n\\mathbf{B} &= 2\\mathbf{i} + 3\\mathbf{j} – \\mathbf{k}\n\n\\end{align*}\n\n\\]\nThe unit vector perpendicular to the plane is most nearly:",
+          "question": "A plane is determined by the following two vectors:\n\\[\n\n\\begin{align*}\n\n\\mathbf{A} &= 3\\mathbf{i} + 5\\mathbf{j} \\\\[6pt]\n\n\\mathbf{B} &= 2\\mathbf{i} + 3\\mathbf{j} \u2013 \\mathbf{k}\n\n\\end{align*}\n\n\\]\nThe unit vector perpendicular to the plane is most nearly:",
           "choices": {
-            "A": "\\( \\dfrac{-5\\mathbf{i} + 3\\mathbf{j} – \\mathbf{k}}{\\sqrt{35}} \\)",
-            "B": "\\( \\dfrac{-5\\mathbf{i} – 3\\mathbf{j} – \\mathbf{k}}{\\sqrt{35}} \\)",
-            "C": "\\( \\dfrac{-5\\mathbf{i} + 3\\mathbf{j} – \\mathbf{k}}{35} \\)",
-            "D": "\\( \\dfrac{3\\mathbf{i} + 5\\mathbf{j} – \\mathbf{k}}{\\sqrt{35}} \\)"
+            "A": "\\( \\dfrac{-5\\mathbf{i} + 3\\mathbf{j} \u2013 \\mathbf{k}}{\\sqrt{35}} \\)",
+            "B": "\\( \\dfrac{-5\\mathbf{i} \u2013 3\\mathbf{j} \u2013 \\mathbf{k}}{\\sqrt{35}} \\)",
+            "C": "\\( \\dfrac{-5\\mathbf{i} + 3\\mathbf{j} \u2013 \\mathbf{k}}{35} \\)",
+            "D": "\\( \\dfrac{3\\mathbf{i} + 5\\mathbf{j} \u2013 \\mathbf{k}}{\\sqrt{35}} \\)"
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P60"
+            "FE Reference Handbook 10.5 \u2013 P60"
           ],
           "tags": [
             "Vectors"
-          ]
+          ],
+          "sectionId": "mathematics",
+          "officialSubtopic": "Linear algebra"
         }
       ]
     },
@@ -1031,7 +1167,7 @@
       "subtopic": "Numerical Methods",
       "questions": [
         {
-          "question": "Evaluate the integral \\(\\int_{0}^{2} f(x) dx\\) using Simpson’s Rule (Parabolic Rule) given the following data points:\n\\(x\\)\n0\n1\n2\n\n\\(f(x)\\)\n2\n5\n3",
+          "question": "Evaluate the integral \\(\\int_{0}^{2} f(x) dx\\) using Simpson\u2019s Rule (Parabolic Rule) given the following data points:\n\\(x\\)\n0\n1\n2\n\n\\(f(x)\\)\n2\n5\n3",
           "choices": {
             "A": "\\(6.00\\)",
             "B": "\\(7.67\\)",
@@ -1040,15 +1176,17 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P62"
+            "FE Reference Handbook 10.5 \u2013 P62"
           ],
           "tags": [
             "Numerical Integration",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "The velocity of a particle is described by the differential equation \\(\\dfrac{dv}{dt} = 10 – 0.5v\\). If the initial velocity \\(v(0) = 0\\), using Euler’s approximation with a step size \\(\\Delta t = 2.0\\text{s}\\), the estimated velocity at \\(t = 2.0\\text{s}\\) is:",
+          "question": "The velocity of a particle is described by the differential equation \\(\\dfrac{dv}{dt} = 10 \u2013 0.5v\\). If the initial velocity \\(v(0) = 0\\), using Euler\u2019s approximation with a step size \\(\\Delta t = 2.0\\text{s}\\), the estimated velocity at \\(t = 2.0\\text{s}\\) is:",
           "choices": {
             "A": "\\(10\\ \\text{m/s}\\)",
             "B": "\\(15\\ \\text{m/s}\\)",
@@ -1057,15 +1195,17 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P62"
+            "FE Reference Handbook 10.5 \u2013 P62"
           ],
           "tags": [
             "Numerical Methods",
             "Numerical Solution Of Ordinary Differential Equations"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "Using Newton’s method to find the root of \\(f(x) = x^3 + x – 1\\), with an initial guess of \\(x_0 = 1.0\\), calculate the value of \\(x_1\\).",
+          "question": "Using Newton\u2019s method to find the root of \\(f(x) = x^3 + x \u2013 1\\), with an initial guess of \\(x_0 = 1.0\\), calculate the value of \\(x_1\\).",
           "choices": {
             "A": "\\(0.68\\)",
             "B": "\\(0.75\\)",
@@ -1074,32 +1214,36 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P61"
+            "FE Reference Handbook 10.5 \u2013 P61"
           ],
           "tags": [
             "Newtons Method For Root Extraction",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "When using Newton’s method to find the root of \\(f(x) = 0\\), the method will fail to converge to a solution if, at any iteration \\(i\\):",
+          "question": "When using Newton\u2019s method to find the root of \\(f(x) = 0\\), the method will fail to converge to a solution if, at any iteration \\(i\\):",
           "choices": {
             "A": "The initial guess \\(x_0\\) is too close to the root.",
             "B": "The derivative \\(f'(x_i)\\) is zero.",
-            "C": "The second derivative \\(f”(x)\\) is constant.",
+            "C": "The second derivative \\(f\u201d(x)\\) is constant.",
             "D": "The function \\(f(x)\\) is a polynomial."
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P61"
+            "FE Reference Handbook 10.5 \u2013 P61"
           ],
           "tags": [
             "Newtons Method For Root Extraction",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "To solve for a critical angle in a structural problem, the equation \\(f(x) = x – \\cos(x) = 0\\) must be solved (where \\(x\\) is in radians). Using Newton’s method with an initial estimate of \\(x_0 = 0.5\\), the first iteration \\(x_1\\) is most nearly:",
+          "question": "To solve for a critical angle in a structural problem, the equation \\(f(x) = x \u2013 \\cos(x) = 0\\) must be solved (where \\(x\\) is in radians). Using Newton\u2019s method with an initial estimate of \\(x_0 = 0.5\\), the first iteration \\(x_1\\) is most nearly:",
           "choices": {
             "A": "\\(0.42\\)",
             "B": "\\(0.55\\)",
@@ -1108,15 +1252,17 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P61"
+            "FE Reference Handbook 10.5 \u2013 P61"
           ],
           "tags": [
             "Newtons Method For Root Extraction",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "Given the first-order differential equation: \\(\\dfrac{dy}{dt} = -y + t\\) with the initial condition \\(y(0) = 1\\). Using Euler’s approximation with a step size of \\(\\Delta t = 0.1\\), the value of \\(y(0.1)\\) is most nearly:",
+          "question": "Given the first-order differential equation: \\(\\dfrac{dy}{dt} = -y + t\\) with the initial condition \\(y(0) = 1\\). Using Euler\u2019s approximation with a step size of \\(\\Delta t = 0.1\\), the value of \\(y(0.1)\\) is most nearly:",
           "choices": {
             "A": "\\(0.80\\)",
             "B": "\\(0.90\\)",
@@ -1125,12 +1271,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P61"
+            "FE Reference Handbook 10.5 \u2013 P61"
           ],
           "tags": [
             "Numerical Methods",
             "Numerical Solution Of Ordinary Differential Equations"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
           "question": "The pressure (\\(P\\)) and volume (\\(V\\)) of a gas in a cylinder are measured at equal intervals as shown in the table below. Using the Trapezoidal Rule, the approximate work done (\\(\\int P \\, dV\\)) by the gas from \\(V = 0.1\\) to \\(V = 0.3\\) is most nearly:\nV (m3)\n0.1\n0.2\n0.3\n\nP (kPa)\n100\n120\n110",
@@ -1142,15 +1290,17 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P62"
+            "FE Reference Handbook 10.5 \u2013 P62"
           ],
           "tags": [
             "Numerical Integration",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
-          "question": "The function \\(f(x) = x^3 – 25\\) has a root near \\(x = 3\\). Using Newton’s method with an initial estimate of \\(x_0 = 3.0\\), the value of the next estimate, \\(x_1\\), is most nearly:",
+          "question": "The function \\(f(x) = x^3 \u2013 25\\) has a root near \\(x = 3\\). Using Newton\u2019s method with an initial estimate of \\(x_0 = 3.0\\), the value of the next estimate, \\(x_1\\), is most nearly:",
           "choices": {
             "A": "\\(2.89\\)",
             "B": "\\(2.93\\)",
@@ -1159,12 +1309,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P61"
+            "FE Reference Handbook 10.5 \u2013 P61"
           ],
           "tags": [
             "Newtons Method For Root Extraction",
             "Numerical Methods"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         }
       ]
     }

@@ -15,11 +15,13 @@
           "answer": "C",
           "references": [
             "FE Reference Handbook 10.5, P220:",
-            "FE Reference Handbook 10.5 – P220"
+            "FE Reference Handbook 10.5 \u2013 P220"
           ],
           "tags": [
             "Temperature Sensors"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A thermistor has a nominal resistance of \\(R_0 = 10,000\\ \\Omega\\) at \\(25^\\circ\\text{C}\\) and a \\(\\beta\\) value of \\(3950\\ \\text{K}\\). The current measured resistance is \\(R_T = 4,000\\ \\Omega\\). The measured temperature \\(T\\) is most nearly:",
@@ -31,11 +33,13 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P220"
+            "FE Reference Handbook 10.5 \u2013 P220"
           ],
           "tags": [
             "Temperature Sensors"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A semiconductor thermistor has a nominal resistance of \\(R_0 = 10,000\\ \\Omega\\) at a reference temperature of \\(25^\\circ\\text{C}\\). The material-dependent value is \\(\\beta = 3950\\ \\text{K}\\). The resistance of the thermistor at \\(80^\\circ\\text{C}\\) is most nearly:",
@@ -47,11 +51,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P220"
+            "FE Reference Handbook 10.5 \u2013 P220"
           ],
           "tags": [
             "Temperature Sensors"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A platinum RTD has a reference resistance of \\(R_0 = 100\\ \\Omega\\) at \\(T_0 = 0^\\circ\\text{C}\\) and a temperature coefficient of \\(\\alpha = 0.00385\\ \\Omega/\\Omega\\ \\text{per}\\ ^\\circ\\text{C}\\). If the measured resistance is \\(R_T = 138.5\\ \\Omega\\), the sensed temperature \\(T\\) is most nearly:",
@@ -63,11 +69,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P219"
+            "FE Reference Handbook 10.5 \u2013 P219"
           ],
           "tags": [
             "Temperature Sensors"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A platinum Resistance Temperature Detector (RTD) has a resistance of \\(R_0 = 100\\ \\Omega\\) at a reference temperature of \\(T_0 = 0^\\circ\\text{C}\\). The resistance temperature coefficient is \\(\\alpha = 0.00385\\ \\Omega/\\Omega\\ \\text{per}\\ ^\\circ\\text{C}\\). The resistance of the RTD at a temperature of \\(T = 150^\\circ\\text{C}\\) is most nearly:",
@@ -79,11 +87,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P219"
+            "FE Reference Handbook 10.5 \u2013 P219"
           ],
           "tags": [
             "Temperature Sensors"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         }
       ]
     },
@@ -102,11 +112,13 @@
           "answer": "B",
           "references": [
             "FE Reference Handbook 10.5, P221:",
-            "FE Reference Handbook 10.5 – P221"
+            "FE Reference Handbook 10.5 \u2013 P221"
           ],
           "tags": [
             "Strain Transducers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A strain gauge with a nominal resistance of \\(R = 350\\ \\Omega\\) and a gauge factor of \\(\\text{GF} = 2.1\\) measures a resistance change of \\(\\Delta R = 0.735\\ \\Omega\\) under load. The sensed normal strain \\(\\epsilon\\) is most nearly:",
@@ -118,11 +130,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P221"
+            "FE Reference Handbook 10.5 \u2013 P221"
           ],
           "tags": [
             "Strain Transducers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A metallic strain gauge has a nominal resistance of \\(R = 120\\ \\Omega\\) and a gauge factor of \\(\\text{GF} = 2.0\\). It is subjected to a normal strain of \\(\\epsilon = 1,500\\ \\mu\\epsilon\\). The expected change in resistance \\(\\Delta R\\) is most nearly:",
@@ -134,11 +148,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P221"
+            "FE Reference Handbook 10.5 \u2013 P221"
           ],
           "tags": [
             "Strain Transducers"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         }
       ]
     },
@@ -156,11 +172,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P223"
+            "FE Reference Handbook 10.5 \u2013 P223"
           ],
           "tags": [
             "Wheatstone Bridge"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A Wheatstone bridge circuit is used to measure changes in resistance. The bridge is initially balanced with \\(R_1 = R_2 = R_3 = R_4 = R = 120\\ \\Omega\\). The supply voltage is \\(V_S = 10\\ \\text{V}\\). If the resistance \\(R_4\\) changes by \\(\\Delta R = 0.6\\ \\Omega\\) (\\(\\Delta R \\ll R\\)), the approximate output voltage \\(V_0\\) is most nearly:",
@@ -172,11 +190,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P223"
+            "FE Reference Handbook 10.5 \u2013 P223"
           ],
           "tags": [
             "Wheatstone Bridge"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         }
       ]
     },
@@ -194,14 +214,16 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P224"
+            "FE Reference Handbook 10.5 \u2013 P224"
           ],
           "tags": [
             "Sampling"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
-          "question": "A structural health monitoring system uses an accelerometer to measure the vibration of a bridge deck. A frequency spectrum analysis of the analog signal reveals dominant frequency components at 15 Hz, 45 Hz, and a maximum high-frequency harmonic at 120 Hz. According to Nyquist’s sampling theorem, the theoretical boundary for the minimum sampling frequency required to accurately reconstruct this analog signal without aliasing is most nearly:",
+          "question": "A structural health monitoring system uses an accelerometer to measure the vibration of a bridge deck. A frequency spectrum analysis of the analog signal reveals dominant frequency components at 15 Hz, 45 Hz, and a maximum high-frequency harmonic at 120 Hz. According to Nyquist\u2019s sampling theorem, the theoretical boundary for the minimum sampling frequency required to accurately reconstruct this analog signal without aliasing is most nearly:",
           "choices": {
             "A": "120 Hz",
             "B": "180 Hz",
@@ -210,11 +232,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P224"
+            "FE Reference Handbook 10.5 \u2013 P224"
           ],
           "tags": [
             "Sampling"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         }
       ]
     },
@@ -232,11 +256,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P224"
+            "FE Reference Handbook 10.5 \u2013 P224"
           ],
           "tags": [
             "Analog To Digital Conversion"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "An instrumentation circuit uses an 8-bit A/D converter to digitize the signal from a fluid flow transmitter. The nominal range of the A/D converter is set to \\(0.0\\ \\text{V}\\) to \\(10.0\\ \\text{V}\\). What is the voltage resolution of this A/D converter?",
@@ -248,11 +274,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P224"
+            "FE Reference Handbook 10.5 \u2013 P224"
           ],
           "tags": [
             "Analog To Digital Conversion"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         },
         {
           "question": "A 12-bit analog-to-digital (A/D) converter is implemented in a data acquisition system to monitor the output of a thermocouple. The A/D converter operates over a nominal voltage range of \\(-5.0\\ \\text{V}\\) to \\(+5.0\\ \\text{V}\\). The voltage resolution of this conversion is most nearly:",
@@ -264,11 +292,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P224"
+            "FE Reference Handbook 10.5 \u2013 P224"
           ],
           "tags": [
             "Analog To Digital Conversion"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Electricity and electrical circuits"
         }
       ]
     },
@@ -286,11 +316,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Measurement Uncertainty"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         },
         {
           "question": "A geotechnical engineer determines the density of a compacted soil core sample using the relationship \\( \\rho = m / V \\). The mass of the sample is measured as \\( 500\\ \\text{g} \\pm 2\\ \\text{g} \\) and the volume is measured as \\( 100\\ \\text{cm}^3 \\pm 1\\ \\text{cm}^3 \\). The estimated measurement uncertainty in the calculated density, \\( w_\\rho \\), is most nearly:",
@@ -302,11 +334,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Measurement Uncertainty"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         },
         {
           "question": "A mechanical engineer measures the dimensions of a rectangular steel plate to calculate its surface area, \\( A = W \\cdot L \\). The width is measured as \\( W = 10.0\\ \\text{cm} \\pm 0.1\\ \\text{cm} \\) and the length as \\( L = 20.0\\ \\text{cm} \\pm 0.2\\ \\text{cm} \\). The estimated measurement uncertainty in the calculated area, \\( w_A \\), is most nearly:",
@@ -318,11 +352,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Measurement Uncertainty"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         },
         {
           "question": "A structural tie rod is composed of two individual cylindrical sections connected end-to-end. The measured length of section 1 is \\( x_1 = 5.00\\ \\text{m} \\) with an uncertainty of \\( w_1 = 0.03\\ \\text{m} \\). The measured length of section 2 is \\( x_2 = 3.00\\ \\text{m} \\) with an uncertainty of \\( w_2 = 0.04\\ \\text{m} \\). Assuming the connection joint adds negligible length, the estimated measurement uncertainty in the total tie rod length, \\( w_L \\), is most nearly:",
@@ -334,11 +370,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Measurement Uncertainty"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         },
         {
           "question": "A control systems engineer calibrates a pressure transmitter against a known, highly accurate reference standard of 50.0 psi. Five successive readings from the transmitter under identical conditions are recorded as 54.2 psi, 54.1 psi, 54.2 psi, 54.3 psi, and 54.2 psi. Which of the following best describes the performance characteristics of this transmitter?",
@@ -351,11 +389,13 @@
           "answer": "C",
           "references": [
             "FE Reference Handbook 10.5, P225:",
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Measurement Uncertainty"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         }
       ]
     },
@@ -373,11 +413,13 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P226"
+            "FE Reference Handbook 10.5 \u2013 P226"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "For the first-order system \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{5}{2s + 1} \\) with zero initial conditions, a unit step input of magnitude \\( M = 1 \\) is applied at \\( t = 0 \\). The physical output response \\( y(t) \\) at exactly \\( t = 2\\ \\text{seconds} \\) is most nearly:",
@@ -389,14 +431,16 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
-          "question": "A temperature probe’s dynamic response is modeled as a first-order control system with the transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{5}{2s + 1} \\). Assuming zero initial conditions, what is the time constant \\( \\tau \\) of this system?",
+          "question": "A temperature probe\u2019s dynamic response is modeled as a first-order control system with the transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{5}{2s + 1} \\). Assuming zero initial conditions, what is the time constant \\( \\tau \\) of this system?",
           "choices": {
             "A": "0.5 s",
             "B": "1.0 s",
@@ -405,11 +449,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A precision optical mount has the transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{36}{s^2 + 3.6s + 36} \\). If a unit step input is applied to the mount, the maximum peak value \\( M_p \\) of the response is most nearly:",
@@ -421,11 +467,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A control systems engineer is designing a precision positioning table for an automated manufacturing process. The closed-loop transfer function relating the actual position \\( Y(s) \\) to the commanded position \\( R(s) \\) is modeled as \\( \\frac{Y(s)}{R(s)} = \\frac{100}{s^2 + 12s + 100} \\). If a unit step input is applied to the system, the time required for the response to settle to within 2% of its final steady-state value is most nearly:",
@@ -437,11 +485,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P228"
+            "FE Reference Handbook 10.5 \u2013 P228"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A servo motor control loop has a transfer function of \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{100}{s^2 + 12s + 100} \\). Following a unit step input, the percent overshoot (% OS) of the transient response is most nearly:",
@@ -453,11 +503,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A normalized underdamped second-order control system is subjected to a unit step input. The system transfer function is \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{100}{s^2 + 12s + 100} \\). The time required to reach a peak value, \\( t_p \\), is most nearly:",
@@ -470,14 +522,16 @@
           "answer": "B",
           "references": [
             "Use the peak time formula from the handbook:",
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
-          "question": "An automated elevator door mechanism is modeled as a linear continuous-time control system. The closed-loop transfer function relating the door’s actual position, \\( Y(s) \\), to the commanded position, \\( R(s) \\), is given by \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{10}{s^2 + 8s + 12} \\). Which of the following terms best classifies the transient response of this mechanism?",
+          "question": "An automated elevator door mechanism is modeled as a linear continuous-time control system. The closed-loop transfer function relating the door\u2019s actual position, \\( Y(s) \\), to the commanded position, \\( R(s) \\), is given by \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{10}{s^2 + 8s + 12} \\). Which of the following terms best classifies the transient response of this mechanism?",
           "choices": {
             "A": "Underdamped",
             "B": "Critically damped",
@@ -486,11 +540,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A mechanical engineer is evaluating the dynamic behavior of a hydraulic suspension system. The relationship between the reference input \\( R(s) \\) and the displacement output \\( Y(s) \\) is modeled by the closed-loop transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{16}{s^2 + 8s + 16} \\). Which of the following best classifies the transient response of this system?",
@@ -502,11 +558,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "In the chemical process industry, a specific reactor is modeled with the alternative second-order form: \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{10}{0.04s^2 + 0.2s + 1} \\). The inverse natural frequency \\( \\tau \\) of this system is most nearly:",
@@ -518,11 +576,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P228"
+            "FE Reference Handbook 10.5 \u2013 P228"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A mass-spring-damper assembly has a control transfer function of \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{25}{s^2 + 6s + 25} \\). The damped natural frequency \\( \\omega_d \\) during oscillation is most nearly:",
@@ -534,11 +594,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "An electromechanical positioning system is described by the transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{100}{s^2 + 8s + 100} \\). The damping ratio \\( \\zeta \\) of this system is most nearly:",
@@ -550,11 +612,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "An aircraft pitch control actuator is modeled as a standard second-order system with the closed-loop transfer function \\( \\dfrac{Y(s)}{R(s)} = \\dfrac{36}{s^2 + 4.8s + 36} \\). The undamped natural frequency \\( \\omega_n \\) of this system is most nearly:",
@@ -566,11 +630,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P227"
+            "FE Reference Handbook 10.5 \u2013 P227"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A robotic arm positioning system operates with an open-loop transfer function \\( G_1(s)G_2(s)H(s) = \\dfrac{10}{s^2 + 5s} \\). The closed-loop characteristic equation for this system is most nearly:",
@@ -578,15 +644,17 @@
             "A": "\\( s^2 + 5s = 0 \\)",
             "B": "\\( s^2 + 5s + 10 = 0 \\)",
             "C": "\\( s^2 + 15s = 0 \\)",
-            "D": "\\( s^2 + 5s – 10 = 0 \\)"
+            "D": "\\( s^2 + 5s \u2013 10 = 0 \\)"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P226"
+            "FE Reference Handbook 10.5 \u2013 P226"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "An automotive cruise control system is subject to road grade disturbances. The controller is \\( G_1(s) = K \\), the vehicle dynamics are \\( G_2(s) = \\dfrac{1}{10s + 1} \\), and the speed sensor feedback is \\( H(s) = 1 \\). If the reference input \\( R(s) = 0 \\), the transfer function relating the speed output to the disturbance, \\( \\dfrac{Y(s)}{L(s)} \\), is most nearly:",
@@ -598,11 +666,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
           "question": "A chemical plant utilizes a feedback control system for a mixing valve. The controller has a transfer function \\( G_1(s) = 2 \\), the valve and process are modeled as \\( G_2(s) = \\dfrac{1}{s + 4} \\), and the measurement sensor provides unity feedback, \\( H(s) = 1 \\). Assuming no external disturbance (\\( L(s) = 0 \\)), the closed-loop transfer function \\( \\dfrac{Y(s)}{R(s)} \\) is most nearly:",
@@ -614,11 +684,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P225"
+            "FE Reference Handbook 10.5 \u2013 P225"
           ],
           "tags": [
             "Control Systems"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         }
       ]
     }

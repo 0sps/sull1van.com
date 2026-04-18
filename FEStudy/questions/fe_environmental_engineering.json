@@ -14,12 +14,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P313"
+            "FE Reference Handbook 10.5 \u2013 P313"
           ],
           "tags": [
             "Air Pollution",
             "Selected Properties Of Air"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A parcel of dry air rises in the atmosphere. Assuming the process is adiabatic (no heat exchange), calculate the temperature at an elevation of \\(2,000\\ \\mathrm{m}\\) if the temperature at sea level (\\(0\\ \\mathrm{m}\\)) is \\(25^\\circ \\mathrm{C}\\). Use the standard Dry Adiabatic Lapse Rate (\\(\\Gamma_{AD}\\)).",
@@ -31,12 +33,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P313"
+            "FE Reference Handbook 10.5 \u2013 P313"
           ],
           "tags": [
             "Air Pollution",
             "Selected Properties Of Air"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Stack gas analysis from an incinerator shows a Carbon Dioxide (\\(CO_2\\)) concentration of \\(8.0\\%\\) by volume and a Carbon Monoxide (\\(CO\\)) concentration of \\(80\\ \\mathrm{ppm}\\) by volume. Calculate the Combustion Efficiency (CE).",
@@ -48,12 +52,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Air Pollution",
             "Incineration"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A hazardous waste incinerator is fed a POHC (Principal Organic Hazardous Contaminant) at a rate of \\(500\\ \\mathrm{kg/h}\\). The mass emission rate of the same POHC in the stack gas is measured to be \\(0.04\\ \\mathrm{kg/h}\\). Calculate the Destruction and Removal Efficiency (DRE).",
@@ -65,12 +71,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Air Pollution",
             "Incineration"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "An ESP is required to achieve a collection efficiency of \\(99\\%\\) (\\(\\eta = 0.99\\)). The gas flow rate is \\(500\\ \\mathrm{m^3/min}\\) and the particle drift velocity is \\(0.1\\ \\mathrm{m/s}\\). Calculate the required total collection area (\\(A\\)).",
@@ -82,12 +90,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Air Pollution",
             "Electrostatic Precipitator Efficiency"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "An Electrostatic Precipitator (ESP) treats an air flow of \\(10,000\\ \\mathrm{ft^3/min}\\). The total collection plate area is \\(4,000\\ \\mathrm{ft^2}\\). The effective particle drift velocity is \\(0.25\\ \\mathrm{ft/s}\\). Calculate the fractional collection efficiency.",
@@ -99,15 +109,17 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Air Pollution",
             "Electrostatic Precipitator Efficiency"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
-          "question": "You are designing a Pulse Jet/Felt baghouse to collect Fly Ash. According to the “Air-to-Cloth Ratio for Baghouses” table in the FE Reference Handbook, what is the typical design Air-to-Cloth ratio in \\(\\mathrm{m^3/(min \\cdot m^2)}\\)?",
+          "question": "You are designing a Pulse Jet/Felt baghouse to collect Fly Ash. According to the \u201cAir-to-Cloth Ratio for Baghouses\u201d table in the FE Reference Handbook, what is the typical design Air-to-Cloth ratio in \\(\\mathrm{m^3/(min \\cdot m^2)}\\)?",
           "choices": {
             "A": "\\(0.8\\)",
             "B": "\\(1.5\\)",
@@ -116,13 +128,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P318:",
-            "FE Reference Handbook 10.5 – P318"
+            "FE Reference Handbook 10.5 \u2013 P318:",
+            "FE Reference Handbook 10.5 \u2013 P318"
           ],
           "tags": [
             "Air Pollution",
             "Baghouse"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A cyclone has a calculated cut diameter (\\(d_{pc}\\)) of \\(10\\ \\mu\\mathrm{m}\\). Calculate the removal efficiency for particles with a diameter (\\(d_p\\)) of \\(20\\ \\mu\\mathrm{m}\\).",
@@ -134,12 +148,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P316"
+            "FE Reference Handbook 10.5 \u2013 P316"
           ],
           "tags": [
             "Air Pollution",
             "Cyclone"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A standard cyclone is designed to remove dust from an air stream. Calculate the cut diameter (\\(d_{pc}\\), the particle size collected with 50% efficiency).\n\nGiven:\nInlet width \\(W = 0.25\\ \\mathrm{m}\\)\n\nNumber of effective turns \\(N_e = 5\\)\n\nInlet gas velocity \\(V_i = 15\\ \\mathrm{m/s}\\)\n\nParticle density \\(\\rho_p = 1,600\\ \\mathrm{kg/m^3}\\)\n\nGas density \\(\\rho_g = 1.2\\ \\mathrm{kg/m^3}\\)\n\nGas dynamic viscosity \\(\\mu = 1.8 \\times 10^{-5}\\ \\mathrm{kg/(m \\cdot s)}\\)",
@@ -151,12 +167,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P317"
+            "FE Reference Handbook 10.5 \u2013 P317"
           ],
           "tags": [
             "Air Pollution",
             "Cyclone"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A cyclone separator has the following dimensions: Inlet height \\(H = 0.5\\ \\mathrm{m}\\), body length \\(L_b = 2.0\\ \\mathrm{m}\\), and cone length \\(L_c = 2.0\\ \\mathrm{m}\\). Calculate the number of effective turns (\\(N_e\\)) the gas makes in the cyclone.",
@@ -168,12 +186,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P316"
+            "FE Reference Handbook 10.5 \u2013 P316"
           ],
           "tags": [
             "Air Pollution",
             "Cyclone"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "An exhaust gas stream has a Carbon Monoxide (\\(CO\\), MW = \\(28\\ \\mathrm{g/mol}\\)) concentration of \\(50\\ \\mathrm{ppm}\\). The stack gas temperature is \\(150^\\circ \\mathrm{C}\\) and the pressure is \\(1.1\\ \\mathrm{atm}\\). Calculate the concentration in \\(\\mu \\mathrm{g/m^3}\\).",
@@ -185,11 +205,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P312"
+            "FE Reference Handbook 10.5 \u2013 P312"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Convert a concentration of \\(2.5\\ \\mathrm{ppm}\\) of Sulfur Dioxide (\\(SO_2\\), MW = \\(64\\ \\mathrm{g/mol}\\)) to \\(\\mu \\mathrm{g/m^3}\\) at standard conditions (\\(25^\\circ \\mathrm{C}\\), \\(1\\ \\mathrm{atm}\\)).",
@@ -201,11 +223,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P312"
+            "FE Reference Handbook 10.5 \u2013 P312"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Estimate the maximum parameter \\((Cu/Q)_{max}\\) for a source with an effective stack height \\(H = 50\\ \\mathrm{m}\\) under Stability Class D (Neutral).",
@@ -217,11 +241,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P315"
+            "FE Reference Handbook 10.5 \u2013 P315"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A physical stack has a height of \\(h = 50\\ \\mathrm{m}\\). Due to thermal buoyancy and momentum, the plume rise is calculated to be \\(\\Delta h = 25\\ \\mathrm{m}\\). What value should be used for \\(H\\) in the Gaussian dispersion equation?",
@@ -233,11 +259,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P312"
+            "FE Reference Handbook 10.5 \u2013 P312"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A power plant stack emits \\(SO_2\\) at a rate of \\(150\\ \\mathrm{g/s}\\). The effective stack height is \\(100\\ \\mathrm{m}\\). The wind speed at stack height is \\(5.0\\ \\mathrm{m/s}\\). At a specific downwind distance, the dispersion coefficients are determined to be \\(\\sigma_y = 100\\ \\mathrm{m}\\) and \\(\\sigma_z = 50\\ \\mathrm{m}\\). Calculate the ground-level concentration along the plume centerline (\\(y=0, z=0\\)) in \\(\\mu \\mathrm{g/m^3}\\).",
@@ -249,11 +277,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P312"
+            "FE Reference Handbook 10.5 \u2013 P312"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "For a stability class of C and a downwind distance \\(x\\) of \\(1,000\\ \\mathrm{m}\\) , estimate the horizontal dispersion parameter (\\(\\sigma_y\\)).",
@@ -265,12 +295,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P314:",
-            "FE Reference Handbook 10.5 – P314"
+            "FE Reference Handbook 10.5 \u2013 P314:",
+            "FE Reference Handbook 10.5 \u2013 P314"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Determine the atmospheric stability class for a site with a surface wind speed of \\(4.0\\ \\mathrm{m/s}\\) during a clear summer day with strong solar insolation (sun high in the sky).",
@@ -282,24 +314,28 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P313:",
-            "FE Reference Handbook 10.5 – P313"
+            "FE Reference Handbook 10.5 \u2013 P313:",
+            "FE Reference Handbook 10.5 \u2013 P313"
           ],
           "tags": [
             "Air Pollution"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A hazardous-waste incinerator processes a liquid waste stream containing a principal organic hazardous contaminant (POHC). The mass feed rate entering the combustion chamber is \\(2{,}400\\ \\text{kg/h}\\), while the mass emission rate measured in the stack is\n\n\\(180\\ \\text{kg/h}\\).  Determine the destruction and removal efficiency (DRE) of the incinerator.",
           "choices": {},
           "answer": "92.5%",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Air Pollution",
             "Incineration"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -317,12 +353,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P320"
+            "FE Reference Handbook 10.5 \u2013 P320"
           ],
           "tags": [
             "Indoor Air Quality",
             "Material Balance"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "In an HVAC system, the return air has a \\(CO_2\\) concentration of \\(800\\ \\mathrm{ppm}\\), and the outdoor air has a concentration of \\(400\\ \\mathrm{ppm}\\). The supply air (mixed air) delivered to the room has a measured concentration of \\(500\\ \\mathrm{ppm}\\). Calculate the percentage of outdoor air (% Outdoor Air) in the supply stream.",
@@ -334,12 +372,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P320"
+            "FE Reference Handbook 10.5 \u2013 P320"
           ],
           "tags": [
             "Indoor Air Quality",
             "Percent Of Outdoor Air"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "A conference room is designed for 20 people. Each person exhales Carbon Dioxide (\\(CO_2\\)) at a rate of \\(0.3\\ \\mathrm{L/min}\\). The outdoor \\(CO_2\\) concentration is \\(400\\ \\mathrm{ppm}\\). If the indoor \\(CO_2\\) concentration must not exceed \\(1,000\\ \\mathrm{ppm}\\), calculate the minimum required ventilation rate (\\(Q\\)) per person.",
@@ -351,12 +391,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Indoor Air Quality",
             "Material Balance"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "A classroom has dimensions of \\(10\\ \\mathrm{m} \\times 8\\ \\mathrm{m} \\times 3\\ \\mathrm{m}\\). The ventilation system supplies air at a rate of \\(120\\ \\mathrm{m^3/h}\\). Calculate the Air Changes per Hour.",
@@ -368,12 +410,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P320"
+            "FE Reference Handbook 10.5 \u2013 P320"
           ],
           "tags": [
             "Indoor Air Quality",
             "Material Balance"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "Formaldehyde is being emitted in a room (\\(V = 100\\ \\mathrm{m^3}\\)) at a rate of \\(S = 20\\ \\mathrm{mg/h}\\). Ventilation rate is \\(Q = 50\\ \\mathrm{m^3/h}\\). Outdoor concentration \\(C_o = 0\\). Decay rate \\(k = 0.2\\ \\mathrm{h^{-1}}\\). Calculate steady-state concentration.",
@@ -385,12 +429,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P319"
+            "FE Reference Handbook 10.5 \u2013 P319"
           ],
           "tags": [
             "Indoor Air Quality",
             "Material Balance"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         }
       ]
     },
@@ -408,15 +454,17 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Vadose Zone Penetration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A volume of \\(2.0\\ \\mathrm{m^3}\\) of gasoline is spilled onto a ground surface consisting of “Coarse to Medium Sand”. The spill covers a surface area of \\(10\\ \\mathrm{m^2}\\). Estimate the maximum vertical depth of penetration (\\(D\\)) into the vadose zone.",
+          "question": "A volume of \\(2.0\\ \\mathrm{m^3}\\) of gasoline is spilled onto a ground surface consisting of \u201cCoarse to Medium Sand\u201d. The spill covers a surface area of \\(10\\ \\mathrm{m^2}\\). Estimate the maximum vertical depth of penetration (\\(D\\)) into the vadose zone.",
           "choices": {
             "A": "\\(6.5\\ \\mathrm{m}\\)",
             "B": "\\(13.0\\ \\mathrm{m}\\)",
@@ -425,12 +473,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Vadose Zone Penetration"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A Completely Mixed Flow Reactor (CMFR/CSTR) has an influent pollutant concentration of \\(100\\ \\mathrm{mg/L}\\) and a hydraulic residence time (\\( \\theta \\)) of \\(4\\ \\mathrm{hours}\\). The pollutant decays via a first-order reaction with a rate constant \\(k = 0.25\\ \\mathrm{h^{-1}}\\). Calculate the steady-state effluent concentration.",
@@ -442,12 +492,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P325"
+            "FE Reference Handbook 10.5 \u2013 P325"
           ],
           "tags": [
             "Fate And Transport",
             "Steady State Reactor Parameters Constant Density Systems"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the Retardation Factor (\\(R\\)) for a contaminant in groundwater. The soil bulk density (\\(\\rho_b\\)) is \\(1.5\\ \\mathrm{kg/L}\\) , the porosity (\\(n_e\\)) is \\(0.30\\), and the distribution coefficient (\\(K_d\\)) is \\(2.0\\ \\mathrm{L/kg}\\).",
@@ -459,12 +511,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Partition Coefficients"
-          ]
+          ],
+          "sectionId": "facilities-supply-chain",
+          "officialSubtopic": "Supply chain management and design"
         },
         {
           "question": "Calculate the Soil-Water Partition Coefficient (\\(K_sw\\)) for a chemical with \\(K_{oc} = 1,200\\ \\mathrm{L/kg}\\) in a sediment with an organic carbon content of \\(0.5\\%\\) (\\(f_{oc} = 0.005\\)).",
@@ -476,12 +530,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Partition Coefficients"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A soil sample has a Soil-Water Partition Coefficient (\\(K_{sw}\\)) of \\(20\\ \\mathrm{L/kg}\\). The fraction of organic carbon in the soil (\\(f_{oc}\\)) is \\(0.04\\) (\\(4\\%\\)). Calculate the Organic Carbon Partition Coefficient (\\(K_{oc}\\)).",
@@ -493,12 +549,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Partition Coefficients"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "The Octanol-Water Partition Coefficient (\\(K_{ow}\\)) is used to determine the hydrophobicity of a chemical. If the equilibrium concentration of a chemical in the octanol phase is \\(150\\ \\mathrm{mg/L}\\) and in the water phase is \\(0.5\\ \\mathrm{mg/L}\\), calculate \\(K_{ow}\\).",
@@ -510,12 +568,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P324"
+            "FE Reference Handbook 10.5 \u2013 P324"
           ],
           "tags": [
             "Fate And Transport",
             "Partition Coefficients"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A chemical substance has an equilibrium concentration of \\(20\\ \\mathrm{mg/kg}\\) in fish tissue and \\(0.05\\ \\mathrm{mg/L}\\) in the surrounding water. Calculate the Bioconcentration Factor (BCF) in \\(\\mathrm{L/kg}\\).",
@@ -527,12 +587,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P323"
+            "FE Reference Handbook 10.5 \u2013 P323"
           ],
           "tags": [
             "Fate And Transport",
             "Partition Coefficients"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "The deoxygenation rate constant (\\(k_d\\)) is determined to be \\(0.20\\ \\mathrm{day^{-1}}\\) at \\(20^\\circ \\mathrm{C}\\). Calculate the rate constant at \\(10^\\circ \\mathrm{C}\\) using a temperature coefficient (\\(\\theta\\)) of \\(1.047\\).",
@@ -544,12 +606,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P322"
+            "FE Reference Handbook 10.5 \u2013 P322"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A wastewater sample has an ultimate BOD (\\(L_0\\)) of \\(250\\ \\mathrm{mg/L}\\). The deoxygenation rate constant (\\(k\\)) is \\(0.23\\ \\mathrm{day^{-1}}\\) (base e). Calculate the amount of BOD exerted in 5 days.",
@@ -561,12 +625,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A wastewater sample has an ultimate BOD (\\(L_0\\)) of \\(250\\ \\mathrm{mg/L}\\). The deoxygenation rate constant (\\(k\\)) is \\(0.23\\ \\mathrm{day^{-1}}\\) (base e). Calculate the remaining BOD (\\(L_t\\)) after 3 days.",
@@ -578,12 +644,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Using the Streeter-Phelps equation, the oxygen deficit (\\(D_t\\)) at \\(t = 2\\ \\mathrm{days}\\) is calculated to be \\(3.5\\ \\mathrm{mg/L}\\). If the saturation dissolved oxygen concentration (\\(DO_{sat}\\)) for the stream is \\(9.0\\ \\mathrm{mg/L}\\), what is the actual Dissolved Oxygen (DO) concentration at this time?",
@@ -595,12 +663,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "For a stream with the following characteristics, calculate the critical time (\\(t_c\\)) at which the minimum dissolved oxygen occurs.\nDeoxygenation rate constant, \\(k_d = 0.2\\ \\mathrm{day^{-1}}\\)\n\nReaeration rate constant, \\(k_r = 0.4\\ \\mathrm{day^{-1}}\\)\n\nInitial Ultimate BOD, \\(L_a = 20\\ \\mathrm{mg/L}\\)\n\nInitial Deficit, \\(D_a = 0\\ \\mathrm{mg/L}\\) (Saturated)",
@@ -612,12 +682,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A river flows at \\(5.0\\ \\mathrm{m^3/s}\\) with an ultimate BOD (\\(L_r\\)) of \\(3.0\\ \\mathrm{mg/L}\\). A wastewater treatment plant discharges \\(0.2\\ \\mathrm{m^3/s}\\) of effluent with an ultimate BOD (\\(L_w\\)) of \\(50.0\\ \\mathrm{mg/L}\\). Calculate the initial ultimate BOD (\\(L_a\\)) of the mixed stream just downstream of the discharge.",
@@ -629,12 +701,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Mass Calculations"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A wastewater stream with a flow of \\(Q_w = 0.5\\ \\mathrm{m^3/s}\\) and a Dissolved Oxygen (DO) concentration of \\(2.0\\ \\mathrm{mg/L}\\) discharges into a river. The river has a flow of \\(Q_r = 3.0\\ \\mathrm{m^3/s}\\) and a DO concentration of \\(8.5\\ \\mathrm{mg/L}\\). If the saturation DO concentration (\\(DO_{sat}\\)) at the mixture temperature is \\(9.2\\ \\mathrm{mg/L}\\), calculate the initial oxygen deficit (\\(D_a\\)).",
@@ -646,30 +720,34 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P321"
+            "FE Reference Handbook 10.5 \u2013 P321"
           ],
           "tags": [
             "Fate And Transport",
             "Mass Calculations",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Microbial growth in a reactor follows Monod kinetics. The maximum specific growth rate (\\(\\mu_{max}\\)) is \\(3.0\\ \\mathrm{day^{-1}}\\) and the half-velocity constant (\\(K_s\\)) is \\(40\\ \\mathrm{mg/L}\\). If the substrate concentration (\\(S\\)) is \\(20\\ \\mathrm{mg/L}\\) and the endogenous decay coefficient (\\(k_d\\)) is \\(0.05\\ \\mathrm{day^{-1}}\\), what is the specific growth rate (\\(\\mu\\))?",
           "choices": {
-            "A": "0.45 day⁻¹",
-            "B": "0.95 day⁻¹",
-            "C": "1.45 day⁻¹",
-            "D": "1.95 day⁻¹"
+            "A": "0.45 day\u207b\u00b9",
+            "B": "0.95 day\u207b\u00b9",
+            "C": "1.45 day\u207b\u00b9",
+            "D": "1.95 day\u207b\u00b9"
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P322"
+            "FE Reference Handbook 10.5 \u2013 P322"
           ],
           "tags": [
             "Fate And Transport",
             "Microbial Kinetics"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -687,11 +765,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P327"
+            "FE Reference Handbook 10.5 \u2013 P327"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Annual monitoring data for a landfill final cover system is collected to perform a water balance analysis. The recorded components are as follows:\nPrecipitation: \\(30\\ \\mathrm{in.}\\)\n\nSurface Runoff: \\(5\\ \\mathrm{in.}\\)\n\nEvapotranspiration: \\(20\\ \\mathrm{in.}\\)\n\nPercolation through the cover: \\(2\\ \\mathrm{in.}\\)\nCalculate the change in soil moisture storage (\\(\\Delta S_{LC}\\)) for the landfill cover.",
@@ -703,11 +783,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P327"
+            "FE Reference Handbook 10.5 \u2013 P327"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Calculate the gas flux (\\(N_A\\)) through a landfill cover.\n\nGiven:\nDiffusion coefficient \\(D = 18.6\\ \\mathrm{ft^2/d}\\)\n\nPorosity \\(\\eta = 0.4\\)\n\nConcentration difference \\(\\Delta C = 0.005\\ \\mathrm{lb\\text{-}mol/ft^3}\\)\n\nCover depth \\(L = 3\\ \\mathrm{ft}\\)",
@@ -719,11 +801,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P327"
+            "FE Reference Handbook 10.5 \u2013 P327"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Calculate the breakthrough time (\\(t\\)) for leachate to penetrate a clay liner. The liner thickness is \\(d = 2\\ \\mathrm{ft}\\), porosity \\(\\eta = 0.2\\), and hydraulic head \\(h = 2\\ \\mathrm{ft}\\). The hydraulic conductivity is \\(K = 0.01\\ \\mathrm{ft/yr}\\).",
@@ -735,11 +819,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P327"
+            "FE Reference Handbook 10.5 \u2013 P327"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "What is the typical density of Clear Glass (whole bottles) in the category of as-received source-separated materials?",
@@ -751,12 +837,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P326",
-            "FE Reference Handbook 10.5 – P326"
+            "FE Reference Handbook 10.5 \u2013 P326",
+            "FE Reference Handbook 10.5 \u2013 P326"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "Which component has the highest typical moisture content?",
@@ -768,12 +856,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P326",
-            "FE Reference Handbook 10.5 – P326"
+            "FE Reference Handbook 10.5 \u2013 P326",
+            "FE Reference Handbook 10.5 \u2013 P326"
           ],
           "tags": [
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "Solid waste is compacted in a landfill. The initial volume of the waste is \\(V_i = 100\\ \\mathrm{yd^3}\\), and the final volume after compaction is \\(V_f = 20\\ \\mathrm{yd^3}\\). Calculate the percent volume reduction.",
@@ -785,12 +875,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P328"
+            "FE Reference Handbook 10.5 \u2013 P328"
           ],
           "tags": [
             "Compaction",
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
           "question": "A 2 ft thick clay with permeability of 8 ft/yr is used as a liner material for a landfill project. The porosity of the clay is 0.4. If the hydraulic head is 10 ft, the time in days it may take for the leachate material to penetrate the liner is most nearly:",
@@ -800,7 +892,9 @@
           "tags": [
             "Break Through Time For Leachate To Penetrate A Clay Liner",
             "Landfill"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         }
       ]
     },
@@ -809,7 +903,7 @@
       "subtopic": "Population Modeling",
       "questions": [
         {
-          "question": "A population grows by “Percent Growth” method. If the population grows from 100 to 121 in 2 periods (\\(n=2\\)), what is the growth rate \\(k\\)?",
+          "question": "A population grows by \u201cPercent Growth\u201d method. If the population grows from 100 to 121 in 2 periods (\\(n=2\\)), what is the growth rate \\(k\\)?",
           "choices": {
             "A": "\\(0.10\\)",
             "B": "\\(0.11\\)",
@@ -818,11 +912,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P328"
+            "FE Reference Handbook 10.5 \u2013 P328"
           ],
           "tags": [
             "Population Modeling"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Stochastic models and simulation"
         },
         {
           "question": "Using the Ratio and Correlation Growth method, calculate the projected population of a city (\\(P_2\\)).\nGiven:\nCity population at last census (\\(P_1\\)) = 10,000\n\nRegion population at last census (\\(P_{1R}\\)) = 100,000\n\nProjected region population (\\(P_{2R}\\)) = 150,000\n\nAssume the ratio \\(k\\) remains constant.",
@@ -834,11 +930,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P328"
+            "FE Reference Handbook 10.5 \u2013 P328"
           ],
           "tags": [
             "Population Modeling"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Stochastic models and simulation"
         },
         {
           "question": "A population is growing according to the Log Growth (Exponential) model. If \\(P_0 = 100,000\\) and \\(k = 0.02\\ \\mathrm{year^{-1}}\\). What is the population after 10 years?",
@@ -850,11 +948,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P328"
+            "FE Reference Handbook 10.5 \u2013 P328"
           ],
           "tags": [
             "Population Modeling"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Stochastic models and simulation"
         },
         {
           "question": "Use the Linear Projection model to predict the population in year 2030.\n\nGiven: \\(P_{2010} = 50,000\\) and \\(k = 1,500\\ \\mathrm{people/year}\\).",
@@ -866,11 +966,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P328"
+            "FE Reference Handbook 10.5 \u2013 P328"
           ],
           "tags": [
             "Population Modeling"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Stochastic models and simulation"
         }
       ]
     },
@@ -888,11 +990,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P329"
+            "FE Reference Handbook 10.5 \u2013 P329"
           ],
           "tags": [
             "Radiation Environmental Engineering"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality control"
         },
         {
           "question": "During a routine site survey, a radiation safety officer measures an exposure rate of \\(I_1 = 100\\ \\mathrm{mR/h}\\) at a distance of \\(R_1 = 5\\ \\mathrm{m}\\) from a point source of gamma radiation. To reduce exposure, the officer moves to a new location at a distance of \\(R_2 = 10\\ \\mathrm{m}\\) from the source. What is the expected radiation intensity at this new distance?",
@@ -904,14 +1008,16 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P330"
+            "FE Reference Handbook 10.5 \u2013 P330"
           ],
           "tags": [
             "Radiation Environmental Engineering"
-          ]
+          ],
+          "sectionId": "human-factors-ergonomics-safety",
+          "officialSubtopic": "Safety and industrial hygiene"
         },
         {
-          "question": "A health physicist is assessing the internal exposure of a worker who accidentally inhaled a radionuclide. The radionuclide has a physical (radioactive) half-life (\\(\\tau_r\\)) of \\(8\\ \\mathrm{days}\\). Medical testing determines that the worker’s body clears the substance with a biological half-life (\\(\\tau_b\\)) of \\(24\\ \\mathrm{days}\\). Calculate the effective half-life (\\(\\tau_e\\)) of the radionuclide in the worker’s body.",
+          "question": "A health physicist is assessing the internal exposure of a worker who accidentally inhaled a radionuclide. The radionuclide has a physical (radioactive) half-life (\\(\\tau_r\\)) of \\(8\\ \\mathrm{days}\\). Medical testing determines that the worker\u2019s body clears the substance with a biological half-life (\\(\\tau_b\\)) of \\(24\\ \\mathrm{days}\\). Calculate the effective half-life (\\(\\tau_e\\)) of the radionuclide in the worker\u2019s body.",
           "choices": {
             "A": "\\(6\\ \\mathrm{days}\\)",
             "B": "\\(8\\ \\mathrm{days}\\)",
@@ -920,11 +1026,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P329"
+            "FE Reference Handbook 10.5 \u2013 P329"
           ],
           "tags": [
             "Radiation Environmental Engineering"
-          ]
+          ],
+          "sectionId": "modeling-quantitative-analysis",
+          "officialSubtopic": "Data, logic development, and analytics"
         },
         {
           "question": "A radioactive isotope decays according to first-order kinetics with a rate constant \\(k = 0.05\\ \\mathrm{year^{-1}}\\). Calculate the half-life (\\(t_{1/2}\\)) of this isotope.",
@@ -936,11 +1044,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P329"
+            "FE Reference Handbook 10.5 \u2013 P329"
           ],
           "tags": [
             "Radiation Environmental Engineering"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -958,11 +1068,13 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P330"
+            "FE Reference Handbook 10.5 \u2013 P330"
           ],
           "tags": [
             "Sampling And Monitoring"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "An environmental engineer is designing a soil sampling plan to demonstrate compliance with a cleanup standard. Preliminary data suggests the site has a Coefficient of Variation (CV) of \\(25\\%\\). The Data Quality Objectives (DQO) specify a \\(95\\%\\) Confidence Level and a \\(95\\%\\) Power to detect a Minimum Detectable Relative Difference of \\(20\\%\\). Determine the minimum number of samples required.",
@@ -974,15 +1086,17 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – Page 331.",
-            "FE Reference Handbook 10.5 – P331"
+            "FE Reference Handbook 10.5 \u2013 Page 331.",
+            "FE Reference Handbook 10.5 \u2013 P331"
           ],
           "tags": [
             "Sampling And Monitoring"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
-          "question": "An environmental engineer is developing a sampling plan for an Emergency Cleanup operation following a hazardous spill. To ensure the data quality meets standard objectives without imposing excessive sampling costs typical of long-term remediation, what is the appropriate target range for the Confidence Level (\\(1 – \\alpha\\))?",
+          "question": "An environmental engineer is developing a sampling plan for an Emergency Cleanup operation following a hazardous spill. To ensure the data quality meets standard objectives without imposing excessive sampling costs typical of long-term remediation, what is the appropriate target range for the Confidence Level (\\(1 \u2013 \\alpha\\))?",
           "choices": {
             "A": "\\(70-80\\%\\)",
             "B": "\\(80-90\\%\\)",
@@ -991,12 +1105,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – Page 330.",
-            "FE Reference Handbook 10.5 – P330"
+            "FE Reference Handbook 10.5 \u2013 Page 330.",
+            "FE Reference Handbook 10.5 \u2013 P330"
           ],
           "tags": [
             "Sampling And Monitoring"
-          ]
+          ],
+          "sectionId": "quality",
+          "officialSubtopic": "Quality management, planning, assurance, and systems"
         },
         {
           "question": "An environmental engineer is analyzing a set of soil samples for lead contamination. The laboratory results indicate a mean concentration (\\(\\bar{x}\\)) of \\(50\\ \\mathrm{mg/kg}\\) with a standard deviation (\\(s\\)) of \\(10\\ \\mathrm{mg/kg}\\). What is the Coefficient of Variation (CV)?",
@@ -1008,11 +1124,13 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P330"
+            "FE Reference Handbook 10.5 \u2013 P330"
           ],
           "tags": [
             "Sampling And Monitoring"
-          ]
+          ],
+          "sectionId": "probability-statistics",
+          "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
         }
       ]
     },
@@ -1021,39 +1139,43 @@
       "subtopic": "Wastewater Treatment and Technologies",
       "questions": [
         {
-          "question": "An activated sludge system is designed using the “Extended Aeration” process modification. What is the typical range for the Mean Cell Residence Time (\\(\\theta_c\\))?",
+          "question": "An activated sludge system is designed using the \u201cExtended Aeration\u201d process modification. What is the typical range for the Mean Cell Residence Time (\\(\\theta_c\\))?",
           "choices": {
-            "A": "4 – 15 days",
-            "B": "5 – 15 days",
-            "C": "8 – 20 days",
-            "D": "20 – 30 days"
+            "A": "4 \u2013 15 days",
+            "B": "5 \u2013 15 days",
+            "C": "8 \u2013 20 days",
+            "D": "20 \u2013 30 days"
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P334:",
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334:",
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An extended aeration activated sludge plant treats a flow of \\(4,000\\ \\mathrm{m^3/day}\\) with an influent BOD\\(_5\\) of \\(250\\ \\mathrm{mg/L}\\). Estimate the required air supply range in \\(\\mathrm{m^3/day}\\).",
           "choices": {
-            "A": "15,000 – 25,000 \\( \\mathrm{m^3/day}\\)",
-            "B": "45,000 – 90,000 \\( \\mathrm{m^3/day}\\)",
-            "C": "90,000 – 125,000 \\( \\mathrm{m^3/day}\\)",
-            "D": "25,000 – 45,000 \\( \\mathrm{m^3/day}\\)"
+            "A": "15,000 \u2013 25,000 \\( \\mathrm{m^3/day}\\)",
+            "B": "45,000 \u2013 90,000 \\( \\mathrm{m^3/day}\\)",
+            "C": "90,000 \u2013 125,000 \\( \\mathrm{m^3/day}\\)",
+            "D": "25,000 \u2013 45,000 \\( \\mathrm{m^3/day}\\)"
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A wastewater treatment plant has an aeration tank volume of \\(1.5\\ \\mathrm{MG}\\) and operates at an MLSS of \\(3,000\\ \\mathrm{mg/L}\\). The target mean cell residence time (\\(\\theta_c\\)) is \\(8\\ \\mathrm{days}\\). The waste activated sludge (WAS) concentration is \\(8,000\\ \\mathrm{mg/L}\\). Assuming the effluent suspended solids are negligible (\\(X_e \\approx 0\\)), calculate the required WAS flow rate \\(Q_w\\) in MGD.",
@@ -1065,12 +1187,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An activated sludge aeration tank has a volume of \\(2,000\\ \\mathrm{m^3}\\). The mixed liquor suspended solids (MLSS) concentration is maintained at \\(3,500\\ \\mathrm{mg/L}\\). If the operator maintains a mean cell residence time (\\(\\theta_c\\)) of \\(10\\ \\mathrm{days}\\), what is the total sludge production rate (solids wasted + effluent solids) in kg/day?",
@@ -1082,12 +1206,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A \\(1.0\\ \\mathrm{L}\\) sample of mixed liquor from an aeration tank is allowed to settle for 30 minutes in a graduated cylinder. The volume of the settled sludge is found to be \\(250\\ \\mathrm{mL}\\). The mixed liquor suspended solids (MLSS) concentration is \\(2,500\\ \\mathrm{mg/L}\\). Calculate the Sludge Volume Index (SVI).",
@@ -1099,12 +1225,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An aeration tank with a volume of \\(5,000\\ \\mathrm{m^3}\\) receives a wastewater flow of \\(15,000\\ \\mathrm{m^3/day}\\). The influent BOD is \\(300\\ \\mathrm{mg/L}\\). Calculate the Organic Loading Rate (Volumetric) in \\(\\mathrm{kg\\ BOD/m^3 \\cdot day}\\).",
@@ -1116,12 +1244,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A treatment plant receives a flow of \\(10\\ \\mathrm{MGD}\\) with a BOD concentration of \\(180\\ \\mathrm{mg/L}\\). The aeration basin has a volume of \\(150,000\\ \\mathrm{ft^3}\\). The MLVSS concentration is \\(3,000\\ \\mathrm{mg/L}\\). The F:M ratio (\\(\\mathrm{lb\\ BOD/lb\\ MLVSS \\cdot day}\\)) is most nearly:",
@@ -1133,12 +1263,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An activated sludge plant has an influent flow of \\(2,500\\ \\mathrm{m^3/day}\\) with a BOD\\(_5\\) of \\(200\\ \\mathrm{mg/L}\\). The aeration tank has a volume of \\(1,000\\ \\mathrm{m^3}\\). The Mixed Liquor Volatile Suspended Solids (MLVSS) concentration is \\(2,000\\ \\mathrm{mg/L}\\). Calculate the Food-to-Microorganism (F:M) ratio in \\(day^{-1}\\).",
@@ -1150,12 +1282,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A wastewater treatment plant treats a flow of \\(5.0\\ \\mathrm{MGD}\\). The aeration tank volume is \\(1.5\\ \\mathrm{MG}\\) and the MLSS is \\(2,500\\ \\mathrm{mg/L}\\). The waste sludge flow rate (\\(Q_w\\)) is \\(0.05\\ \\mathrm{MGD}\\) with a concentration of \\(8,000\\ \\mathrm{mg/L}\\). The effluent suspended solids concentration (\\(X_e\\)) is \\(15\\ \\mathrm{mg/L}\\). The solids residence time (\\(\\theta_c\\)) is most nearly:",
@@ -1167,12 +1301,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "An activated sludge aeration tank has a volume of \\(4,000\\ \\mathrm{m^3}\\). The mixed liquor suspended solids (MLSS) concentration is maintained at \\(3,000\\ \\mathrm{mg/L}\\). The total sludge production (solids wasted plus solids lost in the effluent) is determined to be \\(2,400\\ \\mathrm{kg/day}\\). The Solids residence time  (\\(\\theta_c\\)) in days is most nearly:",
@@ -1184,12 +1320,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P333"
+            "FE Reference Handbook 10.5 \u2013 P333"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A \\( 150,000 \\, \\mathrm{L} \\) activated sludge reactor receives an influent wastewater flow rate of \\( 1,500 \\, \\mathrm{L/min} \\) with an influent \\( \\mathrm{BOD_5} \\) concentration of \\( 220 \\, \\mathrm{mg/L} \\). The mixed liquor volatile suspended solids (MLVSS) concentration in the reactor is \\( 3,200 \\, \\mathrm{mg/L} \\). The food-to-microorganism (\\( \\mathrm{F:M} \\)) ratio of the system is most nearly:",
@@ -1201,12 +1339,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A \\( 900,000 \\)-gallon conventional activated sludge process has a recycle ratio of \\( 0.30 \\), an influent flow rate of \\( 1.2 \\, \\mathrm{MGD} \\), a mixed liquor volatile suspended solids (MLVSS) concentration of \\( 800 \\, \\mathrm{mg/L} \\), and an influent \\( \\mathrm{BOD_5} \\) of \\( 180 \\, \\mathrm{mg/L} \\). The F:M ratio of the process is most nearly:",
@@ -1218,12 +1358,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A \\( 32 \\, \\mathrm{m} \\) diameter clarifier has a flow rate \\( Q = 6 \\, \\mathrm{MGD} \\) and a biomass concentration \\( X_A = 180 \\, \\mathrm{mg/L} \\). Determine the solids loading rate (\\( \\mathrm{SLR} \\)). The solids loading rate is most nearly:",
@@ -1235,12 +1377,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P334"
+            "FE Reference Handbook 10.5 \u2013 P334"
           ],
           "tags": [
             "Activated Sludge",
             "Wastewater Treatment And Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -1258,12 +1402,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P337"
+            "FE Reference Handbook 10.5 \u2013 P337"
           ],
           "tags": [
             "Activated Carbon Adsorption",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "facilities-supply-chain",
+          "officialSubtopic": "Capacity analysis"
         },
         {
           "question": "Adsorption data for an organic pollutant follows the Freundlich isotherm. The constants are \\(K = 2.0\\ (\\mathrm{mg/g})(L/mg)^{1/n}\\) and \\(1/n = 0.5\\). If the equilibrium concentration (\\(C_e\\)) is \\(16\\ \\mathrm{mg/L}\\), calculate the mass of solute adsorbed per unit mass of adsorbent (\\(x/m\\)).",
@@ -1275,12 +1421,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P337"
+            "FE Reference Handbook 10.5 \u2013 P337"
           ],
           "tags": [
             "Activated Carbon Adsorption",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A reverse osmosis system operates with a transmembrane pressure difference (\\(\\Delta P\\)) of \\(3,000\\ \\mathrm{kPa}\\) and an osmotic pressure differential (\\(\\Delta \\pi\\)) of \\(400\\ \\mathrm{kPa}\\). The water permeation coefficient (\\(W_p\\)) is \\(1.5 \\times 10^{-6}\\ \\mathrm{kmol/(m^2 \\cdot s \\cdot kPa)}\\). Calculate the water flux (\\(J_w\\)).",
@@ -1292,12 +1440,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P345"
+            "FE Reference Handbook 10.5 \u2013 P345"
           ],
           "tags": [
             "Reverse Osmosis",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the osmotic pressure (\\(\\Pi\\)) of a solution containing \\(0.1\\ \\mathrm{mol/m^3}\\) of NaCl at \\(25^\\circ \\mathrm{C}\\) (\\(298\\ \\mathrm{K}\\)). Assume complete dissociation (\\(v=2\\)) and an osmotic coefficient (\\(\\Phi\\)) of \\(1.0\\).\n(Use \\(R = 8,314\\ \\mathrm{Pa \\cdot m^3/(kmol \\cdot K)}\\))",
@@ -1309,12 +1459,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P344"
+            "FE Reference Handbook 10.5 \u2013 P344"
           ],
           "tags": [
             "Reverse Osmosis",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "In an air stripping packed tower design, the Height of a Transfer Unit (HTU) is calculated to be \\(1.2\\ \\mathrm{m}\\). The required Number of Transfer Units (NTU) to achieve 99% removal is determined to be \\(4.5\\). Calculate the total packing height (\\(Z\\)).",
@@ -1326,15 +1478,17 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P338"
+            "FE Reference Handbook 10.5 \u2013 P338"
           ],
           "tags": [
             "Air Stripping",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "An air stripping tower is designed with a dimensionless Henry’s constant \\(H’ = 0.25\\). The design calls for a Stripping Factor (\\(R_S\\)) of \\(5.0\\). Calculate the required volumetric air-to-water ratio (\\(Q_A/Q_W\\)).",
+          "question": "An air stripping tower is designed with a dimensionless Henry\u2019s constant \\(H\u2019 = 0.25\\). The design calls for a Stripping Factor (\\(R_S\\)) of \\(5.0\\). Calculate the required volumetric air-to-water ratio (\\(Q_A/Q_W\\)).",
           "choices": {
             "A": "\\(1.25\\)",
             "B": "\\(5.0\\)",
@@ -1343,15 +1497,17 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P338"
+            "FE Reference Handbook 10.5 \u2013 P338"
           ],
           "tags": [
             "Air Stripping",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A contaminant has a Henry’s Law constant (\\(H\\)) of \\(0.01\\ \\mathrm{atm \\cdot m^3/kmol}\\) at \\(20^\\circ \\mathrm{C}\\). Calculate the dimensionless Henry’s Law constant (\\(H’\\)).\n(Use \\(R = 0.0821\\ \\mathrm{m^3 \\cdot atm/(kmol \\cdot K)}\\))",
+          "question": "A contaminant has a Henry\u2019s Law constant (\\(H\\)) of \\(0.01\\ \\mathrm{atm \\cdot m^3/kmol}\\) at \\(20^\\circ \\mathrm{C}\\). Calculate the dimensionless Henry\u2019s Law constant (\\(H\u2019\\)).\n(Use \\(R = 0.0821\\ \\mathrm{m^3 \\cdot atm/(kmol \\cdot K)}\\))",
           "choices": {
             "A": "\\(0.0004\\)",
             "B": "\\(0.0024\\)",
@@ -1360,12 +1516,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P338"
+            "FE Reference Handbook 10.5 \u2013 P338"
           ],
           "tags": [
             "Air Stripping",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Alum (\\(Al_2(SO_4)_3 \\cdot 14H_2O\\), MW \\(\\approx 594\\)) is added to water at a dose of \\(30\\ \\mathrm{mg/L}\\). Based on the coagulation stoichiometry, how much alkalinity (expressed as \\(CaCO_3\\)) is consumed?",
@@ -1377,12 +1535,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P342"
+            "FE Reference Handbook 10.5 \u2013 P342"
           ],
           "tags": [
             "Coagulation Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A sample of water has a Calcium Non-Carbonate Hardness (Permanent Hardness) of \\(80\\ \\mathrm{mg/L}\\) as \\(CaCO_3\\). Calculate the theoretical amount of Soda Ash (\\(Na_2CO_3\\)) required to remove this hardness.\n(MW data: \\(CaCO_3 = 100.1\\), \\(Na_2CO_3 = 106.0\\))",
@@ -1394,12 +1554,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P342"
+            "FE Reference Handbook 10.5 \u2013 P342"
           ],
           "tags": [
             "Lime Soda Softening Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A water source contains \\(1.5\\ \\mathrm{mmol/L}\\) of Magnesium Carbonate Hardness (\\(Mg(HCO_3)_2\\)). Calculate the stoichiometric amount of hydrated lime (\\(Ca(OH)_2\\), MW = \\(74.1\\ \\mathrm{g/mol}\\)) required to remove this magnesium.",
@@ -1411,12 +1573,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P342"
+            "FE Reference Handbook 10.5 \u2013 P342"
           ],
           "tags": [
             "Lime Soda Softening Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Water analysis indicates a Calcium Carbonate Hardness of \\(2.0\\ \\mathrm{mmol/L}\\) (as \\(Ca^{2+}\\)). How much hydrated lime (\\(Ca(OH)_2\\), MW = \\(74.1\\ \\mathrm{g/mol}\\)) is required to remove this hardness stoichiometrically?",
@@ -1428,12 +1592,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P342"
+            "FE Reference Handbook 10.5 \u2013 P342"
           ],
           "tags": [
             "Lime Soda Softening Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "During the backwash of a rapid sand filter, the backwash velocity (\\(v_B\\)) is set to \\(15\\ \\mathrm{m/hr}\\). The terminal settling velocity (\\(v_t\\)) of the sand particles is determined to be \\(180\\ \\mathrm{m/hr}\\). Calculate the porosity of the fluidized bed (\\(\\eta_f\\)).",
@@ -1445,12 +1611,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P341"
+            "FE Reference Handbook 10.5 \u2013 P341"
           ],
           "tags": [
             "Filtration Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rapid sand filter has a bed depth of \\(0.7\\ \\mathrm{m}\\). The filtration rate (approach velocity) is \\(300\\ \\mathrm{m/day}\\). The sand grains have a diameter of \\(0.6\\ \\mathrm{mm}\\) and a drag coefficient (\\(C_D\\)) of \\(5.0\\). The porosity of the bed is \\(0.4\\). Using the Rose equation, calculate the head loss through the clean filter bed.",
@@ -1462,12 +1630,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P341"
+            "FE Reference Handbook 10.5 \u2013 P341"
           ],
           "tags": [
             "Filtration Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "manufacturing-service-production-systems",
+          "officialSubtopic": "Process improvements"
         },
         {
           "question": "Determine the required CT value for 3-log (99.9%) inactivation of Giardia cysts by free chlorine under the following conditions:\nTemperature: \\(\\le 0.5^\\circ \\mathrm{C}\\)\n\npH: \\(7.5\\)\n\nChlorine Concentration: \\(1.0\\ \\mathrm{mg/L}\\)",
@@ -1479,16 +1649,18 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P347:",
-            "FE Reference Handbook 10.5 – P347"
+            "FE Reference Handbook 10.5 \u2013 P347:",
+            "FE Reference Handbook 10.5 \u2013 P347"
           ],
           "tags": [
             "Removal And Inactivation Requirements",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "systems-engineering-analysis-design",
+          "officialSubtopic": "Requirements analysis and system design"
         },
         {
-          "question": "A chlorine contact basin has a volume of \\(20,000\\ \\mathrm{gallons}\\) and the peak hourly flow rate is \\(400\\ \\mathrm{gpm}\\). The basin is classified as having “Superior” baffling conditions (\\(BF = 0.7\\)). Calculate the \\(t_{10}\\) time.",
+          "question": "A chlorine contact basin has a volume of \\(20,000\\ \\mathrm{gallons}\\) and the peak hourly flow rate is \\(400\\ \\mathrm{gpm}\\). The basin is classified as having \u201cSuperior\u201d baffling conditions (\\(BF = 0.7\\)). Calculate the \\(t_{10}\\) time.",
           "choices": {
             "A": "\\(35\\ \\mathrm{min}\\)",
             "B": "\\(50\\ \\mathrm{min}\\)",
@@ -1497,12 +1669,14 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P346"
+            "FE Reference Handbook 10.5 \u2013 P346"
           ],
           "tags": [
             "Disinfection",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A disinfection process uses free chlorine. The residual chlorine concentration measured during peak hourly flow is \\(1.5\\ \\mathrm{mg/L}\\). The contact time \\(t_{10}\\) (time for 10% of water to pass) is determined to be \\(90\\ \\mathrm{minutes}\\). Calculate the \\(CT_{calc}\\) value.",
@@ -1514,12 +1688,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P346"
+            "FE Reference Handbook 10.5 \u2013 P346"
           ],
           "tags": [
             "Disinfection",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A particle is settling in water with a calculated terminal velocity of \\(0.1\\ \\mathrm{m/s}\\). The particle diameter is \\(0.5\\ \\mathrm{mm}\\) (\\(5 \\times 10^{-4}\\ \\mathrm{m}\\)). The kinematic viscosity of water is \\(\\nu = 1 \\times 10^{-6}\\ \\mathrm{m^2/s}\\). Calculate the Reynolds number and determine the flow regime.",
@@ -1531,15 +1707,17 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P340"
+            "FE Reference Handbook 10.5 \u2013 P340"
           ],
           "tags": [
             "Settling Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "A spherical sand particle with a diameter of \\(0.1\\ \\mathrm{mm}\\) (\\(1 \\times 10^{-4}\\ \\mathrm{m}\\)) and a density of \\(2,650\\ \\mathrm{kg/m^3}\\) is settling in water at \\(20^\\circ \\mathrm{C}\\). The water density is \\(\\rho_f = 998\\ \\mathrm{kg/m^3}\\) and the dynamic viscosity is \\(\\mu = 1.002 \\times 10^{-3}\\ \\mathrm{Pa \\cdot s}\\). Assuming laminar flow (Stokes’ Law applies), calculate the terminal settling velocity.",
+          "question": "A spherical sand particle with a diameter of \\(0.1\\ \\mathrm{mm}\\) (\\(1 \\times 10^{-4}\\ \\mathrm{m}\\)) and a density of \\(2,650\\ \\mathrm{kg/m^3}\\) is settling in water at \\(20^\\circ \\mathrm{C}\\). The water density is \\(\\rho_f = 998\\ \\mathrm{kg/m^3}\\) and the dynamic viscosity is \\(\\mu = 1.002 \\times 10^{-3}\\ \\mathrm{Pa \\cdot s}\\). Assuming laminar flow (Stokes\u2019 Law applies), calculate the terminal settling velocity.",
           "choices": {
             "A": "\\(0.005\\ \\mathrm{m/s}\\)",
             "B": "\\(0.009\\ \\mathrm{m/s}\\)",
@@ -1548,12 +1726,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P340"
+            "FE Reference Handbook 10.5 \u2013 P340"
           ],
           "tags": [
             "Settling Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A clarifier has a volume of \\(500\\ \\mathrm{m^3}\\) and treats a wastewater flow of \\(2,000\\ \\mathrm{m^3/day}\\). What is the hydraulic residence time (\\(\\theta\\)) in hours?",
@@ -1565,12 +1745,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P339"
+            "FE Reference Handbook 10.5 \u2013 P339"
           ],
           "tags": [
             "Clarifier",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rectangular sedimentation basin has a flow of \\(6.0\\ \\mathrm{MGD}\\). The basin is \\(40\\ \\mathrm{ft}\\) wide and has a water depth of \\(10\\ \\mathrm{ft}\\). Determine the horizontal velocity (\\(v_h\\)) in \\(\\mathrm{ft/min}\\).",
@@ -1582,12 +1764,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P339"
+            "FE Reference Handbook 10.5 \u2013 P339"
           ],
           "tags": [
             "Clarifier",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A circular secondary clarifier has a diameter of \\(80\\ \\mathrm{ft}\\). The influent flow rate is \\(3.5\\ \\mathrm{MGD}\\). Assuming the weir is located along the entire perimeter of the tank, calculate the weir loading rate (Weir Overflow Rate).",
@@ -1599,12 +1783,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P339"
+            "FE Reference Handbook 10.5 \u2013 P339"
           ],
           "tags": [
             "Clarifier",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A circular clarifier with a diameter of \\(60\\ \\mathrm{ft}\\) treats a water flow of \\(2.5\\ \\mathrm{MGD}\\). What is the surface overflow rate?",
@@ -1616,12 +1802,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P339"
+            "FE Reference Handbook 10.5 \u2013 P339"
           ],
           "tags": [
             "Clarifier",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A rectangular primary clarifier is designed to treat a water flow of \\(4.0\\ \\mathrm{MGD}\\). The basin dimensions are \\(80\\ \\mathrm{ft}\\) long, \\(30\\ \\mathrm{ft}\\) wide, and \\(12\\ \\mathrm{ft}\\) deep. Calculate the surface overflow rate in \\(\\mathrm{gpd/ft^2}\\).",
@@ -1633,15 +1821,17 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P339"
+            "FE Reference Handbook 10.5 \u2013 P339"
           ],
           "tags": [
             "Clarifier",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "In a packed bed air stripper operating at \\( 30^\\circ\\mathrm{C} \\), a vapor contained in an air stream is dissolved in water. The Henry’s law constant (\\( H \\)) for the vapor-water system is \\( 0.15 \\, \\mathrm{atm \\cdot m^3/kmol} \\). The volumetric flow rate of the air (\\( Q_A \\)) is \\( 0.8 \\, \\mathrm{m^3/s} \\). Determine the required volumetric flow rate of the water (\\( Q_W \\)). The water flow rate is most nearly:",
+          "question": "In a packed bed air stripper operating at \\( 30^\\circ\\mathrm{C} \\), a vapor contained in an air stream is dissolved in water. The Henry\u2019s law constant (\\( H \\)) for the vapor-water system is \\( 0.15 \\, \\mathrm{atm \\cdot m^3/kmol} \\). The volumetric flow rate of the air (\\( Q_A \\)) is \\( 0.8 \\, \\mathrm{m^3/s} \\). Determine the required volumetric flow rate of the water (\\( Q_W \\)). The water flow rate is most nearly:",
           "choices": {
             "A": "\\( 3.75 \\, \\mathrm{L/s} \\)",
             "B": "\\( 4.83 \\, \\mathrm{L/s} \\)",
@@ -1650,12 +1840,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P338"
+            "FE Reference Handbook 10.5 \u2013 P338"
           ],
           "tags": [
             "Air Stripping",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "A municipal wastewater treatment plant needs to reduce its effluent phosphorus concentration to meet new environmental discharge limits. The influent wastewater has a constant flow rate and contains a phosphate (\\( \\mathrm{PO_4^{3-}} \\)) concentration of \\( 20\\,\\mathrm{mg/L} \\). The plant engineer plans to use aluminum sulfate (alum), \\( \\mathrm{Al_2(SO_4)_3 \\cdot 14H_2O} \\), to precipitate the phosphate as aluminum phosphate (\\( \\mathrm{AlPO_4} \\)). Assuming theoretical stoichiometry governs the reaction and no other side reactions consume the coagulant, the required alum dose is most nearly:",
@@ -1667,12 +1859,14 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P342"
+            "FE Reference Handbook 10.5 \u2013 P342"
           ],
           "tags": [
             "Phosphorus Removal Equations",
             "Water Treatment Technologies"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -1690,13 +1884,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – Page 353：",
-            "FE Reference Handbook 10.5 – P353"
+            "FE Reference Handbook 10.5 \u2013 Page 353\uff1a",
+            "FE Reference Handbook 10.5 \u2013 P353"
           ],
           "tags": [
             "Energy",
             "Wastes With Fuel Value"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Statics, dynamics, and materials"
         },
         {
           "question": "A waste-to-energy facility is evaluating the potential heat output from processing municipal solid waste. If the facility processes \\(1,000\\ \\mathrm{lbs}\\) of source-separated Plastics, what is the estimated total energy content based on typical values?",
@@ -1708,12 +1904,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P353"
+            "FE Reference Handbook 10.5 \u2013 P353"
           ],
           "tags": [
             "Energy",
             "Municipal Solid Wastes Msw"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "For Nuclear Power Reactors, which reactor type typically has the highest thermal efficiency?",
@@ -1725,13 +1923,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P350:",
-            "FE Reference Handbook 10.5 – P350"
+            "FE Reference Handbook 10.5 \u2013 P350:",
+            "FE Reference Handbook 10.5 \u2013 P350"
           ],
           "tags": [
             "Energy",
             "Nuclear"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Determine the appropriate turbine type for a Head of \\(500\\ \\mathrm{ft}\\) and a Power Output of \\(100,000\\ \\mathrm{kW}\\).",
@@ -1743,16 +1943,18 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P351:",
-            "FE Reference Handbook 10.5 – P351"
+            "FE Reference Handbook 10.5 \u2013 P351:",
+            "FE Reference Handbook 10.5 \u2013 P351"
           ],
           "tags": [
             "Energy",
             "Wind"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "According to the table “Noise of Different Activities…”, which of the following activities has a noise level closest to \\(65\\ \\mathrm{dB(A)}\\)?",
+          "question": "According to the table \u201cNoise of Different Activities\u2026\u201d, which of the following activities has a noise level closest to \\(65\\ \\mathrm{dB(A)}\\)?",
           "choices": {
             "A": "Busy general office",
             "B": "Truck at 30 mph at 100 m",
@@ -1761,13 +1963,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P351:",
-            "FE Reference Handbook 10.5 – P351"
+            "FE Reference Handbook 10.5 \u2013 P351:",
+            "FE Reference Handbook 10.5 \u2013 P351"
           ],
           "tags": [
             "Energy",
             "Wind"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "To achieve Maximum Year-Round Insolation at a latitude of \\(40^\\circ\\), what is the optimum tilt angle?",
@@ -1779,13 +1983,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P352:",
-            "FE Reference Handbook 10.5 – P352"
+            "FE Reference Handbook 10.5 \u2013 P352:",
+            "FE Reference Handbook 10.5 \u2013 P352"
           ],
           "tags": [
             "Energy",
             "Solar"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the mass of \\(CO_2\\) produced from the complete combustion of 44 kg of Propane (\\(C_3H_8\\)).",
@@ -1797,16 +2003,18 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P348:",
-            "FE Reference Handbook 10.5 – P348"
+            "FE Reference Handbook 10.5 \u2013 P348:",
+            "FE Reference Handbook 10.5 \u2013 P348"
           ],
           "tags": [
             "Combustion",
             "Energy"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
-          "question": "According to the “Combustion” table, what are the reaction products for the combustion of Sulfur to Sulfur Trioxide?",
+          "question": "According to the \u201cCombustion\u201d table, what are the reaction products for the combustion of Sulfur to Sulfur Trioxide?",
           "choices": {
             "A": "\\(S + O_2 \\rightarrow SO_2\\)",
             "B": "\\(S + \\frac{3}{2}O_2 \\rightarrow SO_3\\)",
@@ -1815,13 +2023,15 @@
           },
           "answer": "B",
           "references": [
-            "FE Reference Handbook 10.5 – P348",
-            "FE Reference Handbook 10.5 – P348"
+            "FE Reference Handbook 10.5 \u2013 P348",
+            "FE Reference Handbook 10.5 \u2013 P348"
           ],
           "tags": [
             "Combustion",
             "Energy"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Determine the number of moles of Oxygen (\\(O_2\\)) required to completely combust 1 mole of Propane (\\(C_3H_8\\)).",
@@ -1833,13 +2043,15 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P348:",
-            "FE Reference Handbook 10.5 – P348"
+            "FE Reference Handbook 10.5 \u2013 P348:",
+            "FE Reference Handbook 10.5 \u2013 P348"
           ],
           "tags": [
             "Combustion",
             "Energy"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the kinetic energy contained in a \\(1,000\\ \\mathrm{kg}\\) mass of air moving at a wind speed of \\(10\\ \\mathrm{m/s}\\).",
@@ -1851,12 +2063,14 @@
           },
           "answer": "C",
           "references": [
-            "FE Reference Handbook 10.5 – P350"
+            "FE Reference Handbook 10.5 \u2013 P350"
           ],
           "tags": [
             "Energy",
             "Wind"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         },
         {
           "question": "Calculate the power delivered by water (\\(P\\)) in kilowatts (\\(kW\\)) of a hydroelectric turbine. The flow rate is \\(Q = 5\\ \\mathrm{m^3/s}\\), the net head is \\(H = 20\\ \\mathrm{m}\\).",
@@ -1868,12 +2082,14 @@
           },
           "answer": "D",
           "references": [
-            "FE Reference Handbook 10.5 – P349"
+            "FE Reference Handbook 10.5 \u2013 P349"
           ],
           "tags": [
             "Energy",
             "Hydropower"
-          ]
+          ],
+          "sectionId": "engineering-sciences",
+          "officialSubtopic": "Thermodynamics and fluid mechanics"
         }
       ]
     },
@@ -1891,11 +2107,13 @@
           },
           "answer": "A",
           "references": [
-            "FE Reference Handbook 10.5 – P355"
+            "FE Reference Handbook 10.5 \u2013 P355"
           ],
           "tags": [
             "Sustainability"
-          ]
+          ],
+          "sectionId": "ethics-professional-practice",
+          "officialSubtopic": "Public protection and regulatory issues"
         }
       ]
     }
