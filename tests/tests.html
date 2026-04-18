@@ -551,6 +551,12 @@
             display: flex; flex-direction: column;
             align-items: flex-end; gap: 5px; flex-shrink: 0;
         }
+        .latest-chip-wrap {
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: flex-end;
+            gap: 6px;
+        }
         .test-card-unit-row {
             min-height: 18px;
             margin-top: 10px;
@@ -586,6 +592,13 @@
         .latest-chip {
             font-family: var(--font-heading); font-size: 20px; font-weight: 700;
             color: var(--text-primary);
+        }
+        .latest-chip-unit {
+            font-family: var(--font-body);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            line-height: 1;
         }
         .chevron { color: var(--text-tertiary); flex-shrink: 0; }
 
@@ -893,6 +906,7 @@
         .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta  { display: none; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right { flex-direction: row; align-items: center; justify-content: space-between; gap: 0; flex-shrink: 0; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip     { font-size: 26px; font-weight: 700; }
+        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip-unit { font-size: 24px; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap  { width: 70px; height: 32px; flex-shrink: 0; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap canvas { width: 100% !important; height: 100% !important; }
         .layout.is-grid-view #panelList .test-card:not(.expanded) .status-badge    { font-size: 11px; padding: 5px 12px; }
@@ -1776,7 +1790,13 @@
             return unitText ? `<div class="test-card-unit-text">${escStr(unitText)}</div>` : '';
         }
 
+        function getInlineLatestUnitHtml(test) {
+            const unitText = getDisplayUnitText(test);
+            return unitText ? `<span class="latest-chip-unit">${escStr(unitText)}</span>` : '';
+        }
+
         function getCardUnitSlotHtml(test) {
+            if (test?.type !== 'qualitative' && test?.unitStatus !== 'pending') return '';
             const inner = getUnitSlotMarkup(test);
             return inner
                 ? `<div class="test-card-unit-row" data-unit-slot-for="${safeId(test.name)}">${inner}</div>`
@@ -2650,7 +2670,10 @@
             </div>
           </div>
           <div class="test-card-right" style="gap:2px;">
-            <div class="latest-chip ${valColor}">${displayVal}</div>
+            <div class="latest-chip-wrap">
+              <div class="latest-chip ${valColor}">${displayVal}</div>
+              ${getInlineLatestUnitHtml(t)}
+            </div>
             ${t.numericPts.length > 1 ? `<div class="sparkline-wrap"><canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas></div>` : ''}
           </div>
           <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
