@@ -3,6 +3,7 @@ const { useEffect, useMemo, useRef, useState } = React;
 const STORAGE_KEY = "fe-industrial-prep-progress-v2";
 const LEGACY_STORAGE_KEY = "fe-industrial-prep-progress-v1";
 const ACTIVE_QUIZ_STORAGE_KEY = "fe-industrial-prep-active-quiz-v1";
+const EXPORT_SCHEMA_VERSION = 1;
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -262,6 +263,38 @@ function normalizeQuizSession(rawSession, questionsById) {
   };
 }
 
+function buildExportSnapshot(data, progress, activeQuiz) {
+  return {
+    schemaVersion: EXPORT_SCHEMA_VERSION,
+    exam: data.exam,
+    exportedAt: new Date().toISOString(),
+    progress: {
+      ...progress,
+      lastUpdated: progress.lastUpdated || new Date().toISOString()
+    },
+    activeQuiz: activeQuiz
+      ? {
+          ...activeQuiz,
+          lastUpdated: activeQuiz.lastUpdated || new Date().toISOString()
+        }
+      : null
+  };
+}
+
+function extractImportedProgress(data, parsed) {
+  if (parsed?.progress && typeof parsed.progress === "object") {
+    return normalizeProgress(data, parsed.progress);
+  }
+  return normalizeProgress(data, parsed);
+}
+
+function extractImportedQuiz(parsed, questionsById) {
+  if (parsed?.activeQuiz !== undefined) {
+    return normalizeQuizSession(parsed.activeQuiz, questionsById);
+  }
+  return null;
+}
+
 function readActiveQuiz(questionsById) {
   try {
     const raw = localStorage.getItem(ACTIVE_QUIZ_STORAGE_KEY);
@@ -496,8 +529,8 @@ function App() {
     reader.onload = () => {
       try {
         const parsed = JSON.parse(reader.result);
-        setProgress(normalizeProgress(data, parsed));
-        setActiveQuiz(normalizeQuizSession(parsed.activeQuiz, questionsById));
+        setProgress(extractImportedProgress(data, parsed));
+        setActiveQuiz(extractImportedQuiz(parsed, questionsById));
       } catch (error) {
         window.alert("That file could not be imported. Please choose a progress JSON exported from this app.");
       }
@@ -507,12 +540,7 @@ function App() {
   }
 
   function handleExportProgress() {
-    const payload = {
-      ...progress,
-      activeQuiz,
-      exportedAt: new Date().toISOString(),
-      exam: data.exam
-    };
+    const payload = buildExportSnapshot(data, progress, activeQuiz);
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
