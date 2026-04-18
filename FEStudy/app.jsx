@@ -1236,9 +1236,23 @@ function getSubtopicMetrics(progress, sectionId, subtopicName) {
 
 function renderAnsweredBreakdown(answered, correct) {
   const wrong = Math.max(answered - correct, 0);
+  const details = [];
+  if (correct > 0) {
+    details.push(<span key="right" className="score-good">{correct} right</span>);
+  }
+  if (wrong > 0) {
+    details.push(<span key="wrong" className="score-bad">{wrong} wrong</span>);
+  }
   return (
     <>
-      {answered} answered: <span className="score-good">{correct} right</span>, <span className="score-bad">{wrong} wrong</span>
+      {answered} answered
+      {details.length ? ": " : ""}
+      {details.map((detail, index) => (
+        <React.Fragment key={detail.key || index}>
+          {index > 0 ? ", " : ""}
+          {detail}
+        </React.Fragment>
+      ))}
     </>
   );
 }
