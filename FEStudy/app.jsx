@@ -1242,10 +1242,19 @@ function QuizSessionView({
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
   const allGraded = questions.length > 0 && gradedCount === questions.length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
+  const canRevealAnswer = question?.type === "open" || !!response?.revealed;
 
   useEffect(() => {
     renderMath();
   }, [question, response?.revealed, response?.selectedChoice, response?.wasCorrect]);
+
+  function handleGradeAndAdvance(wasCorrect) {
+    if (!question) return;
+    onGrade(question, wasCorrect);
+    if (currentIndex < questions.length - 1) {
+      onSetIndex(currentIndex + 1);
+    }
+  }
 
   useEffect(() => {
     function handleKeydown(event) {
@@ -1269,13 +1278,13 @@ function QuizSessionView({
 
       if ((response?.revealed || question.type === "open") && event.key === "Enter") {
         event.preventDefault();
-        onGrade(question, true);
+        handleGradeAndAdvance(true);
         return;
       }
 
       if ((response?.revealed || question.type === "open") && event.code === "Space") {
         event.preventDefault();
-        onGrade(question, false);
+        handleGradeAndAdvance(false);
         return;
       }
 
@@ -1293,7 +1302,7 @@ function QuizSessionView({
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, response?.revealed, currentIndex, isResetDialogOpen, onGrade, onSetIndex, onUpdateResponse]);
+  }, [question, response?.revealed, currentIndex, isResetDialogOpen, onSetIndex, onUpdateResponse]);
 
   if (!questions.length) {
     return (
@@ -1392,7 +1401,7 @@ function QuizSessionView({
               <h2>{formatQuestionHeading(question, currentIndex)}</h2>
             </div>
 
-            <div className="quiz-card-body">
+            <div className={`quiz-card-body ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
               <div className="quiz-question-scroll">
                 <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
 
@@ -1425,33 +1434,39 @@ function QuizSessionView({
                 )}
               </div>
 
-              <div className="quiz-answer-dock">
-                <div className="card-row">
-                  <div>
-                    <div className="mini-label" style={{ color: answerLabelColor }}>
-                      {response?.wasCorrect == null
-                        ? response?.revealed || question.type === "open"
+              {canRevealAnswer ? (
+                <div className="quiz-answer-dock">
+                  <div className="card-row">
+                    <div>
+                      <div className="mini-label" style={{ color: answerLabelColor }}>
+                        {response?.wasCorrect == null
                           ? "Ready to grade"
-                          : "Select an answer to reveal"
-                        : response.wasCorrect
-                          ? "Marked correct"
-                          : "Marked incorrect"}
+                          : response.wasCorrect
+                            ? "Marked correct"
+                            : "Marked incorrect"}
+                      </div>
+                      <strong>Answer</strong>
                     </div>
-                    <strong>Answer</strong>
+                    {question.type === "mcq" && response?.revealed ? (
+                      <span className="pill subtle">
+                        {response.selectedChoice === question.answer ? "You picked the key" : `Correct choice: ${question.answer}`}
+                      </span>
+                    ) : null}
                   </div>
-                  {question.type === "mcq" && response?.revealed ? (
-                    <span className="pill subtle">
-                      {response.selectedChoice === question.answer ? "You picked the key" : `Correct choice: ${question.answer}`}
-                    </span>
+                  <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                  {question.url ? (
+                    <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
+                      Open source explanation
+                    </a>
                   ) : null}
                 </div>
-                <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
-                {question.url ? (
-                  <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
-                    Open source explanation
-                  </a>
-                ) : null}
-              </div>
+              ) : (
+                <div className="quiz-answer-placeholder">
+                  <div className="mini-label">Reveal locked</div>
+                  <strong>Select an answer first.</strong>
+                  <p className="muted">The explanation appears here only after you choose an option.</p>
+                </div>
+              )}
             </div>
           </article>
         </main>
@@ -1475,7 +1490,7 @@ function QuizSessionView({
         <div className="quiz-footer-right">
           <button
             className="button-ghost result-button result-button-ghost"
-            onClick={() => onGrade(question, false)}
+            onClick={() => handleGradeAndAdvance(false)}
             disabled={!response?.revealed && question.type !== "open"}
           >
             <span>Mark wrong</span>
@@ -1483,7 +1498,7 @@ function QuizSessionView({
           </button>
           <button
             className="button result-button result-button-primary"
-            onClick={() => onGrade(question, true)}
+            onClick={() => handleGradeAndAdvance(true)}
             disabled={!response?.revealed && question.type !== "open"}
           >
             <span>Mark right</span>
