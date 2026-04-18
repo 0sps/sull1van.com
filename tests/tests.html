@@ -1401,6 +1401,14 @@
             </svg>
             Export all health data to file
         </div>
+        <div class="sheet-action" onclick="toggleActionSheet(false); promptUnitImportFile();">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            Import units from XLSX
+        </div>
         <div class="sheet-action" onclick="toggleActionSheet(false); alert('Goal Setting coming soon!');">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" />
@@ -1446,6 +1454,7 @@
             <div class="confirm-actions" id="confirmActions"></div>
         </div>
     </div>
+    <input type="file" id="unitImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;">
 
     <!-- Vault Password Modal -->
     <div class="vault-overlay" id="vaultOverlay">
@@ -1712,6 +1721,7 @@
         let _loadingInProgress = false;
         let _vaultDataCache = null;
         let _exportInProgress = false;
+        let _unitImportInProgress = false;
         let _unitHydrationToken = 0;
 
         // ── THEME COLOR CACHE ─────────────────────────────────────────
@@ -1869,6 +1879,198 @@
                 </div>
             `).join('');
             panel.innerHTML = `<div class="skeleton-list">${cards}</div>`;
+        }
+
+        function promptUnitImportFile() {
+            if (_unitImportInProgress) return;
+            const input = document.getElementById('unitImportFileInput');
+            if (!input) return;
+            input.value = '';
+            input.click();
+        }
+
+        function resetUnitImportInput() {
+            const input = document.getElementById('unitImportFileInput');
+            if (input) input.value = '';
+        }
+
+        function parseUnitWorkbook(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = event => {
+                    try {
+                        const workbook = XLSX.read(event.target.result, { type: 'array' });
+                        const sheet = workbook.Sheets['Blood Tests'];
+                        if (!sheet) throw new Error('Workbook is missing the "Blood Tests" sheet.');
+                        const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+                        if (!rows.length) throw new Error('The "Blood Tests" sheet is empty.');
+                        if (!('TestName' in rows[0]) || !('Units' in rows[0])) {
+                            throw new Error('Expected "TestName" and "Units" columns in the workbook.');
+                        }
+                        resolve(rows);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = () => reject(new Error('Unable to read the selected workbook.'));
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function buildUnitImportPreview(vaultData, workbookRows) {
+            const unitMap = new Map();
+            let blankRows = 0;
+
+            workbookRows.forEach(row => {
+                const testName = typeof row.TestName === 'string' ? row.TestName.trim() : '';
+                const unitText = normalizeUnitString(row.Units);
+                if (!testName) return;
+                if (!unitText) {
+                    blankRows += 1;
+                    return;
+                }
+                unitMap.set(testName, unitText);
+            });
+
+            const tests = Array.isArray(vaultData?.tests) ? vaultData.tests : [];
+            const matchedWorkbookNames = new Set();
+            const updates = [];
+
+            tests.forEach((test, testIndex) => {
+                const testName = typeof test?.name === 'string' ? test.name : '';
+                if (!unitMap.has(testName)) return;
+                const unitText = unitMap.get(testName);
+                const points = Array.isArray(test?.points) ? test.points : [];
+                if (!points.length) return;
+
+                matchedWorkbookNames.add(testName);
+                points.forEach((point, pointIndex) => {
+                    if (normalizeUnitString(point?.unit) === unitText) return;
+                    updates.push({ testIndex, pointIndex, unitText });
+                });
+            });
+
+            const matchedTestNames = new Set();
+            updates.forEach(update => {
+                const name = tests[update.testIndex]?.name;
+                if (name) matchedTestNames.add(name);
+            });
+
+            const unmatchedWorkbookNames = [...unitMap.keys()].filter(name => !matchedWorkbookNames.has(name));
+
+            return {
+                unitMap,
+                updates,
+                matchedTestCount: matchedTestNames.size,
+                matchedWorkbookNameCount: matchedWorkbookNames.size,
+                pointUpdateCount: updates.length,
+                blankRows,
+                unmatchedWorkbookNames,
+            };
+        }
+
+        async function applyUnitImport(preview) {
+            const vaultData = _vaultDataCache || await loadVaultData();
+            const tests = Array.isArray(vaultData?.tests) ? [...vaultData.tests] : [];
+
+            preview.updates.forEach(({ testIndex, pointIndex, unitText }) => {
+                const test = tests[testIndex];
+                if (!test || !Array.isArray(test.points) || !test.points[pointIndex]) return;
+                test.points[pointIndex] = {
+                    ...test.points[pointIndex],
+                    unit: unitText,
+                };
+            });
+
+            const nextVaultData = {
+                ...vaultData,
+                schemaVersion: 1,
+                tests,
+            };
+
+            await persistVaultData(nextVaultData);
+            _dataLoaded = false;
+            await loadData(true);
+        }
+
+        async function handleUnitImportFileChange(event) {
+            const file = event?.target?.files?.[0];
+            if (!file || _unitImportInProgress) {
+                resetUnitImportInput();
+                return;
+            }
+
+            _unitImportInProgress = true;
+            try {
+                if (!window._labsUser) throw new Error('You must be signed in to import units.');
+                if (!window._labsKey) throw new Error('Unlock your vault before importing units.');
+                if (typeof XLSX === 'undefined') throw new Error('The spreadsheet import library did not load.');
+
+                const workbookRows = await parseUnitWorkbook(file);
+                const vaultData = _vaultDataCache || await loadVaultData();
+                const preview = buildUnitImportPreview(vaultData, workbookRows);
+
+                const summaryLines = [
+                    `${preview.matchedWorkbookNameCount} workbook name${preview.matchedWorkbookNameCount === 1 ? '' : 's'} matched tests in the vault.`,
+                    `${preview.pointUpdateCount} historical point${preview.pointUpdateCount === 1 ? '' : 's'} will be updated.`,
+                    `${preview.blankRows} workbook row${preview.blankRows === 1 ? '' : 's'} were skipped because Units was blank.`,
+                ];
+                if (preview.unmatchedWorkbookNames.length) {
+                    const sample = preview.unmatchedWorkbookNames.slice(0, 8).join(', ');
+                    summaryLines.push(`Unmatched workbook names: ${sample}${preview.unmatchedWorkbookNames.length > 8 ? '…' : ''}`);
+                }
+
+                if (preview.pointUpdateCount === 0) {
+                    showConfirm({
+                        icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>`,
+                        iconColor: 'var(--green)',
+                        title: 'No unit changes needed',
+                        body: summaryLines.join('<br><br>'),
+                        primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                    });
+                    return;
+                }
+
+                showConfirm({
+                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
+                    iconColor: 'var(--accent)',
+                    title: 'Import units from workbook?',
+                    body: summaryLines.join('<br><br>'),
+                    secondary: { label: 'Cancel', className: 'confirm-btn-secondary', action: dismissConfirm },
+                    primary: {
+                        label: 'Import',
+                        className: 'confirm-btn-primary',
+                        action: async () => {
+                            dismissConfirm();
+                            try {
+                                await applyUnitImport(preview);
+                                showSuccessToast('Imported units');
+                            } catch (error) {
+                                console.error('Unit import save failed:', error);
+                                showConfirm({
+                                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                                    iconColor: 'var(--red)',
+                                    title: 'Import failed',
+                                    body: error.message || 'Something went wrong while saving imported units.',
+                                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                                });
+                            }
+                        }
+                    },
+                });
+            } catch (error) {
+                console.error('Unit import failed:', error);
+                showConfirm({
+                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                    iconColor: 'var(--red)',
+                    title: 'Import failed',
+                    body: error.message || 'The workbook could not be processed.',
+                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                });
+            } finally {
+                _unitImportInProgress = false;
+                resetUnitImportInput();
+            }
         }
 
         // Qualitative result normalization
@@ -3479,6 +3681,12 @@
 
         // ── INIT ─────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', loadData);
+        document.addEventListener('DOMContentLoaded', () => {
+            const unitImportInput = document.getElementById('unitImportFileInput');
+            if (unitImportInput) {
+                unitImportInput.addEventListener('change', handleUnitImportFileChange);
+            }
+        });
         // Re-triggered after Google sign-in (dispatched by the Firebase module below)
         document.addEventListener('labs:reload', loadData);
     </script>
