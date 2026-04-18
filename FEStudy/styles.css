@@ -124,6 +124,16 @@ select {
   color: var(--muted);
 }
 
+.score-good {
+  color: #1f7a4d;
+  font-weight: 700;
+}
+
+.score-bad {
+  color: #b33a3a;
+  font-weight: 700;
+}
+
 .stats-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 22px;
@@ -501,6 +511,12 @@ select {
   font-size: 0.92rem;
   color: var(--muted);
   line-height: 1.4;
+}
+
+.topic-progress-copy,
+.subtopic-summary {
+  display: grid;
+  gap: 4px;
 }
 
 .coverage-note {

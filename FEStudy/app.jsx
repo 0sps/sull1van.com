@@ -53,12 +53,13 @@ function getRecommendationReason(metrics, questionCount) {
 }
 
 function isTestMode(mode) {
-  return mode === "diagnostic" || mode === "topic-test";
+  return mode === "diagnostic" || mode === "topic-test" || mode === "review";
 }
 
 function getQuizModeLabel(mode) {
   if (mode === "diagnostic") return "Diagnostic mode";
   if (mode === "topic-test") return "Topic test";
+  if (mode === "review") return "Answer review";
   return "Practice mode";
 }
 
@@ -275,11 +276,25 @@ function getSelectedMixCounts(mixInputs, availability) {
   }, {});
 }
 
-function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions, progress, requestedMix = null, poolAvailability = null }) {
+function buildQuizSession({
+  mode,
+  title,
+  subtitle,
+  sectionId = null,
+  officialSubtopic = null,
+  questions,
+  progress,
+  requestedMix = null,
+  poolAvailability = null,
+  initialResponses = null
+}) {
   const now = new Date().toISOString();
   const responses = {};
   questions.forEach((question) => {
-    responses[question.id] = normalizeQuizResponse(question);
+    responses[question.id] = {
+      ...normalizeQuizResponse(question),
+      ...(initialResponses?.[question.id] || {})
+    };
   });
 
   return {
@@ -679,6 +694,33 @@ function App() {
     closeTestSetupDialog();
   }
 
+  function openTopicReview(sectionId) {
+    const section = data.sections.find((entry) => entry.id === sectionId);
+    const answeredQuestions = (questionsBySection[sectionId] || []).filter(
+      (question) => typeof progress.questionResults?.[question.id]?.wasCorrect === "boolean"
+    );
+    const initialResponses = answeredQuestions.reduce((accumulator, question) => {
+      accumulator[question.id] = {
+        selectedChoice: null,
+        revealed: true,
+        wasCorrect: progress.questionResults[question.id].wasCorrect
+      };
+      return accumulator;
+    }, {});
+
+    openQuizSession(
+      buildQuizSession({
+        mode: "review",
+        title: `${section.title} review`,
+        subtitle: "Revisit every answered question in this topic and update the mark if your confidence has changed.",
+        sectionId,
+        questions: answeredQuestions,
+        progress,
+        initialResponses
+      })
+    );
+  }
+
   function saveProgressAndLeaveQuiz() {
     closeQuizActionDialog();
     leaveQuiz();
@@ -977,6 +1019,7 @@ function App() {
               onResumeQuiz={resumeQuiz}
               onBack={() => setView({ name: "dashboard" })}
               onPractice={startTopicPractice}
+              onReviewTopic={openTopicReview}
             />
           ) : null}
 
@@ -1064,20 +1107,32 @@ function App() {
             aria-describedby="quiz-action-description"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="mini-label">{quizActionDialog.type === "leave" ? "Leave quiz" : "Submit quiz"}</div>
+            <div className="mini-label">
+              {quizActionDialog.type === "leave"
+                ? activeQuiz.mode === "review"
+                  ? "Leave review"
+                  : "Leave quiz"
+                : activeQuiz.mode === "review"
+                  ? "Finish review"
+                  : "Submit quiz"}
+            </div>
             <h2 id="quiz-action-title" className="dialog-title">
               {quizActionDialog.type === "leave"
                 ? "What should we do with this quiz?"
-                : quizActionDialog.unansweredCount
-                  ? "Submit and mark unanswered questions wrong?"
-                  : "Submit this quiz now?"}
+                : activeQuiz.mode === "review"
+                  ? "Finish this review now?"
+                  : quizActionDialog.unansweredCount
+                    ? "Submit and leave unanswered questions unrecorded?"
+                    : "Submit this quiz now?"}
             </h2>
             <p id="quiz-action-description" className="sidebar-note" style={{ marginTop: 0 }}>
               {quizActionDialog.type === "leave"
                 ? "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave."
-                : quizActionDialog.unansweredCount
-                  ? `${quizActionDialog.unansweredCount} unanswered question${quizActionDialog.unansweredCount === 1 ? "" : "s"} will be left unrecorded when you submit this test.`
-                  : "We’ll save this quiz as complete and keep every graded result in your browser progress."}
+                : activeQuiz.mode === "review"
+                  ? "Any changes you made to right or wrong marks are already saved. Finishing review just closes out this review session."
+                  : quizActionDialog.unansweredCount
+                    ? `${quizActionDialog.unansweredCount} unanswered question${quizActionDialog.unansweredCount === 1 ? "" : "s"} will be left unrecorded when you submit this test.`
+                    : "We’ll save this quiz as complete and keep every graded result in your browser progress."}
             </p>
             <div className="toolbar dialog-actions quiz-action-dialog-actions">
               {quizActionDialog.type === "leave" ? (
@@ -1177,6 +1232,15 @@ function getSectionMetrics(section, progress) {
 function getSubtopicMetrics(progress, sectionId, subtopicName) {
   const state = progress.subtopicProgress?.[sectionId]?.[subtopicName] || { answered: 0, correct: 0 };
   return { ...state, score: computeEstimatedScore(state.correct, state.answered) };
+}
+
+function renderAnsweredBreakdown(answered, correct) {
+  const wrong = Math.max(answered - correct, 0);
+  return (
+    <>
+      {answered} answered: <span className="score-good">{correct} right</span>, <span className="score-bad">{wrong} wrong</span>
+    </>
+  );
 }
 
 function Dashboard({
@@ -1285,9 +1349,10 @@ function Dashboard({
               </div>
 
               <div className="topic-actions" style={{ marginTop: 16 }}>
-                <span className="muted">
-                  {questionCount} mapped questions • {metrics.answered} answered
-                </span>
+                <div className="topic-progress-copy">
+                  <span className="muted">{questionCount} mapped questions.</span>
+                  <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
+                </div>
                 <div className="toolbar">
                   <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
                     Study this
@@ -1320,16 +1385,17 @@ function Dashboard({
                     <div key={subtopic.name} className="subtopic-row">
                       <div className="subtopic-meta">
                         <strong>{subtopic.name}</strong>
-                        <span className="muted">
-                          {subtopic.count} mapped questions
-                        </span>
+                        <div className="subtopic-summary">
+                          <span className="muted">{subtopic.count} mapped questions.</span>
+                          <span className="muted">{renderAnsweredBreakdown(subMetrics.answered, subMetrics.correct)}</span>
+                        </div>
                       </div>
                       <div className="subtopic-metrics">
                         <div className="card-row" style={{ marginBottom: 6 }}>
                           <span className="muted">
                             {subMetrics.score == null ? "Not assessed" : `${subMetrics.score}%`}
                           </span>
-                          <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name, false)} disabled={subtopic.count === 0}>
+                          <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name, true)} disabled={subtopic.count === 0}>
                             Practice this subtopic
                           </button>
                         </div>
@@ -1349,7 +1415,7 @@ function Dashboard({
   );
 }
 
-function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQuiz, onBack, onPractice }) {
+function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQuiz, onBack, onPractice, onReviewTopic }) {
   const metrics = getSectionMetrics(section, progress);
   const isThinCoverage = questionCount < 5;
   const canResumeSectionQuiz = activeQuiz?.status === "in-progress" && activeQuiz.sectionId === section.id;
@@ -1364,15 +1430,21 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
             {section.questionRange} official range
           </div>
           <h2 className="section-title">{section.title}</h2>
-          <p className="sidebar-note">
-            {questionCount} mapped questions are currently available in this section from the local bank.
-          </p>
+          <div className="topic-progress-copy sidebar-note">
+            <span>{questionCount} mapped questions.</span>
+            <span>{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
+          </div>
           <div className="pill" style={{ marginTop: 10 }}>
             {metrics.score == null ? "Not assessed" : `${metrics.score}% estimated`}
           </div>
           {canResumeSectionQuiz ? (
             <button className="button" style={{ marginTop: 16 }} onClick={onResumeQuiz}>
               Resume quiz
+            </button>
+          ) : null}
+          {metrics.answered > 0 ? (
+            <button className="button-ghost" style={{ marginTop: 12 }} onClick={() => onReviewTopic(section.id)}>
+              Review previous answers
             </button>
           ) : null}
           {isThinCoverage ? (
@@ -1390,9 +1462,11 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
               <div className="mini-label">Focused practice</div>
               <h3 style={{ marginTop: 8 }}>Subtopic breakdown</h3>
             </div>
-            <button className="button" onClick={() => onPractice(section.id, null, true)} disabled={questionCount === 0}>
-              Test me on this topic
-            </button>
+            <div className="toolbar">
+              <button className="button" onClick={() => onPractice(section.id, null, true)} disabled={questionCount === 0}>
+                Test me on this topic
+              </button>
+            </div>
           </div>
 
           <div className="subtopic-list">
@@ -1402,14 +1476,15 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
                 <div className="subtopic-row" key={subtopic.name}>
                   <div className="subtopic-meta">
                     <strong>{subtopic.name}</strong>
-                    <span className="muted">
-                      {subtopic.count} mapped questions
-                    </span>
+                    <div className="subtopic-summary">
+                      <span className="muted">{subtopic.count} mapped questions.</span>
+                      <span className="muted">{renderAnsweredBreakdown(subMetrics.answered, subMetrics.correct)}</span>
+                    </div>
                   </div>
                   <div className="subtopic-metrics">
                     <div className="card-row" style={{ marginBottom: 6 }}>
                       <span className="muted">{subMetrics.score == null ? "Not assessed" : `${subMetrics.score}% ready`}</span>
-                      <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name, false)} disabled={subtopic.count === 0}>
+                      <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name, true)} disabled={subtopic.count === 0}>
                         Practice this subtopic
                       </button>
                     </div>
@@ -1632,6 +1707,7 @@ function QuizSessionView({
   const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, Math.max(questions.length - 1, 0));
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
+  const isReviewMode = activeQuiz?.mode === "review";
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
   const canRevealAnswer = question?.type === "open" || !!response?.revealed;
@@ -1662,7 +1738,7 @@ function QuizSessionView({
       const key = event.key.toUpperCase();
       const availableChoices = question.type === "mcq" ? Object.keys(question.choices || {}) : [];
 
-      if (question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
+      if (!isReviewMode && question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
         event.preventDefault();
         onUpdateResponse(question.id, { selectedChoice: key, revealed: true });
         return;
@@ -1694,7 +1770,7 @@ function QuizSessionView({
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, onSetIndex, onUpdateResponse]);
+  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, isReviewMode, onSetIndex, onUpdateResponse]);
 
   if (!questions.length) {
     return (
@@ -1743,10 +1819,10 @@ function QuizSessionView({
           </div>
           <div className="quiz-header-buttons">
             <button className="button-ghost" onClick={onRequestLeave}>
-              Leave quiz
+              {isReviewMode ? "Leave review" : "Leave quiz"}
             </button>
             <button className="button" onClick={onRequestSubmit}>
-              Submit quiz
+              {isReviewMode ? "Finish review" : "Submit quiz"}
             </button>
           </div>
         </div>
@@ -1815,7 +1891,8 @@ function QuizSessionView({
                         <button
                           key={key}
                           className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
-                          onClick={() => onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
+                          onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
+                          disabled={isReviewMode}
                         >
                           <div className="choice-row">
                             <strong>{key}</strong>
@@ -1862,8 +1939,10 @@ function QuizSessionView({
               ) : (
                 <div className="quiz-answer-placeholder">
                   <div className="mini-label">Reveal locked</div>
-                  <strong>Select an answer first.</strong>
-                  <p className="muted">The explanation appears here only after you choose an option.</p>
+                  <strong>{isReviewMode ? "This review question is already scored." : "Select an answer first."}</strong>
+                  <p className="muted">
+                    {isReviewMode ? "Use the grading controls below if you want to change the saved result." : "The explanation appears here only after you choose an option."}
+                  </p>
                 </div>
               )}
             </div>
