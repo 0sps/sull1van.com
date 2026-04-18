@@ -607,6 +607,7 @@
             color: var(--text-secondary);
             line-height: 1;
         }
+        .latest-chip-unit.is-hidden { display: none; }
         .chevron { color: var(--text-tertiary); flex-shrink: 0; }
 
         /* ── HERO WIDGET ── */
@@ -1745,6 +1746,7 @@
         let _exportInProgress = false;
         let _unitImportInProgress = false;
         let _unitHydrationToken = 0;
+        let _queuedForceRefresh = false;
 
         // ── THEME COLOR CACHE ─────────────────────────────────────────
         // Populated once on init and refreshed on every theme toggle.
@@ -1801,7 +1803,7 @@
         function getInlineLatestUnitHtml(test) {
             if (test?.type === 'qualitative') return '';
             const unitText = getDisplayUnitText(test);
-            return unitText ? `<span class="latest-chip-unit">${escStr(unitText)}</span>` : '';
+            return `<span class="latest-chip-unit${unitText ? '' : ' is-hidden'}" data-inline-unit-for="${safeId(test.name)}">${unitText ? escStr(unitText) : ''}</span>`;
         }
 
         function getCardUnitSlotHtml(test) {
@@ -1844,12 +1846,21 @@
 
             const safeName = safeId(test.name);
             document.querySelectorAll(`[data-unit-slot-for="${safeName}"]`).forEach(node => {
+                if (test.type !== 'qualitative' && test.unitStatus !== 'pending') {
+                    node.remove();
+                    return;
+                }
                 const markup = getUnitSlotMarkup(test);
                 if (!markup) {
                     node.remove();
                     return;
                 }
                 node.innerHTML = markup;
+            });
+            document.querySelectorAll(`[data-inline-unit-for="${safeName}"]`).forEach(node => {
+                const unitText = getDisplayUnitText(test);
+                node.textContent = unitText;
+                node.classList.toggle('is-hidden', !unitText);
             });
             document.querySelectorAll(`[data-grid-kpi-unit-for="${safeName}"]`).forEach(node => {
                 node.innerHTML = getLatestUnitSublineHtml(test);
@@ -2464,12 +2475,14 @@
 
             if (_dataLoaded && !forceRefresh) return;
 
-            // Concurrency guard - but allow forceRefresh (e.g. after vault unlock) to proceed
-            if (_loadingInProgress && !forceRefresh) {
-                console.log('loadData: Load already in progress, skipping.');
+            // Concurrency guard - queue a forced reload instead of running two load paths at once.
+            if (_loadingInProgress) {
+                if (forceRefresh) _queuedForceRefresh = true;
+                console.log('loadData: Load already in progress, skipping.', { queuedForceRefresh: _queuedForceRefresh });
                 return;
             }
             _loadingInProgress = true;
+            _queuedForceRefresh = false;
             _unitHydrationToken += 1;
 
             try {
@@ -2488,14 +2501,12 @@
                 // If there is no signed-in user, return silently
                 if (!window._labsUser) {
                     updateBoot('no_user_returning');
-                    _loadingInProgress = false;
                     return;
                 }
 
                 // If user exists but no key yet, we are waiting for vault unlock.
                 if (!window._labsKey) {
                     updateBoot('waiting_for_vault');
-                    _loadingInProgress = false;
                     return;
                 }
 
@@ -2518,14 +2529,17 @@
                         else if (allTests.length > 0) openTest(allTests[0].name);
                     }, 150);
                 }
-
-                _loadingInProgress = false;
             } catch (e) {
                 console.error(e);
-                _loadingInProgress = false;
                 const errEl = document.getElementById('loadingState');
                 if (errEl) {
                     errEl.innerHTML = '<span style="color:var(--red)">⚠ Failed to load — ' + e.message + '</span>';
+                }
+            } finally {
+                _loadingInProgress = false;
+                if (_queuedForceRefresh) {
+                    _queuedForceRefresh = false;
+                    setTimeout(() => loadData(true), 0);
                 }
             }
         }
