@@ -1337,15 +1337,17 @@ function QuizSessionView({
           <p className="quiz-subtitle">{activeQuiz.subtitle}</p>
         </div>
         <div className="quiz-header-actions">
-          <div className="quiz-progress-block">
-            <div className="mini-label">Saved state</div>
-            <div className="pill">{activeQuiz.status === "in-progress" ? "In progress" : "Complete"}</div>
-          </div>
-          <div className="quiz-progress-block">
-            <div className="mini-label">Graded</div>
-            <strong>
-              {gradedCount}/{questions.length}
-            </strong>
+          <div className="quiz-header-statuses">
+            <div className="quiz-progress-block">
+              <div className="mini-label">Saved state</div>
+              <div className="pill">{activeQuiz.status === "in-progress" ? "In progress" : "Complete"}</div>
+            </div>
+            <div className="quiz-progress-block">
+              <div className="mini-label">Graded</div>
+              <strong>
+                {gradedCount}/{questions.length}
+              </strong>
+            </div>
           </div>
           <button className="button-ghost" onClick={onBack}>
             Leave quiz

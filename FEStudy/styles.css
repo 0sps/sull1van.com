@@ -571,16 +571,24 @@ select {
 
 .quiz-header-actions {
   display: flex;
-  gap: 12px;
+  gap: 18px;
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.quiz-header-statuses {
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+  flex-wrap: nowrap;
 }
 
 .quiz-progress-block {
   display: grid;
   gap: 4px;
   justify-items: end;
+  min-width: max-content;
 }
 
 .quiz-layout {
@@ -801,6 +809,12 @@ select {
   .quiz-layout,
   .quiz-footer {
     grid-template-columns: 1fr;
+  }
+
+  .quiz-header-actions,
+  .quiz-header-statuses {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .quiz-layout {
