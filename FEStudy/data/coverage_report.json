@@ -1,8 +1,8 @@
 {
   "exam": "FE Industrial and Systems",
   "totalSourceQuestions": 1036,
-  "mappedQuestionCount": 915,
-  "unmatchedQuestionCount": 121,
+  "mappedQuestionCount": 1036,
+  "unmatchedQuestionCount": 0,
   "sections": [
     {
       "id": "mathematics",
@@ -30,21 +30,21 @@
       "id": "engineering-sciences",
       "title": "Engineering Sciences",
       "questionRange": "4-6",
-      "mappedQuestionCount": 564,
-      "mcqCount": 353,
+      "mappedQuestionCount": 653,
+      "mcqCount": 442,
       "openCount": 211,
       "subtopicCoverage": [
         {
           "name": "Thermodynamics and fluid mechanics",
-          "count": 278
+          "count": 356
         },
         {
           "name": "Statics, dynamics, and materials",
-          "count": 274
+          "count": 276
         },
         {
           "name": "Electricity and electrical circuits",
-          "count": 12
+          "count": 21
         }
       ]
     },
@@ -52,8 +52,8 @@
       "id": "ethics-professional-practice",
       "title": "Ethics and Professional Practice",
       "questionRange": "4-6",
-      "mappedQuestionCount": 26,
-      "mcqCount": 26,
+      "mappedQuestionCount": 27,
+      "mcqCount": 27,
       "openCount": 0,
       "subtopicCoverage": [
         {
@@ -70,7 +70,7 @@
         },
         {
           "name": "Public protection and regulatory issues",
-          "count": 3
+          "count": 4
         }
       ]
     },
@@ -104,8 +104,8 @@
       "id": "probability-statistics",
       "title": "Probability and Statistics",
       "questionRange": "10-15",
-      "mappedQuestionCount": 77,
-      "mcqCount": 49,
+      "mappedQuestionCount": 81,
+      "mcqCount": 53,
       "openCount": 28,
       "subtopicCoverage": [
         {
@@ -118,7 +118,7 @@
         },
         {
           "name": "Estimation, confidence intervals, and hypothesis testing",
-          "count": 9
+          "count": 13
         },
         {
           "name": "Linear regression",
@@ -134,8 +134,8 @@
       "id": "modeling-quantitative-analysis",
       "title": "Modeling & Quantitative Analysis",
       "questionRange": "9-14",
-      "mappedQuestionCount": 11,
-      "mcqCount": 9,
+      "mappedQuestionCount": 15,
+      "mcqCount": 13,
       "openCount": 2,
       "subtopicCoverage": [
         {
@@ -148,7 +148,7 @@
         },
         {
           "name": "Stochastic models and simulation",
-          "count": 0
+          "count": 4
         }
       ]
     },
@@ -234,9 +234,9 @@
       "id": "human-factors-ergonomics-safety",
       "title": "Human Factors, Ergonomics, and Safety",
       "questionRange": "8-12",
-      "mappedQuestionCount": 25,
-      "mcqCount": 23,
-      "openCount": 2,
+      "mappedQuestionCount": 48,
+      "mcqCount": 45,
+      "openCount": 3,
       "subtopicCoverage": [
         {
           "name": "Human factors",
@@ -244,7 +244,7 @@
         },
         {
           "name": "Safety and industrial hygiene",
-          "count": 23
+          "count": 46
         },
         {
           "name": "Ergonomics",
@@ -323,481 +323,5 @@
       ]
     }
   ],
-  "unmatchedSample": [
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0001",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0002",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0003",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0004",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0005",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0006",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0007",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0008",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0009",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0010",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:definitions-chemistry:0011",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Definitions (Chemistry)",
-      "tags": [
-        "Definitions (Chemistry)"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0001",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Acids, Bases, and pH",
-      "tags": [
-        "Acids Bases And Ph"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0003",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Acids, Bases, and pH",
-      "tags": [
-        "Acids Bases And Ph"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0004",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Acids, Bases, and pH",
-      "tags": [
-        "Acids Bases And Ph"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0005",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Acids, Bases, and pH",
-      "tags": [
-        "Acids Bases And Ph"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:bioconversion:0001",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Bioconversion",
-      "tags": [
-        "Bioconversion"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:bioconversion:0002",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Bioconversion",
-      "tags": [
-        "Bioconversion"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:electrochemistry:0001",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Electrochemistry",
-      "tags": [
-        "Electrochemistry"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_chemistry_and_biology:chemistry-and-biology:electrochemistry:0002",
-      "sourceTopic": "Chemistry and Biology",
-      "sourceSubtopic": "Electrochemistry",
-      "tags": [
-        "Electrochemistry"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0001",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Selected Properties Of Air"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0002",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Selected Properties Of Air"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0003",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Incineration"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0005",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Electrostatic Precipitator Efficiency"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0006",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Electrostatic Precipitator Efficiency"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0007",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Baghouse"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0008",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Cyclone"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0009",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Cyclone"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0010",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution",
-        "Cyclone"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0011",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0012",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0013",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0014",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0015",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0016",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:air-pollution:0017",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Air Pollution",
-      "tags": [
-        "Air Pollution"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0001",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Vadose Zone Penetration"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0002",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Vadose Zone Penetration"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0003",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Steady State Reactor Parameters Constant Density Systems"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0005",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Partition Coefficients"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0006",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Partition Coefficients"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0007",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Partition Coefficients"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0008",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Partition Coefficients"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0009",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0010",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0011",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0012",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0013",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0014",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Mass Calculations"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0015",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Mass Calculations",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    },
-    {
-      "id": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0016",
-      "sourceTopic": "Environmental Engineering",
-      "sourceSubtopic": "Fate and Transport",
-      "tags": [
-        "Fate And Transport",
-        "Microbial Kinetics"
-      ],
-      "type": "mcq"
-    }
-  ]
+  "unmatchedSample": []
 }
