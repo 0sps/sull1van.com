@@ -130,8 +130,8 @@ function persistProgress(progress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...progress, lastUpdated: new Date().toISOString() }));
 }
 
-function updateProgressForQuestion(progress, question, nextWasCorrect) {
-  if (!question || typeof nextWasCorrect !== "boolean") {
+function setProgressForQuestionResult(progress, question, nextWasCorrect) {
+  if (!question || (nextWasCorrect !== null && typeof nextWasCorrect !== "boolean")) {
     return progress;
   }
 
@@ -165,15 +165,27 @@ function updateProgressForQuestion(progress, question, nextWasCorrect) {
     ...(next.subtopicProgress[question.sectionId] || {}),
     [question.officialSubtopic]: subtopicEntry
   };
-  next.questionResults = {
-    ...(next.questionResults || {}),
-    [question.id]: {
-      wasCorrect: nextWasCorrect,
-      updatedAt: new Date().toISOString()
-    }
-  };
+  if (nextWasCorrect == null) {
+    const { [question.id]: _removedQuestionResult, ...remainingResults } = next.questionResults || {};
+    next.questionResults = remainingResults;
+  } else {
+    next.questionResults = {
+      ...(next.questionResults || {}),
+      [question.id]: {
+        wasCorrect: nextWasCorrect,
+        updatedAt: new Date().toISOString()
+      }
+    };
+  }
   next.answeredQuestionIds = Object.keys(next.questionResults);
   return next;
+}
+
+function updateProgressForQuestion(progress, question, nextWasCorrect) {
+  if (typeof nextWasCorrect !== "boolean") {
+    return progress;
+  }
+  return setProgressForQuestionResult(progress, question, nextWasCorrect);
 }
 
 function groupQuestionsBySection(data) {
@@ -201,7 +213,18 @@ function normalizeQuizResponse(question) {
   };
 }
 
-function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions }) {
+function captureBaselineResults(questions, progress) {
+  return questions.reduce((accumulator, question) => {
+    const previous = progress.questionResults?.[question.id];
+    accumulator[question.id] =
+      typeof previous?.wasCorrect === "boolean"
+        ? { wasCorrect: previous.wasCorrect, updatedAt: previous.updatedAt || null }
+        : null;
+    return accumulator;
+  }, {});
+}
+
+function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions, progress }) {
   const now = new Date().toISOString();
   const responses = {};
   questions.forEach((question) => {
@@ -218,6 +241,7 @@ function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSub
     status: "in-progress",
     currentIndex: 0,
     questionIds: questions.map((question) => question.id),
+    baselineResults: captureBaselineResults(questions, progress),
     responses,
     startedAt: now,
     completedAt: null,
@@ -245,6 +269,14 @@ function normalizeQuizSession(rawSession, questionsById) {
       wasCorrect: typeof incoming.wasCorrect === "boolean" ? incoming.wasCorrect : null
     };
   });
+  const baselineResults = {};
+  validQuestionIds.forEach((questionId) => {
+    const incoming = rawSession.baselineResults?.[questionId];
+    baselineResults[questionId] =
+      typeof incoming?.wasCorrect === "boolean"
+        ? { wasCorrect: incoming.wasCorrect, updatedAt: incoming.updatedAt || null }
+        : null;
+  });
 
   return {
     id: rawSession.id || `${Date.now()}-${slugify(`${rawSession.mode || "quiz"}-${rawSession.title || "session"}`)}`,
@@ -256,11 +288,28 @@ function normalizeQuizSession(rawSession, questionsById) {
     status: rawSession.status === "complete" ? "complete" : "in-progress",
     currentIndex: clamp(rawSession.currentIndex || 0, 0, validQuestionIds.length - 1),
     questionIds: validQuestionIds,
+    baselineResults,
     responses,
     startedAt: rawSession.startedAt || new Date().toISOString(),
     completedAt: rawSession.completedAt || null,
     lastUpdated: rawSession.lastUpdated || new Date().toISOString()
   };
+}
+
+function restoreProgressFromQuizSession(progress, activeQuiz, questionsById) {
+  if (!activeQuiz) {
+    return progress;
+  }
+
+  return activeQuiz.questionIds.reduce((nextProgress, questionId) => {
+    const question = questionsById[questionId];
+    if (!question) {
+      return nextProgress;
+    }
+    const baseline = activeQuiz.baselineResults?.[questionId];
+    const baselineWasCorrect = typeof baseline?.wasCorrect === "boolean" ? baseline.wasCorrect : null;
+    return setProgressForQuestionResult(nextProgress, question, baselineWasCorrect);
+  }, progress);
 }
 
 function buildExportSnapshot(data, progress, activeQuiz) {
@@ -349,6 +398,7 @@ function App() {
   const [activeQuiz, setActiveQuiz] = useState(() => readActiveQuiz(questionsById));
   const [view, setView] = useState({ name: "dashboard" });
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
+  const [quizActionDialog, setQuizActionDialog] = useState(null);
   const [resetDialogSelection, setResetDialogSelection] = useState("keep");
   const fileInputRef = useRef(null);
   const keepProgressButtonRef = useRef(null);
@@ -413,7 +463,8 @@ function App() {
         mode: "diagnostic",
         title: "Diagnostic",
         subtitle: "A quick baseline across the FE Industrial sections we can currently map from the bank.",
-        questions: diagnosticQuestions
+        questions: diagnosticQuestions,
+        progress
       })
     );
   }
@@ -430,7 +481,8 @@ function App() {
           subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
           sectionId,
           officialSubtopic,
-          questions
+          questions,
+          progress
         })
       );
       return;
@@ -461,16 +513,68 @@ function App() {
     setView(getSessionBackView(activeQuiz));
   }
 
+  function openLeaveQuizDialog() {
+    if (!activeQuiz) return;
+    setQuizActionDialog({ type: "leave" });
+  }
+
+  function openSubmitQuizDialog() {
+    if (!activeQuiz) return;
+    setQuizActionDialog({
+      type: "submit",
+      unansweredCount: activeQuiz.questionIds.filter((questionId) => getSessionQuestionState(activeQuiz, questionId)?.wasCorrect == null).length
+    });
+  }
+
+  function closeQuizActionDialog() {
+    setQuizActionDialog(null);
+  }
+
+  function saveProgressAndLeaveQuiz() {
+    closeQuizActionDialog();
+    leaveQuiz();
+  }
+
+  function discardQuizAndLeave() {
+    if (!activeQuiz) return;
+    const backView = getSessionBackView(activeQuiz);
+    setProgress((current) => restoreProgressFromQuizSession(current, activeQuiz, questionsById));
+    setActiveQuiz(null);
+    setView(backView);
+    closeQuizActionDialog();
+  }
+
   function submitQuiz() {
     if (!activeQuiz) return;
 
+    const unansweredQuestionIds = activeQuiz.questionIds.filter((questionId) => getSessionQuestionState(activeQuiz, questionId)?.wasCorrect == null);
+    const backView = getSessionBackView(activeQuiz);
+
+    if (unansweredQuestionIds.length) {
+      setProgress((current) =>
+        unansweredQuestionIds.reduce((nextProgress, questionId) => {
+          const question = questionsById[questionId];
+          return question ? setProgressForQuestionResult(nextProgress, question, false) : nextProgress;
+        }, current)
+      );
+    }
+
     setActiveQuiz((current) => {
       if (!current) return current;
+      const nextResponses = { ...current.responses };
+      unansweredQuestionIds.forEach((questionId) => {
+        nextResponses[questionId] = {
+          ...(nextResponses[questionId] || {}),
+          revealed: true,
+          wasCorrect: false
+        };
+      });
       return {
         ...current,
         status: "complete",
         completedAt: new Date().toISOString(),
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
+        responses: nextResponses
       };
     });
 
@@ -478,7 +582,8 @@ function App() {
       setProgress((current) => ({ ...current, completedDiagnostic: true }));
     }
 
-    setView(getSessionBackView(activeQuiz));
+    setView(backView);
+    closeQuizActionDialog();
   }
 
   function updateQuizIndex(nextIndex) {
@@ -606,6 +711,25 @@ function App() {
     setIsResetDialogOpen(true);
   }
 
+  useEffect(() => {
+    if (!quizActionDialog) return undefined;
+
+    function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeQuizActionDialog();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [quizActionDialog]);
+
   const showResumeButton = activeQuiz?.status === "in-progress";
 
   return (
@@ -621,36 +745,39 @@ function App() {
                   This dashboard is scoped to the FE Industrial blueprint, seeded by your local question bank, and built
                   to help you diagnose weak areas before drilling down into focused practice.
                 </p>
-                <div className="toolbar" style={{ marginTop: 18 }}>
-                  <button className="button" onClick={startDiagnostic}>
-                    {progress.completedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
-                  </button>
-                  {showResumeButton ? (
-                    <button className="button-ghost" onClick={resumeQuiz}>
-                      Resume quiz
+                <div className="hero-controls">
+                  <div className="hero-primary-actions">
+                    <button className="button" onClick={startDiagnostic}>
+                      {progress.completedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
+                    </button>
+                  </div>
+                  <div className="hero-utility-actions">
+                    <button className="button-ghost" onClick={handleExportProgress}>
+                      Export progress JSON
+                    </button>
+                    <button className="button-ghost" onClick={handleImportClick}>
+                      Import progress JSON
+                    </button>
+                    <button className="button-ghost" onClick={openResetDialog}>
+                      Reset progress
+                    </button>
+                    <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
+                  </div>
+                  {activeQuiz ? (
+                    <button
+                      className={`session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
+                      onClick={showResumeButton ? resumeQuiz : undefined}
+                      disabled={!showResumeButton}
+                    >
+                      <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
+                        Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Complete"}
+                      </span>
+                      <span className="muted">
+                        {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
+                      </span>
                     </button>
                   ) : null}
-                  <button className="button-ghost" onClick={handleExportProgress}>
-                    Export progress JSON
-                  </button>
-                  <button className="button-ghost" onClick={handleImportClick}>
-                    Import progress JSON
-                  </button>
-                  <button className="button-ghost" onClick={openResetDialog}>
-                    Reset progress
-                  </button>
-                  <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
                 </div>
-                {activeQuiz ? (
-                  <div className="session-banner">
-                    <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
-                      Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Complete"}
-                    </span>
-                    <span className="muted">
-                      {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
-                    </span>
-                  </div>
-                ) : null}
               </div>
               <div className="stats-grid">
                 <div className="stat-card">
@@ -720,8 +847,9 @@ function App() {
           activeQuiz={activeQuiz}
           questionsById={questionsById}
           isResetDialogOpen={isResetDialogOpen}
-          onBack={leaveQuiz}
-          onSubmit={submitQuiz}
+          isQuizActionDialogOpen={!!quizActionDialog}
+          onRequestLeave={openLeaveQuizDialog}
+          onRequestSubmit={openSubmitQuizDialog}
           onSetIndex={updateQuizIndex}
           onUpdateResponse={updateQuizResponse}
           onGrade={gradeQuizQuestion}
@@ -765,6 +893,59 @@ function App() {
               >
                 Reset everything
               </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {quizActionDialog && activeQuiz ? (
+        <div className="dialog-backdrop" onClick={closeQuizActionDialog}>
+          <div
+            className="dialog-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quiz-action-title"
+            aria-describedby="quiz-action-description"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mini-label">{quizActionDialog.type === "leave" ? "Leave quiz" : "Submit quiz"}</div>
+            <h2 id="quiz-action-title" className="dialog-title">
+              {quizActionDialog.type === "leave"
+                ? "What should we do with this quiz?"
+                : quizActionDialog.unansweredCount
+                  ? "Submit and mark unanswered questions wrong?"
+                  : "Submit this quiz now?"}
+            </h2>
+            <p id="quiz-action-description" className="sidebar-note" style={{ marginTop: 0 }}>
+              {quizActionDialog.type === "leave"
+                ? "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave."
+                : quizActionDialog.unansweredCount
+                  ? `${quizActionDialog.unansweredCount} unanswered question${quizActionDialog.unansweredCount === 1 ? "" : "s"} will be marked wrong and saved before we close the test.`
+                  : "We’ll save this quiz as complete and keep every graded result in your browser progress."}
+            </p>
+            <div className="toolbar dialog-actions quiz-action-dialog-actions">
+              {quizActionDialog.type === "leave" ? (
+                <>
+                  <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
+                    Keep testing
+                  </button>
+                  <button className="button dialog-option" onClick={saveProgressAndLeaveQuiz}>
+                    Save progress and leave
+                  </button>
+                  <button className="button button-danger dialog-option" onClick={discardQuizAndLeave}>
+                    Discard results and leave
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
+                    Keep testing
+                  </button>
+                  <button className="button dialog-option" onClick={submitQuiz}>
+                    Confirm submit
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -1229,8 +1410,9 @@ function QuizSessionView({
   activeQuiz,
   questionsById,
   isResetDialogOpen,
-  onBack,
-  onSubmit,
+  isQuizActionDialogOpen,
+  onRequestLeave,
+  onRequestSubmit,
   onSetIndex,
   onUpdateResponse,
   onGrade
@@ -1240,7 +1422,6 @@ function QuizSessionView({
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
-  const allGraded = questions.length > 0 && gradedCount === questions.length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
   const canRevealAnswer = question?.type === "open" || !!response?.revealed;
 
@@ -1258,7 +1439,7 @@ function QuizSessionView({
 
   useEffect(() => {
     function handleKeydown(event) {
-      if (isResetDialogOpen || !question) {
+      if (isResetDialogOpen || isQuizActionDialogOpen || !question) {
         return;
       }
 
@@ -1302,7 +1483,7 @@ function QuizSessionView({
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, response?.revealed, currentIndex, isResetDialogOpen, onSetIndex, onUpdateResponse]);
+  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, onSetIndex, onUpdateResponse]);
 
   if (!questions.length) {
     return (
@@ -1312,7 +1493,7 @@ function QuizSessionView({
             <div className="mini-label">No quiz available</div>
             <h2 className="dialog-title">This test has no mapped questions yet.</h2>
             <p className="sidebar-note">Try another section or return to the dashboard while the bank continues to grow.</p>
-            <button className="button" onClick={onBack}>
+            <button className="button" onClick={onRequestLeave}>
               Back
             </button>
           </div>
@@ -1349,9 +1530,14 @@ function QuizSessionView({
               </strong>
             </div>
           </div>
-          <button className="button-ghost" onClick={onBack}>
-            Leave quiz
-          </button>
+          <div className="quiz-header-buttons">
+            <button className="button-ghost" onClick={onRequestLeave}>
+              Leave quiz
+            </button>
+            <button className="button" onClick={onRequestSubmit}>
+              Submit quiz
+            </button>
+          </div>
         </div>
       </header>
 
@@ -1505,9 +1691,6 @@ function QuizSessionView({
           >
             <span>Mark right</span>
             <span className="shortcut-badge">ENTER</span>
-          </button>
-          <button className="button quiz-submit-button" onClick={onSubmit} disabled={!allGraded}>
-            Submit quiz
           </button>
         </div>
       </footer>
