@@ -13,6 +13,8 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+const TEST_MIX_KEYS = ["correct", "incorrect", "unanswered"];
+
 function scoreToColor(score) {
   if (score == null) return "#a08d78";
   if (score < 50) return "#d13f34";
@@ -224,7 +226,56 @@ function captureBaselineResults(questions, progress) {
   }, {});
 }
 
-function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions, progress }) {
+function getScopedTestPools(questions, progress) {
+  return questions.reduce(
+    (accumulator, question) => {
+      const savedResult = progress.questionResults?.[question.id];
+      if (savedResult?.wasCorrect === true) {
+        accumulator.correct.push(question);
+      } else if (savedResult?.wasCorrect === false) {
+        accumulator.incorrect.push(question);
+      } else {
+        accumulator.unanswered.push(question);
+      }
+      return accumulator;
+    },
+    { correct: [], incorrect: [], unanswered: [] }
+  );
+}
+
+function clampMixCount(value, max) {
+  const numeric = Number.parseInt(String(value || "").trim(), 10);
+  if (!Number.isFinite(numeric) || numeric < 0) {
+    return 0;
+  }
+  return clamp(numeric, 0, max);
+}
+
+function getDefaultMixInputs(availability) {
+  if (availability.unanswered > 0) {
+    return { correct: "0", incorrect: "0", unanswered: String(availability.unanswered) };
+  }
+  if (availability.incorrect > 0) {
+    return { correct: "0", incorrect: String(availability.incorrect), unanswered: "0" };
+  }
+  return { correct: String(availability.correct || 0), incorrect: "0", unanswered: "0" };
+}
+
+function sanitizeMixInputs(mixInputs, availability) {
+  return TEST_MIX_KEYS.reduce((accumulator, key) => {
+    accumulator[key] = String(clampMixCount(mixInputs?.[key], availability[key]));
+    return accumulator;
+  }, {});
+}
+
+function getSelectedMixCounts(mixInputs, availability) {
+  return TEST_MIX_KEYS.reduce((accumulator, key) => {
+    accumulator[key] = clampMixCount(mixInputs?.[key], availability[key]);
+    return accumulator;
+  }, {});
+}
+
+function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions, progress, requestedMix = null, poolAvailability = null }) {
   const now = new Date().toISOString();
   const responses = {};
   questions.forEach((question) => {
@@ -242,6 +293,8 @@ function buildQuizSession({ mode, title, subtitle, sectionId = null, officialSub
     currentIndex: 0,
     questionIds: questions.map((question) => question.id),
     baselineResults: captureBaselineResults(questions, progress),
+    requestedMix,
+    poolAvailability,
     responses,
     startedAt: now,
     completedAt: null,
@@ -289,6 +342,24 @@ function normalizeQuizSession(rawSession, questionsById) {
     currentIndex: clamp(rawSession.currentIndex || 0, 0, validQuestionIds.length - 1),
     questionIds: validQuestionIds,
     baselineResults,
+    requestedMix:
+      rawSession.requestedMix && typeof rawSession.requestedMix === "object"
+        ? TEST_MIX_KEYS.reduce((accumulator, key) => {
+            if (typeof rawSession.requestedMix[key] === "number") {
+              accumulator[key] = rawSession.requestedMix[key];
+            }
+            return accumulator;
+          }, {})
+        : null,
+    poolAvailability:
+      rawSession.poolAvailability && typeof rawSession.poolAvailability === "object"
+        ? TEST_MIX_KEYS.reduce((accumulator, key) => {
+            if (typeof rawSession.poolAvailability[key] === "number") {
+              accumulator[key] = rawSession.poolAvailability[key];
+            }
+            return accumulator;
+          }, {})
+        : null,
     responses,
     startedAt: rawSession.startedAt || new Date().toISOString(),
     completedAt: rawSession.completedAt || null,
@@ -399,6 +470,7 @@ function App() {
   const [view, setView] = useState({ name: "dashboard" });
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
   const [quizActionDialog, setQuizActionDialog] = useState(null);
+  const [testSetupDialog, setTestSetupDialog] = useState(null);
   const [resetDialogSelection, setResetDialogSelection] = useState("keep");
   const fileInputRef = useRef(null);
   const keepProgressButtonRef = useRef(null);
@@ -452,21 +524,36 @@ function App() {
     setView({ name: "session" });
   }
 
-  function startDiagnostic() {
-    const diagnosticQuestions = data.sections.flatMap((section) => {
-      const available = (questionsBySection[section.id] || []).filter((question) => question.type === "mcq");
-      return pickRandom(available, Math.min(2, available.length));
+  function openTestSetupDialog({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions }) {
+    const pools = getScopedTestPools(questions, progress);
+    const availability = TEST_MIX_KEYS.reduce((accumulator, key) => {
+      accumulator[key] = pools[key].length;
+      return accumulator;
+    }, {});
+    setTestSetupDialog({
+      mode,
+      title,
+      subtitle,
+      sectionId,
+      officialSubtopic,
+      questions,
+      availability,
+      mixInputs: getDefaultMixInputs(availability)
     });
+  }
 
-    openQuizSession(
-      buildQuizSession({
-        mode: "diagnostic",
-        title: "Diagnostic",
-        subtitle: "A quick baseline across the FE Industrial sections we can currently map from the bank.",
-        questions: diagnosticQuestions,
-        progress
-      })
-    );
+  function closeTestSetupDialog() {
+    setTestSetupDialog(null);
+  }
+
+  function startDiagnostic() {
+    const diagnosticQuestions = data.questions.filter((question) => question.type === "mcq");
+    openTestSetupDialog({
+      mode: "diagnostic",
+      title: "Diagnostic",
+      subtitle: "Build a custom baseline from the mapped FE Industrial multiple-choice bank.",
+      questions: diagnosticQuestions
+    });
   }
 
   function startTopicPractice(sectionId, officialSubtopic = null, mcqOnly = false) {
@@ -474,17 +561,14 @@ function App() {
     let questions = (questionsBySection[sectionId] || []).filter((question) => !officialSubtopic || question.officialSubtopic === officialSubtopic);
     if (mcqOnly) {
       questions = questions.filter((question) => question.type === "mcq");
-      openQuizSession(
-        buildQuizSession({
-          mode: "topic-test",
-          title: officialSubtopic || section.title,
-          subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
-          sectionId,
-          officialSubtopic,
-          questions,
-          progress
-        })
-      );
+      openTestSetupDialog({
+        mode: "topic-test",
+        title: officialSubtopic || section.title,
+        subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
+        sectionId,
+        officialSubtopic,
+        questions
+      });
       return;
     }
 
@@ -530,6 +614,71 @@ function App() {
     setQuizActionDialog(null);
   }
 
+  function updateTestSetupMixInput(key, value) {
+    setTestSetupDialog((current) => {
+      if (!current) return current;
+      const nextValue = String(value).replace(/[^\d]/g, "");
+      return {
+        ...current,
+        mixInputs: {
+          ...current.mixInputs,
+          [key]: nextValue
+        }
+      };
+    });
+  }
+
+  function clampTestSetupMixInput(key) {
+    setTestSetupDialog((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        mixInputs: {
+          ...current.mixInputs,
+          [key]: String(clampMixCount(current.mixInputs?.[key], current.availability[key]))
+        }
+      };
+    });
+  }
+
+  function startConfiguredTest() {
+    if (!testSetupDialog) return;
+    const pools = getScopedTestPools(testSetupDialog.questions, progress);
+    const availability = TEST_MIX_KEYS.reduce((accumulator, key) => {
+      accumulator[key] = pools[key].length;
+      return accumulator;
+    }, {});
+    const requestedMix = getSelectedMixCounts(testSetupDialog.mixInputs, availability);
+    const selectedQuestions = TEST_MIX_KEYS.flatMap((key) => pickRandom(pools[key], requestedMix[key]));
+    if (!selectedQuestions.length) {
+      setTestSetupDialog((current) =>
+        current
+          ? {
+              ...current,
+              availability,
+              mixInputs: sanitizeMixInputs(current.mixInputs, availability)
+            }
+          : current
+      );
+      return;
+    }
+
+    openQuizSession(
+      buildQuizSession({
+        mode: testSetupDialog.mode,
+        title: testSetupDialog.title,
+        subtitle: testSetupDialog.subtitle,
+        sectionId: testSetupDialog.sectionId,
+        officialSubtopic: testSetupDialog.officialSubtopic,
+        questions: pickRandom(selectedQuestions, selectedQuestions.length),
+        progress,
+        requestedMix,
+        poolAvailability: availability
+      })
+    );
+    closeTestSetupDialog();
+  }
+
   function saveProgressAndLeaveQuiz() {
     closeQuizActionDialog();
     leaveQuiz();
@@ -547,34 +696,16 @@ function App() {
   function submitQuiz() {
     if (!activeQuiz) return;
 
-    const unansweredQuestionIds = activeQuiz.questionIds.filter((questionId) => getSessionQuestionState(activeQuiz, questionId)?.wasCorrect == null);
     const backView = getSessionBackView(activeQuiz);
-
-    if (unansweredQuestionIds.length) {
-      setProgress((current) =>
-        unansweredQuestionIds.reduce((nextProgress, questionId) => {
-          const question = questionsById[questionId];
-          return question ? setProgressForQuestionResult(nextProgress, question, false) : nextProgress;
-        }, current)
-      );
-    }
 
     setActiveQuiz((current) => {
       if (!current) return current;
-      const nextResponses = { ...current.responses };
-      unansweredQuestionIds.forEach((questionId) => {
-        nextResponses[questionId] = {
-          ...(nextResponses[questionId] || {}),
-          revealed: true,
-          wasCorrect: false
-        };
-      });
       return {
         ...current,
         status: "complete",
         completedAt: new Date().toISOString(),
         lastUpdated: new Date().toISOString(),
-        responses: nextResponses
+        responses: { ...current.responses }
       };
     });
 
@@ -730,7 +861,32 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeydown);
   }, [quizActionDialog]);
 
+  useEffect(() => {
+    if (!testSetupDialog) return undefined;
+
+    function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeTestSetupDialog();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [testSetupDialog]);
+
   const showResumeButton = activeQuiz?.status === "in-progress";
+  const configuredQuestionTotal = testSetupDialog
+    ? TEST_MIX_KEYS.reduce(
+        (sum, key) => sum + clampMixCount(testSetupDialog.mixInputs?.[key], testSetupDialog.availability[key]),
+        0
+      )
+    : 0;
 
   return (
     <div className={`app-shell ${view.name === "session" && isTestMode(activeQuiz?.mode) ? "app-shell-session" : ""}`}>
@@ -920,7 +1076,7 @@ function App() {
               {quizActionDialog.type === "leave"
                 ? "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave."
                 : quizActionDialog.unansweredCount
-                  ? `${quizActionDialog.unansweredCount} unanswered question${quizActionDialog.unansweredCount === 1 ? "" : "s"} will be marked wrong and saved before we close the test.`
+                  ? `${quizActionDialog.unansweredCount} unanswered question${quizActionDialog.unansweredCount === 1 ? "" : "s"} will be left unrecorded when you submit this test.`
                   : "We’ll save this quiz as complete and keep every graded result in your browser progress."}
             </p>
             <div className="toolbar dialog-actions quiz-action-dialog-actions">
@@ -946,6 +1102,61 @@ function App() {
                   </button>
                 </>
               )}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {testSetupDialog ? (
+        <div className="dialog-backdrop" onClick={closeTestSetupDialog}>
+          <div
+            className="dialog-card test-setup-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="test-setup-title"
+            aria-describedby="test-setup-description"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mini-label">{getQuizModeLabel(testSetupDialog.mode)}</div>
+            <h2 id="test-setup-title" className="dialog-title">
+              Build your question mix
+            </h2>
+            <p id="test-setup-description" className="sidebar-note" style={{ marginTop: 0 }}>
+              {testSetupDialog.title} lets you pull from the questions you previously got right, previously missed, or have not attempted yet.
+            </p>
+            <div className="test-setup-summary">
+              <strong>{testSetupDialog.title}</strong>
+              <span className="muted">{testSetupDialog.subtitle}</span>
+            </div>
+            <div className="test-mix-grid">
+              {TEST_MIX_KEYS.map((key) => (
+                <label key={key} className="test-mix-row">
+                  <span className="test-mix-label">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                  <div className="test-mix-input-wrap">
+                    <input
+                      className="test-mix-input"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={testSetupDialog.mixInputs?.[key] ?? ""}
+                      onChange={(event) => updateTestSetupMixInput(key, event.target.value)}
+                      onBlur={() => clampTestSetupMixInput(key)}
+                    />
+                    <span className="test-mix-cap">/ {testSetupDialog.availability[key]} questions</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+            <div className="test-setup-total">
+              <span className="mini-label">Total questions selected</span>
+              <strong>{configuredQuestionTotal}</strong>
+            </div>
+            <div className="toolbar dialog-actions test-setup-actions">
+              <button className="button-ghost dialog-option" onClick={closeTestSetupDialog}>
+                Cancel
+              </button>
+              <button className="button dialog-option" onClick={startConfiguredTest} disabled={configuredQuestionTotal === 0}>
+                Start test
+              </button>
             </div>
           </div>
         </div>
