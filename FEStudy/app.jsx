@@ -92,6 +92,34 @@ function mergeSubtopicProgress(base, incoming) {
   return next;
 }
 
+function rebuildDerivedProgress(data, questionResults) {
+  const questionsById = data.questions.reduce((accumulator, question) => {
+    accumulator[question.id] = question;
+    return accumulator;
+  }, {});
+  const next = getDefaultProgress(data);
+
+  Object.entries(questionResults).forEach(([questionId, result]) => {
+    const question = questionsById[questionId];
+    if (!question || typeof result?.wasCorrect !== "boolean") {
+      return;
+    }
+    const updated = setProgressForQuestionResult(next, question, result.wasCorrect);
+    next.topicProgress = updated.topicProgress;
+    next.subtopicProgress = updated.subtopicProgress;
+    next.questionResults = {
+      ...updated.questionResults,
+      [questionId]: {
+        wasCorrect: result.wasCorrect,
+        updatedAt: result.updatedAt || null
+      }
+    };
+    next.answeredQuestionIds = Object.keys(next.questionResults);
+  });
+
+  return next;
+}
+
 function normalizeProgress(data, parsed = {}) {
   const defaults = getDefaultProgress(data);
   const rawQuestionResults = parsed.questionResults || {};
@@ -104,18 +132,15 @@ function normalizeProgress(data, parsed = {}) {
       };
     }
   });
+  const recomputed = rebuildDerivedProgress(data, normalizedQuestionResults);
 
   return {
     ...defaults,
     ...parsed,
-    topicProgress: { ...defaults.topicProgress, ...(parsed.topicProgress || {}) },
-    subtopicProgress: mergeSubtopicProgress(defaults.subtopicProgress, parsed.subtopicProgress || {}),
+    topicProgress: recomputed.topicProgress,
+    subtopicProgress: recomputed.subtopicProgress,
     questionResults: normalizedQuestionResults,
-    answeredQuestionIds: Object.keys(normalizedQuestionResults).length
-      ? Object.keys(normalizedQuestionResults)
-      : Array.isArray(parsed.answeredQuestionIds)
-        ? parsed.answeredQuestionIds
-        : []
+    answeredQuestionIds: recomputed.answeredQuestionIds
   };
 }
 
