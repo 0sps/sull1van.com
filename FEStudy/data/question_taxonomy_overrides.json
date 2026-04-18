@@ -1,0 +1,4707 @@
+{
+  "schemaVersion": 1,
+  "sections": [
+    {
+      "id": "mathematics",
+      "title": "Mathematics",
+      "subtopics": [
+        "Analytic geometry",
+        "Calculus",
+        "Linear algebra"
+      ]
+    },
+    {
+      "id": "engineering-sciences",
+      "title": "Engineering Sciences",
+      "subtopics": [
+        "Thermodynamics and fluid mechanics",
+        "Statics, dynamics, and materials",
+        "Electricity and electrical circuits"
+      ]
+    },
+    {
+      "id": "ethics-professional-practice",
+      "title": "Ethics and Professional Practice",
+      "subtopics": [
+        "Codes of ethics and licensure",
+        "Agreements and contracts",
+        "Professional, ethical, and legal responsibility",
+        "Public protection and regulatory issues"
+      ]
+    },
+    {
+      "id": "engineering-economics",
+      "title": "Engineering Economics",
+      "subtopics": [
+        "Discounted cash flows",
+        "Evaluation of alternatives",
+        "Cost analyses",
+        "Depreciation and taxes"
+      ]
+    },
+    {
+      "id": "probability-statistics",
+      "title": "Probability and Statistics",
+      "subtopics": [
+        "Probabilities",
+        "Probability distributions and functions",
+        "Estimation, confidence intervals, and hypothesis testing",
+        "Linear regression",
+        "Design of experiments"
+      ]
+    },
+    {
+      "id": "modeling-quantitative-analysis",
+      "title": "Modeling and Quantitative Analysis",
+      "subtopics": [
+        "Data, logic development, and analytics",
+        "Linear programming and optimization",
+        "Stochastic models and simulation"
+      ]
+    },
+    {
+      "id": "engineering-management",
+      "title": "Engineering Management",
+      "subtopics": [
+        "Principles and tools",
+        "Project management",
+        "Performance measurement",
+        "Decision making and risk"
+      ]
+    },
+    {
+      "id": "manufacturing-service-production-systems",
+      "title": "Manufacturing, Service, and Other Production Systems",
+      "subtopics": [
+        "Manufacturing processes",
+        "Manufacturing and service systems",
+        "Forecasting",
+        "Planning and scheduling",
+        "Process improvements"
+      ]
+    },
+    {
+      "id": "facilities-supply-chain",
+      "title": "Facilities and Supply Chain",
+      "subtopics": [
+        "Flow, layout, and location analysis",
+        "Capacity analysis",
+        "Supply chain management and design"
+      ]
+    },
+    {
+      "id": "human-factors-ergonomics-safety",
+      "title": "Human Factors, Ergonomics, and Safety",
+      "subtopics": [
+        "Human factors",
+        "Safety and industrial hygiene",
+        "Ergonomics"
+      ]
+    },
+    {
+      "id": "work-design",
+      "title": "Work Design",
+      "subtopics": [
+        "Methods analysis",
+        "Work measurement",
+        "Learning curves"
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Quality",
+      "subtopics": [
+        "Quality management, planning, assurance, and systems",
+        "Quality control"
+      ]
+    },
+    {
+      "id": "systems-engineering-analysis-design",
+      "title": "Systems Engineering, Analysis, and Design",
+      "subtopics": [
+        "Requirements analysis and system design",
+        "Functional analysis and configuration management",
+        "Risk management",
+        "Life-cycle engineering",
+        "Reliability engineering"
+      ]
+    }
+  ],
+  "assignments": [
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_basic_electrical_engineering:basic-electrical-engineering:rotating-machines-and-devices:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_chemistry_and_biology:chemistry-and-biology:acids-bases-and-ph:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_chemistry_and_biology:chemistry-and-biology:bioconversion:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0026",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0027",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0028",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0029",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0030",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0031",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0032",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0033",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0034",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0035",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0036",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0037",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0038",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0039",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0040",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0041",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0042",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0043",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0044",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0045",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0046",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0047",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0048",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0049",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0050",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0051",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0052",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0053",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0054",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0055",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0056",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0057",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0058",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:geotechnical-engineering:0059",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0026",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0027",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0028",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0029",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0030",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0031",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0032",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0033",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0034",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0035",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0036",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0037",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0038",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0039",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0040",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0041",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0042",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0043",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0044",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0045",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0046",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0047",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0048",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0049",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0050",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0051",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0052",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0053",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0054",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0055",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0056",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0057",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0058",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0059",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0060",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0061",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0062",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0063",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:hydrology-water-resources:0064",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0001",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0002",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0003",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0004",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0005",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0006",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0007",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0008",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0009",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0010",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0011",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Capacity analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0012",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0013",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Capacity analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0014",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0015",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0016",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0017",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Capacity analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0018",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0019",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0020",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0021",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0022",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0023",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0026",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0027",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0028",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0029",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0030",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0031",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0032",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0033",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0034",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0035",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Capacity analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0036",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0037",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0038",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0039",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:transportation:0040",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Flow, layout, and location analysis"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0006",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0007",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0008",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0009",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:surveying:0010",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0001",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0002",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0003",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0004",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0005",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0006",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0007",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0008",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0009",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0010",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0011",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0012",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0013",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Project management"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0014",
+      "sectionId": "engineering-management",
+      "officialSubtopic": "Performance measurement"
+    },
+    {
+      "questionId": "fe_civil_engineering:civil-engineering:construction:0015",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Cost analyses"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinematics:0026",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinetics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinetics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:particle-kinetics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:principle-of-work-and-energy:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impulse-and-momentum:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impulse-and-momentum:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impulse-and-momentum:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impact:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impact:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impact:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:impact:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:friction:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:friction:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:friction:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_dynamics:dynamics:plane-motion-of-a-rigid-body-equations-of-motion:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0004",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0005",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0006",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0007",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0008",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0009",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0010",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0011",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0012",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0013",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0014",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0015",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:time-value-of-money:0016",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:non-annual-compounding:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:non-annual-compounding:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Cost analyses"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Cost analyses"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0004",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0005",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Cost analyses"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:breakeven-analysis:0006",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Cost analyses"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:inflation:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:inflation:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:inflation:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:inflation:0004",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0004",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0005",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0006",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0007",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:depreciation:0008",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:book-value:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:book-value:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:book-value:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:taxation:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:taxation:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Depreciation and taxes"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:capitalized-costs:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:capitalized-costs:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:bonds:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:bonds:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:bonds:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Discounted cash flows"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:rate-of-return:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:rate-of-return:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:benefit-cost-analysis:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:economic-decision-trees:0001",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:economic-decision-trees:0002",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_economics:engineering-economics:economic-decision-trees:0003",
+      "sectionId": "engineering-economics",
+      "officialSubtopic": "Evaluation of alternatives"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0006",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0007",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0008",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0009",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0010",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0011",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0012",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0013",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:dispersion-mean-median-and-mode-values:0014",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:permutations-and-combinations:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:permutations-and-combinations:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:permutations-and-combinations:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:permutations-and-combinations:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:permutations-and-combinations:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0006",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0007",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0008",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0009",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0010",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0011",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:laws-of-probability:0012",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0006",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0007",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0008",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0009",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0010",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0011",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0012",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0013",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0014",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0015",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0016",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0017",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:probability-functions-distributions-and-expected-values:0018",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:propagation-of-error:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:propagation-of-error:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:propagation-of-error:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:propagation-of-error:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:propagation-of-error:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probability distributions and functions"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0006",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0007",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0008",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0009",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0010",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0011",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0012",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:linear-regression-and-goodness-of-fit:0013",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Linear regression"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0003",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0004",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:confidence-intervals-sample-distributions-and-sample-size:0006",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:test-statistics:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_engineering_probability_and_statistics:engineering-probability-and-statistics:test-statistics:0002",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Probabilities"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:air-pollution:0004",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:air-pollution:0018",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:indoor-air-quality:0001",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:indoor-air-quality:0002",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:indoor-air-quality:0003",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:indoor-air-quality:0004",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:indoor-air-quality:0005",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:fate-and-transport:0004",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Supply chain management and design"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:landfill:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:radiation-environmental-engineering:0001",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality control"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:radiation-environmental-engineering:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:radiation-environmental-engineering:0003",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:sampling-and-monitoring:0001",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:sampling-and-monitoring:0002",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:sampling-and-monitoring:0003",
+      "sectionId": "quality",
+      "officialSubtopic": "Quality management, planning, assurance, and systems"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:water-treatment-technologies:0001",
+      "sectionId": "facilities-supply-chain",
+      "officialSubtopic": "Capacity analysis"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:water-treatment-technologies:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:water-treatment-technologies:0013",
+      "sectionId": "manufacturing-service-production-systems",
+      "officialSubtopic": "Process improvements"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:water-treatment-technologies:0014",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:energy:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_environmental_engineering:environmental-engineering:energy:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0001",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Agreements and contracts"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0002",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Professional, ethical, and legal responsibility"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0003",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0004",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0005",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0006",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0007",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0008",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Professional, ethical, and legal responsibility"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0009",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0010",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0011",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0012",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Public protection and regulatory issues"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0013",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0014",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0015",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Public protection and regulatory issues"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0016",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0017",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0018",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0019",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0020",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0021",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Agreements and contracts"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0022",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0023",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0024",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Codes of ethics and licensure"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0025",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Public protection and regulatory issues"
+    },
+    {
+      "questionId": "fe_ethics_and_professional_practice:ethics-and-professional-practice:ethics-and-professional-practice:0026",
+      "sectionId": "ethics-professional-practice",
+      "officialSubtopic": "Agreements and contracts"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:definitions-fluid-mechanics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:definitions-fluid-mechanics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:definitions-fluid-mechanics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:definitions-fluid-mechanics:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-a-static-liquid:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:principles-of-one-dimensional-fluid-flow:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:principles-of-one-dimensional-fluid-flow:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-characterization:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-characterization:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-characterization:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-characterization:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-characterization:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:consequences-of-fluid-flow:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:characteristics-of-selected-flow-configurations:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:the-impulse-momentum-principle:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:compressible-flow:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-machinery:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:fluid-flow-measurement:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:dimensional-homogeneity:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:dimensional-homogeneity:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:aerodynamics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:aerodynamics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_fluid_mechanics:fluid-mechanics:aerodynamics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0026",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0027",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0028",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0029",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:conduction:0030",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:convection:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:radiation:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_heat_transfer:heat-transfer:heat-exchangers:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:temperature-sensors:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:strain-transducers:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:wheatstone-bridge:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:analog-to-digital-conversion:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Electricity and electrical circuits"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:measurement-uncertainty:0001",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:measurement-uncertainty:0005",
+      "sectionId": "probability-statistics",
+      "officialSubtopic": "Estimation, confidence intervals, and hypothesis testing"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0001",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0002",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0003",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0004",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0005",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0006",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0007",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0008",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0009",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0010",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0011",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0012",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0013",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0014",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0015",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_instrumentation_measurement_and_control:instrumentation-measurement-and-control:control-systems:0016",
+      "sectionId": "systems-engineering-analysis-design",
+      "officialSubtopic": "Requirements analysis and system design"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:corrosion:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:diffusion:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:thermal-and-mechanical-processing:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:properties-of-materials:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:composite-materials:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:composite-materials:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:hardenability:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:hardenability:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:concrete:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:concrete:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:concrete:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:concrete:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:thermal-properties:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:binary-phase-diagrams:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_materials_science:materials-science:binary-phase-diagrams:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:straight-line:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:straight-line:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:straight-line:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:straight-line:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:quadratic-equation:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:quadratic-equation:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:quadric-surface-sphere:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:quadric-surface-sphere:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:logarithms:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:algebra-of-complex-numbers:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:algebra-of-complex-numbers:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:algebra-of-complex-numbers:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:trigonometry:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:trigonometry:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:trigonometry:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0006",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0007",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0008",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0009",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0010",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0011",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:mensuration-of-areas-and-volumes:0012",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Analytic geometry"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0006",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0007",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0008",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0009",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0010",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0011",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0012",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0013",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0014",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0015",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-calculus:0016",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0006",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0007",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0008",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:integral-calculus:0009",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:progression-and-series:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:progression-and-series:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:progression-and-series:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:progression-and-series:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-equations:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:differential-equations:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Calculus"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:matrices:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:matrices:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:matrices:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:matrices:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:matrices:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:vectors:0001",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:vectors:0002",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:vectors:0003",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:vectors:0004",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:vectors:0005",
+      "sectionId": "mathematics",
+      "officialSubtopic": "Linear algebra"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0001",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0002",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0003",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0004",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0005",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0006",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0007",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mathematics:mathematics:numerical-methods:0008",
+      "sectionId": "modeling-quantitative-analysis",
+      "officialSubtopic": "Data, logic development, and analytics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:intermediate-and-long-length-columns:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:intermediate-and-long-length-columns:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:hvac:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:hvac:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:hvac:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:hvac:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanical_engineering:mechanical-engineering:cycles-and-processes:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:uniaxial-stress-strain:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:thermal-deformations:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:thermal-deformations:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:cylindrical-pressure-vessel:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:cylindrical-pressure-vessel:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:stress-and-strain:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:torsion:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0015",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0016",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0017",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0018",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0019",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0020",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0021",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0022",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0023",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0024",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0025",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0026",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0027",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0028",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0029",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0030",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0031",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0032",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0033",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0034",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:beams:0035",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:columns:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:elastic-strain-energy:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_mechanics_of_materials:mechanics-of-materials:elastic-strain-energy:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_safety:safety:safety-data-sheet-sds:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:flammability:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:flammability:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:granular-storage-and-process-safety:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:electrical-safety:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0003",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0004",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0005",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0006",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:risk-assessment-toxicology:0007",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:chemical-compatibility-chart:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:detailed-corrosion-data-on-construction-materials:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:concentrations-of-vaporized-liquids:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:ergonomics:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Ergonomics"
+    },
+    {
+      "questionId": "fe_safety:safety:ergonomics:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Ergonomics"
+    },
+    {
+      "questionId": "fe_safety:safety:incidence-variable-values:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:incidence-variable-values:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:noise-pollution:0001",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:noise-pollution:0002",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_safety:safety:noise-pollution:0003",
+      "sectionId": "human-factors-ergonomics-safety",
+      "officialSubtopic": "Safety and industrial hygiene"
+    },
+    {
+      "questionId": "fe_statics:statics:resultant-two-dimensions:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:resultant-two-dimensions:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:resultant-two-dimensions:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:resultant-two-dimensions:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:resultant-two-dimensions:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:resolution-of-a-force:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moments-couples:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moments-couples:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0012",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0013",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:systems-of-forces:0014",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:centroids-of-masses-areas-lengths-and-volumes:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:centroids-of-masses-areas-lengths-and-volumes:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:moment-of-inertia:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:radius-of-gyration:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:radius-of-gyration:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:radius-of-gyration:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:radius-of-gyration:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:radius-of-gyration:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:friction:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:friction:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:friction:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:screw-thread:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:screw-thread:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:screw-thread:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:belt-friction:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:belt-friction:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:statically-determinate-truss:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:statically-determinate-truss:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:statically-determinate-truss:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:statically-determinate-truss:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_statics:statics:statically-determinate-truss:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Statics, dynamics, and materials"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:properties-of-single-component-systems:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:properties-of-single-component-systems:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:properties-of-single-component-systems:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:properties-of-single-component-systems:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:pvt-behavior:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0009",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0010",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:first-law-of-thermodynamics:0011",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:basic-cycles:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:psychrometrics:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0006",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0007",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:second-law-of-thermodynamics:0008",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:heats-of-reaction:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:heats-of-reaction:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:heats-of-reaction:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:heats-of-reaction:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:heats-of-reaction:0005",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:phase-relations:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:phase-relations:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:phase-relations:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:refrigeration-and-hvac:0001",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:refrigeration-and-hvac:0002",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:refrigeration-and-hvac:0003",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    },
+    {
+      "questionId": "fe_thermodynamics:thermodynamics:refrigeration-and-hvac:0004",
+      "sectionId": "engineering-sciences",
+      "officialSubtopic": "Thermodynamics and fluid mechanics"
+    }
+  ]
+}

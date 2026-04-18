@@ -8,17 +8,17 @@
       "id": "mathematics",
       "title": "Mathematics",
       "questionRange": "6-9",
-      "mappedQuestionCount": 79,
-      "mcqCount": 44,
-      "openCount": 35,
+      "mappedQuestionCount": 80,
+      "mcqCount": 36,
+      "openCount": 44,
       "subtopicCoverage": [
         {
           "name": "Analytic geometry",
-          "count": 29
+          "count": 34
         },
         {
           "name": "Calculus",
-          "count": 35
+          "count": 31
         },
         {
           "name": "Linear algebra",
@@ -30,27 +30,27 @@
       "id": "engineering-sciences",
       "title": "Engineering Sciences",
       "questionRange": "4-6",
-      "mappedQuestionCount": 439,
-      "mcqCount": 338,
-      "openCount": 101,
+      "mappedQuestionCount": 564,
+      "mcqCount": 353,
+      "openCount": 211,
       "subtopicCoverage": [
         {
           "name": "Thermodynamics and fluid mechanics",
-          "count": 212
+          "count": 278
         },
         {
           "name": "Statics, dynamics, and materials",
-          "count": 214
+          "count": 274
         },
         {
           "name": "Electricity and electrical circuits",
-          "count": 13
+          "count": 12
         }
       ]
     },
     {
       "id": "ethics-professional-practice",
-      "title": "Ethics & Professional Practice",
+      "title": "Ethics and Professional Practice",
       "questionRange": "4-6",
       "mappedQuestionCount": 26,
       "mcqCount": 26,
@@ -78,47 +78,47 @@
       "id": "engineering-economics",
       "title": "Engineering Economics",
       "questionRange": "9-14",
-      "mappedQuestionCount": 52,
-      "mcqCount": 44,
+      "mappedQuestionCount": 53,
+      "mcqCount": 45,
       "openCount": 8,
       "subtopicCoverage": [
         {
           "name": "Discounted cash flows",
-          "count": 32
+          "count": 27
         },
         {
           "name": "Evaluation of alternatives",
-          "count": 6
+          "count": 8
         },
         {
           "name": "Cost analyses",
-          "count": 2
+          "count": 5
         },
         {
           "name": "Depreciation and taxes",
-          "count": 12
+          "count": 13
         }
       ]
     },
     {
       "id": "probability-statistics",
-      "title": "Probability & Statistics",
+      "title": "Probability and Statistics",
       "questionRange": "10-15",
-      "mappedQuestionCount": 75,
-      "mcqCount": 47,
+      "mappedQuestionCount": 77,
+      "mcqCount": 49,
       "openCount": 28,
       "subtopicCoverage": [
         {
           "name": "Probabilities",
-          "count": 38
+          "count": 32
         },
         {
           "name": "Probability distributions and functions",
-          "count": 17
+          "count": 23
         },
         {
           "name": "Estimation, confidence intervals, and hypothesis testing",
-          "count": 7
+          "count": 9
         },
         {
           "name": "Linear regression",
@@ -134,13 +134,13 @@
       "id": "modeling-quantitative-analysis",
       "title": "Modeling & Quantitative Analysis",
       "questionRange": "9-14",
-      "mappedQuestionCount": 2,
-      "mcqCount": 2,
-      "openCount": 0,
+      "mappedQuestionCount": 11,
+      "mcqCount": 9,
+      "openCount": 2,
       "subtopicCoverage": [
         {
           "name": "Data, logic development, and analytics",
-          "count": 2
+          "count": 11
         },
         {
           "name": "Linear programming and optimization",
@@ -156,9 +156,9 @@
       "id": "engineering-management",
       "title": "Engineering Management",
       "questionRange": "8-12",
-      "mappedQuestionCount": 0,
-      "mcqCount": 0,
-      "openCount": 0,
+      "mappedQuestionCount": 17,
+      "mcqCount": 1,
+      "openCount": 16,
       "subtopicCoverage": [
         {
           "name": "Principles and tools",
@@ -166,11 +166,11 @@
         },
         {
           "name": "Project management",
-          "count": 0
+          "count": 9
         },
         {
           "name": "Performance measurement",
-          "count": 0
+          "count": 8
         },
         {
           "name": "Decision making and risk",
@@ -180,15 +180,15 @@
     },
     {
       "id": "manufacturing-service-production-systems",
-      "title": "Manufacturing, Service & Production Systems",
+      "title": "Manufacturing, Service, and Other Production Systems",
       "questionRange": "9-14",
-      "mappedQuestionCount": 2,
-      "mcqCount": 2,
+      "mappedQuestionCount": 1,
+      "mcqCount": 1,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Manufacturing processes",
-          "count": 1
+          "count": 0
         },
         {
           "name": "Manufacturing and service systems",
@@ -210,29 +210,29 @@
     },
     {
       "id": "facilities-supply-chain",
-      "title": "Facilities & Supply Chain",
+      "title": "Facilities and Supply Chain",
       "questionRange": "9-14",
-      "mappedQuestionCount": 190,
-      "mcqCount": 26,
-      "openCount": 164,
+      "mappedQuestionCount": 35,
+      "mcqCount": 8,
+      "openCount": 27,
       "subtopicCoverage": [
         {
           "name": "Flow, layout, and location analysis",
-          "count": 149
+          "count": 29
         },
         {
           "name": "Capacity analysis",
-          "count": 12
+          "count": 5
         },
         {
           "name": "Supply chain management and design",
-          "count": 29
+          "count": 1
         }
       ]
     },
     {
       "id": "human-factors-ergonomics-safety",
-      "title": "Human Factors, Ergonomics & Safety",
+      "title": "Human Factors, Ergonomics, and Safety",
       "questionRange": "8-12",
       "mappedQuestionCount": 25,
       "mcqCount": 23,
@@ -278,13 +278,13 @@
       "id": "quality",
       "title": "Quality",
       "questionRange": "9-14",
-      "mappedQuestionCount": 10,
-      "mcqCount": 10,
+      "mappedQuestionCount": 9,
+      "mcqCount": 9,
       "openCount": 0,
       "subtopicCoverage": [
         {
           "name": "Quality management, planning, assurance, and systems",
-          "count": 9
+          "count": 8
         },
         {
           "name": "Quality control",
@@ -294,15 +294,15 @@
     },
     {
       "id": "systems-engineering-analysis-design",
-      "title": "Systems Engineering, Analysis & Design",
+      "title": "Systems Engineering, Analysis, and Design",
       "questionRange": "8-12",
-      "mappedQuestionCount": 15,
-      "mcqCount": 15,
+      "mappedQuestionCount": 17,
+      "mcqCount": 17,
       "openCount": 0,
       "subtopicCoverage": [
         {
-          "name": "Requirements analysis and systems design",
-          "count": 14
+          "name": "Requirements analysis and system design",
+          "count": 17
         },
         {
           "name": "Functional analysis and configuration management",
@@ -310,7 +310,7 @@
         },
         {
           "name": "Risk management",
-          "count": 1
+          "count": 0
         },
         {
           "name": "Life-cycle engineering",
