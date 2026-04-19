@@ -545,10 +545,7 @@ select {
 }
 
 .result-button-primary {
-  background: rgba(255, 252, 247, 0.96);
-  color: #57a486;
-  border: 3px solid #57a486;
-  box-shadow: none;
+  border-color: rgba(76, 54, 29, 0.18);
 }
 
 .result-button-ghost {
