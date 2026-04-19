@@ -2203,6 +2203,7 @@ function QuizSessionView({
   const questions = activeQuiz?.questionIds.map((questionId) => questionsById[questionId]).filter(Boolean) || [];
   const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, questions.length);
   const isSubmitLanding = currentIndex >= questions.length;
+  const [navKeyActive, setNavKeyActive] = useState(null);
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
@@ -2243,6 +2244,7 @@ function QuizSessionView({
 
       if (isSubmitLanding) {
         if (event.key === "ArrowLeft") {
+          setNavKeyActive("left");
           event.preventDefault();
           onSetIndex(questions.length - 1);
         }
@@ -2275,20 +2277,43 @@ function QuizSessionView({
       }
 
       if (event.key === "ArrowRight") {
+        setNavKeyActive("right");
         event.preventDefault();
         onSetIndex(currentIndex + 1);
         return;
       }
 
       if (event.key === "ArrowLeft") {
+        setNavKeyActive("left");
         event.preventDefault();
         onSetIndex(currentIndex - 1);
       }
     }
 
+    function handleKeyup(event) {
+      if (event.key === "ArrowLeft" && navKeyActive === "left") {
+        setNavKeyActive(null);
+        return;
+      }
+
+      if (event.key === "ArrowRight" && navKeyActive === "right") {
+        setNavKeyActive(null);
+      }
+    }
+
+    function handleWindowBlur() {
+      setNavKeyActive(null);
+    }
+
     window.addEventListener("keydown", handleKeydown);
-    return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, isReviewMode, isSubmitLanding, onSetIndex, onUpdateResponse, questions.length]);
+    window.addEventListener("keyup", handleKeyup);
+    window.addEventListener("blur", handleWindowBlur);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener("keyup", handleKeyup);
+      window.removeEventListener("blur", handleWindowBlur);
+    };
+  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, isReviewMode, isSubmitLanding, navKeyActive, onSetIndex, onUpdateResponse, questions.length]);
 
   if (!questions.length) {
     return (
@@ -2529,11 +2554,19 @@ function QuizSessionView({
 
       <footer className="quiz-footer">
         <div className="quiz-footer-left">
-          <button className="button-ghost quiz-nav-button" onClick={() => onSetIndex(currentIndex - 1)} disabled={currentIndex === 0}>
+          <button
+            className={`button-ghost quiz-nav-button ${navKeyActive === "left" ? "is-key-active" : ""}`}
+            onClick={() => onSetIndex(currentIndex - 1)}
+            disabled={currentIndex === 0}
+          >
             <span>Previous</span>
             <span className="shortcut-badge shortcut-badge-nav">←</span>
           </button>
-          <button className="button-ghost quiz-nav-button" onClick={() => onSetIndex(currentIndex + 1)} disabled={currentIndex >= questions.length}>
+          <button
+            className={`button-ghost quiz-nav-button ${navKeyActive === "right" ? "is-key-active" : ""}`}
+            onClick={() => onSetIndex(currentIndex + 1)}
+            disabled={currentIndex >= questions.length}
+          >
             <span>Next</span>
             <span className="shortcut-badge shortcut-badge-nav">→</span>
           </button>
