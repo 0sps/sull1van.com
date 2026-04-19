@@ -862,10 +862,7 @@ select {
 .quiz-empty .results-card {
   border: 1px solid var(--line);
   background: rgba(255, 252, 247, 0.88);
-  background-clip: padding-box;
   box-shadow: var(--shadow);
-  isolation: isolate;
-  overflow: hidden;
 }
 
 .quiz-header,
