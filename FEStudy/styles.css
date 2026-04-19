@@ -348,15 +348,28 @@ select {
 }
 
 .quiz-topic-pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
   padding: 8px 15px;
   border-radius: 16px;
   border: 3px solid #757575;
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
   color: #757575;
   font-size: calc(0.9rem + 1px);
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.top-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
 }
 
 .score-bar {
@@ -851,7 +864,10 @@ select {
 .quiz-empty .results-card {
   border: 1px solid var(--line);
   background: rgba(255, 252, 247, 0.88);
+  background-clip: padding-box;
   box-shadow: var(--shadow);
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .quiz-header,
