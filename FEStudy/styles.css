@@ -227,10 +227,10 @@ select {
 }
 
 .topic-card-action-open {
-  background: linear-gradient(135deg, rgba(15, 118, 110, 0.68), rgba(17, 94, 89, 0.64));
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.84), rgba(17, 94, 89, 0.8));
   color: white;
-  border-color: rgba(15, 118, 110, 0.3);
-  box-shadow: 0 10px 20px rgba(15, 118, 110, 0.1);
+  border-color: rgba(15, 118, 110, 0.38);
+  box-shadow: 0 11px 22px rgba(15, 118, 110, 0.14);
 }
 
 .topic-card-action-generate {
@@ -243,6 +243,17 @@ select {
 .topic-card-action-open:hover,
 .topic-card-action-generate:hover {
   border-color: rgba(15, 118, 110, 0.44);
+}
+
+.topic-modal-close-button {
+  background: linear-gradient(135deg, #bf5a34, #a13f24);
+  color: white;
+  border-color: rgba(161, 63, 36, 0.34);
+  box-shadow: 0 11px 22px rgba(161, 63, 36, 0.16);
+}
+
+.topic-modal-close-button:hover {
+  border-color: rgba(161, 63, 36, 0.46);
 }
 
 .button[disabled],

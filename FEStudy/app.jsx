@@ -1526,7 +1526,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
     <div className="content-grid topic-detail-modal-layout">
       <aside className="stack">
         <div className="panel">
-          <button className="button-ghost" onClick={onClose}>
+          <button className="button-ghost topic-modal-close-button" onClick={onClose}>
             Close topic
           </button>
           <div style={{ marginTop: 14 }} className="mini-label">
