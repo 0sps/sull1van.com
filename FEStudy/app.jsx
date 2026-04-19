@@ -2123,8 +2123,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
       <main className="stack">
         <article className="question-card">
           <div className="top-row">
-            <span className="pill">{question.officialSubtopic}</span>
-            <span className="pill">{question.type === "mcq" ? "Multiple choice" : "Self-graded"}</span>
+            <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
           </div>
           <h2>{formatQuestionHeading(question, currentIndex)}</h2>
           <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
@@ -2368,8 +2367,7 @@ function QuizSessionView({
           <article className="question-card quiz-card">
             <div className="quiz-card-top">
               <div className="top-row">
-                <span className="pill">{question.officialSubtopic}</span>
-                <span className="pill">{question.type === "mcq" ? "Multiple choice" : "Self-graded"}</span>
+                <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
                 {priorSavedResult != null ? (
                   <span className={`pill subtle ${priorSavedResult ? "score-good" : "score-bad"}`}>
                     Previously marked {priorSavedResult ? "correct" : "incorrect"}

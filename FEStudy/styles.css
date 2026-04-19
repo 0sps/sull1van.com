@@ -347,6 +347,18 @@ select {
   color: var(--muted);
 }
 
+.quiz-topic-pill {
+  padding: 8px 15px;
+  border-radius: 16px;
+  border: 3px solid #757575;
+  background: rgba(255, 255, 255, 0.55);
+  color: #757575;
+  font-size: calc(0.9rem + 1px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .score-bar {
   width: 100%;
   min-height: 12px;
