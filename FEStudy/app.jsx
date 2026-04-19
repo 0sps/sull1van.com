@@ -1214,13 +1214,15 @@ function App() {
             <div className="toolbar dialog-actions quiz-action-dialog-actions">
               {quizActionDialog.type === "leave" ? (
                 <>
-                  <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
-                    Keep testing
-                  </button>
-                  <button className="button dialog-option" onClick={saveProgressAndLeaveQuiz}>
-                    Save progress and leave
-                  </button>
-                  <button className="button button-danger dialog-option" onClick={discardQuizAndLeave}>
+                  <div className="quiz-action-primary-row">
+                    <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
+                      Keep testing
+                    </button>
+                    <button className="button dialog-option" onClick={saveProgressAndLeaveQuiz}>
+                      Save progress and leave
+                    </button>
+                  </div>
+                  <button className="button button-danger dialog-option quiz-action-danger" onClick={discardQuizAndLeave}>
                     Discard results and leave
                   </button>
                 </>
@@ -1913,10 +1915,6 @@ function QuizSessionView({
         </div>
         <div className="quiz-header-actions">
           <div className="quiz-header-statuses">
-            <div className="quiz-progress-block">
-              <div className="mini-label">Saved state</div>
-              <div className="pill">{activeQuiz.status === "in-progress" ? "In progress" : "Complete"}</div>
-            </div>
             <div className="quiz-progress-block">
               <div className="mini-label">Graded</div>
               <strong>
