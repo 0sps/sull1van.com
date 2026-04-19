@@ -3,7 +3,7 @@ const { useEffect, useMemo, useRef, useState } = React;
 const STORAGE_KEY = "fe-industrial-prep-progress-v2";
 const LEGACY_STORAGE_KEY = "fe-industrial-prep-progress-v1";
 const ACTIVE_QUIZ_STORAGE_KEY = "fe-industrial-prep-active-quiz-v1";
-const EXPORT_SCHEMA_VERSION = 1;
+const EXPORT_SCHEMA_VERSION = 2;
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -28,6 +28,11 @@ function computeEstimatedScore(correct, answered) {
   const accuracy = correct / answered;
   const confidence = Math.min(answered / 5, 1);
   return Math.round(accuracy * (0.35 + 0.65 * confidence) * 100);
+}
+
+function computePercentCorrect(correct, answered) {
+  if (!answered) return null;
+  return Math.round((correct / answered) * 100);
 }
 
 function formatQuestionHeading(question, index) {
@@ -80,8 +85,51 @@ function getDefaultProgress(data) {
     questionResults: {},
     answeredQuestionIds: [],
     completedDiagnostic: false,
+    diagnosticAttempts: [],
     lastUpdated: new Date().toISOString()
   };
+}
+
+function normalizeDiagnosticAttempts(parsedAttempts = []) {
+  if (!Array.isArray(parsedAttempts)) return [];
+  return parsedAttempts
+    .filter((attempt) => attempt && Array.isArray(attempt.questionIds))
+    .map((attempt, index) => ({
+      id: attempt.id || `diagnostic-${Date.now()}-${index}`,
+      startedAt: attempt.startedAt || null,
+      completedAt: attempt.completedAt || null,
+      questionsPerTopic: Number.isFinite(attempt.questionsPerTopic) ? attempt.questionsPerTopic : 0,
+      questionIds: attempt.questionIds.filter(Boolean),
+      responses:
+        attempt.responses && typeof attempt.responses === "object"
+          ? Object.entries(attempt.responses).reduce((accumulator, [questionId, response]) => {
+              if (typeof response?.wasCorrect === "boolean") {
+                accumulator[questionId] = { wasCorrect: response.wasCorrect };
+              }
+              return accumulator;
+            }, {})
+          : {},
+      topicSummaries:
+        attempt.topicSummaries && typeof attempt.topicSummaries === "object"
+          ? Object.entries(attempt.topicSummaries).reduce((accumulator, [sectionId, summary]) => {
+              accumulator[sectionId] = {
+                answered: Number.isFinite(summary?.answered) ? summary.answered : 0,
+                correct: Number.isFinite(summary?.correct) ? summary.correct : 0,
+                score: computePercentCorrect(
+                  Number.isFinite(summary?.correct) ? summary.correct : 0,
+                  Number.isFinite(summary?.answered) ? summary.answered : 0
+                )
+              };
+              return accumulator;
+            }, {})
+          : {},
+      answered: Number.isFinite(attempt.answered) ? attempt.answered : 0,
+      correct: Number.isFinite(attempt.correct) ? attempt.correct : 0,
+      score: computePercentCorrect(
+        Number.isFinite(attempt.correct) ? attempt.correct : 0,
+        Number.isFinite(attempt.answered) ? attempt.answered : 0
+      )
+    }));
 }
 
 function mergeSubtopicProgress(base, incoming) {
@@ -123,6 +171,7 @@ function rebuildDerivedProgress(data, questionResults) {
 function normalizeProgress(data, parsed = {}) {
   const defaults = getDefaultProgress(data);
   const rawQuestionResults = parsed.questionResults || {};
+  const diagnosticAttempts = normalizeDiagnosticAttempts(parsed.diagnosticAttempts);
   const normalizedQuestionResults = {};
   Object.entries(rawQuestionResults).forEach(([questionId, result]) => {
     if (typeof result?.wasCorrect === "boolean") {
@@ -140,7 +189,9 @@ function normalizeProgress(data, parsed = {}) {
     topicProgress: recomputed.topicProgress,
     subtopicProgress: recomputed.subtopicProgress,
     questionResults: normalizedQuestionResults,
-    answeredQuestionIds: recomputed.answeredQuestionIds
+    answeredQuestionIds: recomputed.answeredQuestionIds,
+    diagnosticAttempts,
+    completedDiagnostic: diagnosticAttempts.length > 0 || !!parsed.completedDiagnostic
   };
 }
 
@@ -312,6 +363,8 @@ function buildQuizSession({
   requestedMix = null,
   poolAvailability = null,
   initialResponses = null,
+  showPriorResults = true,
+  diagnosticMeta = null,
   returnTarget = { type: "dashboard" }
 }) {
   const now = new Date().toISOString();
@@ -336,6 +389,8 @@ function buildQuizSession({
     baselineResults: captureBaselineResults(questions, progress),
     requestedMix,
     poolAvailability,
+    showPriorResults,
+    diagnosticMeta,
     returnTarget: normalizeReturnTarget(returnTarget),
     responses,
     startedAt: now,
@@ -408,6 +463,18 @@ function normalizeQuizSession(rawSession, questionsById) {
             }
             return accumulator;
           }, {})
+        : null,
+    showPriorResults: rawSession.showPriorResults !== false,
+    diagnosticMeta:
+      rawSession.diagnosticMeta && typeof rawSession.diagnosticMeta === "object"
+        ? {
+            questionsPerTopic: Number.isFinite(rawSession.diagnosticMeta.questionsPerTopic)
+              ? rawSession.diagnosticMeta.questionsPerTopic
+              : 0,
+            estimatedTotal: Number.isFinite(rawSession.diagnosticMeta.estimatedTotal)
+              ? rawSession.diagnosticMeta.estimatedTotal
+              : 0
+          }
         : null,
     returnTarget: normalizeReturnTarget(rawSession.returnTarget),
     responses,
@@ -502,6 +569,116 @@ function getActiveQuizSummary(activeQuiz) {
   };
 }
 
+function splitQuestionsByAnswerState(questions, progress) {
+  return questions.reduce(
+    (accumulator, question) => {
+      if (typeof progress.questionResults?.[question.id]?.wasCorrect === "boolean") {
+        accumulator.answered.push(question);
+      } else {
+        accumulator.unanswered.push(question);
+      }
+      return accumulator;
+    },
+    { unanswered: [], answered: [] }
+  );
+}
+
+function clampDiagnosticQuestionsPerTopic(value) {
+  const numeric = Number.parseInt(String(value || "").trim(), 10);
+  if (!Number.isFinite(numeric)) return 0;
+  return clamp(numeric, 0, 10);
+}
+
+function getDiagnosticAvailabilityBySection(data, questionsBySection, progress) {
+  return data.sections.map((section) => {
+    const pools = splitQuestionsByAnswerState(questionsBySection[section.id] || [], progress);
+    return {
+      sectionId: section.id,
+      sectionTitle: section.title,
+      unanswered: pools.unanswered,
+      answered: pools.answered,
+      totalAvailable: pools.unanswered.length + pools.answered.length
+    };
+  });
+}
+
+function estimateDiagnosticQuestionCount(sectionAvailability, questionsPerTopic) {
+  if (!questionsPerTopic) return 0;
+  return sectionAvailability.reduce((sum, section) => sum + Math.min(section.totalAvailable, questionsPerTopic), 0);
+}
+
+function buildDiagnosticQuestionSet(sectionAvailability, questionsPerTopic) {
+  if (!questionsPerTopic) return [];
+  const selectedQuestions = sectionAvailability.flatMap((section) => {
+    const unansweredSelection = pickRandom(section.unanswered, Math.min(section.unanswered.length, questionsPerTopic));
+    const remainingSlots = Math.max(questionsPerTopic - unansweredSelection.length, 0);
+    const answeredSelection = pickRandom(section.answered, Math.min(section.answered.length, remainingSlots));
+    return [...unansweredSelection, ...answeredSelection];
+  });
+  return pickRandom(selectedQuestions, selectedQuestions.length);
+}
+
+function summarizeDiagnosticAttempt(activeQuiz, questionsById) {
+  const topicSummaries = {};
+  let answered = 0;
+  let correct = 0;
+
+  activeQuiz.questionIds.forEach((questionId) => {
+    const question = questionsById[questionId];
+    const response = activeQuiz.responses?.[questionId];
+    if (!question || typeof response?.wasCorrect !== "boolean") {
+      return;
+    }
+
+    answered += 1;
+    if (response.wasCorrect) {
+      correct += 1;
+    }
+
+    const current = topicSummaries[question.sectionId] || { answered: 0, correct: 0, score: null };
+    current.answered += 1;
+    if (response.wasCorrect) {
+      current.correct += 1;
+    }
+    current.score = computePercentCorrect(current.correct, current.answered);
+    topicSummaries[question.sectionId] = current;
+  });
+
+  return {
+    id: activeQuiz.id,
+    startedAt: activeQuiz.startedAt,
+    completedAt: new Date().toISOString(),
+    questionsPerTopic: activeQuiz.diagnosticMeta?.questionsPerTopic || 0,
+    questionIds: [...activeQuiz.questionIds],
+    responses: activeQuiz.questionIds.reduce((accumulator, questionId) => {
+      const response = activeQuiz.responses?.[questionId];
+      if (typeof response?.wasCorrect === "boolean") {
+        accumulator[questionId] = { wasCorrect: response.wasCorrect };
+      }
+      return accumulator;
+    }, {}),
+    topicSummaries,
+    answered,
+    correct,
+    score: computePercentCorrect(correct, answered)
+  };
+}
+
+function formatDiagnosticAttemptDate(value) {
+  if (!value) return "Completed diagnostic";
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    }).format(new Date(value));
+  } catch (error) {
+    return value;
+  }
+}
+
 function renderMath() {
   if (window.MathJax?.typesetPromise) {
     window.MathJax.typesetPromise().catch(() => {});
@@ -519,6 +696,7 @@ function App() {
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
   const [quizActionDialog, setQuizActionDialog] = useState(null);
   const [testSetupDialog, setTestSetupDialog] = useState(null);
+  const [diagnosticSetupDialog, setDiagnosticSetupDialog] = useState(null);
   const [resetDialogSelection, setResetDialogSelection] = useState("keep");
   const fileInputRef = useRef(null);
   const keepProgressButtonRef = useRef(null);
@@ -566,6 +744,11 @@ function App() {
   }, [data.sections, progress, questionsBySection]);
 
   const activeQuizSummary = useMemo(() => getActiveQuizSummary(activeQuiz), [activeQuiz]);
+  const diagnosticHistory = useMemo(
+    () => [...(progress.diagnosticAttempts || [])].sort((left, right) => new Date(right.completedAt || 0) - new Date(left.completedAt || 0)),
+    [progress.diagnosticAttempts]
+  );
+  const hasCompletedDiagnostic = diagnosticHistory.length > 0 || progress.completedDiagnostic;
 
   function openQuizSession(session) {
     setActiveQuiz(session);
@@ -618,12 +801,14 @@ function App() {
   }
 
   function startDiagnostic() {
-    const diagnosticQuestions = data.questions;
-    openTestSetupDialog({
-      mode: "diagnostic",
+    const questionsPerTopic = 4;
+    const sectionAvailability = getDiagnosticAvailabilityBySection(data, questionsBySection, progress);
+    setDiagnosticSetupDialog({
       title: "Diagnostic",
-      subtitle: "Build a custom baseline from the mapped FE Industrial multiple-choice bank.",
-      questions: diagnosticQuestions
+      subtitle: "Pull balanced coverage across the FE Industrial topics with unanswered questions first.",
+      questionsPerTopicInput: String(questionsPerTopic),
+      sectionAvailability,
+      estimatedTotal: estimateDiagnosticQuestionCount(sectionAvailability, questionsPerTopic)
     });
   }
 
@@ -669,6 +854,10 @@ function App() {
     setQuizActionDialog(null);
   }
 
+  function closeDiagnosticSetupDialog() {
+    setDiagnosticSetupDialog(null);
+  }
+
   function updateTestSetupMixInput(key, value) {
     setTestSetupDialog((current) => {
       if (!current) return current;
@@ -692,6 +881,31 @@ function App() {
           ...current.mixInputs,
           [key]: String(clampMixCount(current.mixInputs?.[key], current.availability[key]))
         }
+      };
+    });
+  }
+
+  function updateDiagnosticQuestionsPerTopicInput(value) {
+    setDiagnosticSetupDialog((current) => {
+      if (!current) return current;
+      const nextValue = String(value).replace(/[^\d]/g, "");
+      const questionsPerTopic = clampDiagnosticQuestionsPerTopic(nextValue);
+      return {
+        ...current,
+        questionsPerTopicInput: nextValue,
+        estimatedTotal: estimateDiagnosticQuestionCount(current.sectionAvailability, questionsPerTopic)
+      };
+    });
+  }
+
+  function clampDiagnosticQuestionsPerTopicInput() {
+    setDiagnosticSetupDialog((current) => {
+      if (!current) return current;
+      const questionsPerTopic = clampDiagnosticQuestionsPerTopic(current.questionsPerTopicInput);
+      return {
+        ...current,
+        questionsPerTopicInput: questionsPerTopic ? String(questionsPerTopic) : "",
+        estimatedTotal: estimateDiagnosticQuestionCount(current.sectionAvailability, questionsPerTopic)
       };
     });
   }
@@ -733,6 +947,40 @@ function App() {
       })
     );
     closeTestSetupDialog();
+  }
+
+  function startConfiguredDiagnostic() {
+    if (!diagnosticSetupDialog) return;
+    const questionsPerTopic = clampDiagnosticQuestionsPerTopic(diagnosticSetupDialog.questionsPerTopicInput);
+    const selectedQuestions = buildDiagnosticQuestionSet(diagnosticSetupDialog.sectionAvailability, questionsPerTopic);
+    if (!selectedQuestions.length) {
+      setDiagnosticSetupDialog((current) =>
+        current
+          ? {
+              ...current,
+              questionsPerTopicInput: questionsPerTopic ? String(questionsPerTopic) : "",
+              estimatedTotal: 0
+            }
+          : current
+      );
+      return;
+    }
+
+    openQuizSession(
+      buildQuizSession({
+        mode: "diagnostic",
+        title: "Diagnostic",
+        subtitle: "Balanced cross-topic diagnostic with fresh question state for this attempt.",
+        questions: selectedQuestions,
+        progress,
+        showPriorResults: false,
+        diagnosticMeta: {
+          questionsPerTopic,
+          estimatedTotal: selectedQuestions.length
+        }
+      })
+    );
+    closeDiagnosticSetupDialog();
   }
 
   function openTopicReview(sectionId, returnTarget = { type: "dashboard" }) {
@@ -794,7 +1042,12 @@ function App() {
     });
 
     if (activeQuiz.mode === "diagnostic") {
-      setProgress((current) => ({ ...current, completedDiagnostic: true }));
+      const diagnosticAttempt = summarizeDiagnosticAttempt(activeQuiz, questionsById);
+      setProgress((current) => ({
+        ...current,
+        completedDiagnostic: true,
+        diagnosticAttempts: [...(current.diagnosticAttempts || []), diagnosticAttempt]
+      }));
     }
 
     restoreAfterQuiz(returnTarget);
@@ -965,6 +1218,25 @@ function App() {
   }, [testSetupDialog]);
 
   useEffect(() => {
+    if (!diagnosticSetupDialog) return undefined;
+
+    function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeDiagnosticSetupDialog();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [diagnosticSetupDialog]);
+
+  useEffect(() => {
     if (!topicModalSectionId || view.name === "session") return undefined;
 
     function handleKeydown(event) {
@@ -1011,7 +1283,7 @@ function App() {
                 <div className="hero-controls">
                   <div className="hero-primary-actions">
                     <button className="button" onClick={startDiagnostic}>
-                      {progress.completedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
+                      {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
                     </button>
                   </div>
                   <div className="hero-utility-actions">
@@ -1065,6 +1337,7 @@ function App() {
             <Dashboard
               data={data}
               progress={progress}
+              diagnosticHistory={diagnosticHistory}
               questionsBySection={questionsBySection}
               recommendations={recommendations}
               activeQuiz={activeQuiz}
@@ -1147,8 +1420,8 @@ function App() {
               Clear all saved progress for this browser?
             </h2>
             <p id="reset-progress-description" className="sidebar-note" style={{ marginTop: 0 }}>
-              This will wipe your topic scores, answered-question history, diagnostic status, and any saved quiz session for
-              this device only.
+              This will wipe your topic scores, answered-question history, saved diagnostic history, diagnostic status, and
+              any saved quiz session for this device only.
             </p>
             <div className="toolbar dialog-actions">
               <button
@@ -1295,22 +1568,83 @@ function App() {
           </div>
         </div>
       ) : null}
+
+      {diagnosticSetupDialog ? (
+        <div className="dialog-backdrop" onClick={closeDiagnosticSetupDialog}>
+          <div
+            className="dialog-card test-setup-dialog diagnostic-setup-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="diagnostic-setup-title"
+            aria-describedby="diagnostic-setup-description"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mini-label">Diagnostic setup</div>
+            <h2 id="diagnostic-setup-title" className="dialog-title">
+              Build a balanced diagnostic
+            </h2>
+            <p id="diagnostic-setup-description" className="sidebar-note" style={{ marginTop: 0 }}>
+              Choose how many questions to pull from each topic. We’ll prefer unanswered questions first, then recycle previously answered ones only when needed.
+            </p>
+            <div className="test-setup-summary diagnostic-setup-summary">
+              <strong>{diagnosticSetupDialog.title}</strong>
+              <span className="muted">{diagnosticSetupDialog.subtitle}</span>
+            </div>
+            <label className="test-mix-row diagnostic-input-row">
+              <span className="test-mix-label">Questions per topic</span>
+              <div className="test-mix-input-wrap">
+                <input
+                  className="test-mix-input"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={diagnosticSetupDialog.questionsPerTopicInput}
+                  onChange={(event) => updateDiagnosticQuestionsPerTopicInput(event.target.value)}
+                  onBlur={clampDiagnosticQuestionsPerTopicInput}
+                />
+                <span className="test-mix-cap">Across {diagnosticSetupDialog.sectionAvailability.length} mapped topics</span>
+              </div>
+            </label>
+            <div className="test-setup-total diagnostic-estimate-total">
+              <span className="mini-label">Estimated total questions</span>
+              <strong>{diagnosticSetupDialog.estimatedTotal}</strong>
+            </div>
+            <div className="diagnostic-topic-count">
+              {diagnosticSetupDialog.sectionAvailability.filter((section) => section.totalAvailable > 0).length} topics currently have mapped questions available for the diagnostic pool.
+            </div>
+            <div className="toolbar dialog-actions test-setup-actions">
+              <button className="button-ghost dialog-option" onClick={closeDiagnosticSetupDialog}>
+                Cancel
+              </button>
+              <button
+                className="button dialog-option"
+                onClick={startConfiguredDiagnostic}
+                disabled={diagnosticSetupDialog.estimatedTotal === 0}
+              >
+                Start diagnostic
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 function getSectionMetrics(section, progress) {
   const topicState = progress.topicProgress[section.id] || { answered: 0, correct: 0 };
-  const score = computeEstimatedScore(topicState.correct, topicState.answered);
+  const isScoreVisible = topicState.answered >= 10;
+  const score = isScoreVisible ? computePercentCorrect(topicState.correct, topicState.answered) : null;
   return {
     ...topicState,
-    score
+    score,
+    isScoreVisible
   };
 }
 
 function getSubtopicMetrics(progress, sectionId, subtopicName) {
   const state = progress.subtopicProgress?.[sectionId]?.[subtopicName] || { answered: 0, correct: 0 };
-  return { ...state, score: computeEstimatedScore(state.correct, state.answered) };
+  const isScoreVisible = state.answered >= 1;
+  return { ...state, score: isScoreVisible ? computePercentCorrect(state.correct, state.answered) : null, isScoreVisible };
 }
 
 function renderAnsweredBreakdown(answered, correct) {
@@ -1339,6 +1673,7 @@ function renderAnsweredBreakdown(answered, correct) {
 function Dashboard({
   data,
   progress,
+  diagnosticHistory,
   questionsBySection,
   recommendations,
   activeQuiz,
@@ -1395,20 +1730,46 @@ function Dashboard({
         <div className="panel">
           <div className="mini-label">How scoring works</div>
           <p className="sidebar-note">
-            Scores are confidence-adjusted. Early results stay conservative until you answer about five questions in a
-            section, so the dashboard does not overstate readiness after one lucky guess.
+            Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered
+            question there, and all percentages are shown as raw percent correct.
           </p>
         </div>
 
         <div className="panel">
           <div className="mini-label">Diagnostic</div>
           <p className="sidebar-note">
-            The diagnostic pulls a small multiple-choice sample across the mapped FE Industrial sections and seeds your
-            starting percentages.
+            Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per
+            topic, and the app prefers unanswered questions before recycling older ones.
           </p>
           <button className="button" onClick={onStartDiagnostic}>
             Start diagnostic
           </button>
+        </div>
+
+        <div className="panel">
+          <div className="mini-label">Diagnostic history</div>
+          {diagnosticHistory.length ? (
+            <div className="stack diagnostic-history-list">
+              {diagnosticHistory.map((attempt) => (
+                <div key={attempt.id} className="results-card diagnostic-history-card">
+                  <div className="card-row">
+                    <strong>{formatDiagnosticAttemptDate(attempt.completedAt)}</strong>
+                    <span className="pill subtle">{attempt.score == null ? "Ungraded" : `${attempt.score}% correct`}</span>
+                  </div>
+                  <p className="muted" style={{ marginBottom: 8 }}>
+                    {attempt.questionsPerTopic} per topic • {attempt.answered} graded
+                  </p>
+                  <p className="reason-text" style={{ margin: 0 }}>
+                    {attempt.correct} correct out of {attempt.answered || 0} graded questions.
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="sidebar-note" style={{ marginBottom: 0 }}>
+              No diagnostic attempts saved yet. Your completed diagnostics will show up here as separate entries.
+            </p>
+          )}
         </div>
       </aside>
 
@@ -1432,14 +1793,18 @@ function Dashboard({
                   </div>
                   <div className="toolbar">
                     <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
-                      {metrics.score == null ? "Not yet assessed" : `${metrics.score}% ready`}
+                      {metrics.isScoreVisible ? `${metrics.score}% correct` : "Progress locked"}
                     </span>
                     <span className={`pill ${isThinCoverage ? "warn" : "subtle"}`}>{coverageLabel}</span>
                   </div>
                 </div>
 
-                <div className="score-bar">
-                  <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
+                <div className={`score-bar ${metrics.isScoreVisible ? "" : "is-disabled has-message"}`}>
+                  {metrics.isScoreVisible ? (
+                    <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
+                  ) : (
+                    <span className="score-bar-message">ANSWER AT LEAST 10 QUESTIONS TO SEE</span>
+                  )}
                 </div>
 
                 <div className="topic-actions">
@@ -1498,14 +1863,16 @@ function Dashboard({
                       <div className="subtopic-metrics">
                         <div className="card-row" style={{ marginBottom: 6 }}>
                           <span className="muted">
-                            {subMetrics.score == null ? "Not assessed" : `${subMetrics.score}%`}
+                            {subMetrics.isScoreVisible ? `${subMetrics.score}% correct` : "Progress locked"}
                           </span>
                           <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
                             Generate quiz with subtopic
                           </button>
                         </div>
-                        <div className="score-bar">
-                          <div className="score-mask" style={{ width: `${100 - (subMetrics.score || 0)}%` }} />
+                        <div className={`score-bar ${subMetrics.isScoreVisible ? "" : "is-disabled"}`}>
+                          {subMetrics.isScoreVisible ? (
+                            <div className="score-mask" style={{ width: `${100 - (subMetrics.score || 0)}%` }} />
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -1540,7 +1907,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
             <span>{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
           </div>
           <div className="pill" style={{ marginTop: 10 }}>
-            {metrics.score == null ? "Not assessed" : `${metrics.score}% estimated`}
+            {metrics.isScoreVisible ? `${metrics.score}% correct` : "Progress locked"}
           </div>
           {canResumeSectionQuiz ? (
             <button className="button" style={{ marginTop: 16 }} onClick={onResumeQuiz}>
@@ -1592,13 +1959,15 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
                   </div>
                   <div className="subtopic-metrics">
                     <div className="card-row" style={{ marginBottom: 6 }}>
-                      <span className="muted">{subMetrics.score == null ? "Not assessed" : `${subMetrics.score}% ready`}</span>
+                      <span className="muted">{subMetrics.isScoreVisible ? `${subMetrics.score}% correct` : "Progress locked"}</span>
                       <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
                         Generate quiz with subtopic
                       </button>
                     </div>
-                    <div className="score-bar">
-                      <div className="score-mask" style={{ width: `${100 - (subMetrics.score || 0)}%` }} />
+                    <div className={`score-bar ${subMetrics.isScoreVisible ? "" : "is-disabled"}`}>
+                      {subMetrics.isScoreVisible ? (
+                        <div className="score-mask" style={{ width: `${100 - (subMetrics.score || 0)}%` }} />
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -1817,6 +2186,10 @@ function QuizSessionView({
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
+  const priorSavedResult =
+    activeQuiz?.showPriorResults && question && typeof activeQuiz?.baselineResults?.[question.id]?.wasCorrect === "boolean"
+      ? activeQuiz.baselineResults[question.id].wasCorrect
+      : null;
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
   const canRevealAnswer = question?.type === "open" || !!response?.revealed;
@@ -1977,6 +2350,11 @@ function QuizSessionView({
               <div className="top-row">
                 <span className="pill">{question.officialSubtopic}</span>
                 <span className="pill">{question.type === "mcq" ? "Multiple choice" : "Self-graded"}</span>
+                {priorSavedResult != null ? (
+                  <span className={`pill subtle ${priorSavedResult ? "score-good" : "score-bad"}`}>
+                    Previously marked {priorSavedResult ? "correct" : "incorrect"}
+                  </span>
+                ) : null}
               </div>
               <h2>{formatQuestionHeading(question, currentIndex)}</h2>
             </div>
@@ -2034,6 +2412,11 @@ function QuizSessionView({
                       </span>
                     ) : null}
                   </div>
+                  {priorSavedResult != null ? (
+                    <div className="quiz-prior-result">
+                      Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
+                    </div>
+                  ) : null}
                   <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
                   {question.url ? (
                     <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">

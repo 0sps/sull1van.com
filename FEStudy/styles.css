@@ -336,11 +336,14 @@ select {
 
 .score-bar {
   width: 100%;
-  height: 12px;
+  min-height: 12px;
   border-radius: 999px;
   background: linear-gradient(90deg, #d13f34 0%, #e6ad2b 48%, #3ba968 100%);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .score-bar::after {
@@ -361,6 +364,31 @@ select {
   right: 0;
   bottom: 0;
   background: rgba(255, 250, 242, 0.74);
+}
+
+.score-bar.is-disabled {
+  min-height: 12px;
+  background: linear-gradient(135deg, rgba(194, 189, 181, 0.62), rgba(224, 219, 210, 0.96));
+  border: 1px solid rgba(120, 110, 98, 0.18);
+}
+
+.score-bar.is-disabled::after {
+  display: none;
+}
+
+.score-bar.has-message {
+  min-height: 40px;
+}
+
+.score-bar-message {
+  position: relative;
+  z-index: 1;
+  padding: 0 14px;
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: rgba(86, 76, 66, 0.92);
 }
 
 .subtopic-list {
@@ -755,6 +783,28 @@ select {
   margin-top: 20px;
 }
 
+.diagnostic-setup-dialog {
+  width: min(640px, 100%);
+}
+
+.diagnostic-setup-summary {
+  margin-bottom: 18px;
+}
+
+.diagnostic-input-row {
+  margin-top: 0;
+}
+
+.diagnostic-estimate-total {
+  margin-top: 14px;
+}
+
+.diagnostic-topic-count {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .button-danger {
   background: linear-gradient(135deg, #b54a26, #94351b);
   box-shadow: 0 12px 24px rgba(148, 53, 27, 0.22);
@@ -960,6 +1010,16 @@ select {
   line-height: 1.55;
 }
 
+.quiz-prior-result {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(76, 54, 29, 0.06);
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 600;
+}
+
 .quiz-source-link {
   margin-top: 12px;
   display: inline-flex;
@@ -1021,6 +1081,14 @@ select {
 
 .quiz-action-danger {
   width: 100%;
+}
+
+.diagnostic-history-list {
+  margin-top: 10px;
+}
+
+.diagnostic-history-card {
+  gap: 0;
 }
 
 .quiz-empty {
