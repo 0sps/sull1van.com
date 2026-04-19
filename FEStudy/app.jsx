@@ -596,35 +596,16 @@ function App() {
     });
   }
 
-  function startTopicPractice(sectionId, officialSubtopic = null, mcqOnly = false) {
+  function startTopicPractice(sectionId, officialSubtopic = null) {
     const section = data.sections.find((entry) => entry.id === sectionId);
-    let questions = (questionsBySection[sectionId] || []).filter((question) => !officialSubtopic || question.officialSubtopic === officialSubtopic);
-    if (mcqOnly) {
-      questions = questions.filter((question) => question.type === "mcq");
-      openTestSetupDialog({
-        mode: "topic-test",
-        title: officialSubtopic || section.title,
-        subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
-        sectionId,
-        officialSubtopic,
-        questions
-      });
-      return;
-    }
-
-    const seenQuestionIds = new Set(progress.answeredQuestionIds || []);
-    const unseen = questions.filter((question) => !seenQuestionIds.has(question.id));
-    const ordered = [...unseen, ...questions.filter((question) => seenQuestionIds.has(question.id))];
-
-    setView({
-      name: "session",
-      mode: "practice",
+    const questions = (questionsBySection[sectionId] || []).filter((question) => !officialSubtopic || question.officialSubtopic === officialSubtopic);
+    openTestSetupDialog({
+      mode: "topic-test",
       title: officialSubtopic || section.title,
-      subtitle: officialSubtopic ? `${section.title} focused practice` : `${section.title} study session`,
-      questions: ordered,
-      index: 0,
+      subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
       sectionId,
-      officialSubtopic
+      officialSubtopic,
+      questions
     });
   }
 
@@ -1396,7 +1377,7 @@ function Dashboard({
                   <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
                     Study this
                   </button>
-                  <button className="button-ghost" onClick={() => onStartPractice(section.id, null, true)} disabled={questionCount === 0}>
+                  <button className="button-ghost" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
                     Test me on this topic
                   </button>
                   {canResumeSectionQuiz ? (
@@ -1434,7 +1415,7 @@ function Dashboard({
                           <span className="muted">
                             {subMetrics.score == null ? "Not assessed" : `${subMetrics.score}%`}
                           </span>
-                          <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name, true)} disabled={subtopic.count === 0}>
+                          <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
                             Practice this subtopic
                           </button>
                         </div>
@@ -1502,7 +1483,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
               <h3 style={{ marginTop: 8 }}>Subtopic breakdown</h3>
             </div>
             <div className="toolbar">
-              <button className="button" onClick={() => onPractice(section.id, null, true)} disabled={questionCount === 0}>
+              <button className="button" onClick={() => onPractice(section.id)} disabled={questionCount === 0}>
                 Test me on this topic
               </button>
             </div>
@@ -1523,7 +1504,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
                   <div className="subtopic-metrics">
                     <div className="card-row" style={{ marginBottom: 6 }}>
                       <span className="muted">{subMetrics.score == null ? "Not assessed" : `${subMetrics.score}% ready`}</span>
-                      <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name, true)} disabled={subtopic.count === 0}>
+                      <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
                         Practice this subtopic
                       </button>
                     </div>
