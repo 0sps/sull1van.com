@@ -1375,10 +1375,10 @@ function Dashboard({
                 </div>
                 <div className="toolbar">
                   <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
-                    Study this
+                    Open topic
                   </button>
                   <button className="button-ghost" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
-                    Test me on this topic
+                    Generate quiz with topic
                   </button>
                   {canResumeSectionQuiz ? (
                     <button className="button-ghost" onClick={onResumeQuiz}>
@@ -1395,6 +1395,12 @@ function Dashboard({
                 <div className="coverage-note">
                   This section has limited mapped source material right now, so its score is less representative than the
                   stronger-covered sections.
+                </div>
+              ) : null}
+
+              {isExpanded ? (
+                <div className="subtopic-section-header">
+                  <span className="mini-label">By subtopic</span>
                 </div>
               ) : null}
 
@@ -1416,7 +1422,7 @@ function Dashboard({
                             {subMetrics.score == null ? "Not assessed" : `${subMetrics.score}%`}
                           </span>
                           <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
-                            Practice this subtopic
+                            Generate quiz with subtopic
                           </button>
                         </div>
                         <div className="score-bar">
@@ -1479,14 +1485,18 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
         <article className="topic-card">
           <div className="topic-actions">
             <div>
-              <div className="mini-label">Focused practice</div>
-              <h3 style={{ marginTop: 8 }}>Subtopic breakdown</h3>
+              <div className="mini-label">Whole topic</div>
+              <h3 style={{ marginTop: 8 }}>{section.title}</h3>
             </div>
             <div className="toolbar">
               <button className="button" onClick={() => onPractice(section.id)} disabled={questionCount === 0}>
-                Test me on this topic
+                Generate quiz with topic
               </button>
             </div>
+          </div>
+
+          <div className="subtopic-section-header">
+            <span className="mini-label">By subtopic</span>
           </div>
 
           <div className="subtopic-list">
@@ -1505,7 +1515,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
                     <div className="card-row" style={{ marginBottom: 6 }}>
                       <span className="muted">{subMetrics.score == null ? "Not assessed" : `${subMetrics.score}% ready`}</span>
                       <button className="nav-chip" onClick={() => onPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
-                        Practice this subtopic
+                        Generate quiz with subtopic
                       </button>
                     </div>
                     <div className="score-bar">

@@ -322,6 +322,26 @@ select {
   margin-top: 16px;
 }
 
+.subtopic-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+
+.subtopic-section-header::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(160, 141, 120, 0.25);
+}
+
+.subtopic-section-header .mini-label {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .subtopic-list.compact {
   gap: 10px;
 }
