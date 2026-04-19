@@ -545,11 +545,15 @@ select {
 }
 
 .result-button-primary {
-  border-color: rgba(76, 54, 29, 0.18);
+  color: #4f9a7d;
+  border: 2px solid rgba(79, 154, 125, 0.42);
+  box-shadow: 0 10px 22px rgba(79, 154, 125, 0.12);
 }
 
 .result-button-ghost {
-  border-color: rgba(76, 54, 29, 0.18);
+  color: #b06a63;
+  border: 2px solid rgba(176, 106, 99, 0.34);
+  box-shadow: 0 10px 22px rgba(176, 106, 99, 0.1);
 }
 
 .shortcut-badge {
