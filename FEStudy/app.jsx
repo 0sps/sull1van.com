@@ -679,6 +679,26 @@ function formatDiagnosticAttemptDate(value) {
   }
 }
 
+function getLeaveDialogTitle(activeQuiz) {
+  if (activeQuiz?.mode === "review") {
+    return "What should we do with this review?";
+  }
+  if (activeQuiz?.mode === "diagnostic") {
+    return "What should we do with this diagnostic?";
+  }
+  return "What should we do with this quiz?";
+}
+
+function getLeaveDialogDescription(activeQuiz) {
+  if (activeQuiz?.mode === "review") {
+    return "You can keep this review exactly as it is and resume later, or discard the mark changes from this review and leave.";
+  }
+  if (activeQuiz?.mode === "diagnostic") {
+    return "You can keep this diagnostic exactly as it is and resume later, or discard every result from this diagnostic attempt and leave without saving it to diagnostic history.";
+  }
+  return "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave.";
+}
+
 function renderMath() {
   if (window.MathJax?.typesetPromise) {
     window.MathJax.typesetPromise().catch(() => {});
@@ -1468,7 +1488,7 @@ function App() {
             </div>
             <h2 id="quiz-action-title" className="dialog-title">
               {quizActionDialog.type === "leave"
-                ? "What should we do with this quiz?"
+                ? getLeaveDialogTitle(activeQuiz)
                 : activeQuiz.mode === "review"
                   ? "Finish this review now?"
                   : quizActionDialog.unansweredCount
@@ -1477,7 +1497,7 @@ function App() {
             </h2>
             <p id="quiz-action-description" className="sidebar-note" style={{ marginTop: 0 }}>
               {quizActionDialog.type === "leave"
-                ? "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave."
+                ? getLeaveDialogDescription(activeQuiz)
                 : activeQuiz.mode === "review"
                   ? "Any changes you made to right or wrong marks are already saved. Finishing review just closes out this review session."
                   : quizActionDialog.unansweredCount
