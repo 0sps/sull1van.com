@@ -2471,7 +2471,7 @@ function QuizSessionView({
           <span className="muted">
             Question {currentIndex + 1} of {questions.length}
           </span>
-          <span className="muted">Enter = mark right • Space = mark wrong</span>
+          
         </div>
         <div className="quiz-footer-right">
           <button
