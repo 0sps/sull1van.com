@@ -1446,10 +1446,14 @@ function Dashboard({
                     <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
                   </div>
                   <div className="toolbar">
-                    <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
+                    <button className="button-ghost topic-card-action-open" onClick={() => onOpenTopic(section.id)}>
                       Open topic
                     </button>
-                    <button className="button-ghost" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
+                    <button
+                      className="button-ghost topic-card-action-generate"
+                      onClick={() => onStartPractice(section.id)}
+                      disabled={questionCount === 0}
+                    >
                       Generate quiz with topic
                     </button>
                     {canResumeSectionQuiz ? (
