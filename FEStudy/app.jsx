@@ -1949,7 +1949,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
 
       <main className="stack">
         <article className="topic-card">
-          <div className="topic-actions">
+          <div className="topic-actions topic-actions-surface">
             <div>
               <div className="mini-label">Whole topic</div>
               <h3 style={{ marginTop: 8 }}>{section.title}</h3>
