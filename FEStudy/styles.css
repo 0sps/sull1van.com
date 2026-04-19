@@ -583,6 +583,34 @@ select {
   z-index: 50;
 }
 
+.topic-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 24, 10, 0.28);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  z-index: 40;
+}
+
+.topic-modal-shell {
+  width: min(1120px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(31, 24, 17, 0.08);
+  background:
+    linear-gradient(135deg, rgba(247, 239, 228, 0.98), rgba(239, 229, 212, 0.96)),
+    linear-gradient(120deg, rgba(15, 118, 110, 0.07), transparent 58%);
+  box-shadow: 0 26px 70px rgba(43, 29, 10, 0.28);
+}
+
+.topic-detail-modal-layout {
+  margin-top: 0;
+}
+
 .dialog-card {
   width: min(520px, 100%);
   padding: 24px;
@@ -971,6 +999,16 @@ select {
 
   .topic-card {
     padding: 18px;
+  }
+
+  .topic-modal-backdrop {
+    padding: 12px;
+  }
+
+  .topic-modal-shell {
+    max-height: calc(100dvh - 24px);
+    padding: 16px;
+    border-radius: 24px;
   }
 
   .test-mix-row {

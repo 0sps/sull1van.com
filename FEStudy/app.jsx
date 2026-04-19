@@ -311,7 +311,8 @@ function buildQuizSession({
   progress,
   requestedMix = null,
   poolAvailability = null,
-  initialResponses = null
+  initialResponses = null,
+  returnTarget = { type: "dashboard" }
 }) {
   const now = new Date().toISOString();
   const responses = {};
@@ -335,11 +336,19 @@ function buildQuizSession({
     baselineResults: captureBaselineResults(questions, progress),
     requestedMix,
     poolAvailability,
+    returnTarget: normalizeReturnTarget(returnTarget),
     responses,
     startedAt: now,
     completedAt: null,
     lastUpdated: now
   };
+}
+
+function normalizeReturnTarget(returnTarget) {
+  if (returnTarget?.type === "topic-modal" && returnTarget.sectionId) {
+    return { type: "topic-modal", sectionId: returnTarget.sectionId };
+  }
+  return { type: "dashboard" };
 }
 
 function normalizeQuizSession(rawSession, questionsById) {
@@ -400,6 +409,7 @@ function normalizeQuizSession(rawSession, questionsById) {
             return accumulator;
           }, {})
         : null,
+    returnTarget: normalizeReturnTarget(rawSession.returnTarget),
     responses,
     startedAt: rawSession.startedAt || new Date().toISOString(),
     completedAt: rawSession.completedAt || null,
@@ -481,10 +491,7 @@ function getSessionQuestionState(activeQuiz, questionId) {
 }
 
 function getSessionBackView(activeQuiz) {
-  if (activeQuiz?.sectionId) {
-    return { name: "topic", sectionId: activeQuiz.sectionId };
-  }
-  return { name: "dashboard" };
+  return normalizeReturnTarget(activeQuiz?.returnTarget);
 }
 
 function getActiveQuizSummary(activeQuiz) {
@@ -508,6 +515,7 @@ function App() {
   const [progress, setProgress] = useState(() => readProgress(data));
   const [activeQuiz, setActiveQuiz] = useState(() => readActiveQuiz(questionsById));
   const [view, setView] = useState({ name: "dashboard" });
+  const [topicModalSectionId, setTopicModalSectionId] = useState(null);
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
   const [quizActionDialog, setQuizActionDialog] = useState(null);
   const [testSetupDialog, setTestSetupDialog] = useState(null);
@@ -564,7 +572,29 @@ function App() {
     setView({ name: "session" });
   }
 
-  function openTestSetupDialog({ mode, title, subtitle, sectionId = null, officialSubtopic = null, questions }) {
+  function openTopicModal(sectionId) {
+    setTopicModalSectionId(sectionId);
+  }
+
+  function closeTopicModal() {
+    setTopicModalSectionId(null);
+  }
+
+  function restoreAfterQuiz(returnTarget) {
+    const normalized = normalizeReturnTarget(returnTarget);
+    setView({ name: "dashboard" });
+    setTopicModalSectionId(normalized.type === "topic-modal" ? normalized.sectionId : null);
+  }
+
+  function openTestSetupDialog({
+    mode,
+    title,
+    subtitle,
+    sectionId = null,
+    officialSubtopic = null,
+    questions,
+    returnTarget = { type: "dashboard" }
+  }) {
     const pools = getScopedTestPools(questions, progress);
     const availability = TEST_MIX_KEYS.reduce((accumulator, key) => {
       accumulator[key] = pools[key].length;
@@ -577,6 +607,7 @@ function App() {
       sectionId,
       officialSubtopic,
       questions,
+      returnTarget: normalizeReturnTarget(returnTarget),
       availability,
       mixInputs: getDefaultMixInputs(availability)
     });
@@ -596,7 +627,7 @@ function App() {
     });
   }
 
-  function startTopicPractice(sectionId, officialSubtopic = null) {
+  function startTopicPractice(sectionId, officialSubtopic = null, returnTarget = { type: "dashboard" }) {
     const section = data.sections.find((entry) => entry.id === sectionId);
     const questions = (questionsBySection[sectionId] || []).filter((question) => !officialSubtopic || question.officialSubtopic === officialSubtopic);
     openTestSetupDialog({
@@ -605,17 +636,20 @@ function App() {
       subtitle: officialSubtopic ? `${section.title} focused test` : `${section.title} topic test`,
       sectionId,
       officialSubtopic,
-      questions
+      questions,
+      returnTarget
     });
   }
 
   function resumeQuiz() {
     if (!activeQuiz || activeQuiz.status !== "in-progress") return;
+    const returnTarget = normalizeReturnTarget(activeQuiz.returnTarget);
+    setTopicModalSectionId(returnTarget.type === "topic-modal" ? returnTarget.sectionId : null);
     setView({ name: "session" });
   }
 
   function leaveQuiz() {
-    setView(getSessionBackView(activeQuiz));
+    restoreAfterQuiz(getSessionBackView(activeQuiz));
   }
 
   function openLeaveQuizDialog() {
@@ -694,13 +728,14 @@ function App() {
         questions: pickRandom(selectedQuestions, selectedQuestions.length),
         progress,
         requestedMix,
-        poolAvailability: availability
+        poolAvailability: availability,
+        returnTarget: testSetupDialog.returnTarget
       })
     );
     closeTestSetupDialog();
   }
 
-  function openTopicReview(sectionId) {
+  function openTopicReview(sectionId, returnTarget = { type: "dashboard" }) {
     const section = data.sections.find((entry) => entry.id === sectionId);
     const answeredQuestions = (questionsBySection[sectionId] || []).filter(
       (question) => typeof progress.questionResults?.[question.id]?.wasCorrect === "boolean"
@@ -722,7 +757,8 @@ function App() {
         sectionId,
         questions: answeredQuestions,
         progress,
-        initialResponses
+        initialResponses,
+        returnTarget
       })
     );
   }
@@ -734,17 +770,17 @@ function App() {
 
   function discardQuizAndLeave() {
     if (!activeQuiz) return;
-    const backView = getSessionBackView(activeQuiz);
+    const returnTarget = getSessionBackView(activeQuiz);
     setProgress((current) => restoreProgressFromQuizSession(current, activeQuiz, questionsById));
     setActiveQuiz(null);
-    setView(backView);
+    restoreAfterQuiz(returnTarget);
     closeQuizActionDialog();
   }
 
   function submitQuiz() {
     if (!activeQuiz) return;
 
-    const backView = getSessionBackView(activeQuiz);
+    const returnTarget = getSessionBackView(activeQuiz);
 
     setActiveQuiz((current) => {
       if (!current) return current;
@@ -761,7 +797,7 @@ function App() {
       setProgress((current) => ({ ...current, completedDiagnostic: true }));
     }
 
-    setView(backView);
+    restoreAfterQuiz(returnTarget);
     closeQuizActionDialog();
   }
 
@@ -928,6 +964,29 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeydown);
   }, [testSetupDialog]);
 
+  useEffect(() => {
+    if (!topicModalSectionId || view.name === "session") return undefined;
+
+    function handleKeydown(event) {
+      const targetTag = event.target?.tagName;
+      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeTopicModal();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [topicModalSectionId, view.name]);
+
   const showResumeButton = activeQuiz?.status === "in-progress";
   const configuredQuestionTotal = testSetupDialog
     ? TEST_MIX_KEYS.reduce(
@@ -1011,21 +1070,8 @@ function App() {
               activeQuiz={activeQuiz}
               onResumeQuiz={resumeQuiz}
               onStartDiagnostic={startDiagnostic}
-              onOpenTopic={(sectionId) => setView({ name: "topic", sectionId })}
+              onOpenTopic={openTopicModal}
               onStartPractice={startTopicPractice}
-            />
-          ) : null}
-
-          {view.name === "topic" ? (
-            <TopicDetail
-              section={data.sections.find((entry) => entry.id === view.sectionId)}
-              progress={progress}
-              questionCount={questionsBySection[view.sectionId]?.length || 0}
-              activeQuiz={activeQuiz}
-              onResumeQuiz={resumeQuiz}
-              onBack={() => setView({ name: "dashboard" })}
-              onPractice={startTopicPractice}
-              onReviewTopic={openTopicReview}
             />
           ) : null}
 
@@ -1033,7 +1079,7 @@ function App() {
             <SessionView
               view={view}
               isResetDialogOpen={isResetDialogOpen}
-              onBack={() => setView(view.sectionId ? { name: "topic", sectionId: view.sectionId } : { name: "dashboard" })}
+              onBack={() => setView({ name: "dashboard" })}
               onFinish={finishPracticeSession}
               onRecord={(question, wasCorrect) => setProgress((current) => updateProgressForQuestion(current, question, wasCorrect))}
             />
@@ -1059,6 +1105,31 @@ function App() {
           onUpdateResponse={updateQuizResponse}
           onGrade={gradeQuizQuestion}
         />
+      ) : null}
+
+      {topicModalSectionId && view.name !== "session" ? (
+        <div className="topic-modal-backdrop" onClick={closeTopicModal}>
+          <div
+            className="topic-modal-shell"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="topic-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <TopicDetail
+              section={data.sections.find((entry) => entry.id === topicModalSectionId)}
+              progress={progress}
+              questionCount={questionsBySection[topicModalSectionId]?.length || 0}
+              activeQuiz={activeQuiz}
+              onResumeQuiz={resumeQuiz}
+              onClose={closeTopicModal}
+              onPractice={(sectionId, officialSubtopic = null) =>
+                startTopicPractice(sectionId, officialSubtopic, { type: "topic-modal", sectionId: topicModalSectionId })
+              }
+              onReviewTopic={(sectionId) => openTopicReview(sectionId, { type: "topic-modal", sectionId })}
+            />
+          </div>
+        </div>
       ) : null}
 
       {isResetDialogOpen ? (
@@ -1443,21 +1514,21 @@ function Dashboard({
   );
 }
 
-function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQuiz, onBack, onPractice, onReviewTopic }) {
+function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQuiz, onClose, onPractice, onReviewTopic }) {
   const metrics = getSectionMetrics(section, progress);
   const isThinCoverage = questionCount < 5;
   const canResumeSectionQuiz = activeQuiz?.status === "in-progress" && activeQuiz.sectionId === section.id;
   return (
-    <div className="content-grid">
+    <div className="content-grid topic-detail-modal-layout">
       <aside className="stack">
         <div className="panel">
-          <button className="button-ghost" onClick={onBack}>
-            Back to dashboard
+          <button className="button-ghost" onClick={onClose}>
+            Close topic
           </button>
           <div style={{ marginTop: 14 }} className="mini-label">
             {section.questionRange} official range
           </div>
-          <h2 className="section-title">{section.title}</h2>
+          <h2 id="topic-modal-title" className="section-title">{section.title}</h2>
           <div className="topic-progress-copy sidebar-note">
             <span>{questionCount} mapped questions.</span>
             <span>{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
