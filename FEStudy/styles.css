@@ -1158,9 +1158,9 @@ select {
 }
 
 .quiz-nav-button.is-key-active {
-  border-color: rgba(79, 154, 125, 0.5);
-  color: #4f9a7d;
-  box-shadow: 0 10px 22px rgba(79, 154, 125, 0.14);
+  border-color: rgba(63, 123, 100, 0.5);
+  color: #3f7b64;
+  box-shadow: 0 10px 22px rgba(63, 123, 100, 0.14);
 }
 
 .quiz-footer-center {
