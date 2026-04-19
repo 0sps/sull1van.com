@@ -1295,7 +1295,7 @@ function App() {
             <div className="hero-grid">
               <div>
                 <div className="eyebrow">{data.exam}</div>
-                <h1>Build your readiness, section by section.</h1>
+                <h1>Build your readiness for the FE exam.</h1>
                 <p>
                   This dashboard is scoped to the FE Industrial blueprint, seeded by your local question bank, and built
                   to help you diagnose weak areas before drilling down into focused practice.
