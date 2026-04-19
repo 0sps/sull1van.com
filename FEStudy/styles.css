@@ -1089,6 +1089,24 @@ select {
   flex-wrap: wrap;
 }
 
+.quiz-footer-left {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.quiz-nav-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.quiz-nav-hint {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
 .quiz-footer-center {
   display: grid;
   gap: 4px;
@@ -1255,6 +1273,14 @@ select {
   .quiz-footer-left,
   .quiz-footer-right {
     justify-content: stretch;
+  }
+
+  .quiz-nav-controls {
+    width: 100%;
+  }
+
+  .quiz-nav-controls > * {
+    flex: 1 1 160px;
   }
 
   .quiz-footer-left > *,

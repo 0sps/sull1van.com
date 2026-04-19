@@ -2458,12 +2458,17 @@ function QuizSessionView({
 
       <footer className="quiz-footer">
         <div className="quiz-footer-left">
-          <button className="button-ghost" onClick={() => onSetIndex(currentIndex - 1)} disabled={currentIndex === 0}>
-            Previous
-          </button>
-          <button className="button-ghost" onClick={() => onSetIndex(currentIndex + 1)} disabled={currentIndex >= questions.length - 1}>
-            Next
-          </button>
+          <div className="quiz-nav-controls">
+            <button className="button-ghost" onClick={() => onSetIndex(currentIndex - 1)} disabled={currentIndex === 0}>
+              Previous
+            </button>
+            <button className="button-ghost" onClick={() => onSetIndex(currentIndex + 1)} disabled={currentIndex >= questions.length - 1}>
+              Next
+            </button>
+          </div>
+          <div className="quiz-nav-hint muted">
+            {"\u2190"} / {"\u2192"} arrow keys move between questions
+          </div>
         </div>
         <div className="quiz-footer-center">
           <span className="muted">
