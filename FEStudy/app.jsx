@@ -1349,54 +1349,56 @@ function Dashboard({
           const canResumeSectionQuiz = activeQuiz?.status === "in-progress" && activeQuiz.sectionId === section.id;
           return (
             <article key={section.id} className={`topic-card ${isThinCoverage ? "is-thin" : ""}`}>
-              <div className="topic-header">
-                <div>
-                  <div className="mini-label">
-                    Blueprint range {section.questionRange} questions
+              <div className="topic-summary-panel">
+                <div className="topic-header">
+                  <div>
+                    <div className="mini-label">
+                      Blueprint range {section.questionRange} questions
+                    </div>
+                    <h3>{section.title}</h3>
                   </div>
-                  <h3>{section.title}</h3>
+                  <div className="toolbar">
+                    <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
+                      {metrics.score == null ? "Not yet assessed" : `${metrics.score}% ready`}
+                    </span>
+                    <span className={`pill ${isThinCoverage ? "warn" : "subtle"}`}>{coverageLabel}</span>
+                  </div>
                 </div>
-                <div className="toolbar">
-                  <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
-                    {metrics.score == null ? "Not yet assessed" : `${metrics.score}% ready`}
-                  </span>
-                  <span className={`pill ${isThinCoverage ? "warn" : "subtle"}`}>{coverageLabel}</span>
-                </div>
-              </div>
 
-              <div className="score-bar">
-                <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
-              </div>
-
-              <div className="topic-actions" style={{ marginTop: 16 }}>
-                <div className="topic-progress-copy">
-                  <span className="muted">{questionCount} mapped questions.</span>
-                  <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
+                <div className="score-bar">
+                  <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
                 </div>
-                <div className="toolbar">
-                  <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
-                    Open topic
-                  </button>
-                  <button className="button-ghost" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
-                    Generate quiz with topic
-                  </button>
-                  {canResumeSectionQuiz ? (
-                    <button className="button-ghost" onClick={onResumeQuiz}>
-                      Resume quiz
+
+                <div className="topic-actions">
+                  <div className="topic-progress-copy">
+                    <span className="muted">{questionCount} mapped questions.</span>
+                    <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
+                  </div>
+                  <div className="toolbar">
+                    <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
+                      Open topic
                     </button>
-                  ) : null}
-                  <button className="nav-chip subtopic-toggle" onClick={() => toggleSection(section.id)}>
-                    {isExpanded ? "Hide subtopics" : "Show more"}
-                  </button>
+                    <button className="button-ghost" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
+                      Generate quiz with topic
+                    </button>
+                    {canResumeSectionQuiz ? (
+                      <button className="button-ghost" onClick={onResumeQuiz}>
+                        Resume quiz
+                      </button>
+                    ) : null}
+                    <button className="nav-chip subtopic-toggle" onClick={() => toggleSection(section.id)}>
+                      {isExpanded ? "Hide subtopics" : "Show more"}
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              {isThinCoverage ? (
-                <div className="coverage-note">
-                  This section has limited mapped source material right now, so its score is less representative than the
-                  stronger-covered sections.
-                </div>
-              ) : null}
+                {isThinCoverage ? (
+                  <div className="coverage-note">
+                    This section has limited mapped source material right now, so its score is less representative than the
+                    stronger-covered sections.
+                  </div>
+                ) : null}
+              </div>
 
               {isExpanded ? (
                 <div className="subtopic-section-header">

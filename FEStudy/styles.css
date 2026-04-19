@@ -238,6 +238,18 @@ select {
   padding: 22px;
 }
 
+.topic-summary-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(76, 54, 29, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.92), rgba(249, 241, 230, 0.88)),
+    linear-gradient(135deg, rgba(15, 118, 110, 0.05), transparent 65%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
 .topic-card.is-thin {
   background:
     linear-gradient(180deg, rgba(255, 250, 242, 0.92), rgba(244, 236, 224, 0.92)),
@@ -319,14 +331,14 @@ select {
 }
 
 .subtopic-list {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .subtopic-section-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 22px;
   margin-bottom: 4px;
 }
 
