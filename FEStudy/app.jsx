@@ -443,7 +443,7 @@ function normalizeQuizSession(rawSession, questionsById) {
     sectionId: rawSession.sectionId || null,
     officialSubtopic: rawSession.officialSubtopic || null,
     status: rawSession.status === "complete" ? "complete" : "in-progress",
-    currentIndex: clamp(rawSession.currentIndex || 0, 0, validQuestionIds.length - 1),
+    currentIndex: clamp(rawSession.currentIndex || 0, 0, validQuestionIds.length),
     questionIds: validQuestionIds,
     baselineResults,
     requestedMix:
@@ -1079,7 +1079,7 @@ function App() {
       if (!current) return current;
       return {
         ...current,
-        currentIndex: clamp(nextIndex, 0, current.questionIds.length - 1),
+        currentIndex: clamp(nextIndex, 0, current.questionIds.length),
         lastUpdated: new Date().toISOString()
       };
     });
@@ -2201,7 +2201,8 @@ function QuizSessionView({
   onGrade
 }) {
   const questions = activeQuiz?.questionIds.map((questionId) => questionsById[questionId]).filter(Boolean) || [];
-  const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, Math.max(questions.length - 1, 0));
+  const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, questions.length);
+  const isSubmitLanding = currentIndex >= questions.length;
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
@@ -2212,6 +2213,8 @@ function QuizSessionView({
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
   const canRevealAnswer = question?.type === "open" || !!response?.revealed;
+  const unansweredCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null).length;
+  const firstUnansweredIndex = questions.findIndex((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null);
 
   useEffect(() => {
     renderMath();
@@ -2222,17 +2225,31 @@ function QuizSessionView({
     onGrade(question, wasCorrect);
     if (currentIndex < questions.length - 1) {
       onSetIndex(currentIndex + 1);
+      return;
     }
+    onSetIndex(questions.length);
   }
 
   useEffect(() => {
     function handleKeydown(event) {
-      if (isResetDialogOpen || isQuizActionDialogOpen || !question) {
+      if (isResetDialogOpen || isQuizActionDialogOpen) {
         return;
       }
 
       const targetTag = event.target?.tagName;
       if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
+        return;
+      }
+
+      if (isSubmitLanding) {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          onSetIndex(questions.length - 1);
+        }
+        return;
+      }
+
+      if (!question) {
         return;
       }
 
@@ -2271,7 +2288,7 @@ function QuizSessionView({
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, isReviewMode, onSetIndex, onUpdateResponse]);
+  }, [question, response?.revealed, currentIndex, isResetDialogOpen, isQuizActionDialogOpen, isReviewMode, isSubmitLanding, onSetIndex, onUpdateResponse, questions.length]);
 
   if (!questions.length) {
     return (
@@ -2365,134 +2382,188 @@ function QuizSessionView({
 
         <main className="quiz-stage">
           <article className="question-card quiz-card">
-            <div className="quiz-card-top">
-              <div className="top-row">
-                <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
-                {priorSavedResult != null ? (
-                  <span className={`pill subtle ${priorSavedResult ? "score-good" : "score-bad"}`}>
-                    Previously marked {priorSavedResult ? "correct" : "incorrect"}
-                  </span>
-                ) : null}
-              </div>
-              <h2>{formatQuestionHeading(question, currentIndex)}</h2>
-            </div>
-
-            <div className={`quiz-card-body ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
-              <div className="quiz-question-scroll">
-                <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
-
-                {question.type === "mcq" ? (
-                  <div className="choice-grid">
-                    {Object.entries(question.choices).map(([key, value]) => {
-                      const isRevealed = !!response?.revealed;
-                      const isCorrectChoice = isRevealed && key === question.answer;
-                      const isSelectedIncorrect = isRevealed && response?.selectedChoice === key && key !== question.answer;
-                      const isSelected = response?.selectedChoice === key;
-                      return (
-                        <button
-                          key={key}
-                          className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
-                          onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
-                          disabled={isReviewMode}
-                        >
-                          <div className="choice-row">
-                            <strong>{key}</strong>
-                            <span dangerouslySetInnerHTML={{ __html: value }} />
-                          </div>
-                        </button>
-                      );
-                    })}
+            {isSubmitLanding ? (
+              <>
+                <div className="quiz-card-top">
+                  <div className="top-row">
+                    <span className="pill quiz-topic-pill">Final review</span>
                   </div>
-                ) : (
-                  <div className="answer-panel answer-panel-intro">
-                    <strong>Self-grade this one.</strong>
-                    <p className="muted">Work it out first, then mark it right or wrong below. You can revisit and change the mark later.</p>
-                  </div>
-                )}
-              </div>
+                  <h2>{isReviewMode ? "Ready to finish review?" : "Ready to submit?"}</h2>
+                </div>
 
-              {canRevealAnswer ? (
-                <div className="quiz-answer-dock">
-                  <div className="card-row">
-                    <div>
-                      <div className="mini-label" style={{ color: answerLabelColor }}>
-                        {response?.wasCorrect == null
-                          ? "Ready to grade"
-                          : response.wasCorrect
-                            ? "Marked correct"
-                            : "Marked incorrect"}
+                <div className="quiz-card-body quiz-submit-card-body">
+                  <div className="quiz-submit-card">
+                    <div className="mini-label">{unansweredCount === 0 ? "All questions graded" : "Review before submitting"}</div>
+                    <strong>
+                      {unansweredCount === 0
+                        ? "Everything has been graded. You can submit whenever you're ready."
+                        : `${unansweredCount} question${unansweredCount === 1 ? "" : "s"} still need a mark before you submit.`}
+                    </strong>
+                    <p className="muted">
+                      {isReviewMode
+                        ? "You can finish now or jump back to any question if you want to revise a saved result."
+                        : "Submit here, use the top-right button as usual, or jump back to any unanswered question from the map."}
+                    </p>
+                    <div className="quiz-submit-stats">
+                      <div className="quiz-submit-stat">
+                        <span className="mini-label">Graded</span>
+                        <strong>
+                          {gradedCount}/{questions.length}
+                        </strong>
                       </div>
-                      <strong>Answer</strong>
+                      <div className="quiz-submit-stat">
+                        <span className="mini-label">Remaining</span>
+                        <strong>{unansweredCount}</strong>
+                      </div>
                     </div>
-                    {question.type === "mcq" && response?.revealed ? (
-                      <span className="pill subtle">
-                        {response.selectedChoice === question.answer ? "You picked the key" : `Correct choice: ${question.answer}`}
+                    <div className="quiz-submit-actions">
+                      <button className="button" onClick={onRequestSubmit}>
+                        {isReviewMode ? "Finish review" : "Submit quiz"}
+                      </button>
+                      {firstUnansweredIndex >= 0 ? (
+                        <button className="button-ghost" onClick={() => onSetIndex(firstUnansweredIndex)}>
+                          Go to first unanswered
+                        </button>
+                      ) : null}
+                      <button className="button-ghost" onClick={() => onSetIndex(Math.max(questions.length - 1, 0))}>
+                        Back to last question
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="quiz-card-top">
+                  <div className="top-row">
+                    <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
+                    {priorSavedResult != null ? (
+                      <span className={`pill subtle ${priorSavedResult ? "score-good" : "score-bad"}`}>
+                        Previously marked {priorSavedResult ? "correct" : "incorrect"}
                       </span>
                     ) : null}
                   </div>
-                  {priorSavedResult != null ? (
-                    <div className="quiz-prior-result">
-                      Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
+                  <h2>{formatQuestionHeading(question, currentIndex)}</h2>
+                </div>
+
+                <div className={`quiz-card-body ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
+                  <div className="quiz-question-scroll">
+                    <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
+
+                    {question.type === "mcq" ? (
+                      <div className="choice-grid">
+                        {Object.entries(question.choices).map(([key, value]) => {
+                          const isRevealed = !!response?.revealed;
+                          const isCorrectChoice = isRevealed && key === question.answer;
+                          const isSelectedIncorrect = isRevealed && response?.selectedChoice === key && key !== question.answer;
+                          const isSelected = response?.selectedChoice === key;
+                          return (
+                            <button
+                              key={key}
+                              className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
+                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
+                              disabled={isReviewMode}
+                            >
+                              <div className="choice-row">
+                                <strong>{key}</strong>
+                                <span dangerouslySetInnerHTML={{ __html: value }} />
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="answer-panel answer-panel-intro">
+                        <strong>Self-grade this one.</strong>
+                        <p className="muted">Work it out first, then mark it right or wrong below. You can revisit and change the mark later.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {canRevealAnswer ? (
+                    <div className="quiz-answer-dock">
+                      <div className="card-row">
+                        <div>
+                          <div className="mini-label" style={{ color: answerLabelColor }}>
+                            {response?.wasCorrect == null
+                              ? "Ready to grade"
+                              : response.wasCorrect
+                                ? "Marked correct"
+                                : "Marked incorrect"}
+                          </div>
+                          <strong>Answer</strong>
+                        </div>
+                        {question.type === "mcq" && response?.revealed ? (
+                          <span className="pill subtle">
+                            {response.selectedChoice === question.answer ? "You picked the key" : `Correct choice: ${question.answer}`}
+                          </span>
+                        ) : null}
+                      </div>
+                      {priorSavedResult != null ? (
+                        <div className="quiz-prior-result">
+                          Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
+                        </div>
+                      ) : null}
+                      <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                      {question.url ? (
+                        <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
+                          Open source explanation
+                        </a>
+                      ) : null}
                     </div>
-                  ) : null}
-                  <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
-                  {question.url ? (
-                    <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
-                      Open source explanation
-                    </a>
-                  ) : null}
+                  ) : (
+                    <div className="quiz-answer-placeholder">
+                      <div className="mini-label">Reveal locked</div>
+                      <strong>{isReviewMode ? "This review question is already scored." : "Select an answer first."}</strong>
+                      <p className="muted">
+                        {isReviewMode ? "Use the grading controls below if you want to change the saved result." : "The explanation appears here only after you choose an option."}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="quiz-answer-placeholder">
-                  <div className="mini-label">Reveal locked</div>
-                  <strong>{isReviewMode ? "This review question is already scored." : "Select an answer first."}</strong>
-                  <p className="muted">
-                    {isReviewMode ? "Use the grading controls below if you want to change the saved result." : "The explanation appears here only after you choose an option."}
-                  </p>
-                </div>
-              )}
-            </div>
+              </>
+            )}
           </article>
         </main>
       </div>
 
       <footer className="quiz-footer">
         <div className="quiz-footer-left">
-          <div className="quiz-nav-controls">
-            <button className="button-ghost" onClick={() => onSetIndex(currentIndex - 1)} disabled={currentIndex === 0}>
-              Previous
-            </button>
-            <button className="button-ghost" onClick={() => onSetIndex(currentIndex + 1)} disabled={currentIndex >= questions.length - 1}>
-              Next
-            </button>
-          </div>
-          <div className="quiz-nav-hint muted">
-            {"\u2190"} / {"\u2192"} arrow keys move between questions
-          </div>
+          <button className="button-ghost quiz-nav-button" onClick={() => onSetIndex(currentIndex - 1)} disabled={currentIndex === 0}>
+            <span>Previous</span>
+            <span className="shortcut-badge shortcut-badge-nav">←</span>
+          </button>
+          <button className="button-ghost quiz-nav-button" onClick={() => onSetIndex(currentIndex + 1)} disabled={currentIndex >= questions.length}>
+            <span>Next</span>
+            <span className="shortcut-badge shortcut-badge-nav">→</span>
+          </button>
         </div>
         <div className="quiz-footer-center">
           <span className="muted">
-            Question {currentIndex + 1} of {questions.length}
+            {isSubmitLanding ? (isReviewMode ? "Review wrap-up" : "Submission check") : `Question ${currentIndex + 1} of ${questions.length}`}
           </span>
-          
         </div>
         <div className="quiz-footer-right">
-          <button
-            className="button-ghost result-button result-button-ghost"
-            onClick={() => handleGradeAndAdvance(false)}
-            disabled={!response?.revealed && question.type !== "open"}
-          >
-            <span>Mark wrong</span>
-            <span className="shortcut-badge">SPACE</span>
-          </button>
-          <button
-            className="button result-button result-button-primary"
-            onClick={() => handleGradeAndAdvance(true)}
-            disabled={!response?.revealed && question.type !== "open"}
-          >
-            <span>Mark right</span>
-            <span className="shortcut-badge">ENTER</span>
-          </button>
+          {isSubmitLanding ? null : (
+            <>
+              <button
+                className="button-ghost result-button result-button-ghost"
+                onClick={() => handleGradeAndAdvance(false)}
+                disabled={!response?.revealed && question.type !== "open"}
+              >
+                <span>Mark wrong</span>
+                <span className="shortcut-badge">SPACE</span>
+              </button>
+              <button
+                className="button result-button result-button-primary"
+                onClick={() => handleGradeAndAdvance(true)}
+                disabled={!response?.revealed && question.type !== "open"}
+              >
+                <span>Mark right</span>
+                <span className="shortcut-badge">ENTER</span>
+              </button>
+            </>
+          )}
         </div>
       </footer>
     </div>
