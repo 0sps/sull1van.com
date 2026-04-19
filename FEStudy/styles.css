@@ -354,7 +354,7 @@ select {
   max-width: 100%;
   padding: 8px 15px;
   border-radius: 16px;
-  border: 3px solid #8a8a8a;
+  border: 3px solid #a7a7a7;
   background: transparent;
   color: #8a8a8a;
   font-size: calc(0.9rem + 1px);
@@ -545,6 +545,7 @@ select {
 }
 
 .result-button-primary {
+  background: rgba(255, 252, 247, 0.96);
   color: #4f9a7d;
   border: 2px solid rgba(79, 154, 125, 0.42);
   box-shadow: 0 10px 22px rgba(79, 154, 125, 0.12);
