@@ -54,7 +54,6 @@ select {
   width: min(1440px, calc(100% - 24px));
   height: calc(100dvh - 12px);
   padding: 6px 0;
-  overflow: hidden;
 }
 
 .hero {
@@ -355,9 +354,9 @@ select {
   max-width: 100%;
   padding: 8px 15px;
   border-radius: 16px;
-  border: 3px solid #757575;
+  border: 3px solid #8a8a8a;
   background: transparent;
-  color: #757575;
+  color: #8a8a8a;
   font-size: calc(0.9rem + 1px);
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -854,7 +853,6 @@ select {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 14px;
-  overflow: hidden;
 }
 
 .quiz-header,
@@ -935,7 +933,6 @@ select {
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr);
   gap: 14px;
-  overflow: hidden;
 }
 
 .quiz-sidebar {
