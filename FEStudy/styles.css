@@ -851,7 +851,6 @@ select {
 .quiz-empty .results-card {
   border: 1px solid var(--line);
   background: rgba(255, 252, 247, 0.88);
-  backdrop-filter: blur(16px);
   box-shadow: var(--shadow);
 }
 
