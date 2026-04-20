@@ -1337,16 +1337,16 @@ function App() {
     <div className={`app-shell ${view.name === "session" && isTestMode(activeQuiz?.mode) ? "app-shell-session" : ""}`}>
       {!(view.name === "session" && isTestMode(activeQuiz?.mode)) ? (
         <>
-          <header className="hero">
-            <div className="hero-grid">
-              <div>
+          <header className="hero dashboard-hero">
+            <div className="hero-grid dashboard-hero-grid">
+              <div className="dashboard-hero-copy">
                 <div className="eyebrow">{data.exam}</div>
                 <h1>Build your readiness for the FE exam.</h1>
                 <p>
                   This dashboard is built
                   to help you diagnose weak areas and drill down into focused practice.
                 </p>
-                <div className="hero-controls">
+                <div className="hero-controls dashboard-hero-controls">
                   <div className="hero-primary-actions">
                     <button className="button" onClick={startDiagnostic}>
                       {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
@@ -1366,7 +1366,7 @@ function App() {
                   </div>
                   {activeQuiz ? (
                     <button
-                      className={`session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
+                      className={`session-banner dashboard-session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
                       onClick={showResumeButton ? resumeQuiz : undefined}
                       disabled={!showResumeButton}
                     >
@@ -1380,18 +1380,18 @@ function App() {
                   ) : null}
                 </div>
               </div>
-              <div className="stats-grid">
-                <div className="stat-card">
+              <div className="stats-grid dashboard-stats-grid">
+                <div className="stat-card dashboard-stat-card">
                   <div className="mini-label">Estimated overall</div>
                   <div className="stat-value" style={{ color: scoreToColor(overall.score) }}>
                     {overall.score == null ? "—" : `${overall.score}%`}
                   </div>
                 </div>
-                <div className="stat-card">
+                <div className="stat-card dashboard-stat-card">
                   <div className="mini-label">Questions answered</div>
                   <div className="stat-value">{overall.answered}</div>
                 </div>
-                <div className="stat-card">
+                <div className="stat-card dashboard-stat-card">
                   <div className="mini-label">Topics assessed</div>
                   <div className="stat-value">{overall.topicsAssessed}/13</div>
                 </div>
@@ -1424,7 +1424,7 @@ function App() {
             />
           ) : null}
 
-          <div className="footer-note">
+          <div className="footer-note dashboard-footer-note">
             Mapped questions: {data.coverageReport.mappedQuestionCount}. Unmatched source questions:{" "}
             {data.coverageReport.unmatchedQuestionCount}. Topics with low coverage can still track progress, but they may
             need more source material later.
@@ -1756,10 +1756,10 @@ function Dashboard({
   }
 
   return (
-    <div className="content-grid">
-      <aside className="stack">
+    <div className="content-grid dashboard-grid">
+      <aside className="stack dashboard-sidebar">
         {activeQuiz?.status === "in-progress" ? (
-          <div className="panel">
+          <div className="panel dashboard-panel dashboard-panel-resume">
             <div className="mini-label">Resume where you left off</div>
             <h2 className="section-title">{activeQuiz.title}</h2>
             <p className="sidebar-note">
@@ -1772,12 +1772,12 @@ function Dashboard({
           </div>
         ) : null}
 
-        <div className="panel">
+        <div className="panel dashboard-panel dashboard-panel-study">
           <div className="mini-label">Study next</div>
           <h2 className="section-title">Recommended focus</h2>
           <div className="stack">
             {recommendations.map(({ section, metrics, questionCount }) => (
-              <div key={section.id} className="results-card">
+              <div key={section.id} className="results-card dashboard-mini-card">
                 <div className="card-row">
                   <strong>{section.title}</strong>
                   <span className="pill">{metrics.score == null ? "Unassessed" : `${metrics.score}%`}</span>
@@ -1794,7 +1794,7 @@ function Dashboard({
           </div>
         </div>
 
-        <div className="panel">
+        <div className="panel dashboard-panel">
           <div className="mini-label">How scoring works</div>
           <p className="sidebar-note">
             Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered
@@ -1802,7 +1802,7 @@ function Dashboard({
           </p>
         </div>
 
-        <div className="panel">
+        <div className="panel dashboard-panel dashboard-panel-diagnostic">
           <div className="mini-label">Diagnostic</div>
           <p className="sidebar-note">
             Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per
@@ -1813,12 +1813,12 @@ function Dashboard({
           </button>
         </div>
 
-        <div className="panel">
+        <div className="panel dashboard-panel">
           <div className="mini-label">Diagnostic history</div>
           {diagnosticHistory.length ? (
             <div className="stack diagnostic-history-list">
               {diagnosticHistory.map((attempt) => (
-                <div key={attempt.id} className="results-card diagnostic-history-card">
+                <div key={attempt.id} className="results-card diagnostic-history-card dashboard-mini-card">
                   <div className="card-row">
                     <strong>{formatDiagnosticAttemptDate(attempt.completedAt)}</strong>
                     <span className="pill subtle">{attempt.score == null ? "Ungraded" : `${attempt.score}% correct`}</span>
@@ -1840,7 +1840,7 @@ function Dashboard({
         </div>
       </aside>
 
-      <main className="stack">
+      <main className="stack dashboard-main">
         {data.sections.map((section) => {
           const metrics = getSectionMetrics(section, progress);
           const questionCount = questionsBySection[section.id]?.length || 0;
@@ -1849,8 +1849,8 @@ function Dashboard({
           const coverageLabel = getCoverageLabel(questionCount);
           const canResumeSectionQuiz = activeQuiz?.status === "in-progress" && activeQuiz.sectionId === section.id;
           return (
-            <article key={section.id} className={`topic-card ${isThinCoverage ? "is-thin" : ""}`}>
-              <div className="topic-summary-panel">
+            <article key={section.id} className={`topic-card dashboard-topic-card ${isThinCoverage ? "is-thin" : ""}`}>
+              <div className="topic-summary-panel dashboard-topic-summary-panel">
                 <div className="topic-header">
                   <div>
                     <div className="mini-label">
