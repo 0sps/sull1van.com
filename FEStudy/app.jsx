@@ -2418,10 +2418,10 @@ function QuizSessionView({
             </div>
           </div>
           <div className="quiz-header-buttons">
-            <button className="button-ghost" onClick={onRequestLeave}>
+            <button className="button-ghost quiz-header-leave-button" onClick={onRequestLeave}>
               {isReviewMode ? "Leave review" : "Leave quiz"}
             </button>
-            <button className="button" onClick={onRequestSubmit}>
+            <button className="button quiz-header-submit-button" onClick={onRequestSubmit}>
               {isReviewMode ? "Finish review" : "Submit quiz"}
             </button>
           </div>

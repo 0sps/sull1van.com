@@ -618,16 +618,29 @@ select {
 }
 
 .result-button-primary {
-  background: rgba(255, 252, 247, 0.96);
-  color: #4f9a7d;
-  border: 2px solid rgba(79, 154, 125, 0.42);
-  box-shadow: 0 10px 22px rgba(79, 154, 125, 0.12);
+  background: rgba(245, 252, 248, 0.98);
+  color: #3e8968;
+  border: 2px solid rgba(62, 137, 104, 0.5);
+  box-shadow: 0 10px 22px rgba(62, 137, 104, 0.12);
 }
 
 .result-button-ghost {
-  color: #b06a63;
-  border: 2px solid rgba(176, 106, 99, 0.34);
-  box-shadow: 0 10px 22px rgba(176, 106, 99, 0.1);
+  background: rgba(255, 249, 248, 0.98);
+  color: #ad5b52;
+  border: 2px solid rgba(173, 91, 82, 0.44);
+  box-shadow: 0 10px 22px rgba(173, 91, 82, 0.1);
+}
+
+.result-button-primary:not(:disabled):is(:hover, :active) {
+  background: rgba(236, 249, 242, 0.99);
+  color: #2f7657;
+  border-color: rgba(47, 118, 87, 0.62);
+}
+
+.result-button-ghost:not(:disabled):is(:hover, :active) {
+  background: rgba(255, 242, 240, 0.99);
+  color: #974942;
+  border-color: rgba(151, 73, 66, 0.58);
 }
 
 .shortcut-badge {
@@ -998,6 +1011,17 @@ select {
   justify-content: flex-end;
 }
 
+.quiz-header-leave-button:not(:disabled):is(:hover, :active) {
+  background: rgba(255, 247, 246, 0.94);
+  color: #8e463f;
+  border: 2px solid rgba(142, 70, 63, 0.58);
+}
+
+.quiz-header-submit-button:not(:disabled):is(:hover, :active) {
+  background: linear-gradient(135deg, #0c665f, #0e514d);
+  box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+}
+
 .quiz-header-statuses {
   display: flex;
   align-items: flex-end;
@@ -1293,9 +1317,10 @@ select {
   font-weight: 700;
 }
 
-.quiz-nav-button.is-key-active {
+.quiz-nav-button:is(.is-key-active, :hover:not(:disabled), :active:not(:disabled)) {
   border-color: rgba(63, 123, 100, 0.5);
   color: #3f7b64;
+  background: rgba(242, 249, 246, 0.96);
   box-shadow: 0 10px 22px rgba(63, 123, 100, 0.14);
 }
 
