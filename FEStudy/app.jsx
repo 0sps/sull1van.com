@@ -2605,53 +2605,57 @@ function QuizSessionView({
         </main>
       </div>
 
-      <footer className="quiz-footer">
-        <div className="quiz-footer-left">
-          <button
-            className={`button-ghost quiz-nav-button ${navKeyActive === "left" ? "is-key-active" : ""}`}
-            onClick={() => onSetIndex(currentIndex - 1)}
-            disabled={currentIndex === 0}
-          >
-            <span>Previous</span>
-            <span className="shortcut-badge shortcut-badge-nav">←</span>
-          </button>
-          <button
-            className={`button-ghost quiz-nav-button ${navKeyActive === "right" ? "is-key-active" : ""}`}
-            onClick={() => onSetIndex(currentIndex + 1)}
-            disabled={currentIndex >= questions.length}
-          >
-            <span>Next</span>
-            <span className="shortcut-badge shortcut-badge-nav">→</span>
-          </button>
-        </div>
-        <div className="quiz-footer-center">
-          <span className="muted">
-            {isSubmitLanding ? (isReviewMode ? "Review wrap-up" : "Submission check") : `Question ${currentIndex + 1} of ${questions.length}`}
-          </span>
-        </div>
-        <div className="quiz-footer-right">
-          {isSubmitLanding ? null : (
-            <>
-              <button
-                className="button-ghost result-button result-button-ghost"
-                onClick={() => handleGradeAndAdvance(false)}
-                disabled={!response?.revealed}
-              >
-                <span>Mark wrong</span>
-                <span className="shortcut-badge">SPACE</span>
-              </button>
-              <button
-                className="button result-button result-button-primary"
-                onClick={() => handleGradeAndAdvance(true)}
-                disabled={!response?.revealed}
-              >
-                <span>Mark right</span>
-                <span className="shortcut-badge">ENTER</span>
-              </button>
-            </>
-          )}
-        </div>
-      </footer>
+      <div className="quiz-footer-layout">
+        <footer className="quiz-footer quiz-footer-sidebar">
+          <div className="quiz-footer-nav">
+            <button
+              className={`button-ghost quiz-nav-button ${navKeyActive === "left" ? "is-key-active" : ""}`}
+              onClick={() => onSetIndex(currentIndex - 1)}
+              disabled={currentIndex === 0}
+            >
+              <span>Previous</span>
+              <span className="shortcut-badge shortcut-badge-nav">←</span>
+            </button>
+            <button
+              className={`button-ghost quiz-nav-button ${navKeyActive === "right" ? "is-key-active" : ""}`}
+              onClick={() => onSetIndex(currentIndex + 1)}
+              disabled={currentIndex >= questions.length}
+            >
+              <span>Next</span>
+              <span className="shortcut-badge shortcut-badge-nav">→</span>
+            </button>
+          </div>
+        </footer>
+        <footer className="quiz-footer quiz-footer-stage">
+          <div className="quiz-footer-center">
+            <span className="muted">
+              {isSubmitLanding ? (isReviewMode ? "Review wrap-up" : "Submission check") : `Question ${currentIndex + 1} of ${questions.length}`}
+            </span>
+          </div>
+          <div className="quiz-footer-actions">
+            {isSubmitLanding ? null : (
+              <>
+                <button
+                  className="button-ghost result-button result-button-ghost"
+                  onClick={() => handleGradeAndAdvance(false)}
+                  disabled={!response?.revealed}
+                >
+                  <span>Mark wrong</span>
+                  <span className="shortcut-badge">SPACE</span>
+                </button>
+                <button
+                  className="button result-button result-button-primary"
+                  onClick={() => handleGradeAndAdvance(true)}
+                  disabled={!response?.revealed}
+                >
+                  <span>Mark right</span>
+                  <span className="shortcut-badge">ENTER</span>
+                </button>
+              </>
+            )}
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
