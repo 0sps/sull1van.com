@@ -56,7 +56,7 @@ function ClearAnswerStamp({ disabled, onClick }) {
     >
       <svg className="clear-answer-stamp-svg" viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <path id={textPathId} d="M 50,50 m -34,0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0" />
+          <path id={textPathId} d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
         </defs>
         <text className="clear-answer-stamp-text">
           <textPath href={`#${textPathId}`} startOffset="50%" textAnchor="middle">
@@ -64,7 +64,7 @@ function ClearAnswerStamp({ disabled, onClick }) {
           </textPath>
         </text>
       </svg>
-      <span className="clear-answer-stamp-core" aria-hidden="true" />
+      <span className="clear-answer-stamp-disc" aria-hidden="true" />
     </button>
   );
 }

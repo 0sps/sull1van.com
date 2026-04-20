@@ -2,9 +2,9 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Replace the existing `Clear answer` ghost button with a circular stamped control that uses wrapped text, soft red styling, and a stronger hover motion.
+**Goal:** Replace the existing `Clear answer` ghost button with a circular stamped control that uses oversized wrapped text, a single pale red filled disc, and hover behavior that only affects the text ring.
 
-**Architecture:** Add one reusable React helper for the circular clear control so practice mode and quiz mode stay visually identical. Style the control with dedicated CSS for the SVG text ring, pale fill, disabled state, and hover/focus treatment without affecting other button classes.
+**Architecture:** Add one reusable React helper for the circular clear control so practice mode and quiz mode stay visually identical. Style the control with dedicated CSS for the SVG text ring, one pale fill disc, disabled state, and hover/focus treatment without affecting other button classes.
 
 **Tech Stack:** React, JSX, CSS
 
@@ -30,7 +30,7 @@ Use the helper in `SessionView` and `QuizSessionView`, preserving current click 
 
 **Step 1: Replace the old clear-answer button rule**
 
-Add dedicated styles for the circular layout, pale red fill, circular text ring, center disc, disabled state, and hover/focus behavior.
+Add dedicated styles for the circular layout, one pale red fill disc, oversized circular text ring, disabled state, and hover/focus behavior.
 
 **Step 2: Keep layout behavior intact**
 
