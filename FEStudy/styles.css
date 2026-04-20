@@ -371,9 +371,103 @@ select {
   gap: 12px;
 }
 
-.clear-answer-button {
+.clear-answer-stamp {
+  --clear-stamp-text: rgba(184, 95, 95, 0.62);
+  --clear-stamp-text-strong: rgba(189, 66, 66, 0.88);
+  --clear-stamp-border: rgba(195, 124, 124, 0.22);
+  --clear-stamp-border-strong: rgba(196, 92, 92, 0.38);
+  --clear-stamp-fill: rgba(214, 112, 112, 0.09);
+  --clear-stamp-fill-strong: rgba(220, 103, 103, 0.15);
   margin-left: auto;
-  white-space: nowrap;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--clear-stamp-border);
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.88), transparent 34%),
+    linear-gradient(180deg, rgba(255, 250, 247, 0.92), rgba(255, 243, 243, 0.94)),
+    var(--clear-stamp-fill);
+  color: var(--clear-stamp-text);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 10px 22px rgba(177, 96, 96, 0.08);
+  flex: 0 0 auto;
+  overflow: visible;
+  transform-origin: center;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.clear-answer-stamp-svg {
+  width: 74px;
+  height: 74px;
+  overflow: visible;
+}
+
+.clear-answer-stamp-text {
+  fill: currentColor;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.clear-answer-stamp-core {
+  position: absolute;
+  inset: 20px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.82), transparent 48%),
+    linear-gradient(180deg, rgba(255, 245, 245, 0.94), rgba(250, 231, 231, 0.92));
+  border: 1px solid rgba(195, 124, 124, 0.16);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.62);
+}
+
+.clear-answer-stamp:hover:not(:disabled) {
+  color: var(--clear-stamp-text-strong);
+  border-color: var(--clear-stamp-border-strong);
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.94), transparent 36%),
+    linear-gradient(180deg, rgba(255, 248, 248, 0.98), rgba(255, 238, 238, 0.98)),
+    var(--clear-stamp-fill-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 14px 28px rgba(186, 81, 81, 0.16);
+  transform: translateY(-5px) rotate(-8deg);
+}
+
+.clear-answer-stamp:focus-visible {
+  outline: 0;
+  color: var(--clear-stamp-text-strong);
+  border-color: var(--clear-stamp-border-strong);
+  box-shadow:
+    0 0 0 3px rgba(241, 226, 226, 0.94),
+    0 0 0 6px rgba(194, 90, 90, 0.18),
+    0 14px 28px rgba(186, 81, 81, 0.12);
+}
+
+.clear-answer-stamp:disabled {
+  cursor: default;
+  color: rgba(184, 95, 95, 0.32);
+  border-color: rgba(195, 124, 124, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 6px 14px rgba(177, 96, 96, 0.04);
+}
+
+.clear-answer-stamp:disabled .clear-answer-stamp-core {
+  border-color: rgba(195, 124, 124, 0.1);
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.74), transparent 48%),
+    linear-gradient(180deg, rgba(255, 247, 247, 0.92), rgba(250, 238, 238, 0.9));
 }
 
 .score-bar {

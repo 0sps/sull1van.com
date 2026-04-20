@@ -1,4 +1,4 @@
-const { useEffect, useMemo, useRef, useState } = React;
+const { useEffect, useId, useMemo, useRef, useState } = React;
 
 const STORAGE_KEY = "fe-industrial-prep-progress-v2";
 const LEGACY_STORAGE_KEY = "fe-industrial-prep-progress-v1";
@@ -41,6 +41,32 @@ function formatQuestionHeading(question, index) {
   if (!hasGeneratedId) return rawId || `Question ${index + 1}`;
   const sourceLabel = question.sourceSubtopic || question.officialSubtopic || "Practice Question";
   return `Question ${index + 1} • ${sourceLabel}`;
+}
+
+function ClearAnswerStamp({ disabled, onClick }) {
+  const textPathId = `clear-answer-stamp-${useId().replace(/:/g, "")}`;
+
+  return (
+    <button
+      type="button"
+      className="clear-answer-stamp"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label="Clear answer"
+    >
+      <svg className="clear-answer-stamp-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <path id={textPathId} d="M 50,50 m -34,0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0" />
+        </defs>
+        <text className="clear-answer-stamp-text">
+          <textPath href={`#${textPathId}`} startOffset="50%" textAnchor="middle">
+            CLEAR ANSWER     CLEAR ANSWER
+          </textPath>
+        </text>
+      </svg>
+      <span className="clear-answer-stamp-core" aria-hidden="true" />
+    </button>
+  );
 }
 
 function getCoverageLabel(questionCount) {
@@ -2152,9 +2178,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
         <article className="question-card">
           <div className="top-row">
             <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
-            <button className="button-ghost clear-answer-button" onClick={clearAnswer} disabled={!canClearAnswer}>
-              Clear answer
-            </button>
+            <ClearAnswerStamp onClick={clearAnswer} disabled={!canClearAnswer} />
           </div>
           <h2>{formatQuestionHeading(question, currentIndex)}</h2>
           <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
@@ -2498,13 +2522,7 @@ function QuizSessionView({
                         Previously marked {priorSavedResult ? "correct" : "incorrect"}
                       </span>
                     ) : null}
-                    <button
-                      className="button-ghost clear-answer-button"
-                      onClick={() => onClearQuestion(question)}
-                      disabled={!canClearAnswer}
-                    >
-                      Clear answer
-                    </button>
+                    <ClearAnswerStamp onClick={() => onClearQuestion(question)} disabled={!canClearAnswer} />
                   </div>
                   <h2>{formatQuestionHeading(question, currentIndex)}</h2>
                 </div>
