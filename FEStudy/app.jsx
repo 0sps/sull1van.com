@@ -56,7 +56,7 @@ function ClearAnswerStamp({ disabled, onClick }) {
     >
       <svg className="clear-answer-stamp-svg" viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <path id={textPathId} d="M 17 50 A 33 33 0 0 1 83 50" />
+          <path id={textPathId} d="M 22 50 A 28 28 0 0 1 78 50" />
         </defs>
         <text className="clear-answer-stamp-text">
           <textPath href={`#${textPathId}`} startOffset="50%" textAnchor="middle">
@@ -1553,19 +1553,19 @@ function App() {
             </p>
             <div className="toolbar dialog-actions quiz-action-dialog-actions">
               {quizActionDialog.type === "leave" ? (
-                <>
-                  <div className="quiz-action-primary-row">
-                    <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
+                <div className="quiz-action-leave-layout">
+                  <button className="button dialog-option quiz-action-save-button" onClick={saveProgressAndLeaveQuiz}>
+                    Save progress and leave
+                  </button>
+                  <div className="quiz-action-secondary-row">
+                    <button className="button-ghost dialog-option quiz-action-keep-button" onClick={closeQuizActionDialog}>
                       Keep testing
                     </button>
-                    <button className="button dialog-option" onClick={saveProgressAndLeaveQuiz}>
-                      Save progress and leave
+                    <button className="button-ghost dialog-option quiz-action-discard-button" onClick={discardQuizAndLeave}>
+                      Discard results and leave
                     </button>
                   </div>
-                  <button className="button button-danger dialog-option quiz-action-danger" onClick={discardQuizAndLeave}>
-                    Discard results and leave
-                  </button>
-                </>
+                </div>
               ) : (
                 <>
                   <button className="button-ghost dialog-option" onClick={closeQuizActionDialog}>
@@ -2176,9 +2176,13 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
 
       <main className="stack">
         <article className="question-card">
-          <div className="top-row">
-            <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
-            <ClearAnswerStamp onClick={clearAnswer} disabled={!canClearAnswer} />
+          <div className="quiz-card-top">
+            <div className="top-row">
+              <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
+            </div>
+            <div className="quiz-card-top-actions">
+              <ClearAnswerStamp onClick={clearAnswer} disabled={!canClearAnswer} />
+            </div>
           </div>
           <h2>{formatQuestionHeading(question, currentIndex)}</h2>
           <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
@@ -2523,6 +2527,8 @@ function QuizSessionView({
                         Previously marked {priorSavedResult ? "correct" : "incorrect"}
                       </span>
                     ) : null}
+                  </div>
+                  <div className="quiz-card-top-actions">
                     <ClearAnswerStamp onClick={() => onClearQuestion(question)} disabled={!canClearAnswer} />
                   </div>
                   <h2>{formatQuestionHeading(question, currentIndex)}</h2>
