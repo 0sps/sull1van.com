@@ -371,6 +371,11 @@ select {
   gap: 12px;
 }
 
+.clear-answer-button {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 .score-bar {
   width: 100%;
   min-height: 12px;
@@ -1030,11 +1035,15 @@ select {
 .quiz-card-body {
   min-height: 0;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(108px, 156px);
+  grid-template-rows: minmax(0, 1fr);
   gap: 14px;
 }
 
-.quiz-card-body.is-awaiting-answer {
+.quiz-card-body.has-answer-dock {
+  grid-template-rows: minmax(0, 1fr) minmax(108px, 156px);
+}
+
+.quiz-card-body.has-answer-dock.is-awaiting-answer {
   grid-template-rows: minmax(0, 1fr) auto;
 }
 

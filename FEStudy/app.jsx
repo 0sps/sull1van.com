@@ -420,10 +420,12 @@ function normalizeQuizSession(rawSession, questionsById) {
   validQuestionIds.forEach((questionId) => {
     const question = questionsById[questionId];
     const incoming = rawSession.responses?.[questionId] || {};
+    const incomingWasCorrect = typeof incoming.wasCorrect === "boolean" ? incoming.wasCorrect : null;
+    const incomingRevealed = typeof incoming.revealed === "boolean" ? incoming.revealed : false;
     responses[questionId] = {
       selectedChoice: incoming.selectedChoice ?? null,
-      revealed: typeof incoming.revealed === "boolean" ? incoming.revealed : false,
-      wasCorrect: typeof incoming.wasCorrect === "boolean" ? incoming.wasCorrect : null
+      revealed: question.type === "open" && incomingWasCorrect == null ? false : incomingRevealed,
+      wasCorrect: incomingWasCorrect
     };
   });
   const baselineResults = {};
@@ -1107,6 +1109,24 @@ function App() {
     setProgress((current) => updateProgressForQuestion(current, question, wasCorrect));
   }
 
+  function clearQuizQuestion(question) {
+    if (!question || !activeQuiz) return;
+    const baseline = activeQuiz.baselineResults?.[question.id];
+    const baselineWasCorrect = typeof baseline?.wasCorrect === "boolean" ? baseline.wasCorrect : null;
+    setActiveQuiz((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        responses: {
+          ...current.responses,
+          [question.id]: normalizeQuizResponse(question)
+        },
+        lastUpdated: new Date().toISOString()
+      };
+    });
+    setProgress((current) => setProgressForQuestionResult(current, question, baselineWasCorrect));
+  }
+
   function finishPracticeSession() {
     setView({ name: "dashboard" });
   }
@@ -1397,6 +1417,7 @@ function App() {
           onSetIndex={updateQuizIndex}
           onUpdateResponse={updateQuizResponse}
           onGrade={gradeQuizQuestion}
+          onClearQuestion={clearQuizQuestion}
         />
       ) : null}
 
@@ -2099,6 +2120,13 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
     setRevealed(true);
   }
 
+  function clearAnswer() {
+    setSelectedChoice(null);
+    setRevealed(false);
+  }
+
+  const canClearAnswer = selectedChoice != null || revealed;
+
   return (
     <div className="content-grid">
       <aside className="stack">
@@ -2124,6 +2152,9 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
         <article className="question-card">
           <div className="top-row">
             <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
+            <button className="button-ghost clear-answer-button" onClick={clearAnswer} disabled={!canClearAnswer}>
+              Clear answer
+            </button>
           </div>
           <h2>{formatQuestionHeading(question, currentIndex)}</h2>
           <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
@@ -2202,13 +2233,13 @@ function QuizSessionView({
   onRequestSubmit,
   onSetIndex,
   onUpdateResponse,
-  onGrade
+  onGrade,
+  onClearQuestion
 }) {
   const questions = activeQuiz?.questionIds.map((questionId) => questionsById[questionId]).filter(Boolean) || [];
   const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, questions.length);
   const isSubmitLanding = currentIndex >= questions.length;
   const [navKeyActive, setNavKeyActive] = useState(null);
-  const normalizedLegacyOpenRevealRef = useRef(new Set());
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
@@ -2221,19 +2252,11 @@ function QuizSessionView({
   const canRevealAnswer = !!response?.revealed;
   const unansweredCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null).length;
   const firstUnansweredIndex = questions.findIndex((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null);
+  const canClearAnswer = !!(response && (response.selectedChoice != null || response.revealed || response.wasCorrect != null));
 
   useEffect(() => {
     renderMath();
   }, [question, response?.revealed, response?.selectedChoice, response?.wasCorrect]);
-
-  useEffect(() => {
-    if (!question || question.type !== "open") return;
-    if (!response || response.wasCorrect != null) return;
-    if (!response.revealed) return;
-    if (normalizedLegacyOpenRevealRef.current.has(question.id)) return;
-    normalizedLegacyOpenRevealRef.current.add(question.id);
-    onUpdateResponse(question.id, { revealed: false });
-  }, [question, response?.revealed, response?.wasCorrect, onUpdateResponse]);
 
   function handleGradeAndAdvance(wasCorrect) {
     if (!question) return;
@@ -2475,11 +2498,18 @@ function QuizSessionView({
                         Previously marked {priorSavedResult ? "correct" : "incorrect"}
                       </span>
                     ) : null}
+                    <button
+                      className="button-ghost clear-answer-button"
+                      onClick={() => onClearQuestion(question)}
+                      disabled={!canClearAnswer}
+                    >
+                      Clear answer
+                    </button>
                   </div>
                   <h2>{formatQuestionHeading(question, currentIndex)}</h2>
                 </div>
 
-                <div className={`quiz-card-body ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
+                <div className={`quiz-card-body ${question.type === "open" ? "has-answer-dock" : ""} ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
                   <div className="quiz-question-scroll">
                     <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
 
