@@ -1443,17 +1443,23 @@ select {
 .quiz-action-dialog-actions {
   display: grid;
   gap: 14px;
+  width: min(860px, 100%);
+  margin-inline: auto;
+  justify-items: stretch;
+  justify-content: stretch;
 }
 
 .quiz-action-leave-layout {
   display: grid;
   gap: 12px;
+  width: 100%;
 }
 
 .quiz-action-secondary-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  width: 100%;
 }
 
 .quiz-action-save-button,
