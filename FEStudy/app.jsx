@@ -103,25 +103,25 @@ function normalizeDiagnosticAttempts(parsedAttempts = []) {
       responses:
         attempt.responses && typeof attempt.responses === "object"
           ? Object.entries(attempt.responses).reduce((accumulator, [questionId, response]) => {
-              if (typeof response?.wasCorrect === "boolean") {
-                accumulator[questionId] = { wasCorrect: response.wasCorrect };
-              }
-              return accumulator;
-            }, {})
+            if (typeof response?.wasCorrect === "boolean") {
+              accumulator[questionId] = { wasCorrect: response.wasCorrect };
+            }
+            return accumulator;
+          }, {})
           : {},
       topicSummaries:
         attempt.topicSummaries && typeof attempt.topicSummaries === "object"
           ? Object.entries(attempt.topicSummaries).reduce((accumulator, [sectionId, summary]) => {
-              accumulator[sectionId] = {
-                answered: Number.isFinite(summary?.answered) ? summary.answered : 0,
-                correct: Number.isFinite(summary?.correct) ? summary.correct : 0,
-                score: computePercentCorrect(
-                  Number.isFinite(summary?.correct) ? summary.correct : 0,
-                  Number.isFinite(summary?.answered) ? summary.answered : 0
-                )
-              };
-              return accumulator;
-            }, {})
+            accumulator[sectionId] = {
+              answered: Number.isFinite(summary?.answered) ? summary.answered : 0,
+              correct: Number.isFinite(summary?.correct) ? summary.correct : 0,
+              score: computePercentCorrect(
+                Number.isFinite(summary?.correct) ? summary.correct : 0,
+                Number.isFinite(summary?.answered) ? summary.answered : 0
+              )
+            };
+            return accumulator;
+          }, {})
           : {},
       answered: Number.isFinite(attempt.answered) ? attempt.answered : 0,
       correct: Number.isFinite(attempt.correct) ? attempt.correct : 0,
@@ -449,32 +449,32 @@ function normalizeQuizSession(rawSession, questionsById) {
     requestedMix:
       rawSession.requestedMix && typeof rawSession.requestedMix === "object"
         ? TEST_MIX_KEYS.reduce((accumulator, key) => {
-            if (typeof rawSession.requestedMix[key] === "number") {
-              accumulator[key] = rawSession.requestedMix[key];
-            }
-            return accumulator;
-          }, {})
+          if (typeof rawSession.requestedMix[key] === "number") {
+            accumulator[key] = rawSession.requestedMix[key];
+          }
+          return accumulator;
+        }, {})
         : null,
     poolAvailability:
       rawSession.poolAvailability && typeof rawSession.poolAvailability === "object"
         ? TEST_MIX_KEYS.reduce((accumulator, key) => {
-            if (typeof rawSession.poolAvailability[key] === "number") {
-              accumulator[key] = rawSession.poolAvailability[key];
-            }
-            return accumulator;
-          }, {})
+          if (typeof rawSession.poolAvailability[key] === "number") {
+            accumulator[key] = rawSession.poolAvailability[key];
+          }
+          return accumulator;
+        }, {})
         : null,
     showPriorResults: rawSession.showPriorResults !== false,
     diagnosticMeta:
       rawSession.diagnosticMeta && typeof rawSession.diagnosticMeta === "object"
         ? {
-            questionsPerTopic: Number.isFinite(rawSession.diagnosticMeta.questionsPerTopic)
-              ? rawSession.diagnosticMeta.questionsPerTopic
-              : 0,
-            estimatedTotal: Number.isFinite(rawSession.diagnosticMeta.estimatedTotal)
-              ? rawSession.diagnosticMeta.estimatedTotal
-              : 0
-          }
+          questionsPerTopic: Number.isFinite(rawSession.diagnosticMeta.questionsPerTopic)
+            ? rawSession.diagnosticMeta.questionsPerTopic
+            : 0,
+          estimatedTotal: Number.isFinite(rawSession.diagnosticMeta.estimatedTotal)
+            ? rawSession.diagnosticMeta.estimatedTotal
+            : 0
+        }
         : null,
     returnTarget: normalizeReturnTarget(rawSession.returnTarget),
     responses,
@@ -511,9 +511,9 @@ function buildExportSnapshot(data, progress, activeQuiz) {
     },
     activeQuiz: activeQuiz
       ? {
-          ...activeQuiz,
-          lastUpdated: activeQuiz.lastUpdated || new Date().toISOString()
-        }
+        ...activeQuiz,
+        lastUpdated: activeQuiz.lastUpdated || new Date().toISOString()
+      }
       : null
   };
 }
@@ -701,7 +701,7 @@ function getLeaveDialogDescription(activeQuiz) {
 
 function renderMath() {
   if (window.MathJax?.typesetPromise) {
-    window.MathJax.typesetPromise().catch(() => {});
+    window.MathJax.typesetPromise().catch(() => { });
   }
 }
 
@@ -943,10 +943,10 @@ function App() {
       setTestSetupDialog((current) =>
         current
           ? {
-              ...current,
-              availability,
-              mixInputs: sanitizeMixInputs(current.mixInputs, availability)
-            }
+            ...current,
+            availability,
+            mixInputs: sanitizeMixInputs(current.mixInputs, availability)
+          }
           : current
       );
       return;
@@ -977,10 +977,10 @@ function App() {
       setDiagnosticSetupDialog((current) =>
         current
           ? {
-              ...current,
-              questionsPerTopicInput: questionsPerTopic ? String(questionsPerTopic) : "",
-              estimatedTotal: 0
-            }
+            ...current,
+            questionsPerTopicInput: questionsPerTopic ? String(questionsPerTopic) : "",
+            estimatedTotal: 0
+          }
           : current
       );
       return;
@@ -1282,9 +1282,9 @@ function App() {
   const showResumeButton = activeQuiz?.status === "in-progress";
   const configuredQuestionTotal = testSetupDialog
     ? TEST_MIX_KEYS.reduce(
-        (sum, key) => sum + clampMixCount(testSetupDialog.mixInputs?.[key], testSetupDialog.availability[key]),
-        0
-      )
+      (sum, key) => sum + clampMixCount(testSetupDialog.mixInputs?.[key], testSetupDialog.availability[key]),
+      0
+    )
     : 0;
 
   return (
@@ -1297,8 +1297,8 @@ function App() {
                 <div className="eyebrow">{data.exam}</div>
                 <h1>Build your readiness for the FE exam.</h1>
                 <p>
-                  This dashboard is scoped to the FE Industrial blueprint, seeded by your local question bank, and built
-                  to help you diagnose weak areas before drilling down into focused practice.
+                  This dashboard is built
+                  to help you diagnose weak areas and drill down into focused practice.
                 </p>
                 <div className="hero-controls">
                   <div className="hero-primary-actions">
