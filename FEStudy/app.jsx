@@ -287,7 +287,7 @@ function groupQuestionsById(data) {
 function normalizeQuizResponse(question) {
   return {
     selectedChoice: null,
-    revealed: question.type === "open",
+    revealed: false,
     wasCorrect: null
   };
 }
@@ -422,7 +422,7 @@ function normalizeQuizSession(rawSession, questionsById) {
     const incoming = rawSession.responses?.[questionId] || {};
     responses[questionId] = {
       selectedChoice: incoming.selectedChoice ?? null,
-      revealed: typeof incoming.revealed === "boolean" ? incoming.revealed : question.type === "open",
+      revealed: typeof incoming.revealed === "boolean" ? incoming.revealed : false,
       wasCorrect: typeof incoming.wasCorrect === "boolean" ? incoming.wasCorrect : null
     };
   });
@@ -2042,17 +2042,17 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
 
       if (question.type === "mcq" && !revealed && availableChoices.includes(key)) {
         event.preventDefault();
-        submitChoice(key);
+        setSelectedChoice(key);
         return;
       }
 
-      if ((revealed || question.type === "open") && event.key === "Enter") {
+      if (revealed && event.key === "Enter") {
         event.preventDefault();
         recordAndAdvance(true);
         return;
       }
 
-      if ((revealed || question.type === "open") && event.code === "Space") {
+      if (revealed && event.code === "Space") {
         event.preventDefault();
         recordAndAdvance(false);
       }
@@ -2096,7 +2096,6 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
 
   function submitChoice(choiceKey) {
     setSelectedChoice(choiceKey);
-    setRevealed(true);
   }
 
   return (
@@ -2157,15 +2156,22 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
             </div>
           ) : null}
 
-          {revealed || question.type === "open" ? (
-            <div className="answer-panel">
-              {question.type === "mcq" && revealed ? (
-                <div className="mini-label" style={{ color: selectedChoice === question.answer ? "#1f7a4d" : "#b33a3a", marginBottom: 8 }}>
-                  {selectedChoice === question.answer ? "Correct" : `Incorrect · Correct answer: ${question.answer}`}
-                </div>
+          <div className="answer-panel">
+            {question.type === "mcq" && revealed ? (
+              <div className="mini-label" style={{ color: selectedChoice === question.answer ? "#1f7a4d" : "#b33a3a", marginBottom: 8 }}>
+                {selectedChoice === question.answer ? "Correct" : `Incorrect · Correct answer: ${question.answer}`}
+              </div>
+            ) : null}
+            <div className="mini-label">Answer</div>
+            <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
+              <div className="answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+              {!revealed ? (
+                <button className="button-ghost answer-reveal-button" onClick={() => setRevealed(true)}>
+                  {question.type === "mcq" && !selectedChoice ? "Select an answer first" : "Click to show answer"}
+                </button>
               ) : null}
-              <div className="mini-label">Answer</div>
-              <div dangerouslySetInnerHTML={{ __html: question.answer }} />
+            </div>
+            {revealed ? (
               <div className="toolbar" style={{ marginTop: 14 }}>
                 {question.url ? (
                   <a className="button-ghost" href={question.url} target="_blank" rel="noreferrer">
@@ -2181,8 +2187,8 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
                   <span className="shortcut-badge">SPACE</span>
                 </button>
               </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </article>
       </main>
     </div>
@@ -2213,7 +2219,7 @@ function QuizSessionView({
       : null;
   const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
-  const canRevealAnswer = question?.type === "open" || !!response?.revealed;
+  const canRevealAnswer = !!response?.revealed;
   const unansweredCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null).length;
   const firstUnansweredIndex = questions.findIndex((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null);
 
@@ -2260,17 +2266,17 @@ function QuizSessionView({
 
       if (!isReviewMode && question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
         event.preventDefault();
-        onUpdateResponse(question.id, { selectedChoice: key, revealed: true });
+        onUpdateResponse(question.id, { selectedChoice: key });
         return;
       }
 
-      if ((response?.revealed || question.type === "open") && event.key === "Enter") {
+      if (response?.revealed && event.key === "Enter") {
         event.preventDefault();
         handleGradeAndAdvance(true);
         return;
       }
 
-      if ((response?.revealed || question.type === "open") && event.code === "Space") {
+      if (response?.revealed && event.code === "Space") {
         event.preventDefault();
         handleGradeAndAdvance(false);
         return;
@@ -2409,15 +2415,9 @@ function QuizSessionView({
           <article className="question-card quiz-card">
             {isSubmitLanding ? (
               <>
-                <div className="quiz-card-top">
-                  <div className="top-row">
-                    <span className="pill quiz-topic-pill">Final review</span>
-                  </div>
-                  <h2>{isReviewMode ? "Ready to finish review?" : "Ready to submit?"}</h2>
-                </div>
-
                 <div className="quiz-card-body quiz-submit-card-body">
                   <div className="quiz-submit-card">
+                    <h2 className="quiz-submit-title">{isReviewMode ? "Ready to finish review?" : "Ready to submit?"}</h2>
                     <div className="mini-label">{unansweredCount === 0 ? "All questions graded" : "Review before submitting"}</div>
                     <strong>
                       {unansweredCount === 0
@@ -2486,7 +2486,7 @@ function QuizSessionView({
                             <button
                               key={key}
                               className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
-                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
+                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key })}
                               disabled={isReviewMode}
                             >
                               <div className="choice-row">
@@ -2505,7 +2505,6 @@ function QuizSessionView({
                     )}
                   </div>
 
-                  {canRevealAnswer ? (
                     <div className="quiz-answer-dock">
                       <div className="card-row">
                         <div>
@@ -2529,22 +2528,24 @@ function QuizSessionView({
                           Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
                         </div>
                       ) : null}
-                      <div className="quiz-answer-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
-                      {question.url ? (
+                      <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
+                        <div className="quiz-answer-content answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                        {!canRevealAnswer ? (
+                          <button
+                            className="button-ghost answer-reveal-button"
+                            onClick={() => onUpdateResponse(question.id, { revealed: true })}
+                            disabled={question.type === "mcq" && !response?.selectedChoice}
+                          >
+                            {question.type === "mcq" && !response?.selectedChoice ? "Select an answer first" : "Click to show answer"}
+                          </button>
+                        ) : null}
+                      </div>
+                      {canRevealAnswer && question.url ? (
                         <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
                           Open source explanation
                         </a>
                       ) : null}
                     </div>
-                  ) : (
-                    <div className="quiz-answer-placeholder">
-                      <div className="mini-label">Reveal locked</div>
-                      <strong>{isReviewMode ? "This review question is already scored." : "Select an answer first."}</strong>
-                      <p className="muted">
-                        {isReviewMode ? "Use the grading controls below if you want to change the saved result." : "The explanation appears here only after you choose an option."}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </>
             )}
