@@ -56,11 +56,11 @@ function ClearAnswerStamp({ disabled, onClick }) {
     >
       <svg className="clear-answer-stamp-svg" viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <path id={textPathId} d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+          <path id={textPathId} d="M 17 50 A 33 33 0 0 1 83 50" />
         </defs>
         <text className="clear-answer-stamp-text">
           <textPath href={`#${textPathId}`} startOffset="50%" textAnchor="middle">
-            CLEAR ANSWER     CLEAR ANSWER
+            CLEAR ANSWER
           </textPath>
         </text>
       </svg>
