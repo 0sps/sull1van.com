@@ -528,8 +528,8 @@ select {
   margin-top: 18px;
   padding: 16px;
   border-radius: 18px;
-  background: rgba(15, 118, 110, 0.08);
-  border: 1px solid rgba(15, 118, 110, 0.14);
+  background: rgba(123, 123, 123, 0.08);
+  border: 1px solid rgba(123, 123, 123, 0.16);
 }
 
 .result-button {
@@ -1049,8 +1049,8 @@ select {
   overflow: auto;
   border-radius: 20px;
   padding: 14px 16px;
-  background: rgba(15, 118, 110, 0.08);
-  border: 1px solid rgba(15, 118, 110, 0.14);
+  background: rgba(123, 123, 123, 0.08);
+  border: 1px solid rgba(123, 123, 123, 0.16);
 }
 
 .quiz-answer-content {

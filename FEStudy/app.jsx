@@ -2042,7 +2042,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
 
       if (question.type === "mcq" && !revealed && availableChoices.includes(key)) {
         event.preventDefault();
-        setSelectedChoice(key);
+        submitChoice(key);
         return;
       }
 
@@ -2096,6 +2096,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
 
   function submitChoice(choiceKey) {
     setSelectedChoice(choiceKey);
+    setRevealed(true);
   }
 
   return (
@@ -2156,39 +2157,36 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
             </div>
           ) : null}
 
-          <div className="answer-panel">
-            {question.type === "mcq" && revealed ? (
-              <div className="mini-label" style={{ color: selectedChoice === question.answer ? "#1f7a4d" : "#b33a3a", marginBottom: 8 }}>
-                {selectedChoice === question.answer ? "Correct" : `Incorrect · Correct answer: ${question.answer}`}
+          {question.type === "open" ? (
+            <div className="answer-panel">
+              <div className="mini-label">Answer</div>
+              <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
+                <div className="answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                {!revealed ? (
+                  <button className="button-ghost answer-reveal-button" onClick={() => setRevealed(true)}>
+                    Click to show answer
+                  </button>
+                ) : null}
               </div>
-            ) : null}
-            <div className="mini-label">Answer</div>
-            <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
-              <div className="answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
-              {!revealed ? (
-                <button className="button-ghost answer-reveal-button" onClick={() => setRevealed(true)}>
-                  {question.type === "mcq" && !selectedChoice ? "Select an answer first" : "Click to show answer"}
-                </button>
+              {revealed ? (
+                <div className="toolbar" style={{ marginTop: 14 }}>
+                  {question.url ? (
+                    <a className="button-ghost" href={question.url} target="_blank" rel="noreferrer">
+                      Open source explanation
+                    </a>
+                  ) : null}
+                  <button className="button result-button result-button-primary" onClick={() => recordAndAdvance(true)}>
+                    <span>{currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}</span>
+                    <span className="shortcut-badge">ENTER</span>
+                  </button>
+                  <button className="button-ghost result-button result-button-ghost" onClick={() => recordAndAdvance(false)}>
+                    <span>I missed it</span>
+                    <span className="shortcut-badge">SPACE</span>
+                  </button>
+                </div>
               ) : null}
             </div>
-            {revealed ? (
-              <div className="toolbar" style={{ marginTop: 14 }}>
-                {question.url ? (
-                  <a className="button-ghost" href={question.url} target="_blank" rel="noreferrer">
-                    Open source explanation
-                  </a>
-                ) : null}
-                <button className="button result-button result-button-primary" onClick={() => recordAndAdvance(true)}>
-                  <span>{currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}</span>
-                  <span className="shortcut-badge">ENTER</span>
-                </button>
-                <button className="button-ghost result-button result-button-ghost" onClick={() => recordAndAdvance(false)}>
-                  <span>I missed it</span>
-                  <span className="shortcut-badge">SPACE</span>
-                </button>
-              </div>
-            ) : null}
-          </div>
+          ) : null}
         </article>
       </main>
     </div>
@@ -2210,6 +2208,7 @@ function QuizSessionView({
   const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, questions.length);
   const isSubmitLanding = currentIndex >= questions.length;
   const [navKeyActive, setNavKeyActive] = useState(null);
+  const normalizedLegacyOpenRevealRef = useRef(new Set());
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
@@ -2226,6 +2225,15 @@ function QuizSessionView({
   useEffect(() => {
     renderMath();
   }, [question, response?.revealed, response?.selectedChoice, response?.wasCorrect]);
+
+  useEffect(() => {
+    if (!question || question.type !== "open") return;
+    if (!response || response.wasCorrect != null) return;
+    if (!response.revealed) return;
+    if (normalizedLegacyOpenRevealRef.current.has(question.id)) return;
+    normalizedLegacyOpenRevealRef.current.add(question.id);
+    onUpdateResponse(question.id, { revealed: false });
+  }, [question, response?.revealed, response?.wasCorrect, onUpdateResponse]);
 
   function handleGradeAndAdvance(wasCorrect) {
     if (!question) return;
@@ -2266,7 +2274,7 @@ function QuizSessionView({
 
       if (!isReviewMode && question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
         event.preventDefault();
-        onUpdateResponse(question.id, { selectedChoice: key });
+        onUpdateResponse(question.id, { selectedChoice: key, revealed: true });
         return;
       }
 
@@ -2486,7 +2494,7 @@ function QuizSessionView({
                             <button
                               key={key}
                               className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
-                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key })}
+                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
                               disabled={isReviewMode}
                             >
                               <div className="choice-row">
@@ -2505,47 +2513,43 @@ function QuizSessionView({
                     )}
                   </div>
 
-                    <div className="quiz-answer-dock">
-                      <div className="card-row">
-                        <div>
-                          <div className="mini-label" style={{ color: answerLabelColor }}>
-                            {response?.wasCorrect == null
-                              ? "Ready to grade"
-                              : response.wasCorrect
-                                ? "Marked correct"
-                                : "Marked incorrect"}
+                    {question.type === "open" ? (
+                      <div className="quiz-answer-dock">
+                        <div className="card-row">
+                          <div>
+                            <div className="mini-label" style={{ color: answerLabelColor }}>
+                              {response?.wasCorrect == null
+                                ? "Ready to grade"
+                                : response.wasCorrect
+                                  ? "Marked correct"
+                                  : "Marked incorrect"}
+                            </div>
+                            <strong>Answer</strong>
                           </div>
-                          <strong>Answer</strong>
                         </div>
-                        {question.type === "mcq" && response?.revealed ? (
-                          <span className="pill subtle">
-                            {response.selectedChoice === question.answer ? "You picked the key" : `Correct choice: ${question.answer}`}
-                          </span>
+                        {priorSavedResult != null ? (
+                          <div className="quiz-prior-result">
+                            Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
+                          </div>
+                        ) : null}
+                        <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
+                          <div className="quiz-answer-content answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                          {!canRevealAnswer ? (
+                            <button
+                              className="button-ghost answer-reveal-button"
+                              onClick={() => onUpdateResponse(question.id, { revealed: true })}
+                            >
+                              Click to show answer
+                            </button>
+                          ) : null}
+                        </div>
+                        {canRevealAnswer && question.url ? (
+                          <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
+                            Open source explanation
+                          </a>
                         ) : null}
                       </div>
-                      {priorSavedResult != null ? (
-                        <div className="quiz-prior-result">
-                          Saved before this attempt: {priorSavedResult ? "correct" : "incorrect"}.
-                        </div>
-                      ) : null}
-                      <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
-                        <div className="quiz-answer-content answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
-                        {!canRevealAnswer ? (
-                          <button
-                            className="button-ghost answer-reveal-button"
-                            onClick={() => onUpdateResponse(question.id, { revealed: true })}
-                            disabled={question.type === "mcq" && !response?.selectedChoice}
-                          >
-                            {question.type === "mcq" && !response?.selectedChoice ? "Select an answer first" : "Click to show answer"}
-                          </button>
-                        ) : null}
-                      </div>
-                      {canRevealAnswer && question.url ? (
-                        <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
-                          Open source explanation
-                        </a>
-                      ) : null}
-                    </div>
+                    ) : null}
                 </div>
               </>
             )}
@@ -2583,7 +2587,7 @@ function QuizSessionView({
               <button
                 className="button-ghost result-button result-button-ghost"
                 onClick={() => handleGradeAndAdvance(false)}
-                disabled={!response?.revealed && question.type !== "open"}
+                disabled={!response?.revealed}
               >
                 <span>Mark wrong</span>
                 <span className="shortcut-badge">SPACE</span>
@@ -2591,7 +2595,7 @@ function QuizSessionView({
               <button
                 className="button result-button result-button-primary"
                 onClick={() => handleGradeAndAdvance(true)}
-                disabled={!response?.revealed && question.type !== "open"}
+                disabled={!response?.revealed}
               >
                 <span>Mark right</span>
                 <span className="shortcut-badge">ENTER</span>
