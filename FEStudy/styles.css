@@ -814,6 +814,7 @@ select {
 .dashboard-hero .eyebrow {
   color: #7d6850;
   letter-spacing: 0.16em;
+  font-weight: 650;
 }
 
 .dashboard-hero h1 {
@@ -823,6 +824,7 @@ select {
   font-size: clamp(2.55rem, 4.15vw, 4.25rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
+  font-weight: 650;
 }
 
 .dashboard-hero p {
@@ -862,6 +864,7 @@ select {
   max-width: 9ch;
   color: #7a664c;
   line-height: 1.4;
+  font-weight: 650;
 }
 
 .dashboard-stat-card .stat-value {
@@ -870,6 +873,7 @@ select {
   font-size: clamp(2.2rem, 2.9vw, 2.9rem);
   line-height: 0.96;
   letter-spacing: -0.045em;
+  font-weight: 620;
 }
 
 .dashboard-hero .button,
@@ -958,14 +962,21 @@ select {
 }
 
 .dashboard-sidebar .section-title {
-  font-size: 1.38rem;
+  font-size: 1.28rem;
   margin-bottom: 10px;
+  font-weight: 620;
 }
 
 .dashboard-sidebar .sidebar-note,
 .dashboard-sidebar .reason-text,
 .dashboard-topic-card .muted {
   color: #655441;
+}
+
+.dashboard-sidebar .mini-label,
+.dashboard-topic-card .mini-label {
+  color: #7a684f;
+  font-weight: 620;
 }
 
 .dashboard-sidebar .stack {
@@ -984,6 +995,14 @@ select {
 
 .dashboard-sidebar .dashboard-mini-card::after {
   display: none;
+}
+
+.dashboard-sidebar .dashboard-mini-card strong,
+.dashboard-sidebar .diagnostic-history-card strong {
+  display: block;
+  font-size: 1.03rem;
+  line-height: 1.22;
+  font-weight: 620;
 }
 
 .dashboard-sidebar .pill,
@@ -1040,13 +1059,14 @@ select {
 
 .dashboard-topic-card h3 {
   margin-top: 8px;
-  font-size: 1.52rem;
-  line-height: 1.03;
+  font-size: 1.42rem;
+  line-height: 1.05;
+  font-weight: 620;
 }
 
 .dashboard-topic-card .topic-progress-copy .muted,
 .dashboard-topic-card .subtopic-summary .muted {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .dashboard-topic-card .topic-card-action-open,
@@ -1108,6 +1128,13 @@ select {
 
 .dashboard-topic-card .subtopic-metrics {
   min-width: min(290px, 100%);
+}
+
+.dashboard-topic-card .subtopic-meta strong {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.24;
+  font-weight: 620;
 }
 
 .dashboard-footer-note {
