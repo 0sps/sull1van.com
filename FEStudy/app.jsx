@@ -2205,7 +2205,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
             </div>
           ) : null}
 
-          {question.type === "open" ? (
+          {question.type === "open" && !revealed ? (
             <div className="answer-panel">
               <strong>Self-grade this one.</strong>
               <p className="muted">Work it out first, then mark whether you got it right before moving on.</p>
@@ -2213,14 +2213,15 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
           ) : null}
 
           {question.type === "open" ? (
-            <div className="answer-panel">
+            <div
+              className={`answer-panel ${revealed ? "" : "is-clickable"}`}
+              onClick={!revealed ? () => setRevealed(true) : undefined}
+            >
               <div className="mini-label">Answer</div>
               <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
                 <div className="answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
                 {!revealed ? (
-                  <button className="button-ghost answer-reveal-button" onClick={() => setRevealed(true)}>
-                    Click to show answer
-                  </button>
+                  <div className="answer-reveal-button">Click to show answer</div>
                 ) : null}
               </div>
               {revealed ? (
@@ -2553,16 +2554,19 @@ function QuizSessionView({
                           );
                         })}
                       </div>
-                    ) : (
+                    ) : !canRevealAnswer ? (
                       <div className="answer-panel answer-panel-intro">
                         <strong>Self-grade this one.</strong>
                         <p className="muted">Work it out first, then mark it right or wrong below. You can revisit and change the mark later.</p>
                       </div>
-                    )}
+                    ) : null}
                   </div>
 
                     {question.type === "open" ? (
-                      <div className="quiz-answer-dock">
+                      <div
+                        className={`quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`}
+                        onClick={!canRevealAnswer ? () => onUpdateResponse(question.id, { revealed: true }) : undefined}
+                      >
                         <div className="card-row">
                           <div>
                             <div className="mini-label" style={{ color: answerLabelColor }}>
@@ -2583,12 +2587,7 @@ function QuizSessionView({
                         <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
                           <div className="quiz-answer-content answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
                           {!canRevealAnswer ? (
-                            <button
-                              className="button-ghost answer-reveal-button"
-                              onClick={() => onUpdateResponse(question.id, { revealed: true })}
-                            >
-                              Click to show answer
-                            </button>
+                            <div className="answer-reveal-button">Click to show answer</div>
                           ) : null}
                         </div>
                         {canRevealAnswer && question.url ? (

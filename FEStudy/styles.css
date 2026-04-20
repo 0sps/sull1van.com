@@ -605,6 +605,10 @@ select {
   border: 1px solid rgba(123, 123, 123, 0.16);
 }
 
+.answer-panel.is-clickable {
+  cursor: pointer;
+}
+
 .result-button {
   position: relative;
   display: inline-flex;
@@ -1161,6 +1165,10 @@ select {
   border: 1px solid rgba(123, 123, 123, 0.16);
 }
 
+.quiz-answer-dock.is-clickable {
+  cursor: pointer;
+}
+
 .quiz-answer-content {
   margin-top: 10px;
   line-height: 1.55;
@@ -1199,6 +1207,13 @@ select {
   transform: translate(-50%, -50%);
   z-index: 1;
   white-space: nowrap;
+  color: #4e4e4e;
+  font-weight: 800;
+  letter-spacing: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 }
 
 .quiz-prior-result {
