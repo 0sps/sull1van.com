@@ -619,32 +619,51 @@ select {
   border-radius: 18px;
   font-weight: 700;
   justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 7px 14px rgba(108, 91, 69, 0.08);
 }
 
 .result-button-primary {
-  background: rgba(245, 252, 248, 0.98);
-  color: #3e8968;
-  border: 2px solid rgba(62, 137, 104, 0.5);
-  box-shadow: 0 10px 22px rgba(62, 137, 104, 0.12);
+  background: linear-gradient(180deg, rgba(248, 253, 250, 0.99), rgba(233, 245, 238, 0.97));
+  color: #2f7b5c;
+  border-color: rgba(82, 154, 118, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 10px 18px rgba(87, 145, 114, 0.14),
+    0 2px 5px rgba(87, 145, 114, 0.08);
 }
 
 .result-button-ghost {
-  background: rgba(255, 249, 248, 0.98);
-  color: #ad5b52;
-  border: 2px solid rgba(173, 91, 82, 0.44);
-  box-shadow: 0 10px 22px rgba(173, 91, 82, 0.1);
+  background: linear-gradient(180deg, rgba(255, 251, 250, 0.99), rgba(249, 239, 237, 0.96));
+  color: #a2554d;
+  border-color: rgba(185, 111, 101, 0.44);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -3px 8px rgba(187, 130, 122, 0.08),
+    0 5px 10px rgba(173, 91, 82, 0.08);
 }
 
 .result-button-primary:not(:disabled):is(:hover, :active) {
-  background: rgba(236, 249, 242, 0.99);
-  color: #2f7657;
-  border-color: rgba(47, 118, 87, 0.62);
+  background: linear-gradient(180deg, rgba(241, 250, 245, 0.99), rgba(221, 239, 228, 0.98));
+  color: #276c50;
+  border-color: rgba(39, 108, 80, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 10px 18px rgba(70, 126, 98, 0.15),
+    0 2px 5px rgba(70, 126, 98, 0.09);
 }
 
 .result-button-ghost:not(:disabled):is(:hover, :active) {
-  background: rgba(255, 242, 240, 0.99);
-  color: #974942;
-  border-color: rgba(151, 73, 66, 0.58);
+  background: linear-gradient(180deg, rgba(255, 246, 244, 0.99), rgba(244, 228, 224, 0.98));
+  color: #904740;
+  border-color: rgba(144, 71, 64, 0.56);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -3px 8px rgba(170, 106, 98, 0.11),
+    0 5px 10px rgba(144, 71, 64, 0.09);
 }
 
 .shortcut-badge {
@@ -1025,15 +1044,48 @@ select {
   justify-content: flex-end;
 }
 
+.quiz-header-leave-button,
+.quiz-header-submit-button {
+  min-height: 44px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.quiz-header-leave-button {
+  background: linear-gradient(180deg, rgba(255, 252, 249, 0.98), rgba(248, 241, 238, 0.95));
+  color: #91564f;
+  border: 1px solid rgba(169, 111, 103, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 -4px 8px rgba(192, 149, 142, 0.08);
+}
+
 .quiz-header-leave-button:not(:disabled):is(:hover, :active) {
-  background: rgba(255, 247, 246, 0.94);
-  color: #8e463f;
-  border: 2px solid rgba(142, 70, 63, 0.58);
+  background: linear-gradient(180deg, rgba(255, 246, 244, 0.98), rgba(245, 233, 230, 0.97));
+  color: #84453f;
+  border-color: rgba(132, 69, 63, 0.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -4px 8px rgba(168, 110, 101, 0.1);
+}
+
+.quiz-header-submit-button {
+  background: linear-gradient(180deg, #18786f 0%, #136660 54%, #115a55 100%);
+  border: 1px solid rgba(17, 98, 91, 0.72);
+  color: #f7f5ef;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 12px 20px rgba(14, 95, 88, 0.2),
+    0 2px 6px rgba(10, 76, 71, 0.14);
 }
 
 .quiz-header-submit-button:not(:disabled):is(:hover, :active) {
-  background: linear-gradient(135deg, #0c665f, #0e514d);
-  box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+  background: linear-gradient(180deg, #136b63 0%, #105c56 54%, #0d504c 100%);
+  border-color: rgba(12, 80, 76, 0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 12px 20px rgba(11, 83, 77, 0.18),
+    0 2px 6px rgba(9, 62, 59, 0.14);
 }
 
 .quiz-header-statuses {
@@ -1352,13 +1404,21 @@ select {
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  background: linear-gradient(180deg, rgba(248, 245, 240, 0.98), rgba(238, 229, 216, 0.92));
+  border: 1px solid rgba(185, 170, 145, 0.34);
+  color: rgba(72, 57, 38, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 -6px 10px rgba(145, 121, 89, 0.08);
 }
 
 .quiz-nav-button:is(.is-key-active, :hover:not(:disabled), :active:not(:disabled)) {
-  border-color: rgba(63, 123, 100, 0.5);
-  color: #3f7b64;
-  background: rgba(242, 249, 246, 0.96);
-  box-shadow: 0 10px 22px rgba(63, 123, 100, 0.14);
+  border-color: rgba(76, 135, 109, 0.42);
+  color: #3e725d;
+  background: linear-gradient(180deg, rgba(244, 249, 246, 0.99), rgba(228, 239, 232, 0.95));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 -6px 10px rgba(84, 134, 108, 0.1);
 }
 
 .quiz-footer-center {
