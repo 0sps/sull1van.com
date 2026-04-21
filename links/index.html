@@ -38,12 +38,22 @@
         html {
             min-height: 100%;
             background:
-                radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.12) 18%, transparent 36%),
-                radial-gradient(circle at 78% 24%, rgba(255, 247, 210, 0.32), transparent 22%),
-                radial-gradient(circle at 24% 24%, rgba(144, 196, 255, 0.24), transparent 34%),
-                radial-gradient(circle at 24% 74%, rgba(125, 178, 255, 0.16), transparent 26%),
-                linear-gradient(180deg, #8db8eb 0%, #6f9edd 34%, #5f8fd3 65%, #6f9fe2 100%);
-            background-color: #76a3e0;
+                radial-gradient(circle at 54% 42%, rgba(255, 246, 218, 0.42), rgba(255, 246, 218, 0.12) 10%, transparent 22%),
+                radial-gradient(circle at 50% 48%, rgba(173, 211, 255, 0.4), transparent 28%),
+                radial-gradient(circle at 28% 52%, rgba(191, 222, 255, 0.14), transparent 24%),
+                radial-gradient(circle at 74% 56%, rgba(174, 212, 255, 0.16), transparent 26%),
+                linear-gradient(
+                    180deg,
+                    #ffffff 0,
+                    #ffffff 10vh,
+                    #eef6ff 18vh,
+                    #dcecff 42%,
+                    #d7e9ff 58%,
+                    #eef6ff calc(100% - 18vh),
+                    #ffffff calc(100% - 10vh),
+                    #ffffff 100%
+                );
+            background-color: #ffffff;
         }
 
         body {
@@ -66,24 +76,23 @@
         .sky {
             z-index: -4;
             background:
-                radial-gradient(circle at 72% 30%, rgba(124, 183, 255, 0.22), transparent 30%),
-                radial-gradient(circle at 12% 80%, rgba(255, 255, 255, 0.08), transparent 18%);
+                radial-gradient(circle at 50% 48%, rgba(116, 182, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 34% 60%, rgba(255, 255, 255, 0.12), transparent 18%);
         }
 
         .flare {
             z-index: -3;
             background:
-                radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 10%, transparent 22%),
-                radial-gradient(circle at 76% 26%, rgba(255, 255, 255, 0.18), transparent 4%),
-                radial-gradient(circle at 68% 34%, rgba(255, 255, 255, 0.14), transparent 5%),
-                radial-gradient(circle at 44% 58%, rgba(255, 255, 255, 0.12), transparent 6%);
+                radial-gradient(circle at 54% 42%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.18) 9%, transparent 20%),
+                radial-gradient(circle at 58% 50%, rgba(255, 255, 255, 0.14), transparent 4%),
+                radial-gradient(circle at 46% 56%, rgba(255, 255, 255, 0.1), transparent 5%);
             filter: blur(2px);
-            opacity: 0.95;
+            opacity: 0.8;
         }
 
         .vignette {
             z-index: -2;
-            background: radial-gradient(circle, transparent 46%, rgba(63, 102, 171, 0.18) 100%);
+            background: radial-gradient(circle at 50% 50%, transparent 52%, rgba(119, 162, 223, 0.08) 100%);
         }
 
         .grain {
