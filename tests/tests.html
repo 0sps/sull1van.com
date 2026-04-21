@@ -3934,6 +3934,51 @@
             document.getElementById('encryptProgressOverlay').classList.remove('visible');
         }
 
+        function _hideVaultOverlay() {
+            const overlay = document.getElementById('vaultOverlay');
+            if (overlay) overlay.classList.remove('visible');
+        }
+
+        function _escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function _renderGoogleAuthRequired({
+            message = 'Google authentication is required to view your lab data.',
+            detail = 'After Google sign-in succeeds, this page will immediately ask for your vault password if the vault is still locked.',
+            buttonLabel = 'Sign in with Google',
+            isBusy = false,
+        } = {}) {
+            const loadingEl = document.getElementById('loadingState');
+            if (!loadingEl) return;
+
+            loadingEl.innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:32px 20px;text-align:center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <div style="display:flex;flex-direction:column;gap:8px;max-width:340px;">
+                        <div style="font-family:var(--font-heading);font-size:1rem;color:var(--text-primary);line-height:1.35;">
+                            ${_escapeHtml(message)}
+                        </div>
+                        <div style="font-family:var(--font-body);font-size:0.8rem;color:var(--muted);line-height:1.6;">
+                            ${_escapeHtml(detail)}
+                        </div>
+                    </div>
+                    <button
+                        onclick="window._labsLogin()"
+                        ${isBusy ? 'disabled' : ''}
+                        style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:var(--font-body);font-size:0.8rem;cursor:${isBusy ? 'default' : 'pointer'};letter-spacing:0.04em;opacity:${isBusy ? '0.72' : '1'};"
+                    >${_escapeHtml(buttonLabel)}</button>
+                </div>`;
+        }
+
         // ─── Key acquisition flow ──────────────────────────────────────────────────
         async function acquireKey(db) {
             // 1. Try 30-day cached key first
@@ -4011,11 +4056,12 @@
 
             getRedirectResult(auth).catch(err => {
                 console.error('Redirect login failed', err);
-                updateBoot('vault_error', { msg: err.message });
-                const errEl = document.getElementById('loadingState');
-                if (errEl) {
-                    errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Sign-in failed: ${err.message}</div>`;
-                }
+                updateBoot('auth_no_user', { msg: err.message });
+                _hideVaultOverlay();
+                _renderGoogleAuthRequired({
+                    message: 'Google sign-in did not complete.',
+                    detail: err?.message || 'Please try signing in again.',
+                });
             });
 
             onAuthStateChanged(auth, async user => {
@@ -4055,21 +4101,20 @@
                     updateBoot('auth_no_user');
                     window._labsUser = null;
                     window._labsKey = null;
-
-                    const loadingEl = document.getElementById('loadingState');
-                    if (loadingEl) {
-                        loadingEl.innerHTML = `
-                            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                <div style="font-family:var(--font-body);font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;">Sign in to view your lab data</div>
-                                <button onclick="window._labsLogin()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:var(--font-body);font-size:0.8rem;cursor:pointer;letter-spacing:0.04em;">Sign in with Google</button>
-                            </div>`;
-                    }
+                    _vaultDataCache = null;
+                    _hideVaultOverlay();
+                    _renderGoogleAuthRequired();
                 }
             });
             window._labsLogin = async function () {
                 try {
                     const provider = new GoogleAuthProvider();
+                    _renderGoogleAuthRequired({
+                        message: 'Google authentication is required to view your lab data.',
+                        detail: 'Complete the sign-in flow in the Google window. If this browser is still locked afterward, the vault password dialog will appear next.',
+                        buttonLabel: 'Opening Google sign-in…',
+                        isBusy: true,
+                    });
                     if (_shouldUseRedirectLogin()) {
                         updateBoot('auth_redirect_start');
                         await signInWithRedirect(auth, provider);
@@ -4079,10 +4124,20 @@
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
                     console.error('Login failed', err);
-                    const loadingEl = document.getElementById('loadingState');
-                    if (loadingEl) {
-                        loadingEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Sign-in failed: ${err.message}</div>`;
+                    const code = err?.code || '';
+                    let message = 'Google sign-in failed.';
+                    let detail = err?.message || 'Please try again.';
+
+                    if (code === 'auth/popup-closed-by-user') {
+                        message = 'Google sign-in was canceled.';
+                        detail = 'Click the button again and complete the Google popup to continue into your encrypted vault.';
+                    } else if (code === 'auth/popup-blocked') {
+                        message = 'Your browser blocked the Google popup.';
+                        detail = 'Allow popups for this page, then click the button again. On mobile, the flow may open as a redirect instead.';
                     }
+
+                    updateBoot('auth_no_user', { msg: detail, code });
+                    _renderGoogleAuthRequired({ message, detail });
                 }
             };
         } catch (e) {
