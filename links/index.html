@@ -8,40 +8,36 @@
     <title>Portal | Sean's Log</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --font-heading: 'Outfit', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
-            --bg: #04101f;
-            --bg-deep: #020913;
-            --card: rgba(17, 30, 48, 0.54);
-            --card-strong: rgba(26, 41, 64, 0.72);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --card-highlight: rgba(255, 255, 255, 0.22);
-            --text: #f7fbff;
-            --muted: rgba(235, 244, 255, 0.68);
-            --faint: rgba(235, 244, 255, 0.28);
-            --blue: #49a6ff;
-            --green: #60d394;
-            --amber: #ffbd59;
-            --rose: #ff8d7a;
-            --shadow: 0 24px 64px rgba(0, 0, 0, 0.42);
-            --radius-xl: 28px;
-            --radius-l: 22px;
-            --radius-pill: 999px;
+            --bg-deep: #01070f;
+            --text: #f4f8fd;
+            --muted: rgba(231, 241, 255, 0.7);
+            --faint: rgba(231, 241, 255, 0.28);
+            --border: rgba(255, 255, 255, 0.12);
+            --border-strong: rgba(255, 255, 255, 0.22);
+            --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            --pill: 999px;
             --spring: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         html {
             min-height: 100%;
             background:
-                radial-gradient(circle at 18% 20%, rgba(73, 166, 255, 0.24), transparent 34%),
-                radial-gradient(circle at 82% 24%, rgba(96, 211, 148, 0.14), transparent 30%),
-                radial-gradient(circle at 50% 100%, rgba(255, 189, 89, 0.13), transparent 34%),
-                linear-gradient(180deg, #071729 0%, var(--bg-deep) 100%);
+                radial-gradient(circle at 16% 18%, rgba(83, 173, 255, 0.22), transparent 34%),
+                radial-gradient(circle at 84% 24%, rgba(255, 195, 107, 0.1), transparent 28%),
+                radial-gradient(circle at 68% 80%, rgba(99, 218, 149, 0.1), transparent 26%),
+                linear-gradient(180deg, #071727 0%, var(--bg-deep) 100%);
             background-color: var(--bg-deep);
         }
 
@@ -49,152 +45,68 @@
             min-height: 100dvh;
             color: var(--text);
             font-family: var(--font-body);
-            overflow-x: hidden;
             position: relative;
+            overflow-x: hidden;
         }
 
         .nebula,
         .vignette,
-        .grain,
-        .sun-halo {
+        .grain {
             position: fixed;
             inset: 0;
             pointer-events: none;
         }
 
         .nebula {
-            z-index: -4;
-            filter: blur(58px);
-            background:
-                radial-gradient(circle at 20% 24%, rgba(73, 166, 255, 0.18), transparent 36%),
-                radial-gradient(circle at 80% 20%, rgba(96, 211, 148, 0.12), transparent 30%),
-                radial-gradient(circle at 48% 82%, rgba(255, 141, 122, 0.12), transparent 34%);
-            animation: drift 26s ease-in-out infinite alternate;
-        }
-
-        .sun-halo {
             z-index: -3;
+            filter: blur(60px);
             background:
-                radial-gradient(circle at 78% 14%, rgba(255, 255, 255, 0.7), transparent 10%),
-                radial-gradient(circle at 78% 14%, rgba(255, 210, 130, 0.32), transparent 20%),
-                radial-gradient(circle at 78% 14%, rgba(255, 210, 130, 0.12), transparent 34%);
+                radial-gradient(circle at 20% 20%, rgba(83, 173, 255, 0.18), transparent 34%),
+                radial-gradient(circle at 82% 22%, rgba(255, 143, 122, 0.1), transparent 28%),
+                radial-gradient(circle at 60% 82%, rgba(99, 218, 149, 0.1), transparent 28%);
+            animation: drift 28s ease-in-out infinite alternate;
         }
 
         .vignette {
             z-index: -2;
-            background: radial-gradient(circle, transparent 42%, rgba(1, 8, 18, 0.58) 100%);
+            background: radial-gradient(circle, transparent 38%, rgba(1, 6, 12, 0.66) 100%);
         }
 
         .grain {
             z-index: -1;
-            opacity: 0.045;
+            opacity: 0.04;
             mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         @keyframes drift {
             from { transform: scale(1) translate(0, 0); }
-            to { transform: scale(1.08) translate(18px, 12px); }
+            to { transform: scale(1.08) translate(20px, 10px); }
         }
 
-        .shell {
-            width: min(1180px, calc(100% - 28px));
+        .page {
+            width: min(920px, calc(100% - 24px));
             margin: 0 auto;
-            padding: calc(18px + env(safe-area-inset-top)) 0 calc(28px + env(safe-area-inset-bottom));
-        }
-
-        .top-bar {
-            position: sticky;
-            top: calc(12px + env(safe-area-inset-top));
-            z-index: 20;
-            margin-bottom: 24px;
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--card-border);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(28px) saturate(145%);
-            -webkit-backdrop-filter: blur(28px) saturate(145%);
-        }
-
-        .top-bar-inner {
-            min-height: 72px;
-            padding: 0 18px;
+            padding: calc(28px + env(safe-area-inset-top)) 0 calc(28px + env(safe-area-inset-bottom));
+            min-height: 100dvh;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 12px;
         }
 
-        .status-pill,
-        .variant-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 38px;
-            padding: 0 14px;
-            border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #7df0b0, #2fc06e);
-            box-shadow: 0 0 18px rgba(96, 211, 148, 0.55);
-        }
-
-        .title-lockup {
-            text-align: center;
-            flex: 1;
-        }
-
-        .eyebrow {
-            font-size: 0.68rem;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        .heading {
-            font-family: var(--font-heading);
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 1.2fr 0.85fr;
-            gap: 22px;
-            align-items: stretch;
-            margin-bottom: 22px;
-        }
-
-        .hero-panel,
-        .summary-panel,
-        .dock {
-            position: relative;
-            overflow: hidden;
-            border-radius: 30px;
-            background: linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
-            border: 1px solid var(--card-border);
-            border-top: 1.5px solid var(--card-highlight);
+        .portal {
+            width: 100%;
+            border-radius: 34px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+            border: 1px solid var(--border);
+            border-top: 1.5px solid var(--border-strong);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(26px) saturate(150%);
-            -webkit-backdrop-filter: blur(26px) saturate(150%);
+            backdrop-filter: blur(28px) saturate(155%);
+            -webkit-backdrop-filter: blur(28px) saturate(155%);
+            overflow: hidden;
+            position: relative;
         }
 
-        .hero-panel::before,
-        .summary-panel::before,
-        .dock::before {
+        .portal::before {
             content: "";
             position: absolute;
             inset: 0;
@@ -202,427 +114,251 @@
             pointer-events: none;
         }
 
-        .hero-panel {
-            padding: 30px;
-            min-height: 320px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .portal-head {
+            padding: 30px 30px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .hero-copy {
-            max-width: 580px;
-        }
-
-        .hero-kicker {
+        .eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 7px 12px;
-            border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.08);
+            gap: 8px;
+            min-height: 30px;
+            padding: 0 12px;
+            border-radius: var(--pill);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--muted);
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
-        .hero h1 {
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #8df5bb, #3abd76);
+            box-shadow: 0 0 18px rgba(99, 218, 149, 0.5);
+        }
+
+        h1 {
             font-family: var(--font-heading);
-            font-size: clamp(2.6rem, 5vw, 4.6rem);
+            font-size: clamp(2.35rem, 5vw, 4.25rem);
             line-height: 0.95;
             letter-spacing: -0.06em;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
-        .hero p {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.75;
-            max-width: 46ch;
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 26px;
-        }
-
-        .meta-chip {
-            min-width: 130px;
-            padding: 12px 14px;
-            border-radius: 18px;
-            background: rgba(2, 12, 24, 0.36);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .meta-chip strong {
-            display: block;
-            font-family: var(--font-heading);
-            font-size: 1.15rem;
-            margin-bottom: 4px;
-        }
-
-        .meta-chip span {
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        .summary-panel {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 18px;
-        }
-
-        .summary-card {
-            padding: 18px;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .summary-card h2 {
-            font-family: var(--font-heading);
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-        }
-
-        .summary-card p {
+        .intro {
+            max-width: 40ch;
             color: var(--muted);
             line-height: 1.7;
-            font-size: 0.93rem;
+            font-size: 0.98rem;
         }
 
-        .signal-row {
+        .control-stack {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-        }
-
-        .signal {
-            padding: 14px 15px;
-            border-radius: 18px;
-            background: rgba(2, 12, 24, 0.36);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .signal-label {
-            color: var(--muted);
-            font-size: 0.76rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .signal-value {
-            font-family: var(--font-heading);
-            font-size: 1.45rem;
-            letter-spacing: -0.04em;
-        }
-
-        .dock {
+            gap: 14px;
             padding: 18px;
         }
 
-        .dock-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 8px 8px 16px;
-        }
-
-        .dock-title {
-            font-family: var(--font-heading);
-            font-size: 1.05rem;
-            letter-spacing: -0.03em;
-        }
-
-        .dock-note {
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .portal-link {
+        .control-link {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 230px;
-            padding: 22px;
-            border-radius: 26px;
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 16px;
+            min-height: 108px;
+            padding: 18px 20px;
+            border-radius: 24px;
             text-decoration: none;
             color: var(--text);
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)),
-                rgba(7, 18, 30, 0.55);
+                linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04)),
+                rgba(9, 18, 31, 0.54);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.18);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.16);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 -14px 24px rgba(0, 0, 0, 0.12),
-                0 18px 34px rgba(0, 0, 0, 0.24);
-            transform: translateY(18px) scale(0.985);
+                inset 0 -12px 22px rgba(0, 0, 0, 0.1),
+                0 16px 30px rgba(0, 0, 0, 0.24);
+            transform: translateY(16px);
             opacity: 0;
-            animation: card-in 680ms var(--spring) forwards;
+            animation: lift-in 620ms var(--spring) forwards;
         }
 
-        .portal-link:nth-child(2) { animation-delay: 90ms; }
-        .portal-link:nth-child(3) { animation-delay: 180ms; }
-        .portal-link:nth-child(4) { animation-delay: 270ms; }
+        .control-link:nth-child(2) { animation-delay: 80ms; }
+        .control-link:nth-child(3) { animation-delay: 160ms; }
+        .control-link:nth-child(4) { animation-delay: 240ms; }
 
-        .portal-link::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 38%);
-            pointer-events: none;
-        }
-
-        .portal-link:hover {
-            transform: translateY(-4px) scale(1.01);
-            transition: transform 260ms var(--spring), box-shadow 260ms var(--spring);
+        .control-link:hover {
+            transform: translateY(-3px);
+            transition: transform 240ms var(--spring), box-shadow 240ms var(--spring);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.14),
-                inset 0 -14px 24px rgba(0, 0, 0, 0.08),
-                0 24px 48px rgba(0, 0, 0, 0.3);
+                inset 0 -10px 18px rgba(0, 0, 0, 0.07),
+                0 22px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .portal-link:focus-visible {
-            outline: 2px solid rgba(255, 255, 255, 0.75);
+        .control-link:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.78);
             outline-offset: 4px;
         }
 
-        .portal-link.tests { background-color: rgba(8, 24, 38, 0.72); }
-        .portal-link.blog { background-color: rgba(18, 20, 44, 0.72); }
-        .portal-link.workouts { background-color: rgba(12, 28, 22, 0.72); }
-        .portal-link.festudy { background-color: rgba(34, 18, 20, 0.72); }
+        .control-link.tests { background-color: rgba(10, 24, 38, 0.72); }
+        .control-link.blog { background-color: rgba(18, 22, 46, 0.72); }
+        .control-link.workouts { background-color: rgba(12, 28, 22, 0.72); }
+        .control-link.festudy { background-color: rgba(34, 18, 20, 0.72); }
 
-        .link-icon {
-            width: 58px;
-            height: 58px;
+        .control-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 18px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
         }
 
-        .link-icon svg {
-            width: 28px;
-            height: 28px;
+        .control-icon svg {
+            width: 29px;
+            height: 29px;
             stroke: currentColor;
         }
 
-        .link-label {
+        .control-copy strong {
             display: block;
             font-family: var(--font-heading);
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-            margin-bottom: 8px;
+            font-size: 1.45rem;
+            letter-spacing: -0.04em;
+            margin-bottom: 4px;
         }
 
-        .link-copy {
+        .control-copy span {
             color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.65;
-            max-width: 28ch;
+            line-height: 1.6;
+            font-size: 0.92rem;
         }
 
-        .link-footer {
+        .control-state {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding-top: 18px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
         }
 
-        .link-tag {
+        .state-pill {
+            min-height: 28px;
+            padding: 0 10px;
             display: inline-flex;
             align-items: center;
-            min-height: 30px;
-            padding: 0 10px;
-            border-radius: var(--radius-pill);
+            border-radius: var(--pill);
             background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.84);
-            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.73rem;
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
         }
 
-        .arrow {
-            font-family: var(--font-heading);
-            font-size: 1.2rem;
+        .state-arrow {
             color: rgba(255, 255, 255, 0.92);
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
         }
 
-        @keyframes card-in {
+        .portal-foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 30px 26px;
+            color: var(--faint);
+            font-size: 0.8rem;
+        }
+
+        @keyframes lift-in {
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 940px) {
-            .hero {
-                grid-template-columns: 1fr;
+        @media (max-width: 720px) {
+            .page {
+                width: min(100% - 16px, 100%);
+                align-items: stretch;
             }
 
-            .link-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .shell {
-                width: min(100% - 18px, 100%);
+            .portal {
+                border-radius: 28px;
             }
 
-            .top-bar-inner {
-                min-height: 64px;
-                padding: 10px 12px;
+            .portal-head {
+                padding: 24px 20px 18px;
             }
 
-            .status-pill {
-                display: none;
+            .control-stack {
+                padding: 14px;
             }
 
-            .variant-link {
-                padding: 0 12px;
-                font-size: 0.74rem;
+            .control-link {
+                grid-template-columns: auto 1fr;
+                min-height: 98px;
             }
 
-            .hero-panel,
-            .summary-panel,
-            .dock {
-                border-radius: 26px;
+            .control-state {
+                grid-column: 1 / -1;
+                align-items: flex-start;
+                flex-direction: row;
+                justify-content: space-between;
             }
 
-            .hero-panel {
-                padding: 24px 20px;
-                min-height: auto;
-            }
-
-            .summary-panel {
-                padding: 18px;
-            }
-
-            .signal-row {
-                grid-template-columns: 1fr;
-            }
-
-            .link-label {
-                font-size: 1.55rem;
+            .portal-foot {
+                padding: 0 20px 22px;
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="nebula"></div>
-    <div class="sun-halo"></div>
     <div class="vignette"></div>
     <div class="grain"></div>
 
-    <main class="shell">
-        <header class="top-bar">
-            <div class="top-bar-inner">
-                <div class="status-pill"><span class="dot"></span> Personal Network</div>
-                <div class="title-lockup">
-                    <div class="eyebrow">Quick Access</div>
-                    <div class="heading">Sean's Portal</div>
-                </div>
-                <a class="variant-link" href="/links/panel.html">View Panel Cut</a>
-            </div>
-        </header>
+    <main class="page">
+        <section class="portal" aria-label="Site portal">
+            <header class="portal-head">
+                <div class="eyebrow">Quick Access</div>
+                <h1>Choose a destination.</h1>
+                <p class="intro">A portal should get you where you want to go with almost no thought. These four routes are the whole interface.</p>
+            </header>
 
-        <section class="hero">
-            <article class="hero-panel">
-                <div class="hero-copy">
-                    <div class="hero-kicker">Private Surface</div>
-                    <h1>Everything important, one tap away.</h1>
-                    <p>A launcher for the corners of the site you actually use. Same atmospheric glass, same midnight depth, but tuned into a tactile home screen instead of a dashboard.</p>
-                </div>
-
-                <div class="hero-meta">
-                    <div class="meta-chip">
-                        <strong>4</strong>
-                        <span>Destinations pinned</span>
-                    </div>
-                    <div class="meta-chip">
-                        <strong>Fast</strong>
-                        <span>Simple static entry point</span>
-                    </div>
-                    <div class="meta-chip">
-                        <strong>Mobile</strong>
-                        <span>Designed for thumb reach</span>
-                    </div>
-                </div>
-            </article>
-
-            <aside class="summary-panel">
-                <div class="summary-card">
-                    <h2>Design Intent</h2>
-                    <p>This version behaves like a polished launchpad. Big carved cards, soft reflections, and enough motion to feel alive without drifting too far from the labs interface you already like.</p>
-                </div>
-                <div class="signal-row">
-                    <div class="signal">
-                        <span class="signal-label">Mood</span>
-                        <div class="signal-value">Launcher</div>
-                    </div>
-                    <div class="signal">
-                        <span class="signal-label">Finish</span>
-                        <div class="signal-value">Skeuomorphic</div>
-                    </div>
-                </div>
-            </aside>
-        </section>
-
-        <section class="dock" aria-label="Site destinations">
-            <div class="dock-header">
-                <div>
-                    <div class="dock-title">Pinned Destinations</div>
-                    <div class="dock-note">Choose a surface and jump straight in.</div>
-                </div>
-            </div>
-
-            <div class="link-grid">
-                <a class="portal-link tests" href="https://sull1van.com/tests">
-                    <div class="link-icon" aria-hidden="true">
+            <div class="control-stack">
+                <a class="control-link tests" href="https://sull1van.com/tests">
+                    <div class="control-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 3h6"></path>
                             <path d="M10 3v5l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 8V3"></path>
                             <path d="M8.5 14h7"></path>
                         </svg>
                     </div>
-                    <div>
-                        <span class="link-label">Tests</span>
-                        <p class="link-copy">Bloodwork, trends, and the secure vault flow for your lab data.</p>
+                    <div class="control-copy">
+                        <strong>Tests</strong>
+                        <span>Bloodwork, trends, and secure lab access.</span>
                     </div>
-                    <div class="link-footer">
-                        <span class="link-tag">Health</span>
-                        <span class="arrow">Open ↗</span>
+                    <div class="control-state">
+                        <span class="state-pill">Health</span>
+                        <span class="state-arrow">Open ↗</span>
                     </div>
                 </a>
 
-                <a class="portal-link blog" href="https://sull1van.com">
-                    <div class="link-icon" aria-hidden="true">
+                <a class="control-link blog" href="https://sull1van.com">
+                    <div class="control-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 4h8l4 4v12H6z"></path>
                             <path d="M14 4v4h4"></path>
@@ -630,18 +366,18 @@
                             <path d="M9 17h6"></path>
                         </svg>
                     </div>
-                    <div>
-                        <span class="link-label">Blog</span>
-                        <p class="link-copy">The main logbook, writing archive, and public-facing front door.</p>
+                    <div class="control-copy">
+                        <strong>Blog</strong>
+                        <span>Main site, writing, and public-facing posts.</span>
                     </div>
-                    <div class="link-footer">
-                        <span class="link-tag">Writing</span>
-                        <span class="arrow">Open ↗</span>
+                    <div class="control-state">
+                        <span class="state-pill">Writing</span>
+                        <span class="state-arrow">Open ↗</span>
                     </div>
                 </a>
 
-                <a class="portal-link workouts" href="https://sull1van.com/workouts">
-                    <div class="link-icon" aria-hidden="true">
+                <a class="control-link workouts" href="https://sull1van.com/workouts">
+                    <div class="control-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 10v4"></path>
                             <path d="M20 10v4"></path>
@@ -650,18 +386,18 @@
                             <path d="M4 12h16"></path>
                         </svg>
                     </div>
-                    <div>
-                        <span class="link-label">Workouts</span>
-                        <p class="link-copy">Training logs, body metrics, and the fitness side of the system.</p>
+                    <div class="control-copy">
+                        <strong>Workouts</strong>
+                        <span>Training logs, body metrics, and fitness tools.</span>
                     </div>
-                    <div class="link-footer">
-                        <span class="link-tag">Training</span>
-                        <span class="arrow">Open ↗</span>
+                    <div class="control-state">
+                        <span class="state-pill">Training</span>
+                        <span class="state-arrow">Open ↗</span>
                     </div>
                 </a>
 
-                <a class="portal-link festudy" href="https://sull1van.com/FEStudy">
-                    <div class="link-icon" aria-hidden="true">
+                <a class="control-link festudy" href="https://sull1van.com/FEStudy">
+                    <div class="control-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3z"></path>
                             <path d="M8 20V7a3 3 0 0 1 3-3"></path>
@@ -669,15 +405,20 @@
                             <path d="M11 13h4"></path>
                         </svg>
                     </div>
-                    <div>
-                        <span class="link-label">FEStudy</span>
-                        <p class="link-copy">Study materials and the engineering prep workspace.</p>
+                    <div class="control-copy">
+                        <strong>FEStudy</strong>
+                        <span>Study materials and exam-prep resources.</span>
                     </div>
-                    <div class="link-footer">
-                        <span class="link-tag">Study</span>
-                        <span class="arrow">Open ↗</span>
+                    <div class="control-state">
+                        <span class="state-pill">Study</span>
+                        <span class="state-arrow">Open ↗</span>
                     </div>
                 </a>
+            </div>
+
+            <div class="portal-foot">
+                <span>Ordered for fast scanning.</span>
+                <span>No extra navigation. No dead ends.</span>
             </div>
         </section>
     </main>
