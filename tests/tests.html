@@ -3953,6 +3953,7 @@
             detail = 'After Google sign-in succeeds, this page will immediately ask for your vault password if the vault is still locked.',
             buttonLabel = 'Sign in with Google',
             isBusy = false,
+            showButton = true,
         } = {}) {
             const loadingEl = document.getElementById('loadingState');
             if (!loadingEl) return;
@@ -3971,11 +3972,13 @@
                             ${_escapeHtml(detail)}
                         </div>
                     </div>
+                    ${showButton ? `
                     <button
                         onclick="window._labsLogin()"
                         ${isBusy ? 'disabled' : ''}
                         style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:var(--font-body);font-size:0.8rem;cursor:${isBusy ? 'default' : 'pointer'};letter-spacing:0.04em;opacity:${isBusy ? '0.72' : '1'};"
                     >${_escapeHtml(buttonLabel)}</button>
+                    ` : ''}
                 </div>`;
         }
 
@@ -4029,10 +4032,43 @@
         }
 
         // ─── Firebase init ─────────────────────────────────────────────────────────
+        function _getAuthEnvironmentIssue() {
+            const { protocol, hostname, origin } = window.location;
+
+            if (protocol === 'file:') {
+                return {
+                    message: 'Google sign-in cannot start from a local file.',
+                    detail: 'Open this page from an authorized HTTPS site instead of double-clicking tests.html. Firebase Auth needs a real web origin for first-time sign-in.',
+                };
+            }
+
+            if (protocol !== 'https:' && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+                return {
+                    message: 'Google sign-in requires HTTPS here.',
+                    detail: `This page is currently running from ${origin || protocol}. Load it from an authorized HTTPS domain to continue.`,
+                };
+            }
+
+            return null;
+        }
+
+        function _renderAuthEnvironmentIssue(issue = _getAuthEnvironmentIssue()) {
+            if (!issue) return false;
+            updateBoot('auth_environment_issue', { msg: issue.detail });
+            _renderGoogleAuthRequired({
+                message: issue.message,
+                detail: issue.detail,
+                showButton: false,
+            });
+            return true;
+        }
+
         function _shouldUseRedirectLogin() {
             const ua = navigator.userAgent || '';
             const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-            return /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || coarsePointer;
+            const smallViewport = Math.min(window.innerWidth || 0, window.innerHeight || 0) > 0
+                && Math.min(window.innerWidth, window.innerHeight) <= 900;
+            return /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || (coarsePointer && smallViewport);
         }
 
         const firebaseConfig = {
@@ -4103,11 +4139,19 @@
                     window._labsKey = null;
                     _vaultDataCache = null;
                     _hideVaultOverlay();
-                    _renderGoogleAuthRequired();
+                    if (!_renderAuthEnvironmentIssue()) {
+                        _renderGoogleAuthRequired();
+                    }
                 }
             });
             window._labsLogin = async function () {
                 try {
+                    const authEnvironmentIssue = _getAuthEnvironmentIssue();
+                    if (authEnvironmentIssue) {
+                        _renderAuthEnvironmentIssue(authEnvironmentIssue);
+                        return;
+                    }
+
                     const provider = new GoogleAuthProvider();
                     _renderGoogleAuthRequired({
                         message: 'Google authentication is required to view your lab data.',
@@ -4134,6 +4178,12 @@
                     } else if (code === 'auth/popup-blocked') {
                         message = 'Your browser blocked the Google popup.';
                         detail = 'Allow popups for this page, then click the button again. On mobile, the flow may open as a redirect instead.';
+                    } else if (code === 'auth/unauthorized-domain') {
+                        message = 'This site is not allowed to use Google sign-in.';
+                        detail = `Add this origin to Firebase Authorized Domains, or open the hosted version instead. Current origin: ${window.location.origin || window.location.protocol}`;
+                    } else if (code === 'auth/operation-not-supported-in-this-environment') {
+                        message = 'This browser environment cannot complete Google sign-in.';
+                        detail = 'Try the hosted HTTPS page in a standard browser tab. Local files, restricted webviews, and some privacy modes can block the Firebase auth flow.';
                     }
 
                     updateBoot('auth_no_user', { msg: detail, code });
