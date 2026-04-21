@@ -1421,17 +1421,17 @@ function App() {
                       <div className="stat-value" style={{ color: scoreToColor(overall.score) }}>
                         {overall.score == null ? "—" : `${overall.score}%`}
                       </div>
-                      <p className="dashboard-stat-note">Confidence rises as your answered coverage grows.</p>
+                      <p className="dashboard-stat-note">Weighted from answered questions with confidence scaling as coverage grows.</p>
                     </div>
                     <div className="stat-card dashboard-stat-card">
                       <div className="mini-label">Questions answered</div>
                       <div className="stat-value">{overall.answered}</div>
-                      <p className="dashboard-stat-note">Each saved mark sharpens coverage and recommendations.</p>
+                      <p className="dashboard-stat-note">Every recorded mark sharpens topic coverage and future recommendations.</p>
                     </div>
                     <div className="stat-card dashboard-stat-card">
                       <div className="mini-label">Topics assessed</div>
                       <div className="stat-value">{overall.topicsAssessed}/13</div>
-                      <p className="dashboard-stat-note">Topics unlock once each area has enough answered questions.</p>
+                      <p className="dashboard-stat-note">Topic bars unlock once each area has enough answered questions to matter.</p>
                     </div>
                   </div>
                   <div className="dashboard-hero-insight">
