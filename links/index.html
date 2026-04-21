@@ -38,9 +38,9 @@
         html {
             min-height: 100%;
             background:
-                radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.12) 18%, transparent 36%),
-                radial-gradient(circle at 20% 28%, rgba(255, 247, 210, 0.32), transparent 22%),
-                radial-gradient(circle at 78% 24%, rgba(144, 196, 255, 0.28), transparent 34%),
+                radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.12) 18%, transparent 36%),
+                radial-gradient(circle at 78% 24%, rgba(255, 247, 210, 0.32), transparent 22%),
+                radial-gradient(circle at 24% 24%, rgba(144, 196, 255, 0.24), transparent 34%),
                 radial-gradient(circle at 24% 74%, rgba(125, 178, 255, 0.16), transparent 26%),
                 linear-gradient(180deg, #8db8eb 0%, #6f9edd 34%, #5f8fd3 65%, #6f9fe2 100%);
             background-color: #76a3e0;
@@ -73,10 +73,10 @@
         .flare {
             z-index: -3;
             background:
-                radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 10%, transparent 22%),
-                radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.18), transparent 4%),
-                radial-gradient(circle at 38% 36%, rgba(255, 255, 255, 0.14), transparent 5%),
-                radial-gradient(circle at 58% 58%, rgba(255, 255, 255, 0.12), transparent 6%);
+                radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 10%, transparent 22%),
+                radial-gradient(circle at 76% 26%, rgba(255, 255, 255, 0.18), transparent 4%),
+                radial-gradient(circle at 68% 34%, rgba(255, 255, 255, 0.14), transparent 5%),
+                radial-gradient(circle at 44% 58%, rgba(255, 255, 255, 0.12), transparent 6%);
             filter: blur(2px);
             opacity: 0.95;
         }
@@ -125,6 +125,9 @@
         }
 
         .tiles-panel {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
             padding: 16px;
             border-radius: 38px;
             background: linear-gradient(180deg, rgba(132, 178, 236, 0.08), rgba(101, 149, 220, 0.04));
@@ -136,8 +139,9 @@
         }
 
         .tiles-grid {
+            --tile-width: 306px;
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, var(--tile-width));
             gap: 16px;
         }
 
@@ -148,18 +152,20 @@
             justify-content: space-between;
             min-height: 220px;
             padding: 22px;
+            width: 100%;
             border-radius: var(--radius-xl);
             color: var(--text);
             text-decoration: none;
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
-                linear-gradient(180deg, rgba(120, 170, 236, 0.42), rgba(72, 122, 204, 0.34));
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.24);
+                linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08)),
+                linear-gradient(180deg, rgba(120, 170, 236, 0.46), rgba(72, 122, 204, 0.38));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.3);
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -12px 20px rgba(58, 98, 165, 0.12),
-                0 12px 24px rgba(72, 118, 192, 0.14);
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 12px 18px rgba(255, 255, 255, 0.03),
+                inset 0 -14px 22px rgba(58, 98, 165, 0.14),
+                0 14px 28px rgba(72, 118, 192, 0.16);
             overflow: hidden;
             transform: translateY(18px) scale(0.985);
             opacity: 0;
@@ -175,7 +181,6 @@
         .tile:nth-child(2) { animation-delay: 90ms; }
         .tile:nth-child(3) { animation-delay: 180ms; }
         .tile:nth-child(4) { animation-delay: 270ms; }
-
         .tile::before {
             content: "";
             position: absolute;
@@ -188,9 +193,10 @@
         .tile:hover {
             transform: translateY(-5px) scale(1.01);
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.28),
-                inset 0 -10px 18px rgba(71, 113, 184, 0.08),
-                0 18px 32px rgba(72, 118, 192, 0.18);
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 12px 18px rgba(255, 255, 255, 0.04),
+                inset 0 -12px 20px rgba(71, 113, 184, 0.1),
+                0 18px 32px rgba(72, 118, 192, 0.2);
             filter: saturate(1.06) brightness(1.03);
         }
 
@@ -216,42 +222,46 @@
 
         .tile.tests {
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
-                linear-gradient(135deg, rgba(76, 129, 232, 0.74), rgba(18, 40, 98, 0.62));
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09)),
+                linear-gradient(135deg, rgba(76, 129, 232, 0.78), rgba(18, 40, 98, 0.66));
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -12px 20px rgba(27, 56, 122, 0.14),
-                0 12px 24px rgba(30, 71, 156, 0.16);
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 12px 18px rgba(255, 255, 255, 0.03),
+                inset 0 -14px 22px rgba(27, 56, 122, 0.16),
+                0 14px 28px rgba(30, 71, 156, 0.18);
         }
 
         .tile.blog {
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
-                linear-gradient(135deg, rgba(156, 170, 192, 0.56), rgba(88, 97, 116, 0.46));
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09)),
+                linear-gradient(135deg, rgba(156, 170, 192, 0.6), rgba(88, 97, 116, 0.5));
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -12px 20px rgba(62, 69, 84, 0.12),
-                0 12px 24px rgba(79, 88, 112, 0.12);
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 12px 18px rgba(255, 255, 255, 0.03),
+                inset 0 -14px 22px rgba(62, 69, 84, 0.14),
+                0 14px 28px rgba(79, 88, 112, 0.14);
         }
 
         .tile.workouts {
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
-                linear-gradient(135deg, rgba(255, 134, 98, 0.7), rgba(193, 54, 39, 0.6));
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09)),
+                linear-gradient(135deg, rgba(255, 134, 98, 0.74), rgba(193, 54, 39, 0.64));
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -12px 20px rgba(138, 38, 29, 0.14),
-                0 12px 24px rgba(181, 53, 42, 0.14);
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 12px 18px rgba(255, 255, 255, 0.03),
+                inset 0 -14px 22px rgba(138, 38, 29, 0.16),
+                0 14px 28px rgba(181, 53, 42, 0.16);
         }
 
         .tile.festudy {
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
-                linear-gradient(135deg, rgba(88, 220, 184, 0.66), rgba(52, 145, 206, 0.58));
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09)),
+                linear-gradient(135deg, rgba(88, 220, 184, 0.7), rgba(52, 145, 206, 0.62));
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -12px 20px rgba(40, 104, 137, 0.14),
-                0 12px 24px rgba(41, 120, 154, 0.14);
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 12px 18px rgba(255, 255, 255, 0.03),
+                inset 0 -14px 22px rgba(40, 104, 137, 0.16),
+                0 14px 28px rgba(41, 120, 154, 0.16);
         }
 
         .tile-icon {
@@ -276,12 +286,13 @@
 
         .tile-copy h2 {
             font-family: var(--font-heading);
-            font-size: 2rem;
+            font-size: 2.85rem;
             font-weight: 600;
             letter-spacing: -0.05em;
-            margin-bottom: 6px;
+            margin-bottom: 0;
             position: relative;
             z-index: 2;
+            line-height: 0.94;
         }
 
         .tile-copy p {
@@ -304,9 +315,21 @@
         }
 
         .tile-foot span {
-            color: var(--faint);
-            font-size: 0.8rem;
-            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            padding: 0 14px;
+            border-radius: var(--pill);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.94rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 6px 14px rgba(65, 108, 177, 0.08);
         }
 
         @keyframes tile-in {
@@ -327,22 +350,25 @@
             }
 
             .tiles-panel {
+                width: 100%;
                 border-radius: 30px;
                 padding: 12px;
             }
 
             .tiles-grid {
+                --tile-width: 100%;
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
 
             .tile {
+                width: 100%;
                 min-height: 180px;
                 padding: 18px;
             }
 
             .tile-copy h2 {
-                font-size: 1.7rem;
+                font-size: 2.25rem;
             }
         }
     </style>
@@ -371,7 +397,6 @@
                         </div>
                         <div class="tile-copy">
                             <h2>Tests</h2>
-                            <p>Bloodwork, trends, and lab history.</p>
                         </div>
                         <div class="tile-foot">
                             <span>Open</span>
@@ -389,7 +414,6 @@
                         </div>
                         <div class="tile-copy">
                             <h2>Blog</h2>
-                            <p>Main site, posts, and public writing.</p>
                         </div>
                         <div class="tile-foot">
                             <span>Open</span>
@@ -408,7 +432,6 @@
                         </div>
                         <div class="tile-copy">
                             <h2>Workouts</h2>
-                            <p>Training logs, body metrics, and fitness tools.</p>
                         </div>
                         <div class="tile-foot">
                             <span>Open</span>
@@ -426,7 +449,6 @@
                         </div>
                         <div class="tile-copy">
                             <h2>FEStudy</h2>
-                            <p>Study materials and exam-prep resources.</p>
                         </div>
                         <div class="tile-foot">
                             <span>Open</span>
