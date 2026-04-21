@@ -8,19 +8,23 @@
     <title>Portal | Sean's Log</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --font-heading: 'Outfit', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
-            --bg-deep: #01070f;
-            --text: #f4f8fd;
-            --muted: rgba(231, 241, 255, 0.7);
-            --faint: rgba(231, 241, 255, 0.28);
-            --border: rgba(255, 255, 255, 0.12);
-            --border-strong: rgba(255, 255, 255, 0.22);
-            --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            --text: rgba(255, 255, 255, 0.96);
+            --muted: rgba(255, 255, 255, 0.76);
+            --faint: rgba(255, 255, 255, 0.58);
+            --line: rgba(255, 255, 255, 0.18);
+            --line-strong: rgba(255, 255, 255, 0.28);
+            --glass: rgba(89, 142, 219, 0.24);
+            --glass-strong: rgba(79, 128, 202, 0.34);
+            --shadow: 0 28px 70px rgba(34, 74, 138, 0.24);
+            --shadow-soft: 0 18px 40px rgba(34, 74, 138, 0.16);
             --pill: 999px;
+            --radius-xl: 34px;
+            --radius-l: 26px;
             --spring: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -34,393 +38,414 @@
         html {
             min-height: 100%;
             background:
-                radial-gradient(circle at 16% 18%, rgba(83, 173, 255, 0.22), transparent 34%),
-                radial-gradient(circle at 84% 24%, rgba(255, 195, 107, 0.1), transparent 28%),
-                radial-gradient(circle at 68% 80%, rgba(99, 218, 149, 0.1), transparent 26%),
-                linear-gradient(180deg, #071727 0%, var(--bg-deep) 100%);
-            background-color: var(--bg-deep);
+                radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.12) 18%, transparent 36%),
+                radial-gradient(circle at 20% 28%, rgba(255, 247, 210, 0.32), transparent 22%),
+                radial-gradient(circle at 78% 24%, rgba(144, 196, 255, 0.28), transparent 34%),
+                radial-gradient(circle at 24% 74%, rgba(125, 178, 255, 0.16), transparent 26%),
+                linear-gradient(180deg, #8db8eb 0%, #6f9edd 34%, #5f8fd3 65%, #6f9fe2 100%);
+            background-color: #76a3e0;
         }
 
         body {
             min-height: 100dvh;
             color: var(--text);
             font-family: var(--font-body);
-            position: relative;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .nebula,
+        .sky,
         .vignette,
-        .grain {
+        .grain,
+        .flare {
             position: fixed;
             inset: 0;
             pointer-events: none;
         }
 
-        .nebula {
-            z-index: -3;
-            filter: blur(60px);
+        .sky {
+            z-index: -4;
             background:
-                radial-gradient(circle at 20% 20%, rgba(83, 173, 255, 0.18), transparent 34%),
-                radial-gradient(circle at 82% 22%, rgba(255, 143, 122, 0.1), transparent 28%),
-                radial-gradient(circle at 60% 82%, rgba(99, 218, 149, 0.1), transparent 28%);
-            animation: drift 28s ease-in-out infinite alternate;
+                radial-gradient(circle at 72% 30%, rgba(124, 183, 255, 0.28), transparent 34%),
+                radial-gradient(circle at 12% 80%, rgba(255, 255, 255, 0.12), transparent 22%);
+            filter: blur(36px);
+            animation: drift 24s ease-in-out infinite alternate;
+        }
+
+        .flare {
+            z-index: -3;
+            background:
+                radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 10%, transparent 22%),
+                radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.18), transparent 4%),
+                radial-gradient(circle at 38% 36%, rgba(255, 255, 255, 0.14), transparent 5%),
+                radial-gradient(circle at 58% 58%, rgba(255, 255, 255, 0.12), transparent 6%);
+            filter: blur(2px);
+            opacity: 0.95;
         }
 
         .vignette {
             z-index: -2;
-            background: radial-gradient(circle, transparent 38%, rgba(1, 6, 12, 0.66) 100%);
+            background: radial-gradient(circle, transparent 46%, rgba(63, 102, 171, 0.18) 100%);
         }
 
         .grain {
             z-index: -1;
-            opacity: 0.04;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.035;
+            mix-blend-mode: soft-light;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         @keyframes drift {
             from { transform: scale(1) translate(0, 0); }
-            to { transform: scale(1.08) translate(20px, 10px); }
+            to { transform: scale(1.06) translate(20px, 10px); }
         }
 
         .page {
-            width: min(920px, calc(100% - 24px));
+            width: min(980px, calc(100% - 26px));
             margin: 0 auto;
             padding: calc(28px + env(safe-area-inset-top)) 0 calc(28px + env(safe-area-inset-bottom));
             min-height: 100dvh;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
-        .portal {
+        .shell {
             width: 100%;
-            border-radius: 34px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-            border: 1px solid var(--border);
-            border-top: 1.5px solid var(--border-strong);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(28px) saturate(155%);
-            -webkit-backdrop-filter: blur(28px) saturate(155%);
-            overflow: hidden;
-            position: relative;
+            display: grid;
+            gap: 20px;
         }
 
-        .portal::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%);
-            pointer-events: none;
-        }
-
-        .portal-head {
-            padding: 30px 30px 22px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 30px;
-            padding: 0 12px;
-            border-radius: var(--pill);
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--muted);
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .eyebrow::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #8df5bb, #3abd76);
-            box-shadow: 0 0 18px rgba(99, 218, 149, 0.5);
+        .hero {
+            text-align: left;
+            padding: 28px 20px 8px;
+            text-shadow: 0 2px 18px rgba(255, 255, 255, 0.18);
         }
 
         h1 {
             font-family: var(--font-heading);
-            font-size: clamp(2.35rem, 5vw, 4.25rem);
-            line-height: 0.95;
-            letter-spacing: -0.06em;
-            margin-bottom: 12px;
+            font-size: clamp(3rem, 8vw, 5.8rem);
+            line-height: 0.92;
+            letter-spacing: -0.07em;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .intro {
-            max-width: 40ch;
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 0.98rem;
-        }
-
-        .control-stack {
-            display: grid;
-            gap: 14px;
-            padding: 18px;
-        }
-
-        .control-link {
-            position: relative;
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 16px;
-            min-height: 108px;
-            padding: 18px 20px;
-            border-radius: 24px;
-            text-decoration: none;
-            color: var(--text);
-            background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04)),
-                rgba(9, 18, 31, 0.54);
+        .tiles-panel {
+            padding: 16px;
+            border-radius: 38px;
+            background: linear-gradient(180deg, rgba(132, 178, 236, 0.1), rgba(101, 149, 220, 0.06));
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-top: 1.5px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(14px) saturate(135%);
+            -webkit-backdrop-filter: blur(14px) saturate(135%);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 -12px 22px rgba(0, 0, 0, 0.1),
-                0 16px 30px rgba(0, 0, 0, 0.24);
-            transform: translateY(16px);
-            opacity: 0;
-            animation: lift-in 620ms var(--spring) forwards;
+                inset 0 -12px 22px rgba(60, 103, 176, 0.04),
+                0 16px 34px rgba(65, 108, 177, 0.12);
         }
 
-        .control-link:nth-child(2) { animation-delay: 80ms; }
-        .control-link:nth-child(3) { animation-delay: 160ms; }
-        .control-link:nth-child(4) { animation-delay: 240ms; }
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
 
-        .control-link:hover {
-            transform: translateY(-3px);
+        .tile {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+            padding: 22px;
+            border-radius: var(--radius-xl);
+            color: var(--text);
+            text-decoration: none;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.07)),
+                linear-gradient(180deg, rgba(89, 138, 214, 0.34), rgba(64, 109, 188, 0.3));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.3);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.24),
+                inset 0 -16px 28px rgba(58, 98, 165, 0.15),
+                0 18px 34px rgba(72, 118, 192, 0.2);
+            backdrop-filter: blur(18px) saturate(145%);
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            overflow: hidden;
+            transform: translateY(18px) scale(0.985);
+            opacity: 0;
+            animation: tile-in 620ms var(--spring) forwards;
+        }
+
+        .tile:nth-child(2) { animation-delay: 90ms; }
+        .tile:nth-child(3) { animation-delay: 180ms; }
+        .tile:nth-child(4) { animation-delay: 270ms; }
+
+        .tile::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 40%);
+            pointer-events: none;
+        }
+
+        .tile::after {
+            content: "";
+            position: absolute;
+            right: -18%;
+            bottom: -34%;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 66%);
+            pointer-events: none;
+        }
+
+        .tile:hover {
+            transform: translateY(-4px) scale(1.01);
             transition: transform 240ms var(--spring), box-shadow 240ms var(--spring);
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.14),
-                inset 0 -10px 18px rgba(0, 0, 0, 0.07),
-                0 22px 40px rgba(0, 0, 0, 0.3);
+                inset 0 1px 0 rgba(255, 255, 255, 0.28),
+                inset 0 -14px 24px rgba(71, 113, 184, 0.1),
+                0 24px 42px rgba(72, 118, 192, 0.26);
         }
 
-        .control-link:focus-visible {
-            outline: 2px solid rgba(255, 255, 255, 0.78);
+        .tile:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.88);
             outline-offset: 4px;
         }
 
-        .control-link.tests { background-color: rgba(10, 24, 38, 0.72); }
-        .control-link.blog { background-color: rgba(18, 22, 46, 0.72); }
-        .control-link.workouts { background-color: rgba(12, 28, 22, 0.72); }
-        .control-link.festudy { background-color: rgba(34, 18, 20, 0.72); }
+        .tile.tests {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+                linear-gradient(135deg, rgba(62, 107, 196, 0.66), rgba(18, 40, 98, 0.58));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -16px 28px rgba(27, 56, 122, 0.18),
+                0 0 0 1px rgba(126, 168, 255, 0.08),
+                0 18px 34px rgba(30, 71, 156, 0.24),
+                0 0 42px rgba(74, 128, 255, 0.16);
+        }
 
-        .control-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
+        .tile.blog {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+                linear-gradient(135deg, rgba(138, 149, 168, 0.5), rgba(88, 97, 116, 0.42));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -16px 28px rgba(62, 69, 84, 0.14),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 18px 34px rgba(79, 88, 112, 0.18),
+                0 0 38px rgba(216, 226, 255, 0.1);
+        }
+
+        .tile.workouts {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+                linear-gradient(135deg, rgba(239, 120, 94, 0.62), rgba(188, 50, 36, 0.56));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -16px 28px rgba(138, 38, 29, 0.18),
+                0 0 0 1px rgba(255, 174, 146, 0.08),
+                0 18px 34px rgba(181, 53, 42, 0.22),
+                0 0 42px rgba(255, 126, 96, 0.16);
+        }
+
+        .tile.festudy {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+                linear-gradient(135deg, rgba(80, 205, 176, 0.58), rgba(52, 136, 190, 0.52));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -16px 28px rgba(40, 104, 137, 0.18),
+                0 0 0 1px rgba(142, 255, 228, 0.08),
+                0 18px 34px rgba(41, 120, 154, 0.22),
+                0 0 42px rgba(80, 233, 194, 0.16);
+        }
+
+        .tile-icon {
+            width: 180px;
+            height: 180px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            right: -28px;
+            bottom: -38px;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
-        .control-icon svg {
-            width: 29px;
-            height: 29px;
+        .tile-icon svg {
+            width: 180px;
+            height: 180px;
             stroke: currentColor;
+            filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.1));
         }
 
-        .control-copy strong {
-            display: block;
+        .tile-copy h2 {
             font-family: var(--font-heading);
-            font-size: 1.45rem;
-            letter-spacing: -0.04em;
-            margin-bottom: 4px;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.05em;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 2;
         }
 
-        .control-copy span {
+        .tile-copy p {
             color: var(--muted);
+            font-size: 0.95rem;
             line-height: 1.6;
-            font-size: 0.92rem;
+            max-width: 24ch;
+            position: relative;
+            z-index: 2;
         }
 
-        .control-state {
+        .tile-foot {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .state-pill {
-            min-height: 28px;
-            padding: 0 10px;
-            display: inline-flex;
             align-items: center;
-            border-radius: var(--pill);
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.88);
-            font-size: 0.73rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        .state-arrow {
-            color: rgba(255, 255, 255, 0.92);
-            font-family: var(--font-heading);
-            font-size: 1.15rem;
-        }
-
-        .portal-foot {
-            display: flex;
             justify-content: space-between;
             gap: 12px;
-            padding: 0 30px 26px;
+            padding-top: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tile-foot span {
             color: var(--faint);
             font-size: 0.8rem;
+            font-weight: 600;
         }
 
-        @keyframes lift-in {
+        @keyframes tile-in {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        @media (max-width: 720px) {
+        @media (max-width: 760px) {
             .page {
                 width: min(100% - 16px, 100%);
-                align-items: stretch;
+                padding-top: calc(18px + env(safe-area-inset-top));
             }
 
-            .portal {
-                border-radius: 28px;
+            .hero {
+                padding: 18px 14px 6px;
             }
 
-            .portal-head {
-                padding: 24px 20px 18px;
+            .tiles-panel {
+                border-radius: 30px;
+                padding: 12px;
             }
 
-            .control-stack {
-                padding: 14px;
+            .tiles-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
 
-            .control-link {
-                grid-template-columns: auto 1fr;
-                min-height: 98px;
+            .tile {
+                min-height: 180px;
+                padding: 18px;
             }
 
-            .control-state {
-                grid-column: 1 / -1;
-                align-items: flex-start;
-                flex-direction: row;
-                justify-content: space-between;
-            }
-
-            .portal-foot {
-                padding: 0 20px 22px;
-                flex-direction: column;
+            .tile-copy h2 {
+                font-size: 1.7rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="nebula"></div>
+    <div class="sky"></div>
+    <div class="flare"></div>
     <div class="vignette"></div>
     <div class="grain"></div>
 
     <main class="page">
-        <section class="portal" aria-label="Site portal">
-            <header class="portal-head">
-                <div class="eyebrow">Quick Access</div>
-                <h1>Choose a destination.</h1>
-                <p class="intro">A portal should get you where you want to go with almost no thought. These four routes are the whole interface.</p>
-            </header>
+        <div class="shell">
+            <section class="hero" aria-label="Portal heading">
+                <h1>Portal</h1>
+            </section>
 
-            <div class="control-stack">
-                <a class="control-link tests" href="https://sull1van.com/tests">
-                    <div class="control-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 3h6"></path>
-                            <path d="M10 3v5l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 8V3"></path>
-                            <path d="M8.5 14h7"></path>
-                        </svg>
-                    </div>
-                    <div class="control-copy">
-                        <strong>Tests</strong>
-                        <span>Bloodwork, trends, and secure lab access.</span>
-                    </div>
-                    <div class="control-state">
-                        <span class="state-pill">Health</span>
-                        <span class="state-arrow">Open ↗</span>
-                    </div>
-                </a>
+            <section class="tiles-panel" aria-label="Portal links">
+                <div class="tiles-grid">
+                    <a class="tile tests" href="https://sull1van.com/tests">
+                        <div class="tile-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 3h6"></path>
+                                <path d="M10 3v5l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 8V3"></path>
+                                <path d="M8.5 14h7"></path>
+                            </svg>
+                        </div>
+                        <div class="tile-copy">
+                            <h2>Tests</h2>
+                            <p>Bloodwork, trends, and lab history.</p>
+                        </div>
+                        <div class="tile-foot">
+                            <span>Open</span>
+                        </div>
+                    </a>
 
-                <a class="control-link blog" href="https://sull1van.com">
-                    <div class="control-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 4h8l4 4v12H6z"></path>
-                            <path d="M14 4v4h4"></path>
-                            <path d="M9 13h6"></path>
-                            <path d="M9 17h6"></path>
-                        </svg>
-                    </div>
-                    <div class="control-copy">
-                        <strong>Blog</strong>
-                        <span>Main site, writing, and public-facing posts.</span>
-                    </div>
-                    <div class="control-state">
-                        <span class="state-pill">Writing</span>
-                        <span class="state-arrow">Open ↗</span>
-                    </div>
-                </a>
+                    <a class="tile blog" href="https://sull1van.com">
+                        <div class="tile-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 4h8l4 4v12H6z"></path>
+                                <path d="M14 4v4h4"></path>
+                                <path d="M9 13h6"></path>
+                                <path d="M9 17h6"></path>
+                            </svg>
+                        </div>
+                        <div class="tile-copy">
+                            <h2>Blog</h2>
+                            <p>Main site, posts, and public writing.</p>
+                        </div>
+                        <div class="tile-foot">
+                            <span>Open</span>
+                        </div>
+                    </a>
 
-                <a class="control-link workouts" href="https://sull1van.com/workouts">
-                    <div class="control-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 10v4"></path>
-                            <path d="M20 10v4"></path>
-                            <path d="M7 8v8"></path>
-                            <path d="M17 8v8"></path>
-                            <path d="M4 12h16"></path>
-                        </svg>
-                    </div>
-                    <div class="control-copy">
-                        <strong>Workouts</strong>
-                        <span>Training logs, body metrics, and fitness tools.</span>
-                    </div>
-                    <div class="control-state">
-                        <span class="state-pill">Training</span>
-                        <span class="state-arrow">Open ↗</span>
-                    </div>
-                </a>
+                    <a class="tile workouts" href="https://sull1van.com/workouts">
+                        <div class="tile-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 10v4"></path>
+                                <path d="M20 10v4"></path>
+                                <path d="M7 8v8"></path>
+                                <path d="M17 8v8"></path>
+                                <path d="M4 12h16"></path>
+                            </svg>
+                        </div>
+                        <div class="tile-copy">
+                            <h2>Workouts</h2>
+                            <p>Training logs, body metrics, and fitness tools.</p>
+                        </div>
+                        <div class="tile-foot">
+                            <span>Open</span>
+                        </div>
+                    </a>
 
-                <a class="control-link festudy" href="https://sull1van.com/FEStudy">
-                    <div class="control-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3z"></path>
-                            <path d="M8 20V7a3 3 0 0 1 3-3"></path>
-                            <path d="M11 9h4"></path>
-                            <path d="M11 13h4"></path>
-                        </svg>
-                    </div>
-                    <div class="control-copy">
-                        <strong>FEStudy</strong>
-                        <span>Study materials and exam-prep resources.</span>
-                    </div>
-                    <div class="control-state">
-                        <span class="state-pill">Study</span>
-                        <span class="state-arrow">Open ↗</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="portal-foot">
-                <span>Ordered for fast scanning.</span>
-                <span>No extra navigation. No dead ends.</span>
-            </div>
-        </section>
+                    <a class="tile festudy" href="https://sull1van.com/FEStudy">
+                        <div class="tile-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3z"></path>
+                                <path d="M8 20V7a3 3 0 0 1 3-3"></path>
+                                <path d="M11 9h4"></path>
+                                <path d="M11 13h4"></path>
+                            </svg>
+                        </div>
+                        <div class="tile-copy">
+                            <h2>FEStudy</h2>
+                            <p>Study materials and exam-prep resources.</p>
+                        </div>
+                        <div class="tile-foot">
+                            <span>Open</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
     </main>
 </body>
 </html>
