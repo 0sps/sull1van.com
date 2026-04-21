@@ -76,23 +76,6 @@ function getCoverageLabel(questionCount) {
   return "Healthy coverage";
 }
 
-function getReadinessLabel(score) {
-  if (score == null) return "Fresh slate";
-  if (score < 60) return "Foundation mode";
-  if (score < 75) return "Build momentum";
-  if (score < 85) return "Sharpening phase";
-  return "Strong position";
-}
-
-function getReadinessDetail(score, answered) {
-  if (!answered) return "Start with a balanced diagnostic to carve out your first baseline.";
-  if (score == null) return "You have some activity logged, but not enough to expose a stable overall estimate yet.";
-  if (score < 60) return "Lean into weak areas first. The fastest gains are still at the foundation level.";
-  if (score < 75) return "You have traction. Keep mixing diagnostics with focused topic tests to compound it.";
-  if (score < 85) return "The base is there. Use targeted review to smooth out the remaining rough spots.";
-  return "You are operating from strength. Keep pressure on weaker topics to preserve that edge.";
-}
-
 function getRecommendationReason(metrics, questionCount) {
   if (metrics.score == null) return "Unassessed and ready for a quick baseline.";
   if (questionCount < 5) return "Low readiness, but question coverage is still thin.";
@@ -1349,107 +1332,68 @@ function App() {
       0
     )
     : 0;
-  const featuredRecommendation = recommendations[0] || null;
-  const readinessLabel = getReadinessLabel(overall.score);
-  const readinessDetail = getReadinessDetail(overall.score, overall.answered);
 
   return (
     <div className={`app-shell ${view.name === "session" && isTestMode(activeQuiz?.mode) ? "app-shell-session" : ""}`}>
       {!(view.name === "session" && isTestMode(activeQuiz?.mode)) ? (
         <>
           <header className="hero dashboard-hero">
-            <div className="dashboard-hero-ambient dashboard-hero-ambient-one" aria-hidden="true" />
-            <div className="dashboard-hero-ambient dashboard-hero-ambient-two" aria-hidden="true" />
-            <div className="dashboard-hero-surface">
-              <div className="hero-grid dashboard-hero-grid">
-                <div className="dashboard-hero-copy">
-                  <div className="dashboard-hero-copy-inner">
-                    <div className="eyebrow">{data.exam}</div>
-                    <h1>Build your readiness for the FE exam.</h1>
-                    <p>
-                      A sculpted study console for diagnosing weak spots, tracking momentum, and drilling down into focused practice.
-                    </p>
-                    <div className="dashboard-hero-readiness-card">
-                      <div className="mini-label">Readiness snapshot</div>
-                      <div className="dashboard-hero-readiness-row">
-                        <strong>{readinessLabel}</strong>
-                        <span className="pill subtle">{overall.score == null ? "No estimate yet" : `${overall.score}% estimated`}</span>
-                      </div>
-                      <p>{readinessDetail}</p>
-                    </div>
+            <div className="hero-grid dashboard-hero-grid">
+              <div className="dashboard-hero-copy">
+                <div className="eyebrow">{data.exam}</div>
+                <h1>Build your readiness for the FE exam.</h1>
+                <p>
+                  This dashboard is built
+                  to help you diagnose weak areas and drill down into focused practice.
+                </p>
+                <div className="hero-controls dashboard-hero-controls">
+                  <div className="hero-primary-actions">
+                    <button className="button" onClick={startDiagnostic}>
+                      {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
+                    </button>
                   </div>
-                  <div className="hero-controls dashboard-hero-controls">
-                    <div className="dashboard-control-deck">
-                      <div className="hero-primary-actions dashboard-control-primary">
-                        <button className="button" onClick={startDiagnostic}>
-                          {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
-                        </button>
-                      </div>
-                      <div className="hero-utility-actions dashboard-control-utility">
-                        <button className="button-ghost" onClick={handleExportProgress}>
-                          Export progress JSON
-                        </button>
-                        <button className="button-ghost" onClick={handleImportClick}>
-                          Import progress JSON
-                        </button>
-                        <button className="button-ghost" onClick={openResetDialog}>
-                          Reset progress
-                        </button>
-                        <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
-                      </div>
-                      {activeQuiz ? (
-                        <button
-                          className={`session-banner dashboard-session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
-                          onClick={showResumeButton ? resumeQuiz : undefined}
-                          disabled={!showResumeButton}
-                        >
-                          <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
-                            Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Complete"}
-                          </span>
-                          <span className="muted">
-                            {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
-                          </span>
-                        </button>
-                      ) : null}
-                    </div>
+                  <div className="hero-utility-actions">
+                    <button className="button-ghost" onClick={handleExportProgress}>
+                      Export progress JSON
+                    </button>
+                    <button className="button-ghost" onClick={handleImportClick}>
+                      Import progress JSON
+                    </button>
+                    <button className="button-ghost" onClick={openResetDialog}>
+                      Reset progress
+                    </button>
+                    <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
+                  </div>
+                  {activeQuiz ? (
+                    <button
+                      className={`session-banner dashboard-session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
+                      onClick={showResumeButton ? resumeQuiz : undefined}
+                      disabled={!showResumeButton}
+                    >
+                      <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
+                        Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Complete"}
+                      </span>
+                      <span className="muted">
+                        {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
+                      </span>
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+              <div className="stats-grid dashboard-stats-grid">
+                <div className="stat-card dashboard-stat-card">
+                  <div className="mini-label">Estimated overall</div>
+                  <div className="stat-value" style={{ color: scoreToColor(overall.score) }}>
+                    {overall.score == null ? "—" : `${overall.score}%`}
                   </div>
                 </div>
-                <div className="dashboard-hero-aside">
-                  <div className="stats-grid dashboard-stats-grid">
-                    <div className="stat-card dashboard-stat-card">
-                      <div className="mini-label">Estimated overall</div>
-                      <div className="stat-value" style={{ color: scoreToColor(overall.score) }}>
-                        {overall.score == null ? "—" : `${overall.score}%`}
-                      </div>
-                      <p className="dashboard-stat-note">Weighted from answered questions with confidence scaling as coverage grows.</p>
-                    </div>
-                    <div className="stat-card dashboard-stat-card">
-                      <div className="mini-label">Questions answered</div>
-                      <div className="stat-value">{overall.answered}</div>
-                      <p className="dashboard-stat-note">Every recorded mark sharpens topic coverage and future recommendations.</p>
-                    </div>
-                    <div className="stat-card dashboard-stat-card">
-                      <div className="mini-label">Topics assessed</div>
-                      <div className="stat-value">{overall.topicsAssessed}/13</div>
-                      <p className="dashboard-stat-note">Topic bars unlock once each area has enough answered questions to matter.</p>
-                    </div>
-                  </div>
-                  <div className="dashboard-hero-insight">
-                    <div className="mini-label">Best next move</div>
-                    {featuredRecommendation ? (
-                      <>
-                        <div className="dashboard-hero-insight-row">
-                          <strong>{featuredRecommendation.section.title}</strong>
-                          <span className="pill">
-                            {featuredRecommendation.metrics.score == null ? "Unassessed" : `${featuredRecommendation.metrics.score}%`}
-                          </span>
-                        </div>
-                        <p>{getRecommendationReason(featuredRecommendation.metrics, featuredRecommendation.questionCount)}</p>
-                      </>
-                    ) : (
-                      <p>Once the question bank has coverage, the dashboard will surface your most strategic next study target here.</p>
-                    )}
-                  </div>
+                <div className="stat-card dashboard-stat-card">
+                  <div className="mini-label">Questions answered</div>
+                  <div className="stat-value">{overall.answered}</div>
+                </div>
+                <div className="stat-card dashboard-stat-card">
+                  <div className="mini-label">Topics assessed</div>
+                  <div className="stat-value">{overall.topicsAssessed}/13</div>
                 </div>
               </div>
             </div>
@@ -1816,31 +1760,25 @@ function Dashboard({
       <aside className="stack dashboard-sidebar">
         {activeQuiz?.status === "in-progress" ? (
           <div className="panel dashboard-panel dashboard-panel-resume">
-            <div className="dashboard-panel-head">
-              <div className="mini-label">Resume where you left off</div>
-              <h2 className="section-title">{activeQuiz.title}</h2>
-              <p className="sidebar-note">
-                {getQuizModeLabel(activeQuiz.mode)} • {getActiveQuizSummary(activeQuiz)?.answeredCount || 0}/
-                {getActiveQuizSummary(activeQuiz)?.questionCount || 0} graded
-              </p>
-            </div>
-            <div className="dashboard-panel-actions">
-              <button className="button" onClick={onResumeQuiz}>
-                Resume quiz
-              </button>
-            </div>
+            <div className="mini-label">Resume where you left off</div>
+            <h2 className="section-title">{activeQuiz.title}</h2>
+            <p className="sidebar-note">
+              {getQuizModeLabel(activeQuiz.mode)} • {getActiveQuizSummary(activeQuiz)?.answeredCount || 0}/
+              {getActiveQuizSummary(activeQuiz)?.questionCount || 0} graded
+            </p>
+            <button className="button" onClick={onResumeQuiz}>
+              Resume quiz
+            </button>
           </div>
         ) : null}
 
         <div className="panel dashboard-panel dashboard-panel-study">
-          <div className="dashboard-panel-head">
-            <div className="mini-label">Study next</div>
-            <h2 className="section-title">Recommended focus</h2>
-          </div>
+          <div className="mini-label">Study next</div>
+          <h2 className="section-title">Recommended focus</h2>
           <div className="stack">
             {recommendations.map(({ section, metrics, questionCount }) => (
-              <div key={section.id} className="results-card dashboard-mini-card dashboard-focus-card">
-                <div className="card-row dashboard-focus-card-row">
+              <div key={section.id} className="results-card dashboard-mini-card">
+                <div className="card-row">
                   <strong>{section.title}</strong>
                   <span className="pill">{metrics.score == null ? "Unassessed" : `${metrics.score}%`}</span>
                 </div>
@@ -1857,34 +1795,26 @@ function Dashboard({
         </div>
 
         <div className="panel dashboard-panel">
-          <div className="dashboard-panel-head">
-            <div className="mini-label">How scoring works</div>
-            <p className="sidebar-note">
-              Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered
-              question there, and all percentages are shown as raw percent correct.
-            </p>
-          </div>
+          <div className="mini-label">How scoring works</div>
+          <p className="sidebar-note">
+            Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered
+            question there, and all percentages are shown as raw percent correct.
+          </p>
         </div>
 
         <div className="panel dashboard-panel dashboard-panel-diagnostic">
-          <div className="dashboard-panel-head">
-            <div className="mini-label">Diagnostic</div>
-            <p className="sidebar-note">
-              Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per
-              topic, and the app prefers unanswered questions before recycling older ones.
-            </p>
-          </div>
-          <div className="dashboard-panel-actions">
-            <button className="button" onClick={onStartDiagnostic}>
-              Start diagnostic
-            </button>
-          </div>
+          <div className="mini-label">Diagnostic</div>
+          <p className="sidebar-note">
+            Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per
+            topic, and the app prefers unanswered questions before recycling older ones.
+          </p>
+          <button className="button" onClick={onStartDiagnostic}>
+            Start diagnostic
+          </button>
         </div>
 
         <div className="panel dashboard-panel">
-          <div className="dashboard-panel-head">
-            <div className="mini-label">Diagnostic history</div>
-          </div>
+          <div className="mini-label">Diagnostic history</div>
           {diagnosticHistory.length ? (
             <div className="stack diagnostic-history-list">
               {diagnosticHistory.map((attempt) => (
@@ -1921,14 +1851,14 @@ function Dashboard({
           return (
             <article key={section.id} className={`topic-card dashboard-topic-card ${isThinCoverage ? "is-thin" : ""}`}>
               <div className="topic-summary-panel dashboard-topic-summary-panel">
-                <div className="topic-header dashboard-topic-header">
-                  <div className="dashboard-topic-heading">
+                <div className="topic-header">
+                  <div>
                     <div className="mini-label">
                       Blueprint range {section.questionRange} questions
                     </div>
                     <h3>{section.title}</h3>
                   </div>
-                  <div className="toolbar dashboard-topic-pills">
+                  <div className="toolbar">
                     <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
                       {metrics.isScoreVisible ? `${metrics.score}% correct` : "Progress locked"}
                     </span>
@@ -1936,7 +1866,7 @@ function Dashboard({
                   </div>
                 </div>
 
-                <div className={`score-bar dashboard-score-bar ${metrics.isScoreVisible ? "" : "is-disabled has-message"}`}>
+                <div className={`score-bar ${metrics.isScoreVisible ? "" : "is-disabled has-message"}`}>
                   {metrics.isScoreVisible ? (
                     <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
                   ) : (
@@ -1944,12 +1874,12 @@ function Dashboard({
                   )}
                 </div>
 
-                <div className="topic-actions dashboard-topic-actions">
-                  <div className="topic-progress-copy dashboard-topic-progress-copy">
+                <div className="topic-actions">
+                  <div className="topic-progress-copy">
                     <span className="muted">{questionCount} mapped questions.</span>
                     <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
                   </div>
-                  <div className="toolbar dashboard-topic-action-bar">
+                  <div className="toolbar">
                     <button className="button-ghost topic-card-action-open" onClick={() => onOpenTopic(section.id)}>
                       Open topic
                     </button>
@@ -1980,24 +1910,24 @@ function Dashboard({
               </div>
 
               {isExpanded ? (
-                <div className="subtopic-section-header dashboard-subtopic-section-header">
+                <div className="subtopic-section-header">
                   <span className="mini-label">By subtopic</span>
                 </div>
               ) : null}
 
-              <div className={`subtopic-list compact dashboard-subtopic-list ${isExpanded ? "" : "mobile-collapsed"}`}>
+              <div className={`subtopic-list compact ${isExpanded ? "" : "mobile-collapsed"}`}>
                 {section.subtopicCoverage.map((subtopic) => {
                   const subMetrics = getSubtopicMetrics(progress, section.id, subtopic.name);
                   return (
-                    <div key={subtopic.name} className="subtopic-row dashboard-subtopic-row">
-                      <div className="subtopic-meta dashboard-subtopic-meta">
+                    <div key={subtopic.name} className="subtopic-row">
+                      <div className="subtopic-meta">
                         <strong>{subtopic.name}</strong>
                         <div className="subtopic-summary">
                           <span className="muted">{subtopic.count} mapped questions.</span>
                           <span className="muted">{renderAnsweredBreakdown(subMetrics.answered, subMetrics.correct)}</span>
                         </div>
                       </div>
-                      <div className="subtopic-metrics dashboard-subtopic-metrics">
+                      <div className="subtopic-metrics">
                         <div className="card-row" style={{ marginBottom: 6 }}>
                           <span className="muted">
                             {subMetrics.isScoreVisible ? `${subMetrics.score}% correct` : "Progress locked"}
