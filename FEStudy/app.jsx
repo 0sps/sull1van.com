@@ -14,6 +14,61 @@ function clamp(value, min, max) {
 }
 
 const TEST_MIX_KEYS = ["correct", "incorrect", "unanswered"];
+const SAFE_HTML_TAGS = new Set([
+  "a", "b", "br", "circle", "code", "dd", "defs", "div", "dl", "dt", "em", "g", "i", "li", "line", "marker",
+  "ol", "p", "path", "polygon", "polyline", "pre", "rect", "small", "span", "strong", "sub", "sup", "svg",
+  "table", "tbody", "td", "text", "tfoot", "th", "thead", "tr", "tspan", "u", "ul"
+]);
+const SAFE_HTML_ATTRIBUTES = new Set([
+  "aria-hidden", "baseline-shift", "class", "cx", "cy", "d", "fill", "font-family", "font-size", "font-style",
+  "font-weight", "height", "href", "id", "marker-end", "marker-start", "markerheight", "markerwidth", "opacity",
+  "orient", "points", "r", "refx", "refy", "rel", "role", "scope", "stroke", "stroke-dasharray", "stroke-width",
+  "style", "target", "text-anchor", "title", "transform", "viewbox", "width", "x", "x1", "x2", "xmlns", "y", "y1", "y2"
+]);
+const URL_ATTRIBUTES = new Set(["href"]);
+
+function isSafeAttributeValue(name, value) {
+  const normalized = String(value).trim().replace(/[\u0000-\u001F\u007F\s]+/g, "").toLowerCase();
+  if (URL_ATTRIBUTES.has(name)) {
+    return normalized === "" || normalized.startsWith("#") || normalized.startsWith("http://") || normalized.startsWith("https://");
+  }
+  if (name === "style") {
+    return !/expression\s*\(|url\s*\(|@import|javascript:/i.test(value);
+  }
+  return true;
+}
+
+function sanitizeHtml(rawHtml) {
+  if (typeof rawHtml !== "string") return "";
+  const template = document.createElement("template");
+  template.innerHTML = rawHtml;
+
+  template.content.querySelectorAll("*").forEach((node) => {
+    const tagName = node.tagName.toLowerCase();
+    if (!SAFE_HTML_TAGS.has(tagName)) {
+      node.replaceWith(document.createTextNode(node.textContent || ""));
+      return;
+    }
+
+    [...node.attributes].forEach((attribute) => {
+      const name = attribute.name.toLowerCase();
+      if (name.startsWith("on") || !SAFE_HTML_ATTRIBUTES.has(name) || !isSafeAttributeValue(name, attribute.value)) {
+        node.removeAttribute(attribute.name);
+      }
+    });
+
+    if (node.tagName.toLowerCase() === "a") {
+      node.setAttribute("rel", "noreferrer");
+    }
+  });
+
+  return template.innerHTML;
+}
+
+function SafeHtml({ as: Tag = "div", className, html }) {
+  const safeHtml = useMemo(() => sanitizeHtml(html), [html]);
+  return <Tag className={className} dangerouslySetInnerHTML={{ __html: safeHtml }} />;
+}
 
 function scoreToColor(score) {
   if (score == null) return "#a08d78";
@@ -232,7 +287,11 @@ function readProgress(data) {
 }
 
 function persistProgress(progress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...progress, lastUpdated: new Date().toISOString() }));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...progress, lastUpdated: new Date().toISOString() }));
+  } catch (error) {
+    console.warn("Progress could not be saved locally.", error);
+  }
 }
 
 function setProgressForQuestionResult(progress, question, nextWasCorrect) {
@@ -571,14 +630,18 @@ function readActiveQuiz(questionsById) {
 }
 
 function persistActiveQuiz(activeQuiz) {
-  if (!activeQuiz) {
-    localStorage.removeItem(ACTIVE_QUIZ_STORAGE_KEY);
-    return;
+  try {
+    if (!activeQuiz) {
+      localStorage.removeItem(ACTIVE_QUIZ_STORAGE_KEY);
+      return;
+    }
+    localStorage.setItem(
+      ACTIVE_QUIZ_STORAGE_KEY,
+      JSON.stringify({ ...activeQuiz, lastUpdated: new Date().toISOString() })
+    );
+  } catch (error) {
+    console.warn("Active quiz could not be saved locally.", error);
   }
-  localStorage.setItem(
-    ACTIVE_QUIZ_STORAGE_KEY,
-    JSON.stringify({ ...activeQuiz, lastUpdated: new Date().toISOString() })
-  );
 }
 
 function getSessionQuestionState(activeQuiz, questionId) {
@@ -733,8 +796,31 @@ function renderMath() {
   }
 }
 
+function isValidQuizData(data) {
+  return !!data && Array.isArray(data.sections) && Array.isArray(data.questions);
+}
+
+function DataLoadError() {
+  return (
+    <main className="app-shell">
+      <section className="answer-panel">
+        <h1>Question data could not be loaded.</h1>
+        <p className="muted">Refresh the page, or check that <code>data/app-data.js</code> is available next to this app.</p>
+      </section>
+    </main>
+  );
+}
+
 function App() {
   const data = window.FEQuizData;
+  if (!isValidQuizData(data)) {
+    return <DataLoadError />;
+  }
+
+  return <QuizApp data={data} />;
+}
+
+function QuizApp({ data }) {
   const questionsBySection = useMemo(() => groupQuestionsBySection(data), [data]);
   const questionsById = useMemo(() => groupQuestionsById(data), [data]);
   const [progress, setProgress] = useState(() => readProgress(data));
@@ -2185,7 +2271,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
             </div>
           </div>
           <h2>{formatQuestionHeading(question, currentIndex)}</h2>
-          <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
+          <SafeHtml className="question-stem" html={question.stem} />
 
           {question.type === "mcq" ? (
             <div className="choice-grid">
@@ -2201,7 +2287,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
                   >
                     <div className="choice-row">
                       <strong>{key}</strong>
-                      <span dangerouslySetInnerHTML={{ __html: value }} />
+                      <SafeHtml as="span" html={value} />
                     </div>
                   </button>
                 );
@@ -2223,7 +2309,7 @@ function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
             >
               <div className="mini-label">Answer</div>
               <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
-                <div className="answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                <SafeHtml className="answer-reveal-content" html={question.answer} />
                 {!revealed ? (
                   <div className="answer-reveal-button">Click to show answer</div>
                 ) : null}
@@ -2536,7 +2622,7 @@ function QuizSessionView({
 
                 <div className={`quiz-card-body ${question.type === "open" ? "has-answer-dock" : ""} ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
                   <div className="quiz-question-scroll">
-                    <div className="question-stem" dangerouslySetInnerHTML={{ __html: question.stem }} />
+                    <SafeHtml className="question-stem" html={question.stem} />
 
                     {question.type === "mcq" ? (
                       <div className="choice-grid">
@@ -2554,7 +2640,7 @@ function QuizSessionView({
                             >
                               <div className="choice-row">
                                 <strong>{key}</strong>
-                                <span dangerouslySetInnerHTML={{ __html: value }} />
+                                <SafeHtml as="span" html={value} />
                               </div>
                             </button>
                           );
@@ -2591,7 +2677,7 @@ function QuizSessionView({
                           </div>
                         ) : null}
                         <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
-                          <div className="quiz-answer-content answer-reveal-content" dangerouslySetInnerHTML={{ __html: question.answer }} />
+                          <SafeHtml className="quiz-answer-content answer-reveal-content" html={question.answer} />
                           {!canRevealAnswer ? (
                             <div className="answer-reveal-button">Click to show answer</div>
                           ) : null}

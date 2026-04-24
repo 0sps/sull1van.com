@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "esbuild app.jsx --bundle --format=iife --global-name=FEStudyApp --outfile=app.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.3"
+  }
+}
