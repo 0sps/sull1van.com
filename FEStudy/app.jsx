@@ -797,7 +797,53 @@ function renderMath() {
 }
 
 function isValidQuizData(data) {
-  return !!data && Array.isArray(data.sections) && Array.isArray(data.questions);
+  if (!data || typeof data !== "object") return false;
+  if (typeof data.exam !== "string" || !data.exam.trim()) return false;
+  if (!data.coverageReport || typeof data.coverageReport !== "object") return false;
+  if (!Number.isFinite(data.coverageReport.mappedQuestionCount)) return false;
+  if (!Number.isFinite(data.coverageReport.unmatchedQuestionCount)) return false;
+  if (!Array.isArray(data.sections) || !Array.isArray(data.questions)) return false;
+
+  const sectionIds = new Set();
+  const sectionsAreValid = data.sections.every((section) => {
+    if (!section || typeof section !== "object") return false;
+    if (typeof section.id !== "string" || !section.id.trim()) return false;
+    if (typeof section.title !== "string" || !section.title.trim()) return false;
+    if (typeof section.questionRange !== "string" && typeof section.questionRange !== "number") return false;
+    if (!Array.isArray(section.subtopicCoverage)) return false;
+    sectionIds.add(section.id);
+    return section.subtopicCoverage.every(
+      (subtopic) =>
+        subtopic &&
+        typeof subtopic === "object" &&
+        typeof subtopic.name === "string" &&
+        subtopic.name.trim() &&
+        Number.isFinite(subtopic.count)
+    );
+  });
+
+  if (!sectionsAreValid || !sectionIds.size) return false;
+
+  return data.questions.every((question) => {
+    if (!question || typeof question !== "object") return false;
+    if (typeof question.id !== "string" || !question.id.trim()) return false;
+    if (!sectionIds.has(question.sectionId)) return false;
+    if (typeof question.officialSubtopic !== "string" || !question.officialSubtopic.trim()) return false;
+    if (typeof question.stem !== "string" || !question.stem.trim()) return false;
+    if (question.type === "mcq") {
+      return (
+        question.choices &&
+        typeof question.choices === "object" &&
+        !Array.isArray(question.choices) &&
+        typeof question.answer === "string" &&
+        Object.prototype.hasOwnProperty.call(question.choices, question.answer)
+      );
+    }
+    if (question.type === "open") {
+      return typeof question.answer === "string";
+    }
+    return false;
+  });
 }
 
 function DataLoadError() {
@@ -964,6 +1010,26 @@ function QuizApp({ data }) {
     if (!activeQuiz || activeQuiz.status !== "in-progress") return;
     const returnTarget = normalizeReturnTarget(activeQuiz.returnTarget);
     setTopicModalSectionId(returnTarget.type === "topic-modal" ? returnTarget.sectionId : null);
+    setView({ name: "session" });
+  }
+
+  function reviewCompletedQuiz() {
+    if (!activeQuiz || activeQuiz.status !== "complete") return;
+    setActiveQuiz((current) => {
+      if (!current || current.status !== "complete") return current;
+      return {
+        ...current,
+        mode: "review",
+        title: `${current.title} review`,
+        subtitle: "Review this completed quiz and update any saved marks.",
+        status: "in-progress",
+        currentIndex: 0,
+        returnTarget: { type: "dashboard" },
+        showPriorResults: true,
+        lastUpdated: new Date().toISOString()
+      };
+    });
+    setTopicModalSectionId(null);
     setView({ name: "session" });
   }
 
@@ -1200,6 +1266,7 @@ function QuizApp({ data }) {
   }
 
   function updateQuizResponse(questionId, patch) {
+    const question = questionsById[questionId];
     setActiveQuiz((current) => {
       if (!current) return current;
       return {
@@ -1214,11 +1281,13 @@ function QuizApp({ data }) {
         lastUpdated: new Date().toISOString()
       };
     });
+    if (question && typeof patch.wasCorrect === "boolean") {
+      setProgress((current) => updateProgressForQuestion(current, question, patch.wasCorrect));
+    }
   }
 
   function gradeQuizQuestion(question, wasCorrect) {
     updateQuizResponse(question.id, { wasCorrect });
-    setProgress((current) => updateProgressForQuestion(current, question, wasCorrect));
   }
 
   function clearQuizQuestion(question) {
@@ -1412,6 +1481,7 @@ function QuizApp({ data }) {
   }, [topicModalSectionId, view.name]);
 
   const showResumeButton = activeQuiz?.status === "in-progress";
+  const showReviewButton = activeQuiz?.status === "complete";
   const configuredQuestionTotal = testSetupDialog
     ? TEST_MIX_KEYS.reduce(
       (sum, key) => sum + clampMixCount(testSetupDialog.mixInputs?.[key], testSetupDialog.availability[key]),
@@ -1452,12 +1522,12 @@ function QuizApp({ data }) {
                   </div>
                   {activeQuiz ? (
                     <button
-                      className={`session-banner dashboard-session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`}
-                      onClick={showResumeButton ? resumeQuiz : undefined}
-                      disabled={!showResumeButton}
+                      className={`session-banner dashboard-session-banner ${showResumeButton || showReviewButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""} ${showReviewButton ? "is-complete" : ""}`}
+                      onClick={showResumeButton ? resumeQuiz : showReviewButton ? reviewCompletedQuiz : undefined}
+                      disabled={!showResumeButton && !showReviewButton}
                     >
                       <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
-                        Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Complete"}
+                        Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Review complete quiz"}
                       </span>
                       <span className="muted">
                         {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
@@ -1494,6 +1564,7 @@ function QuizApp({ data }) {
               recommendations={recommendations}
               activeQuiz={activeQuiz}
               onResumeQuiz={resumeQuiz}
+              onReviewCompletedQuiz={reviewCompletedQuiz}
               onStartDiagnostic={startDiagnostic}
               onOpenTopic={openTopicModal}
               onStartPractice={startTopicPractice}
@@ -1831,6 +1902,7 @@ function Dashboard({
   recommendations,
   activeQuiz,
   onResumeQuiz,
+  onReviewCompletedQuiz,
   onOpenTopic,
   onStartPractice,
   onStartDiagnostic
@@ -1854,6 +1926,20 @@ function Dashboard({
             </p>
             <button className="button" onClick={onResumeQuiz}>
               Resume quiz
+            </button>
+          </div>
+        ) : null}
+
+        {activeQuiz?.status === "complete" ? (
+          <div className="panel dashboard-panel dashboard-panel-resume dashboard-panel-complete">
+            <div className="mini-label">Completed quiz</div>
+            <h2 className="section-title">{activeQuiz.title}</h2>
+            <p className="sidebar-note">
+              {getQuizModeLabel(activeQuiz.mode)} • {getActiveQuizSummary(activeQuiz)?.answeredCount || 0}/
+              {getActiveQuizSummary(activeQuiz)?.questionCount || 0} graded
+            </p>
+            <button className="button-ghost" onClick={onReviewCompletedQuiz}>
+              Review saved answers
             </button>
           </div>
         ) : null}
@@ -2383,6 +2469,37 @@ function QuizSessionView({
     onSetIndex(questions.length);
   }
 
+  function handleSelectChoice(choiceKey) {
+    if (!question || isReviewMode) return;
+    onUpdateResponse(question.id, {
+      selectedChoice: choiceKey,
+      revealed: true,
+      wasCorrect: choiceKey === question.answer
+    });
+  }
+
+  function renderMobileGradeActions() {
+    if (isSubmitLanding || !response?.revealed) return null;
+    return (
+      <div className="mobile-grade-actions">
+        <button
+          className="button-ghost result-button result-button-ghost"
+          onClick={() => handleGradeAndAdvance(false)}
+        >
+          <span>Mark wrong</span>
+          <span className="shortcut-badge">SPACE</span>
+        </button>
+        <button
+          className="button result-button result-button-primary"
+          onClick={() => handleGradeAndAdvance(true)}
+        >
+          <span>Mark right</span>
+          <span className="shortcut-badge">ENTER</span>
+        </button>
+      </div>
+    );
+  }
+
   useEffect(() => {
     function handleKeydown(event) {
       if (isResetDialogOpen || isQuizActionDialogOpen) {
@@ -2410,9 +2527,9 @@ function QuizSessionView({
       const key = event.key.toUpperCase();
       const availableChoices = question.type === "mcq" ? Object.keys(question.choices || {}) : [];
 
-      if (!isReviewMode && question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
+      if (!isReviewMode && question.type === "mcq" && availableChoices.includes(key)) {
         event.preventDefault();
-        onUpdateResponse(question.id, { selectedChoice: key, revealed: true });
+        handleSelectChoice(key);
         return;
       }
 
@@ -2635,7 +2752,7 @@ function QuizSessionView({
                             <button
                               key={key}
                               className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
-                              onClick={() => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true })}
+                              onClick={() => handleSelectChoice(key)}
                               disabled={isReviewMode}
                             >
                               <div className="choice-row">
@@ -2645,6 +2762,7 @@ function QuizSessionView({
                             </button>
                           );
                         })}
+                        {renderMobileGradeActions()}
                       </div>
                     ) : !canRevealAnswer ? (
                       <div className="answer-panel answer-panel-intro">
@@ -2687,6 +2805,7 @@ function QuizSessionView({
                             Open source explanation
                           </a>
                         ) : null}
+                        {renderMobileGradeActions()}
                       </div>
                     ) : null}
                 </div>

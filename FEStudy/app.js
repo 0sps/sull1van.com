@@ -751,7 +751,39 @@ var FEStudyApp = (() => {
     }
   }
   function isValidQuizData(data) {
-    return !!data && Array.isArray(data.sections) && Array.isArray(data.questions);
+    if (!data || typeof data !== "object") return false;
+    if (typeof data.exam !== "string" || !data.exam.trim()) return false;
+    if (!data.coverageReport || typeof data.coverageReport !== "object") return false;
+    if (!Number.isFinite(data.coverageReport.mappedQuestionCount)) return false;
+    if (!Number.isFinite(data.coverageReport.unmatchedQuestionCount)) return false;
+    if (!Array.isArray(data.sections) || !Array.isArray(data.questions)) return false;
+    const sectionIds = /* @__PURE__ */ new Set();
+    const sectionsAreValid = data.sections.every((section) => {
+      if (!section || typeof section !== "object") return false;
+      if (typeof section.id !== "string" || !section.id.trim()) return false;
+      if (typeof section.title !== "string" || !section.title.trim()) return false;
+      if (typeof section.questionRange !== "string" && typeof section.questionRange !== "number") return false;
+      if (!Array.isArray(section.subtopicCoverage)) return false;
+      sectionIds.add(section.id);
+      return section.subtopicCoverage.every(
+        (subtopic) => subtopic && typeof subtopic === "object" && typeof subtopic.name === "string" && subtopic.name.trim() && Number.isFinite(subtopic.count)
+      );
+    });
+    if (!sectionsAreValid || !sectionIds.size) return false;
+    return data.questions.every((question) => {
+      if (!question || typeof question !== "object") return false;
+      if (typeof question.id !== "string" || !question.id.trim()) return false;
+      if (!sectionIds.has(question.sectionId)) return false;
+      if (typeof question.officialSubtopic !== "string" || !question.officialSubtopic.trim()) return false;
+      if (typeof question.stem !== "string" || !question.stem.trim()) return false;
+      if (question.type === "mcq") {
+        return question.choices && typeof question.choices === "object" && !Array.isArray(question.choices) && typeof question.answer === "string" && Object.prototype.hasOwnProperty.call(question.choices, question.answer);
+      }
+      if (question.type === "open") {
+        return typeof question.answer === "string";
+      }
+      return false;
+    });
   }
   function DataLoadError() {
     return /* @__PURE__ */ React.createElement("main", { className: "app-shell" }, /* @__PURE__ */ React.createElement("section", { className: "answer-panel" }, /* @__PURE__ */ React.createElement("h1", null, "Question data could not be loaded."), /* @__PURE__ */ React.createElement("p", { className: "muted" }, "Refresh the page, or check that ", /* @__PURE__ */ React.createElement("code", null, "data/app-data.js"), " is available next to this app.")));
@@ -888,6 +920,25 @@ var FEStudyApp = (() => {
       if (!activeQuiz || activeQuiz.status !== "in-progress") return;
       const returnTarget = normalizeReturnTarget(activeQuiz.returnTarget);
       setTopicModalSectionId(returnTarget.type === "topic-modal" ? returnTarget.sectionId : null);
+      setView({ name: "session" });
+    }
+    function reviewCompletedQuiz() {
+      if (!activeQuiz || activeQuiz.status !== "complete") return;
+      setActiveQuiz((current) => {
+        if (!current || current.status !== "complete") return current;
+        return {
+          ...current,
+          mode: "review",
+          title: `${current.title} review`,
+          subtitle: "Review this completed quiz and update any saved marks.",
+          status: "in-progress",
+          currentIndex: 0,
+          returnTarget: { type: "dashboard" },
+          showPriorResults: true,
+          lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      });
+      setTopicModalSectionId(null);
       setView({ name: "session" });
     }
     function leaveQuiz() {
@@ -1096,6 +1147,7 @@ var FEStudyApp = (() => {
       });
     }
     function updateQuizResponse(questionId, patch) {
+      const question = questionsById[questionId];
       setActiveQuiz((current) => {
         if (!current) return current;
         return {
@@ -1110,10 +1162,12 @@ var FEStudyApp = (() => {
           lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
         };
       });
+      if (question && typeof patch.wasCorrect === "boolean") {
+        setProgress((current) => updateProgressForQuestion(current, question, patch.wasCorrect));
+      }
     }
     function gradeQuizQuestion(question, wasCorrect) {
       updateQuizResponse(question.id, { wasCorrect });
-      setProgress((current) => updateProgressForQuestion(current, question, wasCorrect));
     }
     function clearQuizQuestion(question) {
       if (!question || !activeQuiz) return;
@@ -1274,6 +1328,7 @@ var FEStudyApp = (() => {
       return () => window.removeEventListener("keydown", handleKeydown);
     }, [topicModalSectionId, view.name]);
     const showResumeButton = activeQuiz?.status === "in-progress";
+    const showReviewButton = activeQuiz?.status === "complete";
     const configuredQuestionTotal = testSetupDialog ? TEST_MIX_KEYS.reduce(
       (sum, key) => sum + clampMixCount(testSetupDialog.mixInputs?.[key], testSetupDialog.availability[key]),
       0
@@ -1281,11 +1336,11 @@ var FEStudyApp = (() => {
     return /* @__PURE__ */ React.createElement("div", { className: `app-shell ${view.name === "session" && isTestMode(activeQuiz?.mode) ? "app-shell-session" : ""}` }, !(view.name === "session" && isTestMode(activeQuiz?.mode)) ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("header", { className: "hero dashboard-hero" }, /* @__PURE__ */ React.createElement("div", { className: "hero-grid dashboard-hero-grid" }, /* @__PURE__ */ React.createElement("div", { className: "dashboard-hero-copy" }, /* @__PURE__ */ React.createElement("div", { className: "eyebrow" }, data.exam), /* @__PURE__ */ React.createElement("h1", null, "Build your readiness for the FE exam."), /* @__PURE__ */ React.createElement("p", null, "This dashboard is built to help you diagnose weak areas and drill down into focused practice."), /* @__PURE__ */ React.createElement("div", { className: "hero-controls dashboard-hero-controls" }, /* @__PURE__ */ React.createElement("div", { className: "hero-primary-actions" }, /* @__PURE__ */ React.createElement("button", { className: "button", onClick: startDiagnostic }, hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic")), /* @__PURE__ */ React.createElement("div", { className: "hero-utility-actions" }, /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: handleExportProgress }, "Export progress JSON"), /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: handleImportClick }, "Import progress JSON"), /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: openResetDialog }, "Reset progress"), /* @__PURE__ */ React.createElement("input", { className: "file-input", type: "file", accept: "application/json", ref: fileInputRef, onChange: handleImportProgress })), activeQuiz ? /* @__PURE__ */ React.createElement(
       "button",
       {
-        className: `session-banner dashboard-session-banner ${showResumeButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""}`,
-        onClick: showResumeButton ? resumeQuiz : void 0,
-        disabled: !showResumeButton
+        className: `session-banner dashboard-session-banner ${showResumeButton || showReviewButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""} ${showReviewButton ? "is-complete" : ""}`,
+        onClick: showResumeButton ? resumeQuiz : showReviewButton ? reviewCompletedQuiz : void 0,
+        disabled: !showResumeButton && !showReviewButton
       },
-      /* @__PURE__ */ React.createElement("span", { className: `pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}` }, "Saved quiz: ", activeQuiz.status === "in-progress" ? "In progress" : "Complete"),
+      /* @__PURE__ */ React.createElement("span", { className: `pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}` }, "Saved quiz: ", activeQuiz.status === "in-progress" ? "In progress" : "Review complete quiz"),
       /* @__PURE__ */ React.createElement("span", { className: "muted" }, activeQuiz.title, " \u2022 ", activeQuizSummary?.answeredCount || 0, "/", activeQuizSummary?.questionCount || 0, " graded")
     ) : null)), /* @__PURE__ */ React.createElement("div", { className: "stats-grid dashboard-stats-grid" }, /* @__PURE__ */ React.createElement("div", { className: "stat-card dashboard-stat-card" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Estimated overall"), /* @__PURE__ */ React.createElement("div", { className: "stat-value", style: { color: scoreToColor(overall.score) } }, overall.score == null ? "\u2014" : `${overall.score}%`)), /* @__PURE__ */ React.createElement("div", { className: "stat-card dashboard-stat-card" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Questions answered"), /* @__PURE__ */ React.createElement("div", { className: "stat-value" }, overall.answered)), /* @__PURE__ */ React.createElement("div", { className: "stat-card dashboard-stat-card" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Topics assessed"), /* @__PURE__ */ React.createElement("div", { className: "stat-value" }, overall.topicsAssessed, "/13"))))), view.name === "dashboard" ? /* @__PURE__ */ React.createElement(
       Dashboard,
@@ -1297,6 +1352,7 @@ var FEStudyApp = (() => {
         recommendations,
         activeQuiz,
         onResumeQuiz: resumeQuiz,
+        onReviewCompletedQuiz: reviewCompletedQuiz,
         onStartDiagnostic: startDiagnostic,
         onOpenTopic: openTopicModal,
         onStartPractice: startTopicPractice
@@ -1493,6 +1549,7 @@ var FEStudyApp = (() => {
     recommendations,
     activeQuiz,
     onResumeQuiz,
+    onReviewCompletedQuiz,
     onOpenTopic,
     onStartPractice,
     onStartDiagnostic
@@ -1501,7 +1558,7 @@ var FEStudyApp = (() => {
     function toggleSection(sectionId) {
       setExpandedSections((current) => ({ ...current, [sectionId]: !current[sectionId] }));
     }
-    return /* @__PURE__ */ React.createElement("div", { className: "content-grid dashboard-grid" }, /* @__PURE__ */ React.createElement("aside", { className: "stack dashboard-sidebar" }, activeQuiz?.status === "in-progress" ? /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-resume" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Resume where you left off"), /* @__PURE__ */ React.createElement("h2", { className: "section-title" }, activeQuiz.title), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, getQuizModeLabel(activeQuiz.mode), " \u2022 ", getActiveQuizSummary(activeQuiz)?.answeredCount || 0, "/", getActiveQuizSummary(activeQuiz)?.questionCount || 0, " graded"), /* @__PURE__ */ React.createElement("button", { className: "button", onClick: onResumeQuiz }, "Resume quiz")) : null, /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-study" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Study next"), /* @__PURE__ */ React.createElement("h2", { className: "section-title" }, "Recommended focus"), /* @__PURE__ */ React.createElement("div", { className: "stack" }, recommendations.map(({ section, metrics, questionCount }) => /* @__PURE__ */ React.createElement("div", { key: section.id, className: "results-card dashboard-mini-card" }, /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("strong", null, section.title), /* @__PURE__ */ React.createElement("span", { className: "pill" }, metrics.score == null ? "Unassessed" : `${metrics.score}%`)), /* @__PURE__ */ React.createElement("p", { className: "muted", style: { marginBottom: 10 } }, questionCount, " mapped questions available"), /* @__PURE__ */ React.createElement("p", { className: "reason-text" }, getRecommendationReason(metrics, questionCount)), /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: () => onOpenTopic(section.id) }, "Open topic"))))), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "How scoring works"), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, "Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered question there, and all percentages are shown as raw percent correct.")), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-diagnostic" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Diagnostic"), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, "Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per topic, and the app prefers unanswered questions before recycling older ones."), /* @__PURE__ */ React.createElement("button", { className: "button", onClick: onStartDiagnostic }, "Start diagnostic")), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Diagnostic history"), diagnosticHistory.length ? /* @__PURE__ */ React.createElement("div", { className: "stack diagnostic-history-list" }, diagnosticHistory.map((attempt) => /* @__PURE__ */ React.createElement("div", { key: attempt.id, className: "results-card diagnostic-history-card dashboard-mini-card" }, /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("strong", null, formatDiagnosticAttemptDate(attempt.completedAt)), /* @__PURE__ */ React.createElement("span", { className: "pill subtle" }, attempt.score == null ? "Ungraded" : `${attempt.score}% correct`)), /* @__PURE__ */ React.createElement("p", { className: "muted", style: { marginBottom: 8 } }, attempt.questionsPerTopic, " per topic \u2022 ", attempt.answered, " graded"), /* @__PURE__ */ React.createElement("p", { className: "reason-text", style: { margin: 0 } }, attempt.correct, " correct out of ", attempt.answered || 0, " graded questions.")))) : /* @__PURE__ */ React.createElement("p", { className: "sidebar-note", style: { marginBottom: 0 } }, "No diagnostic attempts saved yet. Your completed diagnostics will show up here as separate entries."))), /* @__PURE__ */ React.createElement("main", { className: "stack dashboard-main" }, data.sections.map((section) => {
+    return /* @__PURE__ */ React.createElement("div", { className: "content-grid dashboard-grid" }, /* @__PURE__ */ React.createElement("aside", { className: "stack dashboard-sidebar" }, activeQuiz?.status === "in-progress" ? /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-resume" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Resume where you left off"), /* @__PURE__ */ React.createElement("h2", { className: "section-title" }, activeQuiz.title), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, getQuizModeLabel(activeQuiz.mode), " \u2022 ", getActiveQuizSummary(activeQuiz)?.answeredCount || 0, "/", getActiveQuizSummary(activeQuiz)?.questionCount || 0, " graded"), /* @__PURE__ */ React.createElement("button", { className: "button", onClick: onResumeQuiz }, "Resume quiz")) : null, activeQuiz?.status === "complete" ? /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-resume dashboard-panel-complete" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Completed quiz"), /* @__PURE__ */ React.createElement("h2", { className: "section-title" }, activeQuiz.title), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, getQuizModeLabel(activeQuiz.mode), " \u2022 ", getActiveQuizSummary(activeQuiz)?.answeredCount || 0, "/", getActiveQuizSummary(activeQuiz)?.questionCount || 0, " graded"), /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: onReviewCompletedQuiz }, "Review saved answers")) : null, /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-study" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Study next"), /* @__PURE__ */ React.createElement("h2", { className: "section-title" }, "Recommended focus"), /* @__PURE__ */ React.createElement("div", { className: "stack" }, recommendations.map(({ section, metrics, questionCount }) => /* @__PURE__ */ React.createElement("div", { key: section.id, className: "results-card dashboard-mini-card" }, /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("strong", null, section.title), /* @__PURE__ */ React.createElement("span", { className: "pill" }, metrics.score == null ? "Unassessed" : `${metrics.score}%`)), /* @__PURE__ */ React.createElement("p", { className: "muted", style: { marginBottom: 10 } }, questionCount, " mapped questions available"), /* @__PURE__ */ React.createElement("p", { className: "reason-text" }, getRecommendationReason(metrics, questionCount)), /* @__PURE__ */ React.createElement("button", { className: "button-ghost", onClick: () => onOpenTopic(section.id) }, "Open topic"))))), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "How scoring works"), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, "Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered question there, and all percentages are shown as raw percent correct.")), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel dashboard-panel-diagnostic" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Diagnostic"), /* @__PURE__ */ React.createElement("p", { className: "sidebar-note" }, "Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per topic, and the app prefers unanswered questions before recycling older ones."), /* @__PURE__ */ React.createElement("button", { className: "button", onClick: onStartDiagnostic }, "Start diagnostic")), /* @__PURE__ */ React.createElement("div", { className: "panel dashboard-panel" }, /* @__PURE__ */ React.createElement("div", { className: "mini-label" }, "Diagnostic history"), diagnosticHistory.length ? /* @__PURE__ */ React.createElement("div", { className: "stack diagnostic-history-list" }, diagnosticHistory.map((attempt) => /* @__PURE__ */ React.createElement("div", { key: attempt.id, className: "results-card diagnostic-history-card dashboard-mini-card" }, /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("strong", null, formatDiagnosticAttemptDate(attempt.completedAt)), /* @__PURE__ */ React.createElement("span", { className: "pill subtle" }, attempt.score == null ? "Ungraded" : `${attempt.score}% correct`)), /* @__PURE__ */ React.createElement("p", { className: "muted", style: { marginBottom: 8 } }, attempt.questionsPerTopic, " per topic \u2022 ", attempt.answered, " graded"), /* @__PURE__ */ React.createElement("p", { className: "reason-text", style: { margin: 0 } }, attempt.correct, " correct out of ", attempt.answered || 0, " graded questions.")))) : /* @__PURE__ */ React.createElement("p", { className: "sidebar-note", style: { marginBottom: 0 } }, "No diagnostic attempts saved yet. Your completed diagnostics will show up here as separate entries."))), /* @__PURE__ */ React.createElement("main", { className: "stack dashboard-main" }, data.sections.map((section) => {
       const metrics = getSectionMetrics(section, progress);
       const questionCount = questionsBySection[section.id]?.length || 0;
       const isThinCoverage = questionCount < 5;
@@ -1664,6 +1721,34 @@ var FEStudyApp = (() => {
       }
       onSetIndex(questions.length);
     }
+    function handleSelectChoice(choiceKey) {
+      if (!question || isReviewMode) return;
+      onUpdateResponse(question.id, {
+        selectedChoice: choiceKey,
+        revealed: true,
+        wasCorrect: choiceKey === question.answer
+      });
+    }
+    function renderMobileGradeActions() {
+      if (isSubmitLanding || !response?.revealed) return null;
+      return /* @__PURE__ */ React.createElement("div", { className: "mobile-grade-actions" }, /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          className: "button-ghost result-button result-button-ghost",
+          onClick: () => handleGradeAndAdvance(false)
+        },
+        /* @__PURE__ */ React.createElement("span", null, "Mark wrong"),
+        /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "SPACE")
+      ), /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          className: "button result-button result-button-primary",
+          onClick: () => handleGradeAndAdvance(true)
+        },
+        /* @__PURE__ */ React.createElement("span", null, "Mark right"),
+        /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "ENTER")
+      ));
+    }
     useEffect(() => {
       function handleKeydown(event) {
         if (isResetDialogOpen || isQuizActionDialogOpen) {
@@ -1686,9 +1771,9 @@ var FEStudyApp = (() => {
         }
         const key = event.key.toUpperCase();
         const availableChoices = question.type === "mcq" ? Object.keys(question.choices || {}) : [];
-        if (!isReviewMode && question.type === "mcq" && !response?.revealed && availableChoices.includes(key)) {
+        if (!isReviewMode && question.type === "mcq" && availableChoices.includes(key)) {
           event.preventDefault();
-          onUpdateResponse(question.id, { selectedChoice: key, revealed: true });
+          handleSelectChoice(key);
           return;
         }
         if (response?.revealed && event.key === "Enter") {
@@ -1760,12 +1845,12 @@ var FEStudyApp = (() => {
         {
           key,
           className: `choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`,
-          onClick: () => !isReviewMode && onUpdateResponse(question.id, { selectedChoice: key, revealed: true }),
+          onClick: () => handleSelectChoice(key),
           disabled: isReviewMode
         },
         /* @__PURE__ */ React.createElement("div", { className: "choice-row" }, /* @__PURE__ */ React.createElement("strong", null, key), /* @__PURE__ */ React.createElement(SafeHtml, { as: "span", html: value }))
       );
-    })) : !canRevealAnswer ? /* @__PURE__ */ React.createElement("div", { className: "answer-panel answer-panel-intro" }, /* @__PURE__ */ React.createElement("strong", null, "Self-grade this one."), /* @__PURE__ */ React.createElement("p", { className: "muted" }, "Work it out first, then mark it right or wrong below. You can revisit and change the mark later.")) : null), question.type === "open" ? /* @__PURE__ */ React.createElement(
+    }), renderMobileGradeActions()) : !canRevealAnswer ? /* @__PURE__ */ React.createElement("div", { className: "answer-panel answer-panel-intro" }, /* @__PURE__ */ React.createElement("strong", null, "Self-grade this one."), /* @__PURE__ */ React.createElement("p", { className: "muted" }, "Work it out first, then mark it right or wrong below. You can revisit and change the mark later.")) : null), question.type === "open" ? /* @__PURE__ */ React.createElement(
       "div",
       {
         className: `quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`,
@@ -1774,7 +1859,8 @@ var FEStudyApp = (() => {
       /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "mini-label", style: { color: answerLabelColor } }, response?.wasCorrect == null ? "Ready to grade" : response.wasCorrect ? "Marked correct" : "Marked incorrect"), /* @__PURE__ */ React.createElement("strong", null, "Answer"))),
       priorSavedResult != null ? /* @__PURE__ */ React.createElement("div", { className: "quiz-prior-result" }, "Saved before this attempt: ", priorSavedResult ? "correct" : "incorrect", ".") : null,
       /* @__PURE__ */ React.createElement("div", { className: `answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}` }, /* @__PURE__ */ React.createElement(SafeHtml, { className: "quiz-answer-content answer-reveal-content", html: question.answer }), !canRevealAnswer ? /* @__PURE__ */ React.createElement("div", { className: "answer-reveal-button" }, "Click to show answer") : null),
-      canRevealAnswer && question.url ? /* @__PURE__ */ React.createElement("a", { className: "button-ghost quiz-source-link", href: question.url, target: "_blank", rel: "noreferrer" }, "Open source explanation") : null
+      canRevealAnswer && question.url ? /* @__PURE__ */ React.createElement("a", { className: "button-ghost quiz-source-link", href: question.url, target: "_blank", rel: "noreferrer" }, "Open source explanation") : null,
+      renderMobileGradeActions()
     ) : null))))), /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-layout" }, /* @__PURE__ */ React.createElement("footer", { className: "quiz-footer quiz-footer-sidebar" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-nav" }, /* @__PURE__ */ React.createElement(
       "button",
       {
