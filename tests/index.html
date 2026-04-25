@@ -59,9 +59,6 @@
             --glass-border: 1px solid rgba(255,255,255,0.1);
             --glass-border-top: 1.5px solid rgba(255,255,255,0.22);
             --glass-shadow: 0 8px 32px -8px rgba(0,0,0,0.55);
-            --glass-hotspot-x: 50%;
-            --glass-hotspot-y: 50%;
-            --glass-lift-shadow: 0 18px 60px -22px rgba(0,0,0,0.85), 0 0 38px rgba(56,189,248,0.08);
 
             /* Geometry */
             --radius-l: 16px;
@@ -275,18 +272,6 @@
             to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        @keyframes liquid-edge-scan {
-            0%   { transform: translateX(-115%) skewX(-18deg); opacity: 0; }
-            14%  { opacity: 0.9; }
-            44%  { opacity: 0.28; }
-            100% { transform: translateX(115%) skewX(-18deg); opacity: 0; }
-        }
-
-        @keyframes glass-depth-breathe {
-            0%, 100% { opacity: 0.42; transform: translate3d(0,0,0) scale(1); }
-            50%      { opacity: 0.72; transform: translate3d(0,-1px,0) scale(1.012); }
-        }
-
         /* ── FLOATING HEADER ── */
         .top-bar {
             position: fixed;
@@ -302,43 +287,7 @@
             border-top: 1.5px solid rgba(255,255,255,0.22);
             box-shadow: 0 14px 48px -8px rgba(0,0,0,0.65);
             z-index: 900;
-            overflow: hidden;
-            isolation: isolate;
         }
-
-        .top-bar::before {
-            content: "";
-            position: absolute;
-            inset: -35% -45%;
-            z-index: 0;
-            background:
-                linear-gradient(90deg,
-                    transparent 0%,
-                    rgba(255,255,255,0.02) 31%,
-                    rgba(255,255,255,0.36) 48%,
-                    rgba(56,189,248,0.18) 52%,
-                    transparent 70%);
-            animation: liquid-edge-scan 7.5s cubic-bezier(0.16,1,0.3,1) infinite;
-            pointer-events: none;
-        }
-
-        .top-bar::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            background:
-                radial-gradient(circle at var(--glass-hotspot-x) var(--glass-hotspot-y),
-                    rgba(255,255,255,0.22) 0%,
-                    rgba(56,189,248,0.11) 22%,
-                    transparent 46%),
-                linear-gradient(180deg, rgba(255,255,255,0.16), transparent 46%);
-            opacity: 0;
-            transition: opacity 0.28s ease;
-            pointer-events: none;
-        }
-
-        .top-bar.is-liquid-active::after { opacity: 0.72; }
 
 
         .top-bar-inner {
@@ -348,7 +297,6 @@
             padding: 0 16px;
             height: 100%;
             position: relative;
-            z-index: 1;
         }
 
         .top-center {
@@ -502,8 +450,6 @@
             transform: translateY(100%) scale(0.96);
             opacity: 0;
             transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
-            overflow: hidden;
-            isolation: isolate;
         }
         .action-sheet.visible { transform: translateY(0) scale(1); opacity: 1; }
 
@@ -559,44 +505,18 @@
             display: flex; flex-direction: column; gap: 0;
             position: relative; overflow: hidden;
             box-shadow: 0 4px 20px -6px rgba(0,0,0,0.4);
-            transition: transform 0.2s var(--spring), background 0.15s, border-color 0.2s, box-shadow 0.28s ease;
-            isolation: isolate;
-        }
-        .test-card::before {
-            content: "";
-            position: absolute;
-            inset: 1px;
-            z-index: 0;
-            border-radius: calc(var(--radius-xl) - 1px);
-            background:
-                radial-gradient(circle at var(--glass-hotspot-x) var(--glass-hotspot-y),
-                    rgba(255,255,255,0.24) 0%,
-                    rgba(56,189,248,0.11) 18%,
-                    transparent 42%),
-                linear-gradient(145deg, rgba(255,255,255,0.1), transparent 34%, rgba(255,255,255,0.035) 68%, transparent);
-            opacity: 0;
-            transition: opacity 0.24s ease;
-            pointer-events: none;
+            transition: transform 0.2s var(--spring), background 0.15s;
         }
         .test-card::after {
             content: "";
-            position: absolute; inset: 0;
-            z-index: 0;
-            background:
-                linear-gradient(90deg, transparent, var(--precision-line), transparent) left bottom / 100% 1px no-repeat,
-                linear-gradient(135deg, rgba(255,255,255,0.08), transparent 24%, transparent 76%, rgba(255,255,255,0.035)),
-                repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 18px);
+            position: absolute; left: 14px; right: 14px; bottom: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--precision-line), transparent);
             opacity: 0.8;
             pointer-events: none;
         }
-        .test-card > * { position: relative; z-index: 1; }
         .test-card:active { transform: scale(0.97); }
         .test-card:hover { transform: translateY(-1px); background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 100%); }
-        .test-card.is-liquid-active {
-            border-color: rgba(255,255,255,0.18);
-            box-shadow: var(--glass-lift-shadow);
-        }
-        .test-card.is-liquid-active::before { opacity: 1; }
 
         .test-card.active-card {
             background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.05) 100%);
@@ -764,32 +684,6 @@
             padding: 20px; margin-bottom: 4px;
             overflow: hidden; transform: translateZ(0);
             box-shadow: var(--glass-shadow);
-            transition: border-color 0.2s, box-shadow 0.28s ease;
-            isolation: isolate;
-        }
-        .hero-widget::before,
-        .range-bar-card::before,
-        .chart-card::before,
-        .std-timeline-card::before,
-        .confirm-dialog::before,
-        .vault-dialog::before,
-        .action-sheet::before,
-        .add-sheet::before,
-        .success-toast::before {
-            content: "";
-            position: absolute;
-            inset: 1px;
-            border-radius: inherit;
-            background:
-                radial-gradient(circle at var(--glass-hotspot-x) var(--glass-hotspot-y),
-                    rgba(255,255,255,0.22) 0%,
-                    rgba(56,189,248,0.11) 18%,
-                    transparent 44%),
-                linear-gradient(145deg, rgba(255,255,255,0.11), transparent 34%, rgba(255,255,255,0.035) 70%, transparent);
-            opacity: 0;
-            transition: opacity 0.24s ease;
-            pointer-events: none;
-            z-index: 0;
         }
         .hero-widget::after,
         .kpi-box::after,
@@ -800,57 +694,10 @@
             position: absolute; inset: 0;
             background:
                 repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 9px),
-                radial-gradient(circle at var(--glass-hotspot-x) var(--glass-hotspot-y), rgba(255,255,255,0.14), transparent 34%),
                 linear-gradient(90deg, transparent, rgba(56,189,248,0.11), transparent);
             opacity: 0.16;
             mix-blend-mode: screen;
             pointer-events: none;
-            z-index: 0;
-            transition: opacity 0.24s ease;
-            animation: glass-depth-breathe 8s ease-in-out infinite;
-        }
-        .hero-widget > *,
-        .kpi-box > *,
-        .range-bar-card > *,
-        .chart-card > *,
-        .std-timeline-card > *,
-        .confirm-dialog > *,
-        .vault-dialog > *,
-        .action-sheet > *,
-        .add-sheet > *,
-        .success-toast > * {
-            position: relative;
-            z-index: 1;
-        }
-        .hero-widget.is-liquid-active,
-        .range-bar-card.is-liquid-active,
-        .chart-card.is-liquid-active,
-        .std-timeline-card.is-liquid-active,
-        .confirm-dialog.is-liquid-active,
-        .vault-dialog.is-liquid-active,
-        .action-sheet.is-liquid-active,
-        .add-sheet.is-liquid-active,
-        .success-toast.is-liquid-active {
-            border-color: rgba(255,255,255,0.18);
-            box-shadow: var(--glass-lift-shadow);
-        }
-        .hero-widget.is-liquid-active::before,
-        .range-bar-card.is-liquid-active::before,
-        .chart-card.is-liquid-active::before,
-        .std-timeline-card.is-liquid-active::before,
-        .confirm-dialog.is-liquid-active::before,
-        .vault-dialog.is-liquid-active::before,
-        .action-sheet.is-liquid-active::before,
-        .add-sheet.is-liquid-active::before,
-        .success-toast.is-liquid-active::before {
-            opacity: 1;
-        }
-        .hero-widget.is-liquid-active::after,
-        .kpi-box.is-liquid-active::after,
-        .range-bar-card.is-liquid-active::after,
-        .chart-card.is-liquid-active::after,
-        .std-timeline-card.is-liquid-active::after {
-            opacity: 0.34;
         }
 
         .hero-glow {
@@ -928,8 +775,6 @@
             display: flex; flex-direction: column; gap: 4px;
             align-items: center; text-align: center;
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.32);
-            transition: border-color 0.2s, box-shadow 0.28s ease, transform 0.2s var(--spring);
-            isolation: isolate;
         }
         .kpi-box::before {
             content: "";
@@ -948,11 +793,6 @@
         .kpi-box.trend-good::before { background: var(--ios-green); }
         .kpi-box.trend-bad::before { background: var(--ios-red); }
         .kpi-box.trend-flat::before { background: var(--precision-line); }
-        .kpi-box.is-liquid-active {
-            border-color: rgba(255,255,255,0.18);
-            box-shadow: var(--glass-lift-shadow);
-            transform: translateY(-1px);
-        }
 
         .kpi-label {
             font-family: var(--font-heading); font-size: 10px; font-weight: 700;
@@ -972,8 +812,6 @@
             border-top: 1.2px solid rgba(255,255,255,0.15);
             border-radius: var(--card-r); padding: 16px;
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
-            transition: border-color 0.2s, box-shadow 0.28s ease;
-            isolation: isolate;
         }
 
         .chart-inner { position: relative; }
@@ -1001,8 +839,6 @@
             border-top: 1.2px solid rgba(255,255,255,0.15);
             border-radius: var(--card-r); padding: 18px 20px;
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
-            transition: border-color 0.2s, box-shadow 0.28s ease;
-            isolation: isolate;
         }
 
         .range-bar-label {
@@ -1054,8 +890,6 @@
             border-radius: var(--card-r); padding: 16px;
             display: flex; flex-direction: column; gap: 10px;
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
-            transition: border-color 0.2s, box-shadow 0.28s ease;
-            isolation: isolate;
         }
         .std-timeline-label {
             font-family: var(--font-heading); font-size: 10px; font-weight: 700;
@@ -1424,7 +1258,6 @@
             transform: translateY(100%) scale(0.96);
             opacity: 0;
             transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
-            isolation: isolate;
         }
         .add-sheet.visible { transform: translateY(0) scale(1); opacity: 1; }
 
@@ -1559,8 +1392,6 @@
         .confirm-overlay.visible { opacity: 1; pointer-events: auto; }
 
         .confirm-dialog {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(160deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
             backdrop-filter: blur(48px) saturate(150%) brightness(0.75);
             -webkit-backdrop-filter: blur(48px) saturate(150%) brightness(0.75);
@@ -1571,7 +1402,6 @@
             transform: scale(0.88);
             transition: transform 0.3s cubic-bezier(0.25,1,0.5,1);
             box-shadow: 0 32px 80px -8px rgba(0,0,0,0.75);
-            isolation: isolate;
         }
         .confirm-overlay.visible .confirm-dialog { transform: scale(1); }
 
@@ -1602,8 +1432,6 @@
         }
         .vault-overlay.visible { opacity: 1; pointer-events: auto; }
         .vault-dialog {
-            position: relative;
-            overflow: hidden;
             background: rgba(22,24,36,0.95);
             border: var(--glass-border);
             border-top: var(--glass-border-top);
@@ -1614,7 +1442,6 @@
             display: flex; flex-direction: column; gap: 14px;
             transform: scale(0.92);
             transition: transform 0.28s var(--spring);
-            isolation: isolate;
         }
         .vault-overlay.visible .vault-dialog { transform: scale(1); }
         .vault-icon {
@@ -1690,44 +1517,10 @@
             box-shadow: 0 8px 32px rgba(48,209,88,0.2), 0 0 0 1px rgba(48,209,88,0.1) inset;
             transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
             opacity: 0; white-space: nowrap; pointer-events: none;
-            overflow: hidden;
-            isolation: isolate;
         }
         .success-toast.visible {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
-        }
-
-        .test-card,
-        .hero-widget,
-        .kpi-box,
-        .range-bar-card,
-        .chart-card,
-        .std-timeline-card {
-            --glass-hotspot-x: 50%;
-            --glass-hotspot-y: 50%;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .top-bar::before,
-            .sun-rays,
-            .nebula,
-            .hero-widget::after,
-            .kpi-box::after,
-            .range-bar-card::after,
-            .chart-card::after,
-            .std-timeline-card::after {
-                animation: none !important;
-            }
-            .test-card,
-            .kpi-box,
-            .hero-widget,
-            .range-bar-card,
-            .chart-card,
-            .std-timeline-card,
-            .top-bar {
-                transition-duration: 0.01ms !important;
-            }
         }
 
         /* Bottom Navigation */
@@ -2102,80 +1895,6 @@
         };
 
         // ── INIT ─────────────────────────────────────────────────────
-        function setupLiquidGlassMotion() {
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-            const liquidSelector = [
-                '.top-bar',
-                '.test-card',
-                '.hero-widget',
-                '.kpi-box',
-                '.range-bar-card',
-                '.chart-card',
-                '.std-timeline-card',
-                '.action-sheet',
-                '.add-sheet',
-                '.confirm-dialog',
-                '.vault-dialog',
-                '.success-toast',
-            ].join(',');
-
-            let activeGlass = null;
-            let pendingFrame = null;
-            let pendingEvent = null;
-
-            function updateHotspot(el, event) {
-                const rect = el.getBoundingClientRect();
-                if (!rect.width || !rect.height) return;
-                const x = ((event.clientX - rect.left) / rect.width) * 100;
-                const y = ((event.clientY - rect.top) / rect.height) * 100;
-                el.style.setProperty('--glass-hotspot-x', `${Math.max(0, Math.min(100, x)).toFixed(2)}%`);
-                el.style.setProperty('--glass-hotspot-y', `${Math.max(0, Math.min(100, y)).toFixed(2)}%`);
-            }
-
-            function clearActive(nextActive = null) {
-                if (activeGlass && activeGlass !== nextActive) {
-                    activeGlass.classList.remove('is-liquid-active');
-                    activeGlass.style.removeProperty('--glass-hotspot-x');
-                    activeGlass.style.removeProperty('--glass-hotspot-y');
-                }
-                activeGlass = nextActive;
-            }
-
-            document.addEventListener('pointermove', event => {
-                if (event.pointerType === 'touch') return;
-                const target = event.target.closest(liquidSelector);
-                if (!target) {
-                    clearActive();
-                    return;
-                }
-
-                if (target !== activeGlass) {
-                    clearActive(target);
-                    target.classList.add('is-liquid-active');
-                }
-
-                pendingEvent = event;
-                if (pendingFrame) return;
-                pendingFrame = requestAnimationFrame(() => {
-                    pendingFrame = null;
-                    if (activeGlass && pendingEvent) updateHotspot(activeGlass, pendingEvent);
-                });
-            }, { passive: true });
-
-            document.addEventListener('pointerleave', () => clearActive(), { passive: true });
-            document.addEventListener('pointerdown', event => {
-                const target = event.target.closest(liquidSelector);
-                if (target) {
-                    target.classList.add('is-liquid-active');
-                    updateHotspot(target, event);
-                    if (event.pointerType === 'touch') {
-                        setTimeout(() => target.classList.remove('is-liquid-active'), 420);
-                    }
-                }
-            }, { passive: true });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             let savedIndex = localStorage.getItem('skyState');
             if (savedIndex === null || savedIndex === '') {
@@ -2184,7 +1903,6 @@
                 else savedIndex = 1; // Default Light
             }
             setSkyState(parseInt(savedIndex));
-            setupLiquidGlassMotion();
             renderLoadingSkeletons();
         });
 
