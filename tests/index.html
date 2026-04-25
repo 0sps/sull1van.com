@@ -520,6 +520,9 @@
         .grid-detail-inner {
             overflow: hidden; display: flex; flex-direction: column; min-height: 0;
         }
+        .test-card.expanded .grid-detail-inner {
+            min-height: auto;
+        }
         .grid-kpi-row { margin-top: 0; padding-top: 14px; border-top: none; }
         .grid-expand-header {
             display: flex; align-items: center; justify-content: flex-end;
@@ -945,6 +948,10 @@
             background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
             border-color: rgba(10,132,255,0.38);
             box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset;
+            overflow: visible;
+        }
+        .layout.is-grid-view #panelList .test-card.expanded .grid-detail-container {
+            grid-template-rows: auto;
         }
         .layout.is-grid-view .grid-detail-inner .kpi-row   { grid-template-columns: repeat(3,1fr); padding: 10px 0 8px; gap: 6px; }
         .layout.is-grid-view .grid-detail-inner .kpi-box   { padding: 10px 8px; border-radius: 12px; }
@@ -969,6 +976,7 @@
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
             .grid-toggle-btn { display: flex !important; }
+            .bottom-nav { display: none !important; }
 
             .layout.is-grid-view .desktop-sidebar { width: 100%; border-right: none; overflow: hidden; }
             .layout.is-grid-view .desktop-sidebar .sidebar-top { padding: 14px 24px 0; }
@@ -1068,7 +1076,6 @@
         /* ultra-wide */
         @media (min-width: 1280px) {
             .desktop-sidebar { width: 380px; }
-            .kpi-row { grid-template-columns: repeat(4,1fr); }
         }
 
         .chart-inner { position: relative; height: 220px; }
@@ -1255,7 +1262,7 @@
             margin: 0 auto 18px; color: var(--ios-blue);
         }
         .confirm-title { font-family: var(--font-heading); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
-        .confirm-body  { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; }
+        .confirm-body  { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; white-space: pre-line; }
         .confirm-actions { display: flex; gap: 10px; }
         .confirm-btn { flex: 1; padding: 13px 16px; border-radius: 14px; font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
         .confirm-btn:active { transform: scale(0.96); }
@@ -2081,7 +2088,7 @@
                         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>`,
                         iconColor: 'var(--green)',
                         title: 'No unit changes needed',
-                        body: summaryLines.join('<br><br>'),
+                        body: summaryLines.join('\n\n'),
                         primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                     });
                     return;
@@ -2091,7 +2098,7 @@
                     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
                     iconColor: 'var(--accent)',
                     title: 'Import units from workbook?',
-                    body: summaryLines.join('<br><br>'),
+                    body: summaryLines.join('\n\n'),
                     secondary: { label: 'Cancel', className: 'confirm-btn-secondary', action: dismissConfirm },
                     primary: {
                         label: 'Import',
