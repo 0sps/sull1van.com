@@ -996,6 +996,10 @@
             color: var(--text-secondary); font-family: var(--font-body); font-size: 14px;
         }
 
+        @media (max-width: 899px) {
+            #command-btn { display: none; }
+        }
+
         @media (max-width: 720px) {
             .command-overlay {
                 padding: calc(82px + env(safe-area-inset-top)) 10px calc(14px + env(safe-area-inset-bottom));
@@ -1115,6 +1119,7 @@
             .layout.is-grid-view .desktop-sidebar .sidebar-top { padding: 14px 24px 0; }
             .layout.is-grid-view .desktop-sidebar .chip-row { margin: 0 -24px; padding: 10px 24px 12px; }
             .layout.is-grid-view .desktop-main { display: none !important; }
+            .mobile-view-toolbar, .bottom-nav { display: none !important; }
 
             body { overflow: hidden; }
 
@@ -1507,43 +1512,72 @@
             opacity: 1;
         }
 
-        /* Bottom Navigation */
+        .mobile-view-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 0 8px;
+        }
+
+        .mobile-view-switcher {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 78px;
+            padding: 4px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.07);
+            border: 0.5px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+        }
+
+        .mobile-view-switcher::before {
+            content: "";
+            position: absolute;
+            top: 4px; bottom: 4px; left: 4px;
+            width: calc(50% - 4px);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.16);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+            transition: transform 0.22s var(--spring);
+        }
+        .mobile-view-switcher.is-grid::before { transform: translateX(35px); }
+
+        .view-tab {
+            position: relative; z-index: 1;
+            width: 35px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            border: none; background: transparent;
+            color: rgba(255,255,255,0.54);
+            cursor: pointer;
+            transition: color 0.18s;
+        }
+        .view-tab.active { color: #fff; }
+
         .bottom-nav {
             position: fixed;
-            bottom: calc(32px + env(safe-area-inset-bottom));
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
-            backdrop-filter: blur(30px) saturate(140%) brightness(0.9);
-            -webkit-backdrop-filter: blur(30px) saturate(140%) brightness(0.9);
+            right: calc(18px + env(safe-area-inset-right));
+            bottom: calc(24px + env(safe-area-inset-bottom));
+            width: 66px;
+            height: 66px;
             display: flex;
-            gap: 8px;
-            padding: 6px;
-            border-radius: 30px;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 1.4px solid rgba(255, 255, 255, 0.24);
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
+            backdrop-filter: blur(30px) saturate(150%) brightness(0.92);
+            -webkit-backdrop-filter: blur(30px) saturate(150%) brightness(0.92);
+            color: var(--text-primary);
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top: 1.2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.6);
-        }
-
-        .nav-tab {
-            padding: 10px 24px;
-            border-radius: 24px;
-            border: none;
-            background: transparent;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 15px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s var(--spring);
+            box-shadow: 0 18px 50px -14px rgba(0, 0, 0, 0.72), 0 0 24px rgba(10,132,255,0.13);
+            transition: transform 0.2s var(--spring), background 0.2s;
         }
-
-        .nav-tab.active {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            font-family: var(--font-heading);
-        }
+        .bottom-nav:active { transform: scale(0.94); background: rgba(255,255,255,0.16); }
+        .bottom-nav svg { width: 34px; height: 34px; filter: drop-shadow(0 4px 12px rgba(10,132,255,0.24)); }
     </style>
 </head>
 
@@ -1755,6 +1789,25 @@
                     </div>
                 </div>
                 <div class="chip-row" id="chipRow"></div>
+                <div class="mobile-view-toolbar">
+                    <div class="mobile-view-switcher" id="mobileViewSwitcher" aria-label="Choose list or grid view">
+                        <button class="view-tab active" id="tabList" type="button" onclick="setLayoutView(false)" aria-label="List View">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                                <line x1="6" y1="7" x2="18" y2="7"></line>
+                                <line x1="6" y1="12" x2="18" y2="12"></line>
+                                <line x1="6" y1="17" x2="18" y2="17"></line>
+                            </svg>
+                        </button>
+                        <button class="view-tab" id="tabGrid" type="button" onclick="setLayoutView(true)" aria-label="Grid View">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <rect x="5" y="5" width="5" height="5" rx="1.2"></rect>
+                                <rect x="14" y="5" width="5" height="5" rx="1.2"></rect>
+                                <rect x="5" y="14" width="5" height="5" rx="1.2"></rect>
+                                <rect x="14" y="14" width="5" height="5" rx="1.2"></rect>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="panel-list visible" id="panelList">
@@ -1823,11 +1876,17 @@
 
     </div><!-- /layout -->
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <button class="nav-tab active" id="tabList" onclick="setLayoutView(false)">List</button>
-        <button class="nav-tab" id="tabGrid" onclick="setLayoutView(true)">Grid</button>
-    </div>
+    <!-- Mobile Command Launcher -->
+    <button class="bottom-nav" id="mobileCommandFab" type="button" onclick="openCommandPalette()" aria-label="Open Command Palette">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 3h6"></path>
+            <path d="M10 3v5.4l-4.4 8.3A3 3 0 0 0 8.25 21h7.5a3 3 0 0 0 2.65-4.3L14 8.4V3"></path>
+            <path d="M7.15 15h9.7"></path>
+            <path d="M9.2 18h5.6"></path>
+            <circle cx="10" cy="12" r="0.8" fill="currentColor" stroke="none"></circle>
+            <circle cx="14.7" cy="16.7" r="0.7" fill="currentColor" stroke="none"></circle>
+        </svg>
+    </button>
 
     <script>
         // ── DAY / NIGHT TOGGLE ────────────────────────────────────────
@@ -1858,6 +1917,8 @@
 
             const tabList = document.getElementById('tabList');
             const tabGrid = document.getElementById('tabGrid');
+            const mobileSwitcher = document.getElementById('mobileViewSwitcher');
+            if (mobileSwitcher) mobileSwitcher.classList.toggle('is-grid', isGrid);
             if (tabList && tabGrid) {
                 if (isGrid) {
                     tabGrid.classList.add('active');
@@ -3461,9 +3522,6 @@
                 layout.classList.add('in-detail');
                 layout.scrollTop = 0;
 
-                const bottomNav = document.querySelector('.bottom-nav');
-                if (bottomNav) bottomNav.style.display = 'none';
-
                 document.getElementById('panelList').classList.remove('visible');
                 document.getElementById('panelDetail').classList.add('visible');
                 document.getElementById('globalTopBar').style.display = 'none';
@@ -3809,9 +3867,6 @@
             const layout = document.querySelector('.layout');
             layout.classList.remove('in-detail');
             layout.scrollTop = 0;
-
-            const bottomNav = document.querySelector('.bottom-nav');
-            if (bottomNav) bottomNav.style.display = '';
 
             document.getElementById('panelDetail').classList.remove('visible');
             document.getElementById('panelList').classList.add('visible');
