@@ -365,6 +365,23 @@
             transition: transform 0.21s var(--command-ease), opacity 0.18s ease;
         }
         .command-overlay.visible .command-palette { transform: translateY(0) scale(1); }
+        .command-palette.add-mode { height: min(720px, calc(100dvh - 128px)); }
+        .command-panel-track {
+            display: flex;
+            width: 200%;
+            min-height: 0;
+            flex: 1;
+            transform: translateX(0);
+            transition: transform 0.24s var(--command-ease);
+        }
+        .command-palette.add-mode .command-panel-track { transform: translateX(-50%); }
+        .command-panel {
+            width: 50%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
         .command-search {
             display: flex; align-items: center; gap: 12px;
             padding: 16px 18px;
@@ -450,6 +467,46 @@
             color: var(--text-secondary);
             font-family: var(--font-heading); font-size: 14px; font-weight: 650;
         }
+        .command-add-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+        }
+        .command-add-header {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 0.5px solid var(--ios-separator);
+            flex-shrink: 0;
+        }
+        .command-back-btn,
+        .command-add-close {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 0.5px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.07);
+            color: var(--text-primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+        .command-back-btn:hover,
+        .command-add-close:hover { background: rgba(255,255,255,0.12); }
+        .command-add-title {
+            flex: 1;
+            min-width: 0;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 750;
+            color: var(--text-primary);
+        }
+        .command-add-content {
+            padding: 14px 16px 16px;
+            overflow-y: auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            scrollbar-width: none;
+        }
+        .command-add-content::-webkit-scrollbar { display: none; }
 
         /* ── LAYOUT PUSHER (space below fixed header) ── */
         .layout-pusher {
@@ -1033,7 +1090,10 @@
                 height: 66dvh;
                 max-height: 66dvh;
                 border-radius: 22px;
+                transform: translateY(calc(-10dvh - 12px)) scale(0.982);
             }
+            .command-palette.add-mode { height: 66dvh; }
+            .command-overlay.visible .command-palette { transform: translateY(-10dvh) scale(1); }
             .command-search { padding: 14px; gap: 10px; }
             .command-search input { font-size: 17px; }
             .command-body {
@@ -1058,6 +1118,7 @@
                 gap: 8px;
             }
             .command-result-value { align-items: flex-start; }
+            .command-add-content { padding: 12px; }
         }
 
         .panel-list, .panel-detail { -webkit-overflow-scrolling: touch; }
@@ -1255,40 +1316,34 @@
 
         .chart-inner { position: relative; height: 220px; }
 
-        /* ── ADD RESULT DRAWER ── */
+        /* ── ADD RESULT PALETTE ── */
         .add-sheet-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            z-index: 1100; opacity: 0; pointer-events: none;
-            transition: opacity 0.35s ease;
+            display: none;
         }
-        .add-sheet-overlay.visible { opacity: 1; pointer-events: auto; }
+        .add-sheet-overlay.visible { display: none; }
 
         .add-sheet {
-            position: fixed; left: 0; right: 0; bottom: 0;
-            max-height: 90vh;
-            background: linear-gradient(180deg, rgba(12,16,28,0.6) 0%, rgba(4,6,16,0.56) 100%);
-            backdrop-filter: blur(40px) saturate(140%) brightness(0.8);
-            -webkit-backdrop-filter: blur(40px) saturate(140%) brightness(0.8);
-            border-radius: 32px 32px 0 0;
-            padding: 16px 24px calc(env(safe-area-inset-bottom, 20px) + 24px);
-            z-index: 1101;
-            border-top: 2px solid rgba(255,255,255,0.18);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            border-right: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 -16px 64px rgba(0,0,0,0.8);
-            overflow-y: auto;
+            position: static;
+            max-height: none;
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-radius: 0;
+            padding: 0;
+            z-index: auto;
+            border: none;
+            box-shadow: none;
+            overflow: visible;
             display: flex; flex-direction: column;
-            transform: translateY(100%) scale(0.96);
-            opacity: 0;
-            transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+            transform: none;
+            opacity: 1;
+            transition: none;
         }
-        .add-sheet.visible { transform: translateY(0) scale(1); opacity: 1; }
+        .add-sheet.visible { transform: none; opacity: 1; }
 
-        .add-sheet .sheet-handle { width: 36px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; margin: 0 auto 20px; flex-shrink: 0; }
+        .add-sheet .sheet-handle,
+        .add-sheet-header { display: none; }
 
-        .add-sheet-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-shrink: 0; }
         .add-sheet-title { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--text-primary); }
         .add-sheet-close {
             background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
@@ -1296,9 +1351,9 @@
             display: flex; align-items: center; justify-content: center;
             color: var(--text-primary); cursor: pointer; transition: all 0.2s; flex-shrink: 0;
         }
-        .add-sheet-close:active { background: rgba(255,255,255,0.16); transform: scale(0.9); }
+        .add-sheet-close:active { background: rgba(255,255,255,0.16); }
 
-        .add-field-group { margin-bottom: 20px; flex-shrink: 0; }
+        .add-field-group { margin-bottom: 0; flex-shrink: 0; }
         .add-field-label {
             font-family: var(--font-heading); font-size: 11px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
@@ -1347,15 +1402,18 @@
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; transition: all 0.2s; font-size: 1.1rem; font-weight: 700;
         }
-        .add-row-remove:active { transform: scale(0.9); background: rgba(255,69,58,0.22); }
+        .add-row-remove:active { background: rgba(255,69,58,0.22); }
 
         .add-row-btn {
             display: flex; align-items: center; gap: 8px;
-            padding: 12px 0; cursor: pointer; color: var(--ios-blue);
+            padding: 12px 14px; cursor: pointer; color: var(--ios-blue);
             font-family: var(--font-body); font-size: 15px; font-weight: 600;
-            border: none; background: none; transition: opacity 0.2s;
+            border: 0.5px solid rgba(10,132,255,0.24);
+            background: rgba(10,132,255,0.08);
+            border-radius: 14px;
+            transition: background 0.2s, opacity 0.2s;
         }
-        .add-row-btn:active { opacity: 0.5; }
+        .add-row-btn:active { opacity: 0.72; }
 
         .add-name-suggestions {
             position: absolute;
@@ -1400,18 +1458,18 @@
             background: var(--ios-blue); color: #fff; border: none;
             border-radius: 16px; font-family: var(--font-heading);
             font-size: 17px; font-weight: 700; letter-spacing: 0.2px; cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
-            margin-top: 20px; flex-shrink: 0;
+            transition: opacity 0.2s;
+            margin-top: 2px; flex-shrink: 0;
             box-shadow: 0 4px 20px rgba(10,132,255,0.38);
         }
-        .add-save-btn:active { opacity: 0.85; transform: scale(0.98); }
+        .add-save-btn:active { opacity: 0.85; }
         .add-save-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
         /* ── CONFIRM DIALOG ── */
         .confirm-overlay {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            z-index: 1200; display: flex; align-items: center; justify-content: center;
+            z-index: 1500; display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
         }
         .confirm-overlay.visible { opacity: 1; pointer-events: auto; }
@@ -1686,31 +1744,8 @@
         <div class="sheet-action" style="color:var(--ios-red);" onclick="toggleActionSheet(false)">Cancel</div>
     </div>
 
-    <!-- Add Result Drawer -->
+    <!-- Add Result overlay shell is retained for legacy close hooks; the form now lives inside Cmd+K. -->
     <div class="add-sheet-overlay" id="addSheetOverlay" onclick="tryCloseAddSheet()"></div>
-    <div class="add-sheet" id="addSheet">
-        <div class="sheet-handle"></div>
-        <div class="add-sheet-header">
-            <div class="add-sheet-title">Add Results</div>
-            <button class="add-sheet-close" onclick="tryCloseAddSheet()" aria-label="Close">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <div class="add-field-group">
-            <div class="add-field-label">Date of Test</div>
-            <input type="date" class="add-date-input" id="addResultDate">
-        </div>
-        <div class="add-field-group">
-            <div class="add-field-label">Results</div>
-            <div class="add-rows-container" id="addRowsContainer"></div>
-            <datalist id="testsDatalist"></datalist>
-        </div>
-        <button class="add-row-btn" id="addRowBtn" onclick="addResultRow()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add another test
-        </button>
-        <button class="add-save-btn" id="addSaveBtn" onclick="handleSaveResults()">Save Results</button>
-    </div>
 
     <!-- Custom Confirm Dialog -->
     <div class="confirm-overlay" id="confirmOverlay">
@@ -1761,17 +1796,57 @@
 
     <!-- Command Palette -->
     <div class="command-overlay" id="commandOverlay" onclick="handleCommandOverlayClick(event)">
-        <div class="command-palette" role="dialog" aria-modal="true" aria-label="Command Palette">
-            <div class="command-search">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="7"/></svg>
-                <input type="text" id="commandInput" placeholder="Search biomarkers or run an action..." autocomplete="off" oninput="onCommandSearchInput()">
-                <div class="command-shortcut" id="commandShortcut">⌘K</div>
+        <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="Command Palette">
+            <div class="command-panel-track">
+                <div class="command-panel command-main-panel">
+                    <div class="command-search">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="7"/></svg>
+                        <input type="text" id="commandInput" placeholder="Search biomarkers or run an action..." autocomplete="off" oninput="onCommandSearchInput()">
+                        <div class="command-shortcut" id="commandShortcut">⌘K</div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-results" id="commandResults"></div>
+                        <div class="command-actions" id="commandActions"></div>
+                    </div>
+                    <div class="command-footer" id="commandCategories"></div>
+                </div>
+                <div class="command-panel command-add-panel" id="commandAddPanel">
+                    <div class="command-add-header">
+                        <button class="command-back-btn" type="button" onclick="tryCloseAddSheet()" aria-label="Back to Command Palette">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <div class="command-add-title">Add Results</div>
+                        <button class="command-add-close" type="button" onclick="tryDismissAddSheet()" aria-label="Close">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div class="command-add-content">
+                        <div class="add-sheet visible" id="addSheet">
+                            <div class="sheet-handle"></div>
+                            <div class="add-sheet-header">
+                                <div class="add-sheet-title">Add Results</div>
+                                <button class="add-sheet-close" onclick="tryCloseAddSheet()" aria-label="Close">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            <div class="add-field-group">
+                                <div class="add-field-label">Date of Test</div>
+                                <input type="date" class="add-date-input" id="addResultDate">
+                            </div>
+                            <div class="add-field-group">
+                                <div class="add-field-label">Results</div>
+                                <div class="add-rows-container" id="addRowsContainer"></div>
+                                <datalist id="testsDatalist"></datalist>
+                            </div>
+                            <button class="add-row-btn" id="addRowBtn" onclick="addResultRow()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Add another test
+                            </button>
+                            <button class="add-save-btn" id="addSaveBtn" onclick="handleSaveResults()">Save Results</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="command-body">
-                <div class="command-results" id="commandResults"></div>
-                <div class="command-actions" id="commandActions"></div>
-            </div>
-            <div class="command-footer" id="commandCategories"></div>
         </div>
     </div>
 
@@ -2044,6 +2119,7 @@
         let selectedCategories = new Set();
         let currentTestName = null;
         let commandPaletteOpen = false;
+        let commandMode = 'main';
         let commandSelectedIndex = 0;
         let anomalyLensActive = false;
         let currentChart = null;
@@ -3069,6 +3145,7 @@
                 })
                 .filter(row => {
                     if (anomalyLensActive && !row.status.isAnomaly) return false;
+                    if (!isAllCategoriesSelected() && !selectedCategories.has(row.test.category)) return false;
                     if (!term) return true;
                     return row.test.name.toLowerCase().includes(term) || row.test.category.toLowerCase().includes(term);
                 })
@@ -3149,9 +3226,11 @@
 
         function openCommandPalette() {
             commandPaletteOpen = true;
+            commandMode = 'main';
             commandSelectedIndex = 0;
             const overlay = document.getElementById('commandOverlay');
             const mobileButton = document.getElementById('mobileCommandFab');
+            document.getElementById('commandPalette')?.classList.remove('add-mode');
             if (overlay) overlay.classList.add('visible');
             if (mobileButton) mobileButton.classList.add('active');
             renderCommandPalette();
@@ -3162,12 +3241,18 @@
 
         function closeCommandPalette() {
             commandPaletteOpen = false;
+            commandMode = 'main';
+            document.getElementById('commandPalette')?.classList.remove('add-mode');
             document.getElementById('commandOverlay')?.classList.remove('visible');
             document.getElementById('mobileCommandFab')?.classList.remove('active');
+            document.getElementById('addSheetOverlay')?.classList.remove('visible');
+            closeAllNameSuggestions();
         }
 
         function handleCommandOverlayClick(event) {
-            if (event.target?.id === 'commandOverlay') closeCommandPalette();
+            if (event.target?.id !== 'commandOverlay') return;
+            if (commandMode === 'add') tryDismissAddSheet();
+            else closeCommandPalette();
         }
 
         function openCommandResult(name) {
@@ -3181,7 +3266,6 @@
         }
 
         function openAddSheetFromCommand() {
-            closeCommandPalette();
             openAddSheet();
         }
 
@@ -3205,9 +3289,9 @@
         }
 
         function jumpCommandCategory(cat) {
-            closeCommandPalette();
-            clearSearch();
-            setCategoryByName(cat);
+            setCategory(cat);
+            commandSelectedIndex = 0;
+            renderCommandPalette();
             document.getElementById('panelList')?.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -3215,7 +3299,10 @@
             const isCommandShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
             if (isCommandShortcut) {
                 event.preventDefault();
-                if (commandPaletteOpen) closeCommandPalette();
+                if (commandPaletteOpen) {
+                    if (commandMode === 'add') tryDismissAddSheet();
+                    else closeCommandPalette();
+                }
                 else openCommandPalette();
                 return;
             }
@@ -3224,9 +3311,12 @@
 
             if (event.key === 'Escape') {
                 event.preventDefault();
-                closeCommandPalette();
+                if (commandMode === 'add') tryCloseAddSheet();
+                else closeCommandPalette();
                 return;
             }
+
+            if (commandMode === 'add') return;
 
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 const rows = getCommandRows();
@@ -4156,6 +4246,15 @@
         }
 
         function openAddSheet() {
+            commandPaletteOpen = true;
+            commandMode = 'add';
+            const overlay = document.getElementById('commandOverlay');
+            const palette = document.getElementById('commandPalette');
+            const mobileButton = document.getElementById('mobileCommandFab');
+            if (overlay) overlay.classList.add('visible');
+            if (palette) palette.classList.add('add-mode');
+            if (mobileButton) mobileButton.classList.add('active');
+
             // Reset the form
             const dateInput = document.getElementById('addResultDate');
             dateInput.value = new Date().toISOString().split('T')[0];
@@ -4163,13 +4262,20 @@
             container.innerHTML = '';
             _addSheetRowCounter = 0;
             closeAllNameSuggestions();
+            const saveBtn = document.getElementById('addSaveBtn');
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Results';
+            }
 
             // Add one blank row to start
             addResultRow();
 
-            // Show the drawer
-            document.getElementById('addSheet').classList.add('visible');
-            document.getElementById('addSheetOverlay').classList.add('visible');
+            document.getElementById('addSheet')?.classList.add('visible');
+            document.getElementById('addSheetOverlay')?.classList.remove('visible');
+            requestAnimationFrame(() => {
+                document.querySelector('#addRowsContainer .add-test-name')?.focus({ preventScroll: true });
+            });
         }
 
         function addSheetHasData() {
@@ -4183,8 +4289,14 @@
         }
 
         function closeAddSheet() {
-            document.getElementById('addSheet').classList.remove('visible');
-            document.getElementById('addSheetOverlay').classList.remove('visible');
+            commandMode = 'main';
+            document.getElementById('commandPalette')?.classList.remove('add-mode');
+            document.getElementById('addSheetOverlay')?.classList.remove('visible');
+            closeAllNameSuggestions();
+            if (commandPaletteOpen) {
+                renderCommandPalette();
+                requestAnimationFrame(focusCommandInput);
+            }
         }
 
         function tryCloseAddSheet() {
@@ -4199,6 +4311,21 @@
                 });
             } else {
                 closeAddSheet();
+            }
+        }
+
+        function tryDismissAddSheet() {
+            if (addSheetHasData()) {
+                showConfirm({
+                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+                    iconColor: 'var(--amber)',
+                    title: 'Discard changes?',
+                    body: 'You have unsaved data. Are you sure you want to close without saving?',
+                    primary: { label: 'Discard', className: 'confirm-btn-danger', action: () => { dismissConfirm(); closeCommandPalette(); } },
+                    secondary: { label: 'Keep editing', className: 'confirm-btn-secondary', action: dismissConfirm },
+                });
+            } else {
+                closeCommandPalette();
             }
         }
 
@@ -4336,8 +4463,8 @@
                 };
                 await persistVaultData(nextVaultData);
 
-                // Success — close drawer, invalidate cache, reload data, show toast
-                closeAddSheet();
+                // Success — close palette, invalidate cache, reload data, show toast
+                closeCommandPalette();
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save Results';
 
