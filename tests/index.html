@@ -334,6 +334,121 @@
         }
 
         .theme-toggle:active { background: rgba(255,255,255,0.18); transform: scale(0.9); }
+        .theme-toggle.active { background: rgba(10,132,255,0.18); border-color: rgba(10,132,255,0.36); color: #fff; }
+
+        /* ── COMMAND PALETTE ── */
+        .command-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.42);
+            backdrop-filter: blur(12px) saturate(130%);
+            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            z-index: 1400;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.24s ease;
+            display: flex; align-items: flex-start; justify-content: center;
+            padding: calc(92px + env(safe-area-inset-top)) 16px 24px;
+        }
+        .command-overlay.visible { opacity: 1; pointer-events: auto; }
+        .command-palette {
+            width: min(680px, 100%);
+            max-height: min(720px, calc(100dvh - 128px));
+            display: flex; flex-direction: column; overflow: hidden;
+            background: linear-gradient(180deg, rgba(20,24,38,0.78) 0%, rgba(8,11,22,0.64) 100%);
+            backdrop-filter: blur(42px) saturate(160%) brightness(0.88);
+            -webkit-backdrop-filter: blur(42px) saturate(160%) brightness(0.88);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-top: 1.5px solid rgba(255,255,255,0.24);
+            border-radius: 24px;
+            box-shadow: 0 28px 80px -24px rgba(0,0,0,0.86);
+            transform: translateY(-10px) scale(0.98);
+            transition: transform 0.28s var(--spring), opacity 0.24s ease;
+        }
+        .command-overlay.visible .command-palette { transform: translateY(0) scale(1); }
+        .command-search {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px 18px;
+            border-bottom: 0.5px solid var(--ios-separator);
+        }
+        .command-search svg { color: rgba(255,255,255,0.72); flex-shrink: 0; }
+        .command-search input {
+            width: 100%; min-width: 0; border: none; outline: none; background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-heading); font-size: 20px; font-weight: 650;
+        }
+        .command-search input::placeholder { color: rgba(255,255,255,0.36); }
+        .command-shortcut {
+            flex-shrink: 0;
+            padding: 4px 8px; border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 0.5px solid rgba(255,255,255,0.12);
+            color: var(--text-secondary);
+            font-family: var(--font-body); font-size: 11px; font-weight: 700;
+        }
+        .command-body {
+            display: grid; grid-template-columns: minmax(0,1fr) 220px;
+            min-height: 0;
+        }
+        .command-results {
+            min-height: 0; max-height: 460px; overflow-y: auto;
+            padding: 8px;
+            scrollbar-width: none;
+        }
+        .command-results::-webkit-scrollbar { display: none; }
+        .command-result {
+            width: 100%; border: none; text-align: left;
+            display: grid; grid-template-columns: minmax(0,1fr) auto;
+            gap: 12px; align-items: center;
+            padding: 12px 14px; border-radius: 16px;
+            color: var(--text-primary);
+            background: transparent;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.15s;
+        }
+        .command-result:hover, .command-result.selected { background: rgba(10,132,255,0.14); }
+        .command-result:active { transform: scale(0.99); }
+        .command-result-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+        .command-result-name {
+            font-family: var(--font-heading); font-size: 15px; font-weight: 700;
+            color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .command-result-meta {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            color: var(--text-secondary); font-family: var(--font-body); font-size: 11px; font-weight: 600;
+        }
+        .command-result-value {
+            display: flex; flex-direction: column; gap: 3px; align-items: flex-end;
+            font-family: var(--font-heading); font-size: 17px; font-weight: 750;
+            color: var(--text-primary);
+        }
+        .command-result-status { font-family: var(--font-body); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; }
+        .command-actions {
+            display: flex; flex-direction: column; gap: 6px;
+            padding: 10px 10px 10px 0;
+            border-left: 0.5px solid var(--ios-separator);
+        }
+        .command-action {
+            border: none; outline: none; width: 100%;
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 14px;
+            color: var(--text-primary); background: rgba(255,255,255,0.05);
+            font-family: var(--font-body); font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: background 0.15s, transform 0.15s;
+        }
+        .command-action:hover { background: rgba(255,255,255,0.1); }
+        .command-action:active { transform: scale(0.97); }
+        .command-action svg { color: var(--ios-blue); flex-shrink: 0; }
+        .command-footer {
+            display: flex; gap: 8px; overflow-x: auto;
+            padding: 10px 12px 12px;
+            border-top: 0.5px solid var(--ios-separator);
+            scrollbar-width: none;
+        }
+        .command-footer::-webkit-scrollbar { display: none; }
+        .command-empty {
+            padding: 42px 16px; text-align: center;
+            color: var(--text-secondary);
+            font-family: var(--font-heading); font-size: 14px; font-weight: 650;
+        }
 
         /* ── LAYOUT PUSHER (space below fixed header) ── */
         .layout-pusher {
@@ -879,6 +994,32 @@
             display: flex; flex-direction: column; align-items: center;
             padding: 40px 20px; gap: 8px;
             color: var(--text-secondary); font-family: var(--font-body); font-size: 14px;
+        }
+
+        @media (max-width: 720px) {
+            .command-overlay {
+                padding: calc(82px + env(safe-area-inset-top)) 10px calc(14px + env(safe-area-inset-bottom));
+            }
+            .command-palette {
+                max-height: calc(100dvh - 104px);
+                border-radius: 22px;
+            }
+            .command-search { padding: 14px; gap: 10px; }
+            .command-search input { font-size: 17px; }
+            .command-body { display: flex; flex-direction: column; }
+            .command-results { max-height: 48dvh; padding: 7px; }
+            .command-actions {
+                border-left: none;
+                border-top: 0.5px solid var(--ios-separator);
+                padding: 8px;
+                display: grid; grid-template-columns: 1fr 1fr;
+            }
+            .command-action { min-height: 40px; }
+            .command-result {
+                grid-template-columns: minmax(0,1fr);
+                gap: 8px;
+            }
+            .command-result-value { align-items: flex-start; }
         }
 
         .panel-list, .panel-detail { -webkit-overflow-scrolling: touch; }
@@ -1531,6 +1672,22 @@
         Saved!
     </div>
 
+    <!-- Command Palette -->
+    <div class="command-overlay" id="commandOverlay" onclick="handleCommandOverlayClick(event)">
+        <div class="command-palette" role="dialog" aria-modal="true" aria-label="Command Palette">
+            <div class="command-search">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="7"/></svg>
+                <input type="text" id="commandInput" placeholder="Search biomarkers or run an action..." autocomplete="off" oninput="renderCommandPalette()">
+                <div class="command-shortcut" id="commandShortcut">⌘K</div>
+            </div>
+            <div class="command-body">
+                <div class="command-results" id="commandResults"></div>
+                <div class="command-actions" id="commandActions"></div>
+            </div>
+            <div class="command-footer" id="commandCategories"></div>
+        </div>
+    </div>
+
     <!-- FLOATING HEADER -->
     <div class="top-bar" id="globalTopBar">
         <div class="top-bar-inner">
@@ -1553,6 +1710,11 @@
                 <div class="top-subtitle">Biomarker Tracker</div>
             </div>
             <div class="top-right">
+                <button class="theme-toggle" id="command-btn" onclick="openCommandPalette()" aria-label="Open Command Palette">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/><path d="M18 15l2 2 2-2"/>
+                    </svg>
+                </button>
                 <button class="theme-toggle grid-toggle-btn" onclick="window.toggleLayout()" aria-label="Toggle Grid View">
                     <svg id="list-icon" style="display:none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line>
@@ -1754,6 +1916,9 @@
         let filteredTests = [];
         let activeCategory = 'All';
         let currentTestName = null;
+        let commandPaletteOpen = false;
+        let commandSelectedIndex = 0;
+        let anomalyLensActive = false;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
         let _dataLoaded = false;
@@ -2573,10 +2738,20 @@
         }
 
         function setCategory(el, cat) {
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
+            document.querySelectorAll('#chipRow .chip').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
             activeCategory = cat;
             applyFilters();
+        }
+
+        function setCategoryByName(cat) {
+            const chip = document.querySelector(`#chipRow .chip[data-cat="${CSS.escape(cat)}"]`);
+            if (chip) {
+                setCategory(chip, cat);
+            } else {
+                activeCategory = cat;
+                applyFilters();
+            }
         }
 
         // ── FILTER / RENDER LIST ────────────────────────────────────
@@ -2603,10 +2778,281 @@
             filteredTests = allTests.filter(t => {
                 const catOk = activeCategory === 'All' || t.category === activeCategory;
                 const termOk = !term || t.name.toLowerCase().includes(term);
-                return catOk && termOk;
+                const anomalyOk = !anomalyLensActive || isTestAnomalousAsOf(t);
+                return catOk && termOk && anomalyOk;
             });
             renderList();
         }
+
+        function getTemporalAsOfDate() {
+            const candidates = [
+                window.currentTemporalDate,
+                window.temporalAsOfDate,
+                window.temporalScrubberDate,
+                document.documentElement.dataset.temporalAsOf,
+                document.body.dataset.temporalAsOf,
+            ];
+            const dateInput = document.querySelector('#temporalScrubberDate, #temporalAsOfDate, input[type="date"][data-temporal-scrubber]');
+            if (dateInput) candidates.push(dateInput.value);
+            for (const value of candidates) {
+                if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+            }
+            return null;
+        }
+
+        function getLatestDataDate() {
+            let latest = null;
+            allTests.forEach(test => {
+                (test.points || []).forEach(point => {
+                    if (!point?.date) return;
+                    if (!latest || parseISODate(point.date) > parseISODate(latest)) latest = point.date;
+                });
+            });
+            return latest;
+        }
+
+        function getCommandAsOfDate() {
+            return getTemporalAsOfDate() || getLatestDataDate();
+        }
+
+        function getCommandTimelineLabel() {
+            const scrubDate = getTemporalAsOfDate();
+            return scrubDate ? `As of ${fmtDate(scrubDate)}` : 'Latest';
+        }
+
+        function getCommandPointForTest(test, asOfDate = getCommandAsOfDate()) {
+            const source = test.type === 'qualitative'
+                ? (test.points || [])
+                : ((test.numericPts && test.numericPts.length) ? test.numericPts : (test.points || []));
+            const dated = source.filter(point => point?.date && (!asOfDate || parseISODate(point.date) <= parseISODate(asOfDate)));
+            return dated.length ? dated[dated.length - 1] : null;
+        }
+
+        function getCommandStatusForPoint(test, point) {
+            if (!point) return { label: 'No data', colorClass: 'c-text', isAnomaly: false };
+            if (test.type === 'qualitative') {
+                const status = qualStatus(point.rawResult);
+                return {
+                    label: qualBadge(status),
+                    colorClass: qualColorClass(status),
+                    isAnomaly: status === 'reactive',
+                };
+            }
+            if (point.isNumeric && point.numVal !== null) {
+                const parsed = parseRange(point.rawRange || test.range);
+                const rangeStatus = parsed ? isInRange(point.numVal, parsed) : null;
+                return {
+                    label: rangeStatus ? rangeStatus : 'Recorded',
+                    colorClass: rangeStatus === 'normal' ? 'c-green' : (rangeStatus === 'high' || rangeStatus === 'low') ? 'c-red' : 'c-text',
+                    isAnomaly: rangeStatus === 'high' || rangeStatus === 'low',
+                };
+            }
+            return { label: point.rawResult || 'Recorded', colorClass: 'c-text', isAnomaly: false };
+        }
+
+        function isTestAnomalousAsOf(test) {
+            const point = getCommandPointForTest(test);
+            return getCommandStatusForPoint(test, point).isAnomaly;
+        }
+
+        function getCommandValueForPoint(test, point) {
+            if (!point) return '—';
+            if (test.type === 'qualitative') return qualBadge(qualStatus(point.rawResult));
+            if (point.isNumeric && point.numVal !== null) {
+                const unit = getDisplayUnitText(test);
+                return `${formatVal(point.numVal)}${unit ? ` ${unit}` : ''}`;
+            }
+            return point.rawResult || '—';
+        }
+
+        function getCommandRows() {
+            const input = document.getElementById('commandInput');
+            const term = (input?.value || '').trim().toLowerCase();
+            const asOfDate = getCommandAsOfDate();
+            return allTests
+                .map(test => {
+                    const point = getCommandPointForTest(test, asOfDate);
+                    const status = getCommandStatusForPoint(test, point);
+                    return {
+                        test,
+                        point,
+                        status,
+                        timeline: point?.date ? `${getCommandTimelineLabel()} · ${fmtDate(point.date)}` : getCommandTimelineLabel(),
+                        value: getCommandValueForPoint(test, point),
+                    };
+                })
+                .filter(row => {
+                    if (anomalyLensActive && !row.status.isAnomaly) return false;
+                    if (!term) return true;
+                    return row.test.name.toLowerCase().includes(term) || row.test.category.toLowerCase().includes(term);
+                })
+                .sort((a, b) => a.test.name.localeCompare(b.test.name))
+                .slice(0, 40);
+        }
+
+        function renderCommandPalette() {
+            if (!commandPaletteOpen) return;
+            const rows = getCommandRows();
+            const results = document.getElementById('commandResults');
+            const actions = document.getElementById('commandActions');
+            const categories = document.getElementById('commandCategories');
+            const shortcut = document.getElementById('commandShortcut');
+
+            if (shortcut) shortcut.textContent = navigator.platform.toLowerCase().includes('mac') ? '⌘K' : 'Ctrl K';
+            commandSelectedIndex = Math.min(commandSelectedIndex, Math.max(rows.length - 1, 0));
+
+            if (results) {
+                results.innerHTML = rows.length ? rows.map((row, index) => `
+                    <button class="command-result${index === commandSelectedIndex ? ' selected' : ''}" type="button" data-command-test="${escStr(row.test.name)}" onclick="openCommandResult(this.dataset.commandTest)">
+                        <div class="command-result-main">
+                            <div class="command-result-name">${escStr(row.test.name)}</div>
+                            <div class="command-result-meta"><span>${escStr(row.test.category || 'Other')}</span><span>${escStr(row.timeline)}</span></div>
+                        </div>
+                        <div class="command-result-value">
+                            <span class="${row.status.colorClass}">${escStr(row.value)}</span>
+                            <span class="command-result-status ${row.status.colorClass}">${escStr(row.status.label)}</span>
+                        </div>
+                    </button>
+                `).join('') : '<div class="command-empty">No matching biomarkers</div>';
+                const selected = results.querySelector('.command-result.selected');
+                if (selected) selected.scrollIntoView({ block: 'nearest' });
+            }
+
+            if (actions) {
+                const isGrid = document.querySelector('.layout')?.classList.contains('is-grid-view');
+                actions.innerHTML = `
+                    ${renderCommandAction('openAddSheetFromCommand()', 'M12 5v14M5 12h14', 'Add Result')}
+                    ${renderCommandAction('exportFromCommand()', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4|M7 10l5 5 5-5|M12 15V3', 'Export')}
+                    ${renderCommandAction('switchSkyFromCommand()', 'M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42', 'Switch Sky')}
+                    ${renderCommandAction('toggleAnomalyLensFromCommand()', 'M3 12h4l3 8 4-16 3 8h4', anomalyLensActive ? 'All Biomarkers' : 'Anomalies')}
+                    ${renderCommandAction('goLiveFromCommand()', 'M5 12h14M13 6l6 6-6 6', 'Go Live')}
+                    ${renderCommandAction('toggleLayoutFromCommand()', isGrid ? 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' : 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', isGrid ? 'List View' : 'Grid View')}
+                `;
+            }
+
+            if (categories) {
+                const cats = ['All', ...Object.keys(CATEGORIES).filter(c => allTests.some(t => t.category === c)), 'Other'];
+                categories.innerHTML = cats.map(cat => `<button class="chip${cat === activeCategory ? ' active' : ''}" type="button" data-command-category="${escStr(cat)}" onclick="jumpCommandCategory(this.dataset.commandCategory)">${escStr(cat)}</button>`).join('');
+            }
+        }
+
+        function renderCommandAction(action, pathData, label) {
+            const paths = pathData.split('|').map(path => `<path d="${path}"/>`).join('');
+            return `<button class="command-action" type="button" onclick="${action}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>${label}</button>`;
+        }
+
+        function openCommandPalette() {
+            commandPaletteOpen = true;
+            commandSelectedIndex = 0;
+            const overlay = document.getElementById('commandOverlay');
+            const input = document.getElementById('commandInput');
+            const button = document.getElementById('command-btn');
+            if (overlay) overlay.classList.add('visible');
+            if (button) button.classList.add('active');
+            renderCommandPalette();
+            setTimeout(() => input?.focus(), 40);
+        }
+
+        function closeCommandPalette() {
+            commandPaletteOpen = false;
+            document.getElementById('commandOverlay')?.classList.remove('visible');
+            document.getElementById('command-btn')?.classList.remove('active');
+        }
+
+        function handleCommandOverlayClick(event) {
+            if (event.target?.id === 'commandOverlay') closeCommandPalette();
+        }
+
+        function openCommandResult(name) {
+            closeCommandPalette();
+            clearSearch();
+            setCategoryByName('All');
+            if (anomalyLensActive) {
+                anomalyLensActive = false;
+                applyFilters();
+            }
+            setTimeout(() => openTest(name), 0);
+        }
+
+        function openAddSheetFromCommand() {
+            closeCommandPalette();
+            openAddSheet();
+        }
+
+        function exportFromCommand() {
+            closeCommandPalette();
+            exportHealthData();
+        }
+
+        function switchSkyFromCommand() {
+            window.toggleTheme();
+            renderCommandPalette();
+        }
+
+        function toggleAnomalyLensFromCommand() {
+            anomalyLensActive = !anomalyLensActive;
+            applyFilters();
+            renderCommandPalette();
+            showSuccessToast(anomalyLensActive ? 'Showing anomalies' : 'Showing all biomarkers');
+        }
+
+        function goLiveFromCommand() {
+            if (typeof window.goLive === 'function') window.goLive();
+            else if (typeof window.setTemporalLive === 'function') window.setTemporalLive();
+            else if (typeof window.setTemporalDate === 'function') window.setTemporalDate(null);
+            document.dispatchEvent(new CustomEvent('labs:goLive'));
+            closeCommandPalette();
+            applyFilters();
+            showSuccessToast('Live data');
+        }
+
+        function toggleLayoutFromCommand() {
+            window.toggleLayout();
+            renderCommandPalette();
+        }
+
+        function jumpCommandCategory(cat) {
+            closeCommandPalette();
+            clearSearch();
+            setCategoryByName(cat);
+            document.getElementById('panelList')?.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', event => {
+            const isCommandShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+            if (isCommandShortcut) {
+                event.preventDefault();
+                if (commandPaletteOpen) closeCommandPalette();
+                else openCommandPalette();
+                return;
+            }
+
+            if (!commandPaletteOpen) return;
+
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeCommandPalette();
+                return;
+            }
+
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                const rows = getCommandRows();
+                if (!rows.length) return;
+                event.preventDefault();
+                commandSelectedIndex = event.key === 'ArrowDown'
+                    ? (commandSelectedIndex + 1) % rows.length
+                    : (commandSelectedIndex - 1 + rows.length) % rows.length;
+                renderCommandPalette();
+                return;
+            }
+
+            if (event.key === 'Enter') {
+                const rows = getCommandRows();
+                if (!rows[commandSelectedIndex]) return;
+                event.preventDefault();
+                openCommandResult(rows[commandSelectedIndex].test.name);
+            }
+        });
 
         function renderList() {
             const panel = document.getElementById('panelList');
