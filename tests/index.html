@@ -2699,9 +2699,6 @@
                 updateBoot('ready_for_auth_check', { user: window._labsUser?.email });
 
                 if (!window._labsDb) throw new Error('Firebase did not initialise properly.');
-                if (!window._labsUser && window._labsAuth?.currentUser) {
-                    window._labsUser = window._labsAuth.currentUser;
-                }
                 
                 // If there is no signed-in user, return silently
                 if (!window._labsUser) {
@@ -4305,45 +4302,12 @@
             const app = initializeApp(firebaseConfig, 'labs');
             const auth = getAuth(app);
             const db = Firestore.getFirestore(app);
-            let authUserFlowInProgress = false;
 
             window._labsDb = db;
-            window._labsAuth = auth;
             window._labsFirestore = Firestore;
             updateBoot('firebase_initialized');
 
-            async function _handleAuthenticatedUser(user) {
-                if (!user || authUserFlowInProgress) return;
-                authUserFlowInProgress = true;
-                updateBoot('auth_user_detected', { email: user.email });
-                window._labsUser = user;
-
-                try {
-                    if (user.email && user.email.toLowerCase() === 'sspsful@gmail.com') {
-                        const key = await acquireKey(db);
-                        updateBoot('vault_unlocked');
-                        window._labsKey = key;
-                        await loadData(true);
-                    } else {
-                        updateBoot('auth_unauthorized');
-                        alert('Unauthorized: Access restricted to sspsful@gmail.com');
-                        await signOut(auth);
-                    }
-                } catch (err) {
-                    updateBoot('vault_error', { msg: err.message });
-                    console.error('Key acquisition failed:', err);
-                    const errEl = document.getElementById('loadingState') || document.getElementById('panelList');
-                    if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${err.message}</div>`;
-                } finally {
-                    authUserFlowInProgress = false;
-                }
-            }
-
-            getRedirectResult(auth).then(result => {
-                if (result?.user) {
-                    _handleAuthenticatedUser(result.user);
-                }
-            }).catch(err => {
+            getRedirectResult(auth).catch(err => {
                 console.error('Redirect login failed', err);
                 updateBoot('auth_no_user', { msg: err.message });
                 _hideVaultOverlay();
@@ -4366,9 +4330,27 @@
                 }
 
                 if (user) {
-                    _handleAuthenticatedUser(user);
+                    updateBoot('auth_user_detected', { email: user.email });
+                    window._labsUser = user;
+
+                    if (user.email && user.email.toLowerCase() === 'sspsful@gmail.com') {
+                        try {
+                            const key = await acquireKey(db);
+                            updateBoot('vault_unlocked');
+                            window._labsKey = key;
+                            loadData(true);
+                        } catch (err) {
+                            updateBoot('vault_error', { msg: err.message });
+                            console.error('Key acquisition failed:', err);
+                            const errEl = document.getElementById('loadingState');
+                            if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${err.message}</div>`;
+                        }
+                    } else {
+                        updateBoot('auth_unauthorized');
+                        alert('Unauthorized: Access restricted to sspsful@gmail.com');
+                        signOut(auth);
+                    }
                 } else {
-                    if (authUserFlowInProgress) return;
                     updateBoot('auth_no_user');
                     window._labsUser = null;
                     window._labsKey = null;
@@ -4399,10 +4381,7 @@
                         await signInWithRedirect(auth, provider);
                         return;
                     }
-                    const result = await signInWithPopup(auth, provider);
-                    if (result?.user) {
-                        await _handleAuthenticatedUser(result.user);
-                    }
+                    await signInWithPopup(auth, provider);
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
                     console.error('Login failed', err);
