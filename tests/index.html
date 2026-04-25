@@ -2703,9 +2703,6 @@
                 // If there is no signed-in user, return silently
                 if (!window._labsUser) {
                     updateBoot('no_user_returning');
-                    if (typeof window._labsRenderGoogleAuthRequired === 'function') {
-                        window._labsRenderGoogleAuthRequired();
-                    }
                     return;
                 }
 
@@ -4197,7 +4194,6 @@
                     ` : ''}
                 </div>`;
         }
-        window._labsRenderGoogleAuthRequired = _renderGoogleAuthRequired;
 
         // ─── Key acquisition flow ──────────────────────────────────────────────────
         async function acquireKey(db) {
