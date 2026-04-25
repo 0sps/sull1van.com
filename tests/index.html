@@ -405,10 +405,9 @@
             color: var(--text-primary);
             background: transparent;
             cursor: pointer;
-            transition: background 0.15s, transform 0.15s;
+            transition: background 0.15s;
         }
         .command-result:hover, .command-result.selected { background: rgba(10,132,255,0.14); }
-        .command-result:active { transform: scale(0.99); }
         .command-result-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
         .command-result-name {
             font-family: var(--font-heading); font-size: 15px; font-weight: 700;
@@ -518,15 +517,34 @@
             color: var(--text-secondary);
             font-family: var(--font-body); font-size: 12px; font-weight: 600;
             cursor: pointer; user-select: none;
-            transition: all 0.2s var(--spring);
+            display: flex; align-items: center; gap: 0;
+            transition: background 0.18s, border-color 0.18s, color 0.18s, padding 0.18s, gap 0.18s;
             backdrop-filter: blur(8px);
         }
 
         .chip.active {
             background: var(--ios-blue); border-color: transparent; color: #fff;
             box-shadow: 0 4px 16px rgba(10,132,255,0.38);
-            transform: scale(1.04);
         }
+
+        .chip.active.has-remove {
+            gap: 7px;
+            padding-right: 9px;
+        }
+
+        .chip-remove {
+            display: none;
+            width: 14px; height: 14px;
+            align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.9);
+            line-height: 1;
+        }
+
+        .chip.active .chip-remove { display: inline-flex; }
+        .chip-remove svg { width: 10px; height: 10px; }
+        .command-footer .chip-remove { display: none !important; }
 
         /* ── LAYOUT ── */
         .layout {
@@ -1009,21 +1027,31 @@
 
         @media (max-width: 720px) {
             .command-overlay {
-                padding: calc(82px + env(safe-area-inset-top)) 10px calc(14px + env(safe-area-inset-bottom));
+                align-items: center;
+                padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom);
             }
             .command-palette {
-                max-height: calc(100dvh - 104px);
+                height: 66dvh;
+                max-height: 66dvh;
                 border-radius: 22px;
             }
             .command-search { padding: 14px; gap: 10px; }
             .command-search input { font-size: 17px; }
-            .command-body { display: flex; flex-direction: column; }
-            .command-results { max-height: 48dvh; padding: 7px; }
+            .command-body {
+                display: flex; flex-direction: column;
+                flex: 1; overflow: hidden;
+                padding: 8px;
+            }
+            .command-results {
+                flex: 1; max-height: none; overflow-y: auto;
+                padding: 0 0 6px;
+            }
             .command-actions {
                 border-left: none;
                 border-top: 0.5px solid var(--ios-separator);
                 padding: 8px;
                 display: grid; grid-template-columns: 1fr 1fr;
+                flex-shrink: 0;
             }
             .command-action { min-height: 40px; }
             .command-result {
@@ -1730,7 +1758,7 @@
         <div class="command-palette" role="dialog" aria-modal="true" aria-label="Command Palette">
             <div class="command-search">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="7"/></svg>
-                <input type="text" id="commandInput" placeholder="Search biomarkers or run an action..." autocomplete="off" oninput="renderCommandPalette()">
+                <input type="text" id="commandInput" placeholder="Search biomarkers or run an action..." autocomplete="off" oninput="onCommandSearchInput()">
                 <div class="command-shortcut" id="commandShortcut">⌘K</div>
             </div>
             <div class="command-body">
@@ -2003,7 +2031,7 @@
         // ── DATA & STATE ──────────────────────────────────────────────
         let allTests = [];          // [{name, unit, range, type, points, numericPts, category}]
         let filteredTests = [];
-        let activeCategory = 'All';
+        let selectedCategories = new Set();
         let currentTestName = null;
         let commandPaletteOpen = false;
         let commandSelectedIndex = 0;
@@ -2815,32 +2843,67 @@
         }
 
         // ── CHIPS ────────────────────────────────────────────────────
-        function buildChips() {
-            const cats = ['All', ...Object.keys(CATEGORIES).filter(c =>
+        function getAvailableCategories() {
+            return ['All', ...Object.keys(CATEGORIES).filter(c =>
                 allTests.some(t => t.category === c)
             ), 'Other'];
-
-            const row = document.getElementById('chipRow');
-            row.innerHTML = cats.map(c =>
-                `<div class="chip${c === 'All' ? ' active' : ''}" data-cat="${c}" onclick="setCategory(this,'${c}')">${c}</div>`
-            ).join('');
         }
 
-        function setCategory(el, cat) {
-            document.querySelectorAll('#chipRow .chip').forEach(c => c.classList.remove('active'));
-            if (el) el.classList.add('active');
-            activeCategory = cat;
+        function isAllCategoriesSelected() {
+            return selectedCategories.size === 0;
+        }
+
+        function isCategorySelected(cat) {
+            return cat === 'All' ? isAllCategoriesSelected() : selectedCategories.has(cat);
+        }
+
+        function renderCategoryChip(cat, active = isCategorySelected(cat)) {
+            const removeIcon = cat === 'All' ? '' : `
+                <span class="chip-remove" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg>
+                </span>`;
+            return `<div class="chip${active ? ' active' : ''}${cat !== 'All' ? ' has-remove' : ''}" data-cat="${escStr(cat)}" onclick="setCategory(this.dataset.cat)"><span>${escStr(cat)}</span>${removeIcon}</div>`;
+        }
+
+        function buildChips() {
+            const cats = getAvailableCategories();
+            selectedCategories = new Set([...selectedCategories].filter(cat => cats.includes(cat)));
+            const row = document.getElementById('chipRow');
+            row.innerHTML = cats.map(c => renderCategoryChip(c)).join('');
+            syncCategoryChips();
+        }
+
+        function syncCategoryChips() {
+            document.querySelectorAll('#chipRow .chip').forEach(chip => {
+                chip.classList.toggle('active', isCategorySelected(chip.dataset.cat));
+            });
+        }
+
+        function setCategory(cat) {
+            if (cat === 'All') {
+                selectedCategories.clear();
+            } else if (selectedCategories.has(cat)) {
+                selectedCategories.delete(cat);
+            } else {
+                selectedCategories.add(cat);
+            }
+            syncCategoryChips();
             applyFilters();
         }
 
-        function setCategoryByName(cat) {
+        function setCategoryByName(cat, exclusive = true) {
             const chip = document.querySelector(`#chipRow .chip[data-cat="${CSS.escape(cat)}"]`);
-            if (chip) {
-                setCategory(chip, cat);
+            if (cat === 'All') {
+                selectedCategories.clear();
+            } else if (exclusive) {
+                selectedCategories = new Set([cat]);
             } else {
-                activeCategory = cat;
-                applyFilters();
+                selectedCategories.add(cat);
             }
+            if (chip || cat === 'All') syncCategoryChips();
+            applyFilters();
         }
 
         function syncAnomalyLensControls() {
@@ -2882,7 +2945,7 @@
         function applyFilters() {
             const term = document.getElementById('testSearch').value.toLowerCase();
             filteredTests = allTests.filter(t => {
-                const catOk = activeCategory === 'All' || t.category === activeCategory;
+                const catOk = isAllCategoriesSelected() || selectedCategories.has(t.category);
                 const termOk = !term || t.name.toLowerCase().includes(term);
                 const anomalyOk = !anomalyLensActive || isTestAnomalousAsOf(t);
                 return catOk && termOk && anomalyOk;
@@ -3037,9 +3100,14 @@
             }
 
             if (categories) {
-                const cats = ['All', ...Object.keys(CATEGORIES).filter(c => allTests.some(t => t.category === c)), 'Other'];
-                categories.innerHTML = cats.map(cat => `<button class="chip${cat === activeCategory ? ' active' : ''}" type="button" data-command-category="${escStr(cat)}" onclick="jumpCommandCategory(this.dataset.commandCategory)">${escStr(cat)}</button>`).join('');
+                const cats = getAvailableCategories();
+                categories.innerHTML = cats.map(cat => `<button class="chip${isCategorySelected(cat) ? ' active' : ''}" type="button" data-command-category="${escStr(cat)}" onclick="jumpCommandCategory(this.dataset.commandCategory)">${escStr(cat)}</button>`).join('');
             }
+        }
+
+        function onCommandSearchInput() {
+            commandSelectedIndex = 0;
+            renderCommandPalette();
         }
 
         function renderCommandAction(action, pathData, label) {
