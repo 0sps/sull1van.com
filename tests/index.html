@@ -365,7 +365,10 @@
             transition: transform 0.21s var(--command-ease), opacity 0.18s ease;
         }
         .command-overlay.visible .command-palette { transform: translateY(0) scale(1); }
-        .command-palette.add-mode { height: min(720px, calc(100dvh - 128px)); }
+        .command-palette.add-mode {
+            height: auto;
+            max-height: min(720px, calc(100dvh - 128px));
+        }
         .command-panel-track {
             display: flex;
             width: 200%;
@@ -600,7 +603,6 @@
 
         .chip.active .chip-remove { display: inline-flex; }
         .chip-remove svg { width: 10px; height: 10px; }
-        .command-footer .chip-remove { display: none !important; }
 
         /* ── LAYOUT ── */
         .layout {
@@ -1092,7 +1094,10 @@
                 border-radius: 22px;
                 transform: translateY(calc(-10dvh - 12px)) scale(0.982);
             }
-            .command-palette.add-mode { height: 66dvh; }
+            .command-palette.add-mode {
+                height: auto;
+                max-height: 66dvh;
+            }
             .command-overlay.visible .command-palette { transform: translateY(-10dvh) scale(1); }
             .command-search { padding: 14px; gap: 10px; }
             .command-search input { font-size: 17px; }
@@ -1118,7 +1123,56 @@
                 gap: 8px;
             }
             .command-result-value { align-items: flex-start; }
-            .command-add-content { padding: 12px; }
+            .command-add-header {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .command-back-btn,
+            .command-add-close {
+                width: 42px;
+                height: 42px;
+            }
+            .command-add-title { font-size: 20px; }
+            .command-add-content {
+                padding: 14px;
+                gap: 12px;
+            }
+            .add-field-label {
+                font-size: 10px;
+                margin-bottom: 7px;
+            }
+            .add-date-input,
+            .add-result-row input.add-test-name,
+            .add-result-row input.add-test-result {
+                padding: 11px 13px;
+                border-radius: 13px;
+                font-size: 15px;
+            }
+            .add-date-input {
+                min-height: 48px;
+                text-align: center;
+            }
+            .add-result-row {
+                display: grid;
+                grid-template-columns: minmax(0,1fr) minmax(0,0.92fr) 34px;
+                gap: 8px;
+            }
+            .add-row-remove {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+            .add-row-btn {
+                min-height: 46px;
+                padding: 11px 13px;
+                border-radius: 14px;
+                font-size: 14px;
+            }
+            .add-save-btn {
+                padding: 14px;
+                border-radius: 15px;
+                font-size: 15px;
+            }
         }
 
         .panel-list, .panel-detail { -webkit-overflow-scrolling: touch; }
@@ -2943,14 +2997,14 @@
             return cat === 'All' ? isAllCategoriesSelected() : selectedCategories.has(cat);
         }
 
-        function renderCategoryChip(cat, active = isCategorySelected(cat)) {
+        function renderCategoryChip(cat, active = isCategorySelected(cat), action = 'setCategory') {
             const removeIcon = cat === 'All' ? '' : `
                 <span class="chip-remove" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
                         <path d="M18 6 6 18M6 6l12 12"></path>
                     </svg>
                 </span>`;
-            return `<div class="chip${active ? ' active' : ''}${cat !== 'All' ? ' has-remove' : ''}" data-cat="${escStr(cat)}" onclick="setCategory(this.dataset.cat)"><span>${escStr(cat)}</span>${removeIcon}</div>`;
+            return `<div class="chip${active ? ' active' : ''}${cat !== 'All' ? ' has-remove' : ''}" data-cat="${escStr(cat)}" onclick="${action}(this.dataset.cat)"><span>${escStr(cat)}</span>${removeIcon}</div>`;
         }
 
         function buildChips() {
@@ -3194,7 +3248,7 @@
 
             if (categories) {
                 const cats = getAvailableCategories();
-                categories.innerHTML = cats.map(cat => `<button class="chip${isCategorySelected(cat) ? ' active' : ''}" type="button" data-command-category="${escStr(cat)}" onclick="jumpCommandCategory(this.dataset.commandCategory)">${escStr(cat)}</button>`).join('');
+                categories.innerHTML = cats.map(cat => renderCategoryChip(cat, isCategorySelected(cat), 'jumpCommandCategory')).join('');
             }
         }
 
