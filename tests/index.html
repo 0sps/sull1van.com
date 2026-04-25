@@ -2736,7 +2736,7 @@
                 }
             } catch (e) {
                 console.error(e);
-                const errEl = document.getElementById('loadingState');
+                const errEl = document.getElementById('loadingState') || document.getElementById('panelList');
                 if (errEl) {
                     errEl.innerHTML = '<span style="color:var(--red)">⚠ Failed to load — ' + e.message + '</span>';
                 }
@@ -4171,7 +4171,7 @@
             isBusy = false,
             showButton = true,
         } = {}) {
-            const loadingEl = document.getElementById('loadingState');
+            const loadingEl = document.getElementById('loadingState') || document.getElementById('panelList');
             if (!loadingEl) return;
 
             loadingEl.innerHTML = `
