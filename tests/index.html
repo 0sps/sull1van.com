@@ -47,12 +47,6 @@
             --chart-grid: rgba(255, 255, 255, 0.06);
             --surface: rgba(28, 28, 34, 0.65);
             --surface2: rgba(40, 42, 54, 0.55);
-            --spectral-cyan: rgba(56, 189, 248, 0.72);
-            --spectral-green: rgba(48, 209, 88, 0.72);
-            --spectral-amber: rgba(255, 159, 10, 0.72);
-            --spectral-red: rgba(255, 69, 58, 0.72);
-            --precision-line: rgba(160, 205, 255, 0.16);
-            --font-mono: 'SFMono-Regular', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
 
             /* Glass system */
             --glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
@@ -507,28 +501,6 @@
             box-shadow: 0 4px 20px -6px rgba(0,0,0,0.4);
             transition: transform 0.2s var(--spring), background 0.15s;
         }
-        .test-card::before {
-            content: "";
-            position: absolute; inset: 0 auto 0 0;
-            width: 3px;
-            background: linear-gradient(180deg, var(--spectral-cyan), rgba(255,255,255,0.08), transparent);
-            opacity: 0.34;
-            pointer-events: none;
-        }
-        .test-card::after {
-            content: "";
-            position: absolute; left: 14px; right: 14px; bottom: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--precision-line), transparent);
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        .test-card.state-normal::before,
-        .test-card.state-clear::before { background: linear-gradient(180deg, var(--spectral-green), rgba(255,255,255,0.08), transparent); opacity: 0.62; }
-        .test-card.state-low::before,
-        .test-card.state-high::before,
-        .test-card.state-reactive::before { background: linear-gradient(180deg, var(--spectral-red), rgba(255,255,255,0.1), transparent); opacity: 0.78; }
-        .test-card.state-unknown::before { background: linear-gradient(180deg, var(--spectral-amber), rgba(255,255,255,0.08), transparent); opacity: 0.62; }
         .test-card:active { transform: scale(0.97); }
         .test-card:hover { transform: translateY(-1px); background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 100%); }
 
@@ -582,48 +554,6 @@
             display: flex; flex-direction: column;
             align-items: flex-end; gap: 5px; flex-shrink: 0;
         }
-        .status-line {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 7px;
-        }
-        .state-sigil {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            border: 1px solid currentColor;
-            color: var(--text-secondary);
-            position: relative;
-            flex-shrink: 0;
-            opacity: 0.9;
-        }
-        .state-sigil::after {
-            content: "";
-            position: absolute;
-            inset: 2px;
-            border-radius: inherit;
-            background: currentColor;
-        }
-        .state-sigil.state-normal,
-        .state-sigil.state-clear { color: var(--ios-green); box-shadow: 0 0 0 3px rgba(48,209,88,0.08); }
-        .state-sigil.state-low,
-        .state-sigil.state-high,
-        .state-sigil.state-reactive {
-            color: var(--ios-red);
-            border-radius: 2px;
-            transform: rotate(45deg);
-            box-shadow: 0 0 12px rgba(255,69,58,0.26);
-        }
-        .state-sigil.state-low::after,
-        .state-sigil.state-high::after,
-        .state-sigil.state-reactive::after { border-radius: 1px; }
-        .state-sigil.state-unknown {
-            color: var(--ios-amber);
-            border-radius: 0;
-            clip-path: polygon(50% 0, 100% 100%, 0 100%);
-            box-shadow: 0 0 10px rgba(255,159,10,0.2);
-        }
-        .state-sigil.state-unknown::after { clip-path: inherit; border-radius: 0; }
         .latest-stack {
             display: flex;
             flex-direction: column;
@@ -670,18 +600,15 @@
         .badge-amber { background: rgba(255,159,10,0.15); color: var(--ios-amber); }
 
         .latest-chip {
-            font-family: var(--font-mono); font-size: 20px; font-weight: 700;
+            font-family: var(--font-heading); font-size: 20px; font-weight: 700;
             color: var(--text-primary);
-            font-variant-numeric: tabular-nums lining-nums;
-            letter-spacing: 0;
         }
         .latest-chip-unit {
-            font-family: var(--font-mono);
-            font-size: 12px;
+            font-family: var(--font-body);
+            font-size: 18px;
             font-weight: 600;
             color: var(--text-secondary);
             line-height: 1;
-            letter-spacing: 0.02em;
         }
         .latest-chip-unit.is-hidden { display: none; }
         .chevron { color: var(--text-tertiary); flex-shrink: 0; }
@@ -699,20 +626,6 @@
             overflow: hidden; transform: translateZ(0);
             box-shadow: var(--glass-shadow);
         }
-        .hero-widget::after,
-        .kpi-box::after,
-        .range-bar-card::after,
-        .chart-card::after,
-        .std-timeline-card::after {
-            content: "";
-            position: absolute; inset: 0;
-            background:
-                repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 9px),
-                linear-gradient(90deg, transparent, rgba(56,189,248,0.11), transparent);
-            opacity: 0.16;
-            mix-blend-mode: screen;
-            pointer-events: none;
-        }
 
         .hero-glow {
             position: absolute; top: -40px; right: -40px;
@@ -722,7 +635,7 @@
         }
         .hero-content { display: flex; align-items: center; justify-content: space-between; position: relative; }
         .hero-kpi { display: flex; flex-direction: column; gap: 4px; text-align: center; flex: 1; }
-        .hero-kpi-val { font-family: var(--font-mono); font-size: 28px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
+        .hero-kpi-val { font-family: var(--font-heading); font-size: 28px; font-weight: 700; line-height: 1; }
         .hero-kpi-lbl {
             font-family: var(--font-heading); font-size: 10px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;
@@ -779,8 +692,6 @@
         .kpi-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 16px 18px; }
 
         .kpi-box {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.09);
@@ -790,36 +701,17 @@
             align-items: center; text-align: center;
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.32);
         }
-        .kpi-box::before {
-            content: "";
-            width: 24px;
-            height: 2px;
-            border-radius: 2px;
-            background: var(--precision-line);
-            margin-bottom: 2px;
-            box-shadow: 10px 0 0 rgba(255,255,255,0.05), -10px 0 0 rgba(255,255,255,0.05);
-        }
-        .kpi-box.state-normal::before,
-        .kpi-box.state-clear::before { background: var(--ios-green); box-shadow: 0 0 12px rgba(48,209,88,0.22); }
-        .kpi-box.state-high::before,
-        .kpi-box.state-low::before,
-        .kpi-box.state-reactive::before { background: var(--ios-red); box-shadow: 0 0 14px rgba(255,69,58,0.28); }
-        .kpi-box.trend-good::before { background: var(--ios-green); }
-        .kpi-box.trend-bad::before { background: var(--ios-red); }
-        .kpi-box.trend-flat::before { background: var(--precision-line); }
 
         .kpi-label {
             font-family: var(--font-heading); font-size: 10px; font-weight: 700;
             color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase;
         }
-        .kpi-val { font-family: var(--font-mono); font-size: 22px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0; }
-        .kpi-sub { font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary); font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0.02em; }
+        .kpi-val { font-family: var(--font-heading); font-size: 22px; font-weight: 700; line-height: 1; }
+        .kpi-sub { font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); }
 
         /* chart */
         .chart-section { padding: 0 18px 16px; }
         .chart-card {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
@@ -828,25 +720,11 @@
             box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
         }
 
-        .chart-inner { position: relative; }
-        .chart-inner::before {
-            content: "SERUM VECTOR";
-            position: absolute;
-            top: 2px; left: 2px;
-            z-index: 1;
-            font-family: var(--font-mono);
-            font-size: 9px;
-            color: var(--text-tertiary);
-            letter-spacing: 0.08em;
-            pointer-events: none;
-        }
         .chart-card canvas { display: block; }
 
         /* gauge */
         .range-bar-section { padding: 0 18px 16px; }
         .range-bar-card {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
@@ -862,11 +740,7 @@
         }
         .gauge-track {
             position: relative; height: 8px;
-            background:
-                repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 1px, transparent 1px 12.5%),
-                linear-gradient(90deg, rgba(255,69,58,0.22), rgba(255,159,10,0.22), rgba(48,209,88,0.2), rgba(255,159,10,0.22), rgba(255,69,58,0.22));
-            border-radius: 999px; margin-bottom: 6px;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.08); border-radius: 999px; margin-bottom: 6px;
         }
 
         .gauge-fill-zone { position: absolute; top: 0; height: 100%; border-radius: 999px; }
@@ -878,25 +752,11 @@
             box-shadow: 0 0 0 2px var(--ios-blue);
             transition: left 0.5s cubic-bezier(.34,1.56,.64,1);
         }
-        .gauge-marker.state-normal { box-shadow: 0 0 0 2px var(--ios-green), 0 0 16px rgba(48,209,88,0.35); }
-        .gauge-marker.state-high,
-        .gauge-marker.state-low { border-radius: 3px; transform: translateX(-50%) rotate(45deg); box-shadow: 0 0 0 2px var(--ios-red), 0 0 18px rgba(255,69,58,0.38); }
-        .gauge-readout {
-            position: absolute; top: 20px;
-            transform: translateX(-50%);
-            font-weight: 700;
-            font-family: var(--font-mono);
-            font-size: 1.05rem;
-            font-variant-numeric: tabular-nums lining-nums;
-            letter-spacing: 0;
-        }
-        .gauge-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); font-variant-numeric: tabular-nums lining-nums; }
+        .gauge-labels { display: flex; justify-content: space-between; font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); }
 
         /* STD timeline */
         .std-timeline { padding: 0 18px 16px; }
         .std-timeline-card {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
@@ -910,21 +770,12 @@
             color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase;
         }
         .std-row { display: flex; align-items: center; gap: 12px; }
-        .std-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); width: 76px; flex-shrink: 0; font-variant-numeric: tabular-nums lining-nums; }
+        .std-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 76px; flex-shrink: 0; }
         .std-bar {
-            position: relative;
             flex: 1; height: 30px; border-radius: 10px;
             display: flex; align-items: center; padding: 0 12px;
             font-family: var(--font-body); font-size: 12px; font-weight: 600;
             transition: all 0.3s;
-        }
-        .std-bar::after {
-            content: "";
-            position: absolute; inset: 4px 8px auto auto;
-            width: 18px; height: 1px;
-            background: currentColor;
-            opacity: 0.42;
-            box-shadow: -6px 5px 0 currentColor;
         }
         .std-bar.clear    { background: rgba(48,209,88,0.13); color: var(--ios-green); border: 1px solid rgba(48,209,88,0.22); }
         .std-bar.reactive { background: rgba(255,69,58,0.13);  color: var(--ios-red);   border: 1px solid rgba(255,69,58,0.22); }
@@ -949,27 +800,12 @@
             padding: 12px 0; border-bottom: 0.5px solid var(--ios-separator);
         }
         .history-row:last-child { border-bottom: none; }
-        .hist-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); width: 82px; flex-shrink: 0; font-variant-numeric: tabular-nums lining-nums; }
-        .hist-val  { font-family: var(--font-mono); font-size: 16px; font-weight: 650; flex: 1; font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0; }
-        .hist-unit {
-            font-size: 0.72em;
-            color: var(--text-secondary);
-            margin-left: 6px;
-            font-family: var(--font-mono);
-            letter-spacing: 0.02em;
-        }
-        .hist-delta {
-            font-family: var(--font-mono); font-size: 10px; font-weight: 700;
-            padding: 3px 8px; border-radius: 999px;
-            font-variant-numeric: tabular-nums lining-nums;
-            letter-spacing: 0;
-            border: 1px solid transparent;
-        }
+        .hist-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 82px; flex-shrink: 0; }
+        .hist-val  { font-family: var(--font-heading); font-size: 17px; font-weight: 600; flex: 1; }
+        .hist-delta { font-family: var(--font-body); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
         .delta-up   { background: rgba(255,69,58,0.13);  color: var(--ios-red); }
         .delta-down { background: rgba(48,209,88,0.13);  color: var(--ios-green); }
         .delta-flat { background: rgba(255,255,255,0.07); color: var(--text-secondary); }
-        .delta-up { border-color: rgba(255,69,58,0.22); box-shadow: 0 0 12px rgba(255,69,58,0.12); }
-        .delta-down { border-color: rgba(48,209,88,0.22); box-shadow: 0 0 12px rgba(48,209,88,0.1); }
 
         /* loading */
         .loading-state {
@@ -1806,18 +1642,18 @@
                     </div>
 
                     <div class="kpi-row">
-                        <div class="kpi-box" id="kpiLatestBox">
+                        <div class="kpi-box">
                             <div class="kpi-label">Latest</div>
                             <div class="kpi-val" id="kpiLatest">—</div>
                             <div class="kpi-sub" id="kpiLatestDate"></div>
                             <div class="kpi-sub" id="kpiLatestUnit"></div>
                         </div>
-                        <div class="kpi-box" id="kpiRangeBox">
+                        <div class="kpi-box">
                             <div class="kpi-label">Range</div>
                             <div class="kpi-val" id="kpiRange" style="font-size:0.82rem;line-height:1.2;margin-top:2px;">—</div>
                             <div class="kpi-sub">Reference</div>
                         </div>
-                        <div class="kpi-box" id="kpiTrendBox">
+                        <div class="kpi-box">
                             <div class="kpi-label">vs Prev</div>
                             <div class="kpi-val" id="kpiTrend">—</div>
                             <div class="kpi-sub" id="kpiTrendSub"></div>
@@ -2397,21 +2233,6 @@
             if (parsed.max !== undefined && val > parsed.max) return 'high';
             return 'normal';
         }
-        function stateClass(status) {
-            return status ? `state-${status}` : 'state-unknown';
-        }
-        function stateLabel(status) {
-            if (status === 'normal' || status === 'clear') return 'IN RANGE';
-            if (status === 'high') return 'HIGH';
-            if (status === 'low') return 'LOW';
-            if (status === 'reactive') return 'DETECTED';
-            return 'UNMAPPED';
-        }
-        function trendClassFromColor(colorClass) {
-            if (colorClass === 'c-green') return 'trend-good';
-            if (colorClass === 'c-red') return 'trend-bad';
-            return 'trend-flat';
-        }
 
         // ── DIAGNOSTICS & STATE ──────────────────────────────────────
         window._labsBoot = { phase: 'init', error: null, authReady: false, dbReady: false };
@@ -2848,10 +2669,9 @@
                 const badgeClass = qualBadgeClass(status);
                 const badgeText = qualBadge(status);
                 const checkCount = t.points.filter(p => qualStatus(p.rawResult) === 'clear').length;
-                const statusClass = stateClass(status);
 
                 return `
-      <div class="test-card ${statusClass}${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
+      <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
         <div class="test-card-inner">
             <div class="test-card-left">
               <div class="test-card-name">${t.name}</div>
@@ -2861,10 +2681,7 @@
               </div>
             </div>
             <div class="test-card-right">
-              <div class="status-line">
-                <span class="state-sigil ${statusClass}" aria-hidden="true"></span>
-                <span class="status-badge ${badgeClass}">${badgeText}</span>
-              </div>
+              <span class="status-badge ${badgeClass}">${badgeText}</span>
               <span style="font-family:var(--font-body);font-size:0.62rem;color:var(--muted)">${fmtDate(last.date)}</span>
             </div>
             <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
@@ -2885,12 +2702,11 @@
             let valColor = 'c-text';
             if (status === 'low' || status === 'high') valColor = 'c-red';
             else if (status === 'normal') valColor = 'c-green';
-            const statusClass = stateClass(status);
 
             const displayVal = latestVal !== null ? formatVal(latestVal) : (last.rawResult ?? '—');
 
             return `
-    <div class="test-card ${statusClass}${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
+    <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
       <div class="test-card-inner">
           <div class="test-card-left">
             <div class="test-card-name">${t.name}</div>
@@ -2901,10 +2717,6 @@
           </div>
           <div class="test-card-right" style="gap:2px;">
             <div class="latest-stack">
-              <div class="status-line">
-                <span class="state-sigil ${statusClass}" aria-hidden="true"></span>
-                <span class="status-badge ${status === 'normal' ? 'badge-green' : status === 'high' || status === 'low' ? 'badge-red' : 'badge-amber'}">${stateLabel(status)}</span>
-              </div>
               <div class="latest-chip-wrap">
                 <div class="latest-chip ${valColor}">${displayVal}</div>
                 ${getInlineLatestUnitHtml(t)}
@@ -2994,7 +2806,6 @@
                     type: 'qualitative',
                     latestLabel: qualLabel(status),
                     latestColorClass: qualColorClass(status),
-                    latestStateClass: stateClass(status),
                     latestDate: fmtDate(last.date),
                     latestUnitHtml: getLatestUnitSublineHtml(t),
                     rangeText: 'Nonreactive',
@@ -3002,7 +2813,6 @@
                     // trend fields unused for qualitative but kept for consistency
                     trendVal: null,
                     trendColorClass: 'c-text',
-                    trendStateClass: 'trend-flat',
                     trendSub: 'total tests',
                 };
             }
@@ -3012,10 +2822,9 @@
                 return {
                     type: 'numeric-empty',
                     latestLabel: '—', latestColorClass: 'c-text', latestDate: '',
-                    latestStateClass: 'state-unknown',
                     latestUnitHtml: getLatestUnitSublineHtml(t),
                     rangeText: '—',
-                    trendVal: '—', trendColorClass: 'c-text', trendStateClass: 'trend-flat', trendSub: '',
+                    trendVal: '—', trendColorClass: 'c-text', trendSub: '',
                 };
             }
 
@@ -3028,7 +2837,6 @@
             const latestColorClass = status === 'normal' ? 'c-green'
                 : (status === 'high' || status === 'low') ? 'c-red'
                 : 'c-text';
-            const latestStateClass = stateClass(status);
 
             const rangeText = (rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)))
                 ? rangeStr : '—';
@@ -3054,14 +2862,12 @@
                 type: 'numeric',
                 latestVal: formatVal(latest.numVal),
                 latestColorClass,
-                latestStateClass,
                 latestDate: fmtDate(latest.date),
                 latestUnitHtml: getLatestUnitSublineHtml(t),
                 rangeText,
                 unit: getDisplayUnitText(t),
                 trendVal,
                 trendColorClass,
-                trendStateClass: trendClassFromColor(trendColorClass),
                 trendSub,
                 // Raw diff arrow variant used in grid card compact view
                 trendArrowVal: prev ? (Math.abs(latest.numVal - prev.numVal) < 0.001 ? '= 0' : ((latest.numVal - prev.numVal) > 0 ? '▲ ' : '▼ ') + formatVal(Math.abs(latest.numVal - prev.numVal))) : null,
@@ -3076,7 +2882,7 @@
             if (s.type === 'qualitative') {
                 return `
                 <div class="kpi-row grid-kpi-row">
-                    <div class="kpi-box ${s.latestStateClass}"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
                     <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                     <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${s.totalCount}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
                 </div>`;
@@ -3097,9 +2903,9 @@
 
             return `
             <div class="kpi-row grid-kpi-row">
-                <div class="kpi-box ${s.latestStateClass}"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
                 <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
-                <div class="kpi-box ${s.trendStateClass}"><div class="kpi-label">Trend</div>${trendHtml}</div>
+                <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
             </div>`;
         }
 
@@ -3270,25 +3076,16 @@
             const rangeEl   = document.getElementById('kpiRange');
             const trendEl   = document.getElementById('kpiTrend');
             const trendSub  = document.getElementById('kpiTrendSub');
-            const latestBox = document.getElementById('kpiLatestBox');
-            const rangeBox  = document.getElementById('kpiRangeBox');
-            const trendBox  = document.getElementById('kpiTrendBox');
-            [latestBox, rangeBox, trendBox].forEach(el => {
-                if (!el) return;
-                el.className = 'kpi-box';
-            });
 
             if (s.type === 'qualitative') {
                 latestEl.textContent  = s.latestLabel;
                 latestEl.className    = 'kpi-val ' + s.latestColorClass;
-                if (latestBox) latestBox.classList.add(s.latestStateClass);
                 latestDate.textContent = s.latestDate;
                 latestUnit.innerHTML = s.latestUnitHtml;
                 rangeEl.textContent   = s.rangeText;
                 rangeEl.className     = 'kpi-val c-text';
                 trendEl.textContent   = String(s.totalCount);
                 trendEl.className     = 'kpi-val c-text';
-                if (trendBox) trendBox.classList.add(s.trendStateClass);
                 trendSub.textContent  = s.trendSub;
                 return;
             }
@@ -3306,14 +3103,12 @@
             // Numeric
             latestEl.textContent  = s.latestVal;
             latestEl.className    = 'kpi-val ' + s.latestColorClass;
-            if (latestBox) latestBox.classList.add(s.latestStateClass);
             latestDate.textContent = s.latestDate;
             latestUnit.innerHTML = s.latestUnitHtml;
             rangeEl.textContent   = s.rangeText;
             rangeEl.className     = 'kpi-val c-text';
             trendEl.textContent   = s.trendVal;
             trendEl.className     = `kpi-val ${s.trendColorClass}`;
-            if (trendBox) trendBox.classList.add(s.trendStateClass);
             trendSub.textContent  = s.trendSub;
         }
 
@@ -3342,7 +3137,6 @@
 
             const zoneColor = status === 'normal' ? 'rgba(48,209,88,0.35)' : 'rgba(10,132,255,0.2)';
             const markerColor = status === 'normal' ? 'var(--green)' : status === 'high' || status === 'low' ? 'var(--red)' : 'var(--accent)';
-            const gaugeStateClass = stateClass(status);
 
             container.insertAdjacentHTML('beforeend', `
       <div class="range-bar-section">
@@ -3350,8 +3144,8 @@
           <div class="range-bar-label">Position in range</div>
           <div class="gauge-track">
             <div class="gauge-fill-zone" style="left:${zoneLeft}%;width:${zoneWidth}%;background:${zoneColor};"></div>
-            <div class="gauge-marker ${gaugeStateClass}" style="left:${markerPct}%;"></div>
-            <div class="gauge-readout" style="left:${markerPct}%; color:${markerColor};">${formatVal(val)}</div>
+            <div class="gauge-marker" style="left:${markerPct}%;box-shadow:0 0 0 2px ${markerColor};"></div>
+            <div style="position:absolute; top:20px; left:${markerPct}%; transform:translateX(-50%); color:${markerColor}; font-weight:700; font-family:var(--font-heading); font-size:1.15rem;">${formatVal(val)}</div>
           </div>
           <div class="gauge-labels" style="margin-top:22px;">
             <span>${hasMin ? rangeMin : '—'}</span>
@@ -3552,7 +3346,7 @@
                 return `
         <div class="history-row">
           <div class="hist-date">${fmtDate(p.date)}</div>
-          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span class="hist-unit">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
+          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
           ${deltaHtml}
         </div>`;
             }).join('');
