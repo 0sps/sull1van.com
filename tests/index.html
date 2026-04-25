@@ -507,6 +507,14 @@
             box-shadow: 0 4px 20px -6px rgba(0,0,0,0.4);
             transition: transform 0.2s var(--spring), background 0.15s;
         }
+        .test-card::before {
+            content: "";
+            position: absolute; inset: 0 auto 0 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--spectral-cyan), rgba(255,255,255,0.08), transparent);
+            opacity: 0.34;
+            pointer-events: none;
+        }
         .test-card::after {
             content: "";
             position: absolute; left: 14px; right: 14px; bottom: 0;
@@ -515,6 +523,12 @@
             opacity: 0.8;
             pointer-events: none;
         }
+        .test-card.state-normal::before,
+        .test-card.state-clear::before { background: linear-gradient(180deg, var(--spectral-green), rgba(255,255,255,0.08), transparent); opacity: 0.62; }
+        .test-card.state-low::before,
+        .test-card.state-high::before,
+        .test-card.state-reactive::before { background: linear-gradient(180deg, var(--spectral-red), rgba(255,255,255,0.1), transparent); opacity: 0.78; }
+        .test-card.state-unknown::before { background: linear-gradient(180deg, var(--spectral-amber), rgba(255,255,255,0.08), transparent); opacity: 0.62; }
         .test-card:active { transform: scale(0.97); }
         .test-card:hover { transform: translateY(-1px); background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 100%); }
 
@@ -2693,16 +2707,7 @@
                 if (!window._labsUser) {
                     updateBoot('no_user_returning');
                     if (typeof window._labsRenderGoogleAuthRequired === 'function') {
-                        if (sessionStorage.getItem('labs_google_redirect_pending') === '1') {
-                            window._labsRenderGoogleAuthRequired({
-                                message: 'Completing Google sign-in…',
-                                detail: 'Waiting for the mobile redirect to restore your Google session.',
-                                buttonLabel: 'Completing sign-in…',
-                                isBusy: true,
-                            });
-                        } else {
-                            window._labsRenderGoogleAuthRequired();
-                        }
+                        window._labsRenderGoogleAuthRequired();
                     }
                     return;
                 }
@@ -3973,8 +3978,7 @@
     <script type="module">
         import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
         import { getAuth, onAuthStateChanged, signOut, getRedirectResult,
-                 signInWithPopup, signInWithRedirect, GoogleAuthProvider,
-                 setPersistence, browserLocalPersistence }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
+                 signInWithPopup, signInWithRedirect, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
 
         // ─── Crypto helpers (inlined from crypto.js) ──────────────────────────────
@@ -4287,15 +4291,6 @@
             return /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || (coarsePointer && smallViewport);
         }
 
-        const _REDIRECT_PENDING_KEY = 'labs_google_redirect_pending';
-        function _isRedirectLoginPending() {
-            return sessionStorage.getItem(_REDIRECT_PENDING_KEY) === '1';
-        }
-        function _setRedirectLoginPending(isPending) {
-            if (isPending) sessionStorage.setItem(_REDIRECT_PENDING_KEY, '1');
-            else sessionStorage.removeItem(_REDIRECT_PENDING_KEY);
-        }
-
         const firebaseConfig = {
             apiKey:            'AIzaSyBsWzW3b-xc-2wB22-w9GUh1J75_FsqMTo',
             authDomain:        'bodydata-7a30d.firebaseapp.com',
@@ -4309,7 +4304,6 @@
             updateBoot('module_executing');
             const app = initializeApp(firebaseConfig, 'labs');
             const auth = getAuth(app);
-            await setPersistence(auth, browserLocalPersistence);
             const db = Firestore.getFirestore(app);
             let authUserFlowInProgress = false;
 
@@ -4320,7 +4314,6 @@
 
             async function _handleAuthenticatedUser(user) {
                 if (!user || authUserFlowInProgress) return;
-                _setRedirectLoginPending(false);
                 authUserFlowInProgress = true;
                 updateBoot('auth_user_detected', { email: user.email });
                 window._labsUser = user;
@@ -4349,21 +4342,8 @@
             getRedirectResult(auth).then(result => {
                 if (result?.user) {
                     _handleAuthenticatedUser(result.user);
-                } else if (_isRedirectLoginPending()) {
-                    setTimeout(() => {
-                        if (auth.currentUser) {
-                            _handleAuthenticatedUser(auth.currentUser);
-                        } else if (_isRedirectLoginPending()) {
-                            _setRedirectLoginPending(false);
-                            _renderGoogleAuthRequired({
-                                message: 'Google sign-in did not complete.',
-                                detail: 'The browser returned to the app without a Google session. Please try signing in again.',
-                            });
-                        }
-                    }, 1800);
                 }
             }).catch(err => {
-                _setRedirectLoginPending(false);
                 console.error('Redirect login failed', err);
                 updateBoot('auth_no_user', { msg: err.message });
                 _hideVaultOverlay();
@@ -4389,16 +4369,6 @@
                     _handleAuthenticatedUser(user);
                 } else {
                     if (authUserFlowInProgress) return;
-                    if (_isRedirectLoginPending()) {
-                        updateBoot('auth_redirect_pending');
-                        _renderGoogleAuthRequired({
-                            message: 'Completing Google sign-in…',
-                            detail: 'Waiting for the mobile redirect to restore your Google session.',
-                            buttonLabel: 'Completing sign-in…',
-                            isBusy: true,
-                        });
-                        return;
-                    }
                     updateBoot('auth_no_user');
                     window._labsUser = null;
                     window._labsKey = null;
@@ -4426,7 +4396,6 @@
                     });
                     if (_shouldUseRedirectLogin()) {
                         updateBoot('auth_redirect_start');
-                        _setRedirectLoginPending(true);
                         await signInWithRedirect(auth, provider);
                         return;
                     }
