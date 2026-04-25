@@ -2693,7 +2693,7 @@
                 if (!window._labsUser) {
                     updateBoot('no_user_returning');
                     if (typeof window._labsRenderGoogleAuthRequired === 'function') {
-                        if (localStorage.getItem('labs_google_redirect_pending') === '1') {
+                        if (sessionStorage.getItem('labs_google_redirect_pending') === '1') {
                             window._labsRenderGoogleAuthRequired({
                                 message: 'Completing Google sign-in…',
                                 detail: 'Waiting for the mobile redirect to restore your Google session.',
@@ -4280,25 +4280,20 @@
         }
 
         function _shouldUseRedirectLogin() {
-            // Always use signInWithPopup — never signInWithRedirect.
-            // signInWithRedirect navigates the page through Firebase's cross-origin relay domain
-            // (bodydata-7a30d.firebaseapp.com), which causes iOS Safari (ITP) to wipe sessionStorage
-            // on return — destroying both the app's redirect-pending flag AND Firebase's own internal
-            // redirect state, so getRedirectResult() returns null and the page loops back to sign-in.
-            // signInWithPopup avoids this entirely: it opens a popup without navigating away,
-            // leaving session storage intact and eliminating the need for getRedirectResult().
-            return false;
+            const ua = navigator.userAgent || '';
+            const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+            const smallViewport = Math.min(window.innerWidth || 0, window.innerHeight || 0) > 0
+                && Math.min(window.innerWidth, window.innerHeight) <= 900;
+            return /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || (coarsePointer && smallViewport);
         }
 
         const _REDIRECT_PENDING_KEY = 'labs_google_redirect_pending';
         function _isRedirectLoginPending() {
-            // Use localStorage (not sessionStorage) — iOS Safari wipes sessionStorage after
-            // cross-origin redirects, so sessionStorage cannot be trusted here.
-            return localStorage.getItem(_REDIRECT_PENDING_KEY) === '1';
+            return sessionStorage.getItem(_REDIRECT_PENDING_KEY) === '1';
         }
         function _setRedirectLoginPending(isPending) {
-            if (isPending) localStorage.setItem(_REDIRECT_PENDING_KEY, '1');
-            else           localStorage.removeItem(_REDIRECT_PENDING_KEY);
+            if (isPending) sessionStorage.setItem(_REDIRECT_PENDING_KEY, '1');
+            else sessionStorage.removeItem(_REDIRECT_PENDING_KEY);
         }
 
         const firebaseConfig = {
