@@ -434,10 +434,9 @@
             padding: 10px 12px; border-radius: 14px;
             color: var(--text-primary); background: rgba(255,255,255,0.05);
             font-family: var(--font-body); font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: background 0.15s, transform 0.15s;
+            cursor: pointer; transition: background 0.15s;
         }
         .command-action:hover { background: rgba(255,255,255,0.1); }
-        .command-action:active { transform: scale(0.97); }
         .command-action svg { color: var(--ios-blue); flex-shrink: 0; }
         .command-footer {
             display: flex; gap: 8px; overflow-x: auto;
@@ -1568,6 +1567,11 @@
             border: 0.5px solid rgba(255,255,255,0.12);
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
+            color: rgba(255,255,255,0.54);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            touch-action: manipulation;
         }
         .anomaly-lens-switcher { width: 70px; }
         .mobile-view-switcher { width: 78px; }
@@ -1593,13 +1597,15 @@
             display: flex; align-items: center; justify-content: center;
             border: none; background: transparent;
             color: rgba(255,255,255,0.54);
-            cursor: pointer;
             transition: color 0.18s;
+            pointer-events: none;
         }
         .lens-tab { width: 31px; }
         .view-tab { width: 35px; }
         .lens-tab.active,
         .view-tab.active { color: #fff; }
+        .anomaly-lens-switcher:active,
+        .mobile-view-switcher:active { transform: none; }
 
         .bottom-nav {
             position: fixed;
@@ -1832,37 +1838,37 @@
                 </div>
                 <div class="chip-row" id="chipRow"></div>
                 <div class="mobile-view-toolbar">
-                    <div class="anomaly-lens-switcher" id="anomalyLensSwitcher" aria-label="Choose all biomarkers or anomalies">
-                        <button class="lens-tab active" id="tabAllBiomarkers" type="button" onclick="setAnomalyLens(false, true)" aria-label="All Biomarkers">
+                    <button class="anomaly-lens-switcher" id="anomalyLensSwitcher" type="button" onclick="toggleAnomalyLensControl()" aria-label="Show anomalies" aria-pressed="false">
+                        <span class="lens-tab active" id="tabAllBiomarkers" aria-hidden="true">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <circle cx="12" cy="12" r="4"></circle>
                             </svg>
-                        </button>
-                        <button class="lens-tab" id="tabAnomalies" type="button" onclick="setAnomalyLens(true, true)" aria-label="Anomalies">
+                        </span>
+                        <span class="lens-tab" id="tabAnomalies" aria-hidden="true">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M10.3 4.3 2.8 17.2A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-2.8L13.7 4.3a2 2 0 0 0-3.4 0z"></path>
                                 <path d="M12 9v4"></path>
                                 <path d="M12 17h.01"></path>
                             </svg>
-                        </button>
-                    </div>
-                    <div class="mobile-view-switcher" id="mobileViewSwitcher" aria-label="Choose list or grid view">
-                        <button class="view-tab active" id="tabList" type="button" onclick="setLayoutView(false)" aria-label="List View">
+                        </span>
+                    </button>
+                    <button class="mobile-view-switcher" id="mobileViewSwitcher" type="button" onclick="window.toggleLayout()" aria-label="Switch to grid view" aria-pressed="false">
+                        <span class="view-tab active" id="tabList" aria-hidden="true">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
                                 <line x1="6" y1="7" x2="18" y2="7"></line>
                                 <line x1="6" y1="12" x2="18" y2="12"></line>
                                 <line x1="6" y1="17" x2="18" y2="17"></line>
                             </svg>
-                        </button>
-                        <button class="view-tab" id="tabGrid" type="button" onclick="setLayoutView(true)" aria-label="Grid View">
+                        </span>
+                        <span class="view-tab" id="tabGrid" aria-hidden="true">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <rect x="5" y="5" width="5" height="5" rx="1.2"></rect>
                                 <rect x="14" y="5" width="5" height="5" rx="1.2"></rect>
                                 <rect x="5" y="14" width="5" height="5" rx="1.2"></rect>
                                 <rect x="14" y="14" width="5" height="5" rx="1.2"></rect>
                             </svg>
-                        </button>
-                    </div>
+                        </span>
+                    </button>
                 </div>
             </div>
 
@@ -1975,6 +1981,10 @@
             const tabGrid = document.getElementById('tabGrid');
             const mobileSwitcher = document.getElementById('mobileViewSwitcher');
             if (mobileSwitcher) mobileSwitcher.classList.toggle('is-grid', isGrid);
+            if (mobileSwitcher) {
+                mobileSwitcher.setAttribute('aria-pressed', isGrid ? 'true' : 'false');
+                mobileSwitcher.setAttribute('aria-label', isGrid ? 'Switch to list view' : 'Switch to grid view');
+            }
             if (tabList && tabGrid) {
                 if (isGrid) {
                     tabGrid.classList.add('active');
@@ -2911,16 +2921,23 @@
             const allTab = document.getElementById('tabAllBiomarkers');
             const anomalyTab = document.getElementById('tabAnomalies');
             if (switcher) switcher.classList.toggle('is-anomaly', anomalyLensActive);
+            if (switcher) {
+                switcher.setAttribute('aria-pressed', anomalyLensActive ? 'true' : 'false');
+                switcher.setAttribute('aria-label', anomalyLensActive ? 'Show all biomarkers' : 'Show anomalies');
+            }
             if (allTab) allTab.classList.toggle('active', !anomalyLensActive);
             if (anomalyTab) anomalyTab.classList.toggle('active', anomalyLensActive);
         }
 
-        function setAnomalyLens(active, notify = false) {
+        function setAnomalyLens(active) {
             anomalyLensActive = !!active;
             syncAnomalyLensControls();
             applyFilters();
             if (commandPaletteOpen) renderCommandPalette();
-            if (notify) showSuccessToast(anomalyLensActive ? 'Showing anomalies' : 'Showing all biomarkers');
+        }
+
+        function toggleAnomalyLensControl() {
+            setAnomalyLens(!anomalyLensActive);
         }
 
         // ── FILTER / RENDER LIST ────────────────────────────────────
@@ -3094,7 +3111,6 @@
                     ${renderCommandAction('exportFromCommand()', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4|M7 10l5 5 5-5|M12 15V3', 'Export')}
                     ${renderCommandAction('switchSkyFromCommand()', 'M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42', 'Switch Sky')}
                     ${renderCommandAction('toggleAnomalyLensFromCommand()', 'M3 12h4l3 8 4-16 3 8h4', anomalyLensActive ? 'All Biomarkers' : 'Anomalies')}
-                    ${renderCommandAction('goLiveFromCommand()', 'M5 12h14M13 6l6 6-6 6', 'Go Live')}
                     ${renderCommandAction('toggleLayoutFromCommand()', isGrid ? 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' : 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', isGrid ? 'List View' : 'Grid View')}
                 `;
             }
@@ -3121,19 +3137,27 @@
             return /Mac|iPhone|iPad|iPod/.test(platform) || /iPhone|iPad|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
         }
 
+        function focusCommandInput() {
+            const input = document.getElementById('commandInput');
+            if (!input) return;
+            input.focus({ preventScroll: true });
+            input.select();
+            try {
+                input.setSelectionRange(0, input.value.length);
+            } catch (_) {}
+        }
+
         function openCommandPalette() {
             commandPaletteOpen = true;
             commandSelectedIndex = 0;
             const overlay = document.getElementById('commandOverlay');
-            const input = document.getElementById('commandInput');
             const mobileButton = document.getElementById('mobileCommandFab');
             if (overlay) overlay.classList.add('visible');
             if (mobileButton) mobileButton.classList.add('active');
             renderCommandPalette();
-            setTimeout(() => {
-                input?.focus();
-                input?.select();
-            }, 24);
+            focusCommandInput();
+            requestAnimationFrame(focusCommandInput);
+            setTimeout(focusCommandInput, 60);
         }
 
         function closeCommandPalette() {
@@ -3172,17 +3196,7 @@
         }
 
         function toggleAnomalyLensFromCommand() {
-            setAnomalyLens(!anomalyLensActive, true);
-        }
-
-        function goLiveFromCommand() {
-            if (typeof window.goLive === 'function') window.goLive();
-            else if (typeof window.setTemporalLive === 'function') window.setTemporalLive();
-            else if (typeof window.setTemporalDate === 'function') window.setTemporalDate(null);
-            document.dispatchEvent(new CustomEvent('labs:goLive'));
-            closeCommandPalette();
-            applyFilters();
-            showSuccessToast('Live data');
+            setAnomalyLens(!anomalyLensActive);
         }
 
         function toggleLayoutFromCommand() {
