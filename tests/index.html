@@ -1126,7 +1126,9 @@
             .layout.is-grid-view .desktop-sidebar .sidebar-top { padding: 14px 24px 0; }
             .layout.is-grid-view .desktop-sidebar .chip-row { margin: 0 -24px; padding: 10px 24px 12px; }
             .layout.is-grid-view .desktop-main { display: none !important; }
-            .mobile-view-toolbar, .bottom-nav { display: none !important; }
+            .bottom-nav { display: none !important; }
+            .mobile-view-toolbar { padding: 0 0 10px; justify-content: flex-end; }
+            .mobile-view-switcher { display: none; }
 
             body { overflow: hidden; }
 
@@ -1521,15 +1523,17 @@
 
         .mobile-view-toolbar {
             display: flex;
-            justify-content: flex-end;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
             padding: 0 0 8px;
         }
 
+        .anomaly-lens-switcher,
         .mobile-view-switcher {
             position: relative;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            width: 78px;
             padding: 4px;
             border-radius: 999px;
             background: rgba(255,255,255,0.07);
@@ -1537,7 +1541,10 @@
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
         }
+        .anomaly-lens-switcher { width: 70px; }
+        .mobile-view-switcher { width: 78px; }
 
+        .anomaly-lens-switcher::before,
         .mobile-view-switcher::before {
             content: "";
             position: absolute;
@@ -1548,17 +1555,22 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.18);
             transition: transform 0.22s var(--spring);
         }
+        .anomaly-lens-switcher.is-anomaly::before { transform: translateX(31px); }
         .mobile-view-switcher.is-grid::before { transform: translateX(35px); }
 
+        .lens-tab,
         .view-tab {
             position: relative; z-index: 1;
-            width: 35px; height: 28px;
+            height: 28px;
             display: flex; align-items: center; justify-content: center;
             border: none; background: transparent;
             color: rgba(255,255,255,0.54);
             cursor: pointer;
             transition: color 0.18s;
         }
+        .lens-tab { width: 31px; }
+        .view-tab { width: 35px; }
+        .lens-tab.active,
         .view-tab.active { color: #fff; }
 
         .bottom-nav {
@@ -1792,6 +1804,20 @@
                 </div>
                 <div class="chip-row" id="chipRow"></div>
                 <div class="mobile-view-toolbar">
+                    <div class="anomaly-lens-switcher" id="anomalyLensSwitcher" aria-label="Choose all biomarkers or anomalies">
+                        <button class="lens-tab active" id="tabAllBiomarkers" type="button" onclick="setAnomalyLens(false, true)" aria-label="All Biomarkers">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <circle cx="12" cy="12" r="4"></circle>
+                            </svg>
+                        </button>
+                        <button class="lens-tab" id="tabAnomalies" type="button" onclick="setAnomalyLens(true, true)" aria-label="Anomalies">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M10.3 4.3 2.8 17.2A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-2.8L13.7 4.3a2 2 0 0 0-3.4 0z"></path>
+                                <path d="M12 9v4"></path>
+                                <path d="M12 17h.01"></path>
+                            </svg>
+                        </button>
+                    </div>
                     <div class="mobile-view-switcher" id="mobileViewSwitcher" aria-label="Choose list or grid view">
                         <button class="view-tab active" id="tabList" type="button" onclick="setLayoutView(false)" aria-label="List View">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
@@ -2817,6 +2843,23 @@
             }
         }
 
+        function syncAnomalyLensControls() {
+            const switcher = document.getElementById('anomalyLensSwitcher');
+            const allTab = document.getElementById('tabAllBiomarkers');
+            const anomalyTab = document.getElementById('tabAnomalies');
+            if (switcher) switcher.classList.toggle('is-anomaly', anomalyLensActive);
+            if (allTab) allTab.classList.toggle('active', !anomalyLensActive);
+            if (anomalyTab) anomalyTab.classList.toggle('active', anomalyLensActive);
+        }
+
+        function setAnomalyLens(active, notify = false) {
+            anomalyLensActive = !!active;
+            syncAnomalyLensControls();
+            applyFilters();
+            if (commandPaletteOpen) renderCommandPalette();
+            if (notify) showSuccessToast(anomalyLensActive ? 'Showing anomalies' : 'Showing all biomarkers');
+        }
+
         // ── FILTER / RENDER LIST ────────────────────────────────────
         function onSearch() {
             const val = document.getElementById('testSearch').value;
@@ -2961,7 +3004,7 @@
             const categories = document.getElementById('commandCategories');
             const shortcut = document.getElementById('commandShortcut');
 
-            if (shortcut) shortcut.textContent = navigator.platform.toLowerCase().includes('mac') ? '⌘K' : 'Ctrl K';
+            if (shortcut) shortcut.textContent = isAppleShortcutPlatform() ? '⌘K' : 'Ctrl K';
             commandSelectedIndex = Math.min(commandSelectedIndex, Math.max(rows.length - 1, 0));
 
             if (results) {
@@ -3004,6 +3047,12 @@
             return `<button class="command-action" type="button" onclick="${action}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>${label}</button>`;
         }
 
+        function isAppleShortcutPlatform() {
+            const platform = navigator.platform || '';
+            const ua = navigator.userAgent || '';
+            return /Mac|iPhone|iPad|iPod/.test(platform) || /iPhone|iPad|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        }
+
         function openCommandPalette() {
             commandPaletteOpen = true;
             commandSelectedIndex = 0;
@@ -3034,8 +3083,7 @@
             clearSearch();
             setCategoryByName('All');
             if (anomalyLensActive) {
-                anomalyLensActive = false;
-                applyFilters();
+                setAnomalyLens(false);
             }
             setTimeout(() => openTest(name), 0);
         }
@@ -3056,10 +3104,7 @@
         }
 
         function toggleAnomalyLensFromCommand() {
-            anomalyLensActive = !anomalyLensActive;
-            applyFilters();
-            renderCommandPalette();
-            showSuccessToast(anomalyLensActive ? 'Showing anomalies' : 'Showing all biomarkers');
+            setAnomalyLens(!anomalyLensActive, true);
         }
 
         function goLiveFromCommand() {
@@ -3088,7 +3133,8 @@
             const isCommandShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
             if (isCommandShortcut) {
                 event.preventDefault();
-                openCommandPalette();
+                if (commandPaletteOpen) closeCommandPalette();
+                else openCommandPalette();
                 return;
             }
 
