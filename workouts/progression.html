@@ -261,9 +261,13 @@
             min-height: 196px;
             overflow: hidden;
             background:
-                radial-gradient(circle at 50% 12%, rgba(255, 187, 0, 0.16), transparent 36%),
+                radial-gradient(ellipse at 50% 18%, rgba(255, 187, 0, 0.2), transparent 42%),
+                radial-gradient(ellipse at 15% 0%, rgba(255, 61, 0, 0.1), transparent 38%),
                 linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-            border-color: rgba(255, 187, 0, 0.22);
+            border-color: rgba(255, 187, 0, 0.32);
+            box-shadow:
+                inset 0 0 34px rgba(255, 187, 0, 0.035),
+                0 0 24px rgba(255, 187, 0, 0.05);
         }
 
         .date-range-row {
@@ -310,7 +314,9 @@
             min-width: 58px;
             max-width: 128px;
             justify-self: center;
-            filter: drop-shadow(0 0 10px rgba(255, 187, 0, 0.34));
+            filter:
+                drop-shadow(0 0 10px rgba(255, 187, 0, 0.44))
+                drop-shadow(0 0 18px rgba(255, 109, 61, 0.2));
         }
 
         .date-arc path {
@@ -392,7 +398,9 @@
         .timeline-fill {
             height: 100%;
             background: linear-gradient(90deg, #ff3d00, #ffbb00, #00ff88);
-            box-shadow: 0 0 22px rgba(255, 187, 0, 0.24);
+            box-shadow:
+                0 0 22px rgba(255, 187, 0, 0.3),
+                0 0 34px rgba(0, 255, 136, 0.08);
         }
 
         .timeline-labels {
@@ -400,6 +408,48 @@
             justify-content: space-between;
             color: var(--text-muted);
             font-size: 0.72rem;
+        }
+
+        .coach-message {
+            margin-top: 18px;
+            padding: 12px 14px;
+            border-left: 2px solid var(--warning);
+            background: linear-gradient(90deg, rgba(255, 187, 0, 0.09), rgba(255, 187, 0, 0.015));
+            color: #f5e1b1;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.35;
+            box-shadow: inset 0 0 24px rgba(255, 187, 0, 0.025);
+        }
+
+        .plan-health {
+            display: grid;
+            grid-template-columns: var(--good-share, 1fr) var(--bad-share, 1fr) var(--warn-share, 1fr);
+            gap: 4px;
+            height: 12px;
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2px;
+        }
+
+        .plan-health-segment {
+            min-width: 4px;
+        }
+
+        .plan-health-segment.good {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.65), rgba(102, 255, 185, 0.95));
+            box-shadow: 0 0 14px rgba(0, 255, 136, 0.3);
+        }
+
+        .plan-health-segment.bad {
+            background: linear-gradient(90deg, rgba(255, 93, 143, 0.72), rgba(255, 132, 174, 0.98));
+            box-shadow: 0 0 14px rgba(255, 93, 143, 0.3);
+        }
+
+        .plan-health-segment.warn {
+            background: linear-gradient(90deg, rgba(255, 187, 0, 0.68), rgba(255, 220, 112, 0.98));
+            box-shadow: 0 0 14px rgba(255, 187, 0, 0.28);
         }
 
         .timeline-stats {
@@ -483,10 +533,23 @@
 
         .collapsible-trigger:hover {
             background: rgba(255, 255, 255, 0.025);
+            box-shadow: inset 0 0 28px rgba(255, 187, 0, 0.035);
         }
 
         .collapsible-trigger .section-title {
             margin-bottom: 0;
+        }
+
+        .collapse-title-group {
+            min-width: 0;
+        }
+
+        .collapse-preview {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-top: 5px;
+            letter-spacing: 0.2px;
         }
 
         .collapse-icon {
@@ -873,13 +936,22 @@
                             <span id="timelineEnd">Finish</span>
                         </div>
                     </div>
+                    <div class="coach-message" id="coachMessage">Loading block readout...</div>
+                    <div class="plan-health" id="planHealth" aria-label="Plan health">
+                        <div class="plan-health-segment good"></div>
+                        <div class="plan-health-segment bad"></div>
+                        <div class="plan-health-segment warn"></div>
+                    </div>
                     <div class="timeline-stats" id="timelineStats"></div>
                 </div>
             </section>
 
             <section class="panel collapsible-panel">
                 <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="trackedLiftsContent" onclick="toggleTrackedLifts()">
-                    <span class="section-title">Tracked Lifts</span>
+                    <span class="collapse-title-group">
+                        <span class="section-title">Tracked Lifts</span>
+                        <span class="collapse-preview" id="trackedLiftsPreview">23 lifts tracked against today's targets</span>
+                    </span>
                     <span class="collapse-icon" id="trackedLiftsIcon">+</span>
                 </button>
                 <div class="collapsible-content" id="trackedLiftsContent" hidden>
@@ -903,7 +975,10 @@
 
             <section class="panel collapsible-panel">
                 <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="liftProgressContent" onclick="toggleCollapsibleSection('liftProgressContent', 'liftProgressIcon')">
-                    <span class="section-title">Lift Progress Chart</span>
+                    <span class="collapse-title-group">
+                        <span class="section-title">Lift Progress Chart</span>
+                        <span class="collapse-preview" id="liftProgressPreview">Choose a lift to see actual weight against the plan line</span>
+                    </span>
                     <span class="collapse-icon" id="liftProgressIcon">+</span>
                 </button>
                 <div class="collapsible-content" id="liftProgressContent" hidden>
@@ -1262,10 +1337,31 @@
             const onTrack = liftRows.filter(row => row.status.label === 'On Track').length;
             const behind = liftRows.filter(row => row.status.label === 'Behind').length;
             const noData = liftRows.filter(row => !row.latest).length;
+            const onAhead = onTrack + ahead;
+            const total = Math.max(1, liftRows.length);
+            const health = document.getElementById('planHealth');
+            const goodShare = Math.max(onAhead, 0.35);
+            const badShare = Math.max(behind, 0.35);
+            const warnShare = Math.max(noData, 0.35);
+
+            health.style.setProperty('--good-share', `${goodShare}fr`);
+            health.style.setProperty('--bad-share', `${badShare}fr`);
+            health.style.setProperty('--warn-share', `${warnShare}fr`);
+
+            let coachMessage = 'You are early in the block. Log this week to establish pace.';
+            if (noData === liftRows.length) {
+                coachMessage = 'No post-start lift data yet. Your first logged training days will set the live pace readout.';
+            } else if (behind > onAhead && behind > 0) {
+                coachMessage = `${behind} lift${behind === 1 ? ' is' : 's are'} behind today's plan pace. Prioritize clean target sets on those first.`;
+            } else if (onAhead > 0 && behind === 0) {
+                coachMessage = `Most tracked lifts are moving cleanly. Keep hitting the target range before chasing the next jump.`;
+            } else if (behind > 0) {
+                coachMessage = `${onAhead} lift${onAhead === 1 ? ' is' : 's are'} on pace, with ${behind} needing attention this week.`;
+            }
 
             document.getElementById('timelineStats').innerHTML = `
                 <div class="timeline-stat good">
-                    <div class="mini-value">${onTrack + ahead}</div>
+                    <div class="mini-value">${onAhead}</div>
                     <div class="timeline-stat-line"></div>
                     <div class="mini-label">On/Ahead</div>
                 </div>
@@ -1279,6 +1375,11 @@
                     <div class="timeline-stat-line"></div>
                     <div class="mini-label">No Recent Data</div>
                 </div>`;
+            document.getElementById('coachMessage').textContent = coachMessage;
+            document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${onAhead} on/ahead · ${behind} behind · ${noData} no data`;
+            document.getElementById('liftProgressPreview').textContent = noData === total
+                ? 'Charts will light up after your first post-start logs'
+                : 'Pick any lift to compare actual weight against the plan line';
         }
 
         function toggleCollapsibleSection(contentId, iconId) {
