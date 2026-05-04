@@ -497,9 +497,9 @@
         }
 
         .set-input.progression-target-input::placeholder {
-            color: rgba(255, 187, 0, 0.92);
+            color: rgba(255, 157, 191, 0.96);
             opacity: 1;
-            text-shadow: 0 0 10px rgba(255, 187, 0, 0.45), 0 0 22px rgba(255, 61, 0, 0.25);
+            text-shadow: 0 0 8px rgba(255, 157, 191, 0.65), 0 0 18px rgba(255, 45, 100, 0.42), 0 0 30px rgba(186, 76, 255, 0.22);
         }
 
         .input-separator {
@@ -1387,6 +1387,14 @@
             overflow-y: auto;
         }
 
+        #trainingPlanModal .modal {
+            max-width: 760px;
+            background:
+                radial-gradient(circle at 18% 0%, rgba(255, 64, 129, 0.12), transparent 32%),
+                radial-gradient(circle at 100% 18%, rgba(0, 255, 136, 0.08), transparent 28%),
+                var(--bg-secondary);
+        }
+
         .modal-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.8rem;
@@ -1398,6 +1406,121 @@
             display: flex;
             gap: 12px;
             margin-top: 24px;
+        }
+
+        .training-plan-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(190px, 0.8fr);
+            gap: 14px;
+            align-items: stretch;
+            margin-bottom: 16px;
+        }
+
+        .training-plan-target-card,
+        .training-plan-pace-card {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 155, 185, 0.28);
+            padding: 16px;
+            box-shadow: inset 0 0 24px rgba(255, 64, 129, 0.06);
+        }
+
+        .training-plan-target-title {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            margin-bottom: 8px;
+        }
+
+        .training-plan-target-line {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 2.3rem;
+            line-height: 1;
+            letter-spacing: 1px;
+            color: rgba(255, 182, 208, 0.98);
+            text-shadow: 0 0 10px rgba(255, 115, 166, 0.7), 0 0 24px rgba(255, 45, 100, 0.42), 0 0 38px rgba(186, 76, 255, 0.22);
+        }
+
+        .training-plan-target-line strong {
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .training-plan-target-sub {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            margin-top: 10px;
+            line-height: 1.45;
+        }
+
+        .training-plan-target-sub strong {
+            color: #ffd4e3;
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+        }
+
+        .training-plan-pace-card {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .training-plan-pace-card.on-track,
+        .training-plan-pace-card.ahead {
+            border-color: rgba(0, 255, 136, 0.45);
+            box-shadow: inset 0 0 24px rgba(0, 255, 136, 0.06), 0 0 18px rgba(0, 255, 136, 0.1);
+        }
+
+        .training-plan-pace-card.behind {
+            border-color: rgba(255, 74, 116, 0.55);
+            box-shadow: inset 0 0 24px rgba(255, 74, 116, 0.07), 0 0 18px rgba(255, 74, 116, 0.12);
+        }
+
+        .training-plan-pace-label {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+
+        .training-plan-pace-value {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .training-plan-pace-value.on-track,
+        .training-plan-pace-value.ahead,
+        .training-plan-chart-dot.on-track {
+            color: var(--success);
+            fill: var(--success);
+            text-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+        }
+
+        .training-plan-pace-value.behind,
+        .training-plan-chart-dot.behind {
+            color: #ff5d8f;
+            fill: #ff5d8f;
+            text-shadow: 0 0 16px rgba(255, 74, 116, 0.5);
+        }
+
+        .training-plan-pace-detail {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.4;
+            margin-top: 6px;
+        }
+
+        .training-plan-progress-track {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            height: 10px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .training-plan-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4f8f, #ff9cbd, #00ff88);
+            box-shadow: 0 0 16px rgba(255, 115, 166, 0.38);
         }
 
         .training-plan-grid {
@@ -1428,6 +1551,21 @@
             color: var(--text-primary);
         }
 
+        .training-plan-value.glow {
+            color: #ffd4e3;
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.55);
+        }
+
+        .text-success {
+            color: var(--success);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.32);
+        }
+
+        .text-error {
+            color: #ff5d8f;
+            text-shadow: 0 0 10px rgba(255, 74, 116, 0.38);
+        }
+
         .training-plan-section {
             border-top: 1px solid var(--border);
             padding-top: 14px;
@@ -1446,6 +1584,90 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+
+        .training-plan-chart-card {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+        }
+
+        .training-plan-chart {
+            width: 100%;
+            height: 230px;
+            display: block;
+            overflow: visible;
+        }
+
+        .training-plan-chart-grid {
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 1;
+        }
+
+        .training-plan-chart-axis {
+            stroke: rgba(255, 255, 255, 0.18);
+            stroke-width: 1.2;
+        }
+
+        .training-plan-chart-plan {
+            fill: none;
+            stroke: rgba(255, 157, 191, 0.62);
+            stroke-width: 2;
+            stroke-dasharray: 6 6;
+        }
+
+        .training-plan-chart-actual {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.7);
+            stroke-width: 2.5;
+        }
+
+        .training-plan-chart-label {
+            fill: var(--text-muted);
+            font-size: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .training-plan-chart-empty {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 40px 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.14);
+        }
+
+        .training-plan-legend {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-top: 8px;
+        }
+
+        .training-plan-legend span::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .training-plan-legend .actual::before {
+            background: var(--text-secondary);
+        }
+
+        .training-plan-legend .planned::before {
+            background: #ff9dbf;
+        }
+
+        .training-plan-legend .hit::before {
+            background: var(--success);
+        }
+
+        .training-plan-legend .behind::before {
+            background: #ff5d8f;
         }
 
         .training-plan-row {
@@ -1472,9 +1694,27 @@
             line-height: 1.45;
         }
 
+        .training-plan-action strong {
+            color: #ffd4e3;
+            font-size: 1.08em;
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.55), 0 0 20px rgba(186, 76, 255, 0.22);
+        }
+
         @media (max-width: 560px) {
+            #trainingPlanModal .modal {
+                padding: 22px;
+            }
+
+            .training-plan-hero {
+                grid-template-columns: 1fr;
+            }
+
             .training-plan-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .training-plan-target-line {
+                font-size: 1.8rem;
             }
         }
 
@@ -2215,6 +2455,134 @@
                 const weightLabel = Number.isFinite(weight) && weight > 0 ? `${displayWeight(weight)} lbs` : 'bodyweight';
                 return `${weightLabel} × ${reps}`;
             }).join(', ');
+        }
+
+        function getPlannedProgressKgForDate(date, weeklyTargetIncreaseKg, goalIncreaseKg) {
+            const startDate = getProgressionStartDate();
+            if (!startDate || !date || !Number.isFinite(weeklyTargetIncreaseKg)) return 0;
+
+            const elapsedMs = new Date(date).getTime() - startDate.getTime();
+            const elapsedWeeks = Math.max(0, elapsedMs / (7 * 24 * 60 * 60 * 1000));
+            const plannedProgress = elapsedWeeks * weeklyTargetIncreaseKg;
+            return Number.isFinite(goalIncreaseKg) && goalIncreaseKg > 0
+                ? Math.min(goalIncreaseKg, plannedProgress)
+                : plannedProgress;
+        }
+
+        function getPlannedWeightKgForDate(baselineWeightKg, date, weeklyTargetIncreaseKg, goalIncreaseKg) {
+            if (!Number.isFinite(baselineWeightKg)) return null;
+            return baselineWeightKg + getPlannedProgressKgForDate(date, weeklyTargetIncreaseKg, goalIncreaseKg);
+        }
+
+        function getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg) {
+            const thresholdKg = Math.max(0.25, (weeklyTargetIncreaseKg || 0) * 0.5);
+            const weeksOffset = weeklyTargetIncreaseKg > 0 ? Math.round(Math.abs(progressDeltaKg) / weeklyTargetIncreaseKg) : 0;
+
+            if (progressDeltaKg >= thresholdKg) {
+                return {
+                    className: 'ahead',
+                    label: 'Ahead',
+                    detail: weeksOffset > 0 ? `${weeksOffset} week${weeksOffset === 1 ? '' : 's'} ahead of pace` : 'Slightly ahead of pace'
+                };
+            }
+
+            if (progressDeltaKg <= -thresholdKg) {
+                return {
+                    className: 'behind',
+                    label: 'Behind',
+                    detail: weeksOffset > 0 ? `${weeksOffset} week${weeksOffset === 1 ? '' : 's'} behind schedule` : 'Slightly behind schedule'
+                };
+            }
+
+            return {
+                className: 'on-track',
+                label: 'On Track',
+                detail: 'Aligned with the current training plan'
+            };
+        }
+
+        function buildTrainingPlanChart(sessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg) {
+            if (!sessions || sessions.length === 0 || !baseline) {
+                return '<div class="training-plan-chart-empty">No progression logs in the last 14 days.</div>';
+            }
+
+            const chartSessions = [...sessions].reverse();
+            const baselineWeightKg = baseline.representativeWeightKg;
+            const points = chartSessions.map(session => {
+                const plannedWeightKg = getPlannedWeightKgForDate(
+                    baselineWeightKg,
+                    session.log.date,
+                    weeklyTargetIncreaseKg,
+                    goalIncreaseKg
+                );
+
+                return {
+                    date: new Date(session.log.date),
+                    actualKg: session.representativeWeightKg,
+                    plannedKg: plannedWeightKg,
+                    hitPlan: plannedWeightKg === null || session.representativeWeightKg >= plannedWeightKg - 0.01
+                };
+            });
+
+            const values = points.flatMap(point => [point.actualKg, point.plannedKg]).filter(Number.isFinite);
+            const minValue = Math.min(...values);
+            const maxValue = Math.max(...values);
+            const yPadding = Math.max(1, (maxValue - minValue) * 0.2);
+            const yMin = Math.max(0, minValue - yPadding);
+            const yMax = maxValue + yPadding;
+            const width = 640;
+            const height = 230;
+            const margin = { top: 18, right: 22, bottom: 34, left: 44 };
+            const plotWidth = width - margin.left - margin.right;
+            const plotHeight = height - margin.top - margin.bottom;
+            const firstDate = points[0].date.getTime();
+            const lastDate = points[points.length - 1].date.getTime();
+            const dateSpan = Math.max(1, lastDate - firstDate);
+
+            const xForDate = date => points.length === 1
+                ? margin.left + plotWidth / 2
+                : margin.left + ((date.getTime() - firstDate) / dateSpan) * plotWidth;
+            const yForKg = kg => margin.top + (1 - ((kg - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
+            const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.actualKg).toFixed(1)}`).join(' ');
+            const plannedPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.plannedKg).toFixed(1)}`).join(' ');
+            const yTicks = [yMin, (yMin + yMax) / 2, yMax];
+
+            const gridHtml = yTicks.map(tick => {
+                const y = yForKg(tick).toFixed(1);
+                return `
+                    <line class="training-plan-chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>
+                    <text class="training-plan-chart-label" x="8" y="${Number(y) + 4}">${displayWeight(tick)} lb</text>`;
+            }).join('');
+
+            const pointHtml = points.map(point => {
+                const x = xForDate(point.date).toFixed(1);
+                const y = yForKg(point.actualKg).toFixed(1);
+                const plannedY = yForKg(point.plannedKg).toFixed(1);
+                const statusClass = point.hitPlan ? 'on-track' : 'behind';
+                const label = formatDate(point.date.toISOString(), DateFormats.SHORT);
+
+                return `
+                    <line x1="${x}" y1="${y}" x2="${x}" y2="${plannedY}" stroke="rgba(255,255,255,0.14)" stroke-width="1"></line>
+                    <circle class="training-plan-chart-dot ${statusClass}" cx="${x}" cy="${y}" r="6"></circle>
+                    <text class="training-plan-chart-label" x="${x}" y="${height - 10}" text-anchor="middle">${label}</text>`;
+            }).join('');
+
+            return `
+                <div class="training-plan-chart-card">
+                    <svg class="training-plan-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Weight lifted over the last two weeks against planned target">
+                        ${gridHtml}
+                        <line class="training-plan-chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"></line>
+                        <path class="training-plan-chart-plan" d="${plannedPath}"></path>
+                        <path class="training-plan-chart-actual" d="${actualPath}"></path>
+                        ${pointHtml}
+                    </svg>
+                    <div class="training-plan-legend">
+                        <span class="actual">Actual</span>
+                        <span class="planned">Plan line</span>
+                        <span class="hit">At/above plan</span>
+                        <span class="behind">Below plan</span>
+                    </div>
+                </div>`;
         }
 
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
@@ -3780,6 +4148,12 @@
             const currentProgressKg = baseline && current
                 ? current.representativeWeightKg - baseline.representativeWeightKg
                 : 0;
+            const plannedProgressKg = getPlannedProgressKgForDate(new Date(), weeklyTargetIncreaseKg, goalIncreaseKg);
+            const plannedWeightTodayKg = baseline
+                ? getPlannedWeightKgForDate(baseline.representativeWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
+                : null;
+            const progressDeltaKg = currentProgressKg - plannedProgressKg;
+            const pace = getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg);
             const remainingKg = Math.max(goalIncreaseKg - currentProgressKg, 0);
             const progressPercent = goalIncreaseKg > 0
                 ? Math.max(0, Math.min(100, Math.round((currentProgressKg / goalIncreaseKg) * 100)))
@@ -3788,34 +4162,76 @@
             const currentWeightLabel = current ? formatKgAndLbs(current.representativeWeightKg) : 'No data';
             const baselineWeightLabel = baseline ? formatKgAndLbs(baseline.representativeWeightKg) : 'No baseline data';
             const recommendationLabel = formatKgAndLbs(target.targetWeightKg);
+            const chartHtml = buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg);
+            const plannedTodayLabel = plannedWeightTodayKg ? formatKgAndLbs(plannedWeightTodayKg) : 'No baseline data';
             const recentHtml = recentSessions.length > 0
-                ? recentSessions.map(session => `
+                ? recentSessions.map(session => {
+                    const plannedForSession = baseline
+                        ? getPlannedWeightKgForDate(baseline.representativeWeightKg, session.log.date, weeklyTargetIncreaseKg, goalIncreaseKg)
+                        : null;
+                    const hitPlan = plannedForSession === null || session.representativeWeightKg >= plannedForSession - 0.01;
+
+                    return `
                     <div class="training-plan-row">
                         <span>${formatDate(session.log.date, DateFormats.SHORT)}</span>
-                        <span>${formatSetSummary(session.exerciseLog.sets)}</span>
-                    </div>`).join('')
+                        <span>${formatSetSummary(session.exerciseLog.sets)} · <strong class="${hitPlan ? 'text-success' : 'text-error'}">${hitPlan ? 'On plan' : 'Below plan'}</strong></span>
+                    </div>`;
+                }).join('')
                 : `<div class="training-plan-row"><span>No logs in the last 14 days</span><span></span></div>`;
 
             document.getElementById('trainingPlanModalTitle').textContent = 'TRAINING PLAN';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <h4 class="exercise-name m-b-16">${(exercise?.name || target.exerciseId).toUpperCase()}</h4>
+                <div class="training-plan-hero">
+                    <div class="training-plan-target-card">
+                        <div class="training-plan-target-title">Hit This Today</div>
+                        <div class="training-plan-target-line">
+                            <strong>${displayWeight(target.targetWeightKg)} lb</strong> × <strong>${target.repRange.label}</strong>
+                        </div>
+                        <div class="training-plan-target-sub">
+                            Mark this target hit by logging <strong>${displayWeight(target.targetWeightKg)}+ lb</strong>
+                            and <strong>${target.repRange.min}+ reps</strong> across every non-warmup set.
+                        </div>
+                    </div>
+                    <div class="training-plan-pace-card ${pace.className}">
+                        <div class="training-plan-pace-label">Plan Pace</div>
+                        <div class="training-plan-pace-value ${pace.className}">${pace.label}</div>
+                        <div class="training-plan-pace-detail">${pace.detail}</div>
+                        <div class="training-plan-progress-track">
+                            <div class="training-plan-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="training-plan-grid">
                     <div class="training-plan-stat">
-                        <div class="training-plan-label">Today</div>
-                        <div class="training-plan-value">${recommendationLabel}</div>
+                        <div class="training-plan-label">Today's Recommendation</div>
+                        <div class="training-plan-value glow">${recommendationLabel}</div>
                     </div>
                     <div class="training-plan-stat">
                         <div class="training-plan-label">Rep Target</div>
-                        <div class="training-plan-value">${target.repRange.label}</div>
+                        <div class="training-plan-value glow">${target.repRange.label}</div>
                     </div>
                     <div class="training-plan-stat">
                         <div class="training-plan-label">Current</div>
                         <div class="training-plan-value">${currentWeightLabel}</div>
                     </div>
                     <div class="training-plan-stat">
+                        <div class="training-plan-label">Plan Says By Today</div>
+                        <div class="training-plan-value ${pace.className === 'behind' ? 'text-error' : 'text-success'}">${plannedTodayLabel}</div>
+                    </div>
+                    <div class="training-plan-stat">
                         <div class="training-plan-label">Remaining</div>
                         <div class="training-plan-value">${formatKgAndLbs(remainingKg)}</div>
                     </div>
+                    <div class="training-plan-stat">
+                        <div class="training-plan-label">Pace Delta</div>
+                        <div class="training-plan-value ${pace.className === 'behind' ? 'text-error' : 'text-success'}">${formatKgAndLbs(progressDeltaKg)}</div>
+                    </div>
+                </div>
+
+                <div class="training-plan-section">
+                    <div class="training-plan-section-title">Last 14 Days vs Plan</div>
+                    ${chartHtml}
                 </div>
 
                 <div class="training-plan-section">
@@ -3823,6 +4239,7 @@
                     <div class="training-plan-list">
                         <div class="training-plan-row"><span>Baseline</span><span>${baselineWeightLabel}</span></div>
                         <div class="training-plan-row"><span>Progress</span><span>${formatKgAndLbs(currentProgressKg)} (${progressPercent}% of block goal)</span></div>
+                        <div class="training-plan-row"><span>Planned Progress</span><span>${formatKgAndLbs(plannedProgressKg)}</span></div>
                         <div class="training-plan-row"><span>Block Goal</span><span>+${formatKgAndLbs(goalIncreaseKg)}</span></div>
                         <div class="training-plan-row"><span>Weekly Pace</span><span>+${formatKgAndLbs(weeklyTargetIncreaseKg)} / week</span></div>
                     </div>
