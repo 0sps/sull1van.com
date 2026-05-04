@@ -269,9 +269,9 @@
         .date-range-row {
             position: relative;
             display: grid;
-            grid-template-columns: minmax(86px, 1fr) minmax(92px, 1.2fr) minmax(86px, 1fr);
-            align-items: end;
-            gap: 8px;
+            grid-template-columns: minmax(84px, max-content) minmax(64px, 1fr) minmax(84px, max-content);
+            align-items: center;
+            gap: 12px;
             margin-top: 14px;
             min-height: 84px;
         }
@@ -307,7 +307,9 @@
         .date-arc {
             align-self: center;
             width: 100%;
-            min-width: 74px;
+            min-width: 58px;
+            max-width: 128px;
+            justify-self: center;
             filter: drop-shadow(0 0 10px rgba(255, 187, 0, 0.34));
         }
 
@@ -316,11 +318,6 @@
             stroke: url(#dateArcGradient);
             stroke-width: 5;
             stroke-linecap: round;
-        }
-
-        .date-arc circle {
-            fill: #ffbb00;
-            filter: drop-shadow(0 0 7px rgba(255, 187, 0, 0.6));
         }
 
         .date-range-metrics {
@@ -405,33 +402,56 @@
             font-size: 0.72rem;
         }
 
-        .summary-grid {
+        .timeline-stats {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
-            margin-bottom: 18px;
+            margin-top: 22px;
         }
 
-        .summary-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 16px;
-            min-height: 110px;
+        .timeline-stat {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 12px;
+            min-height: 96px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .summary-card.good {
+        .timeline-stat.good {
             border-color: rgba(0, 255, 136, 0.35);
             background: rgba(0, 255, 136, 0.045);
         }
 
-        .summary-card.bad {
+        .timeline-stat.bad {
             border-color: rgba(255, 93, 143, 0.38);
             background: rgba(255, 93, 143, 0.055);
         }
 
-        .summary-card.warn {
+        .timeline-stat.warn {
             border-color: rgba(255, 187, 0, 0.35);
             background: rgba(255, 187, 0, 0.045);
+        }
+
+        .timeline-stat .mini-value {
+            font-size: 2.5rem;
+            margin-top: 0;
+        }
+
+        .timeline-stat.good .mini-value {
+            color: var(--success);
+            text-shadow: 0 0 16px rgba(0, 255, 136, 0.2);
+        }
+
+        .timeline-stat.bad .mini-value {
+            color: var(--danger);
+            text-shadow: 0 0 16px rgba(255, 93, 143, 0.24);
+        }
+
+        .timeline-stat.warn .mini-value {
+            color: var(--warning);
+            text-shadow: 0 0 16px rgba(255, 187, 0, 0.24);
         }
 
         .section-title {
@@ -651,7 +671,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .summary-grid {
+            .timeline-stats {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -670,7 +690,7 @@
             }
 
             .hero-stats,
-            .summary-grid {
+            .timeline-stats {
                 grid-template-columns: 1fr;
             }
 
@@ -748,8 +768,6 @@
                                         </linearGradient>
                                     </defs>
                                     <path d="M10 58 C42 8, 118 8, 150 58"></path>
-                                    <circle cx="10" cy="58" r="4"></circle>
-                                    <circle cx="150" cy="58" r="4"></circle>
                                 </svg>
                                 <div class="date-node end">
                                     <div class="date-value" id="endDateValue">--</div>
@@ -794,10 +812,9 @@
                             <span id="timelineEnd">Finish</span>
                         </div>
                     </div>
+                    <div class="timeline-stats" id="timelineStats"></div>
                 </div>
             </section>
-
-            <section class="summary-grid" id="summaryGrid"></section>
 
             <section class="panel">
                 <div class="section-title">Tracked Lifts</div>
@@ -1170,38 +1187,26 @@
         }
 
         function renderSummary() {
-            const withData = liftRows.filter(row => row.latest);
             const ahead = liftRows.filter(row => row.status.label === 'Ahead').length;
             const onTrack = liftRows.filter(row => row.status.label === 'On Track').length;
             const behind = liftRows.filter(row => row.status.label === 'Behind').length;
             const noData = liftRows.filter(row => !row.latest).length;
-            const avgCompletion = liftRows.length
-                ? Math.round(liftRows.reduce((sum, row) => {
-                    const progress = row.latest ? (row.latest.maxWeightKg - row.baselineKg) / Math.max(1, row.goalKg - row.baselineKg) : 0;
-                    return sum + Math.max(0, Math.min(1, progress));
-                }, 0) / liftRows.length * 100)
-                : 0;
 
-            document.getElementById('summaryGrid').innerHTML = `
-                <div class="summary-card good">
-                    <div class="mini-label">On / Ahead</div>
+            document.getElementById('timelineStats').innerHTML = `
+                <div class="timeline-stat good">
                     <div class="mini-value">${onTrack + ahead}</div>
+                    <div class="mini-label">On/Ahead</div>
                     <div class="mini-note">${ahead} ahead, ${onTrack} on track</div>
                 </div>
-                <div class="summary-card bad">
-                    <div class="mini-label">Behind</div>
+                <div class="timeline-stat bad">
                     <div class="mini-value">${behind}</div>
+                    <div class="mini-label">Behind</div>
                     <div class="mini-note">Below today's target pace</div>
                 </div>
-                <div class="summary-card warn">
-                    <div class="mini-label">No Recent Data</div>
+                <div class="timeline-stat warn">
                     <div class="mini-value">${noData}</div>
+                    <div class="mini-label">No Recent Data</div>
                     <div class="mini-note">No post-start non-warmup log</div>
-                </div>
-                <div class="summary-card">
-                    <div class="mini-label">Avg Block Completion</div>
-                    <div class="mini-value">${avgCompletion}%</div>
-                    <div class="mini-note">${withData.length} lifts with data</div>
                 </div>`;
         }
 
