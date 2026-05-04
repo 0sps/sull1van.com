@@ -220,6 +220,104 @@
                 var(--bg-secondary);
         }
 
+        .coach-brief {
+            margin-bottom: 18px;
+            background:
+                radial-gradient(ellipse at 12% 0%, rgba(255, 187, 0, 0.13), transparent 35%),
+                radial-gradient(ellipse at 88% 24%, rgba(0, 255, 136, 0.07), transparent 34%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+                var(--bg-secondary);
+            border-color: rgba(255, 187, 0, 0.2);
+            box-shadow: inset 0 0 42px rgba(255, 187, 0, 0.025);
+        }
+
+        .coach-brief-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .coach-brief-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            line-height: 0.95;
+            letter-spacing: 1.8px;
+        }
+
+        .coach-brief-status {
+            color: var(--warning);
+            border: 1px solid rgba(255, 187, 0, 0.28);
+            background: rgba(255, 187, 0, 0.07);
+            padding: 7px 10px;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            box-shadow: 0 0 18px rgba(255, 187, 0, 0.08);
+        }
+
+        .coach-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 1.15fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .coach-card {
+            min-height: 128px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coach-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 61, 0, 0.75), rgba(255, 187, 0, 0.95), rgba(0, 255, 136, 0.65));
+            opacity: 0.85;
+        }
+
+        .coach-card.attention::before {
+            background: linear-gradient(90deg, rgba(255, 93, 143, 0.9), rgba(255, 187, 0, 0.75));
+        }
+
+        .coach-card.action::before {
+            background: linear-gradient(90deg, rgba(255, 187, 0, 0.95), rgba(255, 224, 163, 0.85));
+        }
+
+        .coach-kicker {
+            color: var(--text-muted);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 9px;
+        }
+
+        .coach-main {
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            line-height: 1.2;
+        }
+
+        .coach-main.glow {
+            color: #ffe0a3;
+            text-shadow: 0 0 14px rgba(255, 187, 0, 0.28);
+        }
+
+        .coach-detail {
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            line-height: 1.45;
+            margin-top: 10px;
+        }
+
         .eyebrow {
             color: var(--warning);
             text-transform: uppercase;
@@ -450,6 +548,31 @@
         .plan-health-segment.warn {
             background: linear-gradient(90deg, rgba(255, 187, 0, 0.68), rgba(255, 220, 112, 0.98));
             box-shadow: 0 0 14px rgba(255, 187, 0, 0.28);
+        }
+
+        .plan-health-labels {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .plan-health-labels span:nth-child(1) {
+            color: rgba(102, 255, 185, 0.86);
+        }
+
+        .plan-health-labels span:nth-child(2) {
+            color: rgba(255, 132, 174, 0.9);
+            text-align: center;
+        }
+
+        .plan-health-labels span:nth-child(3) {
+            color: rgba(255, 220, 112, 0.9);
+            text-align: right;
         }
 
         .timeline-stats {
@@ -774,7 +897,8 @@
 
         @media (max-width: 1020px) {
             .page-hero,
-            .chart-layout {
+            .chart-layout,
+            .coach-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -829,6 +953,15 @@
             .timeline-stat .mini-label {
                 font-size: 0.56rem;
                 letter-spacing: 0.7px;
+            }
+
+            .coach-brief-head {
+                display: block;
+            }
+
+            .coach-brief-status {
+                display: inline-block;
+                margin-top: 10px;
             }
         }
     </style>
@@ -942,7 +1075,44 @@
                         <div class="plan-health-segment bad"></div>
                         <div class="plan-health-segment warn"></div>
                     </div>
+                    <div class="plan-health-labels">
+                        <span>On Pace</span>
+                        <span>Behind</span>
+                        <span>No Data</span>
+                    </div>
                     <div class="timeline-stats" id="timelineStats"></div>
+                </div>
+            </section>
+
+            <section class="panel coach-brief">
+                <div class="coach-brief-head">
+                    <div>
+                        <div class="eyebrow">Coach Brief</div>
+                        <div class="coach-brief-title">What To Do Next</div>
+                    </div>
+                    <div class="coach-brief-status" id="coachBriefStatus">Reading plan</div>
+                </div>
+                <div class="coach-grid">
+                    <div class="coach-card">
+                        <div class="coach-kicker">Current Readout</div>
+                        <div class="coach-main glow" id="coachReadout">Loading block status...</div>
+                        <div class="coach-detail" id="coachReadoutDetail">Checking logged sets against today's plan line.</div>
+                    </div>
+                    <div class="coach-card action">
+                        <div class="coach-kicker">Next Action</div>
+                        <div class="coach-main" id="coachNextAction">Open today's workout and log clean working sets.</div>
+                        <div class="coach-detail" id="coachNextActionDetail">Targets update from your plan pace and recent logs.</div>
+                    </div>
+                    <div class="coach-card attention">
+                        <div class="coach-kicker">Focus Lift</div>
+                        <div class="coach-main" id="coachFocusLift">No focus lift yet</div>
+                        <div class="coach-detail" id="coachFocusDetail">Once data exists, this highlights the lift that needs the most attention.</div>
+                    </div>
+                    <div class="coach-card">
+                        <div class="coach-kicker">This Week</div>
+                        <div class="coach-main" id="coachWeekTarget">Build the first week.</div>
+                        <div class="coach-detail" id="coachWeekDetail">Wednesday is treated as the rest day.</div>
+                    </div>
                 </div>
             </section>
 
@@ -1076,6 +1246,13 @@
         function startOfLocalDay(date) {
             const localDate = new Date(date);
             localDate.setHours(0, 0, 0, 0);
+            return localDate;
+        }
+        function startOfWeek(date) {
+            const localDate = startOfLocalDay(date);
+            const day = localDate.getDay();
+            const diff = day === 0 ? -6 : 1 - day;
+            localDate.setDate(localDate.getDate() + diff);
             return localDate;
         }
         function escapeHtml(value) {
@@ -1304,6 +1481,10 @@
             return `${displayWeight(kg)} lbs`;
         }
 
+        function getLiftName(row) {
+            return row.exercise?.name || row.planExercise.name || row.id;
+        }
+
         function renderHero() {
             const start = getProgressionStartDate();
             const end = getPlanEndDate();
@@ -1380,6 +1561,78 @@
             document.getElementById('liftProgressPreview').textContent = noData === total
                 ? 'Charts will light up after your first post-start logs'
                 : 'Pick any lift to compare actual weight against the plan line';
+            renderCoachBrief({ ahead, onTrack, behind, noData, onAhead });
+        }
+
+        function renderCoachBrief({ behind, noData, onAhead }) {
+            const rowsWithData = liftRows.filter(row => row.latest);
+            const behindRows = liftRows
+                .filter(row => row.status.label === 'Behind')
+                .sort((a, b) => a.status.deltaKg - b.status.deltaKg);
+            const noDataRows = liftRows.filter(row => !row.latest);
+            const nearestRows = rowsWithData
+                .slice()
+                .sort((a, b) => Math.abs(a.status.deltaKg || 0) - Math.abs(b.status.deltaKg || 0));
+            const focusRow = behindRows[0] || noDataRows[0] || nearestRows[0] || liftRows[0];
+            const start = getProgressionStartDate();
+            const end = getPlanEndDate();
+            const now = new Date();
+            const trackedTrainingDays = getTrackedTrainingDayKeys();
+            const weekStart = new Date(Math.max(startOfWeek(now).getTime(), start.getTime()));
+            const weekEnd = new Date(Math.min(startOfWeek(now).getTime() + 7 * 24 * 60 * 60 * 1000, end.getTime()));
+            const weekTrainingDays = getTrainingDayKeysBetween(weekStart, weekEnd);
+            const trackedThisWeek = weekTrainingDays.filter(dayKey => trackedTrainingDays.has(dayKey)).length;
+            const remainingThisWeek = Math.max(0, weekTrainingDays.length - trackedThisWeek);
+
+            let status = 'Build baseline';
+            let readout = 'No block data yet.';
+            let readoutDetail = 'Start by logging clean non-warmup working sets for this phase.';
+            if (rowsWithData.length > 0 && behind === 0) {
+                status = 'On pace';
+                readout = `${onAhead} lifts are on or ahead of today.`;
+                readoutDetail = noData > 0
+                    ? `${noData} lifts still need a post-start log before the picture is complete.`
+                    : 'Every logged lift is currently meeting the plan pace.';
+            } else if (behind > 0) {
+                status = 'Attention';
+                readout = `${behind} lifts need attention.`;
+                readoutDetail = `${onAhead} lifts are on/ahead, ${noData} still need post-start data.`;
+            }
+
+            let nextAction = 'Log your first clean training day.';
+            let nextActionDetail = 'Use today’s workout targets and skip warmups in the progression math.';
+            if (behindRows.length > 0) {
+                nextAction = `Bring ${getLiftName(behindRows[0])} back to pace.`;
+                nextActionDetail = `Target today: ${formatLiftWeight(behindRows[0].targetTodayKg, behindRows[0].planExercise)} × ${behindRows[0].repRange.label}.`;
+            } else if (noDataRows.length > 0) {
+                nextAction = `Get data for ${getLiftName(noDataRows[0])}.`;
+                nextActionDetail = `First clean log gives this lift its live progress readout.`;
+            } else if (nearestRows.length > 0) {
+                nextAction = `Keep ${getLiftName(nearestRows[0])} clean.`;
+                nextActionDetail = `Stay at or above ${formatLiftWeight(nearestRows[0].targetTodayKg, nearestRows[0].planExercise)} × ${nearestRows[0].repRange.label}.`;
+            }
+
+            let focusLift = focusRow ? getLiftName(focusRow) : 'No focus lift yet';
+            let focusDetail = 'Once data exists, this highlights the lift that needs the most attention.';
+            if (focusRow?.latest && focusRow.status.label === 'Behind') {
+                focusDetail = `${Math.abs(displayWeight(focusRow.status.deltaKg))} lbs under today’s plan target of ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)}.`;
+            } else if (focusRow && !focusRow.latest) {
+                focusDetail = `No post-start log yet. Planned target today: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}.`;
+            } else if (focusRow?.latest) {
+                focusDetail = `Closest active target: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}.`;
+            }
+
+            document.getElementById('coachBriefStatus').textContent = status;
+            document.getElementById('coachReadout').textContent = readout;
+            document.getElementById('coachReadoutDetail').textContent = readoutDetail;
+            document.getElementById('coachNextAction').textContent = nextAction;
+            document.getElementById('coachNextActionDetail').textContent = nextActionDetail;
+            document.getElementById('coachFocusLift').textContent = focusLift;
+            document.getElementById('coachFocusDetail').textContent = focusDetail;
+            document.getElementById('coachWeekTarget').textContent = remainingThisWeek > 0
+                ? `Log ${remainingThisWeek} more training day${remainingThisWeek === 1 ? '' : 's'} this week.`
+                : 'Week target complete.';
+            document.getElementById('coachWeekDetail').textContent = `${trackedThisWeek} of ${weekTrainingDays.length} planned training days logged. ${noData} lifts still need post-start data.`;
         }
 
         function toggleCollapsibleSection(contentId, iconId) {
