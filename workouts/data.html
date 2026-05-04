@@ -259,6 +259,16 @@
             box-shadow: 0 4px 15px var(--accent-glow);
         }
 
+        .btn-tool:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            background: var(--bg-tertiary);
+            border-color: var(--border);
+            color: var(--text-secondary);
+            transform: none;
+            box-shadow: none;
+        }
+
         .date-input {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
@@ -339,6 +349,72 @@
 
         .log-item.active::before {
             opacity: 1;
+        }
+
+        .log-item.selected {
+            border-color: rgba(0, 255, 136, 0.45);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .log-item.selected::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(0, 255, 136, 0.18);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .selection-toolbar {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            align-items: center;
+        }
+
+        .selection-count {
+            grid-column: 1 / -1;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .selection-toolbar .btn-tool {
+            width: 100%;
+            padding: 8px 10px;
+        }
+
+        #downloadSelectedBtn {
+            grid-column: 1 / -1;
+        }
+
+        .log-select {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--border-bright);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+        }
+
+        .log-select:checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .log-select:checked::before {
+            content: '✓';
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 900;
+            line-height: 1;
         }
 
         .log-item-date {
@@ -841,6 +917,13 @@
                 </div>
                 <input type="text" id="logSearch" class="search-box" placeholder="Search loaded logs..."
                     oninput="filterLogs()">
+                <div class="selection-toolbar">
+                    <div id="selectionCount" class="selection-count">0 selected</div>
+                    <button class="btn-tool" onclick="selectVisibleLogs()">Select Visible</button>
+                    <button class="btn-tool" onclick="clearSelectedLogs()">Clear</button>
+                    <button class="btn-tool" id="downloadSelectedBtn" onclick="downloadSelectedLogs()" disabled>Download
+                        JSON</button>
+                </div>
             </div>
             <div id="logList">
                 <div style="padding: 20px; text-align: center; color: var(--text-muted);">
@@ -966,6 +1049,8 @@
 
         // GLOBAL REFERENCES
         let currentLogs = [];
+        let lastRenderedLogs = [];
+        let selectedLogIds = new Set();
         let activeLogId = null;
         let exerciseLibrary = {};
 
@@ -1010,6 +1095,29 @@
             el.className = `sync-status ${status.toLowerCase()}`;
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function escapeJsString(value) {
+            return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        }
+
+        function updateSelectionControls() {
+            const count = selectedLogIds.size;
+            const countEl = document.getElementById('selectionCount');
+            const downloadBtn = document.getElementById('downloadSelectedBtn');
+
+            countEl.textContent = `${count} selected`;
+            downloadBtn.disabled = count === 0;
+        }
+
         window.setActive = function (btn) {
             document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -1026,6 +1134,7 @@
 
                 const snapshot = await getDocs(q);
                 currentLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                selectedLogIds.clear();
 
                 renderLogList(currentLogs);
                 showToast(`Loaded ${currentLogs.length} logs`);
@@ -1061,6 +1170,7 @@
 
                 const snapshot = await getDocs(q);
                 currentLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                selectedLogIds.clear();
 
                 renderLogList(currentLogs);
                 showToast(`Found ${currentLogs.length} logs`);
@@ -1074,26 +1184,34 @@
 
         function renderLogList(logs) {
             const list = document.getElementById('logList');
+            lastRenderedLogs = logs;
+            updateSelectionControls();
+
             if (logs.length === 0) {
                 list.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No logs found matching criteria</div>';
                 return;
             }
 
             list.innerHTML = logs.map(log => {
+                const logId = log.id.toString();
+                const safeId = escapeHtml(logId);
+                const jsId = escapeHtml(escapeJsString(logId));
+                const isSelected = selectedLogIds.has(logId);
                 const date = new Date(log.date);
                 const dateStr = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
                 const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
                 return `
-                    <div class="log-item ${activeLogId === log.id ? 'active' : ''}" onclick="selectLog('${log.id}')">
+                    <div class="log-item ${activeLogId?.toString() === logId ? 'active' : ''} ${isSelected ? 'selected' : ''}" data-log-id="${safeId}" onclick="selectLog('${jsId}')">
                         <div class="log-item-date">
                             ${dateStr}
                             <span class="log-item-time">${timeStr}</span>
                         </div>
                         <div class="log-item-info">
-                            <span class="log-item-name">${log.workoutName || 'Unknown Workout'}</span>
+                            <span class="log-item-name">${escapeHtml(log.workoutName || 'Unknown Workout')}</span>
+                            <input type="checkbox" class="log-select" aria-label="Select ${escapeHtml(log.workoutName || 'workout log')}" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation()" onchange="toggleLogSelection(event, '${jsId}')">
                         </div>
-                        <div class="log-item-id"># ${log.id}</div>
+                        <div class="log-item-id"># ${safeId}</div>
                     </div>
                 `;
             }).join('');
@@ -1102,11 +1220,60 @@
         window.filterLogs = function () {
             const query = document.getElementById('logSearch').value.toLowerCase();
             const filtered = currentLogs.filter(log =>
-                log.workoutName?.toLowerCase().includes(query) ||
-                log.id.toString().includes(query) ||
-                log.date.includes(query)
+                String(log.workoutName ?? '').toLowerCase().includes(query) ||
+                log.id.toString().toLowerCase().includes(query) ||
+                String(log.date ?? '').toLowerCase().includes(query)
             );
             renderLogList(filtered);
+        }
+
+        window.toggleLogSelection = function (event, id) {
+            const logId = id.toString();
+            if (event.target.checked) selectedLogIds.add(logId);
+            else selectedLogIds.delete(logId);
+
+            const row = event.target.closest('.log-item');
+            if (row) row.classList.toggle('selected', event.target.checked);
+            updateSelectionControls();
+        }
+
+        window.selectVisibleLogs = function () {
+            if (lastRenderedLogs.length === 0) {
+                showToast("No visible logs to select", "error");
+                return;
+            }
+
+            lastRenderedLogs.forEach(log => selectedLogIds.add(log.id.toString()));
+            renderLogList(lastRenderedLogs);
+        }
+
+        window.clearSelectedLogs = function () {
+            selectedLogIds.clear();
+            renderLogList(lastRenderedLogs);
+        }
+
+        window.downloadSelectedLogs = function () {
+            const selectedLogs = currentLogs.filter(log => selectedLogIds.has(log.id.toString()));
+
+            if (selectedLogs.length === 0) {
+                showToast("Select at least one log", "error");
+                return;
+            }
+
+            const json = JSON.stringify(selectedLogs, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const dateStamp = new Date().toISOString().slice(0, 10);
+
+            link.href = url;
+            link.download = `selected-workout-logs-${dateStamp}.json`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+
+            showToast(`Downloaded ${selectedLogs.length} selected logs`);
         }
 
         window.selectLog = function (id) {
@@ -1116,7 +1283,7 @@
 
             // Highlight in sidebar
             document.querySelectorAll('.log-item').forEach(item => {
-                item.classList.toggle('active', item.innerHTML.includes(`ID: ${id}`));
+                item.classList.toggle('active', item.dataset.logId === id.toString());
             });
 
             // Update Editor
