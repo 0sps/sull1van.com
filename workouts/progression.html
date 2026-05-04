@@ -405,38 +405,19 @@
         .timeline-stats {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
+            gap: 18px;
             margin-top: 22px;
         }
 
         .timeline-stat {
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px 12px;
-            min-height: 96px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .timeline-stat.good {
-            border-color: rgba(0, 255, 136, 0.35);
-            background: rgba(0, 255, 136, 0.045);
-        }
-
-        .timeline-stat.bad {
-            border-color: rgba(255, 93, 143, 0.38);
-            background: rgba(255, 93, 143, 0.055);
-        }
-
-        .timeline-stat.warn {
-            border-color: rgba(255, 187, 0, 0.35);
-            background: rgba(255, 187, 0, 0.045);
+            padding: 0;
+            min-width: 0;
         }
 
         .timeline-stat .mini-value {
             font-size: 2.5rem;
             margin-top: 0;
+            line-height: 0.9;
         }
 
         .timeline-stat.good .mini-value {
@@ -452,6 +433,25 @@
         .timeline-stat.warn .mini-value {
             color: var(--warning);
             text-shadow: 0 0 16px rgba(255, 187, 0, 0.24);
+        }
+
+        .timeline-stat-line {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.14);
+            margin: 12px 0 10px;
+        }
+
+        .timeline-stat.good .timeline-stat-line {
+            background: rgba(0, 255, 136, 0.36);
+        }
+
+        .timeline-stat.bad .timeline-stat-line {
+            background: rgba(255, 93, 143, 0.4);
+        }
+
+        .timeline-stat.warn .timeline-stat-line {
+            background: rgba(255, 187, 0, 0.38);
         }
 
         .section-title {
@@ -671,9 +671,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .timeline-stats {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
         }
 
         @media (max-width: 640px) {
@@ -689,22 +686,42 @@
                 font-size: 2.15rem;
             }
 
-            .hero-stats,
-            .timeline-stats {
+            .hero-stats {
                 grid-template-columns: 1fr;
             }
 
             .date-range-row {
-                grid-template-columns: 1fr;
-                min-height: 0;
+                grid-template-columns: minmax(64px, max-content) minmax(54px, 1fr) minmax(64px, max-content);
+                gap: 8px;
+                min-height: 70px;
             }
 
             .date-node.end {
-                text-align: left;
+                text-align: right;
+            }
+
+            .date-value {
+                font-size: clamp(1.85rem, 10vw, 2.55rem);
             }
 
             .date-arc {
-                height: 42px;
+                height: 38px;
+                min-width: 44px;
+                max-width: 96px;
+            }
+
+            .timeline-stats {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .timeline-stat .mini-value {
+                font-size: 2rem;
+            }
+
+            .timeline-stat .mini-label {
+                font-size: 0.56rem;
+                letter-spacing: 0.7px;
             }
         }
     </style>
@@ -1195,18 +1212,18 @@
             document.getElementById('timelineStats').innerHTML = `
                 <div class="timeline-stat good">
                     <div class="mini-value">${onTrack + ahead}</div>
+                    <div class="timeline-stat-line"></div>
                     <div class="mini-label">On/Ahead</div>
-                    <div class="mini-note">${ahead} ahead, ${onTrack} on track</div>
                 </div>
                 <div class="timeline-stat bad">
                     <div class="mini-value">${behind}</div>
+                    <div class="timeline-stat-line"></div>
                     <div class="mini-label">Behind</div>
-                    <div class="mini-note">Below today's target pace</div>
                 </div>
                 <div class="timeline-stat warn">
                     <div class="mini-value">${noData}</div>
+                    <div class="timeline-stat-line"></div>
                     <div class="mini-label">No Recent Data</div>
-                    <div class="mini-note">No post-start non-warmup log</div>
                 </div>`;
         }
 
