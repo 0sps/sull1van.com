@@ -299,9 +299,9 @@
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 155, 185, 0.85);
-            background: radial-gradient(circle at 35% 28%, rgba(255, 248, 252, 0.98), rgba(255, 150, 180, 0.9) 24%, rgba(255, 61, 112, 0.55) 56%, rgba(160, 45, 255, 0.18) 100%);
-            box-shadow: 0 0 10px rgba(255, 155, 185, 0.55), 0 0 24px rgba(255, 61, 112, 0.32), 0 0 36px rgba(160, 45, 255, 0.16);
+            border: 1px solid rgba(255, 207, 132, 0.9);
+            background: radial-gradient(circle at 35% 28%, rgba(255, 252, 238, 0.98), rgba(255, 214, 120, 0.95) 24%, rgba(255, 149, 42, 0.62) 58%, rgba(255, 225, 112, 0.22) 100%);
+            box-shadow: 0 0 10px rgba(255, 207, 132, 0.62), 0 0 24px rgba(255, 149, 42, 0.34), 0 0 36px rgba(255, 225, 112, 0.18);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -317,8 +317,8 @@
 
         .progression-orb:hover,
         .progression-orb:focus-visible {
-            border-color: rgba(255, 210, 225, 0.95);
-            box-shadow: 0 0 14px rgba(255, 155, 185, 0.7), 0 0 30px rgba(255, 61, 112, 0.42), 0 0 42px rgba(160, 45, 255, 0.22);
+            border-color: rgba(255, 230, 168, 0.98);
+            box-shadow: 0 0 14px rgba(255, 207, 132, 0.76), 0 0 30px rgba(255, 149, 42, 0.46), 0 0 42px rgba(255, 225, 112, 0.22);
             outline: none;
         }
 
@@ -2302,20 +2302,70 @@
             return (sets || []).filter(set => !set.isWarmup);
         }
 
-        function getRepresentativeWeightKg(workingSets, repRange = null) {
+        function getRepresentativeWeightKg(workingSets, repRange = null, allowZeroWeight = false) {
             const minReps = repRange?.min || 1;
             const eligibleSets = workingSets
-                .map(set => ({ weight: parseFloat(set.weight), reps: parseInt(set.reps, 10) }))
-                .filter(set => Number.isFinite(set.weight) && set.weight > 0 && Number.isFinite(set.reps) && set.reps >= minReps);
+                .map(set => {
+                    const parsedWeight = parseFloat(set.weight);
+                    return {
+                        weight: Number.isFinite(parsedWeight) ? parsedWeight : 0,
+                        reps: parseInt(set.reps, 10)
+                    };
+                })
+                .filter(set => Number.isFinite(set.weight) && (allowZeroWeight ? set.weight >= 0 : set.weight > 0) && Number.isFinite(set.reps) && set.reps >= minReps);
 
             const sourceSets = eligibleSets.length > 0
                 ? eligibleSets
                 : workingSets
-                    .map(set => ({ weight: parseFloat(set.weight), reps: parseInt(set.reps, 10) }))
-                    .filter(set => Number.isFinite(set.weight) && set.weight > 0 && Number.isFinite(set.reps) && set.reps > 0);
+                    .map(set => {
+                        const parsedWeight = parseFloat(set.weight);
+                        return {
+                            weight: Number.isFinite(parsedWeight) ? parsedWeight : 0,
+                            reps: parseInt(set.reps, 10)
+                        };
+                    })
+                    .filter(set => Number.isFinite(set.weight) && (allowZeroWeight ? set.weight >= 0 : set.weight > 0) && Number.isFinite(set.reps) && set.reps > 0);
 
             if (sourceSets.length === 0) return null;
             return Math.min(...sourceSets.map(set => set.weight));
+        }
+
+        function getPlanBaselineWeightKg(planExercise) {
+            const baselineWeightKg = parseFloat(planExercise?.baselineWeightKg);
+            return Number.isFinite(baselineWeightKg) ? baselineWeightKg : null;
+        }
+
+        function getPlanTargetWeightKg(planExercise) {
+            const targetWeightKg = parseFloat(planExercise?.targetWeightKg);
+            if (Number.isFinite(targetWeightKg)) return targetWeightKg;
+
+            const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
+            const goalIncreaseKg = parseFloat(planExercise?.goalIncreaseKg);
+            return baselineWeightKg !== null && Number.isFinite(goalIncreaseKg)
+                ? baselineWeightKg + goalIncreaseKg
+                : null;
+        }
+
+        function getPlanGoalIncreaseKg(planExercise) {
+            const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
+            const targetWeightKg = getPlanTargetWeightKg(planExercise);
+            if (baselineWeightKg !== null && targetWeightKg !== null) {
+                return Math.max(targetWeightKg - baselineWeightKg, 0);
+            }
+
+            const goalIncreaseKg = parseFloat(planExercise?.goalIncreaseKg);
+            return Number.isFinite(goalIncreaseKg) ? goalIncreaseKg : 0;
+        }
+
+        function getPlanWeeklyTargetIncreaseKg(planExercise) {
+            const goalIncreaseKg = getPlanGoalIncreaseKg(planExercise);
+            const durationWeeks = parseFloat(progressionPlanData?.durationWeeks);
+            if (goalIncreaseKg > 0 && Number.isFinite(durationWeeks) && durationWeeks > 0) {
+                return goalIncreaseKg / durationWeeks;
+            }
+
+            const weeklyTargetIncreaseKg = parseFloat(planExercise?.weeklyTargetIncreaseKg);
+            return Number.isFinite(weeklyTargetIncreaseKg) ? weeklyTargetIncreaseKg : 0;
         }
 
         function didSessionHitTopReps(workingSets, repRange, targetWeightKg) {
@@ -2324,13 +2374,14 @@
 
             return workingSets.every(set => {
                 const reps = parseInt(set.reps, 10);
-                const weight = parseFloat(set.weight);
+                const rawWeight = parseFloat(set.weight);
+                const weight = Number.isFinite(rawWeight) ? rawWeight : 0;
                 return Number.isFinite(reps) && reps >= repRange.max &&
-                    Number.isFinite(weight) && weight >= targetWeightKg;
+                    weight >= targetWeightKg;
             });
         }
 
-        function getMostRecentProgressionSession(exerciseId, repRange) {
+        function getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight = false) {
             const startDate = getProgressionStartDate();
             if (!startDate || !workoutLogs || workoutLogs.length === 0) return null;
 
@@ -2342,8 +2393,8 @@
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
-                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
-                if (!representativeWeightKg) continue;
+                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange, allowZeroWeight);
+                if (representativeWeightKg === null) continue;
 
                 return {
                     log,
@@ -2361,23 +2412,39 @@
             if (!planExercise) return null;
 
             const repRange = parseRepRange(repSpec);
-            const recentSession = getMostRecentProgressionSession(exerciseId, repRange);
-            if (!recentSession) return null;
+            const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
+            const allowZeroWeight = baselineWeightKg === 0 || planExercise.targetMode === 'bodyweight';
+            const recentSession = getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight);
+            if (!recentSession && baselineWeightKg === null) return null;
 
+            const goalIncreaseKg = getPlanGoalIncreaseKg(planExercise);
+            const weeklyTargetIncreaseKg = getPlanWeeklyTargetIncreaseKg(planExercise);
+            const plannedWeightTodayKg = baselineWeightKg !== null
+                ? getPlannedWeightKgForDate(baselineWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
+                : null;
             const progressionStepKg = parseFloat(planExercise.progressionStepKg) || 0;
-            const earnedIncrease = didSessionHitTopReps(
-                recentSession.workingSets,
-                repRange,
-                recentSession.representativeWeightKg
+            const earnedIncrease = recentSession
+                ? didSessionHitTopReps(
+                    recentSession.workingSets,
+                    repRange,
+                    Math.max(recentSession.representativeWeightKg, plannedWeightTodayKg || 0)
+                )
+                : false;
+            const recentTargetWeightKg = recentSession
+                ? recentSession.representativeWeightKg + (earnedIncrease ? progressionStepKg : 0)
+                : null;
+            const targetWeightKg = Math.max(
+                plannedWeightTodayKg || 0,
+                recentTargetWeightKg || 0,
+                baselineWeightKg || 0
             );
-            const targetWeightKg = recentSession.representativeWeightKg + (earnedIncrease ? progressionStepKg : 0);
 
             return {
                 exerciseId,
                 repRange,
                 targetWeightKg,
                 targetWeightDisplay: displayWeight(targetWeightKg),
-                lastSets: recentSession.exerciseLog.sets,
+                lastSets: recentSession?.exerciseLog?.sets || [],
                 recentSession,
                 earnedIncrease,
                 planExercise
@@ -2385,6 +2452,25 @@
         }
 
         function getBaselineProgressionSession(exerciseId, repRange) {
+            const planExercise = progressionPlanData?.exercises?.[exerciseId];
+            const configuredBaselineWeightKg = getPlanBaselineWeightKg(planExercise);
+            if (configuredBaselineWeightKg !== null) {
+                return {
+                    log: {
+                        date: `${progressionPlanData?.progressionPlan_startDate || ''}T00:00:00`,
+                        configuredBaseline: true
+                    },
+                    exerciseLog: {
+                        id: exerciseId,
+                        name: planExercise?.name || exerciseId,
+                        sets: []
+                    },
+                    workingSets: [],
+                    representativeWeightKg: configuredBaselineWeightKg,
+                    configuredBaseline: true
+                };
+            }
+
             const startDate = getProgressionStartDate();
             if (!startDate || !workoutLogs || workoutLogs.length === 0) return null;
 
@@ -2411,7 +2497,7 @@
             return baseline;
         }
 
-        function getRecentProgressionSessions(exerciseId, repRange, lookbackDays = 14) {
+        function getRecentProgressionSessions(exerciseId, repRange, lookbackDays = 14, allowZeroWeight = false) {
             const cutoff = new Date(Date.now() - lookbackDays * 24 * 60 * 60 * 1000);
             const startDate = getProgressionStartDate();
             const effectiveCutoff = startDate && startDate > cutoff ? startDate : cutoff;
@@ -2425,8 +2511,8 @@
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
-                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
-                if (!representativeWeightKg) continue;
+                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange, allowZeroWeight);
+                if (representativeWeightKg === null) continue;
 
                 sessions.push({
                     log,
@@ -3612,10 +3698,11 @@
                 const repsInput = group.querySelector('.set-input[data-type="reps"]');
                 const weightInput = group.querySelector('.set-input[data-type="weight"]');
                 const reps = parseInt(repsInput?.value, 10);
-                const weight = parseFloat(weightInput?.value);
+                const parsedWeight = parseFloat(weightInput?.value);
+                const weight = Number.isFinite(parsedWeight) ? parsedWeight : 0;
 
                 if (!Number.isFinite(reps) || reps < target.repRange.min) return false;
-                if (!Number.isFinite(weight) || weight <= 0) return false;
+                if (weight <= 0 && target.targetWeightKg > 0) return false;
 
                 const weightKg = weightUnit === 'lbs' ? lbsToKg(weight) : weight;
                 return weightKg >= target.targetWeightKg;
@@ -4142,9 +4229,10 @@
             const exercise = getExerciseForUI(target.exerciseId);
             const baseline = getBaselineProgressionSession(target.exerciseId, target.repRange);
             const current = target.recentSession;
-            const recentSessions = getRecentProgressionSessions(target.exerciseId, target.repRange, 14);
-            const goalIncreaseKg = parseFloat(target.planExercise.goalIncreaseKg) || 0;
-            const weeklyTargetIncreaseKg = parseFloat(target.planExercise.weeklyTargetIncreaseKg) || 0;
+            const allowZeroWeight = getPlanBaselineWeightKg(target.planExercise) === 0 || target.planExercise.targetMode === 'bodyweight';
+            const recentSessions = getRecentProgressionSessions(target.exerciseId, target.repRange, 14, allowZeroWeight);
+            const goalIncreaseKg = getPlanGoalIncreaseKg(target.planExercise);
+            const weeklyTargetIncreaseKg = getPlanWeeklyTargetIncreaseKg(target.planExercise);
             const currentProgressKg = baseline && current
                 ? current.representativeWeightKg - baseline.representativeWeightKg
                 : 0;
