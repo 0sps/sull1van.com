@@ -901,20 +901,25 @@
                 </div>
             </section>
 
-            <section class="panel">
-                <div class="section-title">Lift Progress Chart</div>
-                <div class="chart-layout">
-                    <div>
-                        <select class="select-box" id="liftSelect"></select>
-                        <div class="chart-side-list" id="chartStats"></div>
-                    </div>
-                    <div class="chart-card">
-                        <div id="chartContainer"></div>
-                        <div class="legend">
-                            <span class="actual">Average actual weight</span>
-                            <span class="plan">Plan line</span>
-                            <span class="hit">At or above plan</span>
-                            <span class="behind">Below plan</span>
+            <section class="panel collapsible-panel">
+                <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="liftProgressContent" onclick="toggleCollapsibleSection('liftProgressContent', 'liftProgressIcon')">
+                    <span class="section-title">Lift Progress Chart</span>
+                    <span class="collapse-icon" id="liftProgressIcon">+</span>
+                </button>
+                <div class="collapsible-content" id="liftProgressContent" hidden>
+                    <div class="chart-layout">
+                        <div>
+                            <select class="select-box" id="liftSelect"></select>
+                            <div class="chart-side-list" id="chartStats"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div id="chartContainer"></div>
+                            <div class="legend">
+                                <span class="actual">Average actual weight</span>
+                                <span class="plan">Plan line</span>
+                                <span class="hit">At or above plan</span>
+                                <span class="behind">Below plan</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1276,15 +1281,19 @@
                 </div>`;
         }
 
-        function toggleTrackedLifts() {
-            const trigger = document.querySelector('.collapsible-trigger[aria-controls="trackedLiftsContent"]');
-            const content = document.getElementById('trackedLiftsContent');
-            const icon = document.getElementById('trackedLiftsIcon');
+        function toggleCollapsibleSection(contentId, iconId) {
+            const trigger = document.querySelector(`.collapsible-trigger[aria-controls="${contentId}"]`);
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
             const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 
             trigger.setAttribute('aria-expanded', String(!isExpanded));
             content.hidden = isExpanded;
             icon.textContent = isExpanded ? '+' : '-';
+        }
+
+        function toggleTrackedLifts() {
+            toggleCollapsibleSection('trackedLiftsContent', 'trackedLiftsIcon');
         }
 
         function renderLiftTable() {
