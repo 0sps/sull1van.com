@@ -461,6 +461,50 @@
             margin-bottom: 14px;
         }
 
+        .collapsible-panel {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .collapsible-trigger {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .collapsible-trigger:hover {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .collapsible-trigger .section-title {
+            margin-bottom: 0;
+        }
+
+        .collapse-icon {
+            color: var(--warning);
+            font-family: 'Space Mono', monospace;
+            font-size: 1.15rem;
+            line-height: 1;
+            text-shadow: 0 0 14px rgba(255, 187, 0, 0.24);
+        }
+
+        .collapsible-content {
+            padding: 0 22px 22px;
+        }
+
+        .collapsible-content[hidden] {
+            display: none;
+        }
+
         .table-wrap {
             overflow-x: auto;
         }
@@ -833,22 +877,27 @@
                 </div>
             </section>
 
-            <section class="panel">
-                <div class="section-title">Tracked Lifts</div>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Lift</th>
-                                <th>Baseline</th>
-                                <th>Most Recent</th>
-                                <th>Target Today</th>
-                                <th>Goal</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="liftTableBody"></tbody>
-                    </table>
+            <section class="panel collapsible-panel">
+                <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="trackedLiftsContent" onclick="toggleTrackedLifts()">
+                    <span class="section-title">Tracked Lifts</span>
+                    <span class="collapse-icon" id="trackedLiftsIcon">+</span>
+                </button>
+                <div class="collapsible-content" id="trackedLiftsContent" hidden>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Lift</th>
+                                    <th>Baseline</th>
+                                    <th>Most Recent</th>
+                                    <th>Target Today</th>
+                                    <th>Goal</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="liftTableBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -1225,6 +1274,17 @@
                     <div class="timeline-stat-line"></div>
                     <div class="mini-label">No Recent Data</div>
                 </div>`;
+        }
+
+        function toggleTrackedLifts() {
+            const trigger = document.querySelector('.collapsible-trigger[aria-controls="trackedLiftsContent"]');
+            const content = document.getElementById('trackedLiftsContent');
+            const icon = document.getElementById('trackedLiftsIcon');
+            const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+            trigger.setAttribute('aria-expanded', String(!isExpanded));
+            content.hidden = isExpanded;
+            icon.textContent = isExpanded ? '+' : '-';
         }
 
         function renderLiftTable() {
