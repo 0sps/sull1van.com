@@ -294,14 +294,15 @@
 
         .progression-orb {
             position: absolute;
-            right: 14px;
-            bottom: 14px;
-            width: 22px;
-            height: 22px;
+            right: 0;
+            top: 30px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 187, 0, 0.65);
-            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), rgba(255, 187, 0, 0.75) 28%, rgba(255, 61, 0, 0.3) 62%, rgba(255, 61, 0, 0.08) 100%);
             box-shadow: 0 0 14px rgba(255, 187, 0, 0.35), 0 0 28px rgba(255, 61, 0, 0.18);
+            border: 1px solid rgba(255, 155, 185, 0.85);
+            background: radial-gradient(circle at 35% 28%, rgba(255, 248, 252, 0.98), rgba(255, 150, 180, 0.9) 24%, rgba(255, 61, 112, 0.55) 56%, rgba(160, 45, 255, 0.18) 100%);
+            box-shadow: 0 0 10px rgba(255, 155, 185, 0.55), 0 0 24px rgba(255, 61, 112, 0.32), 0 0 36px rgba(160, 45, 255, 0.16);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -309,7 +310,17 @@
             font-family: Arial, sans-serif;
             font-size: 0.9rem;
             font-weight: 900;
-            pointer-events: none;
+            padding: 0;
+            cursor: pointer;
+            z-index: 2;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .progression-orb:hover,
+        .progression-orb:focus-visible {
+            border-color: rgba(255, 210, 225, 0.95);
+            box-shadow: 0 0 14px rgba(255, 155, 185, 0.7), 0 0 30px rgba(255, 61, 112, 0.42), 0 0 42px rgba(160, 45, 255, 0.22);
+            outline: none;
         }
 
         .progression-orb.achieved {
@@ -317,16 +328,24 @@
             border-color: var(--success);
             color: #03150c;
             box-shadow: 0 0 16px rgba(0, 255, 136, 0.55), 0 0 30px rgba(0, 255, 136, 0.28);
-            animation: progressionCheckSpin 0.45s ease-out;
+            animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
         }
 
         @keyframes progressionCheckSpin {
-            from {
-                transform: rotate(-180deg) scale(0.72);
+            0% {
+                transform: perspective(80px) rotateY(-540deg) rotateZ(-18deg) scale(0.72);
             }
 
-            to {
-                transform: rotate(0deg) scale(1);
+            48% {
+                transform: perspective(80px) rotateY(-180deg) rotateZ(9deg) scale(1.12);
+            }
+
+            72% {
+                transform: perspective(80px) rotateY(-32deg) rotateZ(-4deg) scale(0.96);
+            }
+
+            100% {
+                transform: perspective(80px) rotateY(0deg) rotateZ(0deg) scale(1);
             }
         }
 
@@ -386,6 +405,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            position: relative;
         }
 
         .set-label {
@@ -1381,6 +1401,84 @@
             margin-top: 24px;
         }
 
+        .training-plan-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .training-plan-stat {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 12px;
+        }
+
+        .training-plan-label {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .training-plan-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .training-plan-section {
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            margin-top: 14px;
+        }
+
+        .training-plan-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--accent-secondary);
+            margin-bottom: 8px;
+        }
+
+        .training-plan-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .training-plan-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 8px;
+        }
+
+        .training-plan-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .training-plan-action {
+            color: var(--text-primary);
+            background: rgba(255, 61, 112, 0.08);
+            border: 1px solid rgba(255, 155, 185, 0.35);
+            padding: 12px;
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 560px) {
+            .training-plan-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .btn-history {
             padding: 4px 10px;
             font-size: 0.77rem;
@@ -1677,6 +1775,15 @@
             <div id="historyModalContent"></div>
             <div class="modal-actions"><button class="btn btn-secondary"
                     onclick="closeModal('historyModal')">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="trainingPlanModal">
+        <div class="modal">
+            <h3 class="modal-title" id="trainingPlanModalTitle">TRAINING PLAN</h3>
+            <div id="trainingPlanModalContent"></div>
+            <div class="modal-actions"><button class="btn btn-secondary"
+                    onclick="closeModal('trainingPlanModal')">Close</button>
             </div>
         </div>
     </div>
@@ -2032,9 +2139,83 @@
                 targetWeightKg,
                 targetWeightDisplay: displayWeight(targetWeightKg),
                 lastSets: recentSession.exerciseLog.sets,
+                recentSession,
                 earnedIncrease,
                 planExercise
             };
+        }
+
+        function getBaselineProgressionSession(exerciseId, repRange) {
+            const startDate = getProgressionStartDate();
+            if (!startDate || !workoutLogs || workoutLogs.length === 0) return null;
+
+            let baseline = null;
+            for (const log of workoutLogs) {
+                const logDate = new Date(log.date);
+                if (logDate < startDate) break;
+
+                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                if (!exerciseLog) continue;
+
+                const workingSets = getWorkingSets(exerciseLog.sets);
+                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
+                if (!representativeWeightKg) continue;
+
+                baseline = {
+                    log,
+                    exerciseLog,
+                    workingSets,
+                    representativeWeightKg
+                };
+            }
+
+            return baseline;
+        }
+
+        function getRecentProgressionSessions(exerciseId, repRange, lookbackDays = 14) {
+            const cutoff = new Date(Date.now() - lookbackDays * 24 * 60 * 60 * 1000);
+            const startDate = getProgressionStartDate();
+            const effectiveCutoff = startDate && startDate > cutoff ? startDate : cutoff;
+            const sessions = [];
+
+            for (const log of workoutLogs || []) {
+                const logDate = new Date(log.date);
+                if (logDate < effectiveCutoff) break;
+
+                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                if (!exerciseLog) continue;
+
+                const workingSets = getWorkingSets(exerciseLog.sets);
+                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
+                if (!representativeWeightKg) continue;
+
+                sessions.push({
+                    log,
+                    exerciseLog,
+                    workingSets,
+                    representativeWeightKg
+                });
+            }
+
+            return sessions;
+        }
+
+        function formatKgAndLbs(kg) {
+            if (!Number.isFinite(kg)) return 'N/A';
+            return `${Math.round(kg * 10) / 10} kg / ${displayWeight(kg)} lbs`;
+        }
+
+        function formatSetSummary(sets) {
+            const workingSets = getWorkingSets(sets);
+            const sourceSets = workingSets.length > 0 ? workingSets : (sets || []);
+            if (sourceSets.length === 0) return 'No working sets';
+
+            return sourceSets.map(set => {
+                const weight = parseFloat(set.weight);
+                const reps = parseInt(set.reps, 10) || 0;
+                const weightLabel = Number.isFinite(weight) && weight > 0 ? `${displayWeight(weight)} lbs` : 'bodyweight';
+                return `${weightLabel} × ${reps}`;
+            }).join(', ');
         }
 
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
@@ -2328,11 +2509,14 @@
             const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
             const weightPlaceholder = targetWeight || (prevWeight ? `${prevWeight}` : 'WEIGHT');
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
+            const progressionOrb = (!isEdit && !isManual && hasProgressionTarget && setIdx === 0) ? `
+                    <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation"></button>` : '';
 
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
                     <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
+                    ${progressionOrb}
                     <div class="set-inputs">
                         <input type="number" class="${inputClass}" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
@@ -2345,7 +2529,7 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
-            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false } = options;
+            const { isEdit, exIdx, volumeLbs = 0 } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
@@ -2368,8 +2552,6 @@
 
             const volumeIndicator = isEdit ? '' : `
                 <div class="exercise-volume" id="exercise-volume-${key}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
-            const progressionOrb = (!isEdit && hasProgressionTarget) ? `
-                <div class="progression-orb" id="progression-orb-${key}" aria-label="Progression target pending"></div>` : '';
 
             return `
                 <div class="exercise-item" id="${isEdit ? '' : `exercise-${key}`}" data-mode="${mode}">
@@ -2385,7 +2567,6 @@
                     <div class="sets-grid">${setsHtml}</div>
                     ${volumeIndicator}
                     ${footerActions}
-                    ${progressionOrb}
                 </div>`;
         }
 
@@ -2726,6 +2907,15 @@
                 if (e.target.classList.contains('modal-overlay')) {
                     const modalId = e.target.id;
                     if (modalId) closeModal(modalId);
+                    return;
+                }
+
+                // Progression recommendation modal
+                const progressionOrb = e.target.closest('.progression-orb');
+                if (progressionOrb) {
+                    e.preventDefault();
+                    const key = progressionOrb.dataset.exerciseKey;
+                    if (key) showTrainingPlanModal(key);
                     return;
                 }
 
@@ -3577,6 +3767,86 @@
                 openModal('instructionsModal');
             }
         }
+
+        function showTrainingPlanModal(exerciseKey) {
+            const target = activeProgressionTargets[exerciseKey];
+            if (!target) return;
+
+            const exercise = getExerciseForUI(target.exerciseId);
+            const baseline = getBaselineProgressionSession(target.exerciseId, target.repRange);
+            const current = target.recentSession;
+            const recentSessions = getRecentProgressionSessions(target.exerciseId, target.repRange, 14);
+            const goalIncreaseKg = parseFloat(target.planExercise.goalIncreaseKg) || 0;
+            const weeklyTargetIncreaseKg = parseFloat(target.planExercise.weeklyTargetIncreaseKg) || 0;
+            const currentProgressKg = baseline && current
+                ? current.representativeWeightKg - baseline.representativeWeightKg
+                : 0;
+            const remainingKg = Math.max(goalIncreaseKg - currentProgressKg, 0);
+            const progressPercent = goalIncreaseKg > 0
+                ? Math.max(0, Math.min(100, Math.round((currentProgressKg / goalIncreaseKg) * 100)))
+                : 0;
+            const startDate = progressionPlanData?.progressionPlan_startDate || 'plan start';
+            const currentWeightLabel = current ? formatKgAndLbs(current.representativeWeightKg) : 'No data';
+            const baselineWeightLabel = baseline ? formatKgAndLbs(baseline.representativeWeightKg) : 'No baseline data';
+            const recommendationLabel = formatKgAndLbs(target.targetWeightKg);
+            const recentHtml = recentSessions.length > 0
+                ? recentSessions.map(session => `
+                    <div class="training-plan-row">
+                        <span>${formatDate(session.log.date, DateFormats.SHORT)}</span>
+                        <span>${formatSetSummary(session.exerciseLog.sets)}</span>
+                    </div>`).join('')
+                : `<div class="training-plan-row"><span>No logs in the last 14 days</span><span></span></div>`;
+
+            document.getElementById('trainingPlanModalTitle').textContent = 'TRAINING PLAN';
+            document.getElementById('trainingPlanModalContent').innerHTML = `
+                <h4 class="exercise-name m-b-16">${(exercise?.name || target.exerciseId).toUpperCase()}</h4>
+                <div class="training-plan-grid">
+                    <div class="training-plan-stat">
+                        <div class="training-plan-label">Today</div>
+                        <div class="training-plan-value">${recommendationLabel}</div>
+                    </div>
+                    <div class="training-plan-stat">
+                        <div class="training-plan-label">Rep Target</div>
+                        <div class="training-plan-value">${target.repRange.label}</div>
+                    </div>
+                    <div class="training-plan-stat">
+                        <div class="training-plan-label">Current</div>
+                        <div class="training-plan-value">${currentWeightLabel}</div>
+                    </div>
+                    <div class="training-plan-stat">
+                        <div class="training-plan-label">Remaining</div>
+                        <div class="training-plan-value">${formatKgAndLbs(remainingKg)}</div>
+                    </div>
+                </div>
+
+                <div class="training-plan-section">
+                    <div class="training-plan-section-title">Progress Since ${startDate}</div>
+                    <div class="training-plan-list">
+                        <div class="training-plan-row"><span>Baseline</span><span>${baselineWeightLabel}</span></div>
+                        <div class="training-plan-row"><span>Progress</span><span>${formatKgAndLbs(currentProgressKg)} (${progressPercent}% of block goal)</span></div>
+                        <div class="training-plan-row"><span>Block Goal</span><span>+${formatKgAndLbs(goalIncreaseKg)}</span></div>
+                        <div class="training-plan-row"><span>Weekly Pace</span><span>+${formatKgAndLbs(weeklyTargetIncreaseKg)} / week</span></div>
+                    </div>
+                </div>
+
+                <div class="training-plan-section">
+                    <div class="training-plan-section-title">Last 14 Days</div>
+                    <div class="training-plan-list">${recentHtml}</div>
+                </div>
+
+                <div class="training-plan-section">
+                    <div class="training-plan-section-title">Action</div>
+                    <div class="training-plan-action">
+                        Hit at least <strong>${displayWeight(target.targetWeightKg)} lbs</strong> for
+                        <strong>${target.repRange.min}+ reps</strong> on every non-warmup set to mark this target hit.
+                        Hit <strong>${target.repRange.max} reps</strong> on every non-warmup set to earn the next
+                        ${formatKgAndLbs(parseFloat(target.planExercise.progressionStepKg) || 0)} increase.
+                    </div>
+                </div>`;
+
+            openModal('trainingPlanModal');
+        }
+
         function showExerciseHistory(exerciseName) {
             // Search through all workout logs to find the most recent occurrence of this exercise
             let mostRecentLog = null;
