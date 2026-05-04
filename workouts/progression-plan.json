@@ -1,0 +1,173 @@
+{
+  "progressionPlanName": "Phase 3 Strength Block",
+  "progressionPlan_startDate": "2026-05-04",
+  "durationWeeks": 12,
+  "baselinePolicy": "Use the first valid non-warmup log for each exercise on or after the plan start date.",
+  "currentProgressPolicy": "Use the most recent valid non-warmup log for each exercise on or after the plan start date.",
+  "noBaselineLabel": "No baseline data",
+  "targetHitRule": "Target is hit when all working sets use at least the target weight and reach at least the bottom of the planned rep range.",
+  "nextIncreaseRule": "Next increase is earned when all working sets use at least the target weight and reach the top of the planned rep range.",
+  "exercises": {
+    "ex001": {
+      "name": "Dumbbell Incline Bench Press",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex005": {
+      "name": "Dumbbell Shoulder Press",
+      "goalIncreaseKg": 5,
+      "weeklyTargetIncreaseKg": 0.417,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex004": {
+      "name": "Cable Lateral Raise",
+      "goalIncreaseKg": 3,
+      "weeklyTargetIncreaseKg": 0.25,
+      "progressionStepKg": 1,
+      "targetMode": "load"
+    },
+    "ex055": {
+      "name": "Dip",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "added_load"
+    },
+    "ex357": {
+      "name": "Single-arm Cable Row",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex041": {
+      "name": "Wide Grip Lat Pulldown",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex033": {
+      "name": "Machine Rear Delt Fly",
+      "goalIncreaseKg": 4,
+      "weeklyTargetIncreaseKg": 0.333,
+      "progressionStepKg": 1,
+      "targetMode": "load"
+    },
+    "ex010": {
+      "name": "Dumbbell Bicep Curl",
+      "goalIncreaseKg": 4,
+      "weeklyTargetIncreaseKg": 0.333,
+      "progressionStepKg": 1,
+      "targetMode": "load"
+    },
+    "ex006": {
+      "name": "Back Squat",
+      "goalIncreaseKg": 12.5,
+      "weeklyTargetIncreaseKg": 1.042,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex054": {
+      "name": "Dumbbell Walking Lunge",
+      "goalIncreaseKg": 5,
+      "weeklyTargetIncreaseKg": 0.417,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex002": {
+      "name": "Leg Extension",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex007": {
+      "name": "Standing Machine Calf Press",
+      "goalIncreaseKg": 15,
+      "weeklyTargetIncreaseKg": 1.25,
+      "progressionStepKg": 5,
+      "targetMode": "load"
+    },
+    "ex057": {
+      "name": "Barbell Bench Press",
+      "goalIncreaseKg": 12.5,
+      "weeklyTargetIncreaseKg": 1.042,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex018": {
+      "name": "Machine Fly",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex021": {
+      "name": "Cable Rope Overhead Triceps Extension",
+      "goalIncreaseKg": 5,
+      "weeklyTargetIncreaseKg": 0.417,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex038": {
+      "name": "Seated Cable Row",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex003": {
+      "name": "Pull Up",
+      "goalIncreaseKg": 10,
+      "weeklyTargetIncreaseKg": 0.833,
+      "progressionStepKg": 2.5,
+      "targetMode": "assistance_or_added_load"
+    },
+    "ex046": {
+      "name": "Cable Face Pull",
+      "goalIncreaseKg": 4,
+      "weeklyTargetIncreaseKg": 0.333,
+      "progressionStepKg": 1,
+      "targetMode": "load"
+    },
+    "ex014": {
+      "name": "Incline Dumbbell Curl",
+      "goalIncreaseKg": 4,
+      "weeklyTargetIncreaseKg": 0.333,
+      "progressionStepKg": 1,
+      "targetMode": "load"
+    },
+    "ex013": {
+      "name": "Leg Press",
+      "goalIncreaseKg": 30,
+      "weeklyTargetIncreaseKg": 2.5,
+      "progressionStepKg": 5,
+      "targetMode": "load"
+    },
+    "ex025": {
+      "name": "Romanian Deadlift",
+      "goalIncreaseKg": 12.5,
+      "weeklyTargetIncreaseKg": 1.042,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex008": {
+      "name": "Seated Leg Curl",
+      "goalIncreaseKg": 7.5,
+      "weeklyTargetIncreaseKg": 0.625,
+      "progressionStepKg": 2.5,
+      "targetMode": "load"
+    },
+    "ex030": {
+      "name": "Seated Machine Calf Press",
+      "goalIncreaseKg": 15,
+      "weeklyTargetIncreaseKg": 1.25,
+      "progressionStepKg": 5,
+      "targetMode": "load"
+    }
+  }
+}

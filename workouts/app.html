@@ -280,6 +280,7 @@
             padding: 20px;
             margin-bottom: 16px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .exercise-item:hover {
@@ -289,6 +290,44 @@
         .exercise-item.completed {
             border-color: var(--success);
             background: rgba(0, 255, 136, 0.05);
+        }
+
+        .progression-orb {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 187, 0, 0.65);
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), rgba(255, 187, 0, 0.75) 28%, rgba(255, 61, 0, 0.3) 62%, rgba(255, 61, 0, 0.08) 100%);
+            box-shadow: 0 0 14px rgba(255, 187, 0, 0.35), 0 0 28px rgba(255, 61, 0, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 900;
+            pointer-events: none;
+        }
+
+        .progression-orb.achieved {
+            background: var(--success);
+            border-color: var(--success);
+            color: #03150c;
+            box-shadow: 0 0 16px rgba(0, 255, 136, 0.55), 0 0 30px rgba(0, 255, 136, 0.28);
+            animation: progressionCheckSpin 0.45s ease-out;
+        }
+
+        @keyframes progressionCheckSpin {
+            from {
+                transform: rotate(-180deg) scale(0.72);
+            }
+
+            to {
+                transform: rotate(0deg) scale(1);
+            }
         }
 
         .exercise-header {
@@ -436,6 +475,12 @@
             font-size: 2rem;
             font-weight: bold;
             font-style: italic;
+        }
+
+        .set-input.progression-target-input::placeholder {
+            color: rgba(255, 187, 0, 0.92);
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 187, 0, 0.45), 0 0 22px rgba(255, 61, 0, 0.25);
         }
 
         .input-separator {
@@ -1800,6 +1845,7 @@
         // ============================================================================
         let exercisesData = {};  // Will be loaded from exercises.json
         let trainingPlanData = null;  // Will be loaded from training-plan.json
+        let progressionPlanData = null;  // Will be loaded from progression-plan.json
         let workoutLogs = [];
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
@@ -1813,6 +1859,7 @@
         let pendingWorkoutData = null;
         let manualLogData = {}; // Store data for manual log inputs
         const logCalculationCache = new Map(); // Cache for log calculations (sets/volume)
+        const activeProgressionTargets = {}; // Current workout progression targets keyed by exercise card
         let pendingRenders = new Set(); // Batched render queue
         let renderScheduled = false; // Render batch scheduler flag
 
@@ -1891,6 +1938,103 @@
                 if (ex && ex.sets && ex.sets.length > 0) return ex.sets;
             }
             return null;
+        }
+
+        function parseRepRange(repSpec) {
+            const nums = String(repSpec || '').match(/\d+/g)?.map(Number) || [];
+            if (nums.length === 0) return { min: 0, max: 0, label: String(repSpec || '') };
+            if (nums.length === 1) return { min: nums[0], max: nums[0], label: String(nums[0]) };
+            return { min: nums[0], max: nums[1], label: `${nums[0]}-${nums[1]}` };
+        }
+
+        function getProgressionStartDate() {
+            const dateStr = progressionPlanData?.progressionPlan_startDate;
+            return dateStr ? new Date(`${dateStr}T00:00:00`) : null;
+        }
+
+        function getWorkingSets(sets) {
+            return (sets || []).filter(set => !set.isWarmup);
+        }
+
+        function getRepresentativeWeightKg(workingSets, repRange = null) {
+            const minReps = repRange?.min || 1;
+            const eligibleSets = workingSets
+                .map(set => ({ weight: parseFloat(set.weight), reps: parseInt(set.reps, 10) }))
+                .filter(set => Number.isFinite(set.weight) && set.weight > 0 && Number.isFinite(set.reps) && set.reps >= minReps);
+
+            const sourceSets = eligibleSets.length > 0
+                ? eligibleSets
+                : workingSets
+                    .map(set => ({ weight: parseFloat(set.weight), reps: parseInt(set.reps, 10) }))
+                    .filter(set => Number.isFinite(set.weight) && set.weight > 0 && Number.isFinite(set.reps) && set.reps > 0);
+
+            if (sourceSets.length === 0) return null;
+            return Math.min(...sourceSets.map(set => set.weight));
+        }
+
+        function didSessionHitTopReps(workingSets, repRange, targetWeightKg) {
+            if (!repRange || !repRange.max || !Number.isFinite(targetWeightKg)) return false;
+            if (!workingSets || workingSets.length === 0) return false;
+
+            return workingSets.every(set => {
+                const reps = parseInt(set.reps, 10);
+                const weight = parseFloat(set.weight);
+                return Number.isFinite(reps) && reps >= repRange.max &&
+                    Number.isFinite(weight) && weight >= targetWeightKg;
+            });
+        }
+
+        function getMostRecentProgressionSession(exerciseId, repRange) {
+            const startDate = getProgressionStartDate();
+            if (!startDate || !workoutLogs || workoutLogs.length === 0) return null;
+
+            for (const log of workoutLogs) {
+                const logDate = new Date(log.date);
+                if (logDate < startDate) break;
+
+                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                if (!exerciseLog) continue;
+
+                const workingSets = getWorkingSets(exerciseLog.sets);
+                const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
+                if (!representativeWeightKg) continue;
+
+                return {
+                    log,
+                    exerciseLog,
+                    workingSets,
+                    representativeWeightKg
+                };
+            }
+
+            return null;
+        }
+
+        function getProgressionTarget(exerciseId, repSpec) {
+            const planExercise = progressionPlanData?.exercises?.[exerciseId];
+            if (!planExercise) return null;
+
+            const repRange = parseRepRange(repSpec);
+            const recentSession = getMostRecentProgressionSession(exerciseId, repRange);
+            if (!recentSession) return null;
+
+            const progressionStepKg = parseFloat(planExercise.progressionStepKg) || 0;
+            const earnedIncrease = didSessionHitTopReps(
+                recentSession.workingSets,
+                repRange,
+                recentSession.representativeWeightKg
+            );
+            const targetWeightKg = recentSession.representativeWeightKg + (earnedIncrease ? progressionStepKg : 0);
+
+            return {
+                exerciseId,
+                repRange,
+                targetWeightKg,
+                targetWeightDisplay: displayWeight(targetWeightKg),
+                lastSets: recentSession.exerciseLog.sets,
+                earnedIncrease,
+                planExercise
+            };
         }
 
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
@@ -2165,7 +2309,7 @@
          * @param {Object} options - { key, setIdx, reps, weight, isWarmup, isEdit, exIdx }
          */
         function generateSetHTML(options) {
-            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, prevReps, prevWeight } = options;
+            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, prevReps, prevWeight, targetReps, targetWeight, hasProgressionTarget } = options;
             const displayWeightValue = isEdit && weight > 0 ? displayWeight(weight) : weight;
             let mode = 'workout';
             if (isEdit) mode = 'edit';
@@ -2181,17 +2325,18 @@
                 commonAttrs = `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
             }
 
-            const repsPlaceholder = prevReps ? `${prevReps}` : 'REPS';
-            const weightPlaceholder = prevWeight ? `${prevWeight}` : 'WEIGHT';
+            const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
+            const weightPlaceholder = targetWeight || (prevWeight ? `${prevWeight}` : 'WEIGHT');
+            const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
 
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
                     <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
                     <div class="set-inputs">
-                        <input type="number" class="set-input" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
-                        <input type="number" class="set-input" placeholder="${weightPlaceholder}" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" placeholder="${weightPlaceholder}" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
                     </div>
                 </div>`;
         }
@@ -2200,7 +2345,7 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
-            const { isEdit, exIdx, volumeLbs = 0 } = options;
+            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
@@ -2223,6 +2368,8 @@
 
             const volumeIndicator = isEdit ? '' : `
                 <div class="exercise-volume" id="exercise-volume-${key}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
+            const progressionOrb = (!isEdit && hasProgressionTarget) ? `
+                <div class="progression-orb" id="progression-orb-${key}" aria-label="Progression target pending"></div>` : '';
 
             return `
                 <div class="exercise-item" id="${isEdit ? '' : `exercise-${key}`}" data-mode="${mode}">
@@ -2238,6 +2385,7 @@
                     <div class="sets-grid">${setsHtml}</div>
                     ${volumeIndicator}
                     ${footerActions}
+                    ${progressionOrb}
                 </div>`;
         }
 
@@ -2296,6 +2444,18 @@
                 return true;
             } catch (error) {
                 console.error('Failed to load training-plan.json:', error);
+                return false;
+            }
+        }
+
+        async function loadProgressionPlan() {
+            try {
+                const response = await fetch('progression-plan.json');
+                progressionPlanData = await response.json();
+                return true;
+            } catch (error) {
+                console.error('Failed to load progression-plan.json:', error);
+                progressionPlanData = null;
                 return false;
             }
         }
@@ -2682,6 +2842,7 @@
 
                 const liveVolumeLbs = calculateExerciseVolumeLbsFromInputs(key);
                 updateExerciseVolumeDisplay(key, liveVolumeLbs);
+                checkExerciseCompletion(key);
             });
 
             // Auto-select text on focus
@@ -2705,7 +2866,8 @@
             // Load exercise and training plan data from JSON files
             const exercisesLoaded = await loadExerciseData();
             const planLoaded = await loadTrainingPlan();
-            if (!exercisesLoaded || !planLoaded) {
+            const progressionLoaded = await loadProgressionPlan();
+            if (!exercisesLoaded || !planLoaded || !progressionLoaded) {
                 console.error('Failed to load data files');
                 document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data files. Please refresh.</div>';
                 return;
@@ -2750,6 +2912,7 @@
             const container = document.getElementById('exerciseList');
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
+            Object.keys(activeProgressionTargets).forEach(key => delete activeProgressionTargets[key]);
 
             if (isRest) {
                 container.innerHTML = `<div class="rest-day-message"><div class="rest-day-icon">🧘</div><h2 class="rest-day-title">REST & RECOVER</h2><p class="rest-day-subtitle">Complete rest or light activity. Your muscles grow during recovery!</p></div>`;
@@ -2760,6 +2923,10 @@
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 const lastSessionSets = getLastSessionSets(ex.exerciseId);
+                const progressionTarget = getProgressionTarget(ex.exerciseId, ex.reps);
+                if (progressionTarget) {
+                    activeProgressionTargets[exerciseKey] = progressionTarget;
+                }
 
                 // Initialize set count from workout plan if not already set
                 if (!currentSetCounts[exerciseKey]) {
@@ -2780,12 +2947,21 @@
                         isWarmup: savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0),
                         isEdit: false,
                         prevReps: prevSet ? prevSet.reps : null,
-                        prevWeight: (prevSet && prevSet.weight > 0) ? displayWeight(prevSet.weight) : null
+                        prevWeight: (prevSet && prevSet.weight > 0) ? displayWeight(prevSet.weight) : null,
+                        targetReps: progressionTarget ? progressionTarget.repRange.label : null,
+                        targetWeight: progressionTarget ? progressionTarget.targetWeightDisplay : null,
+                        hasProgressionTarget: !!progressionTarget
                     });
                 }).join('');
 
-                return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, { isEdit: false, volumeLbs });
+                return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, {
+                    isEdit: false,
+                    volumeLbs,
+                    hasProgressionTarget: !!progressionTarget
+                });
             }).join('');
+
+            Object.keys(activeProgressionTargets).forEach(checkExerciseCompletion);
         }
         function updateExerciseData(input) {
             const mode = input.dataset.mode;
@@ -2833,6 +3009,7 @@
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
             btn.classList.toggle('active');
             currentExerciseData[key][idx].isWarmup = btn.classList.contains('active');
+            checkExerciseCompletion(key);
             saveWorkoutProgress(); // Save to localStorage
         }
         function addSet(exerciseKey) {
@@ -2855,10 +3032,44 @@
         }
         function checkExerciseCompletion(key) {
             const el = document.getElementById(`exercise-${key}`);
-            const inputs = el.querySelectorAll('.set-input');
-            let complete = true;
-            inputs.forEach(i => { if (!i.value) complete = false; });
-            el.classList.toggle('completed', complete);
+            if (!el) return;
+
+            const target = activeProgressionTargets[key];
+            const orb = document.getElementById(`progression-orb-${key}`);
+            if (!target) {
+                el.classList.remove('completed');
+                if (orb) {
+                    orb.classList.remove('achieved');
+                    orb.textContent = '';
+                    orb.setAttribute('aria-label', 'Progression target pending');
+                }
+                return;
+            }
+
+            const workingGroups = Array.from(el.querySelectorAll('.set-input-group')).filter(group => {
+                const warmupBtn = group.querySelector('.warmup-btn');
+                return !warmupBtn?.classList.contains('active');
+            });
+
+            const targetHit = workingGroups.length > 0 && workingGroups.every(group => {
+                const repsInput = group.querySelector('.set-input[data-type="reps"]');
+                const weightInput = group.querySelector('.set-input[data-type="weight"]');
+                const reps = parseInt(repsInput?.value, 10);
+                const weight = parseFloat(weightInput?.value);
+
+                if (!Number.isFinite(reps) || reps < target.repRange.min) return false;
+                if (!Number.isFinite(weight) || weight <= 0) return false;
+
+                const weightKg = weightUnit === 'lbs' ? lbsToKg(weight) : weight;
+                return weightKg >= target.targetWeightKg;
+            });
+
+            el.classList.toggle('completed', targetHit);
+            if (orb) {
+                orb.classList.toggle('achieved', targetHit);
+                orb.textContent = targetHit ? '✓' : '';
+                orb.setAttribute('aria-label', targetHit ? 'Progression target hit' : 'Progression target pending');
+            }
         }
         async function completeWorkout(shouldExport = false) {
             const workout = getWorkoutData(currentWorkoutDay);
