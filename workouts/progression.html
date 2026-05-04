@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <title>SEAN'S LOG | Progression</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sean's Log">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #1a1a1d;
+            --accent-primary: #ff3d00;
+            --accent-secondary: #ff6d3d;
+            --accent-glow: rgba(255, 61, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a5;
+            --text-muted: #606065;
+            --success: #00ff88;
+            --warning: #ffbb00;
+            --danger: #ff5d8f;
+            --border: #2a2a2d;
+            --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(255, 61, 0, 0.08), transparent 48%),
+                radial-gradient(ellipse at 85% 25%, rgba(255, 187, 0, 0.07), transparent 42%),
+                radial-gradient(ellipse at 60% 90%, rgba(0, 255, 136, 0.045), transparent 44%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .loading-spinner {
+            width: 46px;
+            height: 46px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 36px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 28px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 4px;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .sync-status {
+            border: 1px solid rgba(0, 255, 136, 0.28);
+            background: rgba(0, 255, 136, 0.08);
+            color: var(--success);
+            padding: 6px 12px;
+            font-size: 0.78rem;
+        }
+
+        .sync-status.error {
+            border-color: rgba(255, 93, 143, 0.35);
+            background: rgba(255, 93, 143, 0.08);
+            color: var(--danger);
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 18px rgba(255, 61, 0, 0.16);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .page-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+            gap: 18px;
+            align-items: stretch;
+            margin-bottom: 18px;
+        }
+
+        .hero-card,
+        .panel {
+            background: rgba(17, 17, 19, 0.94);
+            border: 1px solid var(--border);
+            padding: 22px;
+        }
+
+        .hero-card {
+            background:
+                radial-gradient(circle at 18% 0%, rgba(255, 187, 0, 0.13), transparent 36%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)),
+                var(--bg-secondary);
+        }
+
+        .eyebrow {
+            color: var(--warning);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.7rem;
+            line-height: 0.98;
+            letter-spacing: 2px;
+        }
+
+        .subcopy {
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-top: 12px;
+            max-width: 780px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .mini-stat {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            min-height: 92px;
+        }
+
+        .mini-label {
+            color: var(--text-muted);
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mini-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .mini-note {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-top: 4px;
+        }
+
+        .timeline-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .timeline-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .timeline-week {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            line-height: 1;
+            color: var(--warning);
+            text-shadow: 0 0 18px rgba(255, 187, 0, 0.28);
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .timeline-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3d00, #ffbb00, #00ff88);
+            box-shadow: 0 0 22px rgba(255, 187, 0, 0.24);
+        }
+
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 16px;
+            min-height: 110px;
+        }
+
+        .summary-card.good {
+            border-color: rgba(0, 255, 136, 0.35);
+            background: rgba(0, 255, 136, 0.045);
+        }
+
+        .summary-card.bad {
+            border-color: rgba(255, 93, 143, 0.38);
+            background: rgba(255, 93, 143, 0.055);
+        }
+
+        .summary-card.warn {
+            border-color: rgba(255, 187, 0, 0.35);
+            background: rgba(255, 187, 0, 0.045);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 960px;
+        }
+
+        th,
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.025);
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+        }
+
+        .lift-name {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .lift-meta {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-top: 3px;
+        }
+
+        .num-strong {
+            color: var(--text-primary);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.7px;
+        }
+
+        .target-glow {
+            color: #ffe0a3;
+            text-shadow: 0 0 10px rgba(255, 187, 88, 0.36);
+        }
+
+        .status-pill {
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 4px 8px;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+        }
+
+        .status-pill.good {
+            color: var(--success);
+            border-color: rgba(0, 255, 136, 0.36);
+            background: rgba(0, 255, 136, 0.06);
+        }
+
+        .status-pill.bad {
+            color: var(--danger);
+            border-color: rgba(255, 93, 143, 0.38);
+            background: rgba(255, 93, 143, 0.06);
+        }
+
+        .status-pill.warn {
+            color: var(--warning);
+            border-color: rgba(255, 187, 0, 0.34);
+            background: rgba(255, 187, 0, 0.06);
+        }
+
+        .chart-layout {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.34fr) minmax(0, 0.66fr);
+            gap: 16px;
+        }
+
+        .select-box {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .chart-side-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .side-stat {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.035);
+            padding: 12px;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px;
+        }
+
+        .progress-chart {
+            width: 100%;
+            height: 330px;
+            display: block;
+            overflow: visible;
+        }
+
+        .chart-grid {
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 1;
+        }
+
+        .chart-axis {
+            stroke: rgba(255, 255, 255, 0.18);
+            stroke-width: 1.2;
+        }
+
+        .chart-actual {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.78);
+            stroke-width: 2.5;
+        }
+
+        .chart-plan {
+            fill: none;
+            stroke: rgba(255, 187, 0, 0.78);
+            stroke-width: 2;
+            stroke-dasharray: 7 6;
+        }
+
+        .chart-point {
+            fill: var(--success);
+            stroke: #06150d;
+            stroke-width: 2;
+        }
+
+        .chart-point.behind {
+            fill: var(--danger);
+        }
+
+        .chart-label {
+            fill: var(--text-muted);
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-top: 8px;
+        }
+
+        .legend span::before {
+            content: '';
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .legend .actual::before {
+            background: #fff;
+        }
+
+        .legend .plan::before {
+            background: var(--warning);
+        }
+
+        .legend .hit::before {
+            background: var(--success);
+        }
+
+        .legend .behind::before {
+            background: var(--danger);
+        }
+
+        .empty {
+            color: var(--text-muted);
+            padding: 32px;
+            border: 1px dashed rgba(255, 255, 255, 0.14);
+            text-align: center;
+        }
+
+        @media (max-width: 1020px) {
+            .page-hero,
+            .chart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 14px;
+            }
+
+            .logo h1 {
+                font-size: 2.35rem;
+            }
+
+            h2 {
+                font-size: 2.15rem;
+            }
+
+            .hero-stats,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading progression...</p>
+    </div>
+    <div class="bg-pattern"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="app.html">
+                    <h1>SEAN'S LOG</h1>
+                </a>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <img class="user-avatar" id="userAvatar" src="" alt="User">
+                    <span id="userEmail"></span>
+                </div>
+                <div class="sync-status" id="syncStatus">
+                    <span id="syncIcon">✓</span>
+                    <span id="syncText">Synced</span>
+                </div>
+                <button class="btn" onclick="logout()">LOGOUT</button>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <a href="app.html" class="nav-tab">Today's Workout</a>
+            <a href="app.html" class="nav-tab">Full Plan</a>
+            <a href="app.html" class="nav-tab">Exercise Library</a>
+            <a href="app.html" class="nav-tab">Workout History</a>
+            <a href="body.html" class="nav-tab">Body</a>
+            <a href="progression.html" class="nav-tab active">Progression</a>
+        </nav>
+
+        <main>
+            <section class="page-hero">
+                <div class="hero-card">
+                    <div class="eyebrow" id="planName">Progression Plan</div>
+                    <h2>Phase Progression Dashboard</h2>
+                    <p class="subcopy" id="planSummary">Tracking every planned lift against its explicit baseline, today's target, and the end-of-block goal.</p>
+                    <div class="hero-stats">
+                        <div class="mini-stat">
+                            <div class="mini-label">Start Date</div>
+                            <div class="mini-value" id="startDateValue">--</div>
+                            <div class="mini-note">Plan baseline date</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-label">End Target</div>
+                            <div class="mini-value" id="endDateValue">--</div>
+                            <div class="mini-note">12-week block finish</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-label">Tracked Lifts</div>
+                            <div class="mini-value" id="trackedLiftCount">0</div>
+                            <div class="mini-note">Active plan exercises</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel timeline-card">
+                    <div class="timeline-top">
+                        <div>
+                            <div class="eyebrow">Block Timeline</div>
+                            <div class="timeline-week" id="weekValue">Week --</div>
+                        </div>
+                        <div class="mini-note" id="daysLeftValue">-- days left</div>
+                    </div>
+                    <div>
+                        <div class="timeline-track">
+                            <div class="timeline-fill" id="timelineFill" style="width: 0%"></div>
+                        </div>
+                        <div class="timeline-labels">
+                            <span id="timelineStart">Start</span>
+                            <span id="timelinePercent">0%</span>
+                            <span id="timelineEnd">Finish</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="summary-grid" id="summaryGrid"></section>
+
+            <section class="panel">
+                <div class="section-title">Tracked Lifts</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lift</th>
+                                <th>Baseline</th>
+                                <th>Most Recent</th>
+                                <th>Target Today</th>
+                                <th>Goal</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="liftTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="section-title">Lift Progress Chart</div>
+                <div class="chart-layout">
+                    <div>
+                        <select class="select-box" id="liftSelect"></select>
+                        <div class="chart-side-list" id="chartStats"></div>
+                    </div>
+                    <div class="chart-card">
+                        <div id="chartContainer"></div>
+                        <div class="legend">
+                            <span class="actual">Average actual weight</span>
+                            <span class="plan">Plan line</span>
+                            <span class="hit">At or above plan</span>
+                            <span class="behind">Below plan</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+            authDomain: "workout-c7be0.firebaseapp.com",
+            projectId: "workout-c7be0",
+            storageBucket: "workout-c7be0.firebasestorage.app",
+            messagingSenderId: "625595909146",
+            appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.firebaseDb = db;
+        window.firebaseCollection = collection;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseQuery = query;
+        window.firebaseOrderBy = orderBy;
+        window.firebaseSignOut = signOut;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('userEmail').textContent = user.email || '';
+                document.getElementById('userAvatar').src = user.photoURL || '';
+                window.currentUser = user;
+                init();
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        window.logout = async function () {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        };
+    </script>
+
+    <script>
+        let exercisesData = {};
+        let trainingPlanData = null;
+        let progressionPlanData = null;
+        let workoutLogs = [];
+        let liftRows = [];
+        let selectedExerciseId = null;
+
+        const DateFormats = {
+            SHORT: { month: 'short', day: 'numeric' },
+            LONG: { month: 'long', day: 'numeric', year: 'numeric' }
+        };
+
+        function lbsToKg(lbs) { return lbs * 0.45359237; }
+        function kgToLbs(kg) { return kg / 0.45359237; }
+        function displayWeight(kg) { return Math.round(kgToLbs(kg)); }
+        function formatDate(date, format = DateFormats.LONG) {
+            return new Date(date).toLocaleDateString('en-US', format);
+        }
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[ch]));
+        }
+
+        function setSyncStatus(state) {
+            const el = document.getElementById('syncStatus');
+            const icon = document.getElementById('syncIcon');
+            const text = document.getElementById('syncText');
+            el.classList.toggle('error', state === 'error');
+            icon.textContent = state === 'error' ? '!' : '✓';
+            text.textContent = state === 'error' ? 'Error' : state === 'syncing' ? 'Syncing' : 'Synced';
+        }
+
+        function getProgressionStartDate() {
+            return new Date(`${progressionPlanData.progressionPlan_startDate}T00:00:00`);
+        }
+
+        function getPlanEndDate() {
+            const end = new Date(getProgressionStartDate());
+            end.setDate(end.getDate() + (progressionPlanData.durationWeeks || 12) * 7);
+            return end;
+        }
+
+        function parseRepRange(repSpec) {
+            const nums = String(repSpec || '').match(/\d+/g)?.map(Number) || [];
+            if (nums.length === 0) return { min: 0, max: 0, label: String(repSpec || '') };
+            if (nums.length === 1) return { min: nums[0], max: nums[0], label: String(nums[0]) };
+            return { min: nums[0], max: nums[1], label: `${nums[0]}-${nums[1]}` };
+        }
+
+        function getWorkingSets(sets) {
+            return (sets || []).filter(set => !set.isWarmup);
+        }
+
+        function getGoalIncreaseKg(planExercise) {
+            const baseline = Number(planExercise.baselineWeightKg);
+            const target = Number(planExercise.targetWeightKg);
+            return Number.isFinite(baseline) && Number.isFinite(target) ? Math.max(target - baseline, 0) : 0;
+        }
+
+        function getWeeklyTargetIncreaseKg(planExercise) {
+            const durationWeeks = Number(progressionPlanData.durationWeeks) || 12;
+            return getGoalIncreaseKg(planExercise) / durationWeeks;
+        }
+
+        function getPlannedWeightKg(planExercise, date = new Date()) {
+            const baseline = Number(planExercise.baselineWeightKg);
+            const target = Number(planExercise.targetWeightKg);
+            if (!Number.isFinite(baseline) || !Number.isFinite(target)) return null;
+
+            const start = getProgressionStartDate();
+            const end = getPlanEndDate();
+            const clampedDate = new Date(Math.min(Math.max(new Date(date).getTime(), start.getTime()), end.getTime()));
+            const progress = (clampedDate.getTime() - start.getTime()) / Math.max(1, end.getTime() - start.getTime());
+            return baseline + (target - baseline) * progress;
+        }
+
+        function getPlanStatus(row) {
+            if (!row.latest) return { label: 'No Data', className: 'warn', deltaKg: null };
+            const deltaKg = row.latest.maxWeightKg - row.targetTodayKg;
+            const thresholdKg = Math.max(0.25, getWeeklyTargetIncreaseKg(row.planExercise) * 0.5);
+            if (deltaKg >= thresholdKg) return { label: 'Ahead', className: 'good', deltaKg };
+            if (deltaKg <= -thresholdKg) return { label: 'Behind', className: 'bad', deltaKg };
+            return { label: 'On Track', className: 'good', deltaKg };
+        }
+
+        function getTrainingPlanEntries() {
+            const entries = [];
+            const schedule = trainingPlanData.schedule || [];
+            const seen = new Set();
+
+            schedule.forEach(dayName => {
+                const workout = trainingPlanData.workouts?.[dayName];
+                (workout?.exercises || []).forEach(ex => {
+                    if (seen.has(ex.id)) return;
+                    const planExercise = progressionPlanData.exercises?.[ex.id];
+                    if (!planExercise) return;
+                    seen.add(ex.id);
+                    entries.push({
+                        id: ex.id,
+                        dayName,
+                        sets: ex.sets,
+                        reps: ex.reps,
+                        repRange: parseRepRange(ex.reps),
+                        exercise: exercisesData[ex.id],
+                        planExercise
+                    });
+                });
+            });
+
+            return entries;
+        }
+
+        function getMostRecentLift(exerciseId) {
+            const start = getProgressionStartDate();
+            for (const log of workoutLogs) {
+                const logDate = new Date(log.date);
+                if (logDate < start) break;
+                const exerciseLogs = (log.exercises || []).filter(ex => ex.id === exerciseId);
+                if (exerciseLogs.length === 0) continue;
+
+                const workingSets = exerciseLogs.flatMap(ex => getWorkingSets(ex.sets));
+                if (workingSets.length === 0) continue;
+
+                let best = null;
+                for (const set of workingSets) {
+                    const rawWeight = parseFloat(set.weight);
+                    const weight = Number.isFinite(rawWeight) ? rawWeight : 0;
+                    const reps = parseInt(set.reps, 10) || 0;
+                    if (reps <= 0) continue;
+                    if (!best || weight > best.maxWeightKg || (weight === best.maxWeightKg && reps > best.reps)) {
+                        best = { maxWeightKg: weight, reps };
+                    }
+                }
+
+                if (best) return { ...best, date: log.date };
+            }
+            return null;
+        }
+
+        function getDailyAverages(exerciseId) {
+            const start = getProgressionStartDate();
+            const byDay = new Map();
+
+            for (const log of workoutLogs.slice().reverse()) {
+                const logDate = new Date(log.date);
+                if (logDate < start) continue;
+                const dayKey = logDate.toISOString().slice(0, 10);
+                const exerciseLogs = (log.exercises || []).filter(ex => ex.id === exerciseId);
+                if (exerciseLogs.length === 0) continue;
+
+                for (const exerciseLog of exerciseLogs) {
+                    for (const set of getWorkingSets(exerciseLog.sets)) {
+                        const rawWeight = parseFloat(set.weight);
+                        const weight = Number.isFinite(rawWeight) ? rawWeight : 0;
+                        const reps = parseInt(set.reps, 10) || 0;
+                        if (reps <= 0) continue;
+
+                        const row = byDay.get(dayKey) || { date: dayKey, weightTotal: 0, repTotal: 0, setCount: 0 };
+                        row.weightTotal += weight;
+                        row.repTotal += reps;
+                        row.setCount += 1;
+                        byDay.set(dayKey, row);
+                    }
+                }
+            }
+
+            return [...byDay.values()].map(row => ({
+                date: row.date,
+                avgWeightKg: row.weightTotal / row.setCount,
+                avgReps: row.repTotal / row.setCount,
+                setCount: row.setCount
+            }));
+        }
+
+        function buildLiftRows() {
+            liftRows = getTrainingPlanEntries().map(entry => {
+                const targetTodayKg = getPlannedWeightKg(entry.planExercise, new Date()) ?? 0;
+                const latest = getMostRecentLift(entry.id);
+                const goalKg = Number(entry.planExercise.targetWeightKg);
+                const baselineKg = Number(entry.planExercise.baselineWeightKg);
+                const row = {
+                    ...entry,
+                    baselineKg,
+                    goalKg,
+                    targetTodayKg,
+                    latest,
+                    dailyAverages: getDailyAverages(entry.id)
+                };
+                row.status = getPlanStatus(row);
+                return row;
+            });
+        }
+
+        function formatLiftWeight(kg, planExercise = null) {
+            if (planExercise?.targetMode === 'bodyweight') return 'Bodyweight';
+            return `${displayWeight(kg)} lbs`;
+        }
+
+        function renderHero() {
+            const start = getProgressionStartDate();
+            const end = getPlanEndDate();
+            const now = new Date();
+            const elapsedMs = now.getTime() - start.getTime();
+            const totalMs = end.getTime() - start.getTime();
+            const percent = Math.max(0, Math.min(100, Math.round((elapsedMs / totalMs) * 100)));
+            const week = Math.max(1, Math.min(progressionPlanData.durationWeeks, Math.ceil((elapsedMs / (7 * 24 * 60 * 60 * 1000)) || 1)));
+            const daysLeft = Math.max(0, Math.ceil((end.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)));
+
+            document.getElementById('planName').textContent = progressionPlanData.progressionPlanName || 'Progression Plan';
+            document.getElementById('startDateValue').textContent = formatDate(start, DateFormats.SHORT);
+            document.getElementById('endDateValue').textContent = formatDate(end, DateFormats.SHORT);
+            document.getElementById('trackedLiftCount').textContent = liftRows.length;
+            document.getElementById('weekValue').textContent = `Week ${week}`;
+            document.getElementById('daysLeftValue').textContent = `${daysLeft} days left`;
+            document.getElementById('timelineFill').style.width = `${percent}%`;
+            document.getElementById('timelineStart').textContent = formatDate(start, DateFormats.SHORT);
+            document.getElementById('timelineEnd').textContent = formatDate(end, DateFormats.SHORT);
+            document.getElementById('timelinePercent').textContent = `${percent}% elapsed`;
+        }
+
+        function renderSummary() {
+            const withData = liftRows.filter(row => row.latest);
+            const ahead = liftRows.filter(row => row.status.label === 'Ahead').length;
+            const onTrack = liftRows.filter(row => row.status.label === 'On Track').length;
+            const behind = liftRows.filter(row => row.status.label === 'Behind').length;
+            const noData = liftRows.filter(row => !row.latest).length;
+            const avgCompletion = liftRows.length
+                ? Math.round(liftRows.reduce((sum, row) => {
+                    const progress = row.latest ? (row.latest.maxWeightKg - row.baselineKg) / Math.max(1, row.goalKg - row.baselineKg) : 0;
+                    return sum + Math.max(0, Math.min(1, progress));
+                }, 0) / liftRows.length * 100)
+                : 0;
+
+            document.getElementById('summaryGrid').innerHTML = `
+                <div class="summary-card good">
+                    <div class="mini-label">On / Ahead</div>
+                    <div class="mini-value">${onTrack + ahead}</div>
+                    <div class="mini-note">${ahead} ahead, ${onTrack} on track</div>
+                </div>
+                <div class="summary-card bad">
+                    <div class="mini-label">Behind</div>
+                    <div class="mini-value">${behind}</div>
+                    <div class="mini-note">Below today's target pace</div>
+                </div>
+                <div class="summary-card warn">
+                    <div class="mini-label">No Recent Data</div>
+                    <div class="mini-value">${noData}</div>
+                    <div class="mini-note">No post-start non-warmup log</div>
+                </div>
+                <div class="summary-card">
+                    <div class="mini-label">Avg Block Completion</div>
+                    <div class="mini-value">${avgCompletion}%</div>
+                    <div class="mini-note">${withData.length} lifts with data</div>
+                </div>`;
+        }
+
+        function renderLiftTable() {
+            document.getElementById('liftTableBody').innerHTML = liftRows.map(row => {
+                const latest = row.latest
+                    ? `<span class="num-strong">${formatLiftWeight(row.latest.maxWeightKg, row.planExercise)} × ${row.latest.reps}</span><div class="lift-meta">${formatDate(row.latest.date, DateFormats.SHORT)}</div>`
+                    : '<span class="status-pill warn">No Data</span>';
+                const target = `<span class="num-strong target-glow">${formatLiftWeight(row.targetTodayKg, row.planExercise)} × ${row.repRange.label}</span>`;
+                const status = `<span class="status-pill ${row.status.className}">${row.status.label}</span>`;
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="lift-name">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
+                            <div class="lift-meta">${escapeHtml(row.dayName)} · ${row.sets} sets · ${row.reps} reps</div>
+                            <div class="lift-meta">${escapeHtml(row.planExercise.baselineNote || '')}</div>
+                        </td>
+                        <td><span class="num-strong">${formatLiftWeight(row.baselineKg, row.planExercise)}</span></td>
+                        <td>${latest}</td>
+                        <td>${target}</td>
+                        <td><span class="num-strong">${formatLiftWeight(row.goalKg, row.planExercise)}</span></td>
+                        <td>${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : `${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'}`}</div></td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function renderLiftSelect() {
+            const select = document.getElementById('liftSelect');
+            select.innerHTML = liftRows.map(row => `<option value="${row.id}">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</option>`).join('');
+            selectedExerciseId = selectedExerciseId || liftRows[0]?.id;
+            if (selectedExerciseId) select.value = selectedExerciseId;
+            select.addEventListener('change', () => {
+                selectedExerciseId = select.value;
+                renderSelectedChart();
+            });
+        }
+
+        function renderChartStats(row) {
+            const latest = row.latest;
+            const chartRows = row.dailyAverages;
+            const best = chartRows.reduce((max, point) => point.avgWeightKg > (max?.avgWeightKg ?? -Infinity) ? point : max, null);
+            const avgReps = chartRows.length
+                ? chartRows.reduce((sum, point) => sum + point.avgReps, 0) / chartRows.length
+                : 0;
+
+            document.getElementById('chartStats').innerHTML = `
+                <div class="side-stat">
+                    <div class="mini-label">Selected Lift</div>
+                    <div class="num-strong">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
+                    <div class="mini-note">${row.sets} sets · ${row.reps} reps</div>
+                </div>
+                <div class="side-stat">
+                    <div class="mini-label">Latest Max Set</div>
+                    <div class="num-strong">${latest ? `${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}` : 'No data'}</div>
+                    <div class="mini-note">${latest ? formatDate(latest.date, DateFormats.LONG) : 'No post-start log'}</div>
+                </div>
+                <div class="side-stat">
+                    <div class="mini-label">Best Daily Average</div>
+                    <div class="num-strong">${best ? formatLiftWeight(best.avgWeightKg, row.planExercise) : 'No data'}</div>
+                    <div class="mini-note">${best ? `${formatDate(best.date, DateFormats.LONG)} · ${Math.round(best.avgReps * 10) / 10} avg reps` : 'No chartable sets'}</div>
+                </div>
+                <div class="side-stat">
+                    <div class="mini-label">Avg Reps / Set</div>
+                    <div class="num-strong">${avgReps ? Math.round(avgReps * 10) / 10 : '--'}</div>
+                    <div class="mini-note">Across non-warmup charted sets</div>
+                </div>`;
+        }
+
+        function renderSelectedChart() {
+            const row = liftRows.find(item => item.id === selectedExerciseId) || liftRows[0];
+            if (!row) return;
+            renderChartStats(row);
+            document.getElementById('chartContainer').innerHTML = buildChart(row);
+        }
+
+        function buildChart(row) {
+            const points = row.dailyAverages;
+            if (points.length === 0) {
+                return '<div class="empty">No non-warmup chart data for this lift yet.</div>';
+            }
+
+            const start = getProgressionStartDate();
+            const end = getPlanEndDate();
+            const values = points.flatMap(point => [point.avgWeightKg, getPlannedWeightKg(row.planExercise, point.date)]).filter(Number.isFinite);
+            values.push(row.baselineKg, row.goalKg);
+
+            const minValue = Math.min(...values);
+            const maxValue = Math.max(...values);
+            const yPadding = Math.max(1, (maxValue - minValue) * 0.18);
+            const yMin = Math.max(0, minValue - yPadding);
+            const yMax = maxValue + yPadding;
+            const width = 760;
+            const height = 330;
+            const margin = { top: 22, right: 24, bottom: 38, left: 54 };
+            const plotWidth = width - margin.left - margin.right;
+            const plotHeight = height - margin.top - margin.bottom;
+            const startMs = start.getTime();
+            const endMs = Math.max(end.getTime(), new Date(points[points.length - 1].date).getTime());
+            const dateSpan = Math.max(1, endMs - startMs);
+
+            const xForDate = date => margin.left + ((new Date(date).getTime() - startMs) / dateSpan) * plotWidth;
+            const yForKg = kg => margin.top + (1 - ((kg - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
+            const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.avgWeightKg).toFixed(1)}`).join(' ');
+            const planPoints = [
+                { date: start.toISOString().slice(0, 10), kg: row.baselineKg },
+                { date: new Date().toISOString().slice(0, 10), kg: row.targetTodayKg },
+                { date: end.toISOString().slice(0, 10), kg: row.goalKg }
+            ];
+            const planPath = planPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.kg).toFixed(1)}`).join(' ');
+            const yTicks = [yMin, (yMin + yMax) / 2, yMax];
+
+            const gridHtml = yTicks.map(tick => {
+                const y = yForKg(tick).toFixed(1);
+                return `
+                    <line class="chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>
+                    <text class="chart-label" x="8" y="${Number(y) + 4}">${displayWeight(tick)} lb</text>`;
+            }).join('');
+
+            const pointHtml = points.map(point => {
+                const planned = getPlannedWeightKg(row.planExercise, point.date) || 0;
+                const statusClass = point.avgWeightKg >= planned - 0.01 ? '' : 'behind';
+                const x = xForDate(point.date).toFixed(1);
+                const y = yForKg(point.avgWeightKg).toFixed(1);
+                return `
+                    <circle class="chart-point ${statusClass}" cx="${x}" cy="${y}" r="6"></circle>
+                    <text class="chart-label" x="${x}" y="${height - 12}" text-anchor="middle">${formatDate(point.date, DateFormats.SHORT)}</text>`;
+            }).join('');
+
+            return `
+                <svg class="progress-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Selected lift average weight over time">
+                    ${gridHtml}
+                    <line class="chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"></line>
+                    <path class="chart-plan" d="${planPath}"></path>
+                    <path class="chart-actual" d="${actualPath}"></path>
+                    ${pointHtml}
+                </svg>`;
+        }
+
+        async function loadJson(path) {
+            const response = await fetch(path);
+            if (!response.ok) throw new Error(`Failed to load ${path}`);
+            return response.json();
+        }
+
+        async function loadWorkoutLogs() {
+            setSyncStatus('syncing');
+            const q = window.firebaseQuery(
+                window.firebaseCollection(window.firebaseDb, 'workouts'),
+                window.firebaseOrderBy('date', 'desc')
+            );
+            const snapshot = await window.firebaseGetDocs(q);
+            workoutLogs = [];
+            snapshot.forEach(doc => workoutLogs.push({ id: doc.id, ...doc.data() }));
+            setSyncStatus('synced');
+        }
+
+        function renderAll() {
+            buildLiftRows();
+            renderHero();
+            renderSummary();
+            renderLiftTable();
+            renderLiftSelect();
+            renderSelectedChart();
+        }
+
+        async function init() {
+            try {
+                [exercisesData, trainingPlanData, progressionPlanData] = await Promise.all([
+                    loadJson('exercises.json'),
+                    loadJson('training-plan.json'),
+                    loadJson('progression-plan.json')
+                ]);
+                await loadWorkoutLogs();
+                renderAll();
+                document.getElementById('loadingOverlay').style.display = 'none';
+            } catch (error) {
+                console.error(error);
+                setSyncStatus('error');
+                document.getElementById('loadingOverlay').innerHTML = '<p class="loading-text">Error loading progression data. Please refresh.</p>';
+            }
+        }
+    </script>
+</body>
+
+</html>
