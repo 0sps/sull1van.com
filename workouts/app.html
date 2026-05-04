@@ -298,9 +298,9 @@
             top: 30px;
             width: 30px;
             height: 30px;
-            border: 1px solid rgba(255, 187, 0, 0.38);
-            background: rgba(255, 187, 0, 0.06);
-            box-shadow: 0 0 12px rgba(255, 187, 0, 0.18);
+            border: 0;
+            background: transparent;
+            box-shadow: none;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -316,21 +316,17 @@
 
         .progression-orb:hover,
         .progression-orb:focus-visible {
-            border-color: rgba(255, 207, 132, 0.78);
             color: #ffe0a3;
-            box-shadow: 0 0 14px rgba(255, 187, 0, 0.3), 0 0 24px rgba(255, 149, 42, 0.16);
+            filter: drop-shadow(0 0 8px rgba(255, 187, 0, 0.55)) drop-shadow(0 0 16px rgba(255, 149, 42, 0.25));
             outline: none;
         }
 
-        .progression-orb-icon {
+        .progression-orb-img {
             width: 20px;
             height: 20px;
             display: block;
             pointer-events: none;
-            background: currentColor;
-            mask: url("../assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            -webkit-mask: url("../assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            filter: drop-shadow(0 0 5px rgba(255, 187, 0, 0.35));
+            filter: brightness(0) saturate(100%) invert(86%) sepia(42%) saturate(940%) hue-rotate(345deg) brightness(103%) contrast(101%) drop-shadow(0 0 6px rgba(255, 187, 0, 0.48));
         }
 
         .progression-orb.achieved {
@@ -341,7 +337,7 @@
             animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
         }
 
-        .progression-orb.achieved .progression-orb-icon {
+        .progression-orb.achieved .progression-orb-img {
             display: none;
         }
 
@@ -3171,7 +3167,7 @@
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
             const progressionOrb = (!isEdit && !isManual && hasProgressionTarget && setIdx === 0) ? `
                     <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation">
-                        <span class="progression-orb-icon" aria-hidden="true"></span>
+                        <img class="progression-orb-img" src="/assets/icons/progress-sparkle.svg" alt="" aria-hidden="true">
                     </button>` : '';
 
             return `
