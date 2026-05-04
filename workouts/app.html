@@ -322,11 +322,14 @@
             outline: none;
         }
 
-        .progression-orb img {
+        .progression-orb-icon {
             width: 20px;
             height: 20px;
             display: block;
             pointer-events: none;
+            background: currentColor;
+            mask: url("../assets/icons/progress-sparkle.svg") center / contain no-repeat;
+            -webkit-mask: url("../assets/icons/progress-sparkle.svg") center / contain no-repeat;
             filter: drop-shadow(0 0 5px rgba(255, 187, 0, 0.35));
         }
 
@@ -338,7 +341,7 @@
             animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
         }
 
-        .progression-orb.achieved img {
+        .progression-orb.achieved .progression-orb-icon {
             display: none;
         }
 
@@ -3168,7 +3171,7 @@
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
             const progressionOrb = (!isEdit && !isManual && hasProgressionTarget && setIdx === 0) ? `
                     <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation">
-                        <img src="../assets/icons/progress-sparkle.svg" alt="" aria-hidden="true">
+                        <span class="progression-orb-icon" aria-hidden="true"></span>
                     </button>` : '';
 
             return `
