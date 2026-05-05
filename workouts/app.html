@@ -1325,9 +1325,11 @@
         #trainingPlanModal .modal {
             max-width: 760px;
             background:
-                radial-gradient(circle at 18% 0%, rgba(255, 64, 129, 0.12), transparent 32%),
-                radial-gradient(circle at 100% 18%, rgba(0, 255, 136, 0.08), transparent 28%),
+                radial-gradient(circle at 18% 0%, rgba(0, 255, 136, 0.11), transparent 32%),
+                radial-gradient(circle at 100% 18%, rgba(63, 255, 211, 0.075), transparent 28%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.006)),
                 var(--bg-secondary);
+            border-color: rgba(63, 255, 211, 0.16);
         }
 
         .modal-title {
@@ -1341,14 +1343,6 @@
             display: flex;
             gap: 12px;
             margin-top: 24px;
-        }
-
-        .training-plan-hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(190px, 0.8fr);
-            gap: 14px;
-            align-items: stretch;
-            margin-bottom: 16px;
         }
 
         .training-plan-target-card,
@@ -1379,18 +1373,6 @@
         .training-plan-target-line strong {
             color: #fff;
             font-weight: 900;
-        }
-
-        .training-plan-target-sub {
-            color: var(--text-secondary);
-            font-size: 0.84rem;
-            margin-top: 10px;
-            line-height: 1.45;
-        }
-
-        .training-plan-target-sub strong {
-            color: #ffe0a3;
-            text-shadow: 0 0 10px rgba(255, 187, 88, 0.45);
         }
 
         .training-plan-pace-card {
@@ -1456,39 +1438,6 @@
             height: 100%;
             background: linear-gradient(90deg, #ff4f8f, #ff9cbd, #00ff88);
             box-shadow: 0 0 16px rgba(255, 115, 166, 0.38);
-        }
-
-        .training-plan-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .training-plan-stat {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            padding: 12px;
-        }
-
-        .training-plan-label {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .training-plan-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.35rem;
-            letter-spacing: 1px;
-            color: var(--text-primary);
-        }
-
-        .training-plan-value.glow {
-            color: #ffd4e3;
-            text-shadow: 0 0 10px rgba(255, 64, 129, 0.55);
         }
 
         .training-plan-phase-panel {
@@ -1592,75 +1541,6 @@
 
         .training-plan-phase-labels > div:nth-child(3) {
             text-align: right;
-        }
-
-        .training-plan-metric-deck {
-            display: grid;
-            grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .training-plan-status-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .training-plan-metric {
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            min-height: 92px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .training-plan-metric.recommendation {
-            min-height: 122px;
-            border-color: rgba(255, 184, 92, 0.24);
-            background: linear-gradient(135deg, rgba(255, 184, 92, 0.07), rgba(255, 255, 255, 0.025));
-        }
-
-        .training-plan-status-grid .training-plan-metric {
-            aspect-ratio: 1 / 1;
-            min-height: 0;
-        }
-
-        .training-plan-metric.good {
-            border-color: rgba(0, 255, 136, 0.32);
-            background: rgba(0, 255, 136, 0.045);
-        }
-
-        .training-plan-metric.bad {
-            border-color: rgba(255, 74, 116, 0.38);
-            background: rgba(255, 74, 116, 0.055);
-        }
-
-        .training-plan-metric-label {
-            color: var(--text-muted);
-            font-size: 0.64rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .training-plan-metric-value {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 1.48rem;
-            color: var(--text-primary);
-            letter-spacing: 0.7px;
-            margin-top: 8px;
-        }
-
-        .training-plan-metric.recommendation .training-plan-metric-value {
-            font-size: 2.05rem;
-            line-height: 1;
-        }
-
-        .training-plan-metric-value.glow {
-            color: #ffe0a3;
-            text-shadow: 0 0 10px rgba(255, 187, 88, 0.45);
         }
 
         .training-plan-metric-note {
@@ -1799,19 +1679,212 @@
             padding-bottom: 0;
         }
 
-        .training-plan-action {
-            color: var(--text-primary);
-            background: rgba(255, 61, 112, 0.08);
-            border: 1px solid rgba(255, 155, 185, 0.35);
-            padding: 12px;
-            font-size: 0.86rem;
-            line-height: 1.45;
+        .training-coach-shell {
+            display: grid;
+            gap: 14px;
         }
 
-        .training-plan-action strong {
-            color: #ffd4e3;
-            font-size: 1.08em;
-            text-shadow: 0 0 10px rgba(255, 64, 129, 0.55), 0 0 20px rgba(186, 76, 255, 0.22);
+        .training-coach-header {
+            border-left: 3px solid #35d9c8;
+            padding-left: 13px;
+            margin-bottom: 2px;
+        }
+
+        .training-coach-kicker {
+            color: #7fffe8;
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 4px;
+        }
+
+        .training-coach-name {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 2.2rem;
+            line-height: 0.95;
+            letter-spacing: 1.5px;
+            color: var(--text-primary);
+        }
+
+        .training-coach-subtitle {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 8px;
+            line-height: 1.35;
+        }
+
+        .training-coach-command {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(210px, 0.65fr);
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .training-coach-shell .training-plan-target-card {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 18% 0%, rgba(0, 255, 136, 0.18), transparent 38%),
+                radial-gradient(ellipse at 95% 20%, rgba(127, 255, 232, 0.1), transparent 32%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012)),
+                rgba(0, 0, 0, 0.18);
+            border-color: rgba(63, 255, 211, 0.28);
+            box-shadow: inset 0 0 34px rgba(0, 255, 136, 0.035), 0 0 26px rgba(0, 255, 136, 0.045);
+        }
+
+        .training-coach-shell .training-plan-target-card::before,
+        .training-coach-shell .training-plan-pace-card::before,
+        .training-coach-shell .training-plan-phase-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.95), rgba(127, 255, 232, 0.76), transparent);
+        }
+
+        .training-coach-shell .training-plan-target-title,
+        .training-coach-shell .training-plan-pace-label,
+        .training-coach-shell .training-plan-phase-label {
+            color: var(--text-muted);
+        }
+
+        .training-coach-shell .training-plan-target-line {
+            color: #b0ffee;
+            text-shadow: 0 0 10px rgba(63, 255, 211, 0.32), 0 0 24px rgba(0, 255, 136, 0.18);
+        }
+
+        .training-coach-shell .training-plan-target-line strong {
+            color: #eafffb;
+        }
+
+        .training-plan-rule-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .training-plan-rule {
+            border: 1px solid rgba(63, 255, 211, 0.16);
+            background: rgba(63, 255, 211, 0.055);
+            padding: 9px 10px;
+        }
+
+        .training-plan-rule-label {
+            color: var(--text-muted);
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            margin-bottom: 4px;
+        }
+
+        .training-plan-rule-value {
+            color: #d8fff5;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .training-coach-shell .training-plan-pace-card {
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+                rgba(0, 0, 0, 0.16);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: none;
+        }
+
+        .training-coach-shell .training-plan-pace-card.on-track,
+        .training-coach-shell .training-plan-pace-card.ahead {
+            border-color: rgba(0, 255, 136, 0.34);
+            box-shadow: inset 0 0 28px rgba(0, 255, 136, 0.045);
+        }
+
+        .training-coach-shell .training-plan-pace-card.behind {
+            border-color: rgba(255, 93, 143, 0.42);
+            box-shadow: inset 0 0 28px rgba(255, 93, 143, 0.055);
+        }
+
+        .training-plan-pace-meta {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .training-plan-pace-mini {
+            border-top: 1px solid rgba(255, 255, 255, 0.09);
+            padding-top: 8px;
+        }
+
+        .training-plan-pace-mini span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .training-plan-pace-mini strong {
+            display: block;
+            margin-top: 3px;
+            color: var(--text-primary);
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: 1.18rem;
+            letter-spacing: 0.6px;
+        }
+
+        .training-coach-shell .training-plan-progress-fill,
+        .training-coach-shell .training-plan-phase-fill {
+            background: linear-gradient(90deg, #00ff88, #3fffd3, #b0ffee);
+            box-shadow: 0 0 18px rgba(63, 255, 211, 0.24);
+        }
+
+        .training-coach-shell .training-plan-phase-panel {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 82% 0%, rgba(63, 255, 211, 0.075), transparent 34%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+                rgba(0, 0, 0, 0.14);
+            border-color: rgba(63, 255, 211, 0.14);
+        }
+
+        .training-coach-shell .training-plan-phase-percent {
+            color: #b0ffee;
+            text-shadow: 0 0 12px rgba(63, 255, 211, 0.28);
+        }
+
+        .training-plan-evidence-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(210px, 0.8fr);
+            gap: 12px;
+            align-items: start;
+        }
+
+        .training-coach-shell .training-plan-section {
+            border-top-color: rgba(255, 255, 255, 0.08);
+            margin-top: 0;
+        }
+
+        .training-coach-shell .training-plan-section-title {
+            color: #7fffe8;
+        }
+
+        .training-coach-shell .training-plan-chart-card {
+            background:
+                radial-gradient(ellipse at 72% 18%, rgba(63, 255, 211, 0.052), transparent 36%),
+                rgba(255, 255, 255, 0.026);
+            border-color: rgba(63, 255, 211, 0.13);
+        }
+
+        .training-coach-shell .training-plan-chart-plan {
+            stroke: rgba(63, 255, 211, 0.72);
+        }
+
+        .training-coach-shell .training-plan-legend .planned::before {
+            background: #3fffd3;
         }
 
         @media (max-width: 560px) {
@@ -1819,21 +1892,13 @@
                 padding: 22px;
             }
 
-            .training-plan-hero {
+            .training-coach-command,
+            .training-plan-evidence-grid {
                 grid-template-columns: 1fr;
             }
 
-            .training-plan-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .training-plan-metric-deck,
             .training-plan-phase-labels {
                 grid-template-columns: 1fr;
-            }
-
-            .training-plan-status-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .training-plan-phase-labels > div,
@@ -4401,18 +4466,14 @@
                 : 0;
             const startDate = progressionPlanData?.progressionPlan_startDate || 'plan start';
             const currentWeightLabel = current ? `${Math.round(current.representativeWeightKg * 10) / 10} kg` : 'No data';
-            const baselineWeightLabel = baseline ? formatKgAndLbs(baseline.representativeWeightKg) : 'No baseline data';
             const recommendationLabel = `${displayWeight(target.targetWeightKg)} lbs`;
             const chartHtml = buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg);
-            const plannedTodayLabel = plannedWeightTodayKg ? formatKgAndLbs(plannedWeightTodayKg) : 'No baseline data';
             const plannedTodayLbsLabel = plannedWeightTodayKg ? `${displayWeight(plannedWeightTodayKg)} lbs` : 'No data';
             const baselineLbsLabel = baseline ? `${displayWeight(baseline.representativeWeightKg)} lbs` : 'No data';
-            const currentLbsLabel = current ? `${displayWeight(current.representativeWeightKg)} lbs` : 'No data';
             const targetPlanWeightKg = getPlanTargetWeightKg(target.planExercise);
             const goalLbsLabel = targetPlanWeightKg !== null ? `${displayWeight(targetPlanWeightKg)} lbs` : 'No goal';
             const remainingLbsLabel = `${displayWeight(remainingKg)} lbs`;
             const paceDeltaLbsLabel = `${displayWeight(Math.abs(progressDeltaKg))} lbs`;
-            const paceMetricClass = pace.className === 'behind' ? 'bad' : 'good';
             const paceDeltaText = pace.className === 'behind'
                 ? `${paceDeltaLbsLabel} below pace`
                 : pace.className === 'ahead'
@@ -4433,100 +4494,92 @@
                 }).join('')
                 : `<div class="training-plan-row"><span>No logs in the last 14 days</span><span></span></div>`;
 
-            document.getElementById('trainingPlanModalTitle').textContent = 'TRAINING PLAN';
+            document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
-                <h4 class="exercise-name m-b-16">${(exercise?.name || target.exerciseId).toUpperCase()}</h4>
-                <div class="training-plan-hero">
-                    <div class="training-plan-target-card">
-                        <div class="training-plan-target-title">Hit This Today</div>
-                        <div class="training-plan-target-line">
-                            <strong>${displayWeight(target.targetWeightKg)} lb</strong> × <strong>${target.repRange.label}</strong>
-                        </div>
-                        <div class="training-plan-target-sub">
-                            Mark this target hit by logging <strong>${displayWeight(target.targetWeightKg)}+ lb</strong>
-                            and <strong>${target.repRange.min}+ reps</strong> across every non-warmup set.
-                        </div>
+                <div class="training-coach-shell">
+                    <div class="training-coach-header">
+                        <div class="training-coach-kicker">${progressionPlanData?.progressionPlanName || 'Training Plan'}</div>
+                        <div class="training-coach-name">${(exercise?.name || target.exerciseId).toUpperCase()}</div>
+                        <div class="training-coach-subtitle">Use this to decide what to log on your working sets today. Warmups are ignored for progression.</div>
                     </div>
-                    <div class="training-plan-pace-card ${pace.className}">
-                        <div class="training-plan-pace-label">Plan Pace</div>
-                        <div class="training-plan-pace-value ${pace.className}">${pace.label}</div>
-                        <div class="training-plan-pace-detail">${pace.detail}</div>
-                        <div class="training-plan-progress-track">
-                            <div class="training-plan-progress-fill" style="width: ${progressPercent}%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="training-plan-phase-panel">
-                    <div class="training-plan-panel-top">
-                        <div>
-                            <div class="training-plan-panel-title">Progress Since ${startDate}</div>
-                            <div class="training-plan-panel-subtitle">Actual progress against the planned block curve</div>
-                        </div>
-                        <div class="training-plan-phase-percent">${progressPercent}%</div>
-                    </div>
-                    <div class="training-plan-phase-rail">
-                        <div class="training-plan-phase-fill" style="width: ${progressPercent}%"></div>
-                        <div class="training-plan-phase-marker" style="left: ${plannedPercent}%"></div>
-                    </div>
-                    <div class="training-plan-phase-labels">
-                        <div>
-                            <div class="training-plan-phase-label">Baseline</div>
-                            <div class="training-plan-phase-number">${baselineLbsLabel}</div>
-                        </div>
-                        <div>
-                            <div class="training-plan-phase-label">Current</div>
-                            <div class="training-plan-phase-number">${currentLbsLabel}</div>
-                        </div>
-                        <div>
-                            <div class="training-plan-phase-label">Goal</div>
-                            <div class="training-plan-phase-number">${goalLbsLabel}</div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="training-plan-metric-deck">
-                    <div class="training-plan-metric recommendation">
-                        <div>
-                            <div class="training-plan-metric-label">Recommendation</div>
-                            <div class="training-plan-metric-value glow">${recommendationLabel} × ${target.repRange.label}</div>
-                        </div>
-                        <div class="training-plan-metric-note">${target.repRange.min}+ to hit, ${target.repRange.max} to progress. Use this for today's working sets.</div>
-                    </div>
-                    <div class="training-plan-status-grid">
-                        <div class="training-plan-metric ${paceMetricClass}">
-                            <div>
-                                <div class="training-plan-metric-label">Plan Today</div>
-                                <div class="training-plan-metric-value ${pace.className === 'behind' ? 'text-error' : 'text-success'}">${plannedTodayLbsLabel}</div>
+                    <div class="training-coach-command">
+                        <div class="training-plan-target-card">
+                            <div class="training-plan-target-title">Today's Working Set Target</div>
+                            <div class="training-plan-target-line">
+                                <strong>${recommendationLabel}</strong> × <strong>${target.repRange.label}</strong>
                             </div>
-                            <div class="training-plan-metric-note">${currentWeightLabel} current</div>
-                        </div>
-                        <div class="training-plan-metric ${paceMetricClass}">
-                            <div>
-                                <div class="training-plan-metric-label">Pace</div>
-                                <div class="training-plan-metric-value ${pace.className === 'behind' ? 'text-error' : 'text-success'}">${paceDeltaText}</div>
+                            <div class="training-plan-rule-row">
+                                <div class="training-plan-rule">
+                                    <div class="training-plan-rule-label">Target Hit</div>
+                                    <div class="training-plan-rule-value">${target.repRange.min}+ reps on every set</div>
+                                </div>
+                                <div class="training-plan-rule">
+                                    <div class="training-plan-rule-label">Progress Earned</div>
+                                    <div class="training-plan-rule-value">${target.repRange.max} reps on every set</div>
+                                </div>
                             </div>
-                            <div class="training-plan-metric-note">${remainingLbsLabel} remaining</div>
+                        </div>
+
+                        <div class="training-plan-pace-card ${pace.className}">
+                            <div class="training-plan-pace-label">Plan Pace</div>
+                            <div class="training-plan-pace-value ${pace.className}">${pace.label}</div>
+                            <div class="training-plan-pace-detail">${pace.detail}</div>
+                            <div class="training-plan-progress-track">
+                                <div class="training-plan-progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <div class="training-plan-pace-meta">
+                                <div class="training-plan-pace-mini">
+                                    <span>Plan Today</span>
+                                    <strong>${plannedTodayLbsLabel}</strong>
+                                </div>
+                                <div class="training-plan-pace-mini">
+                                    <span>Delta</span>
+                                    <strong class="${pace.className === 'behind' ? 'text-error' : 'text-success'}">${paceDeltaText}</strong>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="training-plan-section">
-                    <div class="training-plan-section-title">Last 14 Days vs Plan</div>
-                    ${chartHtml}
-                </div>
+                    <div class="training-plan-phase-panel">
+                        <div class="training-plan-panel-top">
+                            <div>
+                                <div class="training-plan-panel-title">Block Progress Since ${startDate}</div>
+                                <div class="training-plan-panel-subtitle">Current load vs baseline, goal, and today's plan line</div>
+                            </div>
+                            <div class="training-plan-phase-percent">${progressPercent}%</div>
+                        </div>
+                        <div class="training-plan-phase-rail">
+                            <div class="training-plan-phase-fill" style="width: ${progressPercent}%"></div>
+                            <div class="training-plan-phase-marker" style="left: ${plannedPercent}%"></div>
+                        </div>
+                        <div class="training-plan-phase-labels">
+                            <div>
+                                <div class="training-plan-phase-label">Baseline</div>
+                                <div class="training-plan-phase-number">${baselineLbsLabel}</div>
+                            </div>
+                            <div>
+                                <div class="training-plan-phase-label">Current</div>
+                                <div class="training-plan-phase-number">${currentWeightLabel}</div>
+                            </div>
+                            <div>
+                                <div class="training-plan-phase-label">Goal</div>
+                                <div class="training-plan-phase-number">${goalLbsLabel}</div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="training-plan-section">
-                    <div class="training-plan-section-title">Last 14 Days</div>
-                    <div class="training-plan-list">${recentHtml}</div>
-                </div>
+                    <div class="training-plan-evidence-grid">
+                        <div class="training-plan-section">
+                            <div class="training-plan-section-title">Last 14 Days vs Plan</div>
+                            ${chartHtml}
+                        </div>
 
-                <div class="training-plan-section">
-                    <div class="training-plan-section-title">Action</div>
-                    <div class="training-plan-action">
-                        Hit at least <strong>${displayWeight(target.targetWeightKg)} lbs</strong> for
-                        <strong>${target.repRange.min}+ reps</strong> on every non-warmup set to mark this target hit.
-                        Hit <strong>${target.repRange.max} reps</strong> on every non-warmup set to earn the next
-                        ${formatKgAndLbs(parseFloat(target.planExercise.progressionStepKg) || 0)} increase.
+                        <div class="training-plan-section">
+                            <div class="training-plan-section-title">Recent Evidence</div>
+                            <div class="training-plan-list">${recentHtml}</div>
+                            <div class="training-plan-metric-note m-t-12">${remainingLbsLabel} remaining to the end-of-block goal.</div>
+                        </div>
                     </div>
                 </div>`;
 
