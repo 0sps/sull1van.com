@@ -342,7 +342,7 @@
 
         .hero-stats {
             display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(170px, 0.6fr);
+            grid-template-columns: 1fr;
             gap: 10px;
             margin-top: 22px;
         }
@@ -1044,11 +1044,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mini-stat">
-                            <div class="mini-label">Tracked Exercises</div>
-                            <div class="mini-value" id="trackedExerciseCount">0</div>
-                            <div class="mini-note">Active plan lifts</div>
-                        </div>
                     </div>
                 </div>
                 <div class="panel timeline-card">
@@ -1541,7 +1536,6 @@
             document.getElementById('endDateValue').textContent = formatRangeDate(end);
             document.getElementById('trackedLiftCount').textContent = trackedTrainingDays.size;
             document.getElementById('liftsLeftCount').textContent = remainingTrainingDays.length;
-            document.getElementById('trackedExerciseCount').textContent = liftRows.length;
             document.getElementById('weekValue').textContent = `Week ${week}`;
             document.getElementById('daysLeftValue').textContent = `${daysLeft} days left`;
             document.getElementById('timelineFill').style.width = `${percent}%`;
