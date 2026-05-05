@@ -292,117 +292,6 @@
             background: rgba(0, 255, 136, 0.05);
         }
 
-        .progression-orb {
-            position: absolute;
-            right: 0;
-            top: 15px;
-            width: 53px;
-            height: 53px;
-            border: 0;
-            background: transparent;
-            box-shadow: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-            font-size: 0.9rem;
-            font-weight: 900;
-            padding: 0;
-            cursor: pointer;
-            z-index: 2;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-        }
-
-        .progression-orb:hover,
-        .progression-orb:focus-visible {
-            filter: drop-shadow(0 0 8px rgba(255, 222, 150, 0.42)) drop-shadow(0 0 16px rgba(255, 137, 54, 0.34));
-            outline: none;
-        }
-
-        .progression-orb::before {
-            content: "";
-            position: relative;
-            z-index: 1;
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(180deg, rgba(255, 223, 178, 0.78), rgba(255, 132, 64, 0.58));
-            mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            -webkit-mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            filter: drop-shadow(0 0 6px rgba(255, 226, 166, 0.58)) drop-shadow(0 0 13px rgba(255, 154, 65, 0.38));
-            transition: background 0.2s ease, filter 0.2s ease;
-        }
-
-        .progression-orb:not(.achieved)::after {
-            content: "";
-            position: absolute;
-            z-index: 0;
-            width: 43px;
-            height: 43px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 185, 108, 0.06), rgba(0, 0, 0, 0.05));
-            mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            -webkit-mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
-            filter: drop-shadow(0 0 10px rgba(255, 213, 128, 0.26));
-            pointer-events: none;
-        }
-
-        .progression-orb.achieved {
-            background: transparent;
-            box-shadow: none;
-            animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
-        }
-
-        .progression-orb.achieved::before {
-            background: var(--success);
-            filter: drop-shadow(0 0 7px rgba(0, 255, 136, 0.72)) drop-shadow(0 0 16px rgba(0, 255, 136, 0.42));
-        }
-
-        .progression-orb.achieved::after {
-            content: "";
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            z-index: 0;
-            background: conic-gradient(from 0deg, rgba(0, 74, 38, 0.08), rgba(0, 255, 136, 0.48), rgba(0, 94, 48, 0.16), rgba(119, 255, 194, 0.42), rgba(0, 74, 38, 0.08));
-            filter: blur(8px);
-            animation: progressionGreenAura 2.8s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes progressionCheckSpin {
-            0% {
-                transform: perspective(80px) rotateY(-540deg) rotateZ(-18deg) scale(0.72);
-            }
-
-            48% {
-                transform: perspective(80px) rotateY(-180deg) rotateZ(9deg) scale(1.12);
-            }
-
-            72% {
-                transform: perspective(80px) rotateY(-32deg) rotateZ(-4deg) scale(0.96);
-            }
-
-            100% {
-                transform: perspective(80px) rotateY(0deg) rotateZ(0deg) scale(1);
-            }
-        }
-
-        @keyframes progressionGreenAura {
-            0% {
-                transform: rotate(0deg) scale(0.92);
-                opacity: 0.58;
-            }
-
-            50% {
-                transform: rotate(180deg) scale(1.08);
-                opacity: 0.9;
-            }
-
-            100% {
-                transform: rotate(360deg) scale(0.92);
-                opacity: 0.58;
-            }
-        }
-
         .exercise-header {
             display: flex;
             justify-content: space-between;
@@ -415,15 +304,6 @@
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.3rem;
             letter-spacing: 1px;
-        }
-
-        .exercise-sets {
-            font-size: 0.8rem;
-            color: var(--accent-secondary);
-            background: rgba(255, 61, 0, 0.1);
-            padding: 4px 12px;
-            width: 100%;
-            text-align: center;
         }
 
         .exercise-muscles {
@@ -552,9 +432,9 @@
         }
 
         .set-input.progression-target-input::placeholder {
-            color: rgba(255, 210, 92, 0.95);
+            color: rgba(176, 255, 238, 0.56);
             opacity: 1;
-            text-shadow: 0 0 8px rgba(255, 187, 0, 0.44), 0 0 16px rgba(255, 109, 61, 0.2);
+            text-shadow: 0 0 8px rgba(78, 255, 214, 0.22), 0 0 16px rgba(0, 210, 180, 0.12);
         }
 
         .input-separator {
@@ -1990,6 +1870,34 @@
             box-shadow: 0 0 10px rgba(255, 187, 0, 0.3);
         }
 
+        .btn-coach {
+            padding: 4px 10px;
+            font-size: 0.77rem;
+            background: rgba(0, 210, 180, 0.1);
+            border: 1px solid #35d9c8;
+            color: #7fffe8;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            text-shadow: 0 0 8px rgba(53, 217, 200, 0.3);
+        }
+
+        .btn-coach:hover {
+            background: rgba(0, 210, 180, 0.18);
+            border-color: #7fffe8;
+            box-shadow: 0 0 12px rgba(53, 217, 200, 0.28), 0 0 20px rgba(0, 255, 136, 0.12);
+        }
+
+        .btn-coach.achieved {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(0, 255, 136, 0.12);
+            box-shadow: 0 0 14px rgba(0, 255, 136, 0.22);
+        }
+
         .history-set {
             display: flex;
             justify-content: space-between;
@@ -3215,14 +3123,11 @@
             const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
             const weightPlaceholder = targetWeight || (prevWeight ? `${prevWeight}` : 'WEIGHT');
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
-            const progressionOrb = (!isEdit && !isManual && hasProgressionTarget && setIdx === 0) ? `
-                    <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation"></button>` : '';
 
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
                     <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
-                    ${progressionOrb}
                     <div class="set-inputs">
                         <input type="number" class="${inputClass}" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
@@ -3235,14 +3140,14 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
-            const { isEdit, exIdx, volumeLbs = 0 } = options;
+            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
             const headerActions = isEdit ? '' : `
                 <div class="exercise-meta-col">
                     <button class="btn-history" data-exercise-name="${exercise.name}">History</button>
-                    <span class="exercise-sets">${workoutEx.sets} × ${workoutEx.reps}</span>
+                    ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${key}" data-exercise-key="${key}">Coach</button>` : ''}
                 </div>`;
 
             const footerActions = isEdit ? `
@@ -3617,10 +3522,10 @@
                 }
 
                 // Progression recommendation modal
-                const progressionOrb = e.target.closest('.progression-orb');
-                if (progressionOrb) {
+                const coachBtn = e.target.closest('.btn-coach');
+                if (coachBtn) {
                     e.preventDefault();
-                    const key = progressionOrb.dataset.exerciseKey;
+                    const key = coachBtn.dataset.exerciseKey;
                     if (key) showTrainingPlanModal(key);
                     return;
                 }
@@ -3931,14 +3836,10 @@
             if (!el) return;
 
             const target = activeProgressionTargets[key];
-            const orb = document.getElementById(`progression-orb-${key}`);
+            const coachBtn = document.getElementById(`coach-btn-${key}`);
             if (!target) {
                 el.classList.remove('completed');
-                if (orb) {
-                    orb.classList.remove('achieved');
-                    orb.textContent = '';
-                    orb.setAttribute('aria-label', 'Progression target pending');
-                }
+                if (coachBtn) coachBtn.classList.remove('achieved');
                 return;
             }
 
@@ -3962,11 +3863,7 @@
             });
 
             el.classList.toggle('completed', targetHit);
-            if (orb) {
-                orb.classList.toggle('achieved', targetHit);
-                orb.textContent = '';
-                orb.setAttribute('aria-label', targetHit ? 'Progression target hit' : 'Progression target pending');
-            }
+            if (coachBtn) coachBtn.classList.toggle('achieved', targetHit);
         }
         async function completeWorkout(shouldExport = false) {
             const workout = getWorkoutData(currentWorkoutDay);

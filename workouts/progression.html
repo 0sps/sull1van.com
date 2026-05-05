@@ -1204,7 +1204,7 @@
                 window.currentUser = user;
                 init();
             } else {
-                window.location.href = 'index.html';
+                window.location.href = 'index.html?redirect=progression.html';
             }
         });
 
@@ -1221,6 +1221,7 @@
         let workoutLogs = [];
         let liftRows = [];
         let selectedExerciseId = null;
+        let initStarted = false;
 
         const DateFormats = {
             SHORT: { month: 'short', day: 'numeric' },
@@ -1273,6 +1274,42 @@
             icon.textContent = state === 'error' ? '!' : '✓';
             text.textContent = state === 'error' ? 'Error' : state === 'syncing' ? 'Syncing' : 'Synced';
         }
+
+        function showLoadingError(message, detail = '') {
+            const overlay = document.getElementById('loadingOverlay');
+            if (!overlay) return;
+            setSyncStatus('error');
+            overlay.innerHTML = `
+                <div class="loading-text">${escapeHtml(message)}</div>
+                ${detail ? `<p class="loading-text" style="max-width: 460px; color: var(--text-muted); font-size: 0.78rem; line-height: 1.5; text-align: center;">${escapeHtml(detail)}</p>` : ''}
+            `;
+        }
+
+        window.addEventListener('error', (event) => {
+            const message = String(event.message || '');
+            if (message.includes('Failed to fetch dynamically imported module') || message.includes('Importing a module script failed')) {
+                showLoadingError(
+                    'Could not load Firebase for the progression page.',
+                    'Open the app from the local web server instead of the file directly, and make sure the Firebase scripts are reachable.'
+                );
+            }
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            const reason = event.reason?.message || event.reason || '';
+            console.error('Unhandled progression page error:', event.reason);
+            showLoadingError('Progression page hit a loading error.', String(reason));
+        });
+
+        setTimeout(() => {
+            const overlay = document.getElementById('loadingOverlay');
+            if (!initStarted && overlay && overlay.style.display !== 'none') {
+                showLoadingError(
+                    'Still waiting for Firebase sign-in.',
+                    'If this stays here, reload from the served URL for this app, not a file:// URL. The progression page needs Firebase auth before it can read workout logs.'
+                );
+            }
+        }, 12000);
 
         function getProgressionStartDate() {
             return new Date(`${progressionPlanData.progressionPlan_startDate}T00:00:00`);
@@ -1788,7 +1825,7 @@
 
         async function loadJson(path) {
             const response = await fetch(path);
-            if (!response.ok) throw new Error(`Failed to load ${path}`);
+            if (!response.ok) throw new Error(`Failed to load ${path}: HTTP ${response.status}`);
             return response.json();
         }
 
@@ -1814,6 +1851,7 @@
         }
 
         async function init() {
+            initStarted = true;
             try {
                 [exercisesData, trainingPlanData, progressionPlanData] = await Promise.all([
                     loadJson('exercises.json'),
@@ -1825,8 +1863,7 @@
                 document.getElementById('loadingOverlay').style.display = 'none';
             } catch (error) {
                 console.error(error);
-                setSyncStatus('error');
-                document.getElementById('loadingOverlay').innerHTML = '<p class="loading-text">Error loading progression data. Please refresh.</p>';
+                showLoadingError('Error loading progression data.', error.message || 'Please refresh and try again.');
             }
         }
     </script>
