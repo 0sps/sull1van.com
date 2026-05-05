@@ -304,7 +304,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
             font-family: Arial, sans-serif;
             font-size: 0.9rem;
             font-weight: 900;
@@ -316,32 +315,44 @@
 
         .progression-orb:hover,
         .progression-orb:focus-visible {
-            color: #ffffff;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 16px rgba(255, 187, 0, 0.35));
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.36)) drop-shadow(0 0 16px rgba(255, 109, 61, 0.45));
             outline: none;
         }
 
         .progression-orb::before {
-            content: "✦";
-            color: #ffffff;
-            font-family: 'Space Mono', monospace;
-            font-size: 1.55rem;
-            line-height: 1;
-            filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.48)) drop-shadow(0 0 12px rgba(255, 187, 0, 0.28));
+            content: "";
+            position: relative;
+            z-index: 1;
+            width: 24px;
+            height: 24px;
+            background: #ff6d3d;
+            mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
+            -webkit-mask: url("/assets/icons/progress-sparkle.svg") center / contain no-repeat;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.42)) drop-shadow(0 0 11px rgba(255, 109, 61, 0.58));
+            transition: background 0.2s ease, filter 0.2s ease;
         }
 
         .progression-orb.achieved {
-            background: var(--success);
-            border-color: var(--success);
-            color: #03150c;
-            box-shadow: 0 0 16px rgba(0, 255, 136, 0.55), 0 0 30px rgba(0, 255, 136, 0.28);
+            background: transparent;
+            box-shadow: none;
             animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
         }
 
         .progression-orb.achieved::before {
-            content: "✓";
-            color: #03150c;
-            filter: none;
+            background: var(--success);
+            filter: drop-shadow(0 0 7px rgba(0, 255, 136, 0.72)) drop-shadow(0 0 16px rgba(0, 255, 136, 0.42));
+        }
+
+        .progression-orb.achieved::after {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            z-index: 0;
+            background: conic-gradient(from 0deg, rgba(0, 74, 38, 0.08), rgba(0, 255, 136, 0.48), rgba(0, 94, 48, 0.16), rgba(119, 255, 194, 0.42), rgba(0, 74, 38, 0.08));
+            filter: blur(8px);
+            animation: progressionGreenAura 2.8s linear infinite;
+            pointer-events: none;
         }
 
         @keyframes progressionCheckSpin {
@@ -359,6 +370,23 @@
 
             100% {
                 transform: perspective(80px) rotateY(0deg) rotateZ(0deg) scale(1);
+            }
+        }
+
+        @keyframes progressionGreenAura {
+            0% {
+                transform: rotate(0deg) scale(0.92);
+                opacity: 0.58;
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.08);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: rotate(360deg) scale(0.92);
+                opacity: 0.58;
             }
         }
 
