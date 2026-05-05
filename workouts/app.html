@@ -321,12 +321,13 @@
             outline: none;
         }
 
-        .progression-orb-img {
-            width: 26px;
-            height: 26px;
-            display: block;
-            pointer-events: none;
-            filter: invert(1) drop-shadow(0 0 7px rgba(255, 255, 255, 0.48)) drop-shadow(0 0 12px rgba(255, 187, 0, 0.28));
+        .progression-orb::before {
+            content: "✦";
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.55rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.48)) drop-shadow(0 0 12px rgba(255, 187, 0, 0.28));
         }
 
         .progression-orb.achieved {
@@ -337,8 +338,10 @@
             animation: progressionCheckSpin 0.9s cubic-bezier(0.18, 0.85, 0.26, 1.08);
         }
 
-        .progression-orb.achieved .progression-orb-img {
-            display: none;
+        .progression-orb.achieved::before {
+            content: "✓";
+            color: #03150c;
+            filter: none;
         }
 
         @keyframes progressionCheckSpin {
@@ -3166,9 +3169,7 @@
             const weightPlaceholder = targetWeight || (prevWeight ? `${prevWeight}` : 'WEIGHT');
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
             const progressionOrb = (!isEdit && !isManual && hasProgressionTarget && setIdx === 0) ? `
-                    <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation">
-                        <img class="progression-orb-img" src="/assets/icons/sparkle.svg" alt="" aria-hidden="true">
-                    </button>` : '';
+                    <button type="button" class="progression-orb" id="progression-orb-${key}" data-exercise-key="${key}" aria-label="Open training plan recommendation"></button>` : '';
 
             return `
                 <div class="set-input-group" data-mode="${mode}">
@@ -3916,7 +3917,7 @@
             el.classList.toggle('completed', targetHit);
             if (orb) {
                 orb.classList.toggle('achieved', targetHit);
-                orb.textContent = targetHit ? '✓' : '';
+                orb.textContent = '';
                 orb.setAttribute('aria-label', targetHit ? 'Progression target hit' : 'Progression target pending');
             }
         }
