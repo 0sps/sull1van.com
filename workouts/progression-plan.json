@@ -8,6 +8,15 @@
   "noBaselineLabel": "No baseline data",
   "targetHitRule": "Target is hit when all working sets use at least the target weight and reach at least the bottom of the planned rep range.",
   "nextIncreaseRule": "Next increase is earned when all working sets use at least the target weight and reach the top of the planned rep range.",
+  "recommendationDefaults": {
+    "method": "estimatedMax",
+    "formula": "epley",
+    "validRepMin": 1,
+    "validRepMax": 12,
+    "lookbackSessions": 2,
+    "roundingMode": "floor",
+    "incrementLbs": 5
+  },
   "exercises": {
     "ex001": {
       "name": "Dumbbell Incline Bench Press",
