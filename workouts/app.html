@@ -1678,19 +1678,20 @@
         }
 
         .training-coach-shell {
-            --coach-glass: rgba(7, 22, 23, 0.58);
-            --coach-glass-bright: rgba(255, 255, 255, 0.13);
-            --coach-glass-dim: rgba(0, 0, 0, 0.28);
-            --coach-edge: rgba(176, 255, 238, 0.28);
-            --coach-edge-soft: rgba(63, 255, 211, 0.14);
-            --coach-shadow: rgba(0, 0, 0, 0.34);
+            --coach-glass: rgba(6, 20, 21, 0.66);
+            --coach-glass-bright: rgba(255, 255, 255, 0.14);
+            --coach-glass-dim: rgba(0, 0, 0, 0.3);
+            --coach-edge: rgba(176, 255, 238, 0.3);
+            --coach-edge-soft: rgba(63, 255, 211, 0.15);
+            --coach-shadow: rgba(0, 0, 0, 0.4);
             display: grid;
-            gap: 16px;
+            gap: 18px;
             position: relative;
             isolation: isolate;
         }
 
         #trainingPlanModal .modal {
+            max-width: 920px;
             backdrop-filter: blur(22px) saturate(1.18);
             -webkit-backdrop-filter: blur(22px) saturate(1.18);
             box-shadow:
@@ -1704,20 +1705,35 @@
         .training-coach-shell::before {
             content: '';
             position: absolute;
-            inset: -8px -10px auto -10px;
-            height: 210px;
+            inset: -26px -28px auto -28px;
+            height: 360px;
             pointer-events: none;
             z-index: -1;
             background:
-                linear-gradient(120deg, rgba(176, 255, 238, 0.06), transparent 32%, rgba(63, 255, 211, 0.035) 68%, transparent),
+                radial-gradient(ellipse at 24% 10%, rgba(63, 255, 211, 0.13), transparent 42%),
+                linear-gradient(135deg, rgba(176, 255, 238, 0.06), transparent 36%, rgba(255, 255, 255, 0.025) 72%, transparent),
                 repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 22px);
-            opacity: 0.65;
+            opacity: 0.78;
+        }
+
+        .training-coach-shell::after {
+            content: '';
+            position: absolute;
+            inset: 92px 16px auto 16px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(176, 255, 238, 0.42), transparent);
+            box-shadow: 0 0 28px rgba(63, 255, 211, 0.22);
+            pointer-events: none;
         }
 
         .training-coach-header {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 18px;
+            align-items: end;
             border-left: 3px solid #35d9c8;
-            padding-left: 13px;
-            margin-bottom: 2px;
+            padding-left: 14px;
+            margin-bottom: 0;
         }
 
         .training-coach-kicker {
@@ -1741,12 +1757,40 @@
             font-size: 0.78rem;
             margin-top: 8px;
             line-height: 1.35;
+            max-width: 650px;
+        }
+
+        .training-coach-status-strip {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 3px;
+        }
+
+        .coach-status-light {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: rgba(176, 255, 238, 0.2);
+            border: 1px solid rgba(176, 255, 238, 0.34);
+            box-shadow:
+                inset 0 1px 2px rgba(255, 255, 255, 0.35),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.38);
+        }
+
+        .coach-status-light.active {
+            background: #7fffe8;
+            box-shadow:
+                0 0 12px rgba(63, 255, 211, 0.62),
+                inset 0 1px 2px rgba(255, 255, 255, 0.55),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.24);
         }
 
         .training-coach-command {
             display: grid;
-            grid-template-columns: minmax(0, 1.35fr) minmax(210px, 0.65fr);
-            gap: 12px;
+            grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+            gap: 14px;
             align-items: stretch;
         }
 
@@ -1763,21 +1807,29 @@
             position: relative;
             overflow: hidden;
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.5), rgba(0, 138, 88, 0.25) 48%, rgba(176, 255, 238, 0.41));
+            min-height: 310px;
+            padding: 20px;
             background:
-                linear-gradient(150deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.045) 24%, rgba(0, 0, 0, 0.16) 74%, rgba(255, 255, 255, 0.04) 100%),
-                linear-gradient(180deg, rgba(63, 255, 211, 0.075), transparent 48%),
+                radial-gradient(circle at 50% 36%, rgba(176, 255, 238, 0.16), transparent 34%),
+                radial-gradient(circle at 50% 36%, rgba(0, 0, 0, 0.34), transparent 55%),
+                linear-gradient(150deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.045) 24%, rgba(0, 0, 0, 0.19) 74%, rgba(255, 255, 255, 0.045) 100%),
                 var(--coach-glass);
             backdrop-filter: blur(24px) saturate(1.18) contrast(1.04);
             -webkit-backdrop-filter: blur(24px) saturate(1.18) contrast(1.04);
             border: 0;
             box-shadow:
-                14px 18px 34px var(--coach-shadow),
+                18px 22px 44px var(--coach-shadow),
                 -10px -10px 24px rgba(255, 255, 255, 0.035),
                 inset 0 1px 0 rgba(255, 255, 255, 0.22),
                 inset 1px 0 0 rgba(255, 255, 255, 0.08),
                 inset 0 -22px 38px rgba(0, 0, 0, 0.24),
                 inset 0 0 34px rgba(0, 80, 54, 0.22),
                 0 0 0 1px rgba(176, 255, 238, 0.08);
+        }
+
+        .training-coach-shell .training-plan-target-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         .training-coach-shell .training-plan-target-card.low-confidence {
@@ -1835,7 +1887,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .coach-confidence-badge {
