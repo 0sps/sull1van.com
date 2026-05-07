@@ -2427,6 +2427,7 @@
         const CONFIG = {
             RECENT_LOGS_LIMIT: 5,
             FIREBASE_INIT_LIMIT: 60,
+            COACH_LOG_LOOKBACK: 14,
             LOCAL_STORAGE_TTL: 48 * 60 * 60 * 1000, // 48 hours
             HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
@@ -2505,6 +2506,7 @@
         }
 
         function formatWeightLbs(kgWeight) {
+            if (!Number.isFinite(kgWeight)) return '?';
             return `${displayWeight(kgWeight)} lbs`;
         }
 
@@ -2674,10 +2676,11 @@
             return Number.isFinite(weeklyTargetIncreaseKg) ? weeklyTargetIncreaseKg : 0;
         }
 
-        function getExerciseProgressionSessions(exerciseId, limitCount = Infinity, repRange = null, allowZeroWeight = false) {
+        function getExerciseProgressionSessions(exerciseId, limitCount = Infinity, repRange = null, allowZeroWeight = false, logLimit = Infinity) {
             const sessions = [];
+            const sourceLogs = (workoutLogs || []).slice(0, logLimit);
 
-            for (const log of workoutLogs || []) {
+            for (const log of sourceLogs) {
                 const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
@@ -2696,6 +2699,30 @@
             }
 
             return sessions;
+        }
+
+        function getCoachConfidence(sessionCount, requiredSessions = 2) {
+            if (sessionCount >= requiredSessions) {
+                return {
+                    className: 'high',
+                    label: 'High',
+                    detail: `${sessionCount} recent lift${sessionCount === 1 ? '' : 's'} found in the last ${CONFIG.COACH_LOG_LOOKBACK} workout logs`
+                };
+            }
+
+            if (sessionCount === 1) {
+                return {
+                    className: 'low',
+                    label: 'Low',
+                    detail: `Only 1 recent lift found in the last ${CONFIG.COACH_LOG_LOOKBACK} workout logs`
+                };
+            }
+
+            return {
+                className: 'low',
+                label: 'Low',
+                detail: `No recent lifts found in the last ${CONFIG.COACH_LOG_LOOKBACK} workout logs`
+            };
         }
 
         function getBestEstimatedMaxSignal(sessions, coachConfig) {
@@ -2746,13 +2773,13 @@
                 const reps = parseInt(set.reps, 10);
                 const weightKg = parseFloat(set.weight);
                 return Number.isFinite(reps) && reps >= target.repRange.min &&
-                    Number.isFinite(weightKg) && weightKg >= target.targetWeightKg;
+                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
             });
             const rangeProgressEarned = workingSets.every(set => {
                 const reps = parseInt(set.reps, 10);
                 const weightKg = parseFloat(set.weight);
                 return Number.isFinite(reps) && reps >= target.repRange.max &&
-                    Number.isFinite(weightKg) && weightKg >= target.targetWeightKg;
+                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
             });
             const coachConfig = target.coachConfig || getCoachConfig(target.planExercise);
             const sessionLike = { workingSets };
@@ -2784,11 +2811,12 @@
             const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
             const allowZeroWeight = baselineWeightKg === 0 || planExercise.targetMode === 'bodyweight';
             const lookbackSessions = Math.max(1, parseInt(coachConfig.lookbackSessions, 10) || 2);
-            const recentSessions = getExerciseProgressionSessions(exerciseId, lookbackSessions, repRange, allowZeroWeight);
+            const recentSessions = getExerciseProgressionSessions(exerciseId, lookbackSessions, repRange, allowZeroWeight, CONFIG.COACH_LOG_LOOKBACK);
             const blockSession = getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight);
             const bestSignal = getBestEstimatedMaxSignal(recentSessions, coachConfig);
+            const confidence = getCoachConfidence(recentSessions.length, lookbackSessions);
 
-            if (!blockSession && !bestSignal && baselineWeightKg === null) return null;
+            if (!blockSession && !bestSignal && baselineWeightKg === null && coachConfig.method !== 'estimatedMax') return null;
 
             const goalIncreaseKg = getPlanGoalIncreaseKg(planExercise);
             const weeklyTargetIncreaseKg = getPlanWeeklyTargetIncreaseKg(planExercise);
@@ -2819,16 +2847,19 @@
             );
             const targetWeightKg = roundedEstimatedTargetKg !== null
                 ? Math.max(roundedEstimatedTargetKg, baselineWeightKg || 0)
-                : fallbackTargetWeightKg;
+                : coachConfig.method === 'estimatedMax'
+                    ? null
+                    : fallbackTargetWeightKg;
 
             return {
                 exerciseId,
                 repRange,
                 targetWeightKg,
-                targetWeightDisplay: displayWeight(targetWeightKg),
+                targetWeightDisplay: Number.isFinite(targetWeightKg) ? displayWeight(targetWeightKg) : '?',
                 recentSession: blockSession,
                 recentSessions,
                 bestSignal,
+                confidence,
                 earnedIncrease,
                 plannedWeightTodayKg,
                 coachConfig,
@@ -3595,18 +3626,6 @@
                 isFullHistoryLoaded = (limitCount === 0);
                 invalidateStatsCache();
             }, 'load');
-        }
-
-        async function ensureExerciseHistoryLoaded(exerciseId, requiredSessions = 2) {
-            const currentMatches = getExerciseProgressionSessions(exerciseId, requiredSessions);
-            if (currentMatches.length >= requiredSessions || isFullHistoryLoaded) return true;
-
-            const loaded = await loadFromFirebase(0);
-            if (loaded) {
-                renderRecentLogs();
-                updateStats();
-            }
-            return loaded;
         }
 
         async function saveToFirebase(log) {
@@ -4657,18 +4676,8 @@
         }
 
         async function showTrainingPlanModal(exerciseKey) {
-            let target = activeProgressionTargets[exerciseKey];
+            const target = activeProgressionTargets[exerciseKey];
             if (!target) return;
-
-            const requiredSessions = Math.max(1, parseInt(target.coachConfig?.lookbackSessions, 10) || 2);
-            if ((target.recentSessions?.length || 0) < requiredSessions && !isFullHistoryLoaded) {
-                document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
-                document.getElementById('trainingPlanModalContent').innerHTML = '<div class="training-plan-chart-empty">Loading exercise history...</div>';
-                openModal('trainingPlanModal');
-                await ensureExerciseHistoryLoaded(target.exerciseId, requiredSessions);
-                renderExercises();
-                target = activeProgressionTargets[exerciseKey] || target;
-            }
 
             const exercise = getExerciseForUI(target.exerciseId);
             const baseline = getBaselineProgressionSession(target.exerciseId, target.repRange);
@@ -4695,24 +4704,19 @@
                 : 0;
             const startDate = progressionPlanData?.progressionPlan_startDate || 'plan start';
             const currentWeightLabel = current ? formatWeightLbs(current.representativeWeightKg) : 'No data';
-            const recommendationLabel = formatWeightLbs(target.targetWeightKg);
+            const recommendationLabel = Number.isFinite(target.targetWeightKg) ? formatWeightLbs(target.targetWeightKg) : '?';
             const chartHtml = buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target);
             const plannedTodayLbsLabel = plannedWeightTodayKg ? formatWeightLbs(plannedWeightTodayKg) : 'No data';
             const baselineLbsLabel = baseline ? formatWeightLbs(baseline.representativeWeightKg) : 'No data';
             const targetPlanWeightKg = getPlanTargetWeightKg(target.planExercise);
             const goalLbsLabel = targetPlanWeightKg !== null ? formatWeightLbs(targetPlanWeightKg) : 'No goal';
             const remainingLbsLabel = formatWeightLbs(remainingKg);
-            const paceDeltaLbsLabel = formatWeightLbs(Math.abs(progressDeltaKg));
-            const paceDeltaText = pace.className === 'behind'
-                ? `${paceDeltaLbsLabel} below pace`
-                : pace.className === 'ahead'
-                    ? `${paceDeltaLbsLabel} ahead`
-                    : 'On pace';
             const basedOnLabel = target.bestSignal
                 ? `${formatWeightLbs(target.bestSignal.weightKg)} × ${target.bestSignal.reps} on ${formatDate(target.bestSignal.session.log.date, DateFormats.SHORT)}`
                 : current
                     ? `${formatWeightLbs(current.representativeWeightKg)} from recent working sets`
-                    : 'Training plan baseline';
+                    : `No recent ${exercise?.name || 'lift'} logs found`;
+            const confidence = target.confidence || getCoachConfidence(target.recentSessions?.length || 0);
             const recentHtml = recentSessions.length > 0
                 ? recentSessions.map(session => {
                     const plannedForSession = baseline
@@ -4765,15 +4769,15 @@
                             </div>
                             <div class="training-plan-pace-meta">
                                 <div class="training-plan-pace-mini">
+                                    <span>Confidence</span>
+                                    <strong class="${confidence.className === 'low' ? 'text-error' : 'text-success'}">${confidence.label}</strong>
+                                </div>
+                                <div class="training-plan-pace-mini">
                                     <span>Plan Today</span>
                                     <strong>${plannedTodayLbsLabel}</strong>
                                 </div>
-                                <div class="training-plan-pace-mini">
-                                    <span>Delta</span>
-                                    <strong class="${pace.className === 'behind' ? 'text-error' : 'text-success'}">${paceDeltaText}</strong>
-                                </div>
                             </div>
-                            <div class="training-plan-metric-note m-t-12">Based on ${basedOnLabel}</div>
+                            <div class="training-plan-metric-note m-t-12">Based on ${basedOnLabel}. ${confidence.detail}.</div>
                         </div>
                     </div>
 
