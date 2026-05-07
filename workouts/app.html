@@ -1720,6 +1720,14 @@
             align-items: stretch;
         }
 
+        .training-coach-section-label {
+            color: #7fffe8;
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: -4px;
+        }
+
         .training-coach-shell .training-plan-target-card {
             position: relative;
             overflow: hidden;
@@ -1731,6 +1739,10 @@
                 rgba(0, 0, 0, 0.28);
             border: 0;
             box-shadow: inset 0 0 34px rgba(0, 80, 54, 0.18), 0 0 20px rgba(0, 255, 136, 0.025);
+        }
+
+        .training-coach-shell .training-plan-target-card.low-confidence {
+            --coach-outline: linear-gradient(135deg, rgba(255, 187, 0, 0.36), rgba(63, 255, 211, 0.24) 52%, rgba(255, 255, 255, 0.12));
         }
 
         .training-coach-shell .training-plan-target-card::before,
@@ -1763,6 +1775,69 @@
 
         .training-coach-shell .training-plan-target-line strong {
             color: #eafffb;
+        }
+
+        .coach-target-topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .coach-confidence-badge {
+            border: 1px solid rgba(0, 255, 136, 0.45);
+            color: #b0ffee;
+            background: rgba(0, 255, 136, 0.09);
+            padding: 7px 10px;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            white-space: nowrap;
+        }
+
+        .coach-confidence-badge.low {
+            border-color: rgba(255, 187, 0, 0.48);
+            color: #ffdf75;
+            background: rgba(255, 187, 0, 0.08);
+        }
+
+        .coach-command-number {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            color: #eafffb;
+            text-shadow: 0 0 16px rgba(63, 255, 211, 0.28);
+        }
+
+        .coach-command-weight {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: clamp(3.4rem, 9vw, 6.2rem);
+            line-height: 0.85;
+            letter-spacing: 1px;
+        }
+
+        .coach-command-unit {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: clamp(1.6rem, 4vw, 2.7rem);
+            line-height: 0.9;
+            color: #b0ffee;
+        }
+
+        .coach-command-reps {
+            color: rgba(235, 246, 244, 0.9);
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            line-height: 0.95;
+            letter-spacing: 0.8px;
+            margin-top: 8px;
+        }
+
+        .coach-low-confidence-note {
+            color: #ffdf75;
+            font-size: 0.76rem;
+            line-height: 1.35;
+            margin-top: 10px;
         }
 
         .training-plan-rule-row {
@@ -1814,8 +1889,8 @@
         }
 
         .training-coach-shell .training-plan-pace-card.behind {
-            --coach-outline: linear-gradient(135deg, rgba(255, 93, 143, 0.48), rgba(255, 154, 184, 0.22) 48%, rgba(63, 255, 211, 0.2));
-            box-shadow: inset 0 0 28px rgba(255, 93, 143, 0.055);
+            --coach-outline: linear-gradient(135deg, rgba(255, 187, 0, 0.34), rgba(255, 255, 255, 0.11) 48%, rgba(63, 255, 211, 0.16));
+            box-shadow: inset 0 0 28px rgba(255, 187, 0, 0.035);
         }
 
         .training-plan-pace-meta {
@@ -1877,10 +1952,7 @@
         }
 
         .training-plan-evidence-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(210px, 0.8fr);
-            gap: 12px;
-            align-items: start;
+            display: block;
         }
 
         .training-coach-shell .training-plan-section {
@@ -1918,6 +1990,11 @@
             .training-coach-command,
             .training-plan-evidence-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .coach-target-topline {
+                align-items: flex-start;
+                flex-direction: column;
             }
 
             .training-plan-phase-labels {
@@ -4704,34 +4781,18 @@
                 : 0;
             const startDate = progressionPlanData?.progressionPlan_startDate || 'plan start';
             const currentWeightLabel = current ? formatWeightLbs(current.representativeWeightKg) : 'No data';
-            const recommendationLabel = Number.isFinite(target.targetWeightKg) ? formatWeightLbs(target.targetWeightKg) : '?';
+            const hasRecommendation = Number.isFinite(target.targetWeightKg);
+            const recommendationWeightLabel = hasRecommendation ? displayWeight(target.targetWeightKg) : '?';
+            const recommendationUnitLabel = hasRecommendation ? 'LBS' : '';
             const chartHtml = buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target);
             const plannedTodayLbsLabel = plannedWeightTodayKg ? formatWeightLbs(plannedWeightTodayKg) : 'No data';
             const baselineLbsLabel = baseline ? formatWeightLbs(baseline.representativeWeightKg) : 'No data';
             const targetPlanWeightKg = getPlanTargetWeightKg(target.planExercise);
             const goalLbsLabel = targetPlanWeightKg !== null ? formatWeightLbs(targetPlanWeightKg) : 'No goal';
-            const remainingLbsLabel = formatWeightLbs(remainingKg);
-            const basedOnLabel = target.bestSignal
-                ? `${formatWeightLbs(target.bestSignal.weightKg)} × ${target.bestSignal.reps} on ${formatDate(target.bestSignal.session.log.date, DateFormats.SHORT)}`
-                : current
-                    ? `${formatWeightLbs(current.representativeWeightKg)} from recent working sets`
-                    : `No recent ${exercise?.name || 'lift'} logs found`;
             const confidence = target.confidence || getCoachConfidence(target.recentSessions?.length || 0);
-            const recentHtml = recentSessions.length > 0
-                ? recentSessions.map(session => {
-                    const plannedForSession = baseline
-                        ? getPlannedWeightKgForDate(baseline.representativeWeightKg, session.log.date, weeklyTargetIncreaseKg, goalIncreaseKg)
-                        : null;
-                    const sessionTarget = plannedForSession === null ? target : { ...target, targetWeightKg: plannedForSession };
-                    const evaluation = evaluateProgressionSets(session.workingSets, sessionTarget);
-
-                    return `
-                    <div class="training-plan-row">
-                        <span>${formatDate(session.log.date, DateFormats.SHORT)}</span>
-                        <span>${formatSetSummary(session.exerciseLog.sets)} · <strong class="${evaluation.statusClass === 'behind' ? 'text-error' : 'text-success'}">${evaluation.statusLabel}</strong></span>
-                    </div>`;
-                }).join('')
-                : `<div class="training-plan-row"><span>No logs in the last 14 days</span><span></span></div>`;
+            const lowConfidenceNote = confidence.className === 'low'
+                ? `<div class="coach-low-confidence-note">${confidence.detail}. Use the block plan today if the recommendation is uncertain.</div>`
+                : '';
 
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
@@ -4742,26 +4803,33 @@
                         <div class="training-coach-subtitle">Use this to decide what to log on your working sets today. Warmups are ignored for progression.</div>
                     </div>
 
+                    <div class="training-coach-section-label">Coach Says</div>
                     <div class="training-coach-command">
-                        <div class="training-plan-target-card">
-                            <div class="training-plan-target-title">Today's Working Set Target</div>
-                            <div class="training-plan-target-line">
-                                <strong>${recommendationLabel}</strong> × <strong>${target.repRange.label}</strong>
+                        <div class="training-plan-target-card ${confidence.className === 'low' ? 'low-confidence' : ''}">
+                            <div class="coach-target-topline">
+                                <div class="training-plan-target-title">Today</div>
+                                <div class="coach-confidence-badge ${confidence.className}">${confidence.label} Confidence</div>
                             </div>
+                            <div class="coach-command-number">
+                                <span class="coach-command-weight">${recommendationWeightLabel}</span>
+                                <span class="coach-command-unit">${recommendationUnitLabel}</span>
+                            </div>
+                            <div class="coach-command-reps">${target.repRange.label} Reps</div>
                             <div class="training-plan-rule-row">
                                 <div class="training-plan-rule">
                                     <div class="training-plan-rule-label">Complete</div>
-                                    <div class="training-plan-rule-value">${target.repRange.min}+ reps </div>
+                                    <div class="training-plan-rule-value">${target.repRange.min}+ reps</div>
                                 </div>
                                 <div class="training-plan-rule">
                                     <div class="training-plan-rule-label">Progress</div>
                                     <div class="training-plan-rule-value">${target.repRange.max} reps</div>
                                 </div>
                             </div>
+                            ${lowConfidenceNote}
                         </div>
 
                         <div class="training-plan-pace-card ${pace.className}">
-                            <div class="training-plan-pace-label">Plan Pace</div>
+                            <div class="training-plan-pace-label">Block Pace</div>
                             <div class="training-plan-pace-value ${pace.className}">${pace.label}</div>
                             <div class="training-plan-pace-detail">${pace.detail}</div>
                             <div class="training-plan-progress-track">
@@ -4777,10 +4845,10 @@
                                     <strong>${plannedTodayLbsLabel}</strong>
                                 </div>
                             </div>
-                            <div class="training-plan-metric-note m-t-12">Based on ${basedOnLabel}. ${confidence.detail}.</div>
                         </div>
                     </div>
 
+                    <div class="training-coach-section-label">Block Context</div>
                     <div class="training-plan-phase-panel">
                         <div class="training-plan-panel-top">
                             <div>
@@ -4813,12 +4881,6 @@
                         <div class="training-plan-section">
                             <div class="training-plan-section-title">Last 14 Days vs Plan</div>
                             ${chartHtml}
-                        </div>
-
-                        <div class="training-plan-section">
-                            <div class="training-plan-section-title">Recent Evidence</div>
-                            <div class="training-plan-list">${recentHtml}</div>
-                            <div class="training-plan-metric-note m-t-12">${remainingLbsLabel} remaining to the end-of-block goal.</div>
                         </div>
                     </div>
                 </div>`;
