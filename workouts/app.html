@@ -484,7 +484,6 @@
 
         .btn-primary:hover {
             box-shadow: 0 0 30px var(--accent-glow);
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
@@ -497,7 +496,6 @@
             background: var(--success) !important;
             color: #000 !important;
             box-shadow: 0 0 40px rgba(0, 255, 136, 0.6) !important;
-            transform: scale(1.05) translateY(-2px) !important;
             animation: successPulse 2s infinite;
         }
 
@@ -1681,7 +1679,31 @@
 
         .training-coach-shell {
             display: grid;
-            gap: 14px;
+            gap: 16px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        #trainingPlanModal .modal {
+            backdrop-filter: blur(22px) saturate(1.18);
+            -webkit-backdrop-filter: blur(22px) saturate(1.18);
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.56),
+                inset 0 1px 0 rgba(255, 255, 255, 0.11),
+                inset 0 -1px 0 rgba(63, 255, 211, 0.09);
+        }
+
+        .training-coach-shell::before {
+            content: '';
+            position: absolute;
+            inset: -8px -10px auto -10px;
+            height: 210px;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                linear-gradient(115deg, rgba(176, 255, 238, 0.09), transparent 28%, rgba(63, 255, 211, 0.065) 56%, transparent 82%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent);
+            opacity: 0.82;
         }
 
         .training-coach-header {
@@ -1726,6 +1748,7 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             margin-bottom: -4px;
+            text-shadow: 0 0 14px rgba(63, 255, 211, 0.28);
         }
 
         .training-coach-shell .training-plan-target-card {
@@ -1735,10 +1758,17 @@
             background:
                 radial-gradient(ellipse at 18% 0%, rgba(0, 110, 74, 0.3), transparent 38%),
                 radial-gradient(ellipse at 95% 20%, rgba(0, 92, 88, 0.2), transparent 32%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.008)),
-                rgba(0, 0, 0, 0.28);
+                linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.028) 36%, rgba(0, 0, 0, 0.18)),
+                rgba(2, 19, 18, 0.52);
+            backdrop-filter: blur(18px) saturate(1.12);
+            -webkit-backdrop-filter: blur(18px) saturate(1.12);
             border: 0;
-            box-shadow: inset 0 0 34px rgba(0, 80, 54, 0.18), 0 0 20px rgba(0, 255, 136, 0.025);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                inset 0 -22px 44px rgba(0, 0, 0, 0.18),
+                inset 0 0 34px rgba(0, 80, 54, 0.2),
+                0 20px 44px rgba(0, 0, 0, 0.26),
+                0 0 26px rgba(0, 255, 136, 0.035);
         }
 
         .training-coach-shell .training-plan-target-card.low-confidence {
@@ -1760,6 +1790,20 @@
             -webkit-mask-composite: xor;
             mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             mask-composite: exclude;
+        }
+
+        .training-coach-shell .training-plan-target-card::after,
+        .training-coach-shell .training-plan-pace-card::after,
+        .training-coach-shell .training-plan-phase-panel::after,
+        .training-coach-shell .training-plan-chart-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.07) 34%, transparent 58%);
+            background-size: 220% 100%;
+            opacity: 0.42;
+            animation: coachSheen 8s ease-in-out infinite;
         }
 
         .training-coach-shell .training-plan-target-title,
@@ -1788,12 +1832,17 @@
         .coach-confidence-badge {
             border: 1px solid rgba(0, 255, 136, 0.45);
             color: #b0ffee;
-            background: rgba(0, 255, 136, 0.09);
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent),
+                rgba(0, 255, 136, 0.09);
             padding: 7px 10px;
             font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.9px;
             white-space: nowrap;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                0 0 18px rgba(0, 255, 136, 0.12);
         }
 
         .coach-confidence-badge.low {
@@ -1808,6 +1857,7 @@
             gap: 12px;
             color: #eafffb;
             text-shadow: 0 0 16px rgba(63, 255, 211, 0.28);
+            animation: coachCommandGlow 5.5s ease-in-out infinite;
         }
 
         .coach-command-weight {
@@ -1852,8 +1902,15 @@
             overflow: hidden;
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.32), rgba(0, 255, 136, 0.11) 52%, rgba(255, 255, 255, 0.13));
             border: 0;
-            background: rgba(63, 255, 211, 0.055);
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 42%, rgba(0, 0, 0, 0.1)),
+                rgba(63, 255, 211, 0.055);
             padding: 9px 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.11),
+                inset 0 -14px 22px rgba(0, 0, 0, 0.12);
         }
 
         .training-plan-rule-label {
@@ -1876,10 +1933,15 @@
             overflow: hidden;
             --coach-outline: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(63, 255, 211, 0.13) 46%, rgba(255, 255, 255, 0.085));
             background:
-                linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
-                rgba(0, 0, 0, 0.16);
+                linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.024) 42%, rgba(0, 0, 0, 0.12)),
+                rgba(4, 15, 17, 0.48);
+            backdrop-filter: blur(18px) saturate(1.08);
+            -webkit-backdrop-filter: blur(18px) saturate(1.08);
             border: 0;
-            box-shadow: none;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.13),
+                inset 0 -20px 34px rgba(0, 0, 0, 0.18),
+                0 18px 38px rgba(0, 0, 0, 0.2);
         }
 
         .training-coach-shell .training-plan-pace-card.on-track,
@@ -1924,8 +1986,10 @@
 
         .training-coach-shell .training-plan-progress-fill,
         .training-coach-shell .training-plan-phase-fill {
-            background: linear-gradient(90deg, #00ff88, #3fffd3, #b0ffee);
+            background: linear-gradient(90deg, #00ff88, #3fffd3, #b0ffee, #3fffd3);
+            background-size: 180% 100%;
             box-shadow: 0 0 18px rgba(63, 255, 211, 0.24);
+            animation: coachProgressFlow 4.5s ease-in-out infinite;
         }
 
         .training-coach-shell .training-plan-phase-panel {
@@ -1934,9 +1998,15 @@
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.29), rgba(0, 255, 136, 0.11) 48%, rgba(255, 255, 255, 0.1));
             background:
                 radial-gradient(ellipse at 82% 0%, rgba(63, 255, 211, 0.075), transparent 34%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
-                rgba(0, 0, 0, 0.14);
+                linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.022) 44%, rgba(0, 0, 0, 0.12)),
+                rgba(4, 16, 18, 0.42);
+            backdrop-filter: blur(16px) saturate(1.08);
+            -webkit-backdrop-filter: blur(16px) saturate(1.08);
             border: 0;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 -20px 38px rgba(0, 0, 0, 0.17),
+                0 18px 36px rgba(0, 0, 0, 0.18);
         }
 
         .training-coach-shell .training-plan-phase-percent {
@@ -1970,8 +2040,14 @@
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.27), rgba(255, 255, 255, 0.085) 46%, rgba(0, 255, 136, 0.13));
             background:
                 radial-gradient(ellipse at 72% 18%, rgba(63, 255, 211, 0.052), transparent 36%),
-                rgba(255, 255, 255, 0.026);
+                linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.016) 48%, rgba(0, 0, 0, 0.12)),
+                rgba(5, 17, 19, 0.4);
+            backdrop-filter: blur(12px) saturate(1.05);
+            -webkit-backdrop-filter: blur(12px) saturate(1.05);
             border: 0;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -18px 30px rgba(0, 0, 0, 0.14);
         }
 
         .training-coach-shell .training-plan-chart-plan {
@@ -1980,6 +2056,48 @@
 
         .training-coach-shell .training-plan-legend .planned::before {
             background: #3fffd3;
+        }
+
+        @keyframes coachSheen {
+            0%, 32% {
+                background-position: 160% 0;
+            }
+
+            62%, 100% {
+                background-position: -80% 0;
+            }
+        }
+
+        @keyframes coachCommandGlow {
+            0%, 100% {
+                text-shadow: 0 0 14px rgba(63, 255, 211, 0.24), 0 0 34px rgba(0, 255, 136, 0.1);
+            }
+
+            50% {
+                text-shadow: 0 0 24px rgba(176, 255, 238, 0.42), 0 0 46px rgba(63, 255, 211, 0.18);
+            }
+        }
+
+        @keyframes coachProgressFlow {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .training-coach-shell .training-plan-target-card::after,
+            .training-coach-shell .training-plan-pace-card::after,
+            .training-coach-shell .training-plan-phase-panel::after,
+            .training-coach-shell .training-plan-chart-card::after,
+            .coach-command-number,
+            .training-coach-shell .training-plan-progress-fill,
+            .training-coach-shell .training-plan-phase-fill {
+                animation: none;
+            }
         }
 
         @media (max-width: 560px) {
