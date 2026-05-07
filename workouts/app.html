@@ -2338,6 +2338,192 @@
             }
         }
 
+        /* Liquid glass Coach pass: tighter type scale, softer refraction, less visual shouting. */
+        #trainingPlanModal .modal {
+            background:
+                linear-gradient(145deg, rgba(226, 255, 249, 0.105), rgba(37, 90, 86, 0.045) 34%, rgba(6, 13, 15, 0.72) 100%),
+                radial-gradient(ellipse at 18% 4%, rgba(137, 255, 236, 0.16), transparent 44%),
+                radial-gradient(ellipse at 85% 18%, rgba(255, 255, 255, 0.07), transparent 38%),
+                rgba(8, 18, 20, 0.86);
+            border-color: rgba(190, 255, 244, 0.2);
+            backdrop-filter: blur(34px) saturate(1.32);
+            -webkit-backdrop-filter: blur(34px) saturate(1.32);
+            box-shadow:
+                0 30px 88px rgba(0, 0, 0, 0.58),
+                0 0 0 1px rgba(190, 255, 244, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 0 90px rgba(118, 255, 229, 0.045),
+                inset 0 -34px 70px rgba(0, 0, 0, 0.32);
+        }
+
+        .training-coach-shell {
+            --coach-glass: rgba(12, 31, 33, 0.44);
+            --coach-edge: rgba(206, 255, 248, 0.26);
+            --coach-edge-soft: rgba(123, 255, 232, 0.16);
+            --coach-shadow: rgba(0, 0, 0, 0.32);
+            gap: 16px;
+        }
+
+        .training-coach-shell::before {
+            background:
+                linear-gradient(116deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.018) 22%, transparent 48%),
+                linear-gradient(153deg, transparent 0%, rgba(115, 255, 232, 0.09) 42%, transparent 76%),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.014) 0 1px, transparent 1px 24px);
+            opacity: 0.58;
+        }
+
+        .training-coach-shell::after {
+            inset: 90px 0 auto 0;
+            background: linear-gradient(90deg, transparent, rgba(224, 255, 250, 0.24), transparent);
+            box-shadow: 0 0 24px rgba(123, 255, 232, 0.16);
+        }
+
+        .training-coach-name {
+            font-size: clamp(1.82rem, 4.1vw, 2.45rem);
+            line-height: 0.96;
+            letter-spacing: 1.1px;
+        }
+
+        .training-coach-subtitle {
+            font-size: 0.78rem;
+            max-width: 680px;
+        }
+
+        .training-coach-section-label,
+        .training-coach-kicker,
+        .training-plan-target-title,
+        .training-plan-pace-label,
+        .coach-instrument-label,
+        .training-plan-rule-label,
+        .training-plan-pace-mini span,
+        .training-plan-phase-label {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+        }
+
+        .training-coach-shell .training-plan-target-card,
+        .training-coach-shell .training-plan-pace-card,
+        .training-coach-shell .training-plan-phase-panel,
+        .coach-instrument-gauge,
+        .training-coach-shell .training-plan-chart-card {
+            border-radius: 8px;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.135), rgba(255, 255, 255, 0.035) 38%, rgba(0, 0, 0, 0.14) 100%),
+                linear-gradient(315deg, rgba(105, 255, 232, 0.06), transparent 42%),
+                rgba(8, 24, 26, 0.48);
+            backdrop-filter: blur(28px) saturate(1.28);
+            -webkit-backdrop-filter: blur(28px) saturate(1.28);
+            box-shadow:
+                0 20px 42px rgba(0, 0, 0, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.23),
+                inset 1px 0 0 rgba(255, 255, 255, 0.07),
+                inset 0 -24px 40px rgba(0, 0, 0, 0.2),
+                inset 0 0 38px rgba(151, 255, 237, 0.045);
+        }
+
+        .training-coach-shell .training-plan-target-card {
+            min-height: 286px;
+        }
+
+        .training-coach-shell .training-plan-target-card::after,
+        .training-coach-shell .training-plan-pace-card::after,
+        .training-coach-shell .training-plan-phase-panel::after,
+        .training-coach-shell .training-plan-chart-card::after {
+            background:
+                linear-gradient(128deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0.045) 18%, transparent 39%),
+                linear-gradient(300deg, rgba(132, 255, 234, 0.07) 0%, transparent 34%);
+            opacity: 0.62;
+        }
+
+        .coach-confidence-badge {
+            padding: 6px 9px;
+            font-size: 0.58rem;
+            background: rgba(210, 255, 248, 0.06);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                inset 0 -8px 14px rgba(0, 0, 0, 0.14);
+        }
+
+        .coach-command-number {
+            min-height: 148px;
+            width: min(100%, 360px);
+            padding: 20px 18px 16px;
+            background:
+                linear-gradient(150deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.065) 30%, rgba(0, 0, 0, 0.18) 100%),
+                linear-gradient(315deg, rgba(123, 255, 232, 0.12), transparent 48%),
+                rgba(205, 255, 247, 0.045);
+            border-color: rgba(220, 255, 250, 0.18);
+            box-shadow:
+                0 18px 34px rgba(0, 0, 0, 0.22),
+                inset 0 2px 8px rgba(255, 255, 255, 0.22),
+                inset 0 -18px 30px rgba(0, 0, 0, 0.2),
+                inset 0 0 34px rgba(178, 255, 243, 0.06);
+        }
+
+        .coach-command-weight {
+            font-size: clamp(3.25rem, 7.2vw, 5.15rem);
+            line-height: 0.82;
+        }
+
+        .coach-command-unit {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+        }
+
+        .coach-command-reps {
+            font-size: clamp(1.95rem, 4vw, 2.65rem);
+            margin-top: 10px;
+        }
+
+        .training-plan-pace-value {
+            font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+        }
+
+        .training-plan-phase-percent {
+            font-size: clamp(1.65rem, 3vw, 2.25rem);
+        }
+
+        .training-plan-panel-title,
+        .training-plan-section-title {
+            font-size: clamp(1.08rem, 2.3vw, 1.38rem);
+            letter-spacing: 0.8px;
+        }
+
+        .training-plan-rule-value,
+        .training-plan-pace-mini strong,
+        .training-plan-phase-number {
+            font-size: 1rem;
+        }
+
+        .coach-signal-bar,
+        .training-plan-progress-track,
+        .training-plan-phase-rail {
+            border-radius: 999px;
+        }
+
+        @media (max-width: 760px) {
+            .training-coach-name {
+                font-size: clamp(1.72rem, 8vw, 2.1rem);
+            }
+
+            .training-coach-shell .training-plan-target-card {
+                min-height: 0;
+                padding: 18px;
+            }
+
+            .coach-command-number {
+                width: min(100%, 310px);
+                min-height: 132px;
+            }
+
+            .coach-command-weight {
+                font-size: clamp(3rem, 18vw, 4.55rem);
+            }
+
+            .coach-command-reps {
+                font-size: clamp(1.78rem, 9vw, 2.25rem);
+            }
+        }
+
         .btn-history {
             padding: 4px 10px;
             font-size: 0.77rem;
