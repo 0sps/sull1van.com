@@ -2785,9 +2785,10 @@
             const allowZeroWeight = baselineWeightKg === 0 || planExercise.targetMode === 'bodyweight';
             const lookbackSessions = Math.max(1, parseInt(coachConfig.lookbackSessions, 10) || 2);
             const recentSessions = getExerciseProgressionSessions(exerciseId, lookbackSessions, repRange, allowZeroWeight);
-            const recentSession = recentSessions[0] || getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight);
+            const blockSession = getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight);
+            const bestSignal = getBestEstimatedMaxSignal(recentSessions, coachConfig);
 
-            if (!recentSession && baselineWeightKg === null) return null;
+            if (!blockSession && !bestSignal && baselineWeightKg === null) return null;
 
             const goalIncreaseKg = getPlanGoalIncreaseKg(planExercise);
             const weeklyTargetIncreaseKg = getPlanWeeklyTargetIncreaseKg(planExercise);
@@ -2795,22 +2796,21 @@
                 ? getPlannedWeightKgForDate(baselineWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
                 : null;
             const progressionStepKg = parseFloat(planExercise.progressionStepKg) || 0;
-            const bestSignal = getBestEstimatedMaxSignal(recentSessions, coachConfig);
             const estimatedTargetForBottomKg = bestSignal && repRange.min
                 ? calculateWeightForRepsKg(bestSignal.estimatedMaxKg, repRange.min, coachConfig.formula)
                 : null;
             const roundedEstimatedTargetKg = estimatedTargetForBottomKg !== null
                 ? lbsToKg(roundWeightLbs(kgToLbs(estimatedTargetForBottomKg), coachConfig.incrementLbs, coachConfig.roundingMode))
                 : null;
-            const earnedIncrease = recentSession
+            const earnedIncrease = blockSession
                 ? didSessionHitTopReps(
-                    recentSession.workingSets,
+                    blockSession.workingSets,
                     repRange,
-                    Math.max(recentSession.representativeWeightKg, plannedWeightTodayKg || 0)
+                    Math.max(blockSession.representativeWeightKg, plannedWeightTodayKg || 0)
                 )
                 : false;
-            const recentTargetWeightKg = recentSession
-                ? recentSession.representativeWeightKg + (earnedIncrease ? progressionStepKg : 0)
+            const recentTargetWeightKg = blockSession
+                ? blockSession.representativeWeightKg + (earnedIncrease ? progressionStepKg : 0)
                 : null;
             const fallbackTargetWeightKg = Math.max(
                 plannedWeightTodayKg || 0,
@@ -2826,8 +2826,7 @@
                 repRange,
                 targetWeightKg,
                 targetWeightDisplay: displayWeight(targetWeightKg),
-                lastSets: recentSession?.exerciseLog?.sets || [],
-                recentSession,
+                recentSession: blockSession,
                 recentSessions,
                 bestSignal,
                 earnedIncrease,
