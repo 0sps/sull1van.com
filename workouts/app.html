@@ -1322,6 +1322,7 @@
 
         #trainingPlanModal .modal {
             max-width: 760px;
+            overflow-x: hidden;
             background:
                 radial-gradient(circle at 18% 0%, rgba(0, 122, 76, 0.18), transparent 34%),
                 radial-gradient(circle at 100% 18%, rgba(0, 96, 88, 0.16), transparent 30%),
@@ -1688,10 +1689,14 @@
             gap: 18px;
             position: relative;
             isolation: isolate;
+            max-width: 100%;
+            min-width: 0;
+            overflow: hidden;
         }
 
         #trainingPlanModal .modal {
-            max-width: 920px;
+            width: min(920px, calc(100vw - 24px));
+            max-width: calc(100vw - 24px);
             backdrop-filter: blur(22px) saturate(1.18);
             -webkit-backdrop-filter: blur(22px) saturate(1.18);
             box-shadow:
@@ -1705,7 +1710,7 @@
         .training-coach-shell::before {
             content: '';
             position: absolute;
-            inset: -26px -28px auto -28px;
+            inset: 0 0 auto 0;
             height: 360px;
             pointer-events: none;
             z-index: -1;
@@ -1734,6 +1739,7 @@
             border-left: 3px solid #35d9c8;
             padding-left: 14px;
             margin-bottom: 0;
+            min-width: 0;
         }
 
         .training-coach-kicker {
@@ -1750,6 +1756,7 @@
             line-height: 0.95;
             letter-spacing: 1.5px;
             color: var(--text-primary);
+            overflow-wrap: anywhere;
         }
 
         .training-coach-subtitle {
@@ -1792,6 +1799,7 @@
             grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
             gap: 14px;
             align-items: stretch;
+            min-width: 0;
         }
 
         .training-coach-section-label {
@@ -1809,6 +1817,7 @@
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.5), rgba(0, 138, 88, 0.25) 48%, rgba(176, 255, 238, 0.41));
             min-height: 310px;
             padding: 20px;
+            min-width: 0;
             background:
                 radial-gradient(circle at 50% 36%, rgba(176, 255, 238, 0.16), transparent 34%),
                 radial-gradient(circle at 50% 36%, rgba(0, 0, 0, 0.34), transparent 55%),
@@ -1921,6 +1930,7 @@
             place-items: center;
             align-content: center;
             width: min(100%, 430px);
+            max-width: 100%;
             min-height: 176px;
             margin: 8px auto 0;
             padding: 24px 18px 18px;
@@ -1982,6 +1992,7 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
             margin-top: 16px;
+            min-width: 0;
         }
 
         .training-plan-rule {
@@ -1993,6 +2004,7 @@
                 linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.025) 45%, rgba(0, 0, 0, 0.18)),
                 rgba(5, 26, 26, 0.56);
             padding: 9px 10px;
+            min-width: 0;
             backdrop-filter: blur(14px) saturate(1.08);
             -webkit-backdrop-filter: blur(14px) saturate(1.08);
             box-shadow:
@@ -2015,6 +2027,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 0.9rem;
             font-weight: 800;
+            overflow-wrap: anywhere;
         }
 
         .training-plan-rule.progress {
@@ -2053,6 +2066,7 @@
             backdrop-filter: blur(22px) saturate(1.1);
             -webkit-backdrop-filter: blur(22px) saturate(1.1);
             border: 0;
+            min-width: 0;
             box-shadow:
                 12px 16px 30px rgba(0, 0, 0, 0.3),
                 -8px -8px 18px rgba(255, 255, 255, 0.025),
@@ -2108,6 +2122,7 @@
         .training-coach-instrument-stack {
             display: grid;
             gap: 14px;
+            min-width: 0;
         }
 
         .coach-instrument-gauge {
@@ -2116,6 +2131,7 @@
             gap: 10px;
             min-height: 112px;
             padding: 16px;
+            min-width: 0;
             background:
                 linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 48%, rgba(0, 0, 0, 0.18)),
                 rgba(3, 16, 17, 0.58);
@@ -2163,6 +2179,7 @@
             grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
             gap: 14px;
             align-items: start;
+            min-width: 0;
         }
 
         .training-coach-shell .training-plan-progress-fill,
@@ -2183,6 +2200,7 @@
             backdrop-filter: blur(20px) saturate(1.1);
             -webkit-backdrop-filter: blur(20px) saturate(1.1);
             border: 0;
+            min-width: 0;
             box-shadow:
                 12px 16px 32px rgba(0, 0, 0, 0.28),
                 -8px -8px 20px rgba(255, 255, 255, 0.022),
@@ -2204,11 +2222,13 @@
 
         .training-plan-evidence-grid {
             display: block;
+            min-width: 0;
         }
 
         .training-coach-shell .training-plan-section {
             border-top-color: rgba(255, 255, 255, 0.08);
             margin-top: 0;
+            min-width: 0;
         }
 
         .training-coach-shell .training-plan-section-title {
@@ -2218,6 +2238,7 @@
         .training-coach-shell .training-plan-chart-card {
             position: relative;
             overflow: hidden;
+            min-width: 0;
             --coach-outline: linear-gradient(135deg, rgba(63, 255, 211, 0.27), rgba(255, 255, 255, 0.085) 46%, rgba(0, 255, 136, 0.13));
             background:
                 linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.018) 48%, rgba(0, 0, 0, 0.14)),
@@ -2233,6 +2254,10 @@
 
         .training-coach-shell .training-plan-chart-plan {
             stroke: rgba(63, 255, 211, 0.72);
+        }
+
+        .training-coach-shell .training-plan-chart {
+            overflow: hidden;
         }
 
         .training-coach-shell .training-plan-legend .planned::before {
@@ -2269,7 +2294,9 @@
 
         @media (max-width: 760px) {
             #trainingPlanModal .modal {
-                padding: 22px;
+                width: calc(100vw - 20px);
+                max-width: calc(100vw - 20px);
+                padding: 20px;
             }
 
             .training-coach-command,
