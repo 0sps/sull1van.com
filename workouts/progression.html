@@ -856,6 +856,34 @@
             margin-bottom: 14px;
         }
 
+        .chart-toggle {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 14px;
+            padding: 4px;
+            border: 1px solid rgba(206, 255, 248, 0.14);
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .chart-toggle-btn {
+            border: 0;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 9px 8px;
+            cursor: pointer;
+        }
+
+        .chart-toggle-btn.active {
+            color: #d8fff5;
+            background: rgba(63, 255, 211, 0.13);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 16px rgba(63, 255, 211, 0.08);
+        }
+
         .chart-side-list {
             display: grid;
             gap: 10px;
@@ -962,6 +990,51 @@
             text-align: center;
         }
 
+        .coach-brief,
+        .timeline-card,
+        .hero-card,
+        .collapsible-panel,
+        .chart-card,
+        .side-stat,
+        .mini-stat,
+        .date-metric,
+        .coach-card {
+            border-radius: 8px;
+            border-color: rgba(206, 255, 248, 0.15);
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.028) 40%, rgba(0, 0, 0, 0.15) 100%),
+                linear-gradient(315deg, rgba(105, 255, 232, 0.045), transparent 42%),
+                rgba(9, 22, 24, 0.58);
+            backdrop-filter: blur(24px) saturate(1.22);
+            -webkit-backdrop-filter: blur(24px) saturate(1.22);
+            box-shadow:
+                0 18px 42px rgba(0, 0, 0, 0.24),
+                inset 0 1px 0 rgba(255, 255, 255, 0.17),
+                inset 0 -20px 34px rgba(0, 0, 0, 0.18);
+        }
+
+        .coach-card::before,
+        .hero-card::before,
+        .timeline-card::before,
+        .coach-brief::before,
+        .collapsible-panel::before {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(206, 255, 248, 0.34), rgba(63, 255, 211, 0.18), transparent);
+        }
+
+        .timeline-track,
+        .plan-health,
+        .chart-toggle,
+        .status-pill {
+            border-radius: 999px;
+        }
+
+        .timeline-fill,
+        .plan-health-segment,
+        .chart-toggle-btn {
+            border-radius: inherit;
+        }
+
         @media (max-width: 1020px) {
             .page-hero,
             .chart-layout,
@@ -1029,6 +1102,61 @@
             .coach-brief-status {
                 display: inline-block;
                 margin-top: 10px;
+            }
+
+            .table-wrap {
+                overflow-x: visible;
+            }
+
+            table,
+            thead,
+            tbody,
+            tr,
+            th,
+            td {
+                display: block;
+                width: 100%;
+            }
+
+            table {
+                min-width: 0;
+                border-collapse: separate;
+                border-spacing: 0 12px;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                border: 1px solid rgba(206, 255, 248, 0.15);
+                border-radius: 8px;
+                padding: 12px;
+                background:
+                    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+                    rgba(9, 22, 24, 0.6);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            }
+
+            td {
+                display: grid;
+                grid-template-columns: minmax(96px, 0.42fr) minmax(0, 1fr);
+                gap: 12px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                padding: 10px 0;
+            }
+
+            td:last-child {
+                border-bottom: 0;
+            }
+
+            td::before {
+                content: attr(data-label);
+                color: var(--text-muted);
+                font-size: 0.58rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                padding-top: 3px;
             }
         }
     </style>
@@ -1100,12 +1228,12 @@
                             </div>
                             <div class="date-range-metrics">
                                 <div class="date-metric">
-                                    <div class="mini-label">Tracked Lifts</div>
+                                    <div class="mini-label">Logged Training Days</div>
                                     <div class="mini-value" id="trackedLiftCount">0</div>
-                                    <div class="mini-note">Logged training days</div>
+                                    <div class="mini-note">Days with tracked lifts</div>
                                 </div>
                                 <div class="date-metric">
-                                    <div class="mini-label">Lifts Left</div>
+                                    <div class="mini-label">Training Days Left</div>
                                     <div class="mini-value" id="liftsLeftCount">0</div>
                                     <div class="mini-note">Training days remaining</div>
                                 </div>
@@ -1195,6 +1323,7 @@
                                     <th>Baseline</th>
                                     <th>Most Recent</th>
                                     <th>Target Today</th>
+                                    <th>Confidence</th>
                                     <th>Goal</th>
                                     <th>Status</th>
                                 </tr>
@@ -1217,6 +1346,10 @@
                     <div class="chart-layout">
                         <div>
                             <select class="select-box" id="liftSelect"></select>
+                            <div class="chart-toggle" role="group" aria-label="Chart metric">
+                                <button class="chart-toggle-btn active" type="button" data-chart-metric="strength">Strength Signal</button>
+                                <button class="chart-toggle-btn" type="button" data-chart-metric="load">Load</button>
+                            </div>
                             <div class="chart-side-list" id="chartStats"></div>
                         </div>
                         <div class="chart-card">
@@ -1283,6 +1416,7 @@
         let workoutLogs = [];
         let liftRows = [];
         let selectedExerciseId = null;
+        let chartMetric = 'strength';
         let initStarted = false;
 
         const DateFormats = {
@@ -1293,6 +1427,13 @@
         function lbsToKg(lbs) { return lbs * 0.45359237; }
         function kgToLbs(kg) { return kg / 0.45359237; }
         function displayWeight(kg) { return Math.round(kgToLbs(kg)); }
+        function roundWeightLbs(weightLbs, incrementLbs = 5, mode = 'floor') {
+            if (!Number.isFinite(weightLbs)) return null;
+            const increment = Number(incrementLbs) || 5;
+            const scaled = weightLbs / increment;
+            const rounded = mode === 'ceil' ? Math.ceil(scaled) : mode === 'nearest' ? Math.round(scaled) : Math.floor(scaled);
+            return rounded * increment;
+        }
         function formatDate(date, format = DateFormats.LONG) {
             return new Date(date).toLocaleDateString('en-US', format);
         }
@@ -1394,6 +1535,93 @@
             return (sets || []).filter(set => !set.isWarmup);
         }
 
+        function getCoachConfig(planExercise) {
+            return {
+                method: 'estimatedMax',
+                formula: 'epley',
+                validRepMin: 1,
+                validRepMax: 12,
+                lookbackSessions: 2,
+                roundingMode: 'floor',
+                incrementLbs: 5,
+                ...(progressionPlanData?.recommendationDefaults || {}),
+                ...(planExercise?.recommendation || {})
+            };
+        }
+
+        function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley') {
+            const weight = Number(weightKg);
+            const repCount = Number(reps);
+            if (!Number.isFinite(weight) || !Number.isFinite(repCount) || weight < 0 || repCount <= 0) return null;
+            if (repCount === 1) return weight;
+
+            switch (String(formula || 'epley').toLowerCase()) {
+                case 'brzycki':
+                    return repCount >= 37 ? null : weight * (36 / (37 - repCount));
+                case 'lombardi':
+                    return weight * Math.pow(repCount, 0.1);
+                case 'epley':
+                default:
+                    return weight * (1 + repCount / 30);
+            }
+        }
+
+        function calculateWeightForRepsKg(estimatedMaxKg, reps, formula = 'epley') {
+            const max = Number(estimatedMaxKg);
+            const repCount = Number(reps);
+            if (!Number.isFinite(max) || !Number.isFinite(repCount) || max < 0 || repCount <= 0) return null;
+            if (repCount === 1) return max;
+
+            switch (String(formula || 'epley').toLowerCase()) {
+                case 'brzycki':
+                    return max * ((37 - repCount) / 36);
+                case 'lombardi':
+                    return max / Math.pow(repCount, 0.1);
+                case 'epley':
+                default:
+                    return max / (1 + repCount / 30);
+            }
+        }
+
+        function getBestEstimatedMaxSignal(sessions, coachConfig) {
+            if (!sessions || sessions.length === 0 || coachConfig.method !== 'estimatedMax') return null;
+            const minReps = Number(coachConfig.validRepMin) || 1;
+            const maxReps = Number(coachConfig.validRepMax) || 12;
+            let best = null;
+
+            for (const session of sessions) {
+                for (const set of session.sets || []) {
+                    const reps = parseInt(set.reps, 10) || 0;
+                    const weightKg = Number.isFinite(parseFloat(set.weight)) ? parseFloat(set.weight) : 0;
+                    if (reps < minReps || reps > maxReps || weightKg <= 0) continue;
+                    const estimatedMaxKg = calculateEstimatedMaxKg(weightKg, reps, coachConfig.formula);
+                    if (!Number.isFinite(estimatedMaxKg)) continue;
+                    if (!best || estimatedMaxKg > best.estimatedMaxKg) {
+                        best = { estimatedMaxKg, weightKg, reps, date: session.date };
+                    }
+                }
+            }
+
+            return best;
+        }
+
+        function getRecentLiftSessions(exerciseId, logLimit = 14) {
+            const sessions = [];
+            for (const log of workoutLogs.slice(0, logLimit)) {
+                const exerciseLogs = (log.exercises || []).filter(ex => ex.id === exerciseId);
+                if (exerciseLogs.length === 0) continue;
+                const workingSets = exerciseLogs.flatMap(ex => getWorkingSets(ex.sets)).filter(set => (parseInt(set.reps, 10) || 0) > 0);
+                if (workingSets.length > 0) sessions.push({ date: log.date, sets: workingSets });
+            }
+            return sessions;
+        }
+
+        function getCoachConfidence(sessionCount) {
+            if (sessionCount >= 2) return { label: 'High', className: 'good', detail: '2+ recent lift sessions found.' };
+            if (sessionCount === 1) return { label: 'Low', className: 'warn', detail: 'Only 1 recent lift session found.' };
+            return { label: 'Low', className: 'warn', detail: 'No recent lift sessions found.' };
+        }
+
         function hasLoggedWorkingSet(exerciseLog) {
             return getWorkingSets(exerciseLog.sets).some(set => {
                 const reps = parseInt(set.reps, 10) || 0;
@@ -1459,12 +1687,19 @@
         }
 
         function getPlanStatus(row) {
-            if (!row.latest) return { label: 'No Data', className: 'warn', deltaKg: null };
-            const deltaKg = row.latest.maxWeightKg - row.targetTodayKg;
             const thresholdKg = Math.max(0.25, getWeeklyTargetIncreaseKg(row.planExercise) * 0.5);
-            if (deltaKg >= thresholdKg) return { label: 'Ahead', className: 'good', deltaKg };
-            if (deltaKg <= -thresholdKg) return { label: 'Behind', className: 'bad', deltaKg };
-            return { label: 'On Track', className: 'good', deltaKg };
+            if (row.bestSignal && Number.isFinite(row.targetSignalKg)) {
+                const deltaKg = row.bestSignal.estimatedMaxKg - row.targetSignalKg;
+                if (deltaKg >= thresholdKg) return { label: 'Ahead', className: 'good', deltaKg, mode: 'strength' };
+                if (deltaKg <= -thresholdKg) return { label: 'Behind', className: 'bad', deltaKg, mode: 'strength' };
+                return { label: 'On Track', className: 'good', deltaKg, mode: 'strength' };
+            }
+
+            if (!row.latest) return { label: 'No Signal', className: 'warn', deltaKg: null, mode: 'load' };
+            const deltaKg = row.latest.maxWeightKg - row.targetTodayKg;
+            if (deltaKg >= thresholdKg) return { label: 'Ahead', className: 'good', deltaKg, mode: 'load' };
+            if (deltaKg <= -thresholdKg) return { label: 'Behind', className: 'bad', deltaKg, mode: 'load' };
+            return { label: 'On Track', className: 'good', deltaKg, mode: 'load' };
         }
 
         function getTrainingPlanEntries() {
@@ -1524,6 +1759,8 @@
         function getDailyAverages(exerciseId) {
             const start = getProgressionStartDate();
             const byDay = new Map();
+            const planExercise = progressionPlanData.exercises?.[exerciseId];
+            const coachConfig = getCoachConfig(planExercise);
 
             for (const log of workoutLogs.slice().reverse()) {
                 const logDate = new Date(log.date);
@@ -1543,6 +1780,12 @@
                         row.weightTotal += weight;
                         row.repTotal += reps;
                         row.setCount += 1;
+                        const estimatedMaxKg = calculateEstimatedMaxKg(weight, reps, coachConfig.formula);
+                        if (Number.isFinite(estimatedMaxKg)) {
+                            row.estimatedMaxTotal = (row.estimatedMaxTotal || 0) + estimatedMaxKg;
+                            row.estimatedMaxCount = (row.estimatedMaxCount || 0) + 1;
+                            row.bestEstimatedMaxKg = Math.max(row.bestEstimatedMaxKg || 0, estimatedMaxKg);
+                        }
                         byDay.set(dayKey, row);
                     }
                 }
@@ -1552,6 +1795,8 @@
                 date: row.date,
                 avgWeightKg: row.weightTotal / row.setCount,
                 avgReps: row.repTotal / row.setCount,
+                avgEstimatedMaxKg: row.estimatedMaxCount ? row.estimatedMaxTotal / row.estimatedMaxCount : null,
+                bestEstimatedMaxKg: row.bestEstimatedMaxKg || null,
                 setCount: row.setCount
             }));
         }
@@ -1562,12 +1807,31 @@
                 const latest = getMostRecentLift(entry.id);
                 const goalKg = Number(entry.planExercise.targetWeightKg);
                 const baselineKg = Number(entry.planExercise.baselineWeightKg);
+                const coachConfig = getCoachConfig(entry.planExercise);
+                const signalSessions = getRecentLiftSessions(entry.id, 14);
+                const bestSignal = getBestEstimatedMaxSignal(signalSessions.slice(0, coachConfig.lookbackSessions || 2), coachConfig);
+                const targetSignalKg = coachConfig.method === 'estimatedMax'
+                    ? calculateEstimatedMaxKg(targetTodayKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    : null;
+                const goalSignalKg = coachConfig.method === 'estimatedMax'
+                    ? calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    : null;
+                const baselineSignalKg = coachConfig.method === 'estimatedMax'
+                    ? calculateEstimatedMaxKg(baselineKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    : null;
                 const row = {
                     ...entry,
                     baselineKg,
+                    baselineSignalKg,
                     goalKg,
+                    goalSignalKg,
                     targetTodayKg,
+                    targetSignalKg,
                     latest,
+                    coachConfig,
+                    signalSessions,
+                    bestSignal,
+                    confidence: getCoachConfidence(signalSessions.length),
                     dailyAverages: getDailyAverages(entry.id)
                 };
                 row.status = getPlanStatus(row);
@@ -1615,13 +1879,14 @@
             const ahead = liftRows.filter(row => row.status.label === 'Ahead').length;
             const onTrack = liftRows.filter(row => row.status.label === 'On Track').length;
             const behind = liftRows.filter(row => row.status.label === 'Behind').length;
-            const noData = liftRows.filter(row => !row.latest).length;
+            const noData = liftRows.filter(row => !row.bestSignal && !row.latest).length;
+            const lowConfidence = liftRows.filter(row => row.confidence.className === 'warn').length;
             const onAhead = onTrack + ahead;
             const total = Math.max(1, liftRows.length);
             const health = document.getElementById('planHealth');
             const goodShare = Math.max(onAhead, 0.35);
             const badShare = Math.max(behind, 0.35);
-            const warnShare = Math.max(noData, 0.35);
+            const warnShare = Math.max(lowConfidence, 0.35);
 
             health.style.setProperty('--good-share', `${goodShare}fr`);
             health.style.setProperty('--bad-share', `${badShare}fr`);
@@ -1629,13 +1894,13 @@
 
             let coachMessage = 'You are early in the block. Log this week to establish pace.';
             if (noData === liftRows.length) {
-                coachMessage = 'No post-start lift data yet. Your first logged training days will set the live pace readout.';
+                coachMessage = 'No recent strength signals yet. Your first clean working sets will wake up the block readout.';
             } else if (behind > onAhead && behind > 0) {
-                coachMessage = `${behind} lift${behind === 1 ? ' is' : 's are'} behind today's plan pace. Prioritize clean target sets on those first.`;
+                coachMessage = `${behind} lift${behind === 1 ? ' is' : 's are'} behind the current strength signal. Prioritize clean target sets on those first.`;
             } else if (onAhead > 0 && behind === 0) {
-                coachMessage = `Most tracked lifts are moving cleanly. Keep hitting the target range before chasing the next jump.`;
+                coachMessage = `Most tracked lifts are moving cleanly. Keep proving the top of the rep range before chasing the next jump.`;
             } else if (behind > 0) {
-                coachMessage = `${onAhead} lift${onAhead === 1 ? ' is' : 's are'} on pace, with ${behind} needing attention this week.`;
+                coachMessage = `${onAhead} lift${onAhead === 1 ? ' is' : 's are'} on pace, with ${behind} needing attention and ${lowConfidence} low-confidence signal${lowConfidence === 1 ? '' : 's'}.`;
             }
 
             document.getElementById('timelineStats').innerHTML = `
@@ -1650,28 +1915,29 @@
                     <div class="mini-label">Behind</div>
                 </div>
                 <div class="timeline-stat warn">
-                    <div class="mini-value">${noData}</div>
+                    <div class="mini-value">${lowConfidence}</div>
                     <div class="timeline-stat-line"></div>
-                    <div class="mini-label">No Recent Data</div>
+                    <div class="mini-label">Low Confidence</div>
                 </div>`;
             document.getElementById('coachMessage').textContent = coachMessage;
-            document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${onAhead} on/ahead · ${behind} behind · ${noData} no data`;
+            document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${onAhead} on/ahead · ${behind} behind · ${lowConfidence} low confidence`;
             document.getElementById('liftProgressPreview').textContent = noData === total
-                ? 'Charts will light up after your first post-start logs'
-                : 'Pick any lift to compare actual weight against the plan line';
-            renderCoachBrief({ ahead, onTrack, behind, noData, onAhead });
+                ? 'Charts will light up after recent strength signals exist'
+                : 'Pick any lift to compare strength signal or load against the plan line';
+            renderCoachBrief({ ahead, onTrack, behind, noData, onAhead, lowConfidence });
         }
 
-        function renderCoachBrief({ behind, noData, onAhead }) {
-            const rowsWithData = liftRows.filter(row => row.latest);
+        function renderCoachBrief({ behind, noData, onAhead, lowConfidence }) {
+            const rowsWithData = liftRows.filter(row => row.bestSignal || row.latest);
             const behindRows = liftRows
                 .filter(row => row.status.label === 'Behind')
                 .sort((a, b) => a.status.deltaKg - b.status.deltaKg);
-            const noDataRows = liftRows.filter(row => !row.latest);
+            const noDataRows = liftRows.filter(row => !row.bestSignal && !row.latest);
+            const lowConfidenceRows = liftRows.filter(row => row.confidence.className === 'warn');
             const nearestRows = rowsWithData
                 .slice()
                 .sort((a, b) => Math.abs(a.status.deltaKg || 0) - Math.abs(b.status.deltaKg || 0));
-            const focusRow = behindRows[0] || noDataRows[0] || nearestRows[0] || liftRows[0];
+            const focusRow = behindRows[0] || lowConfidenceRows[0] || noDataRows[0] || nearestRows[0] || liftRows[0];
             const start = getProgressionStartDate();
             const end = getPlanEndDate();
             const now = new Date();
@@ -1683,28 +1949,31 @@
             const remainingThisWeek = Math.max(0, weekTrainingDays.length - trackedThisWeek);
 
             let status = 'Build baseline';
-            let readout = 'No block data yet.';
-            let readoutDetail = 'Start by logging clean non-warmup working sets for this phase.';
+            let readout = 'No strength signal yet.';
+            let readoutDetail = 'Start by logging clean non-warmup working sets so the dashboard can estimate strength.';
             if (rowsWithData.length > 0 && behind === 0) {
                 status = 'On pace';
-                readout = `${onAhead} lifts are on or ahead of today.`;
+                readout = `${onAhead} lifts are on or ahead by strength signal.`;
                 readoutDetail = noData > 0
-                    ? `${noData} lifts still need a post-start log before the picture is complete.`
-                    : 'Every logged lift is currently meeting the plan pace.';
+                    ? `${noData} lifts still need a recent signal before the picture is complete.`
+                    : `${lowConfidence} lift${lowConfidence === 1 ? '' : 's'} still need another recent exposure to raise confidence.`;
             } else if (behind > 0) {
                 status = 'Attention';
                 readout = `${behind} lifts need attention.`;
-                readoutDetail = `${onAhead} lifts are on/ahead, ${noData} still need post-start data.`;
+                readoutDetail = `${onAhead} lifts are on/ahead, ${lowConfidence} are low confidence, ${noData} have no recent signal.`;
             }
 
             let nextAction = 'Log your first clean training day.';
             let nextActionDetail = 'Use today’s workout targets and skip warmups in the progression math.';
             if (behindRows.length > 0) {
                 nextAction = `Bring ${getLiftName(behindRows[0])} back to pace.`;
-                nextActionDetail = `Target today: ${formatLiftWeight(behindRows[0].targetTodayKg, behindRows[0].planExercise)} × ${behindRows[0].repRange.label}.`;
+                nextActionDetail = `Today: ${formatLiftWeight(behindRows[0].targetTodayKg, behindRows[0].planExercise)} × ${behindRows[0].repRange.label}. Top of range proves progress.`;
+            } else if (lowConfidenceRows.length > 0) {
+                nextAction = `Confirm ${getLiftName(lowConfidenceRows[0])}.`;
+                nextActionDetail = `One more clean exposure raises this from low to high confidence.`;
             } else if (noDataRows.length > 0) {
                 nextAction = `Get data for ${getLiftName(noDataRows[0])}.`;
-                nextActionDetail = `First clean log gives this lift its live progress readout.`;
+                nextActionDetail = `First clean log gives this lift its live strength signal.`;
             } else if (nearestRows.length > 0) {
                 nextAction = `Keep ${getLiftName(nearestRows[0])} clean.`;
                 nextActionDetail = `Stay at or above ${formatLiftWeight(nearestRows[0].targetTodayKg, nearestRows[0].planExercise)} × ${nearestRows[0].repRange.label}.`;
@@ -1712,12 +1981,12 @@
 
             let focusLift = focusRow ? getLiftName(focusRow) : 'No focus lift yet';
             let focusDetail = 'Once data exists, this highlights the lift that needs the most attention.';
-            if (focusRow?.latest && focusRow.status.label === 'Behind') {
-                focusDetail = `${Math.abs(displayWeight(focusRow.status.deltaKg))} lbs under today’s plan target of ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)}.`;
-            } else if (focusRow && !focusRow.latest) {
-                focusDetail = `No post-start log yet. Planned target today: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}.`;
-            } else if (focusRow?.latest) {
-                focusDetail = `Closest active target: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}.`;
+            if (focusRow?.bestSignal && focusRow.status.label === 'Behind') {
+                focusDetail = `${Math.abs(displayWeight(focusRow.status.deltaKg))} lbs under today’s estimated strength target. Confidence: ${focusRow.confidence.label}.`;
+            } else if (focusRow && focusRow.confidence.className === 'warn') {
+                focusDetail = `${focusRow.confidence.detail} Planned target today: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}.`;
+            } else if (focusRow?.bestSignal) {
+                focusDetail = `Closest active target: ${formatLiftWeight(focusRow.targetTodayKg, focusRow.planExercise)} × ${focusRow.repRange.label}. Confidence: ${focusRow.confidence.label}.`;
             }
 
             document.getElementById('coachBriefStatus').textContent = status;
@@ -1730,7 +1999,7 @@
             document.getElementById('coachWeekTarget').textContent = remainingThisWeek > 0
                 ? `Log ${remainingThisWeek} more training day${remainingThisWeek === 1 ? '' : 's'} this week.`
                 : 'Week target complete.';
-            document.getElementById('coachWeekDetail').textContent = `${trackedThisWeek} of ${weekTrainingDays.length} planned training days logged. ${noData} lifts still need post-start data.`;
+            document.getElementById('coachWeekDetail').textContent = `${trackedThisWeek} of ${weekTrainingDays.length} planned training days logged. ${lowConfidence} lifts are low confidence.`;
         }
 
         function toggleCollapsibleSection(contentId, iconId) {
@@ -1755,19 +2024,24 @@
                     : '<span class="status-pill warn">No Data</span>';
                 const target = `<span class="num-strong target-glow">${formatLiftWeight(row.targetTodayKg, row.planExercise)} × ${row.repRange.label}</span>`;
                 const status = `<span class="status-pill ${row.status.className}">${row.status.label}</span>`;
+                const confidence = `<span class="status-pill ${row.confidence.className}">${row.confidence.label}</span><div class="lift-meta">${row.signalSessions.length} recent signal${row.signalSessions.length === 1 ? '' : 's'}</div>`;
+                const strengthMeta = row.bestSignal
+                    ? `<div class="lift-meta">Signal ${formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise)} est. max</div>`
+                    : '';
 
                 return `
                     <tr>
-                        <td>
+                        <td data-label="Lift">
                             <div class="lift-name">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
                             <div class="lift-meta">${escapeHtml(row.dayName)} · ${row.sets} sets · ${row.reps} reps</div>
                             <div class="lift-meta">${escapeHtml(row.planExercise.baselineNote || '')}</div>
                         </td>
-                        <td><span class="num-strong">${formatLiftWeight(row.baselineKg, row.planExercise)}</span></td>
-                        <td>${latest}</td>
-                        <td>${target}</td>
-                        <td><span class="num-strong">${formatLiftWeight(row.goalKg, row.planExercise)}</span></td>
-                        <td>${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : `${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'}`}</div></td>
+                        <td data-label="Baseline"><span class="num-strong">${formatLiftWeight(row.baselineKg, row.planExercise)}</span></td>
+                        <td data-label="Most Recent">${latest}${strengthMeta}</td>
+                        <td data-label="Target Today">${target}</td>
+                        <td data-label="Confidence">${confidence}</td>
+                        <td data-label="Goal"><span class="num-strong">${formatLiftWeight(row.goalKg, row.planExercise)}</span></td>
+                        <td data-label="Status">${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : `${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'} ${row.status.mode === 'strength' ? 'signal' : 'load'}`}</div></td>
                     </tr>`;
             }).join('');
         }
@@ -1781,12 +2055,23 @@
                 selectedExerciseId = select.value;
                 renderSelectedChart();
             });
+            document.querySelectorAll('[data-chart-metric]').forEach(button => {
+                button.addEventListener('click', () => {
+                    chartMetric = button.dataset.chartMetric;
+                    document.querySelectorAll('[data-chart-metric]').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.chartMetric === chartMetric);
+                    });
+                    renderSelectedChart();
+                });
+            });
         }
 
         function renderChartStats(row) {
             const latest = row.latest;
             const chartRows = row.dailyAverages;
             const best = chartRows.reduce((max, point) => point.avgWeightKg > (max?.avgWeightKg ?? -Infinity) ? point : max, null);
+            const bestSignalPoint = chartRows.reduce((max, point) => point.bestEstimatedMaxKg > (max?.bestEstimatedMaxKg ?? -Infinity) ? point : max, null);
+            const selectedBest = chartMetric === 'strength' ? bestSignalPoint : best;
             const avgReps = chartRows.length
                 ? chartRows.reduce((sum, point) => sum + point.avgReps, 0) / chartRows.length
                 : 0;
@@ -1798,19 +2083,21 @@
                     <div class="mini-note">${row.sets} sets · ${row.reps} reps</div>
                 </div>
                 <div class="side-stat">
+                    <div class="mini-label">Strength Signal</div>
+                    <div class="num-strong">${row.bestSignal ? formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise) : 'No signal'}</div>
+                    <div class="mini-note">${row.bestSignal ? `${row.bestSignal.reps} reps signal · ${row.confidence.label} confidence` : row.confidence.detail}</div>
+                </div>
+                <div class="side-stat">
                     <div class="mini-label">Latest Max Set</div>
                     <div class="num-strong">${latest ? `${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}` : 'No data'}</div>
                     <div class="mini-note">${latest ? formatDate(latest.date, DateFormats.LONG) : 'No post-start log'}</div>
                 </div>
                 <div class="side-stat">
-                    <div class="mini-label">Best Daily Average</div>
-                    <div class="num-strong">${best ? formatLiftWeight(best.avgWeightKg, row.planExercise) : 'No data'}</div>
-                    <div class="mini-note">${best ? `${formatDate(best.date, DateFormats.LONG)} · ${Math.round(best.avgReps * 10) / 10} avg reps` : 'No chartable sets'}</div>
-                </div>
-                <div class="side-stat">
-                    <div class="mini-label">Avg Reps / Set</div>
-                    <div class="num-strong">${avgReps ? Math.round(avgReps * 10) / 10 : '--'}</div>
-                    <div class="mini-note">Across non-warmup charted sets</div>
+                    <div class="mini-label">${chartMetric === 'strength' ? 'Best Daily Signal' : 'Best Daily Average'}</div>
+                    <div class="num-strong">${chartMetric === 'strength'
+                    ? (bestSignalPoint ? formatLiftWeight(bestSignalPoint.bestEstimatedMaxKg, row.planExercise) : 'No signal')
+                    : (best ? formatLiftWeight(best.avgWeightKg, row.planExercise) : 'No data')}</div>
+                    <div class="mini-note">${selectedBest ? `${formatDate(selectedBest.date, DateFormats.LONG)} · ${Math.round(avgReps * 10) / 10 || '--'} avg reps` : 'No chartable sets'}</div>
                 </div>`;
         }
 
@@ -1822,15 +2109,30 @@
         }
 
         function buildChart(row) {
-            const points = row.dailyAverages;
+            const points = row.dailyAverages
+                .map(point => ({
+                    ...point,
+                    chartKg: chartMetric === 'strength' ? point.bestEstimatedMaxKg : point.avgWeightKg
+                }))
+                .filter(point => Number.isFinite(point.chartKg));
             if (points.length === 0) {
-                return '<div class="empty">No non-warmup chart data for this lift yet.</div>';
+                return `<div class="empty">No ${chartMetric === 'strength' ? 'strength signal' : 'non-warmup load'} chart data for this lift yet.</div>`;
             }
 
             const start = getProgressionStartDate();
             const end = getPlanEndDate();
-            const values = points.flatMap(point => [point.avgWeightKg, getPlannedWeightKg(row.planExercise, point.date)]).filter(Number.isFinite);
-            values.push(row.baselineKg, row.goalKg);
+            const repForSignal = row.repRange.max || row.repRange.min || 1;
+            const plannedValueForDate = date => {
+                const plannedLoadKg = getPlannedWeightKg(row.planExercise, date);
+                if (chartMetric === 'strength') return calculateEstimatedMaxKg(plannedLoadKg, repForSignal, row.coachConfig.formula);
+                return plannedLoadKg;
+            };
+            const baselineValueKg = chartMetric === 'strength' ? row.baselineSignalKg : row.baselineKg;
+            const goalValueKg = chartMetric === 'strength' ? row.goalSignalKg : row.goalKg;
+            const targetTodayValueKg = chartMetric === 'strength' ? row.targetSignalKg : row.targetTodayKg;
+            const values = points
+                .flatMap(point => [point.chartKg, plannedValueForDate(point.date), baselineValueKg, goalValueKg])
+                .filter(Number.isFinite);
 
             const minValue = Math.min(...values);
             const maxValue = Math.max(...values);
@@ -1848,11 +2150,11 @@
 
             const xForDate = date => margin.left + ((new Date(date).getTime() - startMs) / dateSpan) * plotWidth;
             const yForKg = kg => margin.top + (1 - ((kg - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
-            const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.avgWeightKg).toFixed(1)}`).join(' ');
+            const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.chartKg).toFixed(1)}`).join(' ');
             const planPoints = [
-                { date: start.toISOString().slice(0, 10), kg: row.baselineKg },
-                { date: new Date().toISOString().slice(0, 10), kg: row.targetTodayKg },
-                { date: end.toISOString().slice(0, 10), kg: row.goalKg }
+                { date: start.toISOString().slice(0, 10), kg: baselineValueKg },
+                { date: new Date().toISOString().slice(0, 10), kg: targetTodayValueKg },
+                { date: end.toISOString().slice(0, 10), kg: goalValueKg }
             ];
             const planPath = planPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.kg).toFixed(1)}`).join(' ');
             const yTicks = [yMin, (yMin + yMax) / 2, yMax];
@@ -1865,17 +2167,17 @@
             }).join('');
 
             const pointHtml = points.map(point => {
-                const planned = getPlannedWeightKg(row.planExercise, point.date) || 0;
-                const statusClass = point.avgWeightKg >= planned - 0.01 ? '' : 'behind';
+                const planned = plannedValueForDate(point.date) || 0;
+                const statusClass = point.chartKg >= planned - 0.01 ? '' : 'behind';
                 const x = xForDate(point.date).toFixed(1);
-                const y = yForKg(point.avgWeightKg).toFixed(1);
+                const y = yForKg(point.chartKg).toFixed(1);
                 return `
                     <circle class="chart-point ${statusClass}" cx="${x}" cy="${y}" r="6"></circle>
                     <text class="chart-label" x="${x}" y="${height - 12}" text-anchor="middle">${formatDate(point.date, DateFormats.SHORT)}</text>`;
             }).join('');
 
             return `
-                <svg class="progress-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Selected lift average weight over time">
+                <svg class="progress-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Selected lift ${chartMetric === 'strength' ? 'estimated strength signal' : 'average load'} over time">
                     ${gridHtml}
                     <line class="chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"></line>
                     <path class="chart-plan" d="${planPath}"></path>
