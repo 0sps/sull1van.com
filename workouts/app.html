@@ -3161,33 +3161,6 @@
             dateFormats: DateFormats
         });
 
-        const parseRepRange = (...args) => coach.parseRepRange(...args);
-        const getCoachConfig = (...args) => coach.getCoachConfig(...args);
-        const calculateEstimatedMaxKg = (...args) => coach.calculateEstimatedMaxKg(...args);
-        const calculateWeightForRepsKg = (...args) => coach.calculateWeightForRepsKg(...args);
-        const getProgressionStartDate = (...args) => coach.getProgressionStartDate(...args);
-        const getWorkingSets = (...args) => coach.getWorkingSets(...args);
-        const getRepresentativeWeightKg = (...args) => coach.getRepresentativeWeightKg(...args);
-        const getPlanBaselineWeightKg = (...args) => coach.getPlanBaselineWeightKg(...args);
-        const getPlanTargetWeightKg = (...args) => coach.getPlanTargetWeightKg(...args);
-        const getPlanGoalIncreaseKg = (...args) => coach.getPlanGoalIncreaseKg(...args);
-        const getPlanWeeklyTargetIncreaseKg = (...args) => coach.getPlanWeeklyTargetIncreaseKg(...args);
-        const getExerciseProgressionSessions = (...args) => coach.getExerciseProgressionSessions(...args);
-        const getCoachConfidence = (...args) => coach.getCoachConfidence(...args);
-        const getBestEstimatedMaxSignal = (...args) => coach.getBestEstimatedMaxSignal(...args);
-        const evaluateProgressionSets = (...args) => coach.evaluateProgressionSets(...args);
-        const buildCoachRecommendation = (...args) => coach.buildCoachRecommendation(...args);
-        const didSessionHitTopReps = (...args) => coach.didSessionHitTopReps(...args);
-        const getMostRecentProgressionSession = (...args) => coach.getMostRecentProgressionSession(...args);
-        const getProgressionTarget = (...args) => coach.getProgressionTarget(...args);
-        const getBaselineProgressionSession = (...args) => coach.getBaselineProgressionSession(...args);
-        const getRecentProgressionSessions = (...args) => coach.getRecentProgressionSessions(...args);
-        const formatSetSummary = (...args) => coach.formatSetSummary(...args);
-        const getPlannedProgressKgForDate = (...args) => coach.getPlannedProgressKgForDate(...args);
-        const getPlannedWeightKgForDate = (...args) => coach.getPlannedWeightKgForDate(...args);
-        const getPaceInfo = (...args) => coach.getPaceInfo(...args);
-        const buildTrainingPlanChart = (...args) => coach.buildTrainingPlanChart(...args);
-
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
             const numSets = setCount ?? currentSetCounts[exerciseKey] ?? 0;
             let total = 0;
@@ -4084,7 +4057,7 @@
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 const lastSessionSets = getLastSessionSets(ex.exerciseId);
-                const progressionTarget = getProgressionTarget(ex.exerciseId, ex.reps);
+                const progressionTarget = coach.getProgressionTarget(ex.exerciseId, ex.reps);
                 if (progressionTarget) {
                     activeProgressionTargets[exerciseKey] = progressionTarget;
                 }
@@ -4222,7 +4195,7 @@
                     isWarmup: false
                 };
             });
-            const evaluation = evaluateProgressionSets(workingSets, target);
+            const evaluation = coach.evaluateProgressionSets(workingSets, target);
             const targetHit = evaluation.planComplete || evaluation.progressEarned;
 
             el.classList.toggle('completed', targetHit);
@@ -4740,21 +4713,21 @@
             if (!target) return;
 
             const exercise = getExerciseForUI(target.exerciseId);
-            const baseline = getBaselineProgressionSession(target.exerciseId, target.repRange);
+            const baseline = coach.getBaselineProgressionSession(target.exerciseId, target.repRange);
             const current = target.recentSession;
-            const allowZeroWeight = getPlanBaselineWeightKg(target.planExercise) === 0 || target.planExercise.targetMode === 'bodyweight';
-            const recentSessions = getRecentProgressionSessions(target.exerciseId, target.repRange, 14, allowZeroWeight);
-            const goalIncreaseKg = getPlanGoalIncreaseKg(target.planExercise);
-            const weeklyTargetIncreaseKg = getPlanWeeklyTargetIncreaseKg(target.planExercise);
+            const allowZeroWeight = coach.getPlanBaselineWeightKg(target.planExercise) === 0 || target.planExercise.targetMode === 'bodyweight';
+            const recentSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, allowZeroWeight);
+            const goalIncreaseKg = coach.getPlanGoalIncreaseKg(target.planExercise);
+            const weeklyTargetIncreaseKg = coach.getPlanWeeklyTargetIncreaseKg(target.planExercise);
             const currentProgressKg = baseline && current
                 ? current.representativeWeightKg - baseline.representativeWeightKg
                 : 0;
-            const plannedProgressKg = getPlannedProgressKgForDate(new Date(), weeklyTargetIncreaseKg, goalIncreaseKg);
+            const plannedProgressKg = coach.getPlannedProgressKgForDate(new Date(), weeklyTargetIncreaseKg, goalIncreaseKg);
             const plannedWeightTodayKg = baseline
-                ? getPlannedWeightKgForDate(baseline.representativeWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
+                ? coach.getPlannedWeightKgForDate(baseline.representativeWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
                 : null;
             const progressDeltaKg = currentProgressKg - plannedProgressKg;
-            const pace = getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg);
+            const pace = coach.getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg);
             const remainingKg = Math.max(goalIncreaseKg - currentProgressKg, 0);
             const progressPercent = goalIncreaseKg > 0
                 ? Math.max(0, Math.min(100, Math.round((currentProgressKg / goalIncreaseKg) * 100)))
@@ -4767,12 +4740,12 @@
             const hasRecommendation = Number.isFinite(target.targetWeightKg);
             const recommendationWeightLabel = hasRecommendation ? displayWeight(target.targetWeightKg) : '?';
             const recommendationUnitLabel = hasRecommendation ? 'LBS' : '';
-            const chartHtml = buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target);
+            const chartHtml = coach.buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target);
             const plannedTodayLbsLabel = plannedWeightTodayKg ? formatWeightLbs(plannedWeightTodayKg) : 'No data';
             const baselineLbsLabel = baseline ? formatWeightLbs(baseline.representativeWeightKg) : 'No data';
-            const targetPlanWeightKg = getPlanTargetWeightKg(target.planExercise);
+            const targetPlanWeightKg = coach.getPlanTargetWeightKg(target.planExercise);
             const goalLbsLabel = targetPlanWeightKg !== null ? formatWeightLbs(targetPlanWeightKg) : 'No goal';
-            const confidence = target.confidence || getCoachConfidence(target.recentSessions?.length || 0);
+            const confidence = target.confidence || coach.getCoachConfidence(target.recentSessions?.length || 0);
             const lowConfidenceNote = confidence.className === 'low'
                 ? `<div class="coach-low-confidence-note">${confidence.detail}. Use the block plan today if the recommendation is uncertain.</div>`
                 : '';
