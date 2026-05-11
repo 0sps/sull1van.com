@@ -181,6 +181,42 @@
             font-size: 0.82rem; color: var(--accent-secondary);
             margin-top: 4px; min-height: 1.2em;
         }
+        .body-summary {
+            display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center;
+        }
+        .body-summary-copy {
+            color: var(--text-secondary); font-size: 0.86rem; line-height: 1.65;
+        }
+        .body-summary-copy strong {
+            display: block; font-family: 'Bebas Neue', sans-serif; color: var(--text-primary);
+            font-size: 1.6rem; letter-spacing: 1.6px; line-height: 1; margin-bottom: 8px;
+        }
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 9000;
+            display: none; align-items: center; justify-content: center; padding: 18px;
+            backdrop-filter: blur(10px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-panel {
+            width: min(920px, 100%); max-height: min(86vh, 780px); overflow: auto;
+            background: #111113; border: 1px solid rgba(255,109,61,0.35);
+            box-shadow: 0 24px 90px rgba(0,0,0,0.55);
+        }
+        .modal-header {
+            position: sticky; top: 0; z-index: 2; display: flex; align-items: center;
+            justify-content: space-between; gap: 16px; padding: 20px 22px;
+            background: rgba(17,17,19,0.96); border-bottom: 1px solid var(--border);
+        }
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px;
+        }
+        .modal-close {
+            width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center;
+            background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary);
+            font-size: 1.3rem; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .modal-close:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+        .modal-body { padding: 22px; }
 
         /* Unit Toggle */
         .unit-toggle-row {
@@ -460,6 +496,10 @@
             .score-number { font-size: 3.5rem; }
             .container { padding: 16px; }
             .section-card, .pfra-hero { padding: 18px; }
+            .body-summary { grid-template-columns: 1fr; }
+            .body-summary .btn-load { width: 100%; }
+            .modal-overlay { align-items: flex-end; padding: 0; }
+            .modal-panel { max-height: 92vh; border-left: none; border-right: none; border-bottom: none; }
             .compact-grid, .event-grid, .score-range-summary { grid-template-columns: 1fr; }
             .single-score { font-size: 3.2rem; }
             .range-bar { grid-template-columns: 46px 1fr; }
@@ -499,49 +539,14 @@
         <button class="unit-btn" id="unitMetric" onclick="setUnits('metric')">KG / CM</button>
     </div>
 
-    <!-- Measurement Entry -->
     <div class="section-card">
-        <div class="section-title">Log Measurements</div>
-        <div class="measurement-grid">
-            <div class="measurement-group">
-                <label>Weight (<span class="weight-unit-label">lbs</span>)</label>
-                <input type="number" id="mWeight" placeholder="e.g. 185" step="0.1" min="0">
+        <div class="body-summary">
+            <div class="body-summary-copy">
+                <strong>Measurements are optional</strong>
+                Keep the dashboard calm until you actually want to log data. Trends stay visible below; the entry form opens only when needed.
             </div>
-            <div class="measurement-group">
-                <label>Height (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mHeight" placeholder="e.g. 72" step="0.5" min="0" oninput="updateHeightDisplay()">
-                <div class="height-display" id="heightDisplay"></div>
-            </div>
-            <div class="measurement-group">
-                <label>Right Wrist (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mRightWrist" placeholder="e.g. 7.25" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Waist (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mWaist" placeholder="e.g. 33" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Left Bicep (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mLeftBicep" placeholder="e.g. 15.5" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Right Bicep (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mRightBicep" placeholder="e.g. 15.75" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Chest (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mChest" placeholder="e.g. 42" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Left Calf (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mLeftCalf" placeholder="e.g. 15" step="0.25" min="0">
-            </div>
-            <div class="measurement-group">
-                <label>Right Calf (<span class="length-unit-label">in</span>)</label>
-                <input type="number" id="mRightCalf" placeholder="e.g. 15.25" step="0.25" min="0">
-            </div>
+            <button class="btn-load" onclick="openMeasurementModal()">LOG MEASUREMENTS</button>
         </div>
-        <button class="calc-btn" id="saveMeasurementsBtn" onclick="saveBodyMeasurements()">SAVE MEASUREMENTS</button>
     </div>
 
     <!-- Explore Data -->
@@ -680,6 +685,58 @@
                 </table>
             </div>
         </aside>
+    </div>
+</div>
+
+<!-- Measurement Modal -->
+<div class="modal-overlay" id="measurementModal" aria-hidden="true" onclick="handleModalBackdrop(event)">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="measurementModalTitle">
+        <div class="modal-header">
+            <div class="modal-title" id="measurementModalTitle">Log Measurements</div>
+            <button class="modal-close" type="button" onclick="closeMeasurementModal()" aria-label="Close measurement form">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="measurement-grid">
+                <div class="measurement-group">
+                    <label>Weight (<span class="weight-unit-label">lbs</span>)</label>
+                    <input type="number" id="mWeight" placeholder="e.g. 185" step="0.1" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Height (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mHeight" placeholder="e.g. 72" step="0.5" min="0" oninput="updateHeightDisplay()">
+                    <div class="height-display" id="heightDisplay"></div>
+                </div>
+                <div class="measurement-group">
+                    <label>Right Wrist (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mRightWrist" placeholder="e.g. 7.25" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Waist (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mWaist" placeholder="e.g. 33" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Left Bicep (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mLeftBicep" placeholder="e.g. 15.5" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Right Bicep (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mRightBicep" placeholder="e.g. 15.75" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Chest (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mChest" placeholder="e.g. 42" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Left Calf (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mLeftCalf" placeholder="e.g. 15" step="0.25" min="0">
+                </div>
+                <div class="measurement-group">
+                    <label>Right Calf (<span class="length-unit-label">in</span>)</label>
+                    <input type="number" id="mRightCalf" placeholder="e.g. 15.25" step="0.25" min="0">
+                </div>
+            </div>
+            <button class="calc-btn" id="saveMeasurementsBtn" onclick="saveBodyMeasurements()">SAVE MEASUREMENTS</button>
+        </div>
     </div>
 </div>
 
@@ -858,6 +915,32 @@ function setUnits(units) {
 }
 window.setUnits = setUnits;
 
+function openMeasurementModal() {
+    const modal = document.getElementById('measurementModal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('mWeight')?.focus(), 0);
+}
+window.openMeasurementModal = openMeasurementModal;
+
+function closeMeasurementModal() {
+    const modal = document.getElementById('measurementModal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+window.closeMeasurementModal = closeMeasurementModal;
+
+function handleModalBackdrop(event) {
+    if (event.target.id === 'measurementModal') closeMeasurementModal();
+}
+window.handleModalBackdrop = handleModalBackdrop;
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMeasurementModal();
+});
+
 // ============================================================================
 // HEIGHT DISPLAY
 // ============================================================================
@@ -940,6 +1023,7 @@ async function saveBodyMeasurements() {
         btn.textContent = 'SAVED!';
         btn.classList.add('success-btn');
         showSuccessToast();
+        closeMeasurementModal();
 
         // Clear form
         document.querySelectorAll('.measurement-group input').forEach(input => input.value = '');
