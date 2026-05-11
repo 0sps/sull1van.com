@@ -226,6 +226,15 @@
         }
         .modal-close:hover { border-color: var(--accent-primary); color: var(--text-primary); }
         .modal-body { padding: 22px; }
+        .body-dashboard {
+            display: grid; grid-template-columns: minmax(240px, 0.45fr) minmax(0, 1fr);
+            gap: 18px; align-items: stretch;
+        }
+        .body-dashboard .section-card { margin-bottom: 0; }
+        .body-dashboard .body-summary {
+            height: 100%; grid-template-columns: 1fr; align-content: space-between;
+        }
+        .body-dashboard .btn-load { width: 100%; }
 
         /* Unit Toggle */
         .unit-toggle-row {
@@ -276,7 +285,7 @@
         .load-status.loaded { color: var(--success); }
 
         .chart-container {
-            position: relative; width: 100%; height: 300px;
+            position: relative; width: 100%; height: 260px;
             background: var(--bg-tertiary); border: 1px solid var(--border);
             padding: 16px;
         }
@@ -557,6 +566,7 @@
             .score-number { font-size: 3.5rem; }
             .container { padding: 16px; }
             .section-card, .pfra-hero { padding: 14px; }
+            .body-dashboard { grid-template-columns: 1fr; }
             .body-summary { grid-template-columns: 1fr; }
             .body-summary .btn-load { width: 100%; }
             .modal-overlay { align-items: flex-end; padding: 0; }
@@ -569,6 +579,7 @@
             .score-event-card { min-height: 150px; padding: 10px; }
             .event-name { font-size: 1.2rem; }
             .event-score-value { font-size: 1.45rem; }
+            .chart-container { height: 240px; }
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -604,40 +615,42 @@
         <button class="unit-btn" id="unitMetric" onclick="setUnits('metric')">KG / CM</button>
     </div>
 
-    <div class="section-card">
-        <div class="body-summary">
-            <div class="body-summary-copy">
-                <strong>Quick log</strong>
-                Trends stay up front. Entry opens only when needed.
+    <div class="body-dashboard">
+        <div class="section-card">
+            <div class="body-summary">
+                <div class="body-summary-copy">
+                    <strong>Quick log</strong>
+                    Trends stay up front. Entry opens only when needed.
+                </div>
+                <button class="btn-load" onclick="openMeasurementModal()">LOG MEASUREMENTS</button>
             </div>
-            <button class="btn-load" onclick="openMeasurementModal()">LOG MEASUREMENTS</button>
         </div>
-    </div>
 
-    <!-- Explore Data -->
-    <div class="section-card explore-section">
-        <div class="section-title">Body Trends</div>
-        <div class="metric-picker" id="metricPicker">
-            <button class="metric-btn active" data-metric="weight" onclick="selectMetric('weight')">Weight</button>
-            <button class="metric-btn" data-metric="height" onclick="selectMetric('height')">Height</button>
-            <button class="metric-btn" data-metric="waist" onclick="selectMetric('waist')">Waist</button>
-            <button class="metric-btn" data-metric="rightWrist" onclick="selectMetric('rightWrist')">R. Wrist</button>
-            <button class="metric-btn" data-metric="leftBicep" onclick="selectMetric('leftBicep')">L. Bicep</button>
-            <button class="metric-btn" data-metric="rightBicep" onclick="selectMetric('rightBicep')">R. Bicep</button>
-            <button class="metric-btn" data-metric="chest" onclick="selectMetric('chest')">Chest</button>
-            <button class="metric-btn" data-metric="leftCalf" onclick="selectMetric('leftCalf')">L. Calf</button>
-            <button class="metric-btn" data-metric="rightCalf" onclick="selectMetric('rightCalf')">R. Calf</button>
-        </div>
-        <div class="load-bar">
-            <button class="btn-load" id="loadDataBtn" onclick="loadBodyData()">LOAD DATA</button>
-            <span class="date-range-hint">Last 6 months</span>
-            <span class="load-status" id="loadStatus"></span>
-        </div>
-        <div class="chart-container" id="chartContainer">
-            <div class="chart-empty-state" id="chartEmptyState">
-                <div class="chart-empty-text">Load data to view the last 6 months.</div>
+        <!-- Explore Data -->
+        <div class="section-card explore-section">
+            <div class="section-title">Body Trends</div>
+            <div class="metric-picker" id="metricPicker">
+                <button class="metric-btn active" data-metric="weight" onclick="selectMetric('weight')">Weight</button>
+                <button class="metric-btn" data-metric="height" onclick="selectMetric('height')">Height</button>
+                <button class="metric-btn" data-metric="waist" onclick="selectMetric('waist')">Waist</button>
+                <button class="metric-btn" data-metric="rightWrist" onclick="selectMetric('rightWrist')">R. Wrist</button>
+                <button class="metric-btn" data-metric="leftBicep" onclick="selectMetric('leftBicep')">L. Bicep</button>
+                <button class="metric-btn" data-metric="rightBicep" onclick="selectMetric('rightBicep')">R. Bicep</button>
+                <button class="metric-btn" data-metric="chest" onclick="selectMetric('chest')">Chest</button>
+                <button class="metric-btn" data-metric="leftCalf" onclick="selectMetric('leftCalf')">L. Calf</button>
+                <button class="metric-btn" data-metric="rightCalf" onclick="selectMetric('rightCalf')">R. Calf</button>
             </div>
-            <canvas id="bodyChart" style="display:none;"></canvas>
+            <div class="load-bar">
+                <button class="btn-load" id="loadDataBtn" onclick="loadBodyData()">LOAD DATA</button>
+                <span class="date-range-hint">Last 6 months</span>
+                <span class="load-status" id="loadStatus"></span>
+            </div>
+            <div class="chart-container" id="chartContainer">
+                <div class="chart-empty-state" id="chartEmptyState">
+                    <div class="chart-empty-text">Load data to view the last 6 months.</div>
+                </div>
+                <canvas id="bodyChart" style="display:none;"></canvas>
+            </div>
         </div>
     </div>
 
