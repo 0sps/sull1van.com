@@ -406,23 +406,53 @@
         }
         .pfra-stat span { display: block; color: var(--text-muted); font-size: 0.68rem; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
         .compact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-        .event-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-        .event-option {
-            text-align: left; padding: 14px; min-height: 88px; background: var(--bg-tertiary);
-            border: 1px solid var(--border); color: var(--text-primary); cursor: pointer;
+        .event-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .score-event-card {
+            min-height: 210px; display: flex; flex-direction: column; justify-content: space-between;
+            padding: 14px; background: var(--bg-tertiary); border: 1px solid var(--border);
             transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-            font-family: 'Space Mono', monospace;
         }
-        .event-option:hover { border-color: var(--accent-secondary); background: rgba(255,61,0,0.08); }
-        .event-option.active {
-            border-color: var(--accent-primary); background: rgba(255,61,0,0.14);
-            box-shadow: inset 0 0 0 1px rgba(255,61,0,0.1);
+        .score-event-card:focus-within,
+        .score-event-card:hover {
+            border-color: var(--accent-secondary); background: rgba(255,61,0,0.07);
+        }
+        .score-event-card.scored.good { border-color: rgba(0,255,136,0.45); background: rgba(0,255,136,0.07); }
+        .score-event-card.scored.warn { border-color: rgba(255,187,0,0.45); background: rgba(255,187,0,0.08); }
+        .score-event-card.scored.bad { border-color: rgba(255,61,90,0.45); background: rgba(255,61,90,0.07); }
+        .score-event-top {
+            display: flex; justify-content: space-between; gap: 10px; align-items: flex-start;
         }
         .event-name {
             display: block; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
             letter-spacing: 1.2px; margin-bottom: 6px;
         }
-        .event-meta { display: block; color: var(--text-muted); font-size: 0.72rem; line-height: 1.45; }
+        .event-meta { display: block; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.7px; }
+        .metric-entry {
+            display: grid; gap: 8px; margin: 14px 0;
+        }
+        .metric-entry.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .metric-entry input {
+            width: 100%; padding: 11px 10px; min-width: 0;
+            background: #111113; border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary); font-family: 'Space Mono', monospace; font-size: 16px;
+            appearance: none; -webkit-appearance: none;
+        }
+        .metric-entry input:focus { outline: none; border-color: var(--accent-primary); }
+        .metric-entry input::placeholder { color: var(--text-muted); }
+        .event-score-foot {
+            border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;
+            display: flex; justify-content: space-between; gap: 10px; align-items: flex-end;
+        }
+        .event-score-value {
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; letter-spacing: 1px;
+            color: var(--text-muted); line-height: 0.95;
+        }
+        .score-event-card.good .event-score-value { color: var(--success); }
+        .score-event-card.warn .event-score-value { color: var(--warning); }
+        .score-event-card.bad .event-score-value { color: #ff3d5a; }
+        .event-score-note {
+            color: var(--text-muted); font-size: 0.68rem; line-height: 1.35; text-align: right;
+        }
         .single-result {
             display: none; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,61,0,0.08), rgba(17,17,19,0.96));
             padding: 22px; margin-top: 18px;
@@ -529,6 +559,7 @@
             .pfra-shell { grid-template-columns: 1fr; }
             .pfra-stats { grid-template-columns: repeat(2, 1fr); }
             .explorer-toolbar { grid-template-columns: 1fr; }
+            .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
         @media (max-width: 600px) {
             .breakdown-grid { grid-template-columns: 1fr 1fr; }
@@ -539,7 +570,7 @@
             .body-summary .btn-load { width: 100%; }
             .modal-overlay { align-items: flex-end; padding: 0; }
             .modal-panel { max-height: 92vh; border-left: none; border-right: none; border-bottom: none; }
-            .compact-grid, .event-grid, .score-range-summary { grid-template-columns: 1fr; }
+            .compact-grid, .score-range-summary { grid-template-columns: 1fr; }
             .single-score { font-size: 3.2rem; }
             .range-bar { grid-template-columns: 46px 1fr; }
             .range-bar > span:last-child { grid-column: 2; }
@@ -660,32 +691,7 @@
 
                 <div class="helper-text">Age and gender are used for every event except WHtR, which uses the same chart for everyone.</div>
 
-                <div class="event-grid" id="sectionEventGrid" style="margin-top:18px;">
-                    <button class="event-option active" data-event="whtr" onclick="selectSectionEvent('whtr')"><span class="event-name">WHtR</span><span class="event-meta">Height + waist · 20 pts</span></button>
-                    <button class="event-option" data-event="pushup" onclick="selectSectionEvent('pushup')"><span class="event-name">Push-Up</span><span class="event-meta">Standard reps · 15 pts</span></button>
-                    <button class="event-option" data-event="hrPushup" onclick="selectSectionEvent('hrPushup')"><span class="event-name">HR Push-Up</span><span class="event-meta">Hand-release reps · 15 pts</span></button>
-                    <button class="event-option" data-event="situp" onclick="selectSectionEvent('situp')"><span class="event-name">Sit-Up</span><span class="event-meta">1 minute reps · 15 pts</span></button>
-                    <button class="event-option" data-event="clrc" onclick="selectSectionEvent('clrc')"><span class="event-name">CLRC</span><span class="event-meta">1 minute reps · 15 pts</span></button>
-                    <button class="event-option" data-event="plank" onclick="selectSectionEvent('plank')"><span class="event-name">Plank</span><span class="event-meta">Forearm plank time · 15 pts</span></button>
-                    <button class="event-option" data-event="run" onclick="selectSectionEvent('run')"><span class="event-name">2-Mile Run</span><span class="event-meta">Lower time scores higher · 50 pts</span></button>
-                    <button class="event-option" data-event="hamr" onclick="selectSectionEvent('hamr')"><span class="event-name">20m HAMR</span><span class="event-meta">Shuttles completed · 50 pts</span></button>
-                    <button class="event-option" data-event="walk" onclick="selectSectionEvent('walk')"><span class="event-name">2km Walk</span><span class="event-meta">Alternate cardio pass/fail</span></button>
-                </div>
-
-                <div id="sectionInputs" style="margin-top:18px;"></div>
-                <button class="calc-btn" onclick="calculateSection()">SCORE THIS SECTION</button>
-
-                <div class="single-result" id="singleResult">
-                    <div class="single-score-row">
-                        <div>
-                            <div class="breakdown-label" id="singleEventLabel">Section Score</div>
-                            <div class="single-score" id="singleScore">—</div>
-                        </div>
-                        <div class="single-caption" id="singleCaption"></div>
-                    </div>
-                    <div class="score-meter" id="scoreMeter"><div class="score-meter-fill" id="scoreMeterFill"></div></div>
-                    <div class="badge-row" id="singleBadges"></div>
-                </div>
+                <div class="event-grid" id="sectionEventGrid" style="margin-top:18px;"></div>
             </div>
         </div>
 
@@ -1593,6 +1599,7 @@ const PFRA_EVENTS = {
 };
 
 let selectedSectionEvent = 'whtr';
+const SECTION_EVENT_ORDER = ['whtr', 'pushup', 'hrPushup', 'situp', 'clrc', 'plank', 'run', 'hamr', 'walk'];
 
 const APP_SELECT_LABELS = {
     gender: { M: 'Male', F: 'Female' },
@@ -1648,6 +1655,7 @@ function chooseAppSelect(selectId, value) {
     } else {
         renderScoreExplorer();
     }
+    if (selectId === 'gender') updateAllSectionScores();
 }
 window.chooseAppSelect = chooseAppSelect;
 
@@ -1684,22 +1692,119 @@ function syncPfraProfile() {
     const gender = document.getElementById('gender').value || 'M';
     if (age) document.getElementById('explorerAge').value = age;
     if (gender) setAppSelectValue('explorerGender', gender);
+    updateAllSectionScores();
     renderScoreExplorer();
 }
 window.syncPfraProfile = syncPfraProfile;
 
 function selectSectionEvent(eventKey) {
     selectedSectionEvent = eventKey;
-    document.querySelectorAll('.event-option').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.event === eventKey);
-    });
     const explorerEvent = document.getElementById('explorerEvent');
     if (explorerEvent) setAppSelectValue('explorerEvent', eventKey);
-    document.getElementById('singleResult').classList.remove('visible');
-    renderSectionInputs();
     renderScoreExplorer();
 }
 window.selectSectionEvent = selectSectionEvent;
+
+function eventInputMarkup(eventKey) {
+    if (eventKey === 'whtr') {
+        return `<div class="metric-entry two">
+            <input type="number" id="card-${eventKey}-height" placeholder="Height" min="1" step="0.5" oninput="updateSectionCardScore('${eventKey}')">
+            <input type="number" id="card-${eventKey}-waist" placeholder="Waist" min="1" step="0.25" oninput="updateSectionCardScore('${eventKey}')">
+        </div>`;
+    }
+    const event = PFRA_EVENTS[eventKey];
+    if (event.unit === 'time') {
+        return `<div class="metric-entry two">
+            <input type="number" id="card-${eventKey}-mins" placeholder="Min" min="0" max="99" oninput="updateSectionCardScore('${eventKey}')">
+            <input type="number" id="card-${eventKey}-secs" placeholder="Sec" min="0" max="59" oninput="updateSectionCardScore('${eventKey}')">
+        </div>`;
+    }
+    return `<div class="metric-entry">
+        <input type="number" id="card-${eventKey}-value" placeholder="${event.unit === 'shuttles' ? 'Shuttles' : 'Reps'}" min="0" oninput="updateSectionCardScore('${eventKey}')">
+    </div>`;
+}
+
+function renderScoreCards() {
+    const grid = document.getElementById('sectionEventGrid');
+    if (!grid) return;
+    grid.innerHTML = SECTION_EVENT_ORDER.map(eventKey => {
+        const event = PFRA_EVENTS[eventKey];
+        const maxLabel = eventKey === 'walk' ? 'P/F' : `${event.max} pts`;
+        return `<div class="score-event-card" id="score-card-${eventKey}" onclick="selectSectionEvent('${eventKey}')">
+            <div>
+                <div class="score-event-top">
+                    <span class="event-name">${event.short}</span>
+                    <span class="event-meta">${maxLabel}</span>
+                </div>
+                ${eventInputMarkup(eventKey)}
+            </div>
+            <div class="event-score-foot">
+                <div class="event-score-value" id="score-card-${eventKey}-value">—</div>
+                <div class="event-score-note" id="score-card-${eventKey}-note">Enter result</div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function readCardValue(eventKey) {
+    if (eventKey === 'whtr') {
+        const height = parseFloat(document.getElementById(`card-${eventKey}-height`)?.value);
+        const waist = parseFloat(document.getElementById(`card-${eventKey}-waist`)?.value);
+        if (!height || !waist) return null;
+        return { value: waist / height, display: `${(waist / height * 100).toFixed(1)}%` };
+    }
+    const event = PFRA_EVENTS[eventKey];
+    if (event.unit === 'time') {
+        const mins = parseInt(document.getElementById(`card-${eventKey}-mins`)?.value) || 0;
+        const secs = parseInt(document.getElementById(`card-${eventKey}-secs`)?.value) || 0;
+        if (mins === 0 && secs === 0) return null;
+        return { value: mins * 60 + secs, display: formatTime(mins * 60 + secs) };
+    }
+    const value = parseInt(document.getElementById(`card-${eventKey}-value`)?.value);
+    if (Number.isNaN(value)) return null;
+    return { value, display: String(value) };
+}
+
+function scoreZoneClass(eventKey, score) {
+    if (eventKey === 'walk') return score.pass ? 'good' : 'bad';
+    const percent = score.max ? score.points / score.max : 0;
+    if (!score.pass) return 'bad';
+    if (percent >= 0.85) return 'good';
+    return 'warn';
+}
+
+function updateSectionCardScore(eventKey) {
+    const card = document.getElementById(`score-card-${eventKey}`);
+    const valueEl = document.getElementById(`score-card-${eventKey}-value`);
+    const noteEl = document.getElementById(`score-card-${eventKey}-note`);
+    if (!card || !valueEl || !noteEl) return;
+    const result = readCardValue(eventKey);
+    card.classList.remove('scored', 'good', 'warn', 'bad');
+    if (!result) {
+        valueEl.textContent = '—';
+        noteEl.textContent = 'Enter result';
+        return;
+    }
+
+    const profile = profileForScoring();
+    const score = scoreSection(eventKey, result.value, profile.ageGroup, profile.genderIdx, profile.gender);
+    const zone = scoreZoneClass(eventKey, score);
+    card.classList.add('scored', zone);
+
+    if (eventKey === 'walk') {
+        valueEl.textContent = score.pass ? 'PASS' : 'FAIL';
+        noteEl.textContent = `Max ${score.threshold}`;
+        return;
+    }
+
+    valueEl.textContent = `${score.points.toFixed(1)} / ${score.max}`;
+    noteEl.textContent = score.pass ? result.display : 'Below min';
+}
+window.updateSectionCardScore = updateSectionCardScore;
+
+function updateAllSectionScores() {
+    SECTION_EVENT_ORDER.forEach(updateSectionCardScore);
+}
 
 function renderSectionInputs() {
     const event = PFRA_EVENTS[selectedSectionEvent];
@@ -2151,7 +2256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setAppSelectValue('gender', document.getElementById('gender').value || 'M');
     setAppSelectValue('explorerGender', document.getElementById('explorerGender').value || 'M');
     setAppSelectValue('explorerEvent', document.getElementById('explorerEvent').value || 'whtr');
-    renderSectionInputs();
+    renderScoreCards();
     syncPfraProfile();
     renderScoreExplorer();
 });
