@@ -1043,7 +1043,6 @@
 
         .library-exercise:hover {
             border-color: var(--accent-primary);
-            transform: translateY(-2px);
         }
 
         .library-exercise-name {
@@ -4182,7 +4181,11 @@
         async function withFirebaseErrorHandling(operation, operationName) {
             try {
                 updateSyncStatus('syncing');
-                await operation();
+                const result = await operation();
+                if (result === false) {
+                    updateSyncStatus('error');
+                    return false;
+                }
                 updateSyncStatus('synced');
                 return true;
             } catch (error) {
@@ -5841,7 +5844,7 @@
                     return {
                         weight: weight,
                         reps: reps,
-                        isWarmup: false,
+                        isWarmup: setData.isWarmup || false,
                         note: ''
                     };
                 })

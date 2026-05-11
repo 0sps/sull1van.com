@@ -130,7 +130,7 @@
             font-size: 1.4rem; letter-spacing: 3px; cursor: pointer; border: none;
             transition: all 0.3s ease; margin-top: 8px;
         }
-        .calc-btn:hover { box-shadow: 0 0 40px var(--accent-glow); transform: translateY(-2px); }
+        .calc-btn:hover { box-shadow: 0 0 40px var(--accent-glow); filter: brightness(1.04); }
         .calc-btn:disabled {
             opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
         }
@@ -329,10 +329,141 @@
             background: rgba(255,61,90,0.1); border: 1px solid rgba(255,61,90,0.3);
             padding: 12px 16px; margin-top: 16px; font-size: 0.85rem; color: #ff3d5a;
         }
+        .pfra-shell {
+            display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+            gap: 24px; align-items: start;
+        }
+        .pfra-hero {
+            position: relative; overflow: hidden; border: 1px solid rgba(255,109,61,0.28);
+            background:
+                linear-gradient(135deg, rgba(255,61,0,0.14), rgba(0,255,136,0.05)),
+                var(--bg-secondary);
+            padding: 28px; margin-bottom: 24px;
+        }
+        .pfra-hero::after {
+            content: ''; position: absolute; inset: auto -10% -65% 18%; height: 190px;
+            background: linear-gradient(90deg, transparent, rgba(255,187,0,0.18), transparent);
+            transform: rotate(-8deg); pointer-events: none;
+        }
+        .pfra-kicker {
+            color: var(--accent-secondary); font-size: 0.72rem; letter-spacing: 1.5px;
+            text-transform: uppercase; margin-bottom: 8px;
+        }
+        .pfra-title {
+            font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 9vw, 6.2rem);
+            line-height: 0.9; letter-spacing: 3px; max-width: 760px;
+        }
+        .pfra-copy {
+            color: var(--text-secondary); max-width: 660px; margin-top: 14px; line-height: 1.7;
+            font-size: 0.88rem;
+        }
+        .pfra-stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 22px;
+        }
+        .pfra-stat {
+            border: 1px solid rgba(255,255,255,0.08); background: rgba(10,10,11,0.45);
+            padding: 12px;
+        }
+        .pfra-stat strong {
+            display: block; font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
+            color: var(--text-primary); letter-spacing: 1px; line-height: 1;
+        }
+        .pfra-stat span { display: block; color: var(--text-muted); font-size: 0.68rem; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .compact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .event-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .event-option {
+            text-align: left; padding: 14px; min-height: 88px; background: var(--bg-tertiary);
+            border: 1px solid var(--border); color: var(--text-primary); cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            font-family: 'Space Mono', monospace;
+        }
+        .event-option:hover { border-color: var(--accent-secondary); background: rgba(255,61,0,0.08); }
+        .event-option.active {
+            border-color: var(--accent-primary); background: rgba(255,61,0,0.14);
+            box-shadow: inset 0 0 0 1px rgba(255,61,0,0.1);
+        }
+        .event-name {
+            display: block; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+            letter-spacing: 1.2px; margin-bottom: 6px;
+        }
+        .event-meta { display: block; color: var(--text-muted); font-size: 0.72rem; line-height: 1.45; }
+        .single-result {
+            display: none; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,61,0,0.08), rgba(17,17,19,0.96));
+            padding: 22px; margin-top: 18px;
+        }
+        .single-result.visible { display: block; }
+        .score-meter {
+            height: 14px; background: #070708; border: 1px solid var(--border); overflow: hidden; margin: 16px 0 10px;
+        }
+        .score-meter-fill {
+            height: 100%; width: 0%; background: linear-gradient(90deg, #ff3d5a, var(--warning), var(--success));
+            transition: width 0.45s ease;
+        }
+        .single-score-row {
+            display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap;
+        }
+        .single-score {
+            font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 0.9; color: var(--accent-secondary);
+        }
+        .single-score.pass { color: var(--success); }
+        .single-score.fail { color: #ff3d5a; }
+        .single-caption { color: var(--text-muted); font-size: 0.82rem; line-height: 1.6; }
+        .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .score-badge {
+            border: 1px solid var(--border); color: var(--text-secondary); background: rgba(255,255,255,0.03);
+            padding: 6px 10px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px;
+        }
+        .score-badge.good { color: var(--success); border-color: rgba(0,255,136,0.35); background: rgba(0,255,136,0.08); }
+        .score-badge.warn { color: var(--warning); border-color: rgba(255,187,0,0.35); background: rgba(255,187,0,0.08); }
+        .score-badge.bad { color: #ff3d5a; border-color: rgba(255,61,90,0.35); background: rgba(255,61,90,0.08); }
+        .explorer-toolbar {
+            display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 14px; margin-bottom: 18px;
+        }
+        .score-range-summary {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+        }
+        .range-tile {
+            background: var(--bg-tertiary); border: 1px solid var(--border); padding: 12px;
+        }
+        .range-tile span { display: block; color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.8px; }
+        .range-tile strong { display: block; margin-top: 6px; color: var(--text-primary); font-size: 0.9rem; }
+        .range-table-wrap {
+            max-height: 360px; overflow: auto; border: 1px solid var(--border); background: var(--bg-tertiary);
+        }
+        .range-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+        .range-table th, .range-table td {
+            padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left;
+        }
+        .range-table th {
+            position: sticky; top: 0; background: #151518; color: var(--accent-secondary);
+            text-transform: uppercase; letter-spacing: 0.9px; font-size: 0.68rem; z-index: 1;
+        }
+        .range-table tr.highlight-row td { background: rgba(0,255,136,0.08); color: var(--text-primary); }
+        .range-visual {
+            display: grid; gap: 8px; margin: 4px 0 18px;
+        }
+        .range-bar {
+            display: grid; grid-template-columns: 58px 1fr minmax(78px, auto); gap: 10px; align-items: center;
+            color: var(--text-secondary); font-size: 0.74rem;
+        }
+        .range-line { height: 9px; background: #080809; border: 1px solid var(--border); overflow: hidden; }
+        .range-line span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--warning), var(--success)); }
+        .helper-text { color: var(--text-muted); font-size: 0.78rem; line-height: 1.6; margin-top: 10px; }
         select option { background: var(--bg-tertiary); }
+        @media (max-width: 860px) {
+            .pfra-shell { grid-template-columns: 1fr; }
+            .pfra-stats { grid-template-columns: repeat(2, 1fr); }
+            .explorer-toolbar { grid-template-columns: 1fr; }
+        }
         @media (max-width: 600px) {
             .breakdown-grid { grid-template-columns: 1fr 1fr; }
             .score-number { font-size: 3.5rem; }
+            .container { padding: 16px; }
+            .section-card, .pfra-hero { padding: 18px; }
+            .compact-grid, .event-grid, .score-range-summary { grid-template-columns: 1fr; }
+            .single-score { font-size: 3.2rem; }
+            .range-bar { grid-template-columns: 46px 1fr; }
+            .range-bar > span:last-child { grid-column: 2; }
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -449,126 +580,106 @@
     <!-- ============================================================ -->
     <!-- PFRA CALCULATOR (EXISTING — UNCHANGED)                        -->
     <!-- ============================================================ -->
-    <div class="page-title">BODY RATING FOR AIR FORCE ASSESSMENT</div>
-    <div class="page-subtitle">USAF Physical Fitness Readiness Assessment (PFRA) · Effective 1 Mar 2026 · Reference Only</div>
+    <section class="pfra-hero">
+        <div class="pfra-kicker">USAF PFRA · Effective 1 Mar 2026 · Reference Only</div>
+        <div class="pfra-title">One result. One section score.</div>
+        <p class="pfra-copy">Pick any part of the PT test and enter just that result. The page scores the selected section, shows the max possible points, and lets you explore the full scoring chart for the profile you choose.</p>
+        <div class="pfra-stats">
+            <div class="pfra-stat"><strong>20</strong><span>Body composition</span></div>
+            <div class="pfra-stat"><strong>15</strong><span>Push component</span></div>
+            <div class="pfra-stat"><strong>15</strong><span>Core component</span></div>
+            <div class="pfra-stat"><strong>50</strong><span>Cardio component</span></div>
+        </div>
+    </section>
 
-    <!-- Profile -->
-    <div class="section-card">
-        <div class="section-title">Profile</div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Age</label>
-                <input type="number" id="age" placeholder="e.g. 28" min="17" max="99">
-            </div>
-            <div class="form-group">
-                <label>Gender</label>
-                <select id="gender">
-                    <option value="">Select...</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                </select>
-            </div>
-        </div>
-    </div>
+    <div class="pfra-shell">
+        <div>
+            <div class="section-card">
+                <div class="section-title">Score One Test Result</div>
+                <div class="compact-grid">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" id="age" placeholder="e.g. 28" min="17" max="99" oninput="syncPfraProfile()">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="gender" onchange="syncPfraProfile()">
+                            <option value="">Select...</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+                </div>
 
-    <!-- WHtR -->
-    <div class="section-card">
-        <div class="section-title">Waist-to-Height Ratio (WHtR) · 20 pts</div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Height (inches)</label>
-                <input type="number" id="heightIn" placeholder="e.g. 71" step="0.5">
-            </div>
-            <div class="form-group">
-                <label>Waist Circumference (inches)</label>
-                <input type="number" id="waistIn" placeholder="e.g. 33" step="0.25">
-            </div>
-        </div>
-        <div class="input-hint">WHtR = waist ÷ height. Identical standards for all ages and genders. Must score ≥ 2.5 pts to pass this component.</div>
-    </div>
+                <div class="helper-text">Age and gender are used for every event except WHtR, which uses the same chart for everyone.</div>
 
-    <!-- Push Component -->
-    <div class="section-card">
-        <div class="section-title">Push Component · 15 pts</div>
-        <div class="toggle-row">
-            <button class="toggle-btn active" id="pushTypeStd" onclick="selectPushType('std')">Standard Push-Up</button>
-            <button class="toggle-btn" id="pushTypeHR" onclick="selectPushType('hr')">Hand Release Push-Up</button>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Reps Completed</label>
-                <input type="number" id="pushReps" placeholder="e.g. 45" min="0">
-            </div>
-        </div>
-        <div class="input-hint">Minimum: score ≥ 2.5 pts required to pass this component.</div>
-    </div>
+                <div class="event-grid" id="sectionEventGrid" style="margin-top:18px;">
+                    <button class="event-option active" data-event="whtr" onclick="selectSectionEvent('whtr')"><span class="event-name">WHtR</span><span class="event-meta">Height + waist · 20 pts</span></button>
+                    <button class="event-option" data-event="pushup" onclick="selectSectionEvent('pushup')"><span class="event-name">Push-Up</span><span class="event-meta">Standard reps · 15 pts</span></button>
+                    <button class="event-option" data-event="hrPushup" onclick="selectSectionEvent('hrPushup')"><span class="event-name">HR Push-Up</span><span class="event-meta">Hand-release reps · 15 pts</span></button>
+                    <button class="event-option" data-event="situp" onclick="selectSectionEvent('situp')"><span class="event-name">Sit-Up</span><span class="event-meta">1 minute reps · 15 pts</span></button>
+                    <button class="event-option" data-event="clrc" onclick="selectSectionEvent('clrc')"><span class="event-name">CLRC</span><span class="event-meta">1 minute reps · 15 pts</span></button>
+                    <button class="event-option" data-event="plank" onclick="selectSectionEvent('plank')"><span class="event-name">Plank</span><span class="event-meta">Forearm plank time · 15 pts</span></button>
+                    <button class="event-option" data-event="run" onclick="selectSectionEvent('run')"><span class="event-name">2-Mile Run</span><span class="event-meta">Lower time scores higher · 50 pts</span></button>
+                    <button class="event-option" data-event="hamr" onclick="selectSectionEvent('hamr')"><span class="event-name">20m HAMR</span><span class="event-meta">Shuttles completed · 50 pts</span></button>
+                    <button class="event-option" data-event="walk" onclick="selectSectionEvent('walk')"><span class="event-name">2km Walk</span><span class="event-meta">Alternate cardio pass/fail</span></button>
+                </div>
 
-    <!-- Ab Component -->
-    <div class="section-card">
-        <div class="section-title">Abdominal Component · 15 pts</div>
-        <div class="toggle-row">
-            <button class="toggle-btn active" id="abTypeSitup" onclick="selectAbType('situp')">Sit-Up (1 min)</button>
-            <button class="toggle-btn" id="abTypeCLRC" onclick="selectAbType('clrc')">Cross-Leg Rev Crunch (1 min)</button>
-            <button class="toggle-btn" id="abTypePlank" onclick="selectAbType('plank')">Forearm Plank</button>
-        </div>
-        <div class="form-row" id="abRepsRow">
-            <div class="form-group">
-                <label id="abInputLabel">Reps Completed</label>
-                <input type="number" id="abReps" placeholder="e.g. 42" min="0">
-            </div>
-        </div>
-        <div class="form-row" id="abTimeRow" style="display:none;">
-            <div class="form-group">
-                <label>Minutes</label>
-                <input type="number" id="abMins" placeholder="e.g. 2" min="0" max="10">
-            </div>
-            <div class="form-group">
-                <label>Seconds</label>
-                <input type="number" id="abSecs" placeholder="e.g. 30" min="0" max="59">
-            </div>
-        </div>
-        <div class="input-hint">Minimum: score ≥ 2.5 pts required to pass this component.</div>
-    </div>
+                <div id="sectionInputs" style="margin-top:18px;"></div>
+                <button class="calc-btn" onclick="calculateSection()">SCORE THIS SECTION</button>
 
-    <!-- Cardio Component -->
-    <div class="section-card">
-        <div class="section-title">Cardio Component · 50 pts</div>
-        <div class="toggle-row">
-            <button class="toggle-btn active" id="cardioType2mile" onclick="selectCardioType('run')">2-Mile Run</button>
-            <button class="toggle-btn" id="cardioTypeHAMR" onclick="selectCardioType('hamr')">20m HAMR</button>
-            <button class="toggle-btn" id="cardioTypeWalk" onclick="selectCardioType('walk')">2km Walk (Alt)</button>
-        </div>
-        <div class="form-row" id="cardioTimeRow">
-            <div class="form-group">
-                <label>Minutes</label>
-                <input type="number" id="cardioMins" placeholder="e.g. 14" min="0" max="99">
-            </div>
-            <div class="form-group">
-                <label>Seconds</label>
-                <input type="number" id="cardioSecs" placeholder="e.g. 30" min="0" max="59">
+                <div class="single-result" id="singleResult">
+                    <div class="single-score-row">
+                        <div>
+                            <div class="breakdown-label" id="singleEventLabel">Section Score</div>
+                            <div class="single-score" id="singleScore">—</div>
+                        </div>
+                        <div class="single-caption" id="singleCaption"></div>
+                    </div>
+                    <div class="score-meter" id="scoreMeter"><div class="score-meter-fill" id="scoreMeterFill"></div></div>
+                    <div class="badge-row" id="singleBadges"></div>
+                </div>
             </div>
         </div>
-        <div class="form-row" id="cardioShuttlesRow" style="display:none;">
-            <div class="form-group">
-                <label>Shuttles Completed</label>
-                <input type="number" id="cardioShuttles" placeholder="e.g. 62" min="0">
-            </div>
-        </div>
-        <div id="cardioHint" class="input-hint">Minimum: 35 pts required to pass this component.</div>
-    </div>
 
-    <button class="calc-btn" onclick="calculate()">CALCULATE SCORE</button>
-
-    <!-- Results -->
-    <div class="results-panel" id="resultsPanel">
-        <div class="score-hero">
-            <div class="score-number" id="scoreFinal">—</div>
-            <div class="score-rating" id="scoreRating">—</div>
-            <div class="score-subtext" id="scoreSubtext"></div>
-        </div>
-        <hr class="hr">
-        <div class="breakdown-grid" id="breakdownGrid"></div>
-        <div id="failNotice"></div>
+        <aside class="section-card">
+            <div class="section-title">Chart Explorer</div>
+            <div class="explorer-toolbar">
+                <div class="form-group">
+                    <label>Explorer Age</label>
+                    <input type="number" id="explorerAge" placeholder="e.g. 28" min="17" max="99" oninput="renderScoreExplorer()">
+                </div>
+                <div class="form-group">
+                    <label>Explorer Gender</label>
+                    <select id="explorerGender" onchange="renderScoreExplorer()">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Explorer Event</label>
+                    <select id="explorerEvent" onchange="renderScoreExplorer()">
+                        <option value="whtr">WHtR</option>
+                        <option value="pushup">Standard Push-Up</option>
+                        <option value="hrPushup">Hand Release Push-Up</option>
+                        <option value="situp">Sit-Up</option>
+                        <option value="clrc">Cross-Leg Reverse Crunch</option>
+                        <option value="plank">Forearm Plank</option>
+                        <option value="run">2-Mile Run</option>
+                        <option value="hamr">20m HAMR</option>
+                        <option value="walk">2km Walk</option>
+                    </select>
+                </div>
+            </div>
+            <div class="score-range-summary" id="scoreRangeSummary"></div>
+            <div class="range-visual" id="scoreRangeVisual"></div>
+            <div class="range-table-wrap">
+                <table class="range-table">
+                    <thead><tr><th>Points</th><th>Result Needed</th><th>Zone</th></tr></thead>
+                    <tbody id="scoreRangeTable"></tbody>
+                </table>
+            </div>
+        </aside>
     </div>
 </div>
 
@@ -1333,6 +1444,255 @@ const WALK_MAX = {
     F: [mmss('17:22'), mmss('17:22'), mmss('17:28'), mmss('17:28'), mmss('17:49'), mmss('17:49'), mmss('18:11'), mmss('18:11'), mmss('18:53')],
 };
 
+const AGE_GROUP_LABELS = ['<25', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60+'];
+const PFRA_EVENTS = {
+    whtr: { label: 'Waist-to-Height Ratio', short: 'WHtR', max: 20, pass: 2.5, type: 'whtr' },
+    pushup: { label: 'Standard Push-Up', short: 'Push-Up', max: 15, pass: 2.5, type: 'higher', table: PUSHUP_TABLE, unit: 'reps' },
+    hrPushup: { label: 'Hand Release Push-Up', short: 'HR Push-Up', max: 15, pass: 2.5, type: 'higher', table: HR_PUSHUP_TABLE, unit: 'reps' },
+    situp: { label: 'Sit-Up', short: 'Sit-Up', max: 15, pass: 2.5, type: 'higher', table: SITUP_TABLE, unit: 'reps' },
+    clrc: { label: 'Cross-Leg Reverse Crunch', short: 'CLRC', max: 15, pass: 2.5, type: 'higher', table: CLRC_TABLE, unit: 'reps' },
+    plank: { label: 'Forearm Plank', short: 'Plank', max: 15, pass: 2.5, type: 'higher', table: PLANK_TABLE, unit: 'time' },
+    run: { label: '2-Mile Run', short: '2-Mile Run', max: 50, pass: 35, type: 'lower', table: RUN_TABLE, unit: 'time' },
+    hamr: { label: '20m HAMR', short: 'HAMR', max: 50, pass: 35, type: 'higher', table: HAMR_TABLE, unit: 'shuttles' },
+    walk: { label: '2km Walk', short: '2km Walk', max: 0, pass: null, type: 'walk', unit: 'time' },
+};
+
+let selectedSectionEvent = 'whtr';
+
+function formatTime(totalSeconds) {
+    const safeSeconds = Math.max(0, Math.round(totalSeconds || 0));
+    const mins = Math.floor(safeSeconds / 60);
+    const secs = safeSeconds % 60;
+    return `${mins}:${String(secs).padStart(2, '0')}`;
+}
+
+function formatExplorerValue(eventKey, value) {
+    const event = PFRA_EVENTS[eventKey];
+    if (event.unit === 'time') return formatTime(value);
+    if (event.type === 'whtr') return value === Infinity ? '> 0.59' : `≤ ${value.toFixed(2)}`;
+    return `${value} ${event.unit}`;
+}
+
+function profileForScoring() {
+    const age = parseInt(document.getElementById('age').value);
+    const gender = document.getElementById('gender').value;
+    return { age, gender, ageGroup: age ? getAgeGroup(age) : null, genderIdx: gender === 'F' ? 1 : 0 };
+}
+
+function eventNeedsProfile(eventKey) {
+    return eventKey !== 'whtr';
+}
+
+function syncPfraProfile() {
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    if (age) document.getElementById('explorerAge').value = age;
+    if (gender) document.getElementById('explorerGender').value = gender;
+    renderScoreExplorer();
+}
+window.syncPfraProfile = syncPfraProfile;
+
+function selectSectionEvent(eventKey) {
+    selectedSectionEvent = eventKey;
+    document.querySelectorAll('.event-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.event === eventKey);
+    });
+    const explorerEvent = document.getElementById('explorerEvent');
+    if (explorerEvent) explorerEvent.value = eventKey;
+    document.getElementById('singleResult').classList.remove('visible');
+    renderSectionInputs();
+    renderScoreExplorer();
+}
+window.selectSectionEvent = selectSectionEvent;
+
+function renderSectionInputs() {
+    const event = PFRA_EVENTS[selectedSectionEvent];
+    const inputs = document.getElementById('sectionInputs');
+    if (selectedSectionEvent === 'whtr') {
+        inputs.innerHTML = `<div class="compact-grid">
+            <div class="form-group">
+                <label>Height (inches)</label>
+                <input type="number" id="singleHeightIn" placeholder="e.g. 71" min="1" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Waist (inches)</label>
+                <input type="number" id="singleWaistIn" placeholder="e.g. 33" min="1" step="0.25">
+            </div>
+        </div>
+        <div class="helper-text">Score is based on waist divided by height. Lower is better.</div>`;
+        return;
+    }
+
+    if (event.unit === 'time') {
+        const label = selectedSectionEvent === 'run' ? 'Finish Time' : selectedSectionEvent === 'walk' ? 'Walk Time' : 'Hold Time';
+        inputs.innerHTML = `<div class="compact-grid">
+            <div class="form-group">
+                <label>${label} · Minutes</label>
+                <input type="number" id="singleMins" placeholder="${selectedSectionEvent === 'plank' ? 'e.g. 2' : 'e.g. 14'}" min="0" max="99">
+            </div>
+            <div class="form-group">
+                <label>${label} · Seconds</label>
+                <input type="number" id="singleSecs" placeholder="${selectedSectionEvent === 'plank' ? 'e.g. 30' : 'e.g. 45'}" min="0" max="59">
+            </div>
+        </div>
+        <div class="helper-text">${selectedSectionEvent === 'run' || selectedSectionEvent === 'walk' ? 'Lower time is better.' : 'Longer hold is better.'}</div>`;
+        return;
+    }
+
+    inputs.innerHTML = `<div class="form-row">
+        <div class="form-group">
+            <label>${event.unit === 'shuttles' ? 'Shuttles Completed' : 'Reps Completed'}</label>
+            <input type="number" id="singleValue" placeholder="${event.unit === 'shuttles' ? 'e.g. 62' : 'e.g. 45'}" min="0">
+        </div>
+    </div>
+    <div class="helper-text">Higher result earns more section points.</div>`;
+}
+
+function readSectionValue() {
+    if (selectedSectionEvent === 'whtr') {
+        const height = parseFloat(document.getElementById('singleHeightIn').value);
+        const waist = parseFloat(document.getElementById('singleWaistIn').value);
+        if (!height || !waist) return null;
+        return { height, waist, value: waist / height };
+    }
+    const event = PFRA_EVENTS[selectedSectionEvent];
+    if (event.unit === 'time') {
+        const mins = parseInt(document.getElementById('singleMins').value) || 0;
+        const secs = parseInt(document.getElementById('singleSecs').value) || 0;
+        if (mins === 0 && secs === 0) return null;
+        return { mins, secs, value: mins * 60 + secs };
+    }
+    const value = parseInt(document.getElementById('singleValue').value);
+    if (Number.isNaN(value)) return null;
+    return { value };
+}
+
+function scoreSection(eventKey, value, ageGroup, genderIdx, gender) {
+    const event = PFRA_EVENTS[eventKey];
+    if (event.type === 'whtr') {
+        const pts = lookupWHtR(value);
+        return { points: pts, max: event.max, pass: pts >= event.pass, threshold: `${(value * 100).toFixed(1)}%`, risk: getWHtRRisk(value) };
+    }
+    if (event.type === 'walk') {
+        const maxTime = WALK_MAX[gender][ageGroup];
+        const pass = value <= maxTime;
+        return { points: null, max: null, pass, threshold: formatTime(maxTime), maxTime };
+    }
+    const points = event.type === 'lower'
+        ? lookupLower(event.table, value, ageGroup, genderIdx)
+        : lookupHigher(event.table, value, ageGroup, genderIdx);
+    return { points, max: event.max, pass: points >= event.pass };
+}
+
+function calculateSection() {
+    const eventKey = selectedSectionEvent;
+    const event = PFRA_EVENTS[eventKey];
+    const profile = profileForScoring();
+    const result = readSectionValue();
+    if (!result) {
+        alert('Enter a result for the selected test section.');
+        return;
+    }
+    if (eventNeedsProfile(eventKey) && (!profile.age || !profile.gender)) {
+        alert('Enter age and gender for this section.');
+        return;
+    }
+
+    const score = scoreSection(eventKey, result.value, profile.ageGroup, profile.genderIdx, profile.gender);
+    const panel = document.getElementById('singleResult');
+    const scoreEl = document.getElementById('singleScore');
+    const fill = document.getElementById('scoreMeterFill');
+    const badges = document.getElementById('singleBadges');
+    const caption = document.getElementById('singleCaption');
+
+    document.getElementById('singleEventLabel').textContent = event.label;
+    panel.classList.add('visible');
+    scoreEl.className = 'single-score ' + (score.pass ? 'pass' : 'fail');
+
+    let percent = 0;
+    if (eventKey === 'walk') {
+        scoreEl.textContent = score.pass ? 'PASS' : 'FAIL';
+        caption.textContent = `Your time ${formatTime(result.value)} · maximum allowed ${score.threshold}`;
+        badges.innerHTML = `<span class="score-badge ${score.pass ? 'good' : 'bad'}">${score.pass ? 'Within standard' : 'Over standard'}</span><span class="score-badge">Pass/fail alternate cardio</span>`;
+        percent = score.pass ? 100 : 18;
+    } else {
+        percent = Math.max(0, Math.min(100, (score.points / score.max) * 100));
+        scoreEl.textContent = `${score.points.toFixed(1)} / ${score.max}`;
+        const resultText = eventKey === 'whtr'
+            ? `WHtR ${(result.value * 100).toFixed(1)}% · ${score.risk.label}`
+            : `Result ${formatExplorerValue(eventKey, result.value)}`;
+        caption.textContent = `${resultText}. Minimum section score: ${event.pass} pts.`;
+        const zoneClass = score.pass ? (percent >= 90 ? 'good' : 'warn') : 'bad';
+        badges.innerHTML = `<span class="score-badge ${zoneClass}">${score.pass ? 'Passing section score' : 'Below section minimum'}</span><span class="score-badge">${Math.round(percent)}% of max</span>`;
+    }
+    fill.style.width = `${percent}%`;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+window.calculateSection = calculateSection;
+
+function explorerProfile() {
+    const fallbackAge = parseInt(document.getElementById('age').value) || 28;
+    const age = parseInt(document.getElementById('explorerAge').value) || fallbackAge;
+    const gender = document.getElementById('explorerGender').value || document.getElementById('gender').value || 'M';
+    return { age, gender, ageGroup: getAgeGroup(age), genderIdx: gender === 'F' ? 1 : 0 };
+}
+
+function getExplorerRows(eventKey, ageGroup, genderIdx, gender) {
+    const event = PFRA_EVENTS[eventKey];
+    if (eventKey === 'whtr') {
+        return WHTR_TABLE.map(row => ({ pts: row.pts, value: row.max, zone: row.pts >= 18 ? 'Elite' : row.pts >= 10 ? 'Passing' : row.pts >= 2.5 ? 'Minimum' : 'No score' }));
+    }
+    if (eventKey === 'walk') {
+        return [{ pts: 'PASS', value: WALK_MAX[gender][ageGroup], zone: 'Max allowed time' }];
+    }
+    return event.table.map(row => {
+        const value = row.t[ageGroup][genderIdx];
+        const zone = row.pts >= event.max * 0.9 ? 'Elite' : row.pts >= event.pass ? 'Passing' : 'No score';
+        return { pts: row.pts, value, zone };
+    });
+}
+
+function rangeDescriptor(eventKey, row) {
+    if (eventKey === 'walk') return `≤ ${formatTime(row.value)}`;
+    if (eventKey === 'run') return `≤ ${formatTime(row.value)}`;
+    if (PFRA_EVENTS[eventKey].unit === 'time') return `≥ ${formatTime(row.value)}`;
+    if (eventKey === 'whtr') return row.value === Infinity ? '> 0.59' : `≤ ${row.value.toFixed(2)}`;
+    return `≥ ${row.value}`;
+}
+
+function renderScoreExplorer() {
+    const eventKey = document.getElementById('explorerEvent')?.value || selectedSectionEvent || 'whtr';
+    const event = PFRA_EVENTS[eventKey];
+    const profile = explorerProfile();
+    const rows = getExplorerRows(eventKey, profile.ageGroup, profile.genderIdx, profile.gender);
+    const summary = document.getElementById('scoreRangeSummary');
+    const visual = document.getElementById('scoreRangeVisual');
+    const tbody = document.getElementById('scoreRangeTable');
+    if (!summary || !visual || !tbody) return;
+
+    const best = rows[0];
+    const minimum = eventKey === 'walk' ? rows[0] : rows.find(row => Number(row.pts) === event.pass) || rows[rows.length - 1];
+    summary.innerHTML = `<div class="range-tile"><span>Profile</span><strong>${profile.gender === 'M' ? 'Male' : 'Female'} · ${AGE_GROUP_LABELS[profile.ageGroup]}</strong></div>
+        <div class="range-tile"><span>Max Standard</span><strong>${rangeDescriptor(eventKey, best)}</strong></div>
+        <div class="range-tile"><span>${eventKey === 'walk' ? 'Pass Standard' : 'Minimum Score'}</span><strong>${eventKey === 'walk' ? rangeDescriptor(eventKey, minimum) : `${event.pass} pts · ${rangeDescriptor(eventKey, minimum)}`}</strong></div>`;
+
+    const visualRows = rows.slice(0, Math.min(rows.length, 8));
+    const maxPts = event.max || 1;
+    visual.innerHTML = visualRows.map(row => {
+        const pts = eventKey === 'walk' ? 1 : Number(row.pts);
+        const width = eventKey === 'walk' ? 100 : Math.max(8, (pts / maxPts) * 100);
+        return `<div class="range-bar"><span>${eventKey === 'walk' ? 'Pass' : row.pts + ' pts'}</span><div class="range-line"><span style="width:${width}%"></span></div><span>${rangeDescriptor(eventKey, row)}</span></div>`;
+    }).join('');
+
+    tbody.innerHTML = rows.map(row => {
+        const pts = Number(row.pts);
+        const highlight = eventKey !== 'walk' && pts === event.pass ? ' class="highlight-row"' : '';
+        const pointLabel = eventKey === 'walk' ? row.pts : Number(row.pts).toFixed(pts % 1 === 0 ? 0 : 1);
+        return `<tr${highlight}><td>${pointLabel}</td><td>${rangeDescriptor(eventKey, row)}</td><td>${row.zone}</td></tr>`;
+    }).join('');
+}
+window.renderScoreExplorer = renderScoreExplorer;
+
 // ============================================================================
 // UI State
 // ============================================================================
@@ -1588,6 +1948,12 @@ function calculate() {
 
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderSectionInputs();
+    syncPfraProfile();
+    renderScoreExplorer();
+});
 </script>
 </body>
 </html>

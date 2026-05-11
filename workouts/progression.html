@@ -1544,6 +1544,7 @@
                 lookbackSessions: 2,
                 roundingMode: 'floor',
                 incrementLbs: 5,
+                allowZeroWeight: planExercise?.targetMode === 'bodyweight',
                 ...(progressionPlanData?.recommendationDefaults || {}),
                 ...(planExercise?.recommendation || {})
             };
@@ -1593,7 +1594,8 @@
                 for (const set of session.sets || []) {
                     const reps = parseInt(set.reps, 10) || 0;
                     const weightKg = Number.isFinite(parseFloat(set.weight)) ? parseFloat(set.weight) : 0;
-                    if (reps < minReps || reps > maxReps || weightKg <= 0) continue;
+                    if (reps < minReps || reps > maxReps || weightKg < 0) continue;
+                    if (!coachConfig.allowZeroWeight && weightKg === 0) continue;
                     const estimatedMaxKg = calculateEstimatedMaxKg(weightKg, reps, coachConfig.formula);
                     if (!Number.isFinite(estimatedMaxKg)) continue;
                     if (!best || estimatedMaxKg > best.estimatedMaxKg) {
