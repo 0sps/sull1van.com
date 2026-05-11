@@ -1731,10 +1731,6 @@
         }
 
         .training-coach-header {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 18px;
-            align-items: end;
             border-left: 3px solid #35d9c8;
             padding-left: 14px;
             margin-bottom: 0;
@@ -1756,41 +1752,6 @@
             letter-spacing: 1.5px;
             color: var(--text-primary);
             overflow-wrap: anywhere;
-        }
-
-        .training-coach-subtitle {
-            color: rgba(235, 246, 244, 0.82);
-            font-size: 0.78rem;
-            margin-top: 8px;
-            line-height: 1.35;
-            max-width: 650px;
-        }
-
-        .training-coach-status-strip {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 3px;
-        }
-
-        .coach-status-light {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            background: rgba(176, 255, 238, 0.2);
-            border: 1px solid rgba(176, 255, 238, 0.34);
-            box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.35),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.38);
-        }
-
-        .coach-status-light.active {
-            background: #7fffe8;
-            box-shadow:
-                0 0 12px rgba(63, 255, 211, 0.62),
-                inset 0 1px 2px rgba(255, 255, 255, 0.55),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.24);
         }
 
         .training-coach-command {
@@ -2307,10 +2268,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .training-coach-status-strip {
-                justify-content: flex-start;
-            }
-
             .coach-target-topline {
                 align-items: flex-start;
                 flex-direction: column;
@@ -2383,11 +2340,6 @@
             font-size: clamp(1.82rem, 4.1vw, 2.45rem);
             line-height: 0.96;
             letter-spacing: 1.1px;
-        }
-
-        .training-coach-subtitle {
-            font-size: 0.78rem;
-            max-width: 680px;
         }
 
         .training-coach-section-label,
@@ -4755,10 +4707,6 @@
                 const lowClass = confidence.className === 'low' ? 'low' : '';
                 return `<span class="coach-signal-bar ${activeClass} ${lowClass}"></span>`;
             }).join('');
-            const statusLights = [1, 2, 3].map(level => {
-                const activeClass = level <= confidenceLevel ? 'active' : '';
-                return `<span class="coach-status-light ${activeClass}"></span>`;
-            }).join('');
 
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
@@ -4767,10 +4715,6 @@
                         <div>
                             <div class="training-coach-kicker">${progressionPlanData?.progressionPlanName || 'Training Plan'}</div>
                             <div class="training-coach-name">${(exercise?.name || target.exerciseId).toUpperCase()}</div>
-                            <div class="training-coach-subtitle">Use this to decide what to log on your working sets today. Warmups are ignored for progression.</div>
-                        </div>
-                        <div class="training-coach-status-strip" aria-label="${confidence.label} confidence">
-                            ${statusLights}
                         </div>
                     </div>
 
