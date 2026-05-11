@@ -514,7 +514,7 @@
         .app-select-option {
             width: 100%; padding: 12px 14px; background: transparent; border: none;
             border-bottom: 1px solid rgba(255,255,255,0.06); color: var(--text-secondary);
-            font-family: 'Space Mono', monospace; font-size: 0.86rem; text-align: left;
+            font-family: 'Space Mono', monospace; font-size: 16px; text-align: left;
             cursor: pointer; transition: background 0.2s ease, color 0.2s ease;
         }
         .app-select-option:hover,
@@ -643,15 +643,18 @@
                 <div class="compact-grid">
                     <div class="form-group">
                         <label>Age</label>
-                        <input type="number" id="age" placeholder="e.g. 28" min="17" max="99" oninput="syncPfraProfile()">
+                        <input type="number" id="age" value="25" placeholder="e.g. 25" min="17" max="99" oninput="syncPfraProfile()">
                     </div>
                     <div class="form-group">
                         <label>Gender</label>
-                        <select id="gender" onchange="syncPfraProfile()">
-                            <option value="">Select...</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                        </select>
+                        <input type="hidden" id="gender" value="M">
+                        <div class="app-select" data-select-id="gender">
+                            <button class="app-select-trigger" id="genderTrigger" type="button" onclick="toggleAppSelect('gender')" aria-haspopup="listbox" aria-expanded="false">Male</button>
+                            <div class="app-select-menu" role="listbox" aria-label="Gender">
+                                <button class="app-select-option active" type="button" data-value="M" onclick="chooseAppSelect('gender','M')">Male</button>
+                                <button class="app-select-option" type="button" data-value="F" onclick="chooseAppSelect('gender','F')">Female</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -691,28 +694,36 @@
             <div class="explorer-toolbar">
                 <div class="form-group">
                     <label>Explorer Age</label>
-                    <input type="number" id="explorerAge" placeholder="e.g. 28" min="17" max="99" oninput="renderScoreExplorer()">
+                    <input type="number" id="explorerAge" value="25" placeholder="e.g. 25" min="17" max="99" oninput="renderScoreExplorer()">
                 </div>
                 <div class="form-group">
                     <label>Explorer Gender</label>
-                    <select id="explorerGender" onchange="renderScoreExplorer()">
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                    </select>
+                    <input type="hidden" id="explorerGender" value="M">
+                    <div class="app-select" data-select-id="explorerGender">
+                        <button class="app-select-trigger" id="explorerGenderTrigger" type="button" onclick="toggleAppSelect('explorerGender')" aria-haspopup="listbox" aria-expanded="false">Male</button>
+                        <div class="app-select-menu" role="listbox" aria-label="Explorer gender">
+                            <button class="app-select-option active" type="button" data-value="M" onclick="chooseAppSelect('explorerGender','M')">Male</button>
+                            <button class="app-select-option" type="button" data-value="F" onclick="chooseAppSelect('explorerGender','F')">Female</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Explorer Event</label>
-                    <select id="explorerEvent" onchange="renderScoreExplorer()">
-                        <option value="whtr">WHtR</option>
-                        <option value="pushup">Standard Push-Up</option>
-                        <option value="hrPushup">Hand Release Push-Up</option>
-                        <option value="situp">Sit-Up</option>
-                        <option value="clrc">Cross-Leg Reverse Crunch</option>
-                        <option value="plank">Forearm Plank</option>
-                        <option value="run">2-Mile Run</option>
-                        <option value="hamr">20m HAMR</option>
-                        <option value="walk">2km Walk</option>
-                    </select>
+                    <input type="hidden" id="explorerEvent" value="whtr">
+                    <div class="app-select" data-select-id="explorerEvent">
+                        <button class="app-select-trigger" id="explorerEventTrigger" type="button" onclick="toggleAppSelect('explorerEvent')" aria-haspopup="listbox" aria-expanded="false">WHtR</button>
+                        <div class="app-select-menu" role="listbox" aria-label="Explorer event">
+                            <button class="app-select-option active" type="button" data-value="whtr" onclick="chooseAppSelect('explorerEvent','whtr')">WHtR</button>
+                            <button class="app-select-option" type="button" data-value="pushup" onclick="chooseAppSelect('explorerEvent','pushup')">Standard Push-Up</button>
+                            <button class="app-select-option" type="button" data-value="hrPushup" onclick="chooseAppSelect('explorerEvent','hrPushup')">Hand Release Push-Up</button>
+                            <button class="app-select-option" type="button" data-value="situp" onclick="chooseAppSelect('explorerEvent','situp')">Sit-Up</button>
+                            <button class="app-select-option" type="button" data-value="clrc" onclick="chooseAppSelect('explorerEvent','clrc')">Cross-Leg Reverse Crunch</button>
+                            <button class="app-select-option" type="button" data-value="plank" onclick="chooseAppSelect('explorerEvent','plank')">Forearm Plank</button>
+                            <button class="app-select-option" type="button" data-value="run" onclick="chooseAppSelect('explorerEvent','run')">2-Mile Run</button>
+                            <button class="app-select-option" type="button" data-value="hamr" onclick="chooseAppSelect('explorerEvent','hamr')">20m HAMR</button>
+                            <button class="app-select-option" type="button" data-value="walk" onclick="chooseAppSelect('explorerEvent','walk')">2km Walk</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="score-range-summary" id="scoreRangeSummary"></div>
@@ -978,6 +989,7 @@ window.handleModalBackdrop = handleModalBackdrop;
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMeasurementModal();
+    if (event.key === 'Escape') closeAppSelects();
 });
 
 // ============================================================================
@@ -1582,6 +1594,67 @@ const PFRA_EVENTS = {
 
 let selectedSectionEvent = 'whtr';
 
+const APP_SELECT_LABELS = {
+    gender: { M: 'Male', F: 'Female' },
+    explorerGender: { M: 'Male', F: 'Female' },
+    explorerEvent: {
+        whtr: 'WHtR',
+        pushup: 'Standard Push-Up',
+        hrPushup: 'Hand Release Push-Up',
+        situp: 'Sit-Up',
+        clrc: 'Cross-Leg Reverse Crunch',
+        plank: 'Forearm Plank',
+        run: '2-Mile Run',
+        hamr: '20m HAMR',
+        walk: '2km Walk',
+    },
+};
+
+function closeAppSelects(exceptId = null) {
+    document.querySelectorAll('.app-select').forEach(select => {
+        const selectId = select.dataset.selectId;
+        const isOpen = exceptId && selectId === exceptId;
+        select.classList.toggle('open', Boolean(isOpen));
+        select.querySelector('.app-select-trigger')?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+}
+
+function setAppSelectValue(selectId, value) {
+    const input = document.getElementById(selectId);
+    const label = APP_SELECT_LABELS[selectId]?.[value] || value;
+    if (input) input.value = value;
+    const trigger = document.getElementById(`${selectId}Trigger`);
+    if (trigger) trigger.textContent = label;
+    const wrapper = document.querySelector(`.app-select[data-select-id="${selectId}"]`);
+    wrapper?.querySelectorAll('.app-select-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.value === value);
+    });
+}
+
+function toggleAppSelect(selectId) {
+    window.event?.stopPropagation();
+    const wrapper = document.querySelector(`.app-select[data-select-id="${selectId}"]`);
+    const shouldOpen = !wrapper?.classList.contains('open');
+    closeAppSelects(shouldOpen ? selectId : null);
+}
+window.toggleAppSelect = toggleAppSelect;
+
+function chooseAppSelect(selectId, value) {
+    window.event?.stopPropagation();
+    setAppSelectValue(selectId, value);
+    closeAppSelects();
+    if (selectId === 'gender') {
+        syncPfraProfile();
+    } else {
+        renderScoreExplorer();
+    }
+}
+window.chooseAppSelect = chooseAppSelect;
+
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('.app-select')) closeAppSelects();
+});
+
 function formatTime(totalSeconds) {
     const safeSeconds = Math.max(0, Math.round(totalSeconds || 0));
     const mins = Math.floor(safeSeconds / 60);
@@ -1597,8 +1670,8 @@ function formatExplorerValue(eventKey, value) {
 }
 
 function profileForScoring() {
-    const age = parseInt(document.getElementById('age').value);
-    const gender = document.getElementById('gender').value;
+    const age = parseInt(document.getElementById('age').value) || 25;
+    const gender = document.getElementById('gender').value || 'M';
     return { age, gender, ageGroup: age ? getAgeGroup(age) : null, genderIdx: gender === 'F' ? 1 : 0 };
 }
 
@@ -1607,10 +1680,10 @@ function eventNeedsProfile(eventKey) {
 }
 
 function syncPfraProfile() {
-    const age = document.getElementById('age').value;
-    const gender = document.getElementById('gender').value;
+    const age = document.getElementById('age').value || '25';
+    const gender = document.getElementById('gender').value || 'M';
     if (age) document.getElementById('explorerAge').value = age;
-    if (gender) document.getElementById('explorerGender').value = gender;
+    if (gender) setAppSelectValue('explorerGender', gender);
     renderScoreExplorer();
 }
 window.syncPfraProfile = syncPfraProfile;
@@ -1621,7 +1694,7 @@ function selectSectionEvent(eventKey) {
         btn.classList.toggle('active', btn.dataset.event === eventKey);
     });
     const explorerEvent = document.getElementById('explorerEvent');
-    if (explorerEvent) explorerEvent.value = eventKey;
+    if (explorerEvent) setAppSelectValue('explorerEvent', eventKey);
     document.getElementById('singleResult').classList.remove('visible');
     renderSectionInputs();
     renderScoreExplorer();
@@ -1754,7 +1827,7 @@ function calculateSection() {
 window.calculateSection = calculateSection;
 
 function explorerProfile() {
-    const fallbackAge = parseInt(document.getElementById('age').value) || 28;
+    const fallbackAge = parseInt(document.getElementById('age').value) || 25;
     const age = parseInt(document.getElementById('explorerAge').value) || fallbackAge;
     const gender = document.getElementById('explorerGender').value || document.getElementById('gender').value || 'M';
     return { age, gender, ageGroup: getAgeGroup(age), genderIdx: gender === 'F' ? 1 : 0 };
@@ -1901,8 +1974,8 @@ function getWHtRRisk(ratio) {
 // ============================================================================
 
 function calculate() {
-    const age = parseInt(document.getElementById('age').value);
-    const gender = document.getElementById('gender').value;
+    const age = parseInt(document.getElementById('age').value) || 25;
+    const gender = document.getElementById('gender').value || 'M';
     const heightIn = parseFloat(document.getElementById('heightIn').value);
     const waistIn = parseFloat(document.getElementById('waistIn').value);
 
@@ -2073,6 +2146,11 @@ function calculate() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('age').value = document.getElementById('age').value || '25';
+    document.getElementById('explorerAge').value = document.getElementById('explorerAge').value || '25';
+    setAppSelectValue('gender', document.getElementById('gender').value || 'M');
+    setAppSelectValue('explorerGender', document.getElementById('explorerGender').value || 'M');
+    setAppSelectValue('explorerEvent', document.getElementById('explorerEvent').value || 'whtr');
     renderSectionInputs();
     syncPfraProfile();
     renderScoreExplorer();
