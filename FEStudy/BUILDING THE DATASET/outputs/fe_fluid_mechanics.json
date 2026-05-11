@@ -1,0 +1,1076 @@
+{
+  "topics": [
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Definitions (Fluid Mechanics)",
+      "questions": [
+        {
+          "question": "A light metal ring rests on the surface of water with a total contact length of \\(0.12\\ \\text{m}\\). A horizontal force of \\(3.6\\times 10^{-3}\\ \\text{N}\\) is required to slide the ring free from the water surface. Determine the surface tension of the water (N/m).",
+          "choices": {},
+          "answer": "\\(3.0\\times 10^{-2}\\ \\text{N/m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5, P177"
+          ],
+          "tags": [
+            "Definitions Fluid Mechanics",
+            "Surface Tension And Capillarity"
+          ]
+        },
+        {
+          "question": "A small flat plate with a surface area of \\(0.01\\ \\text{m}^2\\) lies on a fluid layer that is \\(0.002\\ \\text{m}\\) thick. The plate is moved horizontally at a constant velocity of \\(0.1\\ \\text{m/s}\\). If a horizontal force of \\(1.0\\ \\text{N}\\) is required to maintain this motion, determine the dynamic viscosity of the fluid (in Ns/m\\(^2\\)).",
+          "choices": {},
+          "answer": "\\(2\\ \\text{Ns/m}^2\\)",
+          "references": [],
+          "tags": [
+            "Definitions Fluid Mechanics",
+            "Stress Pressure And Viscosity"
+          ]
+        },
+        {
+          "question": "A small flat plate with a surface area of \\( 0.01 \\, \\text{m}^2 \\) lies on a fluid layer that is \\( 0.002 \\, \\text{m} \\) thick. If the plate is moved horizontally at a constant velocity of \\( 0.1 \\, \\text{m/s} \\), and the dynamic viscosity of the fluid is \\( 2 \\, \\text{Ns/m}^2 \\), determine the horizontal force required to maintain this motion.",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\n\\tau &= \\frac{F}{A} \\\\\n\nF &= \\tau A \\\\\n\n&= 100 \\, \\text{N/m}^2 \\times 0.01 \\, \\text{m}^2 \\\\\n\n&= 1 \\, \\text{N}\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "And Viscosity",
+            "Definitions Fluid Mechanics",
+            "Pressure",
+            "Stress"
+          ]
+        },
+        {
+          "question": "A homogeneous mixture is created by combining \\( 18 \\, \\mathrm{kg} \\) of a fluid with a density of \\( 920 \\, \\mathrm{kg/m^3} \\) and \\( 6 \\, \\mathrm{kg} \\) of water. Assuming the volumes are additive, the specific volume of the resulting mixture is most nearly:",
+          "choices": {
+            "A": "\\( 0.00104 \\, \\mathrm{m^3/kg} \\)",
+            "B": "\\( 0.00107 \\, \\mathrm{m^3/kg} \\)",
+            "C": "\\( 0.00109 \\, \\mathrm{m^3/kg} \\)",
+            "D": "\\( 939 \\, \\mathrm{m^3/kg} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P176"
+          ],
+          "tags": [
+            "Definitions Fluid Mechanics",
+            "Specific Volume"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Characteristics of a Static Liquid",
+      "questions": [
+        {
+          "question": "A wooden block with square cross-section \\(0.5\\ \\text{m} \\times 0.5\\ \\text{m}\\) and length \\(1.0\\ \\text{m}\\) floats in fresh water with its long axis horizontal. The wood has specific gravity \\(SG = 0.60\\). Assuming water with \\(\\gamma_w = 9.81\\ \\text{kN/m}^3\\), determine the submerged depth of the block when the block is in static equilibrium.",
+          "choices": {},
+          "answer": "The submerged depth is 0.30 m",
+          "references": [
+            "FE Reference Handbook 10.5 – P179"
+          ],
+          "tags": [
+            "Archimedes Principle And Buoyancy",
+            "Characteristics Of A Static Liquid"
+          ]
+        },
+        {
+          "question": "A circular drainage conduit has an inside diameter of \\(4\\ \\text{m}\\) and is half full of water（Shown as below).\nAssuming water with specific weight \\(\\gamma = 9.81\\ \\text{kN/m}^3\\), determine the magnitude of the resultant force that the water exerts on the curved wall segment \\(AB\\).\n[figure](https://journey2pe.com/wp-content/uploads/2025/11/0313.png)",
+          "choices": {},
+          "answer": "\\(F_R \\approx 36.5\\ \\text{kN/m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P177"
+          ],
+          "tags": [
+            "Characteristics Of A Static Liquid"
+          ]
+        },
+        {
+          "question": "A solid rectangular block is fully submerged in fresh water. The block dimensions are \\(1.2\\ \\text{m} \\times 0.8\\ \\text{m} \\times 0.5\\ \\text{m}\\). Assuming water with specific weight \\(\\gamma = 9.81\\ \\text{kN/m}^3\\), determine the magnitude of the buoyant force acting on the block.",
+          "choices": {},
+          "answer": "\\(F_B = 4.71\\ \\text{kN}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P179"
+          ],
+          "tags": [
+            "Archimedes Principle And Buoyancy",
+            "Characteristics Of A Static Liquid"
+          ]
+        },
+        {
+          "question": "A rectangular barge has a uniform cross-section \\(6\\ \\text{m}\\) long (in plan) and \\(2\\ \\text{m}\\) wide. When floating in calm water, the barge is such that \\(0.6\\ \\text{m}\\) of its depth is submerged below the water surface. The submerged cross-section is therefore a \\(6\\ \\text{m} \\times 0.6\\ \\text{m}\\) rectangle. Determine the vertical distance from the water surface to the center of buoyancy.",
+          "choices": {},
+          "answer": "\\(0.30\\ \\text{m}\\) below the water surface",
+          "references": [
+            "FE Reference Handbook 10.3 P179:\n\nThe center of buoyancy is located at the centroid of the displaced fluid volume.\n\nTherefore:\n\n    \\[\n\nz_{B} = \\dfrac{0.6}{2} = 0.30\\ \\text{m}.\n\n\\]",
+            "FE Reference Handbook 10.5 – P179"
+          ],
+          "tags": [
+            "Archimedes Principle And Buoyancy",
+            "Characteristics Of A Static Liquid"
+          ]
+        },
+        {
+          "question": "A circular inspection hatch of radius \\(0.75\\ \\text{m}\\) is installed in a vertical wall of a large water tank. The center of the hatch is at depth \\(5\\ \\text{m}\\) below the free surface.\nDetermine:\nthe resultant hydrostatic force \\(F_R\\) on the hatch, and\n\nthe depth \\(h_{CP}\\) of the center of pressure below the surface.",
+          "choices": {},
+          "answer": "\\(F_R = 86.8\\ \\text{kN}\\), \\(h_{CP} = 5.03\\ \\text{m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P179"
+          ],
+          "tags": [
+            "Characteristics Of A Static Liquid",
+            "Forces On Submerged Surfaces And The Center Of Pressure"
+          ]
+        },
+        {
+          "question": "A rectangular plate of width \\(1.0\\ \\text{m}\\) is submerged in water as showed below. Determine the slant distance from the water surface to the center of pressure along the plate.\n[Forces on Submerged Surfaces and the Center of Pressure](https://journey2pe.com/wp-content/uploads/2025/11/0266.png)",
+          "choices": {},
+          "answer": "\\(y_{CP} \\approx 3.48\\ \\text{m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P179"
+          ],
+          "tags": [
+            "Characteristics Of A Static Liquid",
+            "Forces On Submerged Surfaces And The Center Of Pressure"
+          ]
+        },
+        {
+          "question": "A rigid rectangular block of cross-sectional area \\(A = 1.0\\ \\text{m}^2\\) lies at the interface between oil and water in a tank. The lower \\(0.5\\ \\text{m}\\) of the block is submerged in water and the upper \\(0.3\\ \\text{m}\\) is submerged in oil. The specific weight of water is \\(\\gamma_w = 9.81\\ \\text{kN/m}^3\\), and the oil has specific gravity \\(SG = 0.80\\). Determine the magnitude of the total buoyant force on the block.",
+          "choices": {},
+          "answer": "\\(F_B \\approx 7.26\\ \\text{kN}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P179:\n\nFluid Mechanics – Characteristics of a Static Liquid – Archimedes Principle and Buoyancy"
+          ],
+          "tags": [
+            "Archimedes Principle And Buoyancy",
+            "Characteristics Of A Static Liquid"
+          ]
+        },
+        {
+          "question": "A vertical rectangular plate is \\(4\\ \\text{m}\\) high and \\(2\\ \\text{m}\\) wide. The upper edge is \\(1\\ \\text{m}\\) above the free water surface, and the lower edge is \\(3\\ \\text{m}\\) below the surface.  nly the submerged portion carries hydrostatic pressure. Using the FE center-of-pressure formulas, determine:\nthe resultant hydrostatic force on the submerged portion, and\n\nthe depth \\(h_{CP}\\) of the center of pressure below the water surface.",
+          "choices": {},
+          "answer": "\\(F_R \\approx 88.3\\ \\text{kN}\\), \\(h_{CP} = 2.0\\ \\text{m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5, P179:\n\nFluid Mechanics – Characteristics of a Static Liquid – Forces on Submerged Surfaces and the Center of Pressure"
+          ],
+          "tags": [
+            "Characteristics Of A Static Liquid",
+            "Forces On Submerged Surfaces And The Center Of Pressure"
+          ]
+        },
+        {
+          "question": "A vertical rectangular gate in a water tank is \\(4\\ \\text{m}\\) high and \\(3\\ \\text{m}\\) wide. The top edge of the gate is located \\(1\\ \\text{m}\\) below the free water surface. Assuming water with specific weight \\(\\gamma = 9.81\\ \\text{kN/m}^3\\), determine:\nthe resultant hydrostatic force \\(F_R\\) on the gate, and\n\nthe vertical distance \\(h_{CP}\\) from the water surface to the center of pressure.",
+          "choices": {},
+          "answer": "\\(F_R \\approx 3.53\\times 10^{2}\\ \\text{kN}\\), \\(h_{CP} \\approx 3.44\\ \\text{m}\\)",
+          "references": [
+            "FE Reference Handbook 10.5, P179:\n\nFluid Mechanics – Characteristics of a Static Liquid – Forces on Submerged Surfaces and the Center of Pressure"
+          ],
+          "tags": [
+            "Characteristics Of A Static Liquid",
+            "Forces On Submerged Surfaces And The Center Of Pressure"
+          ]
+        },
+        {
+          "question": "Determine the vapor pressure \\(P_v\\) in kPa of the water barometer shown below.\nGiven:\n\n\\[\n\n\\begin{align}\n\nP_{\\text{atm}} &= 101\\ \\text{kPa}, \\\\\n\n\\gamma &= 9.81\\ \\text{kN/m}^{3}.\n\n\\end{align}\n\n\\]\n[Barometer diagram for FE exam practice problem 0219](https://journey2pe.com/wp-content/uploads/2025/11/0219.png)",
+          "choices": {},
+          "answer": "\\(P_v \\approx 98.0\\ \\text{kPa}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P178:\n\nFluid Mechanics – Characteristics of a Static Liquid – Manometers"
+          ],
+          "tags": [
+            "Barometers",
+            "Characteristics Of A Static Liquid",
+            "Manometers"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Principles of One-Dimensional Fluid Flow",
+      "questions": [
+        {
+          "question": "An incompressible fluid flows steadily through a 6-inch diameter pipe at a velocity of 12 m/s. It then enters a narrower 4-inch diameter pipe. Estimate the velocity in the new pipe.",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\nv_2 &= \\frac{A_1 v_1}{A_2} = \\frac{28.26}{12.57} \\cdot 12 = 27 \\, \\text{m/s}\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Continuity Equation",
+            "Principles Of One Dimensional Fluid Flow"
+          ]
+        },
+        {
+          "question": "A pipe carrying an incompressible fluid has a diameter of \\( 120\\,\\mathrm{mm} \\) at point 1 and a diameter of \\( 60\\,\\mathrm{mm} \\) at point 2. The velocity of the fluid at point 1 is \\( 0.25\\,\\mathrm{m/s} \\). What is most nearly the flow velocity at point 2?",
+          "choices": {
+            "A": "\\( 0.063\\,\\mathrm{m/s} \\)",
+            "B": "\\( 0.13\\,\\mathrm{m/s} \\)",
+            "C": "\\( 0.50\\,\\mathrm{m/s} \\)",
+            "D": "\\( 1.0\\,\\mathrm{m/s} \\)"
+          },
+          "answer": "D",
+          "references": [
+            "FE Reference Handbook 10.5 – P180"
+          ],
+          "tags": [
+            "Continuity Equation",
+            "Principles Of One Dimensional Fluid Flow"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Fluid Flow Characterization",
+      "questions": [
+        {
+          "question": "A Newtonian fluid flows through a circular tube of radius \\(0.05\\ \\text{m}\\). The wall shear stress is measured to be \\(\\tau_w = 12\\ \\text{Pa}\\). Determine the shear stress at a radial position \\(r = 0.02\\ \\text{m}\\).",
+          "choices": {},
+          "answer": "\\(4.8\\ \\text{Pa}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P182"
+          ],
+          "tags": [
+            "Fluid Flow Characterization"
+          ]
+        },
+        {
+          "question": "A Newtonian fluid flows steadily between two large parallel plates that are \\(8\\ \\text{mm}\\) apart. The flow is laminar. The average velocity \\(\\bar v \\) in the gap is \\( 0.40\\ \\text{m/s}\\). Determine the local velocity at a point that is \\(2\\ \\text{mm}\\) from the center plane.",
+          "choices": {},
+          "answer": "\\(v \\approx 0.45\\ \\text{m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P182"
+          ],
+          "tags": [
+            "Fluid Flow Characterization"
+          ]
+        },
+        {
+          "question": "A fluid flows at a velocity of \\(0.6\\ \\text{m/s}\\) through a \\(0.08\\ \\text{m}\\) diameter pipe. The kinematic viscosity of the fluid is \\(1.5\\times10^{-5}\\ \\text{m}^2/\\text{s}\\). Determine the most likely flow regime.",
+          "choices": {},
+          "answer": "Transitional flow",
+          "references": [
+            "FE Reference Handbook 10.5 – P181"
+          ],
+          "tags": [
+            "Fluid Flow Characterization",
+            "Reynolds Number"
+          ]
+        },
+        {
+          "question": "A Newtonian fluid flows through a circular tube of radius \\(0.04\\ \\text{m}\\). The flow is steady and laminar. The average velocity in the tube is measured to be \\(0.5\\ \\text{m/s}\\). Using the velocity distribution for laminar flow in circular tubes, determine the local fluid velocity at a radial position \\(r = 0.02\\ \\text{m}\\).",
+          "choices": {},
+          "answer": "\\(0.75\\ \\text{m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5, P182:\n\nFluid Mechanics – Fluid Flow Characterization"
+          ],
+          "tags": [
+            "Fluid Flow Characterization"
+          ]
+        },
+        {
+          "question": "Air flows through a circular duct of diameter \\(0.25\\ \\text{m}\\). The flow is fully turbulent and the average velocity in the duct is \\(\\bar v = 12\\ \\text{m/s}\\). Determine the maximum velocity at the centerline of the duct.",
+          "choices": {},
+          "answer": "\\(v_{\\max} = 14.2\\ \\text{m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5P182:\n\nFluid Mechanics – Fluid Flow Characterization"
+          ],
+          "tags": [
+            "Fluid Flow Characterization"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Consequences of Fluid Flow",
+      "questions": [
+        {
+          "question": "Water flows through a commercial steel pipe with an internal diameter of \\( 45 \\ \\mathrm{mm} \\). The flow has a Reynolds number of \\( Re = 4 \\times 10^5 \\). Assuming an average absolute roughness \\( \\epsilon = 0.045 \\ \\mathrm{mm} \\) for the commercial steel, what is most nearly the value of the Darcy friction factor \\( f \\)?",
+          "choices": {
+            "A": "\\( 0.005 \\)",
+            "B": "\\( 0.014 \\)",
+            "C": "\\( 0.020 \\)",
+            "D": "\\( 0.038 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "From the Moody, Darcy, or Stanton Friction Factor Diagram (P200):\n\n                    \\[\n\nf \\approx 0.020\n\n\\]",
+            "From the Moody, Darcy, or Stanton Friction Factor Diagram (P200):",
+            "FE Reference Handbook 10.5 – P200"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Head Loss Due To Flow"
+          ]
+        },
+        {
+          "question": "Oil flows through an old cast-iron pipeline. The Reynolds number of the flow is \\( Re = 1.8\\times10^{6} \\), and the relative roughness of the pipe is \\( \\epsilon/D = 0.015 \\). Using the Moody chart, estimate the Darcy–Weisbach friction factor \\( f \\) for this fully turbulent flow.",
+          "choices": {},
+          "answer": "\\( f \\approx 0.044 \\)",
+          "references": [
+            "FE Reference Handbook 10.5 P200:",
+            "FE Reference Handbook 10.5 – P182"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Head Loss Due To Flow"
+          ]
+        },
+        {
+          "question": "A noncircular air duct is flowing full. The cross-sectional flow area is \\(A = 1.8\\ \\text{ft}^2\\), and the wetted perimeter is \\(P = 4.5\\ \\text{ft}\\). Determine the hydraulic diameter of the duct.",
+          "choices": {},
+          "answer": "\\(D_h = 1.6\\ \\text{ft}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P183"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Flow In Noncircular Conduits"
+          ]
+        },
+        {
+          "question": "A pipe carries water with a Reynolds number of \\( Re = 400{,}000 \\). The relative roughness of the pipe is \\( \\epsilon/D = 0.006 \\). Determine the Darcy–Weisbach friction factor \\( f \\).",
+          "choices": {},
+          "answer": "f = 0.034",
+          "references": [
+            "FE Reference Handbook 10.5 P200:",
+            "FE Reference Handbook 10.5 – P182"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Head Loss Due To Flow"
+          ]
+        },
+        {
+          "question": "A fluid is flowing at a velocity of \\(2.0\\ \\text{m/s}\\) in a circular conduit with an inside diameter of \\(0.030\\ \\text{m}\\). The length of the conduit is \\(60\\ \\text{m}\\). The Moody friction factor for the conduit is \\(f = 0.020\\). Assuming steady, incompressible flow of water, determine the head loss due to friction in the conduit.",
+          "choices": {},
+          "answer": "\\( h_f \\approx 8.15\\ \\text{m} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P182"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Head Loss Due To Flow"
+          ]
+        },
+        {
+          "question": "Water flows steadily through a horizontal steel pipeline with an inside diameter of \\(0.25\\ \\text{m}\\) and a length of \\(120\\ \\text{m}\\). The average velocity of flow is \\(1.8\\ \\text{m/s}\\). The Darcy–Weisbach friction factor for the pipe is \\(f = 0.018\\). Neglecting minor losses, determine the head loss due to friction\n\nin the pipe.",
+          "choices": {},
+          "answer": "\\( h_f = 1.43\\ \\text{m} \\)",
+          "references": [
+            "FE Reference Handbook 10.5, P182"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Head Loss Due To Flow"
+          ]
+        },
+        {
+          "question": "A noncircular storm sewer is flowing full. At a given cross section, the flow area is \\(A = 2.4\\ \\text{m}^2\\), and the wetted perimeter is \\(P = 6.0\\ \\text{m}\\). Determine the hydraulic radius of the flow at that section.",
+          "choices": {},
+          "answer": "\\(R_h = 0.40\\ \\text{m}\\)",
+          "references": [
+            "FE Reference Handbook 10.3 P183:\n\nFluid Mechanics – Consequences of Fluid Flow – Flow in Noncircular Conduits"
+          ],
+          "tags": [
+            "Consequences Of Fluid Flow",
+            "Flow In Noncircular Conduits"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Characteristics of Selected Flow Configurations",
+      "questions": [
+        {
+          "question": "A circular concrete pipe (\\( n = 0.012 \\)) has a diameter of \\( D = 1.5\\text{ m} \\) and is flowing exactly half-full. The pipe is laid on a slope of \\( S = 0.005\\text{ m/m} \\). The average velocity (\\( v \\)) of the flow is most nearly?\n<svg viewbox=\"0 0 300 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"150\" cy=\"100\" fill=\"none\" r=\"70\" stroke=\"#333\" stroke-width=\"4\"></circle>\n<path d=\"M 80 100 A 70 70 0 0 0 220 100 Z\" fill=\"#e3f2fd\" stroke=\"#1976d2\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\" x1=\"60\" x2=\"240\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"none\" points=\"150,100 140,85 160,85\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"140\" x2=\"160\" y1=\"85\" y2=\"85\"></line>\n<text fill=\"#333\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"50\">D = 1.5 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 2.15\\text{ m/s} \\)",
+            "B": "\\( 3.06\\text{ m/s} \\)",
+            "C": "\\( 4.82\\text{ m/s} \\)",
+            "D": "\\( 6.12\\text{ m/s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations"
+          ]
+        },
+        {
+          "question": "A rectangular open channel is designed to carry water with a bottom width of \\( b = 3.0\\text{ m} \\) and a flow depth of \\( y = 1.2\\text{ m} \\). The channel is constructed of troweled concrete with a Manning’s roughness coefficient of \\( n = 0.013 \\). If the longitudinal slope of the channel is \\( S = 0.002\\text{ m/m} \\), the open-channel discharge (\\( Q \\)) is most nearly?\n<svg viewbox=\"0 0 300 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 50 50 L 50 150 L 250 150 L 250 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 40 70 L 260 70\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<polygon fill=\"none\" points=\"150,70 140,55 160,55\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"140\" x2=\"160\" y1=\"55\" y2=\"55\"></line>\n<text fill=\"#333\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"175\">b = 3.0 m</text>\n<text fill=\"#333\" font-weight=\"bold\" transform=\"rotate(-90 30,115)\" x=\"30\" y=\"115\">y = 1.2 m</text>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"50\" x2=\"250\" y1=\"160\" y2=\"160\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"50\" x2=\"50\" y1=\"155\" y2=\"165\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"155\" y2=\"165\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"40\" x2=\"40\" y1=\"70\" y2=\"150\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"35\" x2=\"45\" y1=\"70\" y2=\"70\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"35\" x2=\"45\" y1=\"150\" y2=\"150\"></line>\n</svg>",
+          "choices": {
+            "A": "\\( 7.15\\text{ m}^3\\text{/s} \\)",
+            "B": "\\( 9.45\\text{ m}^3\\text{/s} \\)",
+            "C": "\\( 12.30\\text{ m}^3\\text{/s} \\)",
+            "D": "\\( 14.25\\text{ m}^3\\text{/s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations"
+          ]
+        },
+        {
+          "question": "An industrial water distribution network features a multipath pipeline system connecting an upstream node (1) to a downstream node (2) through two parallel pipes, designated as Pipe A and Pipe B. To ensure adequate flow distribution, engineers must verify the velocities in both branches. The geometric and friction characteristics for both pipes are summarized below:\nBranch\nLength (\\( L \\))\nDiameter (\\( D \\))\nDarcy Friction Factor (\\( f \\))\n\nPipe A\n\\( 1200 \\ \\mathrm{m} \\)\n\\( 0.50 \\ \\mathrm{m} \\)\n\\( 0.020 \\)\n\nPipe B\n\\( 800 \\ \\mathrm{m} \\)\n\\( 0.40 \\ \\mathrm{m} \\)\n\\( 0.015 \\)\nIf inline sensors measure the steady fluid velocity in Pipe A to be \\( v_A = 2.0 \\ \\mathrm{m}/\\mathrm{s} \\), what is most nearly the corresponding steady fluid velocity (\\( v_B \\)) in Pipe B?",
+          "choices": {
+            "A": "\\( 1.6 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "B": "\\( 2.0 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "C": "\\( 2.5 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "D": "\\( 3.2 \\ \\mathrm{m}/\\mathrm{s} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations"
+          ]
+        },
+        {
+          "question": "During a scheduled maintenance cycle, an industrial cylindrical storage tank needs to be partially drained. The tank has a uniform cross-sectional area of \\( A_t = 10 \\ \\mathrm{m}^2 \\). A drain valve at the bottom acts as an orifice discharging freely into the atmosphere, with a physical flow area of \\( A_0 = 0.05 \\ \\mathrm{m}^2 \\) and an overall discharge coefficient of \\( C = 0.60 \\). The initial fluid height is \\( h_1 = 4.0 \\ \\mathrm{m} \\) above the orifice. How much time (\\( \\Delta t \\)) will it take to lower the liquid level to a final height of \\( h_2 = 1.0 \\ \\mathrm{m} \\) above the orifice?",
+          "choices": {
+            "A": "\\( 75 \\ \\mathrm{s} \\)",
+            "B": "\\( 115 \\ \\mathrm{s} \\)",
+            "C": "\\( 150 \\ \\mathrm{s} \\)",
+            "D": "\\( 225 \\ \\mathrm{s} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P185"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations"
+          ]
+        },
+        {
+          "question": "A trapezoidal open channel has a bottom width of \\( b = 4.0\\text{ ft} \\) and symmetrical side slopes of 2:1 (\\( 2\\text{ horizontal} : 1\\text{ vertical} \\)). If the flow depth is \\( y = 2.5\\text{ ft} \\), calculate the hydraulic radius (\\( R_H \\)) of the channel.\n<svg viewbox=\"0 0 320 180\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 48 80 L 272 80 L 192 120 L 128 120 Z\" fill=\"#bbdefb\" opacity=\"0.5\"></path>\n<path d=\"M 8 60 L 128 120 L 192 120 L 312 60\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"6,4\" stroke-width=\"2\" x1=\"48\" x2=\"272\" y1=\"80\" y2=\"80\"></line>\n<polygon fill=\"none\" points=\"160,80 155,70 165,70\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"150\" x2=\"170\" y1=\"70\" y2=\"70\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"128\" x2=\"128\" y1=\"125\" y2=\"145\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"192\" x2=\"192\" y1=\"125\" y2=\"145\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"128\" x2=\"192\" y1=\"135\" y2=\"135\"></line>\n<polygon fill=\"#333\" points=\"128,135 133,132 133,138\"></polygon>\n<polygon fill=\"#333\" points=\"192,135 187,132 187,138\"></polygon>\n<text fill=\"#333\" font-weight=\"bold\" text-anchor=\"middle\" x=\"160\" y=\"155\">b = 4.0 ft</text>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"1\" x1=\"108\" x2=\"128\" y1=\"80\" y2=\"80\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"115\" x2=\"115\" y1=\"80\" y2=\"120\"></line>\n<polygon fill=\"#333\" points=\"115,80 112,85 118,85\"></polygon>\n<polygon fill=\"#333\" points=\"115,120 112,115 118,115\"></polygon>\n<text fill=\"#333\" font-weight=\"bold\" text-anchor=\"end\" x=\"105\" y=\"105\">y = 2.5 ft</text>\n<path d=\"M 232 100 L 272 100 L 272 80\" fill=\"none\" stroke=\"#d32f2f\" stroke-width=\"2\"></path>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"252\" y=\"115\">2</text>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"start\" x=\"280\" y=\"95\">1</text>\n</svg>",
+          "choices": {
+            "A": "\\( 1.20\\text{ ft} \\)",
+            "B": "\\( 1.48\\text{ ft} \\)",
+            "C": "\\( 1.85\\text{ ft} \\)",
+            "D": "\\( 2.12\\text{ ft} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P184"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations"
+          ]
+        },
+        {
+          "question": "A municipal wastewater collection system is being designed. A \\( 30 \\)-inch-diameter concrete sewer pipe is installed at a uniform slope of \\( 0.008 \\, \\mathrm{ft/ft} \\). Assuming the Manning’s roughness coefficient \\( n \\) is constant with depth and equal to \\( 0.014 \\), determine the expected flow velocity of the water when the pipe is flowing exactly half-full.",
+          "choices": {
+            "A": "\\( 4.67 \\, \\mathrm{ft/sec} \\)",
+            "B": "\\( 6.96 \\, \\mathrm{ft/sec} \\)",
+            "C": "\\( 11.04 \\, \\mathrm{ft/sec} \\)",
+            "D": "\\( 13.92 \\, \\mathrm{ft/sec} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P184"
+          ],
+          "tags": [
+            "Characteristics Of Selected Flow Configurations",
+            "Open Channel Flow Pipe Flow Of Water"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "The Impulse-Momentum Principle",
+      "questions": [
+        {
+          "question": "An impulse turbine wheel operates by receiving a continuous water jet (\\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)) directed at its moving blades. The total flow rate delivered by the nozzle is \\( Q = 0.15 \\ \\mathrm{m}^3/\\mathrm{s} \\), and the absolute velocity of the jet is \\( v_1 = 30 \\ \\mathrm{m}/\\mathrm{s} \\). The turbine wheel rotates such that the blades move in the same direction as the jet at a constant tangential velocity of \\( v = 15 \\ \\mathrm{m}/\\mathrm{s} \\). If the geometric design of the blades deflects the water by an angle of \\( \\alpha = 120^\\circ \\), determine the theoretical mechanical power (\\( \\dot{W} \\)) generated by this impulse turbine.",
+          "choices": {
+            "A": "\\( 25.3 \\ \\mathrm{kW} \\)",
+            "B": "\\( 50.6 \\ \\mathrm{kW} \\)",
+            "C": "\\( 75.9 \\ \\mathrm{kW} \\)",
+            "D": "\\( 101.2 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P188"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "A continuous water jet (\\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)) is directed at a series of moving blades on a turbine wheel. The total flow rate from the nozzle is \\( Q = 0.2 \\ \\mathrm{m}^3/\\mathrm{s} \\) and the absolute jet velocity is \\( v_1 = 30 \\ \\mathrm{m}/\\mathrm{s} \\). The blades move in the same horizontal direction as the jet at a constant linear velocity of \\( v = 15 \\ \\mathrm{m}/\\mathrm{s} \\). If the curved blades deflect the water forward by an angle of \\( \\alpha = 60^\\circ \\) relative to the horizontal, calculate the magnitude of the horizontal force (\\( F_x \\)) exerted on the moving blades.\n<svg viewbox=\"0 0 500 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 180 160 Q 250 160 320 80\" fill=\"none\" stroke=\"#333\" stroke-width=\"8\"></path>\n<path d=\"M 180 160 L 180 170 M 200 160 L 202 170 M 220 157 L 225 167 M 240 152 L 247 161 M 260 144 L 268 153 M 280 132 L 290 140 M 300 115 L 312 122\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"></path>\n<text fill=\"#333\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"190\">F ON BLADE</text>\n<line stroke=\"#388e3c\" stroke-width=\"2\" x1=\"280\" x2=\"350\" y1=\"160\" y2=\"160\"></line>\n<polygon fill=\"#388e3c\" points=\"350,160 340,155 340,165\"></polygon>\n<text fill=\"#388e3c\" font-size=\"16\" font-weight=\"bold\" x=\"320\" y=\"175\">v</text>\n<line stroke=\"#1976d2\" stroke-width=\"3\" x1=\"50\" x2=\"160\" y1=\"150\" y2=\"150\"></line>\n<polygon fill=\"#1976d2\" points=\"160,150 150,145 150,155\"></polygon>\n<text fill=\"#1976d2\" font-size=\"16\" font-weight=\"bold\" x=\"100\" y=\"140\">v1</text>\n<path d=\"M 320 80 L 400 40\" fill=\"none\" stroke=\"#64b5f6\" stroke-width=\"3\"></path>\n<polygon fill=\"#64b5f6\" points=\"400,40 390,38 395,48\"></polygon>\n<text fill=\"#64b5f6\" font-size=\"16\" font-weight=\"bold\" x=\"410\" y=\"40\">v2</text>\n<line stroke=\"#999\" stroke-dasharray=\"6,6\" stroke-width=\"1.5\" x1=\"320\" x2=\"420\" y1=\"80\" y2=\"80\"></line>\n<path d=\"M 380 80 A 60 60 0 0 0 355 60\" fill=\"none\" stroke=\"#333\" stroke-width=\"1.5\"></path>\n<text fill=\"#333\" font-size=\"14\" font-weight=\"bold\" x=\"390\" y=\"70\">α = 60°</text>\n</svg>",
+          "choices": {
+            "A": "\\( 1.50 \\ \\mathrm{kN} \\)",
+            "B": "\\( 2.25 \\ \\mathrm{kN} \\)",
+            "C": "\\( 3.00 \\ \\mathrm{kN} \\)",
+            "D": "\\( 4.50 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P188"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "A water jet (\\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)) exits a nozzle with a steady volumetric flow rate of \\( Q = 0.1 \\ \\mathrm{m}^3/\\mathrm{s} \\) and an initial absolute velocity of \\( v_1 = 20 \\ \\mathrm{m}/\\mathrm{s} \\). The horizontal jet strikes a stationary hemispherical blade (deflector) that completely reverses the direction of the flow, deflecting it by \\( \\alpha = 180^\\circ \\). Assuming ideal flow with no frictional losses across the blade surface (\\( v_2 = v_1 \\)), calculate the magnitude of the horizontal force (\\( F_{blade} \\)) exerted by the fluid on the fixed blade.",
+          "choices": {
+            "A": "\\( 1.0 \\ \\mathrm{kN} \\)",
+            "B": "\\( 2.0 \\ \\mathrm{kN} \\)",
+            "C": "\\( 3.0 \\ \\mathrm{kN} \\)",
+            "D": "\\( 4.0 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "D",
+          "references": [
+            "FE Reference Handbook 10.5 – P187"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "A large holding tank filled with water (\\( \\gamma = 9810\\text{ N/m}^3 \\)) has a circular orifice on its side. The area of the nozzle tip is \\( A_2 = 0.01\\text{ m}^2 \\). The height of the water surface above the centerline of the outlet is maintained at a constant \\( h = 5.0\\text{ m} \\). Determine the horizontal propulsive force (\\( F \\)) exerted on the tank by the exiting jet.\n<svg viewbox=\"0 0 500 400\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect fill=\"#e3f2fd\" height=\"250\" width=\"200\" x=\"150\" y=\"100\"></rect>\n<path d=\"M 350 240 L 420 240 Q 450 240 460 260 Q 420 260 350 260 Z\" fill=\"#bbdefb\" stroke=\"none\"></path>\n<path d=\"M 150 50 L 150 350 L 350 350 L 350 260\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 350 240 L 350 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 350 240 Q 365 250 365 245\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 350 260 Q 365 250 365 255\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"140\" x2=\"360\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"none\" points=\"240,85 260,85 250,100\" stroke=\"#1976d2\" stroke-width=\"2\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"240\" x2=\"260\" y1=\"85\" y2=\"85\"></line>\n<line stroke=\"#1976d2\" stroke-dasharray=\"6,6\" stroke-width=\"1.5\" x1=\"200\" x2=\"480\" y1=\"250\" y2=\"250\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"100\" y2=\"250\"></line>\n<polygon fill=\"#333\" points=\"250,250 246,240 254,240\"></polygon>\n<polygon fill=\"#333\" points=\"250,100 246,110 254,110\"></polygon>\n<text fill=\"#333\" font-size=\"18\" font-weight=\"bold\" x=\"260\" y=\"180\">h = 5.0 m</text>\n<line stroke=\"#333\" stroke-width=\"2\" x1=\"380\" x2=\"450\" y1=\"250\" y2=\"250\"></line>\n<polygon fill=\"#333\" points=\"450,250 440,245 440,255\"></polygon>\n<text fill=\"#333\" font-size=\"18\" font-weight=\"bold\" x=\"460\" y=\"255\">v2</text>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"365\" y=\"230\">A2</text>\n</svg>",
+          "choices": {
+            "A": "\\( 490\\text{ N} \\)",
+            "B": "\\( 750\\text{ N} \\)",
+            "C": "\\( 981\\text{ N} \\)",
+            "D": "\\( 1240\\text{ N} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P187"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "A primary water transmission line features a vertical \\( 90^\\circ \\) flanged pipe bend that redirects the flow upward. The constant-diameter pipe has an internal diameter of \\( D = 0.5\\text{ m} \\) and carries water (\\( \\rho = 1000\\text{ kg/m}^3 \\)) at a steady volumetric flow rate of \\( Q = 0.5\\text{ m}^3\\text{/s} \\). The gauge pressure at the exit of the bend (Section 2) is \\( P_2 = 200\\text{ kPa} \\). The volume of water contained within the short-radius bend is \\( V = 0.15\\text{ m}^3 \\). Assuming frictional losses across the bend are negligible, what is most nearly the magnitude of the y-component force (\\( F_y \\)) exerted by the fluid on the pipe bend?\n<svg viewbox=\"0 0 500 350\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 150 250 L 300 250 Q 400 250 400 150 L 400 50\" fill=\"none\" stroke=\"#e3f2fd\" stroke-width=\"80\"></path>\n<path d=\"M 150 210 L 300 210 Q 360 210 360 150 L 360 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"></path>\n<path d=\"M 150 290 L 300 290 Q 440 290 440 150 L 440 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"></path>\n<path d=\"M 100 250 L 300 250 Q 400 250 400 150 L 400 20\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"8,8\" stroke-width=\"2\"></path>\n<line stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"80\" x2=\"180\" y1=\"250\" y2=\"250\"></line>\n<polygon fill=\"#d32f2f\" points=\"180,250 165,240 165,260\"></polygon>\n<text fill=\"#d32f2f\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"130\" y=\"235\">v1</text>\n<line stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"400\" x2=\"400\" y1=\"120\" y2=\"30\"></line>\n<polygon fill=\"#d32f2f\" points=\"400,30 390,45 410,45\"></polygon>\n<text fill=\"#d32f2f\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"425\" y=\"80\">v2</text>\n<line stroke=\"#8e24aa\" stroke-width=\"3\" x1=\"360\" x2=\"360\" y1=\"210\" y2=\"260\"></line>\n<polygon fill=\"#8e24aa\" points=\"360,260 355,245 365,245\"></polygon>\n<text fill=\"#8e24aa\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"375\" y=\"255\">W</text>\n<text fill=\"#333\" font-size=\"20\" font-weight=\"bold\" x=\"150\" y=\"330\">1</text>\n<text fill=\"#333\" font-size=\"20\" font-weight=\"bold\" x=\"470\" y=\"50\">2</text>\n<line stroke=\"#333\" stroke-width=\"2\" x1=\"30\" x2=\"30\" y1=\"50\" y2=\"100\"></line>\n<polygon fill=\"#333\" points=\"30,50 25,60 35,60\"></polygon>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"20\" y=\"65\">y</text>\n<line stroke=\"#333\" stroke-width=\"2\" x1=\"30\" x2=\"80\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"#333\" points=\"80,100 70,95 70,105\"></polygon>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"70\" y=\"120\">x</text>\n</svg>",
+          "choices": {
+            "A": "\\( 39.5\\text{ kN} \\)",
+            "B": "\\( 40.5\\text{ kN} \\)",
+            "C": "\\( 42.0\\text{ kN} \\)",
+            "D": "\\( 45.2\\text{ kN} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "Apply the y-component impulse-momentum equation for a pipe bend from the NCEES Handbook:\n\n\\[\nF_y – W – P_2 A_2 \\sin\\alpha = Q \\rho (v_2 \\sin\\alpha – 0)\n\\]",
+            "Apply the y-component impulse-momentum equation for a pipe bend from the NCEES Handbook:",
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "Water (\\( \\rho = 1000\\text{ kg/m}^3 \\)) flows through a horizontal \\( 90^\\circ \\) pipe bend of constant diameter \\( D = 0.5\\text{ m} \\). The volumetric flow rate is \\( Q = 0.5\\text{ m}^3\\text{/s} \\) and the gauge pressure at the inlet (Section 1) is \\( P_1 = 200\\text{ kPa} \\). Assuming frictional losses are negligible (\\( P_1 \\approx P_2 \\)), calculate the magnitude of the x-component force (\\( F_x \\)) exerted by the fluid on the pipe bend.\n<svg viewbox=\"0 0 500 350\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 150 250 L 300 250 Q 400 250 400 150 L 400 50\" fill=\"none\" stroke=\"#e3f2fd\" stroke-width=\"80\"></path>\n<path d=\"M 150 210 L 300 210 Q 360 210 360 150 L 360 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"></path>\n<path d=\"M 150 290 L 300 290 Q 440 290 440 150 L 440 50\" fill=\"none\" stroke=\"#333\" stroke-width=\"3\"></path>\n<path d=\"M 100 250 L 300 250 Q 400 250 400 150 L 400 20\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"8,8\" stroke-width=\"2\"></path>\n<line stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"80\" x2=\"180\" y1=\"250\" y2=\"250\"></line>\n<polygon fill=\"#d32f2f\" points=\"180,250 165,240 165,260\"></polygon>\n<text fill=\"#d32f2f\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"130\" y=\"235\">v1</text>\n<line stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"400\" x2=\"400\" y1=\"120\" y2=\"30\"></line>\n<polygon fill=\"#d32f2f\" points=\"400,30 390,45 410,45\"></polygon>\n<text fill=\"#d32f2f\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"425\" y=\"80\">v2</text>\n<text fill=\"#333\" font-size=\"20\" font-weight=\"bold\" x=\"150\" y=\"330\">1</text>\n<text fill=\"#333\" font-size=\"20\" font-weight=\"bold\" x=\"470\" y=\"50\">2</text>\n</svg>",
+          "choices": {
+            "A": "\\( 35.2\\text{ kN} \\)",
+            "B": "\\( 40.5\\text{ kN} \\)",
+            "C": "\\( 45.1\\text{ kN} \\)",
+            "D": "\\( 52.6\\text{ kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "Apply the x-component impulse-momentum equation for a pipe bend from the NCEES Handbook:\n\n\\[\nP_1 A_1 – P_2 A_2 \\cos\\alpha – F_x = Q \\rho (v_2 \\cos\\alpha – v_1)\n\\]",
+            "Apply the x-component impulse-momentum equation for a pipe bend from the NCEES Handbook:",
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        },
+        {
+          "question": "A straight horizontal reducing nozzle discharges water (\\( \\rho = 1000\\text{ kg/m}^3 \\)) directly into the atmosphere (\\( P_2 = 0\\text{ kPa gauge} \\)). The flow rate is \\( Q = 0.1\\text{ m}^3\\text{/s} \\). At the inlet (Section 1), the area is \\( A_1 = 0.05\\text{ m}^2 \\), the velocity is \\( v_1 = 2.0\\text{ m/s} \\), and the gauge pressure is \\( P_1 = 150\\text{ kPa} \\). At the exit (Section 2), the velocity is \\( v_2 = 5.0\\text{ m/s} \\). Calculate the reaction force (\\( R_x \\)) required to hold the nozzle in place.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 100 50 L 300 80 L 400 80 L 400 160 L 300 160 L 100 190 Z\" fill=\"#e3f2fd\" stroke=\"#333\" stroke-width=\"3\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,8\" stroke-width=\"2\" x1=\"40\" x2=\"460\" y1=\"120\" y2=\"120\"></line>\n<path d=\"M 400 80 Q 460 80 480 95 L 480 145 Q 460 160 400 160\" fill=\"#bbdefb\" stroke=\"none\"></path>\n<text fill=\"#333\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"115\">1</text>\n<text fill=\"#333\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"350\" y=\"115\">2</text>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"100\" y=\"35\">P1, A1, v1</text>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"350\" y=\"60\">Atmosphere</text>\n<line stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"300\" x2=\"200\" y1=\"25\" y2=\"25\"></line>\n<polygon fill=\"#d32f2f\" points=\"200,25 215,15 215,35\"></polygon>\n<text fill=\"#d32f2f\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"15\">Rx</text>\n</svg>",
+          "choices": {
+            "A": "\\( 3.5\\text{ kN} \\)",
+            "B": "\\( 5.8\\text{ kN} \\)",
+            "C": "\\( 7.2\\text{ kN} \\)",
+            "D": "\\( 8.5\\text{ kN} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P186"
+          ],
+          "tags": [
+            "The Impulse Momentum Principle"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Compressible Flow",
+      "questions": [
+        {
+          "question": "A ramjet engine inlet operating at high speeds encounters a normal shock wave just inside the diffuser. The air (\\( k = 1.4 \\)) enters the shock at a Mach number of \\( Ma_1 = 1.8 \\) and a static pressure of \\( P_1 = 50 \\ \\mathrm{kPa} \\). As the fluid traverses the shock, kinetic energy is violently converted to pressure. Use the normal shock relationships to determine the static pressure ratio (\\( P_2 / P_1 \\)) across the wave.",
+          "choices": {
+            "A": "\\( 2.15 \\)",
+            "B": "\\( 3.61 \\)",
+            "C": "\\( 4.88 \\)",
+            "D": "\\( 5.35 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P189"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "During the operation of a supersonic blowdown wind tunnel, a normal shock wave forms in the constant-area test section. The air (\\( k = 1.4 \\)) immediately upstream of the shock is traveling at a Mach number of \\( Ma_1 = 2.5 \\) and has a static pressure of \\( P_1 = 30 \\ \\mathrm{kPa} \\). The normal shock causes an abrupt deceleration and compression of the fluid. What is most nearly the downstream Mach number (\\( Ma_2 \\)) immediately after the shock wave?\n<svg viewbox=\"0 0 500 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect fill=\"#bbdefb\" height=\"130\" opacity=\"0.5\" width=\"200\" x=\"50\" y=\"60\"></rect>\n<rect fill=\"#ffccbc\" height=\"130\" opacity=\"0.6\" width=\"200\" x=\"250\" y=\"60\"></rect>\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"50\" x2=\"450\" y1=\"60\" y2=\"60\"></line>\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"50\" x2=\"450\" y1=\"190\" y2=\"190\"></line>\n<path d=\"M 250 60 L 240 86 L 260 112 L 240 138 L 260 164 L 250 190\" fill=\"none\" stroke=\"#d32f2f\" stroke-width=\"5\"></path>\n<text fill=\"#d32f2f\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"40\">Normal Shock Wave</text>\n<text fill=\"#1565c0\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"100\">Region 1</text>\n<text fill=\"#1565c0\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"125\">Ma1 = 2.5</text>\n<line stroke=\"#1565c0\" stroke-width=\"5\" x1=\"90\" x2=\"210\" y1=\"155\" y2=\"155\"></line>\n<polygon fill=\"#1565c0\" points=\"210,155 195,145 195,165\"></polygon>\n<text fill=\"#d84315\" font-size=\"24\" font-weight=\"bold\" text-anchor=\"middle\" x=\"350\" y=\"100\">Region 2</text>\n<text fill=\"#d84315\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"350\" y=\"125\">Ma2 = ?</text>\n<line stroke=\"#d84315\" stroke-width=\"5\" x1=\"290\" x2=\"360\" y1=\"155\" y2=\"155\"></line>\n<polygon fill=\"#d84315\" points=\"360,155 345,145 345,165\"></polygon>\n</svg>",
+          "choices": {
+            "A": "\\( 0.35 \\)",
+            "B": "\\( 0.51 \\)",
+            "C": "\\( 0.72 \\)",
+            "D": "\\( 0.88 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P189"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "A converging-diverging (De Laval) nozzle is being designed for a solid-propellant rocket motor. The combustion gases are approximated as ideal air (\\( k = 1.4 \\)). To achieve the desired thrust, the flow must expand isentropically from sonic conditions at the throat (\\( Ma = 1.0 \\), area \\( A^* \\)) to a supersonic Mach number of \\( Ma_e = 3.0 \\) at the nozzle exit plane. What is most nearly the required area ratio (\\( A_e / A^* \\)) of the exit area to the throat area?\n<svg viewbox=\"0 0 500 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 50 60 Q 200 60 250 100 Q 300 40 450 40 L 450 210 Q 300 210 250 150 Q 200 190 50 190 Z\" fill=\"#e3f2fd\" opacity=\"0.6\"></path>\n<path d=\"M 50 60 Q 200 60 250 100 Q 300 40 450 40\" fill=\"none\" stroke=\"#333\" stroke-width=\"5\"></path>\n<path d=\"M 50 190 Q 200 190 250 150 Q 300 210 450 210\" fill=\"none\" stroke=\"#333\" stroke-width=\"5\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,8\" stroke-width=\"2\" x1=\"30\" x2=\"470\" y1=\"125\" y2=\"125\"></line>\n<line stroke=\"#d32f2f\" stroke-dasharray=\"6,4\" stroke-width=\"4\" x1=\"250\" x2=\"250\" y1=\"100\" y2=\"150\"></line>\n<text fill=\"#d32f2f\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"80\">Throat (A*)</text>\n<text fill=\"#d32f2f\" font-size=\"18\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"175\">Ma = 1.0</text>\n<line stroke=\"#388e3c\" stroke-dasharray=\"6,4\" stroke-width=\"4\" x1=\"450\" x2=\"450\" y1=\"40\" y2=\"210\"></line>\n<text fill=\"#388e3c\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"450\" y=\"25\">Exit (Ae)</text>\n<text fill=\"#388e3c\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"390\" y=\"115\">Ma = 3.0</text>\n<line stroke=\"#1976d2\" stroke-width=\"4\" x1=\"80\" x2=\"160\" y1=\"125\" y2=\"125\"></line>\n<polygon fill=\"#1976d2\" points=\"160,125 145,115 145,135\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"4\" x1=\"280\" x2=\"360\" y1=\"125\" y2=\"125\"></line>\n<polygon fill=\"#1976d2\" points=\"360,125 345,115 345,135\"></polygon>\n</svg>",
+          "choices": {
+            "A": "\\( 2.14 \\)",
+            "B": "\\( 3.00 \\)",
+            "C": "\\( 4.23 \\)",
+            "D": "\\( 5.75 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P189"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "A pitot-static tube is utilized to measure the airspeed of a high-performance aircraft operating in the transonic regime. The aircraft is flying at a Mach number of \\( Ma = 0.85 \\) through air (\\( k = 1.4 \\)). The static pressure port on the instrument reads the ambient pressure \\( P = 40 \\ \\mathrm{kPa} \\). Assuming the deceleration of the air at the pitot tube’s stagnation point is an isentropic process, what is most nearly the ratio of the stagnation pressure to the static pressure (\\( P_0 / P \\))?",
+          "choices": {
+            "A": "\\( 1.14 \\)",
+            "B": "\\( 1.35 \\)",
+            "C": "\\( 1.60 \\)",
+            "D": "\\( 1.89 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P189"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "A stagnation temperature probe is mounted on the nose of a supersonic military aircraft. The aircraft is traveling at a Mach number of \\( Ma = 2.0 \\) through ambient air (\\( k = 1.4 \\)) that has a static absolute temperature of \\( T = 220 \\ \\mathrm{K} \\) and a static pressure of \\( P = 26 \\ \\mathrm{kPa} \\). Assuming the air is brought to rest isentropically at the tip of the probe, what is most nearly the stagnation temperature (\\( T_0 \\)) recorded by the sensor?\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"50\" x2=\"180\" y1=\"60\" y2=\"60\"></line>\n<polygon fill=\"#1976d2\" points=\"180,60 170,55 170,65\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"50\" x2=\"180\" y1=\"140\" y2=\"140\"></line>\n<polygon fill=\"#1976d2\" points=\"180,140 170,135 170,145\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"3\" x1=\"50\" x2=\"200\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"#1976d2\" points=\"200,100 185,92 185,108\"></polygon>\n<text fill=\"#1976d2\" font-size=\"16\" font-weight=\"bold\" x=\"120\" y=\"90\">Ma = 2.0, T = 220 K</text>\n<path d=\"M 230 100 Q 250 85 350 85 L 450 85 L 450 115 L 350 115 Q 250 115 230 100 Z\" fill=\"#e0e0e0\" stroke=\"#333\" stroke-width=\"3\"></path>\n<circle cx=\"230\" cy=\"100\" fill=\"#d32f2f\" r=\"5\"></circle>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" x=\"260\" y=\"135\">Stagnation Point (T0)</text>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"1.5\" x1=\"230\" x2=\"260\" y1=\"95\" y2=\"50\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"260\" x2=\"320\" y1=\"50\" y2=\"50\"></line>\n<text fill=\"#333\" font-size=\"14\" x=\"265\" y=\"45\">V = 0</text>\n</svg>",
+          "choices": {
+            "A": "\\( 264 \\ \\mathrm{K} \\)",
+            "B": "\\( 308 \\ \\mathrm{K} \\)",
+            "C": "\\( 396 \\ \\mathrm{K} \\)",
+            "D": "\\( 484 \\ \\mathrm{K} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P189"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "A commercial jetliner is cruising at an altitude of \\( 10,000 \\ \\mathrm{m} \\). The aircraft’s true airspeed is determined to be \\( V = 250 \\ \\mathrm{m}/\\mathrm{s} \\). At this altitude, the ambient static temperature of the air (\\( k = 1.4, \\ R = 287 \\ \\mathrm{J}/(\\mathrm{kg}\\cdot\\mathrm{K}) \\)) is measured at \\( -40^\\circ\\mathrm{C} \\). What is most nearly the Mach number (\\( Ma \\)) of the aircraft?",
+          "choices": {
+            "A": "\\( 0.73 \\)",
+            "B": "\\( 0.78 \\)",
+            "C": "\\( 0.82 \\)",
+            "D": "\\( 0.88 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P188"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        },
+        {
+          "question": "A supersonic wind tunnel is being prepared for aerodynamic testing of a new airfoil profile. The working fluid is dry air, which behaves as an ideal gas with a specific heat ratio of \\( k = 1.4 \\) and a specific gas constant of \\( R = 287 \\ \\mathrm{J}/(\\mathrm{kg}\\cdot\\mathrm{K}) \\). Sensors in the test section record a static absolute pressure of \\( P = 45 \\ \\mathrm{kPa} \\) and a static temperature of \\( T = -20^\\circ\\mathrm{C} \\). What is most nearly the local speed of sound (\\( c \\)) in the test section?",
+          "choices": {
+            "A": "\\( 283 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "B": "\\( 319 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "C": "\\( 331 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "D": "\\( 343 \\ \\mathrm{m}/\\mathrm{s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P188"
+          ],
+          "tags": [
+            "Compressible Flow"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Fluid Flow Machinery",
+      "questions": [
+        {
+          "question": "As part of an industrial cogeneration power plant, hot combustion gases (modeled as ideal air with a constant specific heat of \\( c_p = 1000 \\ \\mathrm{J}/(\\mathrm{kg}\\cdot\\mathrm{K}) \\)) enter an axial-flow gas turbine. Sensors record a steady mass flow rate of \\( \\dot{m} = 2.5 \\ \\mathrm{kg}/\\mathrm{s} \\) with an absolute inlet temperature of \\( T_i = 800 \\ \\mathrm{K} \\). After expanding through the turbine stages, the exhaust gas temperature drops significantly to \\( T_e = 400 \\ \\mathrm{K} \\). Assuming the expansion process is ideal and adiabatic with negligible changes in kinetic and potential energy, what is most nearly the theoretical mechanical power (\\( \\dot{W}_{turb} \\)) produced at the turbine shaft?",
+          "choices": {
+            "A": "\\( 500 \\ \\mathrm{kW} \\)",
+            "B": "\\( 1000 \\ \\mathrm{kW} \\)",
+            "C": "\\( 1500 \\ \\mathrm{kW} \\)",
+            "D": "\\( 2000 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P193"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "A typical backward curved fan is used in an HVAC duct system. The fan generates a pressure rise of \\( \\Delta P = 600 \\ \\mathrm{Pa} \\) (\\( \\mathrm{N}/\\mathrm{m}^2 \\)) while moving a volumetric flow rate of \\( Q = 5.0 \\ \\mathrm{m}^3/\\mathrm{s} \\). If the fan efficiency is \\( \\eta_f = 0.75 \\), what is the required fan power (\\( \\dot{W} \\))?",
+          "choices": {
+            "A": "\\( 2.0 \\ \\mathrm{kW} \\)",
+            "B": "\\( 3.0 \\ \\mathrm{kW} \\)",
+            "C": "\\( 4.0 \\ \\mathrm{kW} \\)",
+            "D": "\\( 5.5 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P191"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "Air enters an ideal isothermal compressor (\\( \\eta_c = 1.0 \\)) at a temperature of \\( T_i = 293 \\ \\mathrm{K} \\) and a mass flow rate of \\( \\dot{m} = 0.24 \\ \\mathrm{kg}/\\mathrm{s} \\). The pressure ratio from exit to inlet is \\( P_e / P_i = 6.0 \\). The universal gas constant is \\( \\bar{R} = 8314 \\ \\mathrm{J}/(\\mathrm{kmol}\\cdot\\mathrm{K}) \\) and the molecular weight of air is \\( M = 29 \\ \\mathrm{kg}/\\mathrm{kmol} \\). Calculate the power consumed (\\( |\\dot{W}_{comp}| \\)).",
+          "choices": {
+            "A": "\\( 22.4 \\ \\mathrm{kW} \\)",
+            "B": "\\( 36.1 \\ \\mathrm{kW} \\)",
+            "C": "\\( 46.8 \\ \\mathrm{kW} \\)",
+            "D": "\\( 55.4 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P193"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "A primary air compressor in a manufacturing plant’s pneumatic system draws in ambient air (\\( k = 1.4 \\)) at an absolute inlet pressure of \\( P_i = 100 \\ \\mathrm{kPa} \\). Sensors indicate that the mass flow rate entering the unit is \\( \\dot{m} = 0.24 \\ \\mathrm{kg}/\\mathrm{s} \\) with a corresponding inlet density of \\( \\rho_i = 1.2 \\ \\mathrm{kg}/\\mathrm{m}^3 \\). The air is then compressed and discharged into a receiver tank at a pressure of \\( P_e = 600 \\ \\mathrm{kPa} \\). Assuming the compression process is adiabatic and the machine operates at an ideal isentropic efficiency of \\( \\eta_c = 1.0 \\), what is most nearly the mechanical power (\\( |\\dot{W}_{comp}| \\)) required to drive this compressor?",
+          "choices": {
+            "A": "\\( 35.8 \\ \\mathrm{kW} \\)",
+            "B": "\\( 46.8 \\ \\mathrm{kW} \\)",
+            "C": "\\( 55.4 \\ \\mathrm{kW} \\)",
+            "D": "\\( 62.1 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P192"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "An industrial cooling system is currently equipped with an oversized centrifugal pump featuring a \\( D_1 = 10.0 \\ \\mathrm{in.} \\) diameter impeller. Under baseline continuous operation, the pump draws a brake power of \\( \\dot{W}_1 = 15 \\ \\mathrm{hp} \\). To optimize system efficiency and eliminate excessive throttling valve losses, plant engineers decide to physically trim the pump’s impeller down to a new diameter of \\( D_2 = 9.0 \\ \\mathrm{in.} \\). Assuming the pump continues to be driven at the exact same rotational speed (\\( N_2 = N_1 \\)) and handles the same fluid (\\( \\rho_2 = \\rho_1 \\)), what is most nearly the expected new power requirement (\\( \\dot{W}_2 \\)) ?",
+          "choices": {
+            "A": "\\( 8.9 \\ \\mathrm{hp} \\)",
+            "B": "\\( 10.9 \\ \\mathrm{hp} \\)",
+            "C": "\\( 12.2 \\ \\mathrm{hp} \\)",
+            "D": "\\( 13.5 \\ \\mathrm{hp} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P194"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "A municipal water treatment plant needs to increase its daily throughput. An existing centrifugal pump currently operates at a rotational speed of \\( N_1 = 1750 \\ \\mathrm{rpm} \\) and delivers a baseline flow rate of \\( Q_1 = 400 \\ \\mathrm{GPM} \\). To meet the new capacity demands, engineers install a Variable Frequency Drive (VFD) to increase the pump’s motor speed to \\( N_2 = 2100 \\ \\mathrm{rpm} \\). Assuming the impeller diameter (\\( D \\)) remains unchanged and the system curve is compatible, what is most nearly the new volumetric flow rate (\\( Q_2 \\)) delivered by the pump?",
+          "choices": {
+            "A": "\\( 480 \\ \\mathrm{GPM} \\)",
+            "B": "\\( 576 \\ \\mathrm{GPM} \\)",
+            "C": "\\( 691 \\ \\mathrm{GPM} \\)",
+            "D": "\\( 820 \\ \\mathrm{GPM} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P194"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "A pump system transports liquid fertilizer (\\( \\rho = 1150 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)). The system requires a flow rate of \\( Q = 0.2 \\ \\mathrm{m}^3/\\mathrm{s} \\) and a total head increase of \\( H = 30 \\ \\mathrm{m} \\). The pump has an efficiency of \\( \\eta_{pump} = 0.78 \\), and the electric motor has an efficiency of \\( \\eta_{motor} = 0.92 \\). Following the sequential power definitions in the NCEES Handbook, what is most nearly the required purchased electrical power (\\( \\dot{W}_{purchased} \\))?",
+          "choices": {
+            "A": "\\( 67.7 \\ \\mathrm{kW} \\)",
+            "B": "\\( 86.8 \\ \\mathrm{kW} \\)",
+            "C": "\\( 94.3 \\ \\mathrm{kW} \\)",
+            "D": "\\( 114.2 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P191"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "A centrifugal pump operates continuously to extract water (\\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)). It delivers a steady volumetric flow rate of \\( Q = 0.05 \\ \\mathrm{m}^3/\\mathrm{s} \\) against a total head increase of \\( H = 45 \\ \\mathrm{m} \\). What is most nearly the ideal fluid power (\\( \\dot{W}_{fluid} \\)) imparted to the water?",
+          "choices": {
+            "A": "\\( 11.0 \\ \\mathrm{kW} \\)",
+            "B": "\\( 22.1 \\ \\mathrm{kW} \\)",
+            "C": "\\( 33.5 \\ \\mathrm{kW} \\)",
+            "D": "\\( 44.2 \\ \\mathrm{kW} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P191"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        },
+        {
+          "question": "An open basin supplies water to a pump. The atmospheric pressure is \\( P_{atm} = 14.7 \\ \\mathrm{psia} \\) and the fluid’s specific weight is \\( \\gamma = 62.4 \\ \\mathrm{lbf}/\\mathrm{ft}^3 \\). The fluid vapor pressure is \\( P_{vapor} = 0.26 \\ \\mathrm{psia} \\). The pump is installed with a suction lift, meaning the water surface is \\( 8.0 \\ \\mathrm{ft} \\) below the pump impeller centerline. Total friction losses in the suction line are \\( \\Sigma h_L = 2.5 \\ \\mathrm{ft} \\). What is most nearly the Net Positive Suction Head Available (\\( NPSH_A \\))?",
+          "choices": {
+            "A": "\\( 11.6 \\ \\mathrm{ft} \\)",
+            "B": "\\( 22.8 \\ \\mathrm{ft} \\)",
+            "C": "\\( 25.3 \\ \\mathrm{ft} \\)",
+            "D": "\\( 38.8 \\ \\mathrm{ft} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P191"
+          ],
+          "tags": [
+            "Fluid Flow Machinery"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Fluid Flow Measurement",
+      "questions": [
+        {
+          "question": "A civil engineering irrigation project requires flow regulation between a primary upstream reservoir and a secondary downstream basin. The system utilizes a submerged circular orifice connecting the two bodies of water. The steady water level in the upstream reservoir is \\( h_1 = 4.5 \\ \\mathrm{m} \\) above the orifice centerline, while the downstream level is \\( h_2 = 1.5 \\ \\mathrm{m} \\) above the centerline. If the physical area of the orifice is \\( A_0 = 0.5 \\ \\mathrm{m}^2 \\) and the calibrated coefficient of discharge is \\( C = 0.65 \\), what is most nearly the steady volumetric flow rate (\\( Q \\)) passing through the submerged orifice?\n<svg viewbox=\"0 0 400 220\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 50 40 L 50 200 L 200 200 L 200 160 M 200 120 L 200 40\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 350 80 L 350 200 L 200 200\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<rect fill=\"#bbdefb\" height=\"138\" opacity=\"0.6\" width=\"146\" x=\"52\" y=\"60\"></rect>\n<rect fill=\"#bbdefb\" height=\"68\" opacity=\"0.6\" width=\"146\" x=\"202\" y=\"130\"></rect>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"40\" x2=\"210\" y1=\"60\" y2=\"60\"></line>\n<polygon fill=\"none\" points=\"125,60 120,50 130,50\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<text fill=\"#1976d2\" font-size=\"14\" font-weight=\"bold\" x=\"140\" y=\"45\">P1 = 0</text>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"360\" y1=\"130\" y2=\"130\"></line>\n<polygon fill=\"none\" points=\"275,130 270,120 280,120\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<text fill=\"#1976d2\" font-size=\"14\" font-weight=\"bold\" x=\"290\" y=\"115\">P2 = 0</text>\n<line stroke=\"#333\" stroke-dasharray=\"4,4\" stroke-width=\"2\" x1=\"100\" x2=\"300\" y1=\"140\" y2=\"140\"></line>\n<line stroke=\"#1976d2\" stroke-width=\"3\" x1=\"180\" x2=\"230\" y1=\"140\" y2=\"140\"></line>\n<polygon fill=\"#1976d2\" points=\"230,140 220,135 220,145\"></polygon>\n<text fill=\"#1976d2\" font-size=\"16\" font-weight=\"bold\" x=\"210\" y=\"160\">Q</text>\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"200\" x2=\"200\" y1=\"120\" y2=\"130\"></line>\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"200\" x2=\"200\" y1=\"150\" y2=\"160\"></line>\n<line stroke=\"#d32f2f\" stroke-width=\"4\" x1=\"200\" x2=\"200\" y1=\"130\" y2=\"150\"></line>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" x=\"175\" y=\"165\">A0</text>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"80\" x2=\"80\" y1=\"60\" y2=\"140\"></line>\n<polygon fill=\"#333\" points=\"80,60 75,70 85,70\"></polygon>\n<polygon fill=\"#333\" points=\"80,140 75,130 85,130\"></polygon>\n<text fill=\"#333\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"end\" x=\"70\" y=\"105\">h1</text>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"320\" x2=\"320\" y1=\"130\" y2=\"140\"></line>\n<polygon fill=\"#333\" points=\"320,130 315,140 325,140\"></polygon>\n<polygon fill=\"#333\" points=\"320,140 315,130 325,130\"></polygon>\n<text fill=\"#333\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"start\" x=\"330\" y=\"140\">h2</text>\n</svg>",
+          "choices": {
+            "A": "\\( 1.76 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "B": "\\( 2.49 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "C": "\\( 3.06 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "D": "\\( 4.88 \\ \\mathrm{m}^3/\\mathrm{s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "The NCEES Handbook provides the general volumetric flow rate equation for orifices as:\n\n\\[\nQ = C A_0 \\sqrt{2g \\left( \\frac{P_1}{\\gamma} + z_1 – \\frac{P_2}{\\gamma} – z_2 \\right)}\n\\]",
+            "The NCEES Handbook provides the general volumetric flow rate equation for orifices as:",
+            "FE Reference Handbook 10.5 – P195"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        },
+        {
+          "question": "A large primary clarifier tank in a wastewater treatment facility is equipped with a circular side drain. The fluid discharges freely into the atmosphere as a jet. The vertical distance from the constant water surface level to the centerline of the orifice is \\( h = 5.0 \\ \\mathrm{m} \\). The physical area of the orifice is \\( A_0 = 0.02 \\ \\mathrm{m}^2 \\), and the overall orifice coefficient (coefficient of discharge) is known to be \\( C = 0.60 \\). Assuming steady conditions, what is most nearly the volumetric flow rate (\\( Q \\)) exiting the tank?\n<svg viewbox=\"0 0 300 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 50 40 L 50 220 L 150 220 L 150 180\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<line stroke=\"#333\" stroke-width=\"4\" x1=\"150\" x2=\"150\" y1=\"140\" y2=\"40\"></line>\n<rect fill=\"#bbdefb\" height=\"158\" opacity=\"0.6\" width=\"96\" x=\"52\" y=\"60\"></rect>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"40\" x2=\"160\" y1=\"60\" y2=\"60\"></line>\n<polygon fill=\"none\" points=\"100,60 95,50 105,50\" stroke=\"#1976d2\" stroke-width=\"1.5\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"90\" x2=\"110\" y1=\"50\" y2=\"50\"></line>\n<text fill=\"#1976d2\" font-size=\"14\" font-weight=\"bold\" x=\"130\" y=\"45\">P1 = 0</text>\n<path d=\"M 150 140 Q 165 145 220 150 L 280 150 L 280 170 L 220 170 Q 165 175 150 180 Z\" fill=\"#bbdefb\" stroke=\"#1976d2\" stroke-width=\"2\"></path>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" x=\"240\" y=\"140\">P2 = 0</text>\n<line stroke=\"#d32f2f\" stroke-width=\"4\" x1=\"150\" x2=\"150\" y1=\"140\" y2=\"180\"></line>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" x=\"130\" y=\"165\">A0</text>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"180\" x2=\"250\" y1=\"160\" y2=\"160\"></line>\n<polygon fill=\"#1976d2\" points=\"250,160 240,155 240,165\"></polygon>\n<text fill=\"#1976d2\" font-size=\"18\" font-weight=\"bold\" x=\"215\" y=\"185\">Q</text>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"1\" x1=\"100\" x2=\"180\" y1=\"160\" y2=\"160\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"70\" x2=\"70\" y1=\"60\" y2=\"160\"></line>\n<polygon fill=\"#333\" points=\"70,60 65,70 75,70\"></polygon>\n<polygon fill=\"#333\" points=\"70,160 65,150 75,150\"></polygon>\n<text fill=\"#333\" font-size=\"16\" font-weight=\"bold\" x=\"55\" y=\"115\">h</text>\n</svg>",
+          "choices": {
+            "A": "\\( 0.088 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "B": "\\( 0.119 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "C": "\\( 0.198 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "D": "\\( 0.245 \\ \\mathrm{m}^3/\\mathrm{s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "The NCEES Handbook provides the general volumetric flow rate equation for orifices as:\n\n\\[\nQ = C A_0 \\sqrt{2g \\left( \\frac{P_1}{\\gamma} + z_1 – \\frac{P_2}{\\gamma} – z_2 \\right)}\n\\]",
+            "The NCEES Handbook provides the general volumetric flow rate equation for orifices as:",
+            "FE Reference Handbook 10.5 – P195"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        },
+        {
+          "question": "A sharp-edged circular orifice is installed on the side of a large holding tank to discharge fluid. Because the upstream area (\\( A_1 \\)) of the tank is significantly larger than the orifice area (\\( A_0 \\)), the velocity of approach factor is considered negligible (\\( A_0/A_1 \\approx 0 \\)). Engineers observe that the fluid streamlines continue to converge after passing through the opening, forming a “vena contracta”. The physical diameter of the orifice hole is \\( D_0 = 100 \\ \\mathrm{mm} \\). Experimental calibration shows that the coefficient of velocity is \\( C_v = 0.98 \\) and the overall coefficient of discharge is \\( C = 0.61 \\). What is most nearly the cross-sectional area of the fluid jet at the vena contracta (\\( A_2 \\))?\n<svg viewbox=\"0 0 400 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"120\" x2=\"120\" y1=\"20\" y2=\"70\"></line>\n<line stroke=\"#333\" stroke-width=\"6\" x1=\"120\" x2=\"120\" y1=\"130\" y2=\"180\"></line>\n<rect fill=\"#bbdefb\" height=\"160\" opacity=\"0.6\" width=\"100\" x=\"20\" y=\"20\"></rect>\n<text fill=\"#1565c0\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"70\" y=\"105\">A1 &gt;&gt; A0</text>\n<path d=\"M 20 70 L 110 70 Q 140 85 200 90 L 350 90 L 350 110 L 200 110 Q 140 115 110 130 L 20 130 Z\" fill=\"#bbdefb\" stroke=\"#1976d2\" stroke-width=\"2\"></path>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"1.5\" x1=\"125\" x2=\"125\" y1=\"70\" y2=\"130\"></line>\n<text fill=\"#333\" font-size=\"14\" font-weight=\"bold\" x=\"135\" y=\"60\">A0</text>\n<line stroke=\"#d32f2f\" stroke-width=\"2\" x1=\"200\" x2=\"200\" y1=\"90\" y2=\"110\"></line>\n<text fill=\"#d32f2f\" font-size=\"14\" font-weight=\"bold\" x=\"210\" y=\"85\">A2 (Vena Contracta)</text>\n<line stroke=\"#1976d2\" stroke-width=\"3\" x1=\"230\" x2=\"300\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"#1976d2\" points=\"300,100 290,95 290,105\"></polygon>\n</svg>",
+          "choices": {
+            "A": "\\( 0.0049 \\ \\mathrm{m}^2 \\)",
+            "B": "\\( 0.0062 \\ \\mathrm{m}^2 \\)",
+            "C": "\\( 0.0079 \\ \\mathrm{m}^2 \\)",
+            "D": "\\( 0.0126 \\ \\mathrm{m}^2 \\)"
+          },
+          "answer": "A",
+          "references": [
+            "The handbook defines the cross-sectional area at the vena contracta (\\( A_2 \\)) as:\n\n\\[\nA_2 = C_c A_0\n\\]",
+            "The handbook defines the cross-sectional area at the vena contracta (\\( A_2 \\)) as:",
+            "FE Reference Handbook 10.5 – P195"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        },
+        {
+          "question": "A municipal water treatment plant uses a primary horizontal Venturi meter to measure main line flow. The main pipe has an internal diameter of \\( D_1 = 0.30 \\ \\mathrm{m} \\), and it smoothly tapers to a throat diameter of \\( D_2 = 0.15 \\ \\mathrm{m} \\). Differential pressure taps indicate a pressure drop between the inlet and the throat of \\( \\Delta P = P_1 – P_2 = 25 \\ \\mathrm{kPa} \\). The water density is \\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\). If the calibrated coefficient of velocity for this specific meter is \\( C_v = 0.98 \\), what is most nearly the steady volumetric flow rate (\\( Q \\))?\n<svg viewbox=\"0 0 400 220\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 30 60 L 120 60 L 180 90 L 250 90 L 310 60 L 370 60 L 370 160 L 310 160 L 250 130 L 180 130 L 120 160 L 30 160 Z\" fill=\"#e3f2fd\"></path>\n<path d=\"M 30 60 L 120 60 L 180 90 L 250 90 L 310 60 L 370 60\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<path d=\"M 30 160 L 120 160 L 180 130 L 250 130 L 310 160 L 370 160\" fill=\"none\" stroke=\"#333\" stroke-width=\"4\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"6,4\" stroke-width=\"2\" x1=\"20\" x2=\"380\" y1=\"110\" y2=\"110\"></line>\n<line stroke=\"#d32f2f\" stroke-width=\"2\" x1=\"80\" x2=\"80\" y1=\"60\" y2=\"20\"></line>\n<text fill=\"#d32f2f\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"15\">P1, D1</text>\n<line stroke=\"#d32f2f\" stroke-width=\"2\" x1=\"215\" x2=\"215\" y1=\"90\" y2=\"20\"></line>\n<text fill=\"#d32f2f\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"215\" y=\"15\">P2, D2</text>\n<text fill=\"#1976d2\" font-size=\"20\" font-weight=\"bold\" text-anchor=\"middle\" x=\"350\" y=\"105\">Q</text>\n</svg>",
+          "choices": {
+            "A": "\\( 0.127 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "B": "\\( 0.155 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "C": "\\( 0.183 \\ \\mathrm{m}^3/\\mathrm{s} \\)",
+            "D": "\\( 0.254 \\ \\mathrm{m}^3/\\mathrm{s} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P195"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        },
+        {
+          "question": "A simple Pitot tube is placed in an open water channel to measure the steady flow velocity. The water (\\( \\rho = 1000 \\ \\mathrm{kg}/\\mathrm{m}^3 \\)) has a static pressure at the measurement depth of \\( P_s = 104.0 \\ \\mathrm{kPa} \\). The stagnation pressure measured at the tip of the tube is \\( P_0 = 108.5 \\ \\mathrm{kPa} \\). What is most nearly the velocity (\\( v \\)) of the water stream?\n<svg viewbox=\"0 0 300 260\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect fill=\"#e3f2fd\" height=\"140\" opacity=\"0.4\" width=\"280\" x=\"10\" y=\"100\"></rect>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"10\" x2=\"290\" y1=\"100\" y2=\"100\"></line>\n<line stroke=\"#333\" stroke-dasharray=\"10,5\" stroke-width=\"0.5\" x1=\"10\" x2=\"290\" y1=\"110\" y2=\"110\"></line>\n<line stroke=\"#333\" stroke-dasharray=\"5,5\" stroke-width=\"0.5\" x1=\"10\" x2=\"290\" y1=\"120\" y2=\"120\"></line>\n<polygon fill=\"none\" points=\"100,100 95,90 105,90\" stroke=\"#333\" stroke-width=\"1\"></polygon>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"90\" x2=\"110\" y1=\"90\" y2=\"90\"></line>\n<path d=\"M 230 20 L 230 200 Q 230 220 200 220 L 120 220\" fill=\"none\" stroke=\"#333\" stroke-width=\"14\"></path>\n<path d=\"M 230 18 L 230 200 Q 230 220 200 220 L 120 220\" fill=\"none\" stroke=\"#fff\" stroke-width=\"10\"></path>\n<line stroke=\"#e3f2fd\" stroke-width=\"10\" x1=\"230\" x2=\"230\" y1=\"100\" y2=\"60\"></line>\n<line opacity=\"0.6\" stroke=\"#90caf9\" stroke-width=\"10\" x1=\"230\" x2=\"230\" y1=\"100\" y2=\"60\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"225\" x2=\"235\" y1=\"60\" y2=\"60\"></line>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"40\" x2=\"100\" y1=\"220\" y2=\"220\"></line>\n<polygon fill=\"#333\" points=\"100,220 92,216 92,224\"></polygon>\n<text fill=\"#333\" font-size=\"14\" font-style=\"italic\" x=\"50\" y=\"210\">V, p<tspan dy=\"5\" font-size=\"10\">s</tspan></text>\n<text fill=\"#333\" font-size=\"14\" x=\"125\" y=\"240\">P<tspan dy=\"5\" font-size=\"10\">0</tspan></text>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"0.5\" x1=\"115\" x2=\"180\" y1=\"100\" y2=\"100\"></line>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"0.5\" x1=\"110\" x2=\"180\" y1=\"220\" y2=\"220\"></line>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"165\" x2=\"165\" y1=\"100\" y2=\"220\"></line>\n<polygon fill=\"#333\" points=\"165,100 162,108 168,108\"></polygon>\n<polygon fill=\"#333\" points=\"165,220 162,212 168,212\"></polygon>\n<rect fill=\"#fff\" height=\"30\" width=\"30\" x=\"150\" y=\"145\"></rect>\n<text fill=\"#333\" font-size=\"14\" text-anchor=\"middle\" x=\"165\" y=\"158\">P<tspan dy=\"5\" font-size=\"10\">s</tspan></text>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"155\" x2=\"175\" y1=\"168\" y2=\"168\"></line>\n<text fill=\"#333\" font-size=\"14\" text-anchor=\"middle\" x=\"165\" y=\"180\">γ</text>\n<line stroke=\"#333\" stroke-dasharray=\"4,2\" stroke-width=\"0.5\" x1=\"180\" x2=\"220\" y1=\"60\" y2=\"60\"></line>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"195\" x2=\"195\" y1=\"60\" y2=\"100\"></line>\n<polygon fill=\"#333\" points=\"195,60 192,68 198,68\"></polygon>\n<polygon fill=\"#333\" points=\"195,100 192,92 198,92\"></polygon>\n<text fill=\"#333\" font-size=\"14\" font-style=\"italic\" text-anchor=\"end\" x=\"180\" y=\"75\">V<tspan dy=\"-5\" font-size=\"10\">2</tspan></text>\n<line stroke=\"#333\" stroke-width=\"1\" x1=\"160\" x2=\"185\" y1=\"80\" y2=\"80\"></line>\n<text fill=\"#333\" font-size=\"14\" text-anchor=\"middle\" x=\"172\" y=\"93\">2g</text>\n</svg>",
+          "choices": {
+            "A": "\\( 2.0 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "B": "\\( 3.0 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "C": "\\( 4.2 \\ \\mathrm{m}/\\mathrm{s} \\)",
+            "D": "\\( 5.5 \\ \\mathrm{m}/\\mathrm{s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P194"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        },
+        {
+          "question": "A concrete dam has a fully submerged discharge orifice with a cross-sectional area of \\( 0.15 \\, \\mathrm{m^2} \\). The water depth on the upstream side of the orifice is \\( 6.0 \\, \\mathrm{m} \\), and the water depth on the downstream side is \\( 1.5 \\, \\mathrm{m} \\), both measured from the centerline of the orifice. If the discharge coefficient for this orifice is \\( 0.80 \\), the expected volumetric flow rate is most nearly:",
+          "choices": {
+            "A": "\\( 0.65 \\, \\mathrm{m^3/s} \\)",
+            "B": "\\( 1.13 \\, \\mathrm{m^3/s} \\)",
+            "C": "\\( 1.30 \\, \\mathrm{m^3/s} \\)",
+            "D": "\\( 1.41 \\, \\mathrm{m^3/s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P195"
+          ],
+          "tags": [
+            "Fluid Flow Measurement"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Dimensional Homogeneity",
+      "questions": [
+        {
+          "question": "A hydraulic engineer is testing a scale model of an open water channel. The prototype channel is scaled down to a model with a characteristic length ratio (\\( L_p : L_m \\)) of \\( 12:1 \\). The design velocity of the actual water flow in the full-scale prototype is \\( 8 \\, \\mathrm{m/s} \\). Assuming both the prototype and the model use water at the same temperature, determine the required flow velocity in the model to achieve dynamic similarity based on equal Reynolds numbers. The model velocity is most nearly:",
+          "choices": {
+            "A": "\\( 0.67 \\, \\mathrm{m/s} \\)",
+            "B": "\\( 27.7 \\, \\mathrm{m/s} \\)",
+            "C": "\\( 96.0 \\, \\mathrm{m/s} \\)",
+            "D": "\\( 1,152 \\, \\mathrm{m/s} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P196"
+          ],
+          "tags": [
+            "Dimensional Homogeneity",
+            "Similitude"
+          ]
+        },
+        {
+          "question": "An engineer is conducting a hydraulic model study for a proposed concrete gravity dam. The physical model is built to a geometric scale of 1:14. To maintain dynamic similarity for open channel flow over the spillway, Froude number scaling is applied. During testing, the water velocity at the toe of the model spillway is measured at \\( 4.8 \\, \\mathrm{m/s} \\). What is the anticipated velocity at the corresponding location on the full-scale prototype dam?",
+          "choices": {
+            "A": "\\( 1.28 \\, \\mathrm{m/s} \\)",
+            "B": "\\( 17.96 \\, \\mathrm{m/s} \\)",
+            "C": "\\( 33.6 \\, \\mathrm{m/s} \\)",
+            "D": "\\( 67.2 \\, \\mathrm{m/s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P196"
+          ],
+          "tags": [
+            "Dimensional Homogeneity"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Fluid Mechanics",
+      "subtopic": "Aerodynamics",
+      "questions": [
+        {
+          "question": "An aerospace engineering team is designing a high-altitude, long-endurance (HALE) unmanned aerial vehicle (UAV). The wing has a tip-to-tip span length of \\( b = 24.0 \\ \\mathrm{m} \\) and a projected plan area of \\( A_p = 36.0 \\ \\mathrm{m}^2 \\). What is the aspect ratio (\\( AR \\)) of this wing?",
+          "choices": {
+            "A": "\\( 10.0 \\)",
+            "B": "\\( 12.0 \\)",
+            "C": "\\( 16.0 \\)",
+            "D": "\\( 24.0 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P198"
+          ],
+          "tags": [
+            "Aerodynamics"
+          ]
+        },
+        {
+          "question": "During a wind tunnel test, a scaled prototype wing is subjected to an airflow with a density of \\( \\rho = 1.20 \\ \\mathrm{kg}/\\mathrm{m}^3 \\) at a velocity of \\( v = 80 \\ \\mathrm{m}/\\mathrm{s} \\). The wing has a projected plan area of \\( A_p = 2.5 \\ \\mathrm{m}^2 \\). The load cells in the tunnel measure a total drag coefficient of \\( C_D = 0.035 \\) for this specific configuration. What is most nearly the total drag force (\\( F_D \\)) acting on the wing?",
+          "choices": {
+            "A": "\\( 168 \\ \\mathrm{N} \\)",
+            "B": "\\( 336 \\ \\mathrm{N} \\)",
+            "C": "\\( 420 \\ \\mathrm{N} \\)",
+            "D": "\\( 672 \\ \\mathrm{N} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P197"
+          ],
+          "tags": [
+            "Aerodynamics"
+          ]
+        },
+        {
+          "question": "A light utility aircraft is cruising at a steady altitude where the ambient air density is \\( \\rho = 1.15 \\ \\mathrm{kg}/\\mathrm{m}^3 \\). The aircraft has a true airspeed of \\( v = 60 \\ \\mathrm{m}/\\mathrm{s} \\) and a projected wing plan area of \\( A_p = 16.0 \\ \\mathrm{m}^2 \\). At this specific angle of attack, the aerodynamic lift coefficient for the wing is \\( C_L = 0.55 \\). What is most nearly the total lift force (\\( F_L \\)) generated by the wing?\n<svg viewbox=\"0 0 300 180\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"20\" x2=\"80\" y1=\"100\" y2=\"100\"></line>\n<polygon fill=\"#1976d2\" points=\"80,100 70,95 70,105\"></polygon>\n<line stroke=\"#1976d2\" stroke-width=\"2\" x1=\"20\" x2=\"80\" y1=\"80\" y2=\"80\"></line>\n<polygon fill=\"#1976d2\" points=\"80,80 70,75 70,85\"></polygon>\n<text fill=\"#1976d2\" font-size=\"16\" font-style=\"italic\" font-weight=\"bold\" x=\"40\" y=\"70\">v, ρ</text>\n<path d=\"M 100 100 C 100 60, 160 70, 260 100 C 160 110, 100 110, 100 100 Z\" fill=\"#cfd8dc\" stroke=\"#455a64\" stroke-width=\"3\"></path>\n<text fill=\"#455a64\" font-size=\"14\" x=\"180\" y=\"135\">Plan Area: A<tspan dy=\"5\" font-size=\"10\">p</tspan></text>\n<line stroke=\"#388e3c\" stroke-width=\"4\" x1=\"150\" x2=\"150\" y1=\"90\" y2=\"20\"></line>\n<polygon fill=\"#388e3c\" points=\"150,20 140,35 160,35\"></polygon>\n<text fill=\"#388e3c\" font-size=\"20\" font-weight=\"bold\" x=\"165\" y=\"50\">F_L</text>\n</svg>",
+          "choices": {
+            "A": "\\( 11.4 \\ \\mathrm{kN} \\)",
+            "B": "\\( 18.2 \\ \\mathrm{kN} \\)",
+            "C": "\\( 22.8 \\ \\mathrm{kN} \\)",
+            "D": "\\( 36.4 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P197"
+          ],
+          "tags": [
+            "Aerodynamics"
+          ]
+        }
+      ]
+    }
+  ]
+}

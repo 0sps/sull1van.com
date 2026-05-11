@@ -1,0 +1,214 @@
+{
+  "topics": [
+    {
+      "topic": "Mechanical Engineering",
+      "subtopic": "Intermediate- and Long-Length Columns",
+      "questions": [
+        {
+          "question": "A column is determined to be an Intermediate Column with \\(S_r = 100\\). Given \\(A = 2000\\ \\mathrm{mm}^2\\), \\(S_y = 300\\ \\mathrm{MPa}\\), and \\(E = 200\\ \\mathrm{GPa}\\). Calculate the critical buckling load \\(P_{cr}\\).",
+          "choices": {
+            "A": "197 kN",
+            "B": "372 kN",
+            "C": "450 kN",
+            "D": "600 kN"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P448"
+          ],
+          "tags": [
+            "Intermediate And Long Length Columns"
+          ]
+        },
+        {
+          "question": "A steel column (\\(E = 200\\ \\mathrm{GPa}, S_y = 250\\ \\mathrm{MPa}\\)) has one end fixed and the other end pinned. The radius of gyration is \\(r = 40\\ \\mathrm{mm}\\). The length is \\(L = 8\\ \\mathrm{m}\\). Determine the slenderness ratio \\(S_r\\) and classify the column.",
+          "choices": {
+            "A": "\\(S_r = 100\\) (Intermediate)",
+            "B": "\\(S_r = 140\\) (Long)",
+            "C": "\\(S_r = 160\\) (Long)",
+            "D": "\\(S_r = 200\\) (Intermediate)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P448"
+          ],
+          "tags": [
+            "Intermediate And Long Length Columns"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanical Engineering",
+      "subtopic": "HVAC",
+      "questions": [
+        {
+          "question": "Two airstreams mix adiabatically. Stream 1: \\(\\dot{m}_{a1} = 1\\ \\text{kg/s}, \\omega_1 = 0.005\\). Stream 2: \\(\\dot{m}_{a2} = 2\\ \\text{kg/s}, \\omega_2 = 0.020\\). Calculate the mixture humidity ratio \\(\\omega_3\\).",
+          "choices": {
+            "A": "0.010",
+            "B": "0.0125",
+            "C": "0.015",
+            "D": "0.0175"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P455"
+          ],
+          "tags": [
+            "Hvac"
+          ]
+        },
+        {
+          "question": "Air enters a coil with \\(\\omega_1 = 0.015\\) and leaves with \\(\\omega_2 = 0.009\\). The dry air flow rate is \\(\\dot{m}_a = 3.0\\ \\text{kg/s}\\). Calculate the rate of water removal \\(\\dot{m}_w\\).",
+          "choices": {
+            "A": "0.006 kg/s",
+            "B": "0.018 kg/s",
+            "C": "0.024 kg/s",
+            "D": "0.045 kg/s"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P455"
+          ],
+          "tags": [
+            "Hvac"
+          ]
+        },
+        {
+          "question": "Moist air enters a cooling coil with an enthalpy \\(h_1 = 80\\ \\text{kJ/kg}\\) and leaves with \\(h_2 = 50\\ \\text{kJ/kg}\\). The mass flow of dry air is \\(\\dot{m}_a = 1.5\\ \\text{kg/s}\\). If the enthalpy of the condensate is neglected, calculate the cooling rate \\(\\dot{Q}_{out}\\).",
+          "choices": {
+            "A": "30 kW",
+            "B": "45 kW",
+            "C": "50 kW",
+            "D": "75 kW"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P455"
+          ],
+          "tags": [
+            "Hvac"
+          ]
+        },
+        {
+          "question": "Air flowing at \\(\\dot{m}_a = 2.0\\ \\text{kg/s}\\) is heated from \\(20^\\circ\\text{C}\\) to \\(30^\\circ\\text{C}\\) without adding moisture. The specific heat of air is \\(c_p \\approx 1.0\\ \\text{kJ}/(\\text{kg}\\cdot\\text{K})\\). Calculate the rate of heat transfer \\(Q\\).",
+          "choices": {
+            "A": "10 kW",
+            "B": "20 kW",
+            "C": "30 kW",
+            "D": "40 kW"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P454"
+          ],
+          "tags": [
+            "Hvac"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanical Engineering",
+      "subtopic": "Cycles and Processes",
+      "questions": [
+        {
+          "question": "In a Brayton cycle, the net work output is \\(w_{net} = 400\\ \\text{kJ/kg}\\) and the heat added in the combustor is \\(q_{23} = 1000\\ \\text{kJ/kg}\\). Calculate the thermal efficiency \\(\\eta\\).",
+          "choices": {
+            "A": "25%",
+            "B": "40%",
+            "C": "60%",
+            "D": "250%"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P459"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        },
+        {
+          "question": "A gas turbine operates on a Brayton cycle. The compressor work is calculated as \\(w_{12} = -300\\ \\text{kJ/kg}\\) (work input). The turbine work is \\(w_{34} = 800\\ \\text{kJ/kg}\\) (work output). What is the net work output \\(w_{net}\\)?",
+          "choices": {
+            "A": "-500 kJ/kg",
+            "B": "500 kJ/kg",
+            "C": "1100 kJ/kg",
+            "D": "2400 kJ/kg"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P459"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        },
+        {
+          "question": "In an ideal air-standard Brayton cycle, air enters the compressor at \\(h_1 = 300\\ \\text{kJ/kg}\\) and leaves at \\(h_2 = 550\\ \\text{kJ/kg}\\). Calculate the specific work input to the compressor, \\(w_{12}\\).",
+          "choices": {
+            "A": "-250 kJ/kg",
+            "B": "250 kJ/kg",
+            "C": "-850 kJ/kg",
+            "D": "850 kJ/kg"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P459"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        },
+        {
+          "question": "An engine has an Indicated Power of \\(150\\ \\text{kW}\\) and a Brake Power of \\(125\\ \\text{kW}\\). Calculate the mechanical efficiency \\(\\eta_m\\).",
+          "choices": {
+            "A": "16.7%",
+            "B": "83.3%",
+            "C": "120%",
+            "D": "25 kW"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P457"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        },
+        {
+          "question": "An engine delivers a torque \\(T = 200\\ \\text{N}\\cdot\\text{m}\\) at a speed \\(N = 3000\\ \\text{rpm}\\). Calculate the Brake Power \\(\\dot{W}_b\\).",
+          "choices": {
+            "A": "10.0 kW",
+            "B": "31.4 kW",
+            "C": "62.8 kW",
+            "D": "600 kW"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P457"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        },
+        {
+          "question": "In an ideal Diesel cycle, if the volume at the end of compression is \\(V_2 = 0.05\\ \\text{m}^3\\) and the volume at the end of heat addition is \\(V_3 = 0.12\\ \\text{m}^3\\), calculate the cutoff ratio \\(r_c\\).",
+          "choices": {
+            "A": "0.42",
+            "B": "1.40",
+            "C": "2.40",
+            "D": "7.00"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P457"
+          ],
+          "tags": [
+            "Cycles And Processes"
+          ]
+        }
+      ]
+    }
+  ]
+}

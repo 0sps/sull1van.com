@@ -1,0 +1,798 @@
+{
+  "topics": [
+    {
+      "topic": "Dynamics",
+      "subtopic": "Particle Kinematics",
+      "questions": [
+        {
+          "question": "A ball starts from rest and slides down a \\(30^\\circ\\) incline. After \\(4\\ \\text{s}\\) its speed reaches \\(6\\ \\text{m/s}\\). Assuming constant acceleration along the plane, how far will the block travel in the next  \\(6\\ \\text{s}\\)?",
+          "choices": {},
+          "answer": "63 m",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A test vehicle moves along a circular ramp of radius \\(r=40\\ \\text{m}\\). At the instant of interest its speed is \\(v=18\\ \\text{m/s}\\), and it is still accelerating tangentially with angular acceleration  \\(\\alpha=0.5\\ \\text{rad/s}^2\\). Determine the magnitude of the acceleration (in \\(\\text{m/s}^2\\)).",
+          "choices": {},
+          "answer": "\\( 21.57\\ \\text{m/s}^{2} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P103"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Plane Circular Motion"
+          ]
+        },
+        {
+          "question": "A block initially at rest is acted upon by a constant horizontal force of \\(18\\ \\text{N}\\) for \\(3\\ \\text{s}\\). After the force is removed, the block continues to move at a constant velocity and covers a distance of \\(80\\ \\text{m}\\) during the following \\(10\\ \\text{s}\\). Determine the mass of the block in kilograms.",
+          "choices": {},
+          "answer": "6.75 kg",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A soccer ball is kicked from level ground with initial speed \\(v_0 = 40\\ \\text{m/s}\\) at an angle \\(\\theta = 45^\\circ\\) above the horizontal. Neglect air resistance and use \\(g = 9.81\\ \\text{m/s}^2\\). Find the horizontal range \\(R\\).",
+          "choices": {},
+          "answer": "R =163.1 m",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Projectile Motion"
+          ]
+        },
+        {
+          "question": "Two particles start from the same location at the same instant and move in a straight line. Particle A has initial speed \\(u_A = 6\\ \\text{m/s}\\) and constant acceleration \\(a_A = 1.5\\ \\text{m/s}^2\\). Particle B has initial speed \\(u_B = 2\\ \\text{m/s}\\) and constant acceleration \\(a_B = 2.5\\ \\text{m/s}^2\\). They arrive at the same point at the same time. How long (in seconds) do they travel?",
+          "choices": {},
+          "answer": "8 s",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A car is traveling along a straight highway at a speed of \\(72\\ \\text{km/h}\\). It comes to rest uniformly in a distance of \\(200\\ \\text{m}\\). Find the stopping time \\(t\\) in seconds.",
+          "choices": {},
+          "answer": "20 s",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A small drone is flying north with a speed of \\(36\\ \\text{km/h}\\). A steady wind suddenly blows toward the east, perpendicular to the drone’s motion. After the wind begins to act, the drone’s resultant ground speed becomes \\(45\\ \\text{km/h}\\). What is the magnitude of the wind’s velocity component?",
+          "choices": {},
+          "answer": "27 km/h",
+          "references": [
+            "FE Reference Handbook 10.5 – P101"
+          ],
+          "tags": [
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A small remote-controlled boat needs to cross a 120 m wide lake. In still air, the boat can travel straight across in 3 minutes. However, when a steady crosswind begins to blow, the boat must aim slightly into the wind in order to reach a point directly opposite its starting location. Under these conditions, it takes 4 minutes to cross. What is the wind’s velocity in m/min?",
+          "choices": {},
+          "answer": "26.5 m/min",
+          "references": [
+            "FE Reference Handbook 10.5 – P102"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Relative Motion"
+          ]
+        },
+        {
+          "question": "A cyclist rides from home to a lakeside trail at \\(12\\ \\text{mph}\\) and returns along the same route at \\(18\\ \\text{mph}\\). What is the average speed (mph) for the entire round trip?",
+          "choices": {},
+          "answer": "\\(14.4\\ \\text{mph}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P101"
+          ],
+          "tags": [
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A small object moves along a straight path with uniform acceleration \\(a_0 = 4\\ \\text{cm/s}^2\\). During the 10th second, it travels \\(43\\ \\text{cm}\\). Determine the initial velocity \\(v_0\\) in \\(\\text{cm/s}\\).",
+          "choices": {},
+          "answer": "5 cm/s",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A commuter train moves at 54 km/h and comes to rest uniformly in 12 s. Determine how far from the platform the brakes should be applied.",
+          "choices": {},
+          "answer": "90m",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A cargo drone flies horizontally at \\(100\\ \\text{m/s}\\) and drops a small package from an altitude of \\(300\\ \\text{m}\\). Neglecting air resistance, what will be the package’s speed (m/s) after \\(4\\ \\text{s}\\) of free fall? Use \\(g = 9.81\\ \\text{m/s}^2\\).",
+          "choices": {},
+          "answer": "107.4 m/s",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Projectile Motion"
+          ]
+        },
+        {
+          "question": "A rescue drone flying horizontally at a constant altitude of \\(400\\ \\text{m}\\) releases a supply package with a horizontal speed of \\(120\\ \\text{m/s}\\). Neglecting air resistance, how far horizontally (m) will the package travel before it reaches the ground?  Assume \\(g = 9.81\\ \\text{m/s}^2\\).",
+          "choices": {},
+          "answer": "1083.6 m",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Projectile Motion"
+          ]
+        },
+        {
+          "question": "A drone releases a small package vertically upward from a height with an initial speed of \\(10\\ \\text{m/s}\\). After \\(4\\ \\text{s}\\), the package reaches the ground. Assuming \\(g = 9.81\\ \\text{m/s}^2\\), find the release height \\(h\\) (m) of the drone.",
+          "choices": {},
+          "answer": "38.5 m",
+          "references": [
+            "FE Reference Handbook 10.5, P102"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A race car moves along a curved test track described by \\(y = 0.05\\,x^{2}\\). At the point where \\(x = 200\\ \\text{m}\\), its speed is \\(v = 25\\ \\text{m/s}\\) and its tangential acceleration is \\(a_t = 3\\ \\text{m/s}^2\\). Determine the magnitude of the acceleration at this instant.",
+          "choices": {},
+          "answer": "\\( 3.00\\ \\text{m/s}^{2}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P102, 103:\n\n Dynamics- Particle Kinematics – Normal and Tangential Components"
+          ],
+          "tags": [
+            "Normal And Tangential Components",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A delivery drone moves in a horizontal plane with position\n\n\\[\n\n(x(t),\\,y(t))=\\big(0.25\\,t^{3},\\;0.50\\,t^{2}+t\\big),\n\n\\]\n\nwhere \\(x,y\\) are in meters and \\(t\\) is in seconds. Determine the drone’s\n\nacceleration at \\(t=4\\ \\text{s}\\) (give the vector and its magnitude).",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\n\\lvert \\mathbf a(4)\\rvert\n\n&=\\sqrt{6^{2}+1^{2}}\n\n&= 6.083\\ \\text{m/s}^2.\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Particle Curvilinear Motion",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A soccer ball is kicked with speed \\(v_0 = 35\\ \\text{m/s}\\) at an angle \\(\\theta = 40^\\circ\\) above the horizontal.\n\nA stadium wall stands \\(x=40\\ \\text{m}\\) away. At what height \\(y\\) (m) does the ball strike the wall?\n\nUse \\(g = 9.81\\ \\text{m/s}^2\\).",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\n\\tan40^\\circ &\\approx 0.8391,\\quad \\cos^2 40^\\circ \\approx 0.5868, \\quad v_0^2=1225,\\\\[3pt]\n\ny &\\approx 40(0.8391) – \\frac{9.81(40)^2}{2(1225)(0.5868)} \\\\[3pt]\n\n&\\approx 33.56 – 10.91 \\approx 22.65\\ \\text{m}.\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Particle Kinematics",
+            "Projectile Motion"
+          ]
+        },
+        {
+          "question": "A jet cruises horizontally at \\(v=200\\ \\text{m/s}\\) at an altitude of \\(1200\\ \\text{m}\\).\n\nIt releases a sensor package with no initial vertical velocity. Determine how long (s) it takes the package to reach the ground.\n\nTake \\(g=9.81\\ \\text{m/s}^2\\).",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\nh &= \\tfrac{1}{2} g t^2\n\n\\ \\Rightarrow\\\n\nt = \\sqrt{\\frac{2h}{g}}\n\n= \\sqrt{\\frac{2(1200)}{9.81}}\n\n= 15.6\\ \\text{s}.\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Particle Kinematics",
+            "Projectile Motion"
+          ]
+        },
+        {
+          "question": "Vehicle A starts from rest and moves with a uniform acceleration of \\(2\\ \\text{m/s}^2\\).\n\nAt the same time, and from the same starting line, vehicle B travels in a parallel lane at a constant speed\n\nof \\(30\\ \\text{m/s}\\).\n\nAfter how many seconds will vehicle A overtake vehicle B?",
+          "choices": {},
+          "answer": "\\[\n\nt = 30\\ \\text{s}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A train starts from rest and accelerates uniformly at a rate of \\( 8\\,\\mathrm{m/s^2} \\). At the exact moment the train begins to move, a car traveling on a parallel path at a constant velocity of \\( 90\\,\\mathrm{m/s} \\) passes it. The time it takes for the train to catch up to and overtake the car is most nearly:",
+          "choices": {
+            "A": "\\( 11.3\\,\\mathrm{s} \\)",
+            "B": "\\( 22.5\\,\\mathrm{s} \\)",
+            "C": "\\( 33.8\\,\\mathrm{s} \\)",
+            "D": "\\( 45.0\\,\\mathrm{s} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A vehicle is traveling at an initial velocity of \\( 30\\,\\mathrm{mph} \\) along a highway acceleration lane. To safely merge into a specific gap in the adjacent traffic lane, the vehicle must travel a longitudinal distance of exactly \\( 200\\,\\mathrm{ft} \\) in precisely \\( 3.5\\,\\mathrm{s} \\). The constant acceleration (\\( \\mathrm{ft/s^2} \\)) required for the vehicle to achieve this merge is most nearly:",
+          "choices": {
+            "A": "\\( 3.76\\,\\mathrm{ft/s^2} \\)",
+            "B": "\\( 4.84\\,\\mathrm{ft/s^2} \\)",
+            "C": "\\( 7.51\\,\\mathrm{ft/s^2} \\)",
+            "D": "\\( 15.5\\,\\mathrm{ft/s^2} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A particle travels along a straight line such that its velocity is defined by the equation \\( v(t) = 20 + 5t \\), where \\( v \\) is in meters per second and \\( t \\) is the time in seconds. The total distance traveled by the particle during the first \\( 10\\,\\mathrm{s} \\) is most nearly:",
+          "choices": {
+            "A": "\\( 250\\,\\mathrm{m} \\)",
+            "B": "\\( 450\\,\\mathrm{m} \\)",
+            "C": "\\( 500\\,\\mathrm{m} \\)",
+            "D": "\\( 700\\,\\mathrm{m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "The rectilinear position of a particle moving along a straight path is defined by the time-dependent equation \\( s(t) = 30t + 2t^2 – 7t^3 \\), where \\( s \\) is the displacement in meters and \\( t \\) is the time in seconds. The acceleration of the particle at \\( t = 3\\,\\mathrm{s} \\) is most nearly:",
+          "choices": {
+            "A": "\\( -122\\,\\mathrm{m/s^2} \\)",
+            "B": "\\( -111\\,\\mathrm{m/s^2} \\)",
+            "C": "\\( -42\\,\\mathrm{m/s^2} \\)",
+            "D": "\\( 42\\,\\mathrm{m/s^2} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P102"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Particle Rectilinear Motion"
+          ]
+        },
+        {
+          "question": "A testing vehicle undergoes plane circular motion with a constant radius of \\( 150\\,\\mathrm{m} \\) about the origin. The vehicle starts exactly at the \\( x \\)-axis (\\( \\theta = 0 \\)) at time \\( t = 0\\,\\mathrm{s} \\) and travels with a constant transverse velocity of \\( 30\\,\\mathrm{m/s} \\). At time \\( t = 10\\,\\mathrm{s} \\), the angle \\( \\theta \\) from the \\( x \\) axis to the position vector \\( \\mathbf{r} \\) is most nearly:",
+          "choices": {
+            "A": "\\( 0.20\\,\\mathrm{rad} \\)",
+            "B": "\\( 2.0\\,\\mathrm{rad} \\)",
+            "C": "\\( 5.0\\,\\mathrm{rad} \\)",
+            "D": "\\( 115\\,\\mathrm{rad} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P103"
+          ],
+          "tags": [
+            "Particle Kinematics",
+            "Plane Circular Motion"
+          ]
+        },
+        {
+          "question": "A ball is projected vertically upward from a height of \\( 6 \\, \\mathrm{ft} \\) above the ground with an initial velocity of \\( 65 \\, \\mathrm{ft/sec} \\). Neglecting air resistance, the maximum height above the ground that the ball will reach is most nearly:",
+          "choices": {
+            "A": "\\( 65.6 \\, \\mathrm{ft} \\)",
+            "B": "\\( 71.7 \\, \\mathrm{ft} \\)",
+            "C": "\\( 131.2 \\, \\mathrm{ft} \\)",
+            "D": "\\( 137.2 \\, \\mathrm{ft} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        },
+        {
+          "question": "A car is traveling at \\( 48 \\, \\mathrm{mph} \\) when the driver sees the traffic light turn yellow. The yellow phase lasts for \\( 4.5 \\, \\mathrm{s} \\), and the intersection ahead is \\( 160 \\, \\mathrm{ft} \\) wide. What constant acceleration is required for the car to just clear the intersection at the exact moment the light turns red? The acceleration is most nearly:",
+          "choices": {
+            "A": "\\( -15.5 \\, \\mathrm{ft/s}^2 \\)",
+            "B": "\\( -5.5 \\, \\mathrm{ft/s}^2 \\)",
+            "C": "\\( -7.7 \\, \\mathrm{ft/s}^2 \\)",
+            "D": "\\( +15.5 \\, \\mathrm{ft/s}^2 \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P104"
+          ],
+          "tags": [
+            "Constant Acceleration",
+            "Particle Kinematics"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Particle Kinetics",
+      "questions": [
+        {
+          "question": "A car with a mass of \\(1500\\ \\text{kg}\\) is traveling at \\(72\\ \\text{km/h}\\). If the car comes to a complete stop in \\(20\\ \\text{m}\\), determine the average braking force required (in newtons).",
+          "choices": {},
+          "answer": "15,000 N",
+          "references": [
+            "FE Reference Handbook 10.5 – P104, 105"
+          ],
+          "tags": [
+            "Particle Kinetics"
+          ]
+        },
+        {
+          "question": "Two forces act on a \\(0.25\\,\\text{kg}\\) object:\n\n\\(\\vec F_{1}=4\\mathbf i + 3\\mathbf j – 5\\mathbf k\\ \\text{N}\\)\n\nand\n\n\\(\\vec F_{2}=-2\\mathbf i + 4\\mathbf j – \\mathbf k\\ \\text{N}\\).\n\nDetermine the magnitude of the acceleration of the object in \\(\\text{m/s}^2\\).",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\na &= \\frac{9.43}{0.25}\n\n= 37.7\\ \\text{m/s}^2\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Particle Kinetics"
+          ]
+        },
+        {
+          "question": "A vehicle with a mass of \\( 1000\\,\\mathrm{kg} \\) is being towed across a smooth, level surface where friction is considered negligible. The tow rope being used has a maximum tension capacity (breaking strength) of \\( 2500\\,\\mathrm{N} \\). The maximum theoretical acceleration the car can experience without the rope snapping is most nearly:",
+          "choices": {
+            "A": "\\( 0.4\\,\\mathrm{m/s^2} \\)",
+            "B": "\\( 2.5\\,\\mathrm{m/s^2} \\)",
+            "C": "\\( 9.8\\,\\mathrm{m/s^2} \\)",
+            "D": "\\( 25\\,\\mathrm{m/s^2} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P105"
+          ],
+          "tags": [
+            "One Dimensional Motion Of A Particle Constant Mass",
+            "Particle Kinetics"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Principle of Work and Energy",
+      "questions": [
+        {
+          "question": "A ball experiences a constant force \\(\\vec{F} = 6\\mathbf i – 4\\mathbf j + 3\\mathbf k\\) N and moves through a displacement \\(\\vec{s} = 2\\mathbf i + \\mathbf j – \\mathbf k\\) m. Determine the work done by the force (in J).",
+          "choices": {},
+          "answer": "5 J",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Principle Of Work And Energy",
+            "Work"
+          ]
+        },
+        {
+          "question": "A winch pulls a boat-and-trailer of total mass \\(m=900\\ \\text{kg}\\) up a launch ramp that makes an angle  \\(\\theta=12^\\circ\\) with the horizontal. The cable reels in so that the boat moves at a steady \\(v=0.60\\ \\text{m/s}\\). Neglect rolling resistance and losses. Determine the mechanical power (W) delivered by the winch.",
+          "choices": {},
+          "answer": "\\( 1.10\\times10^{3}\\ \\text{W} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Power And Efficiency",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A \\(5\\ \\text{kg}\\) object is released from rest and falls freely under gravity. Determine its kinetic energy (in joules) after \\(t = 3\\ \\text{s}\\) of fall, neglecting air resistance.",
+          "choices": {},
+          "answer": "\\( 2165 \\ \\text{J} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P106"
+          ],
+          "tags": [
+            "Kinetic Energy",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A hoist lifts a load of \\(200\\ \\text{kg}\\) vertically upward at a constant speed of \\(0.25\\ \\text{m/s}\\). Determine the power output (in J/s) required by the hoist motor. Neglect energy losses and assume steady motion.",
+          "choices": {},
+          "answer": "\\( 490.5\\ \\text{J/s} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Power And Efficiency",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A constant horizontal force of \\(F = 30\\ \\text{N}\\) pushes a \\(1.5\\ \\text{kg}\\) block up a smooth incline that rises \\(25^\\circ\\) above the horizontal. If the block moves a distance of \\(5\\ \\text{m}\\) along the incline, find the work done by the horizontal force. Ignore the effect of gravity and friction.",
+          "choices": {},
+          "answer": "135.9 J",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Principle Of Work And Energy",
+            "Work"
+          ]
+        },
+        {
+          "question": "When a spring is compressed by \\(10\\ \\text{cm}\\), its potential energy is \\(25\\ \\text{J}\\). Determine the force (in newtons) required to compress the same spring by \\(25\\ \\text{cm}\\).",
+          "choices": {},
+          "answer": "1250 N",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Potential Energy",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A \\(12\\ \\text{kg}\\) object is dropped from a height of \\(80\\ \\text{m}\\). Neglecting air resistance, determine its kinetic energy (in joules) when it is \\(50\\ \\text{m}\\) above the ground.",
+          "choices": {},
+          "answer": "3531.6 J",
+          "references": [
+            "FE Reference Handbook 10.5 – P106"
+          ],
+          "tags": [
+            "Principle Of Work And Energy",
+            "Work"
+          ]
+        },
+        {
+          "question": "A \\(5\\ \\text{kg}\\) object is released from rest and falls freely under gravity. Assume the initial height is \\(h_0 = 50\\ \\text{m}\\) above the ground. Determine its potential energy (J) after \\(t = 3\\ \\text{s}\\) of fall (ignore air resistance).",
+          "choices": {},
+          "answer": "287 J",
+          "references": [
+            "FE Reference Handbook 10.5 – P106"
+          ],
+          "tags": [
+            "Potential Energy",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A motor delivers 3.00 kW of power to a pump that lifts water vertically 5.0 m from a well. The overall efficiency of the motor–pump system is 80%. Neglecting losses in the piping, determine the mass of water (in kg) that can be pumped in 1.0 min.",
+          "choices": {},
+          "answer": "\\( m = 2.94\\times 10^{3}\\ \\text{kg}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Power And Efficiency",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A well is \\(10\\ \\text{m}\\) deep and \\(2.0\\ \\text{m}\\) in diameter. Only the bottom \\(2.0\\ \\text{m}\\) contains water. A pump at the bottom empties the water in \\(20\\ \\text{min}\\). Estimate the required power (hp), neglecting losses.",
+          "choices": {},
+          "answer": "\\(0.62\\ \\text{hp}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P107:\n\nDynamics – Principle of Work and Energy – Power and Efficiency"
+          ],
+          "tags": [
+            "Power And Efficiency",
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A \\(1500\\,\\text{kg}\\) car moves down a \\(20^\\circ\\) incline with initial speed \\(v_1=14\\,\\text{m/s}\\).Brakes are applied and the car comes to rest uniformly after traveling \\(s=30\\,\\text{m}\\) along the slope.Using the nonconservative work–energy relation, find the average braking force \\(F_b\\) in kN.",
+          "choices": {},
+          "answer": "\\(9.93\\ \\text{kN}\\)",
+          "references": [
+            "FE Reference Handbook 10.5, P106：\n\nDynamics – Principle of Work and Energy"
+          ],
+          "tags": [
+            "Principle Of Work And Energy"
+          ]
+        },
+        {
+          "question": "A \\(6\\ \\text{kg}\\) ball is dropped from a height of \\(4\\ \\text{m}\\) onto a soft surface.\n\nThe ball continues to move \\(0.15\\ \\text{m}\\) into the surface before stopping.\n\nAssuming the resisting force of the surface is constant, determine the average resisting force (in newtons).",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\nF_{\\text{avg}}\n\n&= \\frac{m g (h + s)}{s} \\\\\n\n&= \\frac{(6)(9.81)(4 + 0.15)}{0.15} \\\\\n\n&= 1630.6\\ \\text{N}\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Principle Of Work And Energy",
+            "Work"
+          ]
+        },
+        {
+          "question": "A body is dropped freely from a height of \\(H = 40\\ \\text{m}\\). At what height \\(y\\) above the ground will its kinetic energy be three times its remaining potential energy?",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\nmg(H – y) &= 3mgy\\\\\n\nH &= 4y\\\\\n\ny &= \\frac{H}{4} \\\\\n\n&= \\frac{40}{4} \\\\\n\n&= 10\\ \\text{m}\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Principle Of Work And Energy"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Impulse and Momentum",
+      "questions": [
+        {
+          "question": "A baseball of mass \\(0.145\\ \\text{kg}\\) is pitched horizontally toward a batter with a speed of \\(38\\ \\text{m/s}\\). Take the direction from the pitcher to the batter as the positive \\(x\\)-axis. The batter hits the ball, and it leaves the bat with a speed of \\(46\\ \\text{m/s}\\) at \\(25^\\circ\\) above the horizontal, traveling back toward the pitcher. Determine the magnitude of the impulse (in kg·m/s) delivered to the ball by the bat.",
+          "choices": {},
+          "answer": "\\(11.9\\ \\text{kg·m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Impulse And Momentum"
+          ]
+        },
+        {
+          "question": "A \\(0.25\\ \\text{kg}\\) soccer ball is moving horizontally toward the west with a speed of \\(18\\ \\text{m/s}\\). A player kicks the ball so that it leaves the foot with a speed of \\(24\\ \\text{m/s}\\) at an angle of \\(40^\\circ\\) north of east. Determine the magnitude of the net impulse (in kg·m/s) delivered to the ball by the player’s foot.",
+          "choices": {},
+          "answer": "\\(9.9\\ \\text{kg·m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Impulse And Momentum"
+          ]
+        },
+        {
+          "question": "A \\(0.5\\ \\text{kg}\\) drone is flying horizontally toward the east with a speed of \\(12\\ \\text{m/s}\\). A sudden gust of wind acts on the drone and changes its velocity to \\(15\\ \\text{m/s}\\) at a direction of \\(30^\\circ\\) north of east. Determine the magnitude of the net impulse (in kg·m/s) delivered by the wind to the drone.",
+          "choices": {},
+          "answer": "\\(3.78\\ \\text{kg·m/s}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Impulse And Momentum"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Impact",
+      "questions": [
+        {
+          "question": "A \\(3,000\\ \\text{kg}\\) truck is moving north at \\(12\\ \\text{m/s}\\). A \\(1,500\\ \\text{kg}\\) van is moving south at \\(16\\ \\text{m/s}\\) toward the truck. The collision is perfectly inelastic, and the two vehicles stick together. Find the combined velocity (m/s) of the wreckage and specify its travel direction.",
+          "choices": {},
+          "answer": "\\(2.67\\ \\text{m/s}\\) in the travel direction of the truck (north).",
+          "references": [
+            "FE Reference Handbook 10.5 – P108"
+          ],
+          "tags": [
+            "Impact"
+          ]
+        },
+        {
+          "question": "A \\(900\\ \\text{kg}\\) compact car is traveling east at \\(22\\ \\text{m/s}\\). A \\(1,400\\ \\text{kg}\\) SUV is traveling west at \\(18\\ \\text{m/s}\\) toward the compact car. The two vehicles collide and lock together. Determine the magnitude and direction of the combined velocity immediately after impact.",
+          "choices": {},
+          "answer": "\\(2.35\\ \\text{m/s}\\) in the travel direction of the SUV (west).",
+          "references": [
+            "FE Reference Handbook 10.5 – P108"
+          ],
+          "tags": [
+            "Impact"
+          ]
+        },
+        {
+          "question": "A \\(1.2\\ \\text{kg}\\) ball \\(A\\) moves to the right at \\(4.0\\ \\text{m/s}\\) along a smooth, horizontal surface. At the same time, a \\(1.8\\ \\text{kg}\\) ball \\(B\\) moves toward ball \\(A\\) along the same line at \\(3.0\\ \\text{m/s}\\) to the left. The coefficient of restitution between the two balls is \\(e = 0.60\\). Determine the final velocity (m/s) of ball \\(A\\) immediately after the collision. Take the original direction of motion of ball \\(A\\) as positive.",
+          "choices": {},
+          "answer": "\\(-2.72\\ \\text{m/s}\\).",
+          "references": [
+            "FE Reference Handbook 10.5 – P107"
+          ],
+          "tags": [
+            "Impact"
+          ]
+        },
+        {
+          "question": "Two spheres, one with a mass of \\( 2.0\\,\\mathrm{kg} \\) and the other with a mass of \\( 4.0\\,\\mathrm{kg} \\), are traveling towards each other on a frictionless collinear path. Before the head-on collision, the \\( 2.0\\,\\mathrm{kg} \\) sphere has a velocity of \\( 5.0\\,\\mathrm{m/s} \\) to the right, and the \\( 4.0\\,\\mathrm{kg} \\) sphere has a velocity of \\( 3.0\\,\\mathrm{m/s} \\) to the left. If the coefficient of restitution (\\( e \\)) between the two spheres is \\( 0.5 \\), the final velocities of the spheres immediately after the collision are most nearly:",
+          "choices": {
+            "A": "\\( v_1′ = -1.5\\,\\mathrm{m/s}, \\quad v_2′ = 0.5\\,\\mathrm{m/s} \\)",
+            "B": "\\( v_1′ = -2.0\\,\\mathrm{m/s}, \\quad v_2′ = 2.0\\,\\mathrm{m/s} \\)",
+            "C": "\\( v_1′ = -3.0\\,\\mathrm{m/s}, \\quad v_2′ = 1.0\\,\\mathrm{m/s} \\)",
+            "D": "\\( v_1′ = -4.0\\,\\mathrm{m/s}, \\quad v_2′ = 1.5\\,\\mathrm{m/s} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P108"
+          ],
+          "tags": [
+            "Impact"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Friction",
+      "questions": [
+        {
+          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on a flat horizontal surface. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). A horizontal force of \\( 10\\,\\mathrm{kN} \\) is applied to the centroid of the block. If the coefficient of static friction between the block and the surface is \\( \\mu_s = 0.25 \\), which of the following statements is most nearly correct regarding the block’s impending motion?\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 500 350\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto-start-reverse\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"350\" width=\"500\"></rect>\n<line stroke=\"black\" stroke-width=\"2\" x1=\"50\" x2=\"450\" y1=\"250\" y2=\"250\"></line>\n<path d=\"M 70 250 L 50 270 M 110 250 L 90 270 M 150 250 L 130 270 M 190 250 L 170 270 M 230 250 L 210 270 M 270 250 L 250 270 M 310 250 L 290 270 M 350 250 L 330 270 M 390 250 L 370 270 M 430 250 L 410 270\" stroke=\"gray\" stroke-width=\"1.5\"></path>\n<rect fill=\"lightblue\" height=\"200\" stroke=\"black\" stroke-width=\"2\" width=\"200\" x=\"150\" y=\"50\"></rect>\n<circle cx=\"250\" cy=\"150\" fill=\"black\" r=\"4\"></circle>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"150\" y2=\"220\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"260\" y=\"210\">W</text>\n<line marker-end=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"60\" x2=\"140\" y1=\"150\" y2=\"150\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"100\" y=\"135\">10 kN</text>\n<line marker-end=\"url(#arrow)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"250\" x2=\"170\" y1=\"250\" y2=\"250\"></line>\n<text fill=\"#d32f2f\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"180\" y=\"280\">F<tspan baseline-shift=\"sub\" font-size=\"12\">s</tspan></text>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"250\" y2=\"180\"></line>\n<text fill=\"#1976d2\" font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"230\" y=\"195\">N</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"30\" y2=\"30\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"middle\" x=\"250\" y=\"22\">1 m</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"black\" stroke-width=\"1.5\" x1=\"370\" x2=\"370\" y1=\"50\" y2=\"250\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" text-anchor=\"start\" x=\"380\" y=\"155\">1 m</text>\n</svg>",
+          "choices": {
+            "A": "The block will not move; the maximum static friction force is \\( 6.13\\,\\mathrm{kN} \\).",
+            "B": "The block will move; the maximum static friction force is \\( 6.13\\,\\mathrm{kN} \\).",
+            "C": "The block will not move; the maximum static friction force is \\( 24.5\\,\\mathrm{kN} \\).",
+            "D": "The block will move; the maximum static friction force is \\( 2.50\\,\\mathrm{kN} \\)."
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P96"
+          ],
+          "tags": [
+            "Friction"
+          ]
+        },
+        {
+          "question": "A cube-shaped block with dimensions of \\( 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\times 1\\,\\mathrm{m} \\) is placed on an inclined plane. The block has a density of \\( 2,500\\,\\mathrm{kg/m^3} \\). The coefficient of static friction between the block and the incline is \\( \\mu_s = 0.3 \\). Determine the most nearly correct critical angle (\\( \\theta \\)) at which the block begins to slide.\n<svg style=\"max-width: 400px; width: 100%; height: auto; display: block; margin: 30px auto;\" viewbox=\"0 0 400 300\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrowEnd\" markerheight=\"8\" markerwidth=\"8\" orient=\"auto\" refx=\"9\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\"></path>\n</marker>\n</defs>\n<rect fill=\"white\" height=\"300\" width=\"400\"></rect>\n<line stroke=\"black\" stroke-dasharray=\"6,4\" stroke-width=\"1.5\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"250\"></line>\n<line stroke=\"black\" stroke-width=\"3\" x1=\"50\" x2=\"350\" y1=\"250\" y2=\"140\"></line>\n<path d=\"M 120 250 A 70 70 0 0 0 115.7 225.8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.5\"></path>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" x=\"130\" y=\"240\">θ</text>\n<g transform=\"translate(50, 250) rotate(-20)\">\n<rect fill=\"lightblue\" height=\"60\" stroke=\"black\" stroke-width=\"2\" width=\"60\" x=\"120\" y=\"-60\"></rect>\n<circle cx=\"150\" cy=\"-30\" fill=\"black\" r=\"3\"></circle>\n<line marker-end=\"url(#arrowEnd)\" stroke=\"black\" stroke-width=\"1.5\" transform=\"rotate(20, 150, -30)\" x1=\"150\" x2=\"150\" y1=\"-30\" y2=\"40\"></line>\n<text font-family=\"sans-serif\" font-size=\"16\" font-style=\"italic\" transform=\"rotate(20, 150, -30)\" x=\"160\" y=\"35\">W</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 16.7^\\circ \\)",
+            "B": "\\( 30.0^\\circ \\)",
+            "C": "\\( 45.0^\\circ \\)",
+            "D": "\\( 73.3^\\circ \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P96"
+          ],
+          "tags": [
+            "Friction"
+          ]
+        },
+        {
+          "question": "A \\( 10 \\, \\mathrm{kg} \\) block starting from rest slides down a \\( 28^\\circ \\) inclined plane. After \\( 12 \\, \\mathrm{s} \\), the block reaches a velocity of \\( 18 \\, \\mathrm{m/s} \\). Determine the kinetic coefficient of friction between the block and the inclined surface.",
+          "choices": {
+            "A": "\\( 0.22 \\)",
+            "B": "\\( 0.36 \\)",
+            "C": "\\( 0.47 \\)",
+            "D": "\\( 0.53 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P108"
+          ],
+          "tags": [
+            "Friction"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Dynamics",
+      "subtopic": "Plane Motion of a Rigid Body (Equations of Motion)",
+      "questions": [
+        {
+          "question": "A flywheel of diameter \\(0.6\\ \\text{m}\\) has a time-dependent angular acceleration given by \\(\\alpha(t)=4t^{2}+3t+1\\ \\text{rad/s}^2\\), where \\(t\\) is in seconds. If its initial angular velocity is \\(\\omega_0=8\\ \\text{rad/s}\\), find the linear (tangential) velocity of a point on its rim after \\(t=4\\ \\text{s}\\).",
+          "choices": {},
+          "answer": "\\(36.4\\ \\text{m/s} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P109"
+          ],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        },
+        {
+          "question": "A laboratory centrifuge spins at \\(9000\\ \\text{rpm}\\). When power is cut, it decelerates uniformly and comes to rest in \\(2\\ \\text{min}\\). Determine the angular deceleration in \\(\\text{rad/min}^2\\) and in \\(\\text{rad/s}^2\\).",
+          "choices": {},
+          "answer": "\\(-9000\\pi\\ \\dfrac{\\text{rad}}{\\text{min}^2}\\ \\text{or}\\ 7.854\\ \\dfrac{\\text{rad}}{\\text{s}^2} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P109"
+          ],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        },
+        {
+          "question": "The angular position of a rotating platform is given by  \\(\\theta(t)=10t^{2}-5t^{3}+20t+4\\), where \\(t\\) is in seconds. Determine the angular acceleration (in \\(\\text{rad/s}^2\\)) of the platform  at \\(t=2\\ \\text{s}\\).",
+          "choices": {},
+          "answer": "\\( -40\\ \\text{rad/s}^{2} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P109"
+          ],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        },
+        {
+          "question": "A disk starts from rest and is subjected to an angular acceleration \\(\\alpha = 0.04\\,\\theta^{0.3}\\ \\text{rad/s}^2\\), where \\(\\theta\\) is in radians. Determine the magnitude of the normal (centripetal) acceleration, in \\(\\text{in/s}^2\\), of a point on the rim (\\(R = 3\\ \\text{in}\\)) after the disk has rotated through \\(6\\) revolutions.",
+          "choices": {},
+          "answer": "20.16",
+          "references": [
+            "FE Reference Handbook 10.5 – P109"
+          ],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        },
+        {
+          "question": "A wind turbine is rotating at \\(4800\\ \\text{rpm}\\) when a braking system is applied.\n\nThe turbine slows down uniformly with an angular deceleration of\n\n\\(\\alpha = 3200\\pi\\ \\text{rad/min}^2\\).\n\nDetermine the total number of revolutions the turbine completes before coming to rest.",
+          "choices": {},
+          "answer": "\\[\n\n\\begin{align}\n\nN\n\n&= \\frac{14400\\pi}{2\\pi} \\\\\n\n&= 7200\\ \\text{revolutions}\n\n\\end{align}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        },
+        {
+          "question": "A uniform rod has a total length of \\( 1.2\\,\\mathrm{m} \\) and a mass of \\( 12\\,\\mathrm{kg} \\). It is pinned at one end to a frictionless pivot point to allow for free rotation. The mass moment of inertia of the rod about the pivot point is most nearly:",
+          "choices": {
+            "A": "\\( 1.44\\,\\mathrm{kg \\cdot m^2} \\)",
+            "B": "\\( 5.76\\,\\mathrm{kg \\cdot m^2} \\)",
+            "C": "\\( 8.64\\,\\mathrm{kg \\cdot m^2} \\)",
+            "D": "\\( 17.28\\,\\mathrm{kg \\cdot m^2} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P110"
+          ],
+          "tags": [
+            "Mass Moment Of Inertia",
+            "Plane Motion Of A Rigid Body Equations Of Motion"
+          ]
+        },
+        {
+          "question": "An initially stationary flywheel with a mass moment of inertia of \\( 3.2 \\, \\mathrm{kg \\cdot m^2} \\) is subjected to a constant torque of \\( 0.12 \\, \\mathrm{N \\cdot m} \\). After completing \\( 10 \\) full revolutions, the flywheel’s approximate rotational speed is most nearly:",
+          "choices": {
+            "A": "\\( 0.87 \\, \\mathrm{rad/s} \\)",
+            "B": "\\( 1.53 \\, \\mathrm{rad/s} \\)",
+            "C": "\\( 2.17 \\, \\mathrm{rad/s} \\)",
+            "D": "\\( 4.71 \\, \\mathrm{rad/s} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P109"
+          ],
+          "tags": [
+            "Kinematics Of A Rigid Body",
+            "Plane Motion Of A Rigid Body Equations Of Motion",
+            "Rigid Body Rotation About A Fixed Axis"
+          ]
+        }
+      ]
+    }
+  ]
+}

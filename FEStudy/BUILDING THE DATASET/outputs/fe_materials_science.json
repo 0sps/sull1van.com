@@ -1,0 +1,418 @@
+{
+  "topics": [
+    {
+      "topic": "Materials Science",
+      "subtopic": "Corrosion",
+      "questions": [
+        {
+          "question": "A metallographic analysis of a degraded plain carbon steel component reveals that material loss is heavily concentrated along the grain boundaries, while the interior bulk grains remain relatively unattacked. Based on localized corrosion cell principles, this preferential degradation occurs because the grain boundaries:",
+          "choices": {
+            "A": "function as the anode and undergo oxidation.",
+            "B": "function as the cathode and undergo reduction.",
+            "C": "serve as the primary site for oxygen reduction.",
+            "D": "become cathodic due to a localized depletion of oxygen."
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5, P116:",
+            "FE Reference Handbook 10.5 – P116"
+          ],
+          "tags": [
+            "Corrosion"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Diffusion",
+      "questions": [
+        {
+          "question": "The diffusion of carbon in BCC iron at a temperature of \\( 727^\\circ\\mathrm{C} \\) has a proportionality constant \\( D_0 = 5.0 \\times 10^{-5}\\ \\mathrm{m^2/s} \\) and an activation energy \\( Q = 140\\ \\mathrm{kJ/mol} \\). The diffusion coefficient \\( D \\) (\\( \\mathrm{m^2/s} \\)) is most nearly:",
+          "choices": {
+            "A": "\\( 4.3 \\times 10^{-15} \\)",
+            "B": "\\( 2.4 \\times 10^{-12} \\)",
+            "C": "\\( 1.8 \\times 10^{-11} \\)",
+            "D": "\\( 4.9 \\times 10^{-5} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P116"
+          ],
+          "tags": [
+            "Diffusion"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Thermal and Mechanical Processing",
+      "questions": [
+        {
+          "question": "During the fabrication process, a metal bracket is plastically deformed at room temperature (cold worked). Compared to its original pre-worked state, the resulting cold-worked bracket will exhibit:",
+          "choices": {
+            "A": "Increased strength and increased ductility.",
+            "B": "Increased strength and decreased ductility.",
+            "C": "Decreased strength and increased ductility.",
+            "D": "Decreased strength and decreased ductility."
+          },
+          "answer": "B",
+          "references": [
+            "Refer to FE Reference Handbook 10.5 – P116",
+            "FE Reference Handbook 10.5 – P116"
+          ],
+          "tags": [
+            "Thermal And Mechanical Processing"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Properties of Materials",
+      "questions": [
+        {
+          "question": "During the fabrication of a semiconductor device, a pure silicon (Si) substrate is doped with phosphorus (P). The maximum solid solubility (\\( \\mathrm{atoms/m^3} \\)) of the phosphorus dopant in the silicon substrate is most nearly:",
+          "choices": {
+            "A": "\\( 40 \\times 10^{24} \\)",
+            "B": "\\( 600 \\times 10^{24} \\)",
+            "C": "\\( 1,000 \\times 10^{24} \\)",
+            "D": "\\( 2,000 \\times 10^{24} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "Refer to FE Reference Handbook 10.5 – P120:",
+            "FE Reference Handbook 10.5 – P120"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "A \\( 100\\ \\mathrm{m} \\) length of electrical cable has a uniform circular cross-section with an area of \\( 2.0\\ \\mathrm{mm^2} \\). The measured resistance of this cable is \\( 0.85\\ \\Omega \\). The electrical resistivity (\\( \\Omega \\cdot \\mathrm{m} \\)) of the core material is most nearly:",
+          "choices": {
+            "A": "\\( 1.7 \\times 10^{-8} \\)",
+            "B": "\\( 1.7 \\times 10^{-6} \\)",
+            "C": "\\( 4.2 \\times 10^{-8} \\)",
+            "D": "\\( 8.5 \\times 10^{-5} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P117"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "A machine component is subjected to a completely reversed cyclic stress, resulting in a stress ratio of \\( R = -1 \\). The applied completely reversed stress is \\( \\sigma_r = 300\\ \\mathrm{MPa} \\). Fatigue testing determines the material constants for this component to be \\( A = 1200\\ \\mathrm{MPa} \\) and \\( B = -0.10 \\). The expected number of cycles to failure (\\( N \\)) is most nearly:",
+          "choices": {
+            "A": "\\( 2.5 \\times 10^5 \\)",
+            "B": "\\( 1.0 \\times 10^6 \\)",
+            "C": "\\( 4.0 \\times 10^6 \\)",
+            "D": "\\( 1.2 \\times 10^7 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P121"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "A thick 4340 steel plate is subjected to an applied tensile stress of \\( 350\\ \\mathrm{MPa} \\). If an internal crack is detected during an ultrasonic inspection, the maximum allowable total internal crack length (mm) before catastrophic fracture occurs is most nearly:",
+          "choices": {
+            "A": "5.5",
+            "B": "8.5",
+            "C": "11.0",
+            "D": "17.5"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P122"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "An aluminum 2024-T3 structural panel is subjected to a tensile stress. An exterior edge crack of length \\( 4.0\\ \\mathrm{mm} \\) is detected. The critical applied engineering stress (MPa) that will cause catastrophic crack propagation is most nearly:",
+          "choices": {
+            "A": "295 \\(\\ \\mathrm{MPa} \\)",
+            "B": "357 \\(\\ \\mathrm{MPa} \\)",
+            "C": "402 \\(\\ \\mathrm{MPa} \\)",
+            "D": "440 \\(\\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P122"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "A ductile metal specimen is tested to failure. The point on the engineering stress-strain curve representing the maximum stress the material can withstand before necking begins is defined as the:",
+          "choices": {
+            "A": "Yield strength",
+            "B": "Ultimate tensile strength",
+            "C": "Fracture strength",
+            "D": "Proportional limit"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5, P121:",
+            "FE Reference Handbook 10.5 – P121"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "A tensile specimen is subjected to a load \\( F = 50\\ \\mathrm{kN} \\). At this load, the instantaneous cross-sectional area is measured to be \\( A = 80\\ \\mathrm{mm^2} \\). The true stress (\\( \\sigma_T \\)) is most nearly:",
+          "choices": {
+            "A": "400 MPa",
+            "B": "500 MPa",
+            "C": "625 MPa",
+            "D": "800 MPa"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P121"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        },
+        {
+          "question": "During a tensile test of a metal specimen within the linear elastic region, an applied engineering stress of \\( 350\\ \\mathrm{MPa} \\) results in an engineering strain of \\( 0.00175 \\). The modulus of elasticity (\\( E \\)) of the metal is most nearly:",
+          "choices": {
+            "A": "61 GPa",
+            "B": "120 GPa",
+            "C": "200 GPa",
+            "D": "350 GPa"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P121"
+          ],
+          "tags": [
+            "Properties Of Materials"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Composite Materials",
+      "questions": [
+        {
+          "question": "A composite panel is manufactured using a polymer matrix with a density of \\( 1.2\\ \\mathrm{g/cm^3} \\) and reinforcing fibers with a density of \\( 2.5\\ \\mathrm{g/cm^3} \\). If the composite is designed with a \\( 40\\% \\) fiber volume fraction, the theoretical density (\\( \\mathrm{g/cm^3} \\)) of the fabricated panel is most nearly:",
+          "choices": {
+            "A": "1.55",
+            "B": "1.72",
+            "C": "1.85",
+            "D": "1.98"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P123"
+          ],
+          "tags": [
+            "Composite Materials"
+          ]
+        },
+        {
+          "question": "A materials engineer is formulating a new lightweight composite material for structural applications. The composite mixture is batched by mass, consisting of \\( 25\\,\\mathrm{kg} \\) of a polymer matrix (Material A), \\( 15\\,\\mathrm{kg} \\) of structural fibers (Material B), and \\( 10\\,\\mathrm{kg} \\) of functional fillers (Material C). The individual densities of materials A, B, and C are \\( 2.5\\,\\mathrm{g/cm^3} \\), \\( 3.5\\,\\mathrm{g/cm^3} \\), and \\( 4.5\\,\\mathrm{g/cm^3} \\), respectively. Assuming a fully dense composite with no voids, the theoretical density of the resulting composite material is most nearly:",
+          "choices": {
+            "A": "\\( 3.03\\,\\mathrm{g/cm^3} \\)",
+            "B": "\\( 3.20\\,\\mathrm{g/cm^3} \\)",
+            "C": "\\( 3.50\\,\\mathrm{g/cm^3} \\)",
+            "D": "\\( 10.5\\,\\mathrm{g/cm^3} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P123"
+          ],
+          "tags": [
+            "Composite Materials"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Hardenability",
+      "questions": [
+        {
+          "question": "A machine part manufactured from 1040 steel requires a minimum hardness of 30 RC to resist premature wear. According to its standard hardenability profile, the maximum distance from the quenched end that successfully achieves this minimum hardness is most nearly:",
+          "choices": {
+            "A": "6 mm",
+            "B": "10 mm",
+            "C": "15 mm",
+            "D": "25 mm"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P123"
+          ],
+          "tags": [
+            "Hardenability"
+          ]
+        },
+        {
+          "question": "A 4340 steel alloy component undergoes a standard Jominy end-quench test to evaluate its heat treatment characteristics. Based on standard hardenability data, the expected Rockwell C hardness (RC) at a distance of \\( 15\\ \\mathrm{mm} \\) from the quenched end is most nearly:",
+          "choices": {
+            "A": "40",
+            "B": "48",
+            "C": "55",
+            "D": "60"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P123"
+          ],
+          "tags": [
+            "Hardenability"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Concrete",
+      "questions": [
+        {
+          "question": "A concrete mix is prepared with below properties:\nwater-cement ratio: 0.50 \n\nair content:4% \n\ncement content: 556 \\(\\mathrm{lb/yd}^3\\) \n\nsand content: 36% \n\nslump: 3.5 \\(\\mathrm{in}\\)\nThe specimens are moist cured for 3 days and then stored in air. The approximate compressive strength (psi) of this concrete at 90 days is most nearly::",
+          "choices": {
+            "A": "2,500",
+            "B": "3,700",
+            "C": "4,500",
+            "D": "5,500"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – Page 125",
+            "FE Reference Handbook 10.5 – P125"
+          ],
+          "tags": [
+            "Concrete"
+          ]
+        },
+        {
+          "question": "A concrete mix is prepared with below properties:\nwater-cement ratio: 0.50 \n\nair content:4% \n\ncement content: 556 \\(\\mathrm{lb/yd}^3\\) \n\nsand content: 36% \n\nslump: 3.5 \\(\\mathrm{in}\\)\nThe specimens are subjected to continuous moist curing. The compressive strength (psi) at an age of 28 days is most nearly:",
+          "choices": {
+            "A": "2,500",
+            "B": "3,000",
+            "C": "4,500",
+            "D": "5,000"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – Page 125",
+            "FE Reference Handbook 10.5 – P125"
+          ],
+          "tags": [
+            "Concrete"
+          ]
+        },
+        {
+          "question": "A non-air-entrained concrete mix is prepared with a water-cement ratio of 0.45. The expected average 28-day compressive strength (psi) is most nearly:",
+          "choices": {
+            "A": "4,200",
+            "B": "4,800",
+            "C": "5,800",
+            "D": "6,500"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – Page 125",
+            "FE Reference Handbook 10.5 – P125"
+          ],
+          "tags": [
+            "Concrete"
+          ]
+        },
+        {
+          "question": "A concrete mix is designed with a water-cement ratio of 0.55 by weight and includes the recommended percentage of entrained air. The average 28-day compressive strength (psi) of this mix is most nearly:",
+          "choices": {
+            "A": "3,000",
+            "B": "3,600",
+            "C": "4,400",
+            "D": "5,200"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – Page 125",
+            "FE Reference Handbook 10.5 – P125"
+          ],
+          "tags": [
+            "Concrete"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Thermal Properties",
+      "questions": [
+        {
+          "question": "A \\( 1.0\\ \\mathrm{m} \\) long control rod exhibits a thermal elongation of \\( 0.24\\ \\mathrm{mm} \\) when the temperature increases by \\( 10.0^\\circ\\mathrm{C} \\). The coefficient of thermal expansion (\\( \\alpha \\)) is most nearly:",
+          "choices": {
+            "A": "\\( 2.4 \\times 10^{-6}\\ /^\\circ\\mathrm{C} \\)",
+            "B": "\\( 2.4 \\times 10^{-5}\\ /^\\circ\\mathrm{C} \\)",
+            "C": "\\( 2.4 \\times 10^{-4}\\ /^\\circ\\mathrm{C} \\)",
+            "D": "\\( 4.1 \\times 10^{-6}\\ /^\\circ\\mathrm{C} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P126"
+          ],
+          "tags": [
+            "Thermal Properties"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Materials Science",
+      "subtopic": "Binary Phase Diagrams",
+      "questions": [
+        {
+          "question": "A binary alloy system consisting of components A and B has an overall composition of \\( x = 40\\%\\ \\mathrm{B} \\). At equilibrium at temperature \\( T \\), the system comprises two phases, \\( \\alpha \\) and \\( \\beta \\), with compositions \\( x_\\alpha = 10\\%\\ \\mathrm{B} \\) and \\( x_\\beta = 85\\%\\ \\mathrm{B} \\), respectively. The weight percent of the \\( \\alpha \\) phase is most nearly:",
+          "choices": {
+            "A": "40%",
+            "B": "53%",
+            "C": "60%",
+            "D": "85%"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P127"
+          ],
+          "tags": [
+            "Binary Phase Diagrams"
+          ]
+        },
+        {
+          "question": "A binary alloy has an overall composition of \\( 35\\%\\ \\mathrm{B} \\) by weight. At a specific temperature, the alloy exists in a two-phase equilibrium state consisting of solid \\( \\alpha \\) and liquid \\( L \\). Equilibrium analysis determines the composition of the solid phase to be \\( 15\\%\\ \\mathrm{B} \\) and the liquid phase to be \\( 75\\%\\ \\mathrm{B} \\). The weight percent of the liquid phase is most nearly:",
+          "choices": {
+            "A": "20%",
+            "B": "33%",
+            "C": "60%",
+            "D": "67%"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P127"
+          ],
+          "tags": [
+            "Binary Phase Diagrams"
+          ]
+        }
+      ]
+    }
+  ]
+}

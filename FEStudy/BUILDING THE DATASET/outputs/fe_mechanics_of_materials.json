@@ -1,0 +1,1318 @@
+{
+  "topics": [
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Uniaxial Stress-Strain",
+      "questions": [
+        {
+          "question": "A metal bar has a length of \\( 2.1\\,\\mathrm{m} \\) and a rectangular cross-section of \\( 250\\,\\mathrm{mm} \\) (width) by \\( 150\\,\\mathrm{mm} \\) (thickness). The modulus of elasticity of this material is \\( 210\\,\\mathrm{GPa} \\) and Poisson’s ratio is \\( 0.2 \\). If an axial tensile force of \\( 110\\,\\mathrm{kN} \\) is applied, the most nearly correct change in the width of the bar is:",
+          "choices": {
+            "A": "\\( -0.00070\\,\\mathrm{mm} \\) (contraction)",
+            "B": "\\( +0.00070\\,\\mathrm{mm} \\) (expansion)",
+            "C": "\\( -0.00042\\,\\mathrm{mm} \\) (contraction)",
+            "D": "\\( -0.00350\\,\\mathrm{mm} \\) (contraction)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P129, 130"
+          ],
+          "tags": [
+            "Poissons Ratio",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A metal rod is \\( 0.022\\,\\mathrm{m} \\) in diameter and \\( 2.1\\,\\mathrm{m} \\) in length. The modulus of elasticity of this material is \\( 210\\,\\mathrm{GPa} \\), and Poisson’s ratio is \\( 0.2 \\). The rod is subjected to a tensile force of \\( 110\\,\\mathrm{kN} \\). The change in diameter after the force is applied is most nearly:",
+          "choices": {
+            "A": "\\( -0.0030\\,\\mathrm{mm} \\)",
+            "B": "\\( -0.0061\\,\\mathrm{mm} \\)",
+            "C": "\\( 0.0061\\,\\mathrm{mm} \\)",
+            "D": "\\( 0.0303\\,\\mathrm{mm} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Poissons Ratio",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A metal rod with a diameter of \\( 0.022 \\, \\mathrm{m} \\) and a length of \\( 2.1 \\, \\mathrm{m} \\) is subjected to an axial tensile force of \\( 110 \\, \\mathrm{kN} \\). The modulus of elasticity of the material is \\( 210 \\, \\mathrm{GPa} \\). The change in length of the rod after the tensile force is applied is most nearly:",
+          "choices": {
+            "A": "\\( 0.72 \\, \\mathrm{mm} \\)",
+            "B": "\\( 2.89 \\, \\mathrm{mm} \\)",
+            "C": "\\( 3.32 \\, \\mathrm{mm} \\)",
+            "D": "\\( 11.58 \\, \\mathrm{mm} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A tensile force of \\( 110\\,\\mathrm{kN} \\) is applied to a rod with an initial diameter of \\( 0.022\\,\\mathrm{m} \\) and a length of \\( 2.1\\,\\mathrm{m} \\). After the load is applied, the diameter reduces to \\( 0.02198\\,\\mathrm{m} \\), and the length extends to \\( 2.11\\,\\mathrm{m} \\). Assuming no permanent deformation occurs in the material, the modulus of elasticity (\\( \\mathrm{GPa} \\)) is most nearly:",
+          "choices": {
+            "A": "\\( 60.8\\,\\mathrm{GPa} \\)",
+            "B": "\\( 128.5\\,\\mathrm{GPa} \\)",
+            "C": "\\( 318.3\\,\\mathrm{GPa} \\)",
+            "D": "\\( 60,818\\,\\mathrm{GPa} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Modulus Of Elasticity",
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A tensile force of \\( 110\\,\\mathrm{kN} \\) is applied to a rod with an initial diameter of \\( 0.022\\,\\mathrm{m} \\) and a length of \\( 2.1\\,\\mathrm{m} \\). After the load is applied, the diameter reduces to \\( 0.02198\\,\\mathrm{m} \\), and the length extends to \\( 2.11\\,\\mathrm{m} \\). The Poisson’s ratio of the material is most nearly:",
+          "choices": {
+            "A": "\\( 0.0048 \\)",
+            "B": "\\( 0.191 \\)",
+            "C": "\\( 1.09 \\)",
+            "D": "\\( 5.24 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Poissons Ratio",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A tensile force of \\( 110\\,\\mathrm{kN} \\) is applied to a rod with an initial diameter of \\( 0.022\\,\\mathrm{m} \\) and a length of \\( 2.1\\,\\mathrm{m} \\). After the load is applied, the diameter reduces to \\( 0.02198\\,\\mathrm{m} \\), and the length extends to \\( 2.11\\,\\mathrm{m} \\). The true stress on the rod is most nearly:",
+          "choices": {
+            "A": "\\( 289.4\\,\\mathrm{MPa} \\)",
+            "B": "\\( 289.9\\,\\mathrm{MPa} \\)",
+            "C": "\\( 578.8\\,\\mathrm{MPa} \\)",
+            "D": "\\( 1159.8\\,\\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "True Stress",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A structural tie rod with an initial diameter of \\( 0.022\\,\\mathrm{m} \\) and an original length of \\( 2.1\\,\\mathrm{m} \\) is subjected to a static tensile force of \\( 110\\,\\mathrm{kN} \\). Post-loading measurements show the diameter has decreased to \\( 0.02198\\,\\mathrm{m} \\) and the length has increased to \\( 2.11\\,\\mathrm{m} \\). The engineering axial strain on the rod is most nearly:",
+          "choices": {
+            "A": "\\( 0.00091 \\)",
+            "B": "\\( 0.00476 \\)",
+            "C": "\\( 0.191 \\)",
+            "D": "\\( 211.5 \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P129"
+          ],
+          "tags": [
+            "Engineering Strain",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A tensile force of \\( 130 \\, \\mathrm{kN} \\) is applied to a rod with an initial diameter of \\( 0.025 \\, \\mathrm{m} \\) and an initial length of \\( 2.5 \\, \\mathrm{m} \\). After applying the load, the diameter decreases to \\( 0.02498 \\, \\mathrm{m} \\), and the length increases to \\( 2.52 \\, \\mathrm{m} \\). The engineering stress on the rod is most nearly:",
+          "choices": {
+            "A": "\\( 264.8 \\, \\mathrm{MPa} \\)",
+            "B": "\\( 265.3 \\, \\mathrm{MPa} \\)",
+            "C": "\\( 529.6 \\, \\mathrm{MPa} \\)",
+            "D": "\\( 648.5 \\, \\mathrm{MPa} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A structural tie rod with an initial diameter of \\( 0.03\\,\\mathrm{m} \\) and an original length of \\( 3\\,\\mathrm{m} \\) is subjected to a static tensile force of \\( 150\\,\\mathrm{kN} \\). Post-loading measurements show the diameter has decreased to \\( 0.02998\\,\\mathrm{m} \\) and the length has increased to \\( 3.01\\,\\mathrm{m} \\). The engineering stress experienced by the rod is most nearly:",
+          "choices": {
+            "A": "\\( 150\\,\\mathrm{MPa} \\)",
+            "B": "\\( 212\\,\\mathrm{MPa} \\)",
+            "C": "\\( 212\\,\\mathrm{GPa} \\)",
+            "D": "\\( 530\\,\\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A cylindrical steel tie rod undergoes a destructive tensile test in a laboratory. The initial diameter of the test specimen is measured as \\( 0.500\\,\\mathrm{in} \\). At the point of fracture, the necked-down region has a final diameter of \\( 0.400\\,\\mathrm{in} \\). The percent reduction in area (\\( \\%RA \\)) for this specimen is most nearly:",
+          "choices": {
+            "A": "\\( 20\\% \\)",
+            "B": "\\( 36\\% \\)",
+            "C": "\\( 64\\% \\)",
+            "D": "\\( 80\\% \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P129"
+          ],
+          "tags": [
+            "Percent Reduction In Area Ra",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A steel cable is used to lift a load of \\( 25 \\, \\mathrm{kN} \\). The cable has an initial length of \\( 15 \\, \\mathrm{m} \\) and a modulus of elasticity of \\( 200 \\, \\mathrm{GPa} \\). If the maximum allowable elastic longitudinal deformation is \\( 10 \\, \\mathrm{mm} \\), what is the minimum required diameter of the cable?",
+          "choices": {
+            "A": "\\( 7.7 \\, \\mathrm{mm} \\)",
+            "B": "\\( 10.9 \\, \\mathrm{mm} \\)",
+            "C": "\\( 15.5 \\, \\mathrm{mm} \\)",
+            "D": "\\( 21.9 \\, \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A \\( 0.6 \\, \\mathrm{m} \\) long solid steel rod has a diameter of \\( 0.04 \\, \\mathrm{m} \\) and a modulus of elasticity of \\( 200 \\, \\mathrm{GPa} \\). The rod supports an axial compressive load of \\( 15,000 \\, \\mathrm{N} \\). What is most nearly the decrease in the steel rod’s length?",
+          "choices": {
+            "A": "\\( 2.87 \\times 10^{-6} \\, \\mathrm{m} \\)",
+            "B": "\\( 3.58 \\times 10^{-5} \\, \\mathrm{m} \\)",
+            "C": "\\( 7.16 \\times 10^{-5} \\, \\mathrm{m} \\)",
+            "D": "\\( 1.43 \\times 10^{-4} \\, \\mathrm{m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P130"
+          ],
+          "tags": [
+            "Uniaxial Loading And Deformation",
+            "Uniaxial Stress Strain"
+          ]
+        },
+        {
+          "question": "A material experiences a shear stress of \\( \\tau_{xy} = 40 \\, \\mathrm{MPa} \\) and has a shear modulus of \\( G = 80 \\, \\mathrm{GPa} \\). The shear strain is most nearly:",
+          "choices": {
+            "A": "\\( 5.0 \\times 10^{-4} \\, \\mathrm{rad} \\)",
+            "B": "\\( 5.0 \\times 10^{-1} \\, \\mathrm{rad} \\)",
+            "C": "\\( 2.0 \\times 10^3 \\, \\mathrm{rad} \\)",
+            "D": "\\( 3.2 \\times 10^{12} \\, \\mathrm{rad} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P129"
+          ],
+          "tags": [
+            "Uniaxial Stress Strain"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Thermal Deformations",
+      "questions": [
+        {
+          "question": "A metal rod, 5 meters in length, is firmly supported by two rigid supports at both ends. The rod has a coefficient of thermal expansion of \\(11.7 \\times 10^{-6} \\, \\text{per}^\\circ \\text{C}\\), and its elastic modulus is \\(210 \\, \\text{GPa}\\). When the temperature of the rod increases by \\(50^\\circ \\text{C}\\), determine the thermal stress that develops in the rod due to the expansion being restricted by the supports.",
+          "choices": {},
+          "answer": "\\[\n\n\\sigma = E \\varepsilon_t = 210 \\times 10^9 \\times  5.85 \\times 10^{-4} = 122.85 \\, \\text{MPa}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Thermal Deformations"
+          ]
+        },
+        {
+          "question": "A 5-m metal rod has a coefficient of thermal expansion and contraction of\n\n\\(11.7 \\times 10^{-6} \\, \\text{per}^\\circ \\text{C}\\). If the temperature of the rod is decreased\n\nby \\(50^\\circ \\text{C}\\), the thermal strain is most nearly:",
+          "choices": {},
+          "answer": "\\[\n\n\\varepsilon_t = \\alpha \\Delta T \\varepsilon_t = (11.7 \\times 10^{-6})(-50) = -0.000585\n\n\\]",
+          "references": [],
+          "tags": [
+            "Thermal Deformations",
+            "Thermal Strain"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Cylindrical Pressure Vessel",
+      "questions": [
+        {
+          "question": "A pressure (150 psi) applied to a cylindrical vessel (the inner diameter:3 ft, the wall thickness:1 inch), a crack was developed longitudinally at the vessel wall. The failure/cracking stress in psi of the thin-walled pressure vessel is:",
+          "choices": {},
+          "answer": "\\[\n\n\\sigma_h = \\frac{P r}{t} = \\frac{150 \\, \\text{psi} \\times 18.5 \\, \\text{in}}{1 \\, \\text{in}} = 2,775 \\, \\text{psi}\n\n\\]",
+          "references": [],
+          "tags": [
+            "Cylindrical Pressure Vessel",
+            "Thin Walled"
+          ]
+        },
+        {
+          "question": "A mechanical engineer is evaluating a compressed air storage cylinder in a manufacturing facility. The cylindrical tank has an internal diameter of \\( 720 \\, \\mathrm{mm} \\) and is fabricated from \\( 15\\text{-}\\mathrm{mm} \\) thick structural steel plate. If the pressure gauge on the manifold reads an internal pressure of \\( 1,700 \\, \\mathrm{kPa} \\), the maximum tangential (hoop) stress developed in the cylindrical wall is most nearly:",
+          "choices": {
+            "A": "\\( 20.4 \\, \\mathrm{MPa} \\)",
+            "B": "\\( 40.8 \\, \\mathrm{MPa} \\)",
+            "C": "\\( 81.6 \\, \\mathrm{MPa} \\)",
+            "D": "\\( 163.2 \\, \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P131"
+          ],
+          "tags": [
+            "Cylindrical Pressure Vessel"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Stress and Strain",
+      "questions": [
+        {
+          "question": "A planar stress element on the web of a bridge girder has the following stresses applied due to combined bending and shear: \\( \\sigma_x = 90 \\ \\mathrm{MPa} \\), \\( \\sigma_y = 30 \\ \\mathrm{MPa} \\), and \\( \\tau_{xy} = 40 \\ \\mathrm{MPa} \\). To determine the optimal orientation for placing carbon fiber reinforcement, find the angle \\( \\theta_{p1} \\) to the principal plane experiencing the maximum principal stress. (Provide the smallest positive angle).",
+          "choices": {
+            "A": "\\( 26.6^\\circ \\)",
+            "B": "\\( 53.1^\\circ \\)",
+            "C": "\\( 13.3^\\circ \\)",
+            "D": "\\( 36.9^\\circ \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A thick-walled steel cylinder is subjected to internal pressure and an applied external torque. At a critical location on the outer surface, the combined loading produces a state of plane stress with components \\( \\sigma_x = 150 \\ \\mathrm{MPa} \\), \\( \\sigma_y = 50 \\ \\mathrm{MPa} \\), and \\( \\tau_{xy} = 40 \\ \\mathrm{MPa} \\). To evaluate the cylinder’s safety using the Maximum Shear Stress (Tresca) yield criterion, calculate the maximum in-plane shear stress \\( \\tau_{\\mathrm{max}} \\).",
+          "choices": {
+            "A": "\\( 40.0 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 50.0 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 64.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 100.0 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A strain gauge rosette is attached to the surface of a loaded aircraft wing spar. The measured and transformed plane stress components at this critical location are found to be \\( \\sigma_x = -8 \\ \\mathrm{ksi} \\), \\( \\sigma_y = 12 \\ \\mathrm{ksi} \\), and \\( \\tau_{xy} = 10 \\ \\mathrm{ksi} \\). To evaluate the material against a specific compressive failure theory, determine the minimum (most compressive) principal stress.",
+          "choices": {
+            "A": "\\( -12.1 \\ \\mathrm{ksi} \\)",
+            "B": "\\( -22.1 \\ \\mathrm{ksi} \\)",
+            "C": "\\( -2.1 \\ \\mathrm{ksi} \\)",
+            "D": "\\( -14.1 \\ \\mathrm{ksi} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "An element is subjected to a normal tensile stress \\( \\sigma_x = 120 \\ \\mathrm{ksi} \\), a normal compressive stress \\( \\sigma_y = -60 \\ \\mathrm{ksi} \\), and a shear stress \\( \\tau_{xy} = 40 \\ \\mathrm{ksi} \\). What is the maximum principal stress (\\( \\sigma_1 \\))?",
+          "choices": {
+            "A": "\\( 128.5 \\ \\mathrm{ksi} \\)",
+            "B": "\\( 160.0 \\ \\mathrm{ksi} \\)",
+            "C": "\\( 98.5 \\ \\mathrm{ksi} \\)",
+            "D": "\\( 68.5 \\ \\mathrm{ksi} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A spherical pressure vessel experiences a state of equal biaxial tension. The stresses on a given element are \\( \\sigma_x = 60 \\ \\mathrm{MPa} \\), \\( \\sigma_y = 60 \\ \\mathrm{MPa} \\), and there is no shear stress (\\( \\tau_{xy} = 0 \\)). Determine the principal stresses.",
+          "choices": {
+            "A": "\\( 120 \\ \\mathrm{MPa}, \\ 0 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 60 \\ \\mathrm{MPa}, \\ 60 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 60 \\ \\mathrm{MPa}, \\ -60 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 84.8 \\ \\mathrm{MPa}, \\ 35.2 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A thin-walled tube is subjected to pure torsion, resulting in a state of pure shear. The normal stresses are \\( \\sigma_x = 0 \\) and \\( \\sigma_y = 0 \\), and the shear stress is \\( \\tau_{xy} = 50 \\ \\mathrm{MPa} \\). What are the principal normal stresses \\( \\sigma_1, \\sigma_2 \\) at this point?\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-green\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#388e3c\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"100\" stroke=\"#333\" stroke-width=\"2\" width=\"100\" x=\"200\" y=\"70\"></rect>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"310\" x2=\"310\" y1=\"160\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"210\" x2=\"290\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"80\" y2=\"160\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"290\" x2=\"210\" y1=\"180\" y2=\"180\"></line>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"330\" y=\"125\">50 MPa</text>\n</svg>",
+          "choices": {
+            "A": "\\( 100 \\ \\mathrm{MPa}, \\ 0 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 50 \\ \\mathrm{MPa}, \\ 50 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 50 \\ \\mathrm{MPa}, \\ -50 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 0 \\ \\mathrm{MPa}, \\ 0 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "An element of material is subjected to biaxial compression and shear. The stresses are \\( \\sigma_x = -50 \\ \\mathrm{MPa} \\), \\( \\sigma_y = -30 \\ \\mathrm{MPa} \\), and \\( \\tau_{xy} = 20 \\ \\mathrm{MPa} \\). Find the principal stresses \\( \\sigma_1 \\) and \\( \\sigma_2 \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-green\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#388e3c\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"100\" stroke=\"#333\" stroke-width=\"2\" width=\"100\" x=\"200\" y=\"70\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"350\" x2=\"300\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"360\" y=\"125\">50 MPa</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"150\" x2=\"200\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"90\" y=\"125\">50 MPa</text>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2.5\" x1=\"250\" x2=\"250\" y1=\"20\" y2=\"70\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"10\">30 MPa</text>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2.5\" x1=\"250\" x2=\"250\" y1=\"220\" y2=\"170\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"235\">30 MPa</text>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"310\" x2=\"310\" y1=\"160\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"210\" x2=\"290\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"80\" y2=\"160\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"290\" x2=\"210\" y1=\"180\" y2=\"180\"></line>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"330\" y=\"90\">20 MPa</text>\n</svg>",
+          "choices": {
+            "A": "\\( -17.6 \\ \\mathrm{MPa}, \\ -62.4 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 17.6 \\ \\mathrm{MPa}, \\ 62.4 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 0.0 \\ \\mathrm{MPa}, \\ -80.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( -20.0 \\ \\mathrm{MPa}, \\ -60.0 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A point on a free surface is subjected to uniaxial tension \\( \\sigma_x = 100 \\ \\mathrm{MPa} \\) and a negative shear stress \\( \\tau_{xy} = -40 \\ \\mathrm{MPa} \\). There is no stress applied in the y-direction (\\( \\sigma_y = 0 \\)). Calculate the maximum and minimum principal stresses at this point.\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-green\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#388e3c\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"100\" stroke=\"#333\" stroke-width=\"2\" width=\"100\" x=\"200\" y=\"70\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"300\" x2=\"350\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"360\" y=\"125\">100 MPa</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"200\" x2=\"150\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"80\" y=\"125\">100 MPa</text>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"310\" x2=\"310\" y1=\"80\" y2=\"160\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"290\" x2=\"210\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"160\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"210\" x2=\"290\" y1=\"180\" y2=\"180\"></line>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"330\" y=\"160\">40 MPa</text>\n</svg>",
+          "choices": {
+            "A": "\\( 114.0 \\ \\mathrm{MPa}, \\ -14.0 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 100.0 \\ \\mathrm{MPa}, \\ -40.0 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 140.0 \\ \\mathrm{MPa}, \\ 0.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 64.0 \\ \\mathrm{MPa}, \\ -64.0 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "A structural component is subjected to a 2D plane stress state as shown. The normal stresses are \\( \\sigma_x = 80 \\ \\mathrm{MPa} \\) and \\( \\sigma_y = 40 \\ \\mathrm{MPa} \\), and the shear stress is \\( \\tau_{xy} = 30 \\ \\mathrm{MPa} \\). Determine the maximum and minimum principal stresses (\\( \\sigma_1, \\sigma_2 \\)).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-green\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"8\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#388e3c\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"100\" stroke=\"#333\" stroke-width=\"2\" width=\"100\" x=\"200\" y=\"70\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"300\" x2=\"350\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"360\" y=\"125\">80 MPa</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"2.5\" x1=\"200\" x2=\"150\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"90\" y=\"125\">80 MPa</text>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2.5\" x1=\"250\" x2=\"250\" y1=\"70\" y2=\"20\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"10\">40 MPa</text>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2.5\" x1=\"250\" x2=\"250\" y1=\"170\" y2=\"220\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"235\">40 MPa</text>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"310\" x2=\"310\" y1=\"160\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"210\" x2=\"290\" y1=\"60\" y2=\"60\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"80\" y2=\"160\"></line>\n<line marker-end=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"2\" x1=\"290\" x2=\"210\" y1=\"180\" y2=\"180\"></line>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"330\" y=\"90\">30 MPa</text>\n</svg>",
+          "choices": {
+            "A": "\\( 100.0 \\ \\mathrm{MPa}, \\ 20.0 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 96.1 \\ \\mathrm{MPa}, \\ 23.9 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 110.0 \\ \\mathrm{MPa}, \\ 10.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 85.5 \\ \\mathrm{MPa}, \\ 34.5 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P132"
+          ],
+          "tags": [
+            "Stress And Strain"
+          ]
+        },
+        {
+          "question": "For a given state of plane stress at a point in a material, what is the magnitude of the in-plane shear stress on the principal planes where the principal normal stresses occur?",
+          "choices": {
+            "A": "It is equal to the maximum in-plane shear stress.",
+            "B": "It is equal to the average normal stress.",
+            "C": "It is zero.",
+            "D": "It is equal to the maximum principal stress."
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P131, 132"
+          ],
+          "tags": [
+            "Principal Stresses",
+            "Stress And Strain"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Torsion",
+      "questions": [
+        {
+          "question": "A \\( 3 \\)-ft hollow circular shaft with an inner diameter of \\( 14 \\, \\mathrm{in} \\) and an outer diameter of \\( 15 \\, \\mathrm{in} \\) is subjected to a torsional moment of \\( 12,000 \\, \\mathrm{kip \\cdot ft} \\). The shear modulus of the shaft material is \\( 10,000 \\, \\mathrm{ksi} \\). Determine the angle of twist of the shaft. The angle of twist is most nearly:",
+          "choices": {
+            "A": "\\( 0.036 \\, \\mathrm{rad} \\)",
+            "B": "\\( 0.432 \\, \\mathrm{rad} \\)",
+            "C": "\\( 0.451 \\, \\mathrm{rad} \\)",
+            "D": "\\( 0.865 \\, \\mathrm{rad} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P133"
+          ],
+          "tags": [
+            "Torsion",
+            "Torsional Strain"
+          ]
+        },
+        {
+          "question": "If a torque is applied to a circular shaft, the maximum shear stress is developed at:",
+          "choices": {},
+          "answer": "At the center of the shaft, the shear stress is zero, and it increases as you move outward, reaching a maximum at the outermost surface.",
+          "references": [],
+          "tags": [
+            "Torsion",
+            "Torsional Strain"
+          ]
+        },
+        {
+          "question": "Where can you find the maximum shear stress if a torque is applied to a circular shaft?",
+          "choices": {},
+          "answer": "\\( \\frac{d\\phi}{dz} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 P133:"
+          ],
+          "tags": [
+            "Torsion",
+            "Torsional Strain"
+          ]
+        },
+        {
+          "question": "A hollow circular shaft has an inner diameter of \\( 10 \\, \\mathrm{in} \\) and an outer diameter of \\( 11 \\, \\mathrm{in} \\). A torsional moment of \\( 150 \\, \\mathrm{kip \\cdot ft} \\) is applied to the shaft. Find the maximum shear stress developed in the shaft.",
+          "choices": {
+            "A": "\\( 13.8 \\, \\mathrm{ksi} \\)",
+            "B": "\\( 19.8 \\, \\mathrm{ksi} \\)",
+            "C": "\\( 21.7 \\, \\mathrm{ksi} \\)",
+            "D": "\\( 43.4 \\, \\mathrm{ksi} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P133"
+          ],
+          "tags": [
+            "Torsion"
+          ]
+        },
+        {
+          "question": "A hollow circular shaft has a length of \\( 3\\,\\mathrm{ft} \\), an inner diameter of \\( 10\\,\\mathrm{in} \\), and an outer diameter of \\( 11\\,\\mathrm{in} \\). The shaft is subjected to an applied torque of \\( 10,000\\,\\mathrm{kip \\cdot ft} \\). If the shear modulus of the material is \\( 10,000\\,\\mathrm{ksi} \\), the angle of twist of the shaft is most nearly:",
+          "choices": {
+            "A": "\\( 0.079\\,\\mathrm{rad} \\)",
+            "B": "\\( 0.833\\,\\mathrm{rad} \\)",
+            "C": "\\( 0.948\\,\\mathrm{rad} \\)",
+            "D": "\\( 11.38\\,\\mathrm{rad} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P133"
+          ],
+          "tags": [
+            "Torsion",
+            "Torsional Strain"
+          ]
+        },
+        {
+          "question": "A solid aluminum rod has a shear modulus of \\( G = 2.8 \\times 10^{10} \\, \\mathrm{Pa} \\), a diameter of \\( 30 \\, \\mathrm{mm} \\), and a length of \\( 60 \\, \\mathrm{cm} \\). One end is rigidly fixed to a support. Determine the approximate torque required at the free end to twist the rod by \\( 5^\\circ \\) about its longitudinal axis. The required torque is most nearly:",
+          "choices": {
+            "A": "\\( 32.4 \\, \\mathrm{N \\cdot m} \\)",
+            "B": "\\( 162 \\, \\mathrm{N \\cdot m} \\)",
+            "C": "\\( 324 \\, \\mathrm{N \\cdot m} \\)",
+            "D": "\\( 648 \\, \\mathrm{N \\cdot m} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P133"
+          ],
+          "tags": [
+            "Torsion",
+            "Torsional Strain"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Beams",
+      "questions": [
+        {
+          "question": "A cantilever beam of length \\( L = 6 \\ \\mathrm{m} \\) is subjected to a uniform distributed load of \\( w = 10 \\ \\mathrm{kN/m} \\) over its entire length. In addition, a concentrated point load \\( P = 25 \\ \\mathrm{kN} \\) acts exactly at the midspan (\\( a = 3 \\ \\mathrm{m} \\) from the fixed support). The flexural rigidity is \\( EI = 30,000 \\ \\mathrm{kN \\cdot m^2} \\). Determine the total maximum deflection \\( v_{\\mathrm{max}} \\) at the free end.\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"4\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"260\" x2=\"260\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"330\" x2=\"330\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"350\" y=\"50\">w = 10 kN/m</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"20\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"210\" y=\"35\">P = 25 kN</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"215\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"180\" y2=\"195\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"215\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"250\" y1=\"185\" y2=\"185\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"175\" y=\"175\">a = 3 m</text>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"205\" y2=\"205\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"220\">L = 6 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 54.00 \\ \\mathrm{mm} \\)",
+            "B": "\\( 62.50 \\ \\mathrm{mm} \\)",
+            "C": "\\( 72.75 \\ \\mathrm{mm} \\)",
+            "D": "\\( 91.50 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A designer is selecting a cross-section for a cantilever beam of length \\( L = 3 \\ \\mathrm{m} \\). The beam must support a concentrated load \\( P = 20 \\ \\mathrm{kN} \\) at its free end. The material is steel with \\( E = 200 \\ \\mathrm{GPa} \\). To protect an adjacent glass panel, the maximum deflection at the free end is strictly limited to \\( 5 \\ \\mathrm{mm} \\). What is the minimum required moment of inertia \\( I \\) for the beam?\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"400\" x2=\"400\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"400\" y=\"30\">P = 20 kN</text>\n<path d=\"M 100 110 Q 250 110 400 160\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" x=\"350\" y=\"175\">v_max ≤ 5 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"185\" y2=\"210\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"185\" y2=\"210\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"200\" y2=\"200\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"190\">L = 3 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 60 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "B": "\\( 90 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "C": "\\( 180 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "D": "\\( 360 \\times 10^6 \\ \\mathrm{mm^4} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilever beam of length \\( L = 4 \\ \\mathrm{m} \\) is subjected to a downward uniform distributed load of \\( w = 8 \\ \\mathrm{kN/m} \\). Simultaneously, an applied moment \\( M_0 = 30 \\ \\mathrm{kN \\cdot m} \\) acts at the free end, creating an upward bending curvature (concave up). The flexural rigidity is \\( EI = 10,000 \\ \\mathrm{kN \\cdot m^2} \\). Determine the magnitude and direction of the net deflection at the free end.\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-orange\" markerheight=\"4\" markerwidth=\"4\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#f57c00\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"260\" x2=\"260\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"330\" x2=\"330\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 8 kN/m</text>\n<path d=\"M 400 140 A 30 30 0 0 0 430 90\" fill=\"none\" marker-end=\"url(#arrow-orange)\" stroke=\"#f57c00\" stroke-width=\"3\"></path>\n<text fill=\"#f57c00\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"440\" y=\"80\">M_0 = 30 kN·m</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"205\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"205\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"195\" y2=\"195\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"185\">L = 4 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 1.6 \\ \\mathrm{mm \\ (downward)} \\)",
+            "B": "\\( 1.6 \\ \\mathrm{mm \\ (upward)} \\)",
+            "C": "\\( 24.0 \\ \\mathrm{mm \\ (downward)} \\)",
+            "D": "\\( 49.6 \\ \\mathrm{mm \\ (downward)} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A “propped” cantilever beam of length \\( L = 5 \\ \\mathrm{m} \\) is fixed at the left end and subjected to a downward uniform distributed load of \\( w = 24 \\ \\mathrm{kN/m} \\). To prevent the free end from deflecting downward, an upward point load \\( P \\) is applied at the free end. What is the required magnitude of the upward force \\( P \\) so that the net deflection at the free end is exactly zero?\n<svg viewbox=\"0 0 500 250\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-red-up\" markerheight=\"4\" markerwidth=\"6\" orient=\"up\" refx=\"5\" refy=\"0\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 10 L 5 0 L 10 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"260\" x2=\"260\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"330\" x2=\"330\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 24 kN/m</text>\n<line marker-end=\"url(#arrow-red-up)\" stroke=\"#d32f2f\" stroke-width=\"4\" x1=\"400\" x2=\"400\" y1=\"200\" y2=\"125\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"400\" y=\"220\">P = ?</text>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"450\" y=\"115\">v_net = 0</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"220\" y2=\"245\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"230\" y2=\"245\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"235\" y2=\"235\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"225\">L = 5 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 30 \\ \\mathrm{kN} \\)",
+            "B": "\\( 45 \\ \\mathrm{kN} \\)",
+            "C": "\\( 60 \\ \\mathrm{kN} \\)",
+            "D": "\\( 120 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "Substitute the respective deflection formulas from the FE Reference Handbook:\n\n\\[\n\\frac{wL^4}{8EI} = \\frac{PL^3}{3EI}\n\\]",
+            "Substitute the respective deflection formulas from the FE Reference Handbook:",
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilever beam of length \\( L = 4 \\ \\mathrm{m} \\) is loaded with both a uniform distributed load of \\( w = 5 \\ \\mathrm{kN/m} \\) over its entire length and a concentrated point load \\( P = 10 \\ \\mathrm{kN} \\) at its free end. The flexural rigidity is \\( EI = 12,000 \\ \\mathrm{kN \\cdot m^2} \\). Using the principle of superposition, calculate the total maximum downward deflection \\( v_{\\mathrm{max}} \\).\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"4\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"260\" x2=\"260\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"330\" x2=\"330\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 5 kN/m</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"400\" x2=\"400\" y1=\"20\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"435\" y=\"30\">P = 10 kN</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"190\" y2=\"215\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"190\" y2=\"215\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"205\" y2=\"205\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"195\">L = 4 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 13.3 \\ \\mathrm{mm} \\)",
+            "B": "\\( 17.8 \\ \\mathrm{mm} \\)",
+            "C": "\\( 25.4 \\ \\mathrm{mm} \\)",
+            "D": "\\( 31.1 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "D",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilever beam of length \\( L = 4 \\ \\mathrm{m} \\) has an applied concentrated moment \\( M_0 = 40 \\ \\mathrm{kN \\cdot m} \\) at its free end. The flexural rigidity of the beam is \\( EI = 16,000 \\ \\mathrm{kN \\cdot m^2} \\). Calculate the maximum deflection \\( v_{\\mathrm{max}} \\) at the free end.\n<svg viewbox=\"0 0 500 220\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-orange\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#f57c00\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<path d=\"M 430 110 A 30 30 0 0 0 400 60\" fill=\"none\" marker-end=\"url(#arrow-orange)\" stroke=\"#f57c00\" stroke-width=\"3\"></path>\n<text fill=\"#f57c00\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"420\" y=\"50\">M_0 = 40 kN·m</text>\n<path d=\"M 100 110 Q 250 110 400 150\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"205\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"205\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"195\" y2=\"195\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"185\">L = 4 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 10.0 \\ \\mathrm{mm} \\)",
+            "B": "\\( 15.0 \\ \\mathrm{mm} \\)",
+            "C": "\\( 20.0 \\ \\mathrm{mm} \\)",
+            "D": "\\( 40.0 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilever beam of length \\( L = 5 \\ \\mathrm{m} \\) is subjected to a concentrated load \\( P = 50 \\ \\mathrm{kN} \\) applied at a distance \\( a = 3 \\ \\mathrm{m} \\) from the fixed support. The flexural rigidity of the beam is \\( EI = 25,000 \\ \\mathrm{kN \\cdot m^2} \\). Determine the maximum deflection \\( v_{\\mathrm{max}} \\) at the free end of the beam.\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"6\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"280\" x2=\"280\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"280\" y=\"30\">P = 50 kN</text>\n<path d=\"M 100 110 Q 200 110 280 135 L 400 165\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"410\" y=\"170\">v_max</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"215\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"280\" x2=\"280\" y1=\"180\" y2=\"195\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"215\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"280\" y1=\"185\" y2=\"185\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"190\" y=\"175\">a = 3 m</text>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"205\" y2=\"205\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"220\">L = 5 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 18.0 \\ \\mathrm{mm} \\)",
+            "B": "\\( 27.5 \\ \\mathrm{mm} \\)",
+            "C": "\\( 36.0 \\ \\mathrm{mm} \\)",
+            "D": "\\( 45.0 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilever beam of length \\( L = 3 \\ \\mathrm{m} \\) is subjected to a uniform distributed load of \\( w = 10 \\ \\mathrm{kN/m} \\) over its entire length. The beam has a modulus of elasticity \\( E = 200 \\ \\mathrm{GPa} \\) and a moment of inertia \\( I = 45 \\times 10^6 \\ \\mathrm{mm^4} \\). Calculate the maximum deflection \\( v_{\\mathrm{max}} \\) at the free end.\n<svg viewbox=\"0 0 500 220\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"190\" x2=\"190\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"260\" x2=\"260\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"330\" x2=\"330\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"400\" x2=\"400\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 10 kN/m</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"205\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"205\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"195\" y2=\"195\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"185\">L = 3 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 5.63 \\ \\mathrm{mm} \\)",
+            "B": "\\( 8.50 \\ \\mathrm{mm} \\)",
+            "C": "\\( 11.25 \\ \\mathrm{mm} \\)",
+            "D": "\\( 15.00 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A cantilevered steel beam of length \\( L = 4 \\ \\mathrm{m} \\) is subjected to a concentrated point load \\( P = 15 \\ \\mathrm{kN} \\) at its free end. The modulus of elasticity is \\( E = 200 \\ \\mathrm{GPa} \\) and the moment of inertia is \\( I = 80 \\times 10^6 \\ \\mathrm{mm^4} \\). Determine the maximum downward deflection \\( v_{\\mathrm{max}} \\) at the free end.\n<svg viewbox=\"0 0 500 220\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"6\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"url(#wall-hatch)\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"30\" x=\"70\" y=\"50\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"100\" x2=\"100\" y1=\"50\" y2=\"170\"></line>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"400\" x2=\"400\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"400\" y=\"30\">P = 15 kN</text>\n<path d=\"M 100 110 Q 250 110 400 150\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"350\" y=\"160\">v_max</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"180\" y2=\"205\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"180\" y2=\"205\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"195\" y2=\"195\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"185\">L = 4 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 10.0 \\ \\mathrm{mm} \\)",
+            "B": "\\( 15.0 \\ \\mathrm{mm} \\)",
+            "C": "\\( 20.0 \\ \\mathrm{mm} \\)",
+            "D": "\\( 25.0 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "Identify the standard formula from the FE Reference Handbook P140:\n\n\\[\nv_{\\mathrm{max}} = \\frac{P a^2 (3L -a)}{6EI} = \\frac{P L^2 (3L -L)}{6EI} = \\frac{PL^3}{3EI}\n\\]",
+            "Identify the standard formula from the FE Reference Handbook P140:",
+            "FE Reference Handbook 10.5 – P135, P140"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A machine component acts as a simply supported beam spanning \\( L = 5 \\ \\mathrm{m} \\). It is made of steel (\\( E = 200 \\ \\mathrm{GPa} \\)) and has a moment of inertia \\( I = 100 \\times 10^6 \\ \\mathrm{mm^4} \\). To prevent interference with other moving parts, the maximum downward deflection at the center cannot exceed \\( 10 \\ \\mathrm{mm} \\). What is the maximum allowable magnitude of a point load \\( P \\) applied at the midspan?\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"6\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"30\">P = ?</text>\n<path d=\"M 100 110 Q 250 150 400 110\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"165\">v_max ≤ 10 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"170\" y2=\"195\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"170\" y2=\"195\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"185\" y2=\"185\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"150\" y=\"175\">L = 5 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 64.5 \\ \\mathrm{kN} \\)",
+            "B": "\\( 76.8 \\ \\mathrm{kN} \\)",
+            "C": "\\( 85.2 \\ \\mathrm{kN} \\)",
+            "D": "\\( 92.0 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported steel beam (\\( E = 200 \\ \\mathrm{GPa} \\)) spans \\( L = 8 \\ \\mathrm{m} \\) and is required to support a uniform distributed load of \\( w = 12 \\ \\mathrm{kN/m} \\). Building codes stipulate that the maximum allowable deflection is \\( L/360 \\). What is the minimum required moment of inertia \\( I \\) to satisfy this deflection criterion?\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"185\" x2=\"185\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"315\" x2=\"315\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"380\" x2=\"380\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 12 kN/m</text>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"140\">v_max ≤ L / 360</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 8 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 120 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "B": "\\( 144 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "C": "\\( 180 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "D": "\\( 240 \\times 10^6 \\ \\mathrm{mm^4} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 6 \\ \\mathrm{m} \\) is subjected simultaneously to a uniform distributed load of \\( w = 10 \\ \\mathrm{kN/m} \\) and a concentrated point load of \\( P = 30 \\ \\mathrm{kN} \\) at the midspan. The flexural rigidity of the beam is \\( EI = 24,000 \\ \\mathrm{kN \\cdot m^2} \\). Calculate the total magnitude of the end slope \\( \\theta \\) at the supports.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"6\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-curve\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"185\" x2=\"185\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"315\" x2=\"315\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"380\" x2=\"380\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"20\" y2=\"95\"></line>\n<path d=\"M 100 110 Q 250 160 400 110\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"60\" x2=\"150\" y1=\"95\" y2=\"128\"></line>\n<path d=\"M 130 105 A 20 20 0 0 1 140 120\" fill=\"none\" marker-end=\"url(#arrow-curve)\" stroke=\"#1976d2\" stroke-width=\"1.5\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"145\" y=\"105\">θ</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 6 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 0.00425 \\ \\mathrm{rad} \\)",
+            "B": "\\( 0.00656 \\ \\mathrm{rad} \\)",
+            "C": "\\( 0.00812 \\ \\mathrm{rad} \\)",
+            "D": "\\( 0.01050 \\ \\mathrm{rad} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 6 \\ \\mathrm{m} \\) is subjected simultaneously to a uniform distributed load of \\( w = 10 \\ \\mathrm{kN/m} \\) and a concentrated point load of \\( P = 30 \\ \\mathrm{kN} \\) at the midspan. The flexural rigidity is \\( EI = 24,000 \\ \\mathrm{kN \\cdot m^2} \\). Calculate the total maximum deflection \\( v_{\\mathrm{max}} \\) of the beam.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"4\" markerwidth=\"6\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"185\" x2=\"185\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"315\" x2=\"315\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"380\" x2=\"380\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"160\" y=\"50\">w = 10 kN/m</text>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"20\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"260\" y=\"30\">P = 30 kN</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 6 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 8.33 \\ \\mathrm{mm} \\)",
+            "B": "\\( 10.45 \\ \\mathrm{mm} \\)",
+            "C": "\\( 12.66 \\ \\mathrm{mm} \\)",
+            "D": "\\( 15.22 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 6 \\ \\mathrm{m} \\) carries a uniform distributed load of \\( w = 20 \\ \\mathrm{kN/m} \\). The flexural rigidity of the beam is \\( EI = 30,000 \\ \\mathrm{kN \\cdot m^2} \\). Calculate the magnitude of the slope \\( \\theta \\) at either support.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-curve\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"185\" x2=\"185\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"315\" x2=\"315\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"380\" x2=\"380\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 20 kN/m</text>\n<path d=\"M 100 110 Q 250 160 400 110\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"60\" x2=\"150\" y1=\"95\" y2=\"128\"></line>\n<path d=\"M 130 105 A 20 20 0 0 1 140 120\" fill=\"none\" marker-end=\"url(#arrow-curve)\" stroke=\"#1976d2\" stroke-width=\"1.5\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"145\" y=\"105\">θ</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 6 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 0.004 \\ \\mathrm{rad} \\)",
+            "B": "\\( 0.005 \\ \\mathrm{rad} \\)",
+            "C": "\\( 0.006 \\ \\mathrm{rad} \\)",
+            "D": "\\( 0.008 \\ \\mathrm{rad} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 5 \\ \\mathrm{m} \\) is subjected to a concentrated point load \\( P = 60 \\ \\mathrm{kN} \\) at its midspan. The flexural rigidity of the beam is \\( EI = 20,000 \\ \\mathrm{kN \\cdot m^2} \\). Determine the magnitude of the slope \\( \\theta \\) at the supports.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"4\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-curve\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"30\">P = 60 kN</text>\n<path d=\"M 100 110 Q 250 160 400 110\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-width=\"1.5\" x1=\"60\" x2=\"150\" y1=\"100\" y2=\"122\"></line>\n<path d=\"M 130 105 A 20 20 0 0 1 140 118\" fill=\"none\" marker-end=\"url(#arrow-curve)\" stroke=\"#1976d2\" stroke-width=\"1.5\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"145\" y=\"105\">θ</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 5 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 2.34 \\times 10^{-3} \\ \\mathrm{rad} \\)",
+            "B": "\\( 3.12 \\times 10^{-3} \\ \\mathrm{rad} \\)",
+            "C": "\\( 4.69 \\times 10^{-3} \\ \\mathrm{rad} \\)",
+            "D": "\\( 9.38 \\times 10^{-3} \\ \\mathrm{rad} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135, P139"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 8 \\ \\mathrm{m} \\) carries a uniform distributed load of \\( w = 15 \\ \\mathrm{kN/m} \\) over its entire span. The beam’s modulus of elasticity is \\( E = 200 \\ \\mathrm{GPa} \\) and its moment of inertia is \\( I = 250 \\times 10^6 \\ \\mathrm{mm^4} \\). Calculate the maximum deflection \\( v_{\\mathrm{max}} \\).\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<rect fill=\"#bbdefb\" height=\"40\" opacity=\"0.6\" stroke=\"#1976d2\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"60\"></rect>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"120\" x2=\"120\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"185\" x2=\"185\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"315\" x2=\"315\" y1=\"60\" y2=\"95\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"380\" x2=\"380\" y1=\"60\" y2=\"95\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"50\">w = 15 kN/m</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 8 m</text>\n</svg>",
+          "choices": {
+            "A": "\\( 8.5 \\ \\mathrm{mm} \\)",
+            "B": "\\( 12.0 \\ \\mathrm{mm} \\)",
+            "C": "\\( 16.0 \\ \\mathrm{mm} \\)",
+            "D": "\\( 24.0 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "Identify the standard formula from the FE Reference Handbook P139:\n\n\\[\nv_{\\mathrm{max}} = \\frac{5wL^4}{384EI}\n\\]",
+            "Identify the standard formula from the FE Reference Handbook P139:",
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported beam of length \\( L = 6 \\ \\mathrm{m} \\) is subjected to a concentrated point load \\( P = 40 \\ \\mathrm{kN} \\) at its midspan. The beam has a modulus of elasticity \\( E = 200 \\ \\mathrm{GPa} \\) and a moment of inertia \\( I = 150 \\times 10^6 \\ \\mathrm{mm^4} \\). Calculate the maximum deflection \\( v_{\\mathrm{max}} \\) of the beam.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-red\" markerheight=\"6\" markerwidth=\"4\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"300\" x=\"100\" y=\"100\"></rect>\n<g transform=\"translate(100, 115)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(400, 115)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<line marker-end=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"250\" x2=\"250\" y1=\"40\" y2=\"95\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"30\">P = 40 kN</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"160\" y2=\"185\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"400\" x2=\"400\" y1=\"160\" y2=\"185\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"100\" x2=\"400\" y1=\"175\" y2=\"175\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"165\">L = 6 m</text>\n<path d=\"M 100 110 Q 250 140 400 110\" fill=\"none\" stroke=\"#1976d2\" stroke-dasharray=\"5,5\" stroke-width=\"2\"></path>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"280\" y=\"135\">v_max</text>\n</svg>",
+          "choices": {
+            "A": "\\( 4.0 \\ \\mathrm{mm} \\)",
+            "B": "\\( 6.0 \\ \\mathrm{mm} \\)",
+            "C": "\\( 8.5 \\ \\mathrm{mm} \\)",
+            "D": "\\( 12.0 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "Identify the standard formula from the FE Reference Handbook P139:\n\n\\[\nv_{\\mathrm{max}} = \\frac{PL^3}{48EI}\n\\]",
+            "Identify the standard formula from the FE Reference Handbook P139:",
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A steel W-shape beam is reinforced by bolting two \\( 10 \\ \\mathrm{in.} \\times 1 \\ \\mathrm{in.} \\) cover plates to its flanges. The total moment of inertia of the built-up section is \\( I = 2,500 \\ \\mathrm{in^4} \\). The distance from the neutral axis to the centroid of the top cover plate is \\( 8.5 \\ \\mathrm{in.} \\) If the section is subjected to a vertical shear of \\( V = 120 \\ \\mathrm{kips} \\), determine the total transverse shear flow \\( q \\) acting on the bolts connecting the top cover plate.\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<pattern height=\"6\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"6\">\n<line stroke=\"#d32f2f\" stroke-width=\"1\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"6\"></line>\n</pattern>\n</defs>\n<path d=\"M 180,45 L 320,45 L 320,60 L 255,60 L 255,180 L 320,180 L 320,195 L 180,195 L 180,180 L 245,180 L 245,60 L 180,60 Z\" fill=\"#e0e0e0\" stroke=\"#333\" stroke-width=\"2\"></path>\n<rect fill=\"url(#hatch-red)\" height=\"20\" stroke=\"#333\" stroke-width=\"3\" width=\"200\" x=\"150\" y=\"25\"></rect>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"3\" width=\"200\" x=\"150\" y=\"195\"></rect>\n<line stroke=\"#000\" stroke-dasharray=\"5,3\" stroke-width=\"3\" x1=\"200\" x2=\"200\" y1=\"10\" y2=\"70\"></line>\n<line stroke=\"#000\" stroke-dasharray=\"5,3\" stroke-width=\"3\" x1=\"300\" x2=\"300\" y1=\"10\" y2=\"70\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"350\" y=\"35\">Bolts</text>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"410\" y=\"125\">NA</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"35\" y2=\"35\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"120\" y2=\"120\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"35\" y2=\"120\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"85\">8.5 in.</text>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"40\">A’ (Cover Plate)</text>\n</svg>",
+          "choices": {
+            "A": "\\( 2.04 \\ \\mathrm{kips/in} \\)",
+            "B": "\\( 4.08 \\ \\mathrm{kips/in} \\)",
+            "C": "\\( 8.16 \\ \\mathrm{kips/in} \\)",
+            "D": "\\( 10.2 \\ \\mathrm{kips/in} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A built-up box beam is constructed by nailing two \\( 100 \\ \\mathrm{mm} \\times 20 \\ \\mathrm{mm} \\) flange boards to two \\( 10 \\ \\mathrm{mm} \\times 140 \\ \\mathrm{mm} \\) web boards as shown. The total moment of inertia is \\( I = 36.0 \\times 10^6 \\ \\mathrm{mm^4} \\). The beam is subjected to a vertical shear force of \\( V = 8.0 \\ \\mathrm{kN} \\). If each nail can safely carry a shear force of \\( F_{\\mathrm{nail}} = 400 \\ \\mathrm{N} \\), what is the maximum allowable longitudinal spacing \\( s \\) between the pairs of nails connecting the top flange to the webs?\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<pattern height=\"8\" id=\"hatch-green\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#388e3c\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"#e0e0e0\" height=\"140\" stroke=\"#333\" stroke-width=\"2\" width=\"10\" x=\"160\" y=\"50\"></rect>\n<rect fill=\"#e0e0e0\" height=\"140\" stroke=\"#333\" stroke-width=\"2\" width=\"10\" x=\"330\" y=\"50\"></rect>\n<rect fill=\"url(#hatch-green)\" height=\"20\" stroke=\"#333\" stroke-width=\"3\" width=\"200\" x=\"150\" y=\"30\"></rect>\n<rect fill=\"#f5f5f5\" height=\"20\" stroke=\"#333\" stroke-width=\"3\" width=\"200\" x=\"150\" y=\"190\"></rect>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"410\" y=\"125\">NA</text>\n<line stroke=\"#000000\" stroke-width=\"4\" x1=\"165\" x2=\"165\" y1=\"20\" y2=\"70\"></line>\n<circle cx=\"165\" cy=\"20\" fill=\"#000000\" r=\"4\"></circle>\n<line stroke=\"#000000\" stroke-width=\"4\" x1=\"335\" x2=\"335\" y1=\"20\" y2=\"70\"></line>\n<circle cx=\"335\" cy=\"20\" fill=\"#000000\" r=\"4\"></circle>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"80\">2 nails per section</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"10\" y2=\"28\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"350\" x2=\"350\" y1=\"10\" y2=\"28\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"15\" y2=\"15\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"10\">100 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"50\" y2=\"50\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"120\" y2=\"120\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"50\" y2=\"120\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"90\">70 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"352\" x2=\"375\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"352\" x2=\"375\" y1=\"50\" y2=\"50\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"370\" x2=\"370\" y1=\"30\" y2=\"50\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"380\" y=\"45\">20 mm</text>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"45\">A’</text>\n</svg>",
+          "choices": {
+            "A": "\\( 11.25 \\ \\mathrm{mm} \\)",
+            "B": "\\( 22.50 \\ \\mathrm{mm} \\)",
+            "C": "\\( 35.55 \\ \\mathrm{mm} \\)",
+            "D": "\\( 45.00 \\ \\mathrm{mm} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A built-up wooden I-beam is constructed by gluing three boards together as shown. The beam is subjected to a vertical shear force of \\( V = 25 \\ \\mathrm{kN} \\). The total moment of inertia about the neutral axis is \\( I = 55.6 \\times 10^6 \\ \\mathrm{mm^4} \\). Determine the shear flow \\( q \\) in the glue joint connecting the top flange to the web.\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"pointer\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#f57c00\"></path>\n</marker>\n<pattern height=\"8\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<path d=\"M 150,30 L 350,30 L 350,50 L 260,50 L 260,210 L 350,210 L 350,230 L 150,230 L 150,210 L 240,210 L 240,50 L 150,50 Z\" fill=\"#f5f5f5\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<line stroke=\"#f57c00\" stroke-width=\"4\" x1=\"240\" x2=\"260\" y1=\"50\" y2=\"50\"></line>\n<line stroke=\"#f57c00\" stroke-width=\"4\" x1=\"240\" x2=\"260\" y1=\"210\" y2=\"210\"></line>\n<text fill=\"#f57c00\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"320\" y=\"70\">Glue Joint</text>\n<path d=\"M 320,65 L 260,50\" fill=\"none\" marker-end=\"url(#pointer)\" stroke=\"#f57c00\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"130\" y2=\"130\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"410\" y=\"135\">NA</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"10\" y2=\"28\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"350\" x2=\"350\" y1=\"10\" y2=\"28\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"15\" y2=\"15\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"10\">150 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"50\" y2=\"50\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"30\" y2=\"50\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"45\">20 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"130\" y2=\"130\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"50\" y2=\"130\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"95\">80 mm</text>\n<rect fill=\"url(#hatch-red)\" height=\"20\" opacity=\"0.6\" width=\"200\" x=\"150\" y=\"30\"></rect>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"45\">A’</text>\n</svg>",
+          "choices": {
+            "A": "\\( 60.7 \\ \\mathrm{kN/m} \\)",
+            "B": "\\( 121.4 \\ \\mathrm{kN/m} \\)",
+            "C": "\\( 135.0 \\ \\mathrm{kN/m} \\)",
+            "D": "\\( 242.8 \\ \\mathrm{kN/m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A hollow box beam has outer dimensions of \\( B = 100 \\ \\mathrm{mm} \\) (width) and \\( H = 150 \\ \\mathrm{mm} \\) (depth), with a uniform wall thickness of \\( t = 10 \\ \\mathrm{mm} \\). The calculated moment of inertia about the neutral axis is \\( I = 13.48 \\times 10^6 \\ \\mathrm{mm^4} \\). If it carries a transverse shear force of \\( V = 50 \\ \\mathrm{kN} \\), calculate the maximum transverse shear stress.\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<pattern height=\"8\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"150\" stroke=\"#333\" stroke-width=\"3\" width=\"100\" x=\"150\" y=\"45\"></rect>\n<rect fill=\"#ffffff\" height=\"130\" stroke=\"#333\" stroke-width=\"3\" width=\"80\" x=\"160\" y=\"55\"></rect>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"90\" x2=\"310\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"320\" y=\"125\">NA</text>\n<path d=\"M 150,45 L 250,45 L 250,120 L 240,120 L 240,55 L 160,55 L 160,120 L 150,120 Z\" fill=\"url(#hatch-red)\" opacity=\"0.7\"></path>\n<line stroke=\"#d32f2f\" stroke-width=\"5\" x1=\"150\" x2=\"160\" y1=\"120\" y2=\"120\"></line>\n<line stroke=\"#d32f2f\" stroke-width=\"5\" x1=\"240\" x2=\"250\" y1=\"120\" y2=\"120\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"25\" y2=\"43\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"25\" y2=\"43\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"250\" y1=\"30\" y2=\"30\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"200\" y=\"22\">B = 100 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"45\" y2=\"45\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"195\" y2=\"195\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"45\" y2=\"195\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"125\">H = 150 mm</text>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"bold\" x=\"270\" y=\"100\">Wall thickness t = 10 mm</text>\n</svg>",
+          "choices": {
+            "A": "\\( 10.4 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 20.8 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 31.2 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 41.6 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A symmetric wide-flange beam (I-beam) is subjected to a transverse shear force of \\( V = 150 \\ \\mathrm{kN} \\). The moment of inertia about its neutral axis is \\( I = 171.6 \\times 10^6 \\ \\mathrm{mm^4} \\). The cross-section dimensions are: flange width \\( b_f = 200 \\ \\mathrm{mm} \\), flange thickness \\( t_f = 20 \\ \\mathrm{mm} \\), overall depth \\( d = 300 \\ \\mathrm{mm} \\), and web thickness \\( t_w = 10 \\ \\mathrm{mm} \\). Calculate the transverse shear stress in the web, immediately below the junction with the top flange.\n<svg viewbox=\"0 0 500 230\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<pattern height=\"8\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<path d=\"M 150,30 L 350,30 L 350,50 L 255,50 L 255,190 L 350,190 L 350,210 L 150,210 L 150,190 L 245,190 L 245,50 L 150,50 Z\" fill=\"#f5f5f5\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"410\" y=\"125\">NA</text>\n<line stroke=\"#f57c00\" stroke-dasharray=\"10,5\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"50\" y2=\"50\"></line>\n<text fill=\"#f57c00\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"410\" y=\"55\">Cut for Q</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"10\" y2=\"28\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"350\" x2=\"350\" y1=\"10\" y2=\"28\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"15\" y2=\"15\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"10\">b_f = 200 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"210\" y2=\"210\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"30\" y2=\"210\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"125\">d = 300 mm</text>\n<rect fill=\"url(#hatch-red)\" height=\"20\" opacity=\"0.6\" width=\"200\" x=\"150\" y=\"30\"></rect>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"45\">Area A’</text>\n<circle cx=\"250\" cy=\"53\" fill=\"#d32f2f\" r=\"3\"></circle>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"260\" y=\"65\">Point of Interest</text>\n</svg>",
+          "choices": {
+            "A": "\\( 4.9 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 24.5 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 49.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 56.3 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A symmetric wide-flange beam (I-beam) is subjected to a transverse shear force of \\( V = 150 \\ \\mathrm{kN} \\). The moment of inertia about its neutral axis is \\( I = 171.6 \\times 10^6 \\ \\mathrm{mm^4} \\). The flange width is \\( b_f = 200 \\ \\mathrm{mm} \\), flange thickness is \\( t_f = 20 \\ \\mathrm{mm} \\), overall depth is \\( d = 300 \\ \\mathrm{mm} \\), and the web thickness is \\( t_w = 10 \\ \\mathrm{mm} \\). Calculate the maximum transverse shear stress in the beam (which occurs at the neutral axis).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"tick-red\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#d32f2f\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<pattern height=\"8\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<path d=\"M 150,30 L 350,30 L 350,50 L 255,50 L 255,190 L 350,190 L 350,210 L 150,210 L 150,190 L 245,190 L 245,50 L 150,50 Z\" fill=\"#f5f5f5\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"400\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"410\" y=\"125\">NA</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"10\" y2=\"28\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"350\" x2=\"350\" y1=\"10\" y2=\"28\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"350\" y1=\"15\" y2=\"15\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"250\" y=\"10\">b_f = 200 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"352\" x2=\"375\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"352\" x2=\"375\" y1=\"50\" y2=\"50\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"370\" x2=\"370\" y1=\"30\" y2=\"50\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"380\" y=\"45\">t_f = 20 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"125\" x2=\"148\" y1=\"210\" y2=\"210\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"30\" y2=\"210\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"120\" y=\"125\">d = 300 mm</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"245\" x2=\"245\" y1=\"150\" y2=\"168\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"255\" x2=\"255\" y1=\"150\" y2=\"168\"></line>\n<line marker-end=\"url(#tick-red)\" marker-start=\"url(#tick-red)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"245\" x2=\"255\" y1=\"160\" y2=\"160\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"265\" y=\"165\">t_w = 10 mm</text>\n<rect fill=\"url(#hatch-red)\" height=\"20\" opacity=\"0.6\" width=\"200\" x=\"150\" y=\"30\"></rect>\n<rect fill=\"url(#hatch-red)\" height=\"70\" opacity=\"0.6\" width=\"10\" x=\"245\" y=\"50\"></rect>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"200\" y=\"85\">Area A’</text>\n</svg>",
+          "choices": {
+            "A": "\\( 32.5 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 45.1 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 56.3 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 68.2 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A solid steel circular shaft is subjected to a transverse shear force of \\( V = 20 \\ \\mathrm{kN} \\). The diameter of the shaft is \\( d = 40 \\ \\mathrm{mm} \\). Determine the maximum transverse shear stress \\( \\tau_{\\mathrm{max}} \\) in the shaft.\n<svg viewbox=\"0 0 500 200\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-black\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333\"></path>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<circle cx=\"200\" cy=\"100\" fill=\"#f5f5f5\" r=\"75\" stroke=\"#333\" stroke-width=\"3\"></circle>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"100\" x2=\"300\" y1=\"100\" y2=\"100\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"310\" y=\"105\">NA</text>\n<line marker-end=\"url(#arrow-black)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"200\" x2=\"253\" y1=\"100\" y2=\"47\"></line>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"260\" y=\"40\">d = 40 mm</text>\n<path d=\"M 350,25 Q 430,100 350,175\" fill=\"none\" stroke=\"#d32f2f\" stroke-width=\"2.5\"></path>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"350\" x2=\"350\" y1=\"25\" y2=\"175\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"350\" x2=\"390\" y1=\"100\" y2=\"100\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"400\" y=\"105\">τ_max</text>\n</svg>",
+          "choices": {
+            "A": "\\( 15.9 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 21.2 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 28.3 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 31.8 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A solid rectangular timber beam has a width of \\( b = 50 \\ \\mathrm{mm} \\) and a depth of \\( h = 150 \\ \\mathrm{mm} \\). If the beam is subjected to a maximum internal transverse shear force of \\( V = 45 \\ \\mathrm{kN} \\), determine the maximum transverse shear stress \\( \\tau_{\\mathrm{max}} \\) in the cross-section.\n<svg viewbox=\"0 0 500 260\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333\"></path>\n</marker>\n<marker id=\"arrow-blue\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n</defs>\n<rect fill=\"#f5f5f5\" height=\"180\" stroke=\"#333\" stroke-width=\"3\" width=\"60\" x=\"170\" y=\"40\"></rect>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"120\" x2=\"280\" y1=\"130\" y2=\"130\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"290\" y=\"135\">NA</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"170\" x2=\"230\" y1=\"20\" y2=\"20\"></line>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" x=\"200\" y=\"12\">b = 50 mm</text>\n<line marker-end=\"url(#arrow)\" marker-start=\"url(#arrow)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"140\" x2=\"140\" y1=\"40\" y2=\"220\"></line>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"end\" x=\"130\" y=\"135\">h = 150</text>\n<path d=\"M 330,40 Q 430,130 330,220\" fill=\"none\" stroke=\"#d32f2f\" stroke-width=\"2.5\"></path>\n<line stroke=\"#333\" stroke-width=\"1.5\" x1=\"330\" x2=\"330\" y1=\"40\" y2=\"220\"></line>\n<line marker-end=\"url(#arrow-blue)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"330\" x2=\"380\" y1=\"130\" y2=\"130\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"390\" y=\"135\">τ_max</text>\n</svg>",
+          "choices": {
+            "A": "\\( 4.5 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 6.0 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 9.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 12.0 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A structural beam is designed to carry a maximum internal bending moment of \\( M_{\\mathrm{max}} = 50 \\ \\mathrm{kN \\cdot m} \\). If the allowable normal bending stress for the material is \\( \\sigma_{\\mathrm{allow}} = 150 \\ \\mathrm{MPa} \\), what is the minimum required elastic section modulus \\( S \\) for the beam?",
+          "choices": {
+            "A": "\\( 3.33 \\times 10^3 \\ \\mathrm{mm^3} \\)",
+            "B": "\\( 111 \\times 10^3 \\ \\mathrm{mm^3} \\)",
+            "C": "\\( 333 \\times 10^3 \\ \\mathrm{mm^3} \\)",
+            "D": "\\( 750 \\times 10^3 \\ \\mathrm{mm^3} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A hollow circular pipe functions as a structural beam and is subjected to a bending moment \\( M = 30 \\ \\mathrm{kip \\cdot in} \\). The pipe has an outer diameter \\( D = 4.0 \\ \\mathrm{in} \\) and an inner diameter \\( d = 3.0 \\ \\mathrm{in} \\). Calculate the maximum bending stress on the cross-section.\n<svg height=\"250\" viewbox=\"0 0 500 250\" width=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-black\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333\"></path>\n</marker>\n</defs>\n<circle cx=\"250\" cy=\"125\" fill=\"#f5f5f5\" r=\"80\" stroke=\"#333\" stroke-width=\"3\"></circle>\n<circle cx=\"250\" cy=\"125\" fill=\"#ffffff\" r=\"60\" stroke=\"#333\" stroke-width=\"3\"></circle>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"140\" x2=\"360\" y1=\"125\" y2=\"125\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"370\" y=\"130\">NA</text>\n<line marker-end=\"url(#arrow-black)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"250\" x2=\"250\" y1=\"125\" y2=\"45\"></line>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"260\" y=\"80\">D/2 = 2.0 in</text>\n<line marker-end=\"url(#arrow-black)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"250\" x2=\"208\" y1=\"125\" y2=\"83\"></line>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"125\" y=\"70\">d/2 = 1.5 in</text>\n</svg>",
+          "choices": {
+            "A": "\\( 6.98 \\ \\mathrm{ksi} \\)",
+            "B": "\\( 11.6 \\ \\mathrm{ksi} \\)",
+            "C": "\\( 13.9 \\ \\mathrm{ksi} \\)",
+            "D": "\\( 21.2 \\ \\mathrm{ksi} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "An inverted T-beam is subjected to a positive internal bending moment of \\( M = +25 \\ \\mathrm{kN \\cdot m} \\) (causing the beam to bend concave upward). The centroidal neutral axis (NA) is located \\( 80 \\ \\mathrm{mm} \\) from the top edge and \\( 40 \\ \\mathrm{mm} \\) from the bottom edge of the section. The moment of inertia about the NA is \\( I = 8.0 \\times 10^6 \\ \\mathrm{mm^4} \\). Determine the magnitude of the maximum compressive bending stress in the cross-section.\n<svg height=\"250\" viewbox=\"0 0 500 250\" width=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow-red\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<marker id=\"arrow-green\" markerheight=\"5\" markerwidth=\"5\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#388e3c\"></path>\n</marker>\n<marker id=\"arrow-orange\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#f57c00\"></path>\n</marker>\n</defs>\n<path d=\"M 230 40 L 270 40 L 270 140 L 330 140 L 330 160 L 170 160 L 170 140 L 230 140 Z\" fill=\"#f5f5f5\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"8,4\" stroke-width=\"2\" x1=\"140\" x2=\"360\" y1=\"120\" y2=\"120\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"370\" y=\"125\">NA</text>\n<line marker-end=\"url(#arrow-red)\" marker-start=\"url(#arrow-red)\" stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"40\" y2=\"120\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"350\" y=\"85\">c_top = 80 mm</text>\n<line marker-end=\"url(#arrow-green)\" marker-start=\"url(#arrow-green)\" stroke=\"#388e3c\" stroke-width=\"1.5\" x1=\"340\" x2=\"340\" y1=\"120\" y2=\"160\"></line>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"350\" y=\"145\">c_bot = 40 mm</text>\n<path d=\"M 120 70 A 50 50 0 0 0 120 170\" fill=\"none\" marker-end=\"url(#arrow-orange)\" stroke=\"#f57c00\" stroke-width=\"3\"></path>\n<text fill=\"#f57c00\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"bold\" x=\"60\" y=\"125\">+M</text>\n</svg>",
+          "choices": {
+            "A": "\\( 125 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 250 \\ \\mathrm{MPa} \\)",
+            "C": "\\( -125 \\ \\mathrm{MPa} \\)",
+            "D": "\\( -250 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A steel wide-flange beam (W-shape) is subjected to a maximum bending moment of \\( M = 120 \\ \\mathrm{kip \\cdot ft} \\). The beam has an elastic section modulus \\( S = 36.0 \\ \\mathrm{in^3} \\) about its strong axis. Determine the maximum bending stress in the beam.\n<svg height=\"250\" viewbox=\"0 0 500 250\" width=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M 200 40 L 300 40 L 300 60 L 260 60 L 260 190 L 300 190 L 300 210 L 200 210 L 200 190 L 240 190 L 240 60 L 200 60 Z\" fill=\"#f5f5f5\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"6,4\" stroke-width=\"2\" x1=\"160\" x2=\"340\" y1=\"125\" y2=\"125\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"14\" x=\"350\" y=\"130\">NA</text>\n<text fill=\"#333\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"30\">S = 36.0 in³</text>\n</svg>",
+          "choices": {
+            "A": "\\( 3.33 \\ \\mathrm{ksi} \\)",
+            "B": "\\( 40.0 \\ \\mathrm{ksi} \\)",
+            "C": "\\( 45.0 \\ \\mathrm{ksi} \\)",
+            "D": "\\( 480 \\ \\mathrm{ksi} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A simply supported timber beam with a solid rectangular cross-section is subjected to a maximum internal bending moment of \\( M = 15 \\ \\mathrm{kN \\cdot m} \\). The cross-sectional dimensions are base \\( b = 100 \\ \\mathrm{mm} \\) and height \\( h = 200 \\ \\mathrm{mm} \\). Determine the maximum normal bending stress \\( \\sigma_{\\mathrm{max}} \\) in the beam.",
+          "choices": {
+            "A": "\\( 11.3 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 22.5 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 45.0 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 67.5 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "The internal shear force in a simply supported beam is represented by the equation \\( V(x) = 48 – 3x^2 \\ \\mathrm{kN} \\), where \\( x \\) is measured in meters from the left support. Determine the location \\( x \\) where the maximum bending moment occurs within this region.",
+          "choices": {
+            "A": "\\( 3.0 \\ \\mathrm{m} \\)",
+            "B": "\\( 4.0 \\ \\mathrm{m} \\)",
+            "C": "\\( 12.0 \\ \\mathrm{m} \\)",
+            "D": "\\( 16.0 \\ \\mathrm{m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P134"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "The shear force diagram for a beam region from \\( x_1 = 0 \\) to \\( x_2 = 5 \\ \\mathrm{m} \\) is defined by the equation \\( V(x) = 30 – 6x \\ \\mathrm{kN} \\). If the bending moment at the start of this region (\\( x_1 = 0 \\)) is \\( M_1 = 15 \\ \\mathrm{kN \\cdot m} \\), determine the internal bending moment \\( M_2 \\) at \\( x_2 = 5 \\ \\mathrm{m} \\).\n<svg height=\"100%\" viewbox=\"0 0 500 500\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"arrow\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto-start-reverse\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<pattern height=\"10\" id=\"hatch-red\" patternunits=\"userSpaceOnUse\" width=\"10\">\n<line stroke=\"#d32f2f\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"10\"></line>\n</pattern>\n<pattern height=\"10\" id=\"hatch-green\" patternunits=\"userSpaceOnUse\" width=\"10\">\n<line stroke=\"#388e3c\" stroke-width=\"1.5\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"10\"></line>\n</pattern>\n<clippath id=\"sfd-clip\">\n<polygon points=\"0,0 0,-80 300,0\"></polygon>\n</clippath>\n<clippath id=\"bmd-clip\">\n<path d=\"M 0,0 L 0,-30 Q 150,-180 300,-180 L 300,0 Z\"></path>\n</clippath>\n</defs>\n<g id=\"guidelines\" opacity=\"0.5\" stroke=\"gray\" stroke-dasharray=\"4,4\" stroke-width=\"1\">\n<line x1=\"100\" x2=\"100\" y1=\"50\" y2=\"600\"></line>\n<line x1=\"400\" x2=\"400\" y1=\"50\" y2=\"600\"></line>\n</g>\n<g id=\"beam-diagram\" transform=\"translate(100, 80)\">\n<text font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" x=\"-70\" y=\"5\">Beam</text>\n<path d=\"M 0,-10 L 300,-10 L 305,-5 L 295,5 L 300,10 L 0,10 L -5,5 L 5,-5 Z\" fill=\"#ffffff\" stroke=\"#000000\" stroke-linejoin=\"round\" stroke-width=\"3\"></path>\n<path d=\"M 0,-10 L 0,-35 L 300,-35 L 300,-10\" fill=\"none\" stroke=\"#1976d2\" stroke-width=\"2\"></path>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"50\" x2=\"50\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"100\" x2=\"100\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"150\" x2=\"150\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"200\" x2=\"200\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"250\" x2=\"250\" y1=\"-35\" y2=\"-10\"></line>\n<line marker-end=\"url(#arrow)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"300\" x2=\"300\" y1=\"-35\" y2=\"-10\"></line>\n<text fill=\"#1976d2\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"150\" y=\"-45\">w(x) = 6 kN/m</text>\n</g>\n<g id=\"sfd-diagram\" transform=\"translate(100, 280)\">\n<text fill=\"#1976d2\" font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" x=\"-70\" y=\"5\">SFD</text>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\" x1=\"-20\" x2=\"320\" y1=\"0\" y2=\"0\"></line>\n<rect clip-path=\"url(#sfd-clip)\" fill=\"url(#hatch-red)\" height=\"80\" width=\"300\" x=\"0\" y=\"-80\"></rect>\n<polygon fill=\"none\" points=\"0,0 0,-80 300,0\" stroke=\"#d32f2f\" stroke-width=\"2.5\"></polygon>\n<text fill=\"#d32f2f\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"end\" x=\"-10\" y=\"-80\">30</text>\n</g>\n<g id=\"bmd-diagram\" transform=\"translate(100, 480)\">\n<text fill=\"#388e3c\" font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" x=\"-70\" y=\"5\">BMD</text>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"4\" x1=\"-20\" x2=\"320\" y1=\"0\" y2=\"0\"></line>\n<rect clip-path=\"url(#bmd-clip)\" fill=\"url(#hatch-green)\" height=\"180\" width=\"300\" x=\"0\" y=\"-180\"></rect>\n<path d=\"M 0,0 L 0,-30 Q 150,-180 300,-180 L 300,0 Z\" fill=\"none\" stroke=\"#388e3c\" stroke-width=\"2.5\"></path>\n<text fill=\"#388e3c\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"end\" x=\"-10\" y=\"-30\">15</text>\n<text fill=\"#388e3c\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"start\" x=\"310\" y=\"-180\">M₂ = ?</text>\n</g>\n<g id=\"bottom-labels\" transform=\"translate(100, 620)\">\n<text font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"0\" y=\"0\">x₁ = 0</text>\n<text font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"300\" y=\"0\">x₂ = 5 m</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 75 \\ \\mathrm{kN \\cdot m} \\)",
+            "B": "\\( 90 \\ \\mathrm{kN \\cdot m} \\)",
+            "C": "\\( 150 \\ \\mathrm{kN \\cdot m} \\)",
+            "D": "\\( 165 \\ \\mathrm{kN \\cdot m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P134"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "The internal bending moment in a structural member is expressed as \\( M(x) = 4x^3 – 18x^2 + 15x – 30 \\ \\mathrm{kN \\cdot m} \\), where \\( x \\) is the position in meters. Determine the shear force \\( V \\) at \\( x = 2 \\ \\mathrm{m} \\).",
+          "choices": {
+            "A": "\\( -9 \\ \\mathrm{kN} \\)",
+            "B": "\\( -15 \\ \\mathrm{kN} \\)",
+            "C": "\\( 15 \\ \\mathrm{kN} \\)",
+            "D": "\\( 24 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P134"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "The shear force in a continuous beam is defined by the equation \\( V(x) = 120 – 10x – 2x^2 \\ \\mathrm{kN} \\), where \\( x \\) is the distance in meters from the left support. Determine the magnitude of the distributed load \\( w(x) \\) acting on the beam at \\( x = 3 \\ \\mathrm{m} \\).\n<svg height=\"200\" viewbox=\"0 0 500 200\" width=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect fill=\"#cfd8dc\" height=\"20\" stroke=\"#37474f\" stroke-width=\"2\" width=\"400\" x=\"50\" y=\"80\"></rect>\n<g transform=\"translate(50, 100)\">\n<polygon fill=\"#f5f5f5\" points=\"0,0 -15,25 15,25\" stroke=\"black\" stroke-linejoin=\"round\" stroke-width=\"2\"></polygon>\n<circle cx=\"0\" cy=\"0\" fill=\"white\" r=\"4\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-25\" x2=\"25\" y1=\"25\" y2=\"25\"></line>\n<path d=\"M -20 25 L -30 35 M -10 25 L -20 35 M 0 25 L -10 35 M 10 25 L 0 35 M 20 25 L 10 35\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<g transform=\"translate(450, 100)\">\n<circle cx=\"0\" cy=\"10\" fill=\"#f5f5f5\" r=\"10\" stroke=\"black\" stroke-width=\"2\"></circle>\n<line stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"2\" x1=\"-20\" x2=\"20\" y1=\"20\" y2=\"20\"></line>\n<path d=\"M -15 20 L -25 30 M -5 20 L -15 30 M 5 20 L -5 30 M 15 20 L 5 30\" stroke=\"black\" stroke-linecap=\"round\" stroke-width=\"1.5\"></path>\n</g>\n<path d=\"M 50 40 Q 150 10 250 50 T 450 20 L 450 80 L 50 80 Z\" fill=\"#bbdefb\" opacity=\"0.7\" stroke=\"#1976d2\" stroke-width=\"2\"></path>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"100\" x2=\"100\" y1=\"32\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"200\" x2=\"200\" y1=\"35\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"300\" x2=\"300\" y1=\"42\" y2=\"80\"></line>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#1976d2\" stroke-width=\"2\" x1=\"400\" x2=\"400\" y1=\"28\" y2=\"80\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"bold\" text-anchor=\"middle\" x=\"250\" y=\"15\">w(x) = ?</text>\n<line marker-end=\"url(#arrow-right)\" stroke=\"#d32f2f\" stroke-width=\"2\" x1=\"50\" x2=\"180\" y1=\"160\" y2=\"160\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" x=\"115\" y=\"175\">x = 3 m</text>\n<defs>\n<marker id=\"arrow-down\" markerheight=\"5\" markerwidth=\"5\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#1976d2\"></path>\n</marker>\n<marker id=\"arrow-right\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"10\" refy=\"5\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 0 10 L 10 5 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n</svg>",
+          "choices": {
+            "A": "\\( -22 \\ \\mathrm{kN/m} \\)",
+            "B": "\\( 22 \\ \\mathrm{kN/m} \\)",
+            "C": "\\( -32 \\ \\mathrm{kN/m} \\)",
+            "D": "\\( 32 \\ \\mathrm{kN/m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P134"
+          ],
+          "tags": [
+            "Beams"
+          ]
+        },
+        {
+          "question": "A rectangular beam has a width of \\( b = 10 \\,\\text{in} \\) and a total depth of \\( h = 20 \\,\\text{in} \\). At a certain section, the internal shear force is \\( V = 18 \\,\\text{kips} \\). Compute the maximum shear stress.",
+          "choices": {},
+          "answer": "\\( \\tau_{\\max} = 135 \\,\\text{psi} \\)",
+          "references": [
+            "FE Reference Handbook 10.5 – P135"
+          ],
+          "tags": [
+            "Beams",
+            "Stresses In Beams"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Columns",
+      "questions": [
+        {
+          "question": "A steel W-shape column (\\( E = 200 \\ \\mathrm{GPa} \\)) has a total length of \\( L = 8 \\ \\mathrm{m} \\) and is pinned at both its top and bottom supports. The section properties are \\( I_x = 150 \\times 10^6 \\ \\mathrm{mm^4} \\) (strong axis) and \\( I_y = 30 \\times 10^6 \\ \\mathrm{mm^4} \\) (weak axis). To increase its capacity, a lateral brace is installed exactly at midspan (\\( 4 \\ \\mathrm{m} \\) from either end) that prevents displacement strictly in the weak-axis (y-y) direction. The brace does not prevent displacement in the strong-axis (x-x) direction. Calculate the critical buckling load \\( P_{cr} \\) for this braced column.\n<svg viewbox=\"0 0 500 280\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-down\" markerheight=\"3\" markerwidth=\"3\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n<g transform=\"translate(50, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"60\" y=\"0\">Weak-Axis View</text>\n<circle cx=\"60\" cy=\"30\" fill=\"#fff\" r=\"4\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<polygon fill=\"#e0e0e0\" points=\"60,34 50,45 70,45\" stroke=\"#333\" stroke-width=\"1.5\"></polygon>\n<circle cx=\"60\" cy=\"230\" fill=\"#fff\" r=\"4\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<polygon fill=\"#e0e0e0\" points=\"60,234 50,245 70,245\" stroke=\"#333\" stroke-width=\"1.5\"></polygon>\n<rect fill=\"#f5f5f5\" height=\"185\" stroke=\"#333\" stroke-width=\"2\" width=\"20\" x=\"50\" y=\"45\"></rect>\n<line stroke=\"#388e3c\" stroke-width=\"4\" x1=\"10\" x2=\"50\" y1=\"137.5\" y2=\"137.5\"></line>\n<line stroke=\"#388e3c\" stroke-width=\"4\" x1=\"70\" x2=\"110\" y1=\"137.5\" y2=\"137.5\"></line>\n<circle cx=\"60\" cy=\"137.5\" fill=\"#388e3c\" r=\"4\"></circle>\n<text fill=\"#388e3c\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"bold\" x=\"120\" y=\"142\">Lateral Brace</text>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"60\" x2=\"60\" y1=\"5\" y2=\"25\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"45\" y2=\"45\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"137.5\" y2=\"137.5\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"230\" y2=\"230\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"45\" y2=\"137.5\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"95\">4 m</text>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"137.5\" y2=\"230\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"190\">4 m</text>\n</g>\n<g transform=\"translate(300, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"0\">Cross Section</text>\n<path d=\"M 30,80 L 130,80 L 130,95 L 85,95 L 85,185 L 130,185 L 130,200 L 30,200 L 30,185 L 75,185 L 75,95 L 30,95 Z\" fill=\"#e0e0e0\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"10\" x2=\"150\" y1=\"140\" y2=\"140\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"110\" y=\"135\">x-x (Strong)</text>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"80\" x2=\"80\" y1=\"60\" y2=\"220\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"80\" y=\"235\">y-y (Weak)</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 925 \\ \\mathrm{kN} \\)",
+            "B": "\\( 3,701 \\ \\mathrm{kN} \\)",
+            "C": "\\( 4,626 \\ \\mathrm{kN} \\)",
+            "D": "\\( 18,505 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A steel structural member with a solid square cross-section (\\( a = 50 \\ \\mathrm{mm} \\)) acts as a pinned-pinned column. The modulus of elasticity is \\( E = 200 \\ \\mathrm{GPa} \\). If the column must be designed to withstand a critical buckling load of exactly \\( P_{cr} = 150 \\ \\mathrm{kN} \\), what is the maximum allowable length \\( L \\) of the column?",
+          "choices": {
+            "A": "\\( 1.84 \\ \\mathrm{m} \\)",
+            "B": "\\( 2.62 \\ \\mathrm{m} \\)",
+            "C": "\\( 3.15 \\ \\mathrm{m} \\)",
+            "D": "\\( 5.24 \\ \\mathrm{m} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A solid circular column has a diameter of \\( d = 80 \\ \\mathrm{mm} \\) and a length of \\( L = 2.5 \\ \\mathrm{m} \\). The column is fixed at the base and completely free at the top. Calculate the maximum slenderness ratio (\\( KL/r \\)) for this column.",
+          "choices": {
+            "A": "\\( 62.5 \\)",
+            "B": "\\( 125.0 \\)",
+            "C": "\\( 250.0 \\)",
+            "D": "\\( 500.0 \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A rectangular timber column has cross-sectional dimensions of \\( b = 60 \\ \\mathrm{mm} \\) and \\( h = 120 \\ \\mathrm{mm} \\). It has an unbraced length of \\( L = 3.5 \\ \\mathrm{m} \\) and is pinned at both ends. The modulus of elasticity for the timber is \\( E = 10 \\ \\mathrm{GPa} \\). Determine the Euler critical buckling load \\( P_{cr} \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n</defs>\n<g transform=\"translate(150, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"100\" y=\"0\">Cross Section</text>\n<rect fill=\"#f5f5f5\" height=\"120\" stroke=\"#333\" stroke-width=\"3\" width=\"60\" x=\"70\" y=\"30\"></rect>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1.5\" x1=\"40\" x2=\"160\" y1=\"90\" y2=\"90\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"170\" y=\"95\">x-x</text>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1.5\" x1=\"100\" x2=\"100\" y1=\"10\" y2=\"170\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"100\" y=\"185\">y-y</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"70\" x2=\"70\" y1=\"160\" y2=\"180\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"160\" y2=\"180\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"70\" x2=\"130\" y1=\"170\" y2=\"170\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"100\" y=\"165\">b = 60</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"140\" x2=\"160\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"140\" x2=\"160\" y1=\"150\" y2=\"150\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"150\" x2=\"150\" y1=\"30\" y2=\"150\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"start\" x=\"160\" y=\"75\">h = 120</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 17.4 \\ \\mathrm{kN} \\)",
+            "B": "\\( 69.6 \\ \\mathrm{kN} \\)",
+            "C": "\\( 85.2 \\ \\mathrm{kN} \\)",
+            "D": "\\( 139.2 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A steel column (\\( E = 200 \\ \\mathrm{GPa} \\)) with a length of \\( L = 4.5 \\ \\mathrm{m} \\) is pinned at both ends. The column must support a structural design load of \\( P_{\\mathrm{design}} = 400 \\ \\mathrm{kN} \\). If safety standards mandate a Factor of Safety (FS) of 2.5 against Euler buckling, what is the minimum required moment of inertia \\( I \\) for the column’s cross-section?",
+          "choices": {
+            "A": "\\( 4.10 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "B": "\\( 6.15 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "C": "\\( 10.26 \\times 10^6 \\ \\mathrm{mm^4} \\)",
+            "D": "\\( 25.65 \\times 10^6 \\ \\mathrm{mm^4} \\)"
+          },
+          "answer": "C",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "An aluminum structural pipe (\\( E = 70 \\ \\mathrm{GPa} \\)) is used as a column with a length of \\( L = 5 \\ \\mathrm{m} \\). It is rigidly fixed at the base and pinned at the top. The pipe has an outside diameter \\( D = 120 \\ \\mathrm{mm} \\) and an inside diameter \\( d = 100 \\ \\mathrm{mm} \\). Calculate the critical buckling load \\( P_{cr} \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-down\" markerheight=\"3\" markerwidth=\"3\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<g transform=\"translate(50, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"60\" y=\"0\">Elevation</text>\n<circle cx=\"60\" cy=\"30\" fill=\"#fff\" r=\"4\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<polygon fill=\"#e0e0e0\" points=\"60,34 50,45 70,45\" stroke=\"#333\" stroke-width=\"1.5\"></polygon>\n<rect fill=\"url(#wall-hatch)\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"40\" x=\"40\" y=\"180\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"40\" x2=\"80\" y1=\"180\" y2=\"180\"></line>\n<rect fill=\"#f5f5f5\" height=\"135\" stroke=\"#333\" stroke-width=\"2\" width=\"20\" x=\"50\" y=\"45\"></rect>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"60\" x2=\"60\" y1=\"5\" y2=\"25\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"75\" y=\"20\">P_cr</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"180\" y2=\"180\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"30\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"110\">L = 5 m</text>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"120\" y=\"110\">Fixed-Pinned</text>\n</g>\n<g transform=\"translate(300, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"0\">Cross Section</text>\n<circle cx=\"80\" cy=\"110\" fill=\"#f5f5f5\" r=\"50\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<circle cx=\"80\" cy=\"110\" fill=\"#ffffff\" r=\"41.6\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"20\" x2=\"140\" y1=\"110\" y2=\"110\"></line>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"80\" x2=\"80\" y1=\"50\" y2=\"170\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"130\" y=\"100\">D = 120 mm</text>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"130\" y=\"130\">d = 100 mm</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 145.6 \\ \\mathrm{kN} \\)",
+            "B": "\\( 297.2 \\ \\mathrm{kN} \\)",
+            "C": "\\( 424.5 \\ \\mathrm{kN} \\)",
+            "D": "\\( 606.5 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A steel W-shape column (\\( E = 200 \\ \\mathrm{GPa} \\)) has a length of \\( L = 6 \\ \\mathrm{m} \\) and is completely fixed at both ends. The cross-section properties are given as \\( I_x = 80 \\times 10^6 \\ \\mathrm{mm^4} \\) (strong axis) and \\( I_y = 15 \\times 10^6 \\ \\mathrm{mm^4} \\) (weak axis). Assume the column is completely unbraced along its entire length. Determine the critical buckling load \\( P_{cr} \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-down\" markerheight=\"3\" markerwidth=\"3\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<g transform=\"translate(50, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"60\" y=\"0\">Elevation</text>\n<rect fill=\"url(#wall-hatch)\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"50\" x=\"35\" y=\"30\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"35\" x2=\"85\" y1=\"45\" y2=\"45\"></line>\n<rect fill=\"url(#wall-hatch)\" height=\"15\" stroke=\"#333\" stroke-width=\"2\" width=\"50\" x=\"35\" y=\"180\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"35\" x2=\"85\" y1=\"180\" y2=\"180\"></line>\n<rect fill=\"#f5f5f5\" height=\"135\" stroke=\"#333\" stroke-width=\"2\" width=\"30\" x=\"45\" y=\"45\"></rect>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"60\" x2=\"60\" y1=\"5\" y2=\"25\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"75\" y=\"20\">P_cr</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"45\" y2=\"45\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"180\" y2=\"180\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"45\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"115\">L = 6 m</text>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"120\" y=\"115\">Fixed-Fixed</text>\n</g>\n<g transform=\"translate(300, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"0\">Cross Section</text>\n<path d=\"M 30,50 L 130,50 L 130,65 L 85,65 L 85,155 L 130,155 L 130,170 L 30,170 L 30,155 L 75,155 L 75,65 L 30,65 Z\" fill=\"#e0e0e0\" stroke=\"#333\" stroke-linejoin=\"round\" stroke-width=\"2\"></path>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"10\" x2=\"150\" y1=\"110\" y2=\"110\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"160\" y=\"115\">x-x</text>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"80\" x2=\"80\" y1=\"30\" y2=\"190\"></line>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"80\" y=\"205\">y-y (Weak)</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 822 \\ \\mathrm{kN} \\)",
+            "B": "\\( 3,290 \\ \\mathrm{kN} \\)",
+            "C": "\\( 13,160 \\ \\mathrm{kN} \\)",
+            "D": "\\( 17,546 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "Two ideal, long columns have identical lengths, cross-sections, and are made of the same material. Column A is fixed at one end and pinned at the other. Column B is pinned at both ends. What is the theoretical ratio of the critical buckling load of Column A to Column B (\\( P_{cr, A} / P_{cr, B} \\))?",
+          "choices": {
+            "A": "\\( 0.49 \\)",
+            "B": "\\( 0.70 \\)",
+            "C": "\\( 1.43 \\)",
+            "D": "\\( 2.04 \\)"
+          },
+          "answer": "D",
+          "references": [
+            "Identify the standard theoretical \\( K \\) values from the FE Reference Handbook:\n\nColumn A (Fixed-Pinned): \\( K_A = 0.7 \\)\n\nColumn B (Pinned-Pinned): \\( K_B = 1.0 \\)",
+            "Identify the standard theoretical \\( K \\) values from the FE Reference Handbook:",
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A timber post has a square cross-section with a side length of \\( a = 150 \\ \\mathrm{mm} \\). The post is fixed at the base and completely free at the top. The total length of the post is \\( L = 3 \\ \\mathrm{m} \\). Assuming the modulus of elasticity for the timber is \\( E = 12 \\ \\mathrm{GPa} \\), calculate the critical buckling stress \\( \\sigma_{cr} \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-down\" markerheight=\"3\" markerwidth=\"3\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n<pattern height=\"8\" id=\"wall-hatch\" patterntransform=\"rotate(45)\" patternunits=\"userSpaceOnUse\" width=\"8\">\n<line stroke=\"#9e9e9e\" stroke-width=\"2\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"8\"></line>\n</pattern>\n</defs>\n<g transform=\"translate(50, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"60\" y=\"0\">Elevation</text>\n<rect fill=\"url(#wall-hatch)\" height=\"20\" stroke=\"#333\" stroke-width=\"2\" width=\"50\" x=\"35\" y=\"180\"></rect>\n<line stroke=\"#333\" stroke-width=\"3\" x1=\"35\" x2=\"85\" y1=\"180\" y2=\"180\"></line>\n<rect fill=\"#f5f5f5\" height=\"150\" stroke=\"#333\" stroke-width=\"2\" width=\"30\" x=\"45\" y=\"30\"></rect>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"60\" x2=\"60\" y1=\"5\" y2=\"25\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"75\" y=\"20\">P_cr</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"180\" y2=\"180\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"30\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"110\">L = 3 m</text>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"120\" y=\"110\">Fixed-Free</text>\n</g>\n<g transform=\"translate(300, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"0\">Cross Section</text>\n<rect fill=\"#f5f5f5\" height=\"100\" stroke=\"#333\" stroke-width=\"2\" width=\"100\" x=\"30\" y=\"60\"></rect>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"10\" x2=\"150\" y1=\"110\" y2=\"110\"></line>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"80\" x2=\"80\" y1=\"40\" y2=\"180\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"30\" y1=\"175\" y2=\"195\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"175\" y2=\"195\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"30\" x2=\"130\" y1=\"185\" y2=\"185\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"80\" y=\"205\">a = 150 mm</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 6.17 \\ \\mathrm{MPa} \\)",
+            "B": "\\( 12.34 \\ \\mathrm{MPa} \\)",
+            "C": "\\( 24.67 \\ \\mathrm{MPa} \\)",
+            "D": "\\( 98.70 \\ \\mathrm{MPa} \\)"
+          },
+          "answer": "A",
+          "references": [
+            "Identify the formula for critical buckling stress from the FE Reference Handbook:\n\n\\[\n\\sigma_{cr} = \\frac{\\pi^2 E}{(KL/r)^2}\n\\]",
+            "Identify the formula for critical buckling stress from the FE Reference Handbook:",
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        },
+        {
+          "question": "A solid circular steel column has a diameter \\( d = 100 \\ \\mathrm{mm} \\) and a length \\( L = 5 \\ \\mathrm{m} \\). The column is pinned at both ends. Assuming the modulus of elasticity is \\( E = 200 \\ \\mathrm{GPa} \\), calculate the Euler critical buckling load \\( P_{cr} \\).\n<svg viewbox=\"0 0 500 240\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<marker id=\"tick\" markerheight=\"6\" markerwidth=\"6\" orient=\"auto\" refx=\"5\" refy=\"5\" viewbox=\"0 0 10 10\">\n<line stroke=\"#333\" stroke-linecap=\"round\" stroke-width=\"2.5\" x1=\"2\" x2=\"8\" y1=\"8\" y2=\"2\"></line>\n</marker>\n<marker id=\"arrow-down\" markerheight=\"3\" markerwidth=\"3\" orient=\"down\" refx=\"5\" refy=\"10\" viewbox=\"0 0 10 10\">\n<path d=\"M 0 0 L 10 0 L 5 10 z\" fill=\"#d32f2f\"></path>\n</marker>\n</defs>\n<g transform=\"translate(50, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"60\" y=\"0\">Elevation</text>\n<circle cx=\"60\" cy=\"30\" fill=\"#fff\" r=\"4\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<polygon fill=\"#e0e0e0\" points=\"60,34 50,45 70,45\" stroke=\"#333\" stroke-width=\"1.5\"></polygon>\n<circle cx=\"60\" cy=\"180\" fill=\"#fff\" r=\"4\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<polygon fill=\"#e0e0e0\" points=\"60,184 50,195 70,195\" stroke=\"#333\" stroke-width=\"1.5\"></polygon>\n<rect fill=\"#f5f5f5\" height=\"135\" stroke=\"#333\" stroke-width=\"2\" width=\"20\" x=\"50\" y=\"45\"></rect>\n<line marker-end=\"url(#arrow-down)\" stroke=\"#d32f2f\" stroke-width=\"3\" x1=\"60\" x2=\"60\" y1=\"5\" y2=\"25\"></line>\n<text fill=\"#d32f2f\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" x=\"75\" y=\"20\">P_cr</text>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"30\" y2=\"30\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"30\" x2=\"10\" y1=\"180\" y2=\"180\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"20\" x2=\"20\" y1=\"30\" y2=\"180\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"end\" x=\"10\" y=\"110\">L = 5 m</text>\n<text fill=\"#1976d2\" font-family=\"Arial, sans-serif\" font-size=\"12\" x=\"120\" y=\"110\">Pinned-Pinned</text>\n</g>\n<g transform=\"translate(300, 20)\">\n<text font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\" x=\"80\" y=\"0\">Cross Section</text>\n<circle cx=\"80\" cy=\"110\" fill=\"#f5f5f5\" r=\"50\" stroke=\"#333\" stroke-width=\"2\"></circle>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"20\" x2=\"140\" y1=\"110\" y2=\"110\"></line>\n<line stroke=\"#1976d2\" stroke-dasharray=\"5,3\" stroke-width=\"1\" x1=\"80\" x2=\"80\" y1=\"50\" y2=\"170\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"80\" x2=\"80\" y1=\"175\" y2=\"195\"></line>\n<line stroke=\"#9e9e9e\" stroke-width=\"1.5\" x1=\"130\" x2=\"130\" y1=\"175\" y2=\"195\"></line>\n<line marker-end=\"url(#tick)\" marker-start=\"url(#tick)\" stroke=\"#333\" stroke-width=\"1.5\" x1=\"80\" x2=\"130\" y1=\"185\" y2=\"185\"></line>\n<text font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\" x=\"105\" y=\"205\">r = 50 mm</text>\n</g>\n</svg>",
+          "choices": {
+            "A": "\\( 193.8 \\ \\mathrm{kN} \\)",
+            "B": "\\( 387.6 \\ \\mathrm{kN} \\)",
+            "C": "\\( 775.2 \\ \\mathrm{kN} \\)",
+            "D": "\\( 1,550.4 \\ \\mathrm{kN} \\)"
+          },
+          "answer": "B",
+          "references": [
+            "FE Reference Handbook 10.5 – P136"
+          ],
+          "tags": [
+            "Columns"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mechanics of Materials",
+      "subtopic": "Elastic Strain Energy",
+      "questions": [
+        {
+          "question": "A tensile force applied to a steel rod with the given values shown below. Assuming linear elastic behavior, determine the work done by the load (in joules).\nGiven values:\nThe initial length of the rod, \\(L_1 = 3.0\\ \\text{m}\\), \n\nThe final length of the rod, \\(L_2 = 3.004\\ \\text{m}\\), \n\nThe diameter of the rod, \\(d = 25\\ \\text{mm}\\), \n\nThe tensile force, \\(P = 60\\ \\text{kN} \\), \n\nmodulus of elasticity \\(E = 200\\ \\text{GPa}\\).",
+          "choices": {},
+          "answer": "\\(120\\ \\text{J}\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P137:\n\nMechanics of Materials – Elastic Strain Energy"
+          ],
+          "tags": [
+            "Elastic Strain Energy"
+          ]
+        },
+        {
+          "question": "A tensile force applied to a steel rod with the given values shown below. Assume linear elastic behavior, determine\n\nthe strain energy per unit volume \\(u\\) (in \\(\\text{J/m}^3\\)).\nGiven values:\nThe initial length of the rod, \\(L_1 = 3.0\\ \\text{m}\\), \n\nThe final length of the rod, \\(L_2 = 3.004\\ \\text{m}\\), \n\nThe diameter of the rod, \\(d = 25\\ \\text{mm}\\), \n\nThe tensile force, \\(P = 60\\ \\text{kN} \\), \n\nmodulus of elasticity \\(E = 200\\ \\text{GPa}\\).",
+          "choices": {},
+          "answer": "\\(u \\approx 3.7\\times10^{4}\\ \\text{J/m}^3\\)",
+          "references": [
+            "FE Reference Handbook 10.5 P137:\n\nMechanics of Materials – Elastic Strain Energy"
+          ],
+          "tags": [
+            "Elastic Strain Energy"
+          ]
+        }
+      ]
+    }
+  ]
+}
