@@ -37,21 +37,9 @@ tags: [personal, tech]
 
   /* Title styling */
   h1 {
-    display: inline-block;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     margin-top: 70vh;
     font-size: 2.3em;
   }
-
-  @media (prefers-color-scheme: dark) {
-    h1 { background: rgba(0, 0, 0, 0.3); }
-  }
-  html[data-theme="dark"] h1 { background: rgba(0, 0, 0, 0.3); }
-  html[data-theme="light"] h1 { background: rgba(255, 255, 255, 0.3); }
 </style>
 
 ### The idea
