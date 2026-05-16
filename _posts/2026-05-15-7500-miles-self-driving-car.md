@@ -6,19 +6,14 @@ tags: [personal, tech]
 ---
 <div id="splash-background"></div>
 <div id="splash-gradient"></div>
-<div id="content-bg-cover"></div>
 
 <style>
-  /* Override body backgrounds to let the splash show through */
-  html body, html[data-theme="dark"] body, html[data-theme="light"] body {
-    background: transparent !important;
-  }
 
   #splash-background {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-image: url('/assets/images/splash.jpeg');
     background-size: cover;
@@ -32,30 +27,24 @@ tags: [personal, tech]
     left: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 90%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffffe0 90%);
     z-index: -2;
     pointer-events: none;
   }
 
-  #content-bg-cover {
-    position: absolute;
-    top: 100vh;
-    left: 0;
-    width: 100%;
-    height: calc(100% + 100000px); /* Tall enough to cover all scrolling content */
-    background: #fff;
-    z-index: -2;
+  /* Override body backgrounds to match the gradient */
+  html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
+  html[data-theme="dark"] body { background: #000000e0 !important; }
+  @media (prefers-color-scheme: dark) {
+    html body { background: #000000e0 !important; }
   }
 
   /* Dark mode backgrounds */
   @media (prefers-color-scheme: dark) {
-    #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 90%); }
-    #content-bg-cover { background: #111; }
+    #splash-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000e0 90%); }
   }
-  html[data-theme="dark"] #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 90%); }
-  html[data-theme="dark"] #content-bg-cover { background: #111; }
-  html[data-theme="light"] #splash-gradient { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 90%); }
-  html[data-theme="light"] #content-bg-cover { background: #fff; }
+  html[data-theme="dark"] #splash-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000e0 90%); }
+  html[data-theme="light"] #splash-gradient { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffffe0 90%); }
 
   /* Title styling */
   h1 {
