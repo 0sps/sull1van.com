@@ -32,7 +32,7 @@ tags: [personal, tech]
     left: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 90%);
     z-index: -2;
     pointer-events: none;
   }
@@ -49,12 +49,12 @@ tags: [personal, tech]
 
   /* Dark mode backgrounds */
   @media (prefers-color-scheme: dark) {
-    #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 100%); }
+    #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 90%); }
     #content-bg-cover { background: #111; }
   }
-  html[data-theme="dark"] #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 100%); }
+  html[data-theme="dark"] #splash-gradient { background: linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 90%); }
   html[data-theme="dark"] #content-bg-cover { background: #111; }
-  html[data-theme="light"] #splash-gradient { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%); }
+  html[data-theme="light"] #splash-gradient { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 90%); }
   html[data-theme="light"] #content-bg-cover { background: #fff; }
 
   /* Title styling */
