@@ -42,7 +42,9 @@ tags: [personal, tech]
   }
 </style>
 
-### The idea
+
+# The idea
+## Drive across the country, but only for some of it
 
 In summer 2025, I drove about 7,500 miles across the United States. Before I left, I installed a Comma 3X in my car, spent weeks getting it configured, and slowly built enough trust in it to let it handle most of the highway driving.
 
