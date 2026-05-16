@@ -5,7 +5,6 @@ date: 2026-05-15
 tags: [personal, tech]
 ---
 <div id="splash-background"></div>
-<div id="splash-gradient"></div>
 
 <style>
 
@@ -19,18 +18,11 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center top;
     z-index: -3;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
   }
 
-  #splash-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffffe0 90%);
-    z-index: -2;
-    pointer-events: none;
-  }
+
 
   /* Override body backgrounds to match the gradient */
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
@@ -41,10 +33,7 @@ tags: [personal, tech]
 
   /* Dark mode backgrounds */
   @media (prefers-color-scheme: dark) {
-    #splash-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000e0 90%); }
   }
-  html[data-theme="dark"] #splash-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000e0 90%); }
-  html[data-theme="light"] #splash-gradient { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffffe0 90%); }
 
   /* Title styling */
   h1 {
