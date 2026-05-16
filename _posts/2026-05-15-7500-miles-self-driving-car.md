@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "7,500 Miles in a Self-Driving Car (Kind Of)"
-date: 2026-05-16
+date: 2026-05-15
 tags: [personal, tech]
 ---
 <div id="splash-background"></div>
