@@ -65,7 +65,8 @@ tags: [personal, tech]
     border-radius: 12px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    margin-top: 66vh;
+    margin-top: 80vh;
+    font-size: 2.3em;
   }
 
   @media (prefers-color-scheme: dark) {
