@@ -42,7 +42,7 @@ tags: [personal, tech]
     top: 100vh;
     left: 0;
     width: 100%;
-    height: calc(100% - 100vh + 1000px); /* Tall enough to cover all scrolling content */
+    height: calc(100% + 100000px); /* Tall enough to cover all scrolling content */
     background: #fff;
     z-index: -2;
   }
@@ -65,7 +65,7 @@ tags: [personal, tech]
     border-radius: 12px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    margin-top: 5vh;
+    margin-top: 66vh;
   }
 
   @media (prefers-color-scheme: dark) {
