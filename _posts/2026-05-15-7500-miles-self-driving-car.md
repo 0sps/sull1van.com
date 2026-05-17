@@ -60,22 +60,26 @@ tags: [personal, tech]
 
 
 
-  /* Override body backgrounds to match the gradient */
-  body { position: relative; padding-bottom: 70vh; }
-  html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
-  html[data-theme="dark"] body { background: #000000e0 !important; }
-  @media (prefers-color-scheme: dark) {
-    html body { background: #000000e0 !important; }
+  /* Keep the page canvas themed without washing over the background images. */
+  html,
+  html[data-theme="light"] {
+    background: #fff;
   }
-
-  /* Text background for legibility */
-  main {
-    background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(255, 255, 255, 0.5) 80vh);
+  body {
+    position: relative;
+    padding-bottom: 70vh;
+    background: transparent !important;
   }
-  html[data-theme="dark"] main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(0, 0, 0, 0.5) 80vh) !important; }
+  html[data-theme="dark"] {
+    background: #111;
+  }
   @media (prefers-color-scheme: dark) {
-    main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(0, 0, 0, 0.5) 80vh); }
-    html[data-theme="light"] main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(255, 255, 255, 0.5) 80vh) !important; }
+    html {
+      background: #111;
+    }
+    html[data-theme="light"] {
+      background: #fff;
+    }
   }
 
   /* Title styling */
