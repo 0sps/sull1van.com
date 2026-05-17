@@ -21,8 +21,8 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center bottom;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 90%);
-    mask-image: linear-gradient(to top, black 0%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 70%);
+    mask-image: linear-gradient(to top, black 0%, transparent 70%);
   }
 
   #kia2-background {
@@ -31,7 +31,7 @@ tags: [personal, tech]
     right: 0;
     width: 70vw;
     height: 115vh;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scaleX(-1);
     background-image: url('/assets/images/kia2.jpg');
     background-size: cover;
     background-position: center right;
@@ -60,7 +60,7 @@ tags: [personal, tech]
 
 
   /* Override body backgrounds to match the gradient */
-  body { position: relative; padding-bottom: 90vh; }
+  body { position: relative; padding-bottom: 70vh; }
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
   html[data-theme="dark"] body { background: #000000e0 !important; }
   @media (prefers-color-scheme: dark) {
