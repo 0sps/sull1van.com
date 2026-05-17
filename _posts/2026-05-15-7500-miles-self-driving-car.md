@@ -71,7 +71,8 @@ tags: [personal, tech]
 
   /* Title styling */
   h1 {
-    margin-top: 70vh;
+    margin-top: 0;
+    padding-top: 70vh;
     font-size: 2.3em;
   }
 </style>
