@@ -43,35 +43,51 @@ tags: [personal, tech]
 </style>
 
 
-# The idea
-## Drive across the country, but only for some of it
+## The idea
+### Drive across the country, but only for some of it
 
-In summer 2025, I drove about 7,500 miles across the United States. Before I left, I installed a Comma 3X in my car, spent weeks getting it configured, and slowly built enough trust in it to let it handle most of the highway driving.
+In summer 2025, I had a pretty big goal. I wanted to drive across the entire western half of the country on a solo road trip, within the span of one month.
 
-This is not really a travel post. It is mostly about what it feels like to take a consumer self-driving-ish setup from “box on my desk” to “driving across the country.”
+It took weeks to plan out the complete itinerary, which involved stops in over 23 states, and visiting with twelve different friends all across the country, plus working out of three different Chase offices.
 
-### Why I bought one
+The coolest part of the trip, though, was how I drove around, thanks to the Comma 3X. 
 
-Talk about what made you interested:
-- long road trip coming up
-- curiosity about openpilot
-- wanting to see how good it actually was
-- maybe the difference between “self-driving” marketing and what it really does
+Comma.ai is a startup trying to make autonomous driving accessible to everyone. They sell small, windshield-mounted computers that take control of the steering in most production cars. The car must have some kind of lane keep assist, and also needs to be running supported software. 
 
-### What Comma actually is
+At first, I saw that my Kia wasn't supported, so I gave up my hopes of autonomous driving as soon as I got the car in 2024. A year later, I learned that there were actually a few modifications I needed to make but that it was very doable.
 
-Plain-English explainer:
-- Comma 3X
-- openpilot
-- it does lane centering and adaptive cruise
-- it is not autonomous
-- you are still responsible the whole time
+Comma's software is open source. This is great because they get feedback from the community on what works, and they also get forks of the code for custom use cases. To that end, a group known as Sunnypilot cloned Comma's software and made their own fork of it. Within that fork, there is a group of Hyandai/Kia/Genesis (HKG) owners who made a branch of Sunnypilot that works with the new cars. THIS is what I used. A fork of a fork :)
 
-This section should be short and non-technical enough that a normal person can follow it.
+So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more reserach. In my case, my car wasn't supported, but all I had to do was join the Discord and learn what kind of harness I'd need, buy that one, then figure out hwo in the communty has already forked the code.
 
-### Installing it
 
-This is where the article starts getting fun.
+
+## Installing it
+
+This is where it gets fun. You'll need to look up the Comma setup video specific to your car. I found that all HKG cars now have similar rearview mirrors and camera assemblies. After one thirty-second video, I was able to pull my assembly off and get the Comma installed.
+
+The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, and decodes it and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly reslient setup.
+
+## Setting it up
+
+### First launch
+By far the hardest thing to work on with a Comma is the software. It will install openpilot by default, which will fuck you over if you are like me and don't have a supported car. Don't do this! You will spend *so much time* trying to force a factory reset only to reinstall openpilot by accident.
+
+On setup, you need to choose "Custom software", and enter in a link. What link exactly? This is where it gets weird.
+
+After TONS of research, I learned you CAN point the Comma at a website with a release image of the software you want. It's nearly impossible to figure it out, though. I literally could not find the link for sunnypilot. But then I learned that Comma will actually do it for you, as they host Sunnypilot on their own domain. You just type in "sunnypilot" in the custom software URL box, and that's it! For me, I'm using a **branch** of the sunnypilot github repo, so I do "sunnypilot/ccnc-port". And that's it.
+
+
+### Getting the specifics right
+
+There are a million and one variables to configure once it launches. The Comma will try to ideitify your car's fingerprint, refusing to engage if there's an error. Fingerprinting is essentially the Comma identifying what car you own, and what APIs it's going to need to interact with to control your steering. By defualt, it should be able to fingerprint your car. If it can't, you're screwed. It will let you choose a car manually from the list, but the fact that it couldn't figure it out automatically means it can't communciate with your car properly, so you're probably running the wrong software. This happened to me *a lot* when I would try different branches of Sunnypilot. The only supported one for me is ccnc-port. So if you do this, make sure you are using the appropriate branch for your car.
+
+After fingerprinting, you should go into the settings menu and configure things to your liking. It can show you the speed limit, your current speed, and many other cool metrics. I turn most of these on. One thing Comma does that I've never seen anywhere else is it will actually show you the speed of the car in front of you. I don't know why car manufacturers don't do this to begin with, because the cars know this information thanks to their ultrasound sensors. Either way, it's great to have this on the Comma.
+
+There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates the models from driving data. No model is ever the 'best' one, since all cars are different. You really have to just start driving with them to figure out which works well for you. For me, that meant choosing like ~10 models and just spedning the entire day on the road testing them. 
+
+There are also additional things like how you want your lane changes and braking to work. It won't brake by default, and it won't do lane changes by default, but you can turn these on if you want. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my gas and brakes. For that reason I have it fall back to my car's integrated cruise system and let it handle all that. 
+
 
 Cover:
 - unboxing
