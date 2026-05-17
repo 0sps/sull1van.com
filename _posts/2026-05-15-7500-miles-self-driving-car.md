@@ -71,6 +71,26 @@ tags: [personal, tech]
     padding-bottom: 70vh;
     background: transparent !important;
   }
+  footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: max(12vh, 5rem);
+    z-index: 1;
+    background: transparent;
+    color: #eee;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.95);
+  }
+  footer hr {
+    display: none;
+  }
+  footer a:link,
+  footer a:visited,
+  footer a:focus,
+  footer a:hover,
+  footer a:active {
+    color: #eef;
+  }
   html[data-theme="dark"] {
     background: #111;
   }
