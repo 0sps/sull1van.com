@@ -28,17 +28,17 @@ tags: [personal, tech]
   #kia2-background {
     position: absolute;
     top: 50%;
-    right: 0;
-    width: 70vw;
+    left: 50%;
+    width: 100vw;
     height: 115vh;
-    transform: translateY(-50%) scaleX(-1);
+    transform: translate(-50%, -50%);
     background-image: url('/assets/images/kia2.jpg');
     background-size: cover;
-    background-position: center right;
+    background-position: center left;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
     mask-composite: intersect;
   }
 
