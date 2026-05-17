@@ -36,6 +36,7 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center center;
     z-index: -3;
+    opacity: 0.5;
     -webkit-mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
