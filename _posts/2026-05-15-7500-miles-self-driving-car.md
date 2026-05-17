@@ -12,16 +12,16 @@ tags: [personal, tech]
 
   #splash-background {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     background-image: url('/assets/images/splash.jpeg');
     background-size: cover;
-    background-position: center top;
+    background-position: center bottom;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
-    mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 90%);
+    mask-image: linear-gradient(to top, black 0%, transparent 90%);
   }
 
   #kia2-background {
@@ -41,21 +41,22 @@ tags: [personal, tech]
 
   #kia3-background {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     background-image: url('/assets/images/kia3.JPG');
     background-size: cover;
-    background-position: center bottom;
+    background-position: center top;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 90%);
-    mask-image: linear-gradient(to top, black 0%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
   }
 
 
 
   /* Override body backgrounds to match the gradient */
+  main, body { position: relative; }
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
   html[data-theme="dark"] body { background: #000000e0 !important; }
   @media (prefers-color-scheme: dark) {
