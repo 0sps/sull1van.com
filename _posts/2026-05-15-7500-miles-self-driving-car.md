@@ -30,14 +30,16 @@ tags: [personal, tech]
     top: 50%;
     right: 0;
     width: 70vw;
-    height: 100vh;
+    height: 115vh;
     transform: translateY(-50%);
     background-image: url('/assets/images/kia2.jpg');
     background-size: cover;
     background-position: center right;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%);
-    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-composite: intersect;
   }
 
   #kia3-background {
@@ -58,7 +60,7 @@ tags: [personal, tech]
 
 
   /* Override body backgrounds to match the gradient */
-  body { position: relative; padding-bottom: 60vh; }
+  body { position: relative; padding-bottom: 90vh; }
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
   html[data-theme="dark"] body { background: #000000e0 !important; }
   @media (prefers-color-scheme: dark) {
