@@ -13,8 +13,9 @@ tags: [personal, tech]
   #splash-background {
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
     height: 100vh;
     background-image: url('/assets/images/splash.jpeg');
     background-size: cover;
@@ -42,8 +43,9 @@ tags: [personal, tech]
   #kia3-background {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
     height: 100vh;
     background-image: url('/assets/images/kia3.JPG');
     background-size: cover;
@@ -56,7 +58,7 @@ tags: [personal, tech]
 
 
   /* Override body backgrounds to match the gradient */
-  main, body { position: relative; }
+  body { position: relative; }
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
   html[data-theme="dark"] body { background: #000000e0 !important; }
   @media (prefers-color-scheme: dark) {
