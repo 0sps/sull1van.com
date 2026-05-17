@@ -54,8 +54,8 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center top;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 67%, rgba(0,0,0,0.3) 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 67%, rgba(0,0,0,0.3) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60vh, transparent 80vh);
+    mask-image: linear-gradient(to bottom, black 0%, black 60vh, transparent 80vh);
   }
 
 
@@ -68,8 +68,14 @@ tags: [personal, tech]
     html body { background: #000000e0 !important; }
   }
 
-  /* Dark mode backgrounds */
+  /* Text background for legibility */
+  main {
+    background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(255, 255, 255, 0.5) 80vh);
+  }
+  html[data-theme="dark"] main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(0, 0, 0, 0.5) 80vh) !important; }
   @media (prefers-color-scheme: dark) {
+    main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(0, 0, 0, 0.5) 80vh); }
+    html[data-theme="light"] main { background: linear-gradient(to bottom, transparent 0%, transparent 60vh, rgba(255, 255, 255, 0.5) 80vh) !important; }
   }
 
   /* Title styling */
