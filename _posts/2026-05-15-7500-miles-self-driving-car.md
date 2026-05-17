@@ -36,8 +36,8 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center right;
     z-index: -3;
-    -webkit-mask-image: radial-gradient(ellipse at right center, rgba(0,0,0,0.15) 0%, transparent 80%);
-    mask-image: radial-gradient(ellipse at right center, rgba(0,0,0,0.15) 0%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 40%, black 100%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 40%, black 100%);
   }
 
   #kia3-background {
