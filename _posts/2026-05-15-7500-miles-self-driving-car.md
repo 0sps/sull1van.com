@@ -5,6 +5,8 @@ date: 2026-05-15
 tags: [personal, tech]
 ---
 <div id="splash-background"></div>
+<div id="kia2-background"></div>
+<div id="kia3-background"></div>
 
 <style>
 
@@ -20,6 +22,35 @@ tags: [personal, tech]
     z-index: -3;
     -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
     mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+  }
+
+  #kia2-background {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 70vw;
+    height: 100vh;
+    transform: translateY(-50%);
+    background-image: url('/assets/images/kia2.jpg');
+    background-size: cover;
+    background-position: center right;
+    z-index: -3;
+    -webkit-mask-image: radial-gradient(ellipse at right center, black 0%, transparent 80%);
+    mask-image: radial-gradient(ellipse at right center, black 0%, transparent 80%);
+  }
+
+  #kia3-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('/assets/images/kia3.JPG');
+    background-size: cover;
+    background-position: center bottom;
+    z-index: -3;
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 90%);
+    mask-image: linear-gradient(to top, black 0%, transparent 90%);
   }
 
 
@@ -86,7 +117,20 @@ After fingerprinting, you should go into the settings menu and configure things 
 
 There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates the models from driving data. No model is ever the 'best' one, since all cars are different. You really have to just start driving with them to figure out which works well for you. For me, that meant choosing like ~10 models and just spedning the entire day on the road testing them. 
 
-There are also additional things like how you want your lane changes and braking to work. It won't brake by default, and it won't do lane changes by default, but you can turn these on if you want. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my gas and brakes. For that reason I have it fall back to my car's integrated cruise system and let it handle all that. 
+You'll also want to look at additional things, like how you want lane changes and braking to work. The Comma won't brake by default, and it won't do lane changes by default, but can if you want it to. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my speed. 
+
+### Driver monitoring
+
+By far the most 'controversial' aspect of the Comma is that it enables hands-free driving in most cars it's installed in. To do this, the creators have develpoed a driver monitoring system. The Comma 3X has a wide-angle camera which is constantly watching the driver and running a neural network to assess their attention. For example, if the driver uses a phone during driving, Comma will notice that and start beeping.
+
+Since the software is completely open source, you might think you could change these settings. Turns out, **you absolutely can**. For anyone wondering, it's two files; one called helpers.py, one called monitoring.py. I have done extensive amounts of testing with mine, and have arrived at a happy medium for monitoring: I do WANT the monitoring, since hands-free driving could lead to instances where I become unattentive to what's on the road, but it shouldn't be annoying. I relaxed the parameters so that if I briefly check my phone, such as to look at directions or read a text for a moment, it won't beep. However if I look at my phone for *several* seconds, it will pick that up. 
+
+This is the sweet spot for me, and it actully improves my driving focus over what came stock on the Kia. If Comma notices me being excessively drowsy while driving, it will make the same extremely loud beep, presumably to wake me up. This *did happen* often when I would drive late at night, and I am very thankful for it. The monitoring you get with the Comma is honestly great peace of mind. You can also be assured that your face isn't being recorded and uploaded anywhere, because you control the software, end to end. It's great.
+
+
+### Beyond the basics: Asking for help
+
+If you do try to get set up with this, there can be tons of issues. tons of problems. Driverless car technology is insanely complicated, and was extremely difficult to get set up even for someone like me. The great thing about buying a Comma 3X, though, is that you're joining a huge community of car drivers just like you. Sunnypilot and Openpilot both have large Discord chats you can join and 
 
 
 Cover:
