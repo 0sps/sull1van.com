@@ -29,16 +29,16 @@ tags: [personal, tech]
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100vw;
-    height: 115vh;
-    transform: translate(-50%, -50%);
+    width: 115vh;
+    height: 100vw;
+    transform: translate(-50%, -50%) rotate(90deg);
     background-image: url('/assets/images/kia2.jpg');
     background-size: cover;
-    background-position: center left;
+    background-position: center center;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     mask-composite: intersect;
   }
 
