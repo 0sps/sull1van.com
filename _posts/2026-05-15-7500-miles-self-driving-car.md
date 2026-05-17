@@ -36,8 +36,8 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center right;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 40%, black 100%);
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 40%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%);
+    mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 60%);
   }
 
   #kia3-background {
@@ -58,7 +58,7 @@ tags: [personal, tech]
 
 
   /* Override body backgrounds to match the gradient */
-  body { position: relative; }
+  body { position: relative; padding-bottom: 60vh; }
   html body, html[data-theme="light"] body { background: #ffffffe0 !important; }
   html[data-theme="dark"] body { background: #000000e0 !important; }
   @media (prefers-color-scheme: dark) {
