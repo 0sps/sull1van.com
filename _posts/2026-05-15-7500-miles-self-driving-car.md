@@ -18,8 +18,9 @@ tags: [personal, tech]
     width: 100vw;
     height: 100vh;
     background-image: url('/assets/images/splash.jpeg');
-    background-size: cover;
-    background-position: center bottom;
+    background-size: auto 122%;
+    background-position: center top;
+    background-repeat: no-repeat;
     z-index: -3;
     -webkit-mask-image: linear-gradient(to top, black 0%, transparent 70%);
     mask-image: linear-gradient(to top, black 0%, transparent 70%);
