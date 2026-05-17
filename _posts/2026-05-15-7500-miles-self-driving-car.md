@@ -54,8 +54,8 @@ tags: [personal, tech]
     background-size: cover;
     background-position: center top;
     z-index: -3;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
-    mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 67%, rgba(0,0,0,0.3) 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 67%, rgba(0,0,0,0.3) 100%);
   }
 
 
