@@ -7,6 +7,8 @@ tags: [personal, tech]
 <div id="splash-background"></div>
 <div id="kia2-background"></div>
 <div id="kia3-background"></div>
+<div id="kia4-background"></div>
+<div id="kia5-background"></div>
 
 <style>
 
@@ -59,6 +61,39 @@ tags: [personal, tech]
     mask-image: linear-gradient(to bottom, black 0%, black 60vh, transparent 80vh);
   }
 
+  #kia4-background {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    width: 115vh;
+    height: 100vw;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    background-image: url('/assets/images/kia4.jpeg');
+    background-size: cover;
+    background-position: center center;
+    z-index: -3;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  #kia5-background {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    background-image: url('/assets/images/kia5.jpeg');
+    background-size: cover;
+    background-position: center center;
+    z-index: -3;
+    opacity: 0.3;
+    -webkit-mask-image: radial-gradient(circle, black 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+    mask-image: radial-gradient(circle, black 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+  }
 
 
   /* Keep the page canvas themed without washing over the background images. */
@@ -130,7 +165,7 @@ Comma's software is open source. This is great because they get feedback from th
 So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more reserach. In my case, my car wasn't supported, but all I had to do was join the Discord and learn what kind of harness I'd need, buy that one, then figure out hwo in the communty has already forked the code.
 
 
-![Comma 3X](https://comma.ai/_app/immutable/assets/comma-3x.B9aH0JPi.jpeg)
+<img src="https://comma.ai/_app/immutable/assets/comma-3x.B9aH0JPi.jpeg" alt="Comma 3X" style="max-width: 100%; height: auto;" />
 
 ## Installing it
 
