@@ -198,6 +198,7 @@ If you do try to get set up with this, there can be tons of issues. tons of prob
 
 
 
+```text
           _                                                       
         ./ |                                                      
        /  /                                                       
@@ -217,7 +218,7 @@ If you do try to get set up with this, there can be tons of issues. tons of prob
   ,-'    `-,                                                      
   |        |                                                      
   `--------'                                                      
-
+```
 
 Below is an AI generated suggestion of what to put in this article. the entire article up to this point IS written by me, but this is a list of suggestions for ways I could format the article. keeping it here til i am done.
 
