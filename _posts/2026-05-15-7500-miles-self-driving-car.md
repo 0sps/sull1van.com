@@ -190,6 +190,37 @@ This is the sweet spot for me, and it actully improves my driving focus over wha
 If you do try to get set up with this, there can be tons of issues. tons of problems. Driverless car technology is insanely complicated, and was extremely difficult to get set up even for someone like me. The great thing about buying a Comma 3X, though, is that you're joining a huge community of car drivers just like you. Sunnypilot and Openpilot both have large Discord chats you can join and 
 
 
+
+
+
+
+# CONSTRUCTION ZONE BELOW
+
+
+
+          _                                                       
+        ./ |                                                      
+       /  /                                                       
+     /'  /                                                        
+    /   /                                                         
+   /    \                                                         
+  |      `\                                                       
+  |        |                                ___________________   
+  |        |___________________...-------'''- - -  =- - =  - = `. 
+ /|        |                   \-  =  = -  -= - =  - =-   =  - =| 
+( |        |                    |= -= - = - = - = - =--= = - = =| 
+ \|        |___________________/- = - -= =_- =_-=_- -=_=-=_=_= -| 
+  |        |                   ```-------...___________________.' 
+  |________|                                                      
+    \    /                                                        
+    |    |                                                        
+  ,-'    `-,                                                      
+  |        |                                                      
+  `--------'                                                      
+
+
+Below is an AI generated suggestion of what to put in this article. the entire thing IS written by me, but this is a list of suggestions for ways I could format the article. keeping it here til i am done.
+
 Cover:
 - unboxing
 - mounting it
@@ -266,8 +297,6 @@ End with reflection:
 - it made you more aware of what driving actually involves
 - it made the future feel both closer and messier
 
-### The honest conclusion
+### The conclusion
 
-The Comma did not drive me across the country. I drove across the country with a very good, very strange assistant that could handle the boring parts better than I expected and the weird parts about as well as you would hope from a camera taped to a windshield.
-
-That sounds like a joke, but 7,500 miles later, I missed it when it was off.
+I drove across the country with a very good assistant that could handle the boring parts better than I expected and the weird parts about as well as you would hope from a camera taped to a windshield.
