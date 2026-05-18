@@ -130,6 +130,7 @@ Comma's software is open source. This is great because they get feedback from th
 So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more reserach. In my case, my car wasn't supported, but all I had to do was join the Discord and learn what kind of harness I'd need, buy that one, then figure out hwo in the communty has already forked the code.
 
 
+![Comma 3X](https://comma.ai/_app/immutable/assets/comma-3x.B9aH0JPi.jpeg)
 
 ## Installing it
 
@@ -137,9 +138,9 @@ This is where it gets fun. You'll need to look up the Comma setup video specific
 
 The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, and decodes it and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly reslient setup.
 
-## Setting it up
+# Setting it up
 
-### First launch
+## First launch
 By far the hardest thing to work on with a Comma is the software. It will install openpilot by default, which will fuck you over if you are like me and don't have a supported car. Don't do this! You will spend *so much time* trying to force a factory reset only to reinstall openpilot by accident.
 
 On setup, you need to choose "Custom software", and enter in a link. What link exactly? This is where it gets weird.
