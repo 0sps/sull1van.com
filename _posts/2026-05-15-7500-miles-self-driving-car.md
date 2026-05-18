@@ -8,7 +8,6 @@ tags: [personal, tech]
 <div id="kia2-background"></div>
 <div id="kia3-background"></div>
 <div id="kia4-background"></div>
-<div id="kia5-background"></div>
 
 <style>
 
@@ -68,7 +67,7 @@ tags: [personal, tech]
     width: 115vh;
     height: 100vw;
     transform: translate(-50%, -50%) rotate(-90deg);
-    background-image: url('/assets/images/kia4.jpeg');
+    background-image: url('/assets/images/kia5.jpeg');
     background-size: cover;
     background-position: center center;
     z-index: -3;
@@ -77,22 +76,6 @@ tags: [personal, tech]
     -webkit-mask-composite: source-in;
     mask-image: linear-gradient(to top, black 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.1) 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     mask-composite: intersect;
-  }
-
-  #kia5-background {
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    width: 100vw;
-    height: 100vh;
-    transform: translate(-50%, -50%);
-    background-image: url('/assets/images/kia5.jpeg');
-    background-size: cover;
-    background-position: center center;
-    z-index: -3;
-    opacity: 0.3;
-    -webkit-mask-image: radial-gradient(circle, black 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-    mask-image: radial-gradient(circle, black 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
   }
 
 
