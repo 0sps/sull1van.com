@@ -2178,6 +2178,7 @@
         let anomalyLensActive = false;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
+        let testCardNodes = {};     // id -> Card DOM node (for reuse)
         let _dataLoaded = false;
         let _loadingInProgress = false;
         let _vaultDataCache = null;
@@ -2278,12 +2279,13 @@
             return unitText ? escStr(unitText) : '';
         }
 
-        function refreshResolvedUnitDomForTest(testName) {
+        function refreshResolvedUnitDomForTest(testName, cache = null) {
             const test = allTests.find(item => item.name === testName);
             if (!test) return;
 
             const safeName = safeId(test.name);
-            document.querySelectorAll(`[data-unit-slot-for="${safeName}"]`).forEach(node => {
+            const slotNodes = cache ? (cache.unitSlots[safeName] || []) : document.querySelectorAll(`[data-unit-slot-for="${safeName}"]`);
+            slotNodes.forEach(node => {
                 if (test.type !== 'qualitative' && test.unitStatus !== 'pending') {
                     node.remove();
                     return;
@@ -2295,12 +2297,14 @@
                 }
                 node.innerHTML = markup;
             });
-            document.querySelectorAll(`[data-inline-unit-for="${safeName}"]`).forEach(node => {
+            const inlineNodes = cache ? (cache.inlineUnits[safeName] || []) : document.querySelectorAll(`[data-inline-unit-for="${safeName}"]`);
+            inlineNodes.forEach(node => {
                 const unitText = getDisplayUnitText(test);
                 node.textContent = unitText;
                 node.classList.toggle('is-hidden', !unitText);
             });
-            document.querySelectorAll(`[data-grid-kpi-unit-for="${safeName}"]`).forEach(node => {
+            const gridNodes = cache ? (cache.gridKpiUnits[safeName] || []) : document.querySelectorAll(`[data-grid-kpi-unit-for="${safeName}"]`);
+            gridNodes.forEach(node => {
                 node.innerHTML = getLatestUnitSublineHtml(test);
             });
 
@@ -2315,6 +2319,28 @@
             const queue = allTests.filter(test => test && test.unitStatus === 'pending');
             if (queue.length === 0) return;
 
+            // Single global sweep of DOM to cache element selectors before hydration loop starts
+            const cache = {
+                unitSlots: {},
+                inlineUnits: {},
+                gridKpiUnits: {}
+            };
+            document.querySelectorAll('[data-unit-slot-for]').forEach(el => {
+                const name = el.getAttribute('data-unit-slot-for');
+                if (!cache.unitSlots[name]) cache.unitSlots[name] = [];
+                cache.unitSlots[name].push(el);
+            });
+            document.querySelectorAll('[data-inline-unit-for]').forEach(el => {
+                const name = el.getAttribute('data-inline-unit-for');
+                if (!cache.inlineUnits[name]) cache.inlineUnits[name] = [];
+                cache.inlineUnits[name].push(el);
+            });
+            document.querySelectorAll('[data-grid-kpi-unit-for]').forEach(el => {
+                const name = el.getAttribute('data-grid-kpi-unit-for');
+                if (!cache.gridKpiUnits[name]) cache.gridKpiUnits[name] = [];
+                cache.gridKpiUnits[name].push(el);
+            });
+
             const runBatch = (startIndex = 0) => {
                 if (token !== _unitHydrationToken) return;
                 const endIndex = Math.min(startIndex + 6, queue.length);
@@ -2328,7 +2354,7 @@
                         test.displayUnit = '';
                         test.unitStatus = 'absent';
                     }
-                    refreshResolvedUnitDomForTest(test.name);
+                    refreshResolvedUnitDomForTest(test.name, cache);
                 }
                 if (endIndex < queue.length) {
                     setTimeout(() => runBatch(endIndex), 24);
@@ -2952,6 +2978,7 @@
 
                 const vaultData = await loadVaultData();
                 allTests = buildUiTestsFromVault(vaultData.tests);
+                testCardNodes = {};
 
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
@@ -3071,21 +3098,32 @@
         }
 
         // ── FILTER / RENDER LIST ────────────────────────────────────
-        function onSearch() {
+        let searchDebounceTimeout = null;
+        function onSearch(immediate = false) {
             const val = document.getElementById('testSearch').value;
             const clearBtn = document.getElementById('searchClearBtn');
             if (clearBtn) {
                 if (val) clearBtn.classList.add('visible');
                 else clearBtn.classList.remove('visible');
             }
-            applyFilters();
+            if (searchDebounceTimeout) {
+                clearTimeout(searchDebounceTimeout);
+                searchDebounceTimeout = null;
+            }
+            if (immediate) {
+                applyFilters();
+            } else {
+                searchDebounceTimeout = setTimeout(() => {
+                    applyFilters();
+                }, 180);
+            }
         }
 
         function clearSearch() {
             const input = document.getElementById('testSearch');
             if (input) {
                 input.value = '';
-                onSearch();
+                onSearch(true);
             }
         }
 
@@ -3398,9 +3436,16 @@
             // otherwise Chart.js holds a reference to a detached canvas (memory leak).
             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
-            // Destroy old sparklines
-            Object.values(sparklineCharts).forEach(c => { try { c.destroy(); } catch (_) { } });
-            sparklineCharts = {};
+            // Build active IDs set for filteredTests
+            const activeIds = new Set(filteredTests.map(t => safeId(t.name)));
+
+            // Clean up sparkline charts of biomarkers that have been filtered out (to avoid memory leaks)
+            Object.keys(sparklineCharts).forEach(id => {
+                if (!activeIds.has(id)) {
+                    try { sparklineCharts[id].destroy(); } catch (_) {}
+                    delete sparklineCharts[id];
+                }
+            });
 
             // Group by category
             const byCategory = {};
@@ -3414,17 +3459,40 @@
                 return;
             }
 
-            const sections = [];
-
+            const fragment = document.createDocumentFragment();
 
             Object.entries(byCategory).forEach(([cat, tests]) => {
-                sections.push(`<div class="section-label">${cat}</div>`);
+                const labelNode = document.createElement('div');
+                labelNode.className = 'section-label';
+                labelNode.textContent = cat;
+                fragment.appendChild(labelNode);
+
                 tests.forEach(t => {
-                    sections.push(renderTestCard(t));
+                    const id = safeId(t.name);
+                    const btnId = `test-btn-${id}`;
+                    let node = testCardNodes[btnId];
+                    if (!node) {
+                        const temp = document.createElement('div');
+                        temp.innerHTML = renderTestCard(t).trim();
+                        node = temp.firstElementChild;
+                        testCardNodes[btnId] = node;
+                    } else {
+                        // Sync the active class state of the reused node
+                        const isCurrent = t.name === currentTestName;
+                        if (isCurrent) {
+                            node.classList.add('active-card');
+                        } else {
+                            node.classList.remove('active-card');
+                        }
+                    }
+                    fragment.appendChild(node);
                 });
             });
 
-            panel.innerHTML = sections.join('');
+            // Clear the panel list container
+            panel.innerHTML = '';
+            // Append the fragment containing the reused/new elements
+            panel.appendChild(fragment);
 
             // Draw sparklines
             filteredTests.forEach(t => {
@@ -3523,11 +3591,19 @@
                 : lastStatus === 'high' || lastStatus === 'low' ? themeCache['--red']
                 : themeCache['--accent'];
 
-            // Destroy any existing Chart instance for this id before creating a new one.
-            // Prevents ghost instances when the list re-renders rapidly (e.g. fast search input).
-            if (sparklineCharts[id]) {
-                try { sparklineCharts[id].destroy(); } catch (_) { }
-                delete sparklineCharts[id];
+            const chart = sparklineCharts[id];
+            if (chart) {
+                try {
+                    chart.data.labels = t.numericPts.map(p => p.date);
+                    chart.data.datasets[0].data = vals;
+                    chart.data.datasets[0].borderColor = lineColor;
+                    chart.update('none');
+                    return;
+                } catch (e) {
+                    console.error("Failed to update existing sparkline chart", e);
+                    try { chart.destroy(); } catch (_) {}
+                    delete sparklineCharts[id];
+                }
             }
 
             try {
