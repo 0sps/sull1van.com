@@ -2177,10 +2177,16 @@
         let currentSkyIndex = SKY_STATES.indexOf(DEFAULT_SKY_STATE);
 
         function normalizeSkyIndex(index) {
+            if (Number.isInteger(index)) {
+                return index >= 0 && index < SKY_STATES.length
+                    ? index
+                    : SKY_STATES.indexOf(DEFAULT_SKY_STATE);
+            }
+
             if (SKY_STATES.includes(index)) return SKY_STATES.indexOf(index);
 
             const parsed = Number.parseInt(index, 10);
-            if (Number.isInteger(parsed)) {
+            if (Number.isInteger(parsed) && String(parsed) === String(index).trim()) {
                 const legacyState = LEGACY_SKY_STATES[parsed];
                 if (legacyState) return SKY_STATES.indexOf(legacyState);
             }
@@ -4702,7 +4708,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             let savedIndex = localStorage.getItem('skyState');
             if (savedIndex === null || savedIndex === '') {
-                savedIndex = localStorage.getItem('sky') === 'night' ? 3 : 1;
+                savedIndex = localStorage.getItem('sky') === 'night' ? 'time-night' : DEFAULT_SKY_STATE;
             }
             setSkyState(savedIndex);
             renderLoadingSkeletons();
