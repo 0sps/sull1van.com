@@ -1672,7 +1672,7 @@
         .report-overlay.visible { opacity: 1; pointer-events: auto; }
 
         .report-dialog {
-            width: min(390px, 100%);
+            width: min(520px, 100%);
             border-radius: 24px;
             border: 1px solid rgba(255,255,255,0.12);
             border-top: 1.5px solid rgba(255,255,255,0.22);
@@ -1699,33 +1699,133 @@
             color: var(--text-secondary);
             margin-bottom: 18px;
         }
-        .report-options {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 20px;
+        .report-search-wrap {
+            position: relative;
+            margin-bottom: 12px;
         }
-        .report-option {
-            display: grid;
-            grid-template-columns: 22px 1fr;
-            gap: 12px;
+        .report-search {
+            width: 100%;
+            height: 48px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            padding: 0 15px 0 44px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            outline: none;
+        }
+        .report-search::placeholder { color: var(--text-secondary); }
+        .report-search-wrap svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        .report-selected {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 30px;
+            margin-bottom: 12px;
+        }
+        .report-chip {
+            display: inline-flex;
             align-items: center;
-            padding: 14px 15px;
+            gap: 7px;
+            max-width: 100%;
+            border: 1px solid rgba(10,132,255,0.35);
+            border-radius: 999px;
+            padding: 7px 9px 7px 11px;
+            background: rgba(10,132,255,0.14);
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .report-chip span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .report-chip button {
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.16);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        .report-results {
+            display: grid;
+            gap: 8px;
+            max-height: min(330px, 44vh);
+            overflow-y: auto;
+            margin-bottom: 18px;
+            padding-right: 2px;
+        }
+        .report-result {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 14px;
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
             background: rgba(255,255,255,0.06);
             color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.16s, border-color 0.16s, opacity 0.16s;
+        }
+        .report-result:hover,
+        .report-result.selected {
+            border-color: rgba(10,132,255,0.42);
+            background: rgba(10,132,255,0.13);
+        }
+        .report-result-name {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             font-family: var(--font-heading);
             font-size: 15px;
+            font-weight: 720;
+        }
+        .report-result-meta {
+            margin-top: 3px;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 11px;
             font-weight: 650;
-            cursor: pointer;
         }
-        .report-option input {
-            width: 18px; height: 18px;
-            accent-color: var(--ios-blue);
+        .report-result-action {
+            color: var(--ios-blue);
+            font-family: var(--font-heading);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        .report-option:has(input:checked) {
-            border-color: rgba(10,132,255,0.68);
-            background: rgba(10,132,255,0.15);
+        .report-result.is-added .report-result-action {
+            color: var(--ios-green);
+        }
+        .report-empty {
+            padding: 24px 14px;
+            border: 1px dashed rgba(255,255,255,0.14);
+            border-radius: 16px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 14px;
         }
         .report-actions { display: flex; gap: 10px; }
         .report-btn {
@@ -1740,6 +1840,11 @@
             transition: opacity 0.18s, background 0.18s, box-shadow 0.18s;
         }
         .report-btn:active { opacity: 0.78; }
+        .report-btn:disabled {
+            opacity: 0.38;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
         .report-btn-secondary {
             background: rgba(255,255,255,0.08);
             color: var(--text-primary);
@@ -1993,8 +2098,15 @@
     <div class="report-overlay" id="reportOverlay" onclick="if(event.target === this) closePdfReportPrompt();">
         <div class="report-dialog" role="dialog" aria-modal="true" aria-labelledby="reportDialogTitle">
             <div class="report-title" id="reportDialogTitle">Generate PDF report</div>
-            <div class="report-body">Choose what you want to show in the report.</div>
-            <div class="report-options" id="reportOptions"></div>
+            <div class="report-body">Search for biomarkers to include. Add one or more results, then generate a combined report.</div>
+            <div class="report-search-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input class="report-search" id="reportSearchInput" type="text" placeholder="Search biomarkers..." autocomplete="off" oninput="onPdfReportSearchInput()" onkeydown="handlePdfReportSearchKey(event)">
+            </div>
+            <div class="report-selected" id="reportSelectedList"></div>
+            <div class="report-results" id="reportResults"></div>
             <div class="report-actions">
                 <button class="report-btn report-btn-secondary" type="button" onclick="closePdfReportPrompt()">Cancel</button>
                 <button class="report-btn report-btn-primary" type="button" onclick="generateSelectedPdfReport()">Generate</button>
@@ -2342,6 +2454,8 @@
         let _vaultDataCache = null;
         let _exportInProgress = false;
         let _pdfReportInProgress = false;
+        let _pdfReportSelectedTests = new Set();
+        let _pdfReportSelectedIndex = 0;
         let _unitImportInProgress = false;
         let _unitHydrationToken = 0;
         let _queuedForceRefresh = false;
@@ -3108,40 +3222,26 @@
         }
 
         // ── PDF REPORTS ──────────────────────────────────────────────
-        const CMP_REPORT_MARKERS = [
-            'GLUCOSE', 'CALCIUM', 'SODIUM', 'POTASSIUM', 'CHLORIDE', 'CO2',
-            'BUN', 'CREATININE', 'ALBUMIN', 'TOTAL PROTEIN', 'GLOBULIN',
-            'A/G RATIO', 'ALKALINE PHOSPHATASE', 'ALT', 'AST', 'BILIRUBIN'
-        ];
-
         function openPdfReportPrompt() {
-            if (!currentTestName) {
+            if (!allTests.length) {
                 showConfirm({
                     icon: CONFIRM_ICONS.info,
                     iconColor: 'var(--accent)',
-                    title: 'Choose a test first',
-                    body: 'Open a test result, then generate a PDF report from the menu.',
+                    title: 'No results available',
+                    body: 'Add or load lab results before generating a PDF report.',
                     primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                 });
                 return;
             }
 
-            const options = [
-                { value: 'current', label: `${currentTestName} (this test)` },
-                { value: 'cmp', label: 'Metabolic Panel (CMP)' },
-                { value: 'testosterone', label: 'Testosterone' },
-            ];
+            _pdfReportSelectedTests = new Set();
+            _pdfReportSelectedIndex = 0;
+            const input = document.getElementById('reportSearchInput');
+            if (input) input.value = '';
 
-            const box = document.getElementById('reportOptions');
-            if (!box) return;
-            box.innerHTML = options.map((option, index) => `
-                <label class="report-option">
-                    <input type="radio" name="pdfReportType" value="${option.value}" ${index === 0 ? 'checked' : ''}>
-                    <span>${escStr(option.label)}</span>
-                </label>
-            `).join('');
-
+            renderPdfReportPicker();
             document.getElementById('reportOverlay')?.classList.add('visible');
+            requestAnimationFrame(() => input?.focus({ preventScroll: true }));
         }
 
         function closePdfReportPrompt() {
@@ -3174,6 +3274,110 @@
                 console.warn('Local report lookup failed:', error);
             }
             return matches;
+        }
+
+        function getPdfReportRows() {
+            const term = (document.getElementById('reportSearchInput')?.value || '').trim().toLowerCase();
+            return allTests
+                .filter(test => {
+                    if (!term) return true;
+                    return test.name.toLowerCase().includes(term) || (test.category || 'Other').toLowerCase().includes(term);
+                })
+                .sort((a, b) => {
+                    const aSelected = _pdfReportSelectedTests.has(a.name);
+                    const bSelected = _pdfReportSelectedTests.has(b.name);
+                    if (aSelected !== bSelected) return aSelected ? -1 : 1;
+                    return a.name.localeCompare(b.name);
+                })
+                .slice(0, 40);
+        }
+
+        function getPdfReportReadingSummary(test) {
+            const first = test.points?.[0]?.date ? fmtDate(test.points[0].date) : '';
+            const last = test.points?.[test.points.length - 1]?.date ? fmtDate(test.points[test.points.length - 1].date) : '';
+            const count = test.points?.length || 0;
+            const span = first && last && first !== last ? `${first} - ${last}` : (last || 'No date');
+            return `${test.category || 'Other'} · ${count} reading${count === 1 ? '' : 's'} · ${span}`;
+        }
+
+        function renderPdfReportPicker() {
+            const rows = getPdfReportRows();
+            const selectedList = document.getElementById('reportSelectedList');
+            const results = document.getElementById('reportResults');
+            const generateBtn = document.querySelector('.report-btn-primary');
+            _pdfReportSelectedIndex = Math.min(_pdfReportSelectedIndex, Math.max(rows.length - 1, 0));
+
+            if (selectedList) {
+                selectedList.innerHTML = _pdfReportSelectedTests.size
+                    ? [..._pdfReportSelectedTests].map(name => `
+                        <div class="report-chip">
+                            <span>${escStr(name)}</span>
+                            <button type="button" data-report-remove="${escStr(name)}" onclick="removePdfReportTest(this.dataset.reportRemove)" aria-label="Remove ${escStr(name)}">×</button>
+                        </div>
+                    `).join('')
+                    : '<div class="report-empty" style="width:100%;padding:12px 14px;">No biomarkers selected yet</div>';
+            }
+
+            if (results) {
+                results.innerHTML = rows.length ? rows.map((test, index) => {
+                    const selected = _pdfReportSelectedTests.has(test.name);
+                    return `
+                        <button class="report-result${index === _pdfReportSelectedIndex ? ' selected' : ''}${selected ? ' is-added' : ''}" type="button" data-report-test="${escStr(test.name)}" onclick="togglePdfReportTest(this.dataset.reportTest)">
+                            <div>
+                                <div class="report-result-name">${escStr(test.name)}</div>
+                                <div class="report-result-meta">${escStr(getPdfReportReadingSummary(test))}</div>
+                            </div>
+                            <div class="report-result-action">${selected ? 'Added' : 'Add'}</div>
+                        </button>
+                    `;
+                }).join('') : '<div class="report-empty">No matching biomarkers</div>';
+            }
+
+            if (generateBtn) generateBtn.disabled = _pdfReportSelectedTests.size === 0;
+        }
+
+        function togglePdfReportTest(name) {
+            const test = allTests.find(item => item.name === name);
+            if (!test) return;
+            if (_pdfReportSelectedTests.has(test.name)) {
+                _pdfReportSelectedTests.delete(test.name);
+            } else {
+                _pdfReportSelectedTests.add(test.name);
+            }
+            const input = document.getElementById('reportSearchInput');
+            if (input) input.value = '';
+            _pdfReportSelectedIndex = 0;
+            renderPdfReportPicker();
+            requestAnimationFrame(() => input?.focus({ preventScroll: true }));
+        }
+
+        function removePdfReportTest(name) {
+            _pdfReportSelectedTests.delete(name);
+            renderPdfReportPicker();
+        }
+
+        function onPdfReportSearchInput() {
+            _pdfReportSelectedIndex = 0;
+            renderPdfReportPicker();
+        }
+
+        function handlePdfReportSearchKey(event) {
+            const rows = getPdfReportRows();
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                _pdfReportSelectedIndex = Math.min(_pdfReportSelectedIndex + 1, Math.max(rows.length - 1, 0));
+                renderPdfReportPicker();
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                _pdfReportSelectedIndex = Math.max(_pdfReportSelectedIndex - 1, 0);
+                renderPdfReportPicker();
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                const test = rows[_pdfReportSelectedIndex];
+                if (test) togglePdfReportTest(test.name);
+            } else if (event.key === 'Escape') {
+                closePdfReportPrompt();
+            }
         }
 
         function mergeReportTests(tests) {
@@ -3219,35 +3423,20 @@
             }).filter(test => test.points.length);
         }
 
-        function markerMatchesReport(testName, marker) {
-            const normalizedName = normalizeTestName(testName);
-            const normalizedMarker = normalizeTestName(marker);
-            return normalizedName === normalizedMarker || normalizedName.includes(normalizedMarker);
-        }
-
-        function getTestsForReport(reportType) {
-            if (reportType === 'current') {
-                return {
-                    title: `${currentTestName} REPORT`,
-                    tests: mergeReportTests(allTests.filter(test => test.name === currentTestName)),
-                };
-            }
-
-            if (reportType === 'testosterone') {
-                const direct = allTests.filter(test => normalizeTestName(test.name) === 'TESTOSTERONE');
-                const local = getLocalStorageReportTestsByName('TESTOSTERONE');
-                return {
-                    title: 'TESTOSTERONE REPORT',
-                    tests: mergeReportTests([...direct, ...local]),
-                };
-            }
-
-            const cmpTests = allTests.filter(test =>
-                CMP_REPORT_MARKERS.some(marker => markerMatchesReport(test.name, marker))
-            );
+        function getSelectedTestsForReport() {
+            const selectedNames = [..._pdfReportSelectedTests];
+            const selectedTests = selectedNames.flatMap(name => {
+                const direct = allTests.filter(test => test.name === name);
+                const local = normalizeTestName(name) === 'TESTOSTERONE'
+                    ? getLocalStorageReportTestsByName('TESTOSTERONE')
+                    : [];
+                return [...direct, ...local];
+            });
+            const tests = mergeReportTests(selectedTests).sort((a, b) => a.name.localeCompare(b.name));
+            const title = tests.length === 1 ? `${tests[0].name} REPORT` : 'BIOMARKER REPORT';
             return {
-                title: 'METABOLIC PANEL (CMP) REPORT',
-                tests: mergeReportTests(cmpTests).sort((a, b) => a.name.localeCompare(b.name)),
+                title,
+                tests,
             };
         }
 
@@ -3557,11 +3746,10 @@
             _pdfReportInProgress = true;
 
             try {
-                const selected = document.querySelector('input[name="pdfReportType"]:checked')?.value || 'current';
-                const report = getTestsForReport(selected);
+                const report = getSelectedTestsForReport();
 
                 if (!report.tests.length) {
-                    throw new Error('No matching results were found for that report.');
+                    throw new Error('Search for and add at least one biomarker to the PDF report.');
                 }
 
                 const win = window.open('', '_blank');
