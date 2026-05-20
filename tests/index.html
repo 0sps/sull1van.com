@@ -68,7 +68,38 @@
             --gauge-bg: rgba(20, 22, 32, 0.85);
         }
 
+        :root.time-day {
+            --ios-bg: #58aeea;
+            --ios-blue: #1679d6;
+            --ios-red: #ff3b30;
+            --ios-green: #1fbb55;
+            --ios-amber: #ffcc00;
+            --ios-separator: rgba(255, 255, 255, 0.2);
 
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.78);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+
+            --green: #30d158;
+            --green-bg: rgba(48, 209, 88, 0.2);
+            --red: #ff3b30;
+            --red-bg: rgba(255, 59, 48, 0.16);
+            --amber: #ffd60a;
+            --amber-bg: rgba(255, 214, 10, 0.18);
+            --blue: #1679d6;
+            --blue-bg: rgba(22, 121, 214, 0.18);
+            --accent: #ffffff;
+            --bg: #58aeea;
+            --text: #ffffff;
+            --muted: rgba(255, 255, 255, 0.72);
+            --faint: rgba(255, 255, 255, 0.36);
+            --tooltip-bg: rgba(20, 105, 185, 0.96);
+            --card-border: rgba(255, 255, 255, 0.24);
+            --chart-grid: rgba(255, 255, 255, 0.22);
+            --surface: rgba(42, 138, 219, 0.48);
+            --surface2: rgba(64, 157, 230, 0.42);
+            --gauge-bg: rgba(37, 119, 197, 0.9);
+        }
 
         /* ── RESET ── */
         * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -106,6 +137,15 @@
                 radial-gradient(circle at 50% 105%, rgba(255,159,10,0.05) 0%, transparent 38%);
         }
 
+        /* Day */
+        :root.time-day .nebula {
+            background:
+                radial-gradient(circle at 14% 4%, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.24) 12%, transparent 28%),
+                radial-gradient(circle at 22% 18%, rgba(255,236,168,0.22) 0%, transparent 26%),
+                linear-gradient(145deg, #78bbef 0%, #4ca5e8 45%, #237fd1 100%);
+            filter: blur(24px);
+        }
+
         /* Sunrise */
         :root.time-sunrise .nebula {
             background:
@@ -141,6 +181,7 @@
             pointer-events: none;
             transition: background 2.5s cubic-bezier(0.4,0,0.2,1);
         }
+        :root.time-day .vignette { background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(24,119,207,0.08) 48%, rgba(16,86,170,0.18) 100%); }
         :root.time-sunrise .vignette { background: radial-gradient(circle, transparent 40%, rgba(20,10,0,0.45) 100%); }
         :root.time-sunset .vignette { background: radial-gradient(circle, transparent 38%, rgba(15,0,5,0.55) 100%); }
         :root.time-night .vignette, :root.night-mode .vignette { background: radial-gradient(circle, transparent 35%, rgba(0,0,8,0.65) 100%); }
@@ -167,6 +208,9 @@
         
         /* Midday (Default): high in sky */
         :root .sun-container, :root.time-midday .sun-container { top: 12%; right: 12%; opacity: 1; transform: scale(1); }
+
+        /* Day: bright sun in the upper-left sky */
+        :root.time-day .sun-container { top: -7%; right: 58%; opacity: 0.92; transform: scale(0.92); }
         
         /* Sunset: low over on left side */
         :root.time-sunset .sun-container { top: 70%; right: 60%; opacity: 0.85; transform: scale(1.1); }
@@ -207,6 +251,7 @@
             transition: opacity 2.5s ease;
         }
         :root.time-sunset .stars { opacity: 0.2; }
+        :root.time-day .stars { opacity: 0; }
         :root.time-night .stars, :root.night-mode .stars { opacity: 1; transition: opacity 2.5s ease 0.8s; }
 
         .sun {
@@ -222,6 +267,11 @@
         :root .sun, :root.time-midday .sun {
             background: radial-gradient(circle, #ffffff 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 70%);
             box-shadow: 0 0 80px 20px rgba(255, 204, 51, 0.4), 0 0 150px 40px rgba(255, 204, 51, 0.2);
+        }
+
+        :root.time-day .sun {
+            background: radial-gradient(circle, #fff 22%, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0) 72%);
+            box-shadow: 0 0 54px 18px rgba(255,255,255,0.7), 0 0 150px 46px rgba(255,232,158,0.3);
         }
 
         /* Sunrise styling */
@@ -254,6 +304,18 @@
             mix-blend-mode: overlay;
         }
 
+        :root.time-day .sun-rays {
+            background:
+                radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 54%),
+                conic-gradient(from 0deg,
+                    transparent 0deg,
+                    rgba(255,255,255,0.12) 26deg,
+                    transparent 58deg,
+                    rgba(255,255,255,0.07) 98deg,
+                    transparent 180deg);
+            mix-blend-mode: screen;
+        }
+
         @keyframes rotate-rays {
             from { transform: translate(-50%, -50%) rotate(0deg); }
             to   { transform: translate(-50%, -50%) rotate(360deg); }
@@ -276,6 +338,100 @@
             z-index: 900;
         }
 
+        :root.time-day .top-bar,
+        :root.time-day .test-card,
+        :root.time-day .kpi-box,
+        :root.time-day .chart-card,
+        :root.time-day .range-bar-card,
+        :root.time-day .std-timeline-card,
+        :root.time-day .command-palette,
+        :root.time-day .confirm-dialog {
+            background: linear-gradient(160deg, rgba(255,255,255,0.28) 0%, rgba(39,130,213,0.22) 100%);
+            border-color: rgba(255,255,255,0.28);
+            border-top-color: rgba(255,255,255,0.52);
+            box-shadow: 0 18px 48px -18px rgba(18,87,158,0.5);
+        }
+
+        :root.time-day .top-bar {
+            backdrop-filter: blur(34px) saturate(170%) brightness(1.04);
+            -webkit-backdrop-filter: blur(34px) saturate(170%) brightness(1.04);
+        }
+
+        :root.time-day .test-card:hover {
+            background: linear-gradient(160deg, rgba(255,255,255,0.34) 0%, rgba(39,130,213,0.26) 100%);
+            border-color: rgba(255,255,255,0.42);
+        }
+
+        :root.time-day .test-card.active-card,
+        :root.time-day .layout.is-grid-view #panelList .test-card.expanded {
+            background: linear-gradient(160deg, rgba(255,255,255,0.36) 0%, rgba(13,111,210,0.3) 100%);
+            border-color: rgba(255,255,255,0.56);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.24) inset, 0 18px 48px -18px rgba(16,88,172,0.58);
+        }
+
+        :root.time-day .top-title {
+            background: linear-gradient(180deg, #fff 12%, rgba(255,255,255,0.72) 100%);
+            -webkit-background-clip: text; background-clip: text;
+        }
+
+        :root.time-day .theme-toggle,
+        :root.time-day .detail-nav-btn,
+        :root.time-day .command-back-btn,
+        :root.time-day .command-add-close,
+        :root.time-day .anomaly-lens-switcher,
+        :root.time-day .mobile-view-switcher,
+        :root.time-day .bottom-nav {
+            background: rgba(255,255,255,0.22);
+            border-color: rgba(255,255,255,0.34);
+            color: #fff;
+            box-shadow: 0 8px 24px -14px rgba(20,91,168,0.65);
+        }
+
+        :root.time-day #testSearch,
+        :root.time-day .add-date-input,
+        :root.time-day .add-result-row input.add-test-name,
+        :root.time-day .add-result-row input.add-test-result,
+        :root.time-day .vault-input {
+            background: rgba(255,255,255,0.22);
+            border-color: rgba(255,255,255,0.34);
+        }
+
+        :root.time-day #testSearch:focus,
+        :root.time-day .add-date-input:focus,
+        :root.time-day .add-result-row input.add-test-name:focus,
+        :root.time-day .add-result-row input.add-test-result:focus {
+            background: rgba(255,255,255,0.28);
+            border-color: rgba(255,255,255,0.58);
+        }
+
+        :root.time-day .chip {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.28);
+            color: rgba(255,255,255,0.82);
+        }
+
+        :root.time-day .chip.active,
+        :root.time-day .add-save-btn,
+        :root.time-day .confirm-btn-primary,
+        :root.time-day .vault-btn-primary {
+            background: #fff;
+            color: #1679d6;
+            box-shadow: 0 10px 24px -12px rgba(20,91,168,0.7);
+        }
+
+        :root.time-day .anomaly-lens-switcher::before,
+        :root.time-day .mobile-view-switcher::before {
+            background: rgba(255,255,255,0.34);
+        }
+
+        :root.time-day .unit-placeholder,
+        :root.time-day .detail-unit-placeholder,
+        :root.time-day .skeleton-line,
+        :root.time-day .skeleton-chip,
+        :root.time-day .skeleton-spark {
+            background: linear-gradient(90deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.38) 45%, rgba(255,255,255,0.16) 100%);
+            background-size: 180% 100%;
+        }
 
         .top-bar-inner {
             display: flex;
@@ -2015,12 +2171,21 @@
             }
         };
 
-        const SKY_STATES = ['time-sunrise', 'time-midday', 'time-sunset', 'time-night'];
-        let currentSkyIndex = 1; // Default to midday
+        const SKY_STATES = ['time-sunrise', 'time-day', 'time-midday', 'time-sunset', 'time-night'];
+        const LEGACY_SKY_STATES = ['time-sunrise', 'time-midday', 'time-sunset', 'time-night'];
+        const DEFAULT_SKY_STATE = 'time-midday';
+        let currentSkyIndex = SKY_STATES.indexOf(DEFAULT_SKY_STATE);
 
         function normalizeSkyIndex(index) {
+            if (SKY_STATES.includes(index)) return SKY_STATES.indexOf(index);
+
             const parsed = Number.parseInt(index, 10);
-            return Number.isInteger(parsed) && parsed >= 0 && parsed < SKY_STATES.length ? parsed : 1;
+            if (Number.isInteger(parsed)) {
+                const legacyState = LEGACY_SKY_STATES[parsed];
+                if (legacyState) return SKY_STATES.indexOf(legacyState);
+            }
+
+            return SKY_STATES.indexOf(DEFAULT_SKY_STATE);
         }
 
         function setSkyState(index) {
@@ -2038,11 +2203,11 @@
 
             // Swap icons flawlessly
             document.getElementById('sunrise-icon').style.display = newState === 'time-sunrise' ? 'block' : 'none';
-            document.getElementById('sun-icon').style.display = newState === 'time-midday' ? 'block' : 'none';
+            document.getElementById('sun-icon').style.display = (newState === 'time-day' || newState === 'time-midday') ? 'block' : 'none';
             document.getElementById('sunset-icon').style.display = newState === 'time-sunset' ? 'block' : 'none';
             document.getElementById('moon-icon').style.display = newState === 'time-night' ? 'block' : 'none';
 
-            localStorage.setItem('skyState', String(currentSkyIndex));
+            localStorage.setItem('skyState', newState);
             refreshThemeCache();
         }
 
