@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- V2.0 LABS!! NEW FEATURE; PDF EXPORT-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -1658,6 +1658,99 @@
         .confirm-btn-primary   { background: var(--ios-blue); color: #fff; box-shadow: 0 4px 16px rgba(10,132,255,0.32); }
         .confirm-btn-danger    { background: var(--ios-red);  color: #fff; box-shadow: 0 4px 16px rgba(255,69,58,0.32); }
 
+        /* ── PDF REPORT MODAL ─────────────────────────────────────── */
+        .report-overlay {
+            position: fixed; inset: 0;
+            z-index: 1600;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            background: rgba(0,0,0,0.58);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.24s ease;
+        }
+        .report-overlay.visible { opacity: 1; pointer-events: auto; }
+
+        .report-dialog {
+            width: min(390px, 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-top: 1.5px solid rgba(255,255,255,0.22);
+            background: linear-gradient(160deg, rgba(255,255,255,0.11), rgba(255,255,255,0.055));
+            backdrop-filter: blur(48px) saturate(150%) brightness(0.75);
+            -webkit-backdrop-filter: blur(48px) saturate(150%) brightness(0.75);
+            box-shadow: 0 32px 80px -8px rgba(0,0,0,0.75);
+            padding: 24px;
+            transform: scale(0.92);
+            transition: transform 0.28s cubic-bezier(0.25,1,0.5,1);
+        }
+        .report-overlay.visible .report-dialog { transform: scale(1); }
+        .report-title {
+            font-family: var(--font-heading);
+            font-size: 21px;
+            font-weight: 750;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .report-body {
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+        .report-options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .report-option {
+            display: grid;
+            grid-template-columns: 22px 1fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 15px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.06);
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        .report-option input {
+            width: 18px; height: 18px;
+            accent-color: var(--ios-blue);
+        }
+        .report-option:has(input:checked) {
+            border-color: rgba(10,132,255,0.68);
+            background: rgba(10,132,255,0.15);
+        }
+        .report-actions { display: flex; gap: 10px; }
+        .report-btn {
+            flex: 1;
+            border: none;
+            border-radius: 14px;
+            padding: 13px 14px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.18s, background 0.18s, box-shadow 0.18s;
+        }
+        .report-btn:active { opacity: 0.78; }
+        .report-btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .report-btn-primary {
+            background: var(--ios-blue);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(10,132,255,0.32);
+        }
+
         /* ── VAULT PASSWORD MODAL ─────────────────────────────────── */
         .vault-overlay {
             position: fixed; inset: 0; z-index: 9000;
@@ -1854,7 +1947,7 @@
     <div class="action-sheet" id="actionSheet">
         <div class="sheet-handle"></div>
         <div class="sheet-title">More Actions</div>
-        <div class="sheet-action" onclick="toggleActionSheet(false); alert('Analysis Report feature coming soon!');">
+        <div class="sheet-action" onclick="toggleActionSheet(false); openPdfReportPrompt();">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16h16V8l-6-6z" /><polyline points="14 2 14 8 20 8" />
                 <line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
@@ -1895,6 +1988,17 @@
             <div class="confirm-title" id="confirmTitle"></div>
             <div class="confirm-body" id="confirmBody"></div>
             <div class="confirm-actions" id="confirmActions"></div>
+        </div>
+    </div>
+    <div class="report-overlay" id="reportOverlay" onclick="if(event.target === this) closePdfReportPrompt();">
+        <div class="report-dialog" role="dialog" aria-modal="true" aria-labelledby="reportDialogTitle">
+            <div class="report-title" id="reportDialogTitle">Generate PDF report</div>
+            <div class="report-body">Choose what you want to show in the report.</div>
+            <div class="report-options" id="reportOptions"></div>
+            <div class="report-actions">
+                <button class="report-btn report-btn-secondary" type="button" onclick="closePdfReportPrompt()">Cancel</button>
+                <button class="report-btn report-btn-primary" type="button" onclick="generateSelectedPdfReport()">Generate</button>
+            </div>
         </div>
     </div>
     <input type="file" id="unitImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;">
@@ -2237,6 +2341,7 @@
         let _loadingInProgress = false;
         let _vaultDataCache = null;
         let _exportInProgress = false;
+        let _pdfReportInProgress = false;
         let _unitImportInProgress = false;
         let _unitHydrationToken = 0;
         let _queuedForceRefresh = false;
@@ -2999,6 +3104,487 @@
                 });
             } finally {
                 _exportInProgress = false;
+            }
+        }
+
+        // ── PDF REPORTS ──────────────────────────────────────────────
+        const CMP_REPORT_MARKERS = [
+            'GLUCOSE', 'CALCIUM', 'SODIUM', 'POTASSIUM', 'CHLORIDE', 'CO2',
+            'BUN', 'CREATININE', 'ALBUMIN', 'TOTAL PROTEIN', 'GLOBULIN',
+            'A/G RATIO', 'ALKALINE PHOSPHATASE', 'ALT', 'AST', 'BILIRUBIN'
+        ];
+
+        function openPdfReportPrompt() {
+            if (!currentTestName) {
+                showConfirm({
+                    icon: CONFIRM_ICONS.info,
+                    iconColor: 'var(--accent)',
+                    title: 'Choose a test first',
+                    body: 'Open a test result, then generate a PDF report from the menu.',
+                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                });
+                return;
+            }
+
+            const options = [
+                { value: 'current', label: `${currentTestName} (this test)` },
+                { value: 'cmp', label: 'Metabolic Panel (CMP)' },
+                { value: 'testosterone', label: 'Testosterone' },
+            ];
+
+            const box = document.getElementById('reportOptions');
+            if (!box) return;
+            box.innerHTML = options.map((option, index) => `
+                <label class="report-option">
+                    <input type="radio" name="pdfReportType" value="${option.value}" ${index === 0 ? 'checked' : ''}>
+                    <span>${escStr(option.label)}</span>
+                </label>
+            `).join('');
+
+            document.getElementById('reportOverlay')?.classList.add('visible');
+        }
+
+        function closePdfReportPrompt() {
+            document.getElementById('reportOverlay')?.classList.remove('visible');
+        }
+
+        function getLocalStorageReportTestsByName(testName) {
+            const normalizedTarget = normalizeTestName(testName);
+            const matches = [];
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (!key || key === 'health_enc_key') continue;
+                    const raw = localStorage.getItem(key);
+                    if (!raw || raw.length > 1500000) continue;
+                    let parsed;
+                    try { parsed = JSON.parse(raw); } catch (_) { continue; }
+
+                    const candidates = Array.isArray(parsed)
+                        ? parsed
+                        : Array.isArray(parsed?.tests)
+                            ? parsed.tests
+                            : [];
+                    const uiTests = buildUiTestsFromVault(candidates);
+                    uiTests.forEach(test => {
+                        if (normalizeTestName(test.name) === normalizedTarget) matches.push(test);
+                    });
+                }
+            } catch (error) {
+                console.warn('Local report lookup failed:', error);
+            }
+            return matches;
+        }
+
+        function mergeReportTests(tests) {
+            const byName = new Map();
+            tests.filter(Boolean).forEach(test => {
+                const key = normalizeTestName(test.name);
+                if (!key) return;
+                if (!byName.has(key)) {
+                    byName.set(key, { ...test, points: [...(test.points || [])] });
+                    return;
+                }
+                const existing = byName.get(key);
+                existing.points = [...existing.points, ...(test.points || [])];
+                existing.unitFallback = existing.unitFallback || test.unitFallback;
+                existing.range = existing.range || test.range;
+            });
+
+            return [...byName.values()].map(test => {
+                const seen = new Set();
+                const points = [...(test.points || [])]
+                    .filter(point => point && point.date)
+                    .filter(point => {
+                        const key = `${point.date}_${point.rawResult}_${point.lab}_${point.sourceFile}`;
+                        if (seen.has(key)) return false;
+                        seen.add(key);
+                        return true;
+                    })
+                    .sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+                const numericPts = points.filter(point => point.isNumeric && point.numVal !== null);
+                const qualPts = points.filter(point => !point.isNumeric);
+                const type = (numericPts.length === 0 && qualPts.length > 0)
+                    ? 'qualitative'
+                    : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
+                const displayUnit = getDisplayUnitText(test) || findBestUnitText({ ...test, points });
+                return {
+                    ...test,
+                    points,
+                    numericPts,
+                    type,
+                    displayUnit,
+                    unitStatus: displayUnit ? 'resolved' : 'absent',
+                };
+            }).filter(test => test.points.length);
+        }
+
+        function markerMatchesReport(testName, marker) {
+            const normalizedName = normalizeTestName(testName);
+            const normalizedMarker = normalizeTestName(marker);
+            return normalizedName === normalizedMarker || normalizedName.includes(normalizedMarker);
+        }
+
+        function getTestsForReport(reportType) {
+            if (reportType === 'current') {
+                return {
+                    title: `${currentTestName} REPORT`,
+                    tests: mergeReportTests(allTests.filter(test => test.name === currentTestName)),
+                };
+            }
+
+            if (reportType === 'testosterone') {
+                const direct = allTests.filter(test => normalizeTestName(test.name) === 'TESTOSTERONE');
+                const local = getLocalStorageReportTestsByName('TESTOSTERONE');
+                return {
+                    title: 'TESTOSTERONE REPORT',
+                    tests: mergeReportTests([...direct, ...local]),
+                };
+            }
+
+            const cmpTests = allTests.filter(test =>
+                CMP_REPORT_MARKERS.some(marker => markerMatchesReport(test.name, marker))
+            );
+            return {
+                title: 'METABOLIC PANEL (CMP) REPORT',
+                tests: mergeReportTests(cmpTests).sort((a, b) => a.name.localeCompare(b.name)),
+            };
+        }
+
+        function getReportLatestPoint(test) {
+            const pts = test.type === 'qualitative' ? test.points : (test.numericPts.length ? test.numericPts : test.points);
+            return pts[pts.length - 1] || null;
+        }
+
+        function getReportPointValue(point) {
+            if (!point) return '—';
+            return point.numVal !== null && point.numVal !== undefined
+                ? formatVal(point.numVal)
+                : String(point.rawResult ?? '—');
+        }
+
+        function getReportStatusText(test, point) {
+            if (!point) return '—';
+            if (point.isNumeric && point.numVal !== null) {
+                const rangeStr = point.rawRange || test.range;
+                const parsed = parseRange(rangeStr);
+                const status = parsed ? isInRange(point.numVal, parsed) : null;
+                return status ? status.toUpperCase() : 'RECORDED';
+            }
+            return qualBadge(qualStatus(point.rawResult));
+        }
+
+        function buildReportGraphSvg(test) {
+            const pts = test.numericPts || [];
+            if (pts.length < 2) {
+                return '<div class="empty-graph">Not enough numeric readings for a trend graph.</div>';
+            }
+
+            const width = 680;
+            const height = 230;
+            const padX = 46;
+            const padY = 28;
+            const values = pts.map(point => point.numVal);
+            let min = Math.min(...values);
+            let max = Math.max(...values);
+            if (min === max) {
+                min -= 1;
+                max += 1;
+            }
+            const valueRange = max - min;
+            const xFor = index => padX + (index / Math.max(1, pts.length - 1)) * (width - padX * 2);
+            const yFor = value => height - padY - ((value - min) / valueRange) * (height - padY * 2);
+            const coords = pts.map((point, index) => `${xFor(index).toFixed(1)},${yFor(point.numVal).toFixed(1)}`).join(' ');
+            const dots = pts.map((point, index) =>
+                `<circle cx="${xFor(index).toFixed(1)}" cy="${yFor(point.numVal).toFixed(1)}" r="4.5" />`
+            ).join('');
+
+            return `
+                <svg class="report-graph" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escStr(test.name)} history graph">
+                    <line class="axis" x1="${padX}" y1="${height - padY}" x2="${width - padX}" y2="${height - padY}" />
+                    <line class="axis" x1="${padX}" y1="${padY}" x2="${padX}" y2="${height - padY}" />
+                    <text class="axis-label" x="${padX}" y="18">${formatVal(max)}</text>
+                    <text class="axis-label" x="${padX}" y="${height - 7}">${formatVal(min)}</text>
+                    <polyline points="${coords}" />
+                    ${dots}
+                </svg>
+                <div class="graph-dates">
+                    <span>${escStr(fmtDate(pts[0].date))}</span>
+                    <span>${escStr(fmtDate(pts[pts.length - 1].date))}</span>
+                </div>
+            `;
+        }
+
+        function buildPdfReportHtml(title, tests) {
+            const generatedAt = new Date().toLocaleDateString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric'
+            });
+            const summaryRows = tests.map(test => {
+                const latest = getReportLatestPoint(test);
+                const unit = getDisplayUnitText(test) || findBestUnitText(test);
+                return `
+                    <tr>
+                        <td>${escStr(test.name)}</td>
+                        <td>${escStr(getReportPointValue(latest))}</td>
+                        <td>${escStr(unit || '—')}</td>
+                        <td>${escStr(latest?.date ? fmtDate(latest.date) : '—')}</td>
+                        <td>${escStr(getReportStatusText(test, latest))}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const sections = tests.map(test => {
+                const unit = getDisplayUnitText(test) || findBestUnitText(test);
+                const history = [...(test.type === 'qualitative' ? test.points : (test.numericPts.length ? test.numericPts : test.points))]
+                    .reverse()
+                    .map(point => `
+                        <tr>
+                            <td>${escStr(fmtDate(point.date))}</td>
+                            <td>${escStr(getReportPointValue(point))}</td>
+                            <td>${escStr(unit || '—')}</td>
+                            <td>${escStr(point.rawRange || test.range || '—')}</td>
+                        </tr>
+                    `).join('');
+                return `
+                    <section class="marker-section">
+                        <div class="marker-heading">
+                            <h2>${escStr(test.name)}</h2>
+                            <span>${escStr((test.points || []).length)} reading${(test.points || []).length === 1 ? '' : 's'}</span>
+                        </div>
+                        ${buildReportGraphSvg(test)}
+                        <table class="history-table">
+                            <thead><tr><th>Date</th><th>Result</th><th>Unit</th><th>Reference Range</th></tr></thead>
+                            <tbody>${history}</tbody>
+                        </table>
+                    </section>
+                `;
+            }).join('');
+
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escStr(title)}</title>
+<style>
+    @page { size: letter; margin: 0.55in; }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        background: #f5f7fb;
+        color: #111827;
+        font-family: "Plus Jakarta Sans", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .page {
+        max-width: 8.5in;
+        min-height: 11in;
+        margin: 0 auto;
+        padding: 0;
+        background: #fff;
+    }
+    header {
+        padding: 34px 38px 28px;
+        color: #fff;
+        background: linear-gradient(135deg, #0b1220 0%, #0f766e 52%, #2563eb 100%);
+    }
+    .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        opacity: 0.76;
+        font-weight: 800;
+    }
+    h1 {
+        margin: 8px 0 10px;
+        font-size: 34px;
+        line-height: 1;
+        letter-spacing: 0;
+    }
+    .meta {
+        display: flex;
+        gap: 18px;
+        color: rgba(255,255,255,0.82);
+        font-size: 12px;
+        font-weight: 650;
+    }
+    main { padding: 30px 38px 42px; }
+    .section-title {
+        margin: 0 0 14px;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #64748b;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .summary-table {
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 0 0 1px #e5e7eb;
+        margin-bottom: 28px;
+    }
+    th {
+        background: #eef2f7;
+        color: #475569;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-align: left;
+        padding: 11px 12px;
+    }
+    td {
+        border-top: 1px solid #e5e7eb;
+        padding: 12px;
+        font-size: 13px;
+        color: #172033;
+        vertical-align: top;
+    }
+    td:first-child { font-weight: 760; color: #0f172a; }
+    .marker-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid #e5e7eb;
+    }
+    .marker-section + .marker-section {
+        break-before: page;
+        page-break-before: always;
+    }
+    .marker-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+    h2 {
+        margin: 0;
+        font-size: 23px;
+        letter-spacing: 0;
+        color: #0f172a;
+    }
+    .marker-heading span {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 760;
+    }
+    .report-graph {
+        width: 100%;
+        height: 230px;
+        display: block;
+        margin: 8px 0 4px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #f8fafc, #eef6ff);
+        box-shadow: inset 0 0 0 1px #e2e8f0;
+    }
+    .report-graph .axis {
+        stroke: #cbd5e1;
+        stroke-width: 1.25;
+    }
+    .report-graph .axis-label {
+        fill: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+    }
+    .report-graph polyline {
+        fill: none;
+        stroke: #0f766e;
+        stroke-width: 3.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    .report-graph circle {
+        fill: #2563eb;
+        stroke: #fff;
+        stroke-width: 2;
+    }
+    .graph-dates {
+        display: flex;
+        justify-content: space-between;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+    .empty-graph {
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        color: #64748b;
+        padding: 28px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+    .history-table th { background: #f8fafc; }
+    .history-table td { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="eyebrow">Sean's Log</div>
+        <h1>${escStr(title)}</h1>
+        <div class="meta">
+            <span>Generated ${escStr(generatedAt)}</span>
+            <span>${tests.length} marker${tests.length === 1 ? '' : 's'}</span>
+        </div>
+    </header>
+    <main>
+        <h2 class="section-title">Most Recent Results</h2>
+        <table class="summary-table">
+            <thead><tr><th>Marker</th><th>Most Recent</th><th>Unit</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>${summaryRows}</tbody>
+        </table>
+        ${sections}
+    </main>
+</div>
+<script>
+    window.addEventListener('load', () => setTimeout(() => window.print(), 250));
+<\/script>
+</body>
+</html>`;
+        }
+
+        function generateSelectedPdfReport() {
+            if (_pdfReportInProgress) return;
+            _pdfReportInProgress = true;
+
+            try {
+                const selected = document.querySelector('input[name="pdfReportType"]:checked')?.value || 'current';
+                const report = getTestsForReport(selected);
+
+                if (!report.tests.length) {
+                    throw new Error('No matching results were found for that report.');
+                }
+
+                const win = window.open('', '_blank');
+                if (!win) {
+                    throw new Error('Your browser blocked the report window. Allow pop-ups for this site and try again.');
+                }
+
+                win.document.open();
+                win.document.write(buildPdfReportHtml(report.title, report.tests));
+                win.document.close();
+                closePdfReportPrompt();
+                showSuccessToast('Report ready');
+            } catch (error) {
+                console.error('PDF report failed:', error);
+                showConfirm({
+                    icon: CONFIRM_ICONS.error,
+                    iconColor: 'var(--red)',
+                    title: 'Report failed',
+                    body: error.message || 'Something went wrong while preparing your PDF report.',
+                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                });
+            } finally {
+                _pdfReportInProgress = false;
             }
         }
 
