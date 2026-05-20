@@ -1549,7 +1549,7 @@
             margin: 0 auto 18px; color: var(--ios-blue);
         }
         .confirm-title { font-family: var(--font-heading); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
-        .confirm-body  { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; }
+        .confirm-body  { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; white-space: pre-line; }
         .confirm-actions { display: flex; gap: 10px; }
         .confirm-btn { flex: 1; padding: 13px 16px; border-radius: 14px; font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
         .confirm-btn:active { transform: scale(0.96); }
@@ -2128,8 +2128,13 @@
         const SKY_STATES = ['time-sunrise', 'time-midday', 'time-sunset', 'time-night'];
         let currentSkyIndex = 1; // Default to midday
 
+        function normalizeSkyIndex(index) {
+            const parsed = Number.parseInt(index, 10);
+            return Number.isInteger(parsed) && parsed >= 0 && parsed < SKY_STATES.length ? parsed : 1;
+        }
+
         function setSkyState(index) {
-            currentSkyIndex = index;
+            currentSkyIndex = normalizeSkyIndex(index);
             const root = document.documentElement;
             
             // Remove existing modes
@@ -2163,7 +2168,7 @@
                 if (localStorage.getItem('sky') === 'night') savedIndex = 3;
                 else savedIndex = 1; // Default Light
             }
-            setSkyState(parseInt(savedIndex));
+            setSkyState(savedIndex);
             renderLoadingSkeletons();
         });
 
@@ -2242,14 +2247,14 @@
         function getInlineLatestUnitHtml(test) {
             if (test?.type === 'qualitative') return '';
             const unitText = getDisplayUnitText(test);
-            return `<span class="latest-chip-unit${unitText ? '' : ' is-hidden'}" data-inline-unit-for="${safeId(test.name)}">${unitText ? escStr(unitText) : ''}</span>`;
+            return `<span class="latest-chip-unit${unitText ? '' : ' is-hidden'}" data-inline-unit-for="${getTestDomId(test.name)}">${unitText ? escStr(unitText) : ''}</span>`;
         }
 
         function getCardUnitSlotHtml(test) {
             if (test?.type !== 'qualitative' && test?.unitStatus !== 'pending') return '';
             const inner = getUnitSlotMarkup(test);
             return inner
-                ? `<div class="test-card-unit-row" data-unit-slot-for="${safeId(test.name)}">${inner}</div>`
+                ? `<div class="test-card-unit-row" data-unit-slot-for="${getTestDomId(test.name)}">${inner}</div>`
                 : '';
         }
 
@@ -2283,7 +2288,7 @@
             const test = allTests.find(item => item.name === testName);
             if (!test) return;
 
-            const safeName = safeId(test.name);
+            const safeName = getTestDomId(test.name);
             const slotNodes = cache ? (cache.unitSlots[safeName] || []) : document.querySelectorAll(`[data-unit-slot-for="${safeName}"]`);
             slotNodes.forEach(node => {
                 if (test.type !== 'qualitative' && test.unitStatus !== 'pending') {
@@ -2423,6 +2428,7 @@
 
         function buildUnitImportPreview(vaultData, workbookRows) {
             const unitMap = new Map();
+            const workbookNameMap = new Map();
             let blankRows = 0;
 
             workbookRows.forEach(row => {
@@ -2433,7 +2439,9 @@
                     blankRows += 1;
                     return;
                 }
-                unitMap.set(testName, unitText);
+                const normalizedName = normalizeTestName(testName);
+                unitMap.set(normalizedName, unitText);
+                workbookNameMap.set(normalizedName, testName);
             });
 
             const tests = Array.isArray(vaultData?.tests) ? vaultData.tests : [];
@@ -2442,12 +2450,13 @@
 
             tests.forEach((test, testIndex) => {
                 const testName = typeof test?.name === 'string' ? test.name : '';
-                if (!unitMap.has(testName)) return;
-                const unitText = unitMap.get(testName);
+                const normalizedName = normalizeTestName(testName);
+                if (!unitMap.has(normalizedName)) return;
+                const unitText = unitMap.get(normalizedName);
                 const points = Array.isArray(test?.points) ? test.points : [];
                 if (!points.length) return;
 
-                matchedWorkbookNames.add(testName);
+                matchedWorkbookNames.add(normalizedName);
                 points.forEach((point, pointIndex) => {
                     if (normalizeUnitString(point?.unit) === unitText) return;
                     updates.push({ testIndex, pointIndex, unitText });
@@ -2460,7 +2469,9 @@
                 if (name) matchedTestNames.add(name);
             });
 
-            const unmatchedWorkbookNames = [...unitMap.keys()].filter(name => !matchedWorkbookNames.has(name));
+            const unmatchedWorkbookNames = [...unitMap.keys()]
+                .filter(name => !matchedWorkbookNames.has(name))
+                .map(name => workbookNameMap.get(name) || name);
 
             return {
                 unitMap,
@@ -2529,7 +2540,7 @@
                         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>`,
                         iconColor: 'var(--green)',
                         title: 'No unit changes needed',
-                        body: summaryLines.join('<br><br>'),
+                        body: summaryLines.join('\n\n'),
                         primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                     });
                     return;
@@ -2539,7 +2550,7 @@
                     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
                     iconColor: 'var(--accent)',
                     title: 'Import units from workbook?',
-                    body: summaryLines.join('<br><br>'),
+                    body: summaryLines.join('\n\n'),
                     secondary: { label: 'Cancel', className: 'confirm-btn-secondary', action: dismissConfirm },
                     primary: {
                         label: 'Import',
@@ -2741,7 +2752,10 @@
             return (rawTests || []).map(rawTest => {
                 if (!rawTest || !rawTest.name) return null;
 
-                const points = Array.isArray(rawTest.points) ? rawTest.points.map(p => {
+                const rawPoints = Array.isArray(rawTest.points) ? rawTest.points.filter(p => p && p.date) : [];
+                if (rawPoints.length === 0) return null;
+
+                const points = rawPoints.map(p => {
                     const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
                     const numVal    = cleanNumber(rawResult);
                     const isNumeric = rawTest.type === 'numeric' || (rawTest.type !== 'qualitative' && numVal !== null);
@@ -2756,12 +2770,15 @@
                         lab: p.lab || null,
                         sourceFile: p.sourceFile || null,
                     };
-                }) : [];
+                });
 
                 points.sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+                if (points.length === 0) return null;
                 const dmap = {};
                 points.forEach(p => { dmap[p.date] = p; });
                 const sortedPoints = Object.values(dmap).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+
+                if (sortedPoints.length === 0) return null;
 
                 const numericPts = sortedPoints.filter(p => p.isNumeric && p.numVal !== null);
                 const qualPts    = sortedPoints.filter(p => !p.isNumeric);
@@ -3437,7 +3454,7 @@
             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
             // Build active IDs set for filteredTests
-            const activeIds = new Set(filteredTests.map(t => safeId(t.name)));
+            const activeIds = new Set(filteredTests.map(t => getTestDomId(t.name)));
 
             // Clean up sparkline charts of biomarkers that have been filtered out (to avoid memory leaks)
             Object.keys(sparklineCharts).forEach(id => {
@@ -3468,7 +3485,7 @@
                 fragment.appendChild(labelNode);
 
                 tests.forEach(t => {
-                    const id = safeId(t.name);
+                    const id = getTestDomId(t.name);
                     const btnId = `test-btn-${id}`;
                     let node = testCardNodes[btnId];
                     if (!node) {
@@ -3503,7 +3520,7 @@
         }
 
         function renderTestCard(t) {
-            const id = safeId(t.name);
+            const id = getTestDomId(t.name);
             const isCurrent = t.name === currentTestName;
             const last = t.points[t.points.length - 1];
 
@@ -3577,7 +3594,7 @@
         }
 
         function drawSparkline(t) {
-            const id = safeId(t.name);
+            const id = getTestDomId(t.name);
             const canvas = document.getElementById(`spark-${id}`);
             if (!canvas) return;
 
@@ -3734,7 +3751,7 @@
             if (s.type === 'qualitative') {
                 return `
                 <div class="kpi-row grid-kpi-row">
-                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
                     <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                     <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${s.totalCount}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
                 </div>`;
@@ -3755,7 +3772,7 @@
 
             return `
             <div class="kpi-row grid-kpi-row">
-                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${safeId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
                 <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                 <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
             </div>`;
@@ -3770,7 +3787,7 @@
                 if (layout.classList.contains('is-grid-view')) {
                     // Collapse any other open card first
                     document.querySelectorAll('.test-card.expanded').forEach(el => {
-                        if (el.id !== `test-btn-${safeId(name)}`) {
+                        if (el.id !== `test-btn-${getTestDomId(name)}`) {
                             el.classList.remove('expanded');
                             el.removeAttribute('data-grid-open');
                             const container = el.querySelector('.grid-detail-container');
@@ -3778,7 +3795,7 @@
                         }
                     });
 
-                    const cardId = `test-btn-${safeId(name)}`;
+                    const cardId = `test-btn-${getTestDomId(name)}`;
                     const cardEl = document.getElementById(cardId);
                     if (cardEl) {
                         // Toggle: clicking an open card collapses it
@@ -3862,7 +3879,7 @@
                 dc.style.flexDirection = 'column';
 
                 document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
-                const cardId = `test-btn-${safeId(name)}`;
+                const cardId = `test-btn-${getTestDomId(name)}`;
                 const cardEl = document.getElementById(cardId);
                 if (cardEl) {
                     cardEl.classList.add('active-card');
@@ -4006,7 +4023,7 @@
         }
 
         function renderTrendChart(t, container) {
-            const canvasId = 'trendChart_' + safeId(t.name);
+            const canvasId = 'trendChart_' + getTestDomId(t.name);
             container.insertAdjacentHTML('beforeend', `
       <div class="detail-divider">Trend over time</div>
       <div class="chart-section">
@@ -4235,7 +4252,20 @@
         function getCssVar(name) {
             return themeCache[name] ?? getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
-        function safeId(name) { return name.replace(/[^a-zA-Z0-9]/g, '_'); }
+        function safeId(name) { return String(name).replace(/[^a-zA-Z0-9]/g, '_'); }
+        function getTestDomId(name) {
+            const index = allTests.findIndex(test => test.name === name);
+            const suffix = index >= 0 ? index : hashString(name);
+            return `${safeId(name)}_${suffix}`;
+        }
+        function hashString(value) {
+            let hash = 0;
+            const text = String(value || '');
+            for (let i = 0; i < text.length; i++) {
+                hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+            }
+            return Math.abs(hash).toString(36);
+        }
         function escStr(name) {
             return String(name)
                 .replace(/&/g, '&amp;')
