@@ -2129,7 +2129,7 @@
         }
 
         function getCardUnitSlotHtml(test) {
-            if (test?.type !== 'qualitative' && test?.unitStatus !== 'pending') return '';
+            if (test?.type !== 'qualitative') return '';
             const inner = getUnitSlotMarkup(test);
             return inner
                 ? `<div class="test-card-unit-row" data-unit-slot-for="${getTestDomId(test.name)}">${inner}</div>`
