@@ -90,13 +90,6 @@
         }
 
         /* ── BACKGROUND ATMOSPHERE ── */
-        .ios-bg-wrapper {
-            position: fixed; inset: 0;
-            z-index: -10;
-            background-color: var(--ios-bg);
-            pointer-events: none;
-        }
-
         .nebula {
             position: fixed; inset: 0; z-index: -4;
             filter: blur(55px);
@@ -812,35 +805,6 @@
         .latest-chip-unit.is-hidden { display: none; }
         .chevron { color: var(--text-tertiary); flex-shrink: 0; }
 
-        /* ── HERO WIDGET ── */
-        .hero-widget {
-            position: relative;
-            background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-top: 1.5px solid rgba(255,255,255,0.22);
-            border-radius: var(--card-r);
-            padding: 20px; margin-bottom: 4px;
-            overflow: hidden; transform: translateZ(0);
-            box-shadow: var(--glass-shadow);
-        }
-
-        .hero-glow {
-            position: absolute; top: -40px; right: -40px;
-            width: 140px; height: 140px;
-            background: radial-gradient(circle, rgba(10,132,255,0.16) 0%, transparent 70%);
-            border-radius: 50%; pointer-events: none;
-        }
-        .hero-content { display: flex; align-items: center; justify-content: space-between; position: relative; }
-        .hero-kpi { display: flex; flex-direction: column; gap: 4px; text-align: center; flex: 1; }
-        .hero-kpi-val { font-family: var(--font-heading); font-size: 28px; font-weight: 700; line-height: 1; }
-        .hero-kpi-lbl {
-            font-family: var(--font-heading); font-size: 10px; font-weight: 700;
-            color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .hero-kpi-divider { width: 1px; height: 36px; background: var(--ios-separator); }
-
         /* ── DETAIL PANEL ── */
         .panel-detail {
             display: none; flex-direction: column;
@@ -1196,8 +1160,6 @@
             }
         }
         .layout.is-grid-view #panelList .section-label { grid-column: 1 / -1; font-size: 10px; padding-top: 16px; padding-left: 0; }
-        .layout.is-grid-view #panelList .hero-widget   { grid-column: 1 / -1; margin-bottom: 0; }
-
         /* Collapsed grid tile */
         .layout.is-grid-view #panelList .test-card:not(.expanded) {
             border-radius: 20px; padding: 18px; min-height: 100px; gap: 0;
@@ -1371,11 +1333,6 @@
         .chart-inner { position: relative; height: 220px; }
 
         /* ── ADD RESULT PALETTE ── */
-        .add-sheet-overlay {
-            display: none;
-        }
-        .add-sheet-overlay.visible { display: none; }
-
         .add-sheet {
             position: static;
             max-height: none;
@@ -1394,18 +1351,6 @@
             transition: none;
         }
         .add-sheet.visible { transform: none; opacity: 1; }
-
-        .add-sheet .sheet-handle,
-        .add-sheet-header { display: none; }
-
-        .add-sheet-title { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--text-primary); }
-        .add-sheet-close {
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50%; width: 34px; height: 34px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-primary); cursor: pointer; transition: all 0.2s; flex-shrink: 0;
-        }
-        .add-sheet-close:active { background: rgba(255,255,255,0.16); }
 
         .add-field-group { margin-bottom: 0; flex-shrink: 0; }
         .add-field-label {
@@ -1627,16 +1572,6 @@
             box-shadow: 0 4px 16px rgba(10,132,255,0.32);
         }
         .vault-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-        .vault-progress-bar-track {
-            height: 4px; background: rgba(255,255,255,0.08);
-            border-radius: 999px; overflow: hidden;
-        }
-        .vault-progress-bar-fill {
-            height: 100%; background: var(--ios-blue);
-            border-radius: 999px; width: 0%;
-            transition: width 0.3s ease;
-        }
-
         /* ── SUCCESS TOAST ── */
         .success-toast {
             position: fixed;
@@ -1748,7 +1683,6 @@
 
 <body>
     <!-- Background atmosphere -->
-    <div class="ios-bg-wrapper" id="iosBgWrapper"></div>
     <div class="nebula"></div>
     <div class="vignette"></div>
     <div class="stars"></div>
@@ -1798,9 +1732,6 @@
         <div class="sheet-action" style="color:var(--ios-red);" onclick="toggleActionSheet(false)">Cancel</div>
     </div>
 
-    <!-- Add Result overlay shell is retained for legacy close hooks; the form now lives inside Cmd+K. -->
-    <div class="add-sheet-overlay" id="addSheetOverlay" onclick="tryCloseAddSheet()"></div>
-
     <!-- Custom Confirm Dialog -->
     <div class="confirm-overlay" id="confirmOverlay">
         <div class="confirm-dialog">
@@ -1825,20 +1756,6 @@
             <div class="vault-warning" id="vaultWarning">&#x26A0; This password cannot be recovered. If you forget it, your data will be unrecoverable.</div>
             <div class="vault-error" id="vaultError"></div>
             <button class="vault-btn vault-btn-primary" id="vaultSubmit"></button>
-        </div>
-    </div>
-
-    <!-- Encryption Progress Overlay -->
-    <div class="vault-overlay" id="encryptProgressOverlay">
-        <div class="vault-dialog" style="text-align:center;">
-            <div class="vault-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="vault-title">Encrypting Your Data</div>
-            <div class="vault-subtitle" id="encryptProgressText">Preparing&#x2026;</div>
-            <div class="vault-progress-bar-track">
-                <div class="vault-progress-bar-fill" id="encryptProgressBar"></div>
-            </div>
         </div>
     </div>
 
@@ -1883,7 +1800,6 @@
                             <div class="add-field-group">
                                 <div class="add-field-label">Results</div>
                                 <div class="add-rows-container" id="addRowsContainer"></div>
-                                <datalist id="testsDatalist"></datalist>
                             </div>
                             <button class="add-row-btn" id="addRowBtn" onclick="addResultRow()">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2073,12 +1989,6 @@
     </button>
 
     <script>
-        // ── DAY / NIGHT TOGGLE ────────────────────────────────────────
-        // Restores persisted state on load (default: day)
-        if (localStorage.getItem('sky') === 'night') {
-            document.documentElement.classList.add('night-mode');
-        }
-
         window.toggleLayout = function() {
             const layout = document.querySelector('.layout');
             const isGrid = !layout.classList.contains('is-grid-view');
@@ -2087,34 +1997,21 @@
 
         window.setLayoutView = function(isGrid) {
             const layout = document.querySelector('.layout');
-            if (isGrid) {
-                layout.classList.add('is-grid-view');
-            } else {
-                layout.classList.remove('is-grid-view');
-            }
-
-            const gridIconStyle = document.getElementById('grid-icon') ? document.getElementById('grid-icon').style : null;
-            const listIconStyle = document.getElementById('list-icon') ? document.getElementById('list-icon').style : null;
-
-            if (gridIconStyle) gridIconStyle.display = isGrid ? 'none' : 'block';
-            if (listIconStyle) listIconStyle.display = isGrid ? 'block' : 'none';
+            layout.classList.toggle('is-grid-view', isGrid);
+            document.getElementById('grid-icon')?.style.setProperty('display', isGrid ? 'none' : 'block');
+            document.getElementById('list-icon')?.style.setProperty('display', isGrid ? 'block' : 'none');
 
             const tabList = document.getElementById('tabList');
             const tabGrid = document.getElementById('tabGrid');
             const mobileSwitcher = document.getElementById('mobileViewSwitcher');
-            if (mobileSwitcher) mobileSwitcher.classList.toggle('is-grid', isGrid);
             if (mobileSwitcher) {
+                mobileSwitcher.classList.toggle('is-grid', isGrid);
                 mobileSwitcher.setAttribute('aria-pressed', isGrid ? 'true' : 'false');
                 mobileSwitcher.setAttribute('aria-label', isGrid ? 'Switch to list view' : 'Switch to grid view');
             }
             if (tabList && tabGrid) {
-                if (isGrid) {
-                    tabGrid.classList.add('active');
-                    tabList.classList.remove('active');
-                } else {
-                    tabList.classList.add('active');
-                    tabGrid.classList.remove('active');
-                }
+                tabGrid.classList.toggle('active', isGrid);
+                tabList.classList.toggle('active', !isGrid);
             }
         };
 
@@ -2152,18 +2049,6 @@
         window.toggleTheme = function () {
             setSkyState((currentSkyIndex + 1) % SKY_STATES.length);
         };
-
-        // ── INIT ─────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', () => {
-            let savedIndex = localStorage.getItem('skyState');
-            if (savedIndex === null || savedIndex === '') {
-                // Fallback check for legacy toggle config
-                if (localStorage.getItem('sky') === 'night') savedIndex = 3;
-                else savedIndex = 1; // Default Light
-            }
-            setSkyState(savedIndex);
-            renderLoadingSkeletons();
-        });
 
         // ── DATA & STATE ──────────────────────────────────────────────
         let allTests = [];          // [{name, unit, range, type, points, numericPts, category}]
@@ -2383,6 +2268,14 @@
             panel.innerHTML = `<div class="skeleton-list">${cards}</div>`;
         }
 
+        const CONFIRM_ICONS = {
+            check: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>',
+            error: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+            info: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+            save: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>',
+            warning: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+        };
+
         function promptUnitImportFile() {
             if (_unitImportInProgress) return;
             const input = document.getElementById('unitImportFileInput');
@@ -2456,12 +2349,6 @@
                 });
             });
 
-            const matchedTestNames = new Set();
-            updates.forEach(update => {
-                const name = tests[update.testIndex]?.name;
-                if (name) matchedTestNames.add(name);
-            });
-
             const unmatchedWorkbookNames = [...unitMap.keys()]
                 .filter(name => !matchedWorkbookNames.has(name))
                 .map(name => workbookNameMap.get(name) || name);
@@ -2469,7 +2356,6 @@
             return {
                 unitMap,
                 updates,
-                matchedTestCount: matchedTestNames.size,
                 matchedWorkbookNameCount: matchedWorkbookNames.size,
                 pointUpdateCount: updates.length,
                 blankRows,
@@ -2530,7 +2416,7 @@
 
                 if (preview.pointUpdateCount === 0) {
                     showConfirm({
-                        icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>`,
+                        icon: CONFIRM_ICONS.check,
                         iconColor: 'var(--green)',
                         title: 'No unit changes needed',
                         body: summaryLines.join('\n\n'),
@@ -2540,7 +2426,7 @@
                 }
 
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
+                    icon: CONFIRM_ICONS.save,
                     iconColor: 'var(--accent)',
                     title: 'Import units from workbook?',
                     body: summaryLines.join('\n\n'),
@@ -2556,7 +2442,7 @@
                             } catch (error) {
                                 console.error('Unit import save failed:', error);
                                 showConfirm({
-                                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                                    icon: CONFIRM_ICONS.error,
                                     iconColor: 'var(--red)',
                                     title: 'Import failed',
                                     body: error.message || 'Something went wrong while saving imported units.',
@@ -2569,7 +2455,7 @@
             } catch (error) {
                 console.error('Unit import failed:', error);
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                    icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
                     title: 'Import failed',
                     body: error.message || 'The workbook could not be processed.',
@@ -2934,7 +2820,7 @@
             } catch (e) {
                 console.error('Export failed:', e);
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                    icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
                     title: 'Export failed',
                     body: e.message || 'Something went wrong while preparing your workbook.',
@@ -3351,7 +3237,6 @@
             document.getElementById('commandPalette')?.classList.remove('add-mode');
             document.getElementById('commandOverlay')?.classList.remove('visible');
             document.getElementById('mobileCommandFab')?.classList.remove('active');
-            document.getElementById('addSheetOverlay')?.classList.remove('visible');
             closeAllNameSuggestions();
         }
 
@@ -4069,7 +3954,7 @@
                     borderColor: seg => pointColors[seg.p1DataIndex]
                 },
                 pointBackgroundColor: pointColors,
-                pointBorderColor: getCssVar('--bg'),
+                pointBorderColor: themeCache['--bg'],
                 pointBorderWidth: 1.5,
                 pointRadius: 5,
                 pointHoverRadius: 7,
@@ -4247,11 +4132,6 @@
         }
 
         // ── UTILS ─────────────────────────────────────────────────────
-        // getCssVar kept for any one-off reads (e.g. gauge marker color);
-        // hot render paths must use themeCache instead.
-        function getCssVar(name) {
-            return themeCache[name] ?? getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-        }
         function safeId(name) { return String(name).replace(/[^a-zA-Z0-9]/g, '_'); }
         function getTestDomId(name) {
             const index = allTests.findIndex(test => test.name === name);
@@ -4432,7 +4312,6 @@
             addResultRow();
 
             document.getElementById('addSheet')?.classList.add('visible');
-            document.getElementById('addSheetOverlay')?.classList.remove('visible');
             requestAnimationFrame(() => {
                 document.querySelector('#addRowsContainer .add-test-name')?.focus({ preventScroll: true });
             });
@@ -4451,7 +4330,6 @@
         function closeAddSheet() {
             commandMode = 'main';
             document.getElementById('commandPalette')?.classList.remove('add-mode');
-            document.getElementById('addSheetOverlay')?.classList.remove('visible');
             closeAllNameSuggestions();
             if (commandPaletteOpen) {
                 renderCommandPalette();
@@ -4462,7 +4340,7 @@
         function tryCloseAddSheet() {
             if (addSheetHasData()) {
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+                    icon: CONFIRM_ICONS.warning,
                     iconColor: 'var(--amber)',
                     title: 'Discard changes?',
                     body: 'You have unsaved data. Are you sure you want to close without saving?',
@@ -4477,7 +4355,7 @@
         function tryDismissAddSheet() {
             if (addSheetHasData()) {
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+                    icon: CONFIRM_ICONS.warning,
                     iconColor: 'var(--amber)',
                     title: 'Discard changes?',
                     body: 'You have unsaved data. Are you sure you want to close without saving?',
@@ -4499,20 +4377,13 @@
 
             const actions = document.getElementById('confirmActions');
             actions.innerHTML = '';
-
-            if (secondary) {
+            [secondary, primary].filter(Boolean).forEach(config => {
                 const btn = document.createElement('button');
-                btn.className = `confirm-btn ${secondary.className}`;
-                btn.textContent = secondary.label;
-                btn.onclick = secondary.action;
+                btn.className = `confirm-btn ${config.className}`;
+                btn.textContent = config.label;
+                btn.onclick = config.action;
                 actions.appendChild(btn);
-            }
-
-            const pBtn = document.createElement('button');
-            pBtn.className = `confirm-btn ${primary.className}`;
-            pBtn.textContent = primary.label;
-            pBtn.onclick = primary.action;
-            actions.appendChild(pBtn);
+            });
 
             overlay.classList.add('visible');
         }
@@ -4526,7 +4397,7 @@
             const dateVal = document.getElementById('addResultDate').value;
             if (!dateVal) {
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+                    icon: CONFIRM_ICONS.info,
                     iconColor: 'var(--amber)',
                     title: 'Missing date',
                     body: 'Please select a date for this test before saving.',
@@ -4548,7 +4419,7 @@
 
             if (entries.length === 0) {
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+                    icon: CONFIRM_ICONS.info,
                     iconColor: 'var(--amber)',
                     title: 'No results entered',
                     body: 'Please select at least one test and enter a result value.',
@@ -4559,7 +4430,7 @@
 
             // Show final confirmation before saving
             showConfirm({
-                icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
+                icon: CONFIRM_ICONS.save,
                 iconColor: 'var(--accent)',
                 title: 'Save these results?',
                 body: `${entries.length} result${entries.length > 1 ? 's' : ''} will be saved for ${dateVal}.`,
@@ -4640,7 +4511,7 @@
                 saveBtn.textContent = 'Save Results';
 
                 showConfirm({
-                    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+                    icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
                     title: 'Save failed',
                     body: e.message || 'Something went wrong. Please try again.',
@@ -4663,9 +4534,15 @@
             setTimeout(() => toast.classList.remove('visible'), 3000);
         }
 
-        // ── INIT ─────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', loadData);
         document.addEventListener('DOMContentLoaded', () => {
+            let savedIndex = localStorage.getItem('skyState');
+            if (savedIndex === null || savedIndex === '') {
+                savedIndex = localStorage.getItem('sky') === 'night' ? 3 : 1;
+            }
+            setSkyState(savedIndex);
+            renderLoadingSkeletons();
+            loadData();
+
             const unitImportInput = document.getElementById('unitImportFileInput');
             if (unitImportInput) {
                 unitImportInput.addEventListener('change', handleUnitImportFileChange);
@@ -4845,15 +4722,6 @@
             $('vaultPassword').focus();
         }
 
-        function _showEncryptProgress(text, pct) {
-            document.getElementById('encryptProgressOverlay').classList.add('visible');
-            document.getElementById('encryptProgressText').textContent    = text;
-            document.getElementById('encryptProgressBar').style.width     = pct + '%';
-        }
-        function _hideEncryptProgress() {
-            document.getElementById('encryptProgressOverlay').classList.remove('visible');
-        }
-
         function _hideVaultOverlay() {
             const overlay = document.getElementById('vaultOverlay');
             if (overlay) overlay.classList.remove('visible');
@@ -4908,7 +4776,7 @@
             const cached = await loadCachedKey();
             if (cached) return cached;
 
-            const { getDoc, setDoc, doc, getDocs, collection, updateDoc, deleteField } = Firestore;
+            const { getDoc, setDoc, doc } = Firestore;
             const metaRef  = doc(db, 'meta', 'encryption');
             updateBoot('checking_vault_status');
             const metaSnap = await Promise.race([
