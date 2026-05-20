@@ -1876,13 +1876,6 @@
                     </div>
                     <div class="command-add-content">
                         <div class="add-sheet visible" id="addSheet">
-                            <div class="sheet-handle"></div>
-                            <div class="add-sheet-header">
-                                <div class="add-sheet-title">Add Results</div>
-                                <button class="add-sheet-close" onclick="tryCloseAddSheet()" aria-label="Close">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                                </button>
-                            </div>
                             <div class="add-field-group">
                                 <div class="add-field-label">Date of Test</div>
                                 <input type="date" class="add-date-input" id="addResultDate">
@@ -2772,11 +2765,15 @@
                     };
                 });
 
-                points.sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
                 if (points.length === 0) return null;
-                const dmap = {};
-                points.forEach(p => { dmap[p.date] = p; });
-                const sortedPoints = Object.values(dmap).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+                const seen = new Set();
+                const sortedPoints = points.filter(p => {
+                    // Deduplicate only strictly identical records (same date, value, lab, and source)
+                    const key = `${p.date}_${p.rawResult}_${p.lab}_${p.sourceFile}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                }).sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
 
                 if (sortedPoints.length === 0) return null;
 
@@ -3449,9 +3446,12 @@
         function renderList() {
             const panel = document.getElementById('panelList');
 
-            // Destroy any open detail chart (covers grid-card charts) BEFORE clearing the DOM,
-            // otherwise Chart.js holds a reference to a detached canvas (memory leak).
-            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+            // Only destroy active chart in Grid View to avoid blanking out the main detail chart in split-pane Desktop view
+            const isGrid = document.querySelector('.layout')?.classList.contains('is-grid-view');
+            if (isGrid && currentChart) {
+                try { currentChart.destroy(); } catch (_) {}
+                currentChart = null;
+            }
 
             // Build active IDs set for filteredTests
             const activeIds = new Set(filteredTests.map(t => getTestDomId(t.name)));
@@ -3535,7 +3535,7 @@
       <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
         <div class="test-card-inner">
             <div class="test-card-left">
-              <div class="test-card-name">${t.name}</div>
+              <div class="test-card-name">${escStr(t.name)}</div>
               <div class="test-card-meta">
                 <span>${t.points.length} ${t.points.length === 1 ? 'test' : 'tests'}</span>
                 <span>${checkCount}/${t.points.length} clear</span>
@@ -3570,7 +3570,7 @@
     <div class="test-card${isCurrent ? ' active-card' : ''}" id="test-btn-${id}" data-testname="${escStr(t.name)}" onclick="openTest(this.dataset.testname)">
       <div class="test-card-inner">
           <div class="test-card-left">
-            <div class="test-card-name">${t.name}</div>
+            <div class="test-card-name">${escStr(t.name)}</div>
             <div class="test-card-meta">
               <span>${t.numericPts.length} ${t.numericPts.length === 1 ? 'reading' : 'readings'}</span>
               ${rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)) ? `<span>${rangeStr}</span>` : ''} 
