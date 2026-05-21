@@ -1320,14 +1320,23 @@
         }
 
         #trainingPlanModal .modal {
-            max-width: 760px;
+            width: min(920px, calc(100vw - 24px));
+            max-width: calc(100vw - 24px);
             overflow-x: hidden;
             background:
-                radial-gradient(circle at 18% 0%, rgba(0, 122, 76, 0.18), transparent 34%),
-                radial-gradient(circle at 100% 18%, rgba(0, 96, 88, 0.16), transparent 30%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.006)),
-                var(--bg-secondary);
-            border-color: rgba(63, 255, 211, 0.16);
+                linear-gradient(145deg, rgba(226, 255, 249, 0.105), rgba(37, 90, 86, 0.045) 34%, rgba(6, 13, 15, 0.72) 100%),
+                radial-gradient(ellipse at 18% 4%, rgba(137, 255, 236, 0.16), transparent 44%),
+                radial-gradient(ellipse at 85% 18%, rgba(255, 255, 255, 0.07), transparent 38%),
+                rgba(8, 18, 20, 0.86);
+            border-color: rgba(190, 255, 244, 0.2);
+            backdrop-filter: blur(34px) saturate(1.32);
+            -webkit-backdrop-filter: blur(34px) saturate(1.32);
+            box-shadow:
+                0 30px 88px rgba(0, 0, 0, 0.58),
+                0 0 0 1px rgba(190, 255, 244, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 0 90px rgba(118, 255, 229, 0.045),
+                inset 0 -34px 70px rgba(0, 0, 0, 0.32);
         }
 
         .modal-title {
@@ -1357,20 +1366,6 @@
             text-transform: uppercase;
             letter-spacing: 1.4px;
             margin-bottom: 8px;
-        }
-
-        .training-plan-target-line {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 2.3rem;
-            line-height: 1;
-            letter-spacing: 1px;
-            color: rgba(255, 207, 132, 0.98);
-            text-shadow: 0 0 10px rgba(255, 187, 88, 0.68), 0 0 24px rgba(255, 111, 45, 0.36), 0 0 34px rgba(255, 204, 102, 0.16);
-        }
-
-        .training-plan-target-line strong {
-            color: #fff;
-            font-weight: 900;
         }
 
         .training-plan-pace-card {
@@ -1541,13 +1536,6 @@
             text-align: right;
         }
 
-        .training-plan-metric-note {
-            color: var(--text-muted);
-            font-size: 0.72rem;
-            margin-top: 6px;
-            line-height: 1.25;
-        }
-
         .text-success {
             color: var(--success);
             text-shadow: 0 0 10px rgba(0, 255, 136, 0.32);
@@ -1570,12 +1558,6 @@
             letter-spacing: 1px;
             color: var(--accent-secondary);
             margin-bottom: 8px;
-        }
-
-        .training-plan-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
         }
 
         .training-plan-chart-card {
@@ -1662,48 +1644,20 @@
             background: #ff5d8f;
         }
 
-        .training-plan-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 8px;
-        }
-
-        .training-plan-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
         .training-coach-shell {
-            --coach-glass: rgba(6, 20, 21, 0.66);
+            --coach-glass: rgba(12, 31, 33, 0.44);
             --coach-glass-bright: rgba(255, 255, 255, 0.14);
             --coach-glass-dim: rgba(0, 0, 0, 0.3);
-            --coach-edge: rgba(176, 255, 238, 0.3);
-            --coach-edge-soft: rgba(63, 255, 211, 0.15);
-            --coach-shadow: rgba(0, 0, 0, 0.4);
+            --coach-edge: rgba(206, 255, 248, 0.26);
+            --coach-edge-soft: rgba(123, 255, 232, 0.16);
+            --coach-shadow: rgba(0, 0, 0, 0.32);
             display: grid;
-            gap: 18px;
+            gap: 16px;
             position: relative;
             isolation: isolate;
             max-width: 100%;
             min-width: 0;
             overflow: hidden;
-        }
-
-        #trainingPlanModal .modal {
-            width: min(920px, calc(100vw - 24px));
-            max-width: calc(100vw - 24px);
-            backdrop-filter: blur(22px) saturate(1.18);
-            -webkit-backdrop-filter: blur(22px) saturate(1.18);
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.56),
-                0 0 0 1px rgba(176, 255, 238, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.11),
-                inset 0 -1px 0 rgba(63, 255, 211, 0.09),
-                inset 0 0 80px rgba(0, 0, 0, 0.16);
         }
 
         .training-coach-shell::before {
@@ -1844,15 +1798,6 @@
             color: rgba(235, 246, 244, 0.82);
         }
 
-        .training-coach-shell .training-plan-target-line {
-            color: #b0ffee;
-            text-shadow: 0 0 10px rgba(63, 255, 211, 0.32), 0 0 24px rgba(0, 255, 136, 0.18);
-        }
-
-        .training-coach-shell .training-plan-target-line strong {
-            color: #eafffb;
-        }
-
         .coach-target-topline {
             display: flex;
             align-items: center;
@@ -1864,27 +1809,23 @@
         .coach-confidence-badge {
             border: 1px solid rgba(176, 255, 238, 0.38);
             color: #b0ffee;
-            background:
-                linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.025) 50%, rgba(0, 0, 0, 0.12)),
-                rgba(8, 34, 33, 0.54);
+            background: rgba(210, 255, 248, 0.06);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 7px 10px;
-            font-size: 0.62rem;
+            padding: 6px 9px;
+            font-size: 0.58rem;
             text-transform: uppercase;
             letter-spacing: 0.9px;
             white-space: nowrap;
             box-shadow:
-                5px 6px 14px rgba(0, 0, 0, 0.24),
-                -4px -4px 12px rgba(255, 255, 255, 0.025),
                 inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                inset 0 -8px 12px rgba(0, 0, 0, 0.16);
+                inset 0 -8px 14px rgba(0, 0, 0, 0.14);
         }
 
         .coach-confidence-badge.low {
-            border-color: rgba(255, 187, 0, 0.48);
+            border-color: rgba(255, 228, 139, 0.34);
             color: #ffdf75;
-            background: rgba(255, 187, 0, 0.08);
+            background: rgba(255, 218, 112, 0.055);
         }
 
         .coach-command-number {
@@ -2176,9 +2117,7 @@
         }
 
         .training-coach-shell .training-plan-panel-subtitle,
-        .training-coach-shell .training-plan-pace-detail,
-        .training-coach-shell .training-plan-row,
-        .training-coach-shell .training-plan-metric-note {
+        .training-coach-shell .training-plan-pace-detail {
             color: rgba(235, 246, 244, 0.82);
         }
 
@@ -2290,38 +2229,9 @@
             .training-plan-panel-top {
                 flex-direction: column;
             }
-
-            .training-plan-target-line {
-                font-size: 1.8rem;
-            }
         }
 
         /* Liquid glass Coach pass: tighter type scale, softer refraction, less visual shouting. */
-        #trainingPlanModal .modal {
-            background:
-                linear-gradient(145deg, rgba(226, 255, 249, 0.105), rgba(37, 90, 86, 0.045) 34%, rgba(6, 13, 15, 0.72) 100%),
-                radial-gradient(ellipse at 18% 4%, rgba(137, 255, 236, 0.16), transparent 44%),
-                radial-gradient(ellipse at 85% 18%, rgba(255, 255, 255, 0.07), transparent 38%),
-                rgba(8, 18, 20, 0.86);
-            border-color: rgba(190, 255, 244, 0.2);
-            backdrop-filter: blur(34px) saturate(1.32);
-            -webkit-backdrop-filter: blur(34px) saturate(1.32);
-            box-shadow:
-                0 30px 88px rgba(0, 0, 0, 0.58),
-                0 0 0 1px rgba(190, 255, 244, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 0 90px rgba(118, 255, 229, 0.045),
-                inset 0 -34px 70px rgba(0, 0, 0, 0.32);
-        }
-
-        .training-coach-shell {
-            --coach-glass: rgba(12, 31, 33, 0.44);
-            --coach-edge: rgba(206, 255, 248, 0.26);
-            --coach-edge-soft: rgba(123, 255, 232, 0.16);
-            --coach-shadow: rgba(0, 0, 0, 0.32);
-            gap: 16px;
-        }
-
         .training-coach-shell::before {
             background:
                 linear-gradient(116deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.018) 22%, transparent 48%),
@@ -2393,20 +2303,6 @@
                 linear-gradient(128deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0.045) 18%, transparent 39%),
                 linear-gradient(300deg, rgba(132, 255, 234, 0.07) 0%, transparent 34%);
             opacity: 0.62;
-        }
-
-        .coach-confidence-badge {
-            padding: 6px 9px;
-            font-size: 0.58rem;
-            background: rgba(210, 255, 248, 0.06);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                inset 0 -8px 14px rgba(0, 0, 0, 0.14);
-        }
-
-        .coach-confidence-badge.low {
-            border-color: rgba(255, 228, 139, 0.34);
-            background: rgba(255, 218, 112, 0.055);
         }
 
         .coach-command-number {
@@ -2935,7 +2831,6 @@
         const db = getFirestore(app);
         // Make Firebase functions available globally
         window.firebaseDb = db;
-        window.firebaseAuth = auth;
         window.firebaseCollection = collection;
         window.firebaseDoc = doc;
         window.firebaseGetDocs = getDocs;
@@ -2944,7 +2839,6 @@
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
         window.firebaseLimit = limit;
-        window.firebaseSignOut = signOut;
         // Check auth state
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -3035,6 +2929,23 @@
             setTimeout(() => {
                 toast.classList.remove('active');
             }, 3000);
+        }
+
+        function emptyStateHtml(icon, message) {
+            return `<div class="empty-state"><div class="empty-state-icon">${icon}</div><p>${message}</p></div>`;
+        }
+
+        function showButtonSuccess(button, label = 'WORKOUT SAVED!', duration = 2000, afterRestore = null, showToast = true) {
+            if (!button) return;
+            const originalText = button.textContent;
+            button.textContent = label;
+            button.classList.add('success');
+            if (showToast) showSuccessToast();
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('success');
+                if (afterRestore) afterRestore();
+            }, duration);
         }
 
         // --- Date Formatting ---
@@ -3625,6 +3536,17 @@
             }, 'save');
         }
 
+        async function saveWorkoutLog(log, refreshComponents = ['logs', 'stats']) {
+            const success = await saveToFirebase(log);
+            if (!success) return false;
+            workoutLogs.unshift(log);
+            invalidateStatsCache();
+            if (refreshComponents.length > 0) {
+                refreshUI(refreshComponents);
+            }
+            return true;
+        }
+
         async function deleteFromFirebase(logId) {
             return withFirebaseErrorHandling(async () => {
                 const user = window.currentUser;
@@ -4200,22 +4122,11 @@
             const logId = Date.now();
             const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
 
-            const success = await saveToFirebase(log);
+            const success = await saveWorkoutLog(log, []);
 
             if (success) {
                 const btn = document.getElementById('completeWorkoutBtn');
-                if (btn) {
-                    const originalText = btn.textContent;
-                    btn.textContent = 'WORKOUT SAVED!';
-                    btn.classList.add('success');
-                    showSuccessToast();
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.classList.remove('success');
-                    }, 2000);
-                }
-                workoutLogs.unshift(log);
-                invalidateStatsCache();
+                showButtonSuccess(btn);
                 currentExerciseData = {};
                 currentSetCounts = {};
                 clearWorkoutProgress();
@@ -4247,7 +4158,7 @@
             const container = document.getElementById('recentLogs');
             const recent = workoutLogs.slice(0, CONFIG.RECENT_LOGS_LIMIT);
             if (recent.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet</p></div>`;
+                container.innerHTML = emptyStateHtml('📋', 'No workouts logged yet');
                 return;
             }
             container.innerHTML = recent.map(log => generateLogEntryHTML(log)).join('');
@@ -4376,15 +4287,7 @@
                     // Success animation for save button
                     const btn = document.getElementById('saveEditsBtn');
                     if (btn) {
-                        const originalText = btn.textContent;
-                        btn.textContent = 'EDITS SAVED!';
-                        btn.classList.add('success');
-                        showSuccessToast();
-                        setTimeout(() => {
-                            btn.textContent = originalText;
-                            btn.classList.remove('success');
-                            closeEditModal(); // Close modal after the animation/delay
-                        }, 2000);
+                        showButtonSuccess(btn, 'EDITS SAVED!', 2000, closeEditModal);
                     } else {
                         showNotification('SUCCESS', '✏️ Workout updated and synced!');
                         closeEditModal();
@@ -4469,7 +4372,7 @@
             const container = document.getElementById('deleteSetList');
             const sets = flattenRecentSets();
             if (sets.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No sets found</p></div>`;
+                container.innerHTML = emptyStateHtml('📋', 'No sets found');
                 return;
             }
             let html = `
@@ -4820,7 +4723,6 @@
 
         function showExerciseHistory(exerciseName) {
             // Search through all workout logs to find the most recent occurrence of this exercise
-            let mostRecentLog = null;
             let mostRecentExercise = null;
             let mostRecentDate = null;
             // workoutLogs is already sorted by date descending, so first match is most recent
@@ -4832,7 +4734,6 @@
                     return nameMatch && ex.sets && ex.sets.length > 0;
                 });
                 if (exercise) {
-                    mostRecentLog = log;
                     mostRecentExercise = exercise;
                     mostRecentDate = new Date(log.date);
                     break;
@@ -4843,7 +4744,7 @@
             const content = document.getElementById('historyModalContent');
             title.textContent = exerciseName.toUpperCase() + ' HISTORY';
             if (!mostRecentExercise) {
-                content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>No history found for this exercise</p></div>`;
+                content.innerHTML = emptyStateHtml('📊', 'No history found for this exercise');
             } else {
                 const dateStr = formatDateFull(mostRecentDate);
                 let html = `<p class="history-date">Most recent: <strong>${dateStr}</strong></p>`;
@@ -5060,7 +4961,7 @@
             const container = document.getElementById('fullHistory');
             const subtitle = document.getElementById('historySubtitle');
             if (workoutLogs.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>No workouts logged yet!</p></div>`;
+                container.innerHTML = emptyStateHtml('📋', 'No workouts logged yet!');
                 if (subtitle) subtitle.textContent = '';
                 return;
             }
@@ -5243,7 +5144,6 @@
 
         async function finalizeManualLogSave(exercises) {
             const btn = document.getElementById('submitManualLogBtn');
-            const originalText = btn.textContent;
 
             const logId = Date.now();
             const log = {
@@ -5258,40 +5158,23 @@
             btn.disabled = true;
             btn.textContent = 'SAVING...';
 
-            const success = await saveToFirebase(log);
+            const success = await saveWorkoutLog(log, ['logs', 'stats']);
 
             if (success) {
                 // Success state for the modal button
-                btn.textContent = 'WORKOUT SAVED!';
-                btn.classList.add('success');
-                showSuccessToast();
+                showButtonSuccess(btn, 'WORKOUT SAVED!', 1500, () => {
+                    closeModal('manualLogModal');
+                    btn.textContent = 'SAVE WORKOUT';
+                    btn.disabled = false;
+                    manualLogData = {};
+                });
 
                 // Also trigger success state for the main "COMPLETE WORKOUT" button if it exists
                 const mainBtn = document.getElementById('completeWorkoutBtn');
-                if (mainBtn) {
-                    const originalMainText = mainBtn.textContent;
-                    mainBtn.textContent = 'WORKOUT SAVED!';
-                    mainBtn.classList.add('success');
-                    setTimeout(() => {
-                        mainBtn.textContent = originalMainText;
-                        mainBtn.classList.remove('success');
-                    }, 2000);
-                }
-
-                workoutLogs.unshift(log);
-                invalidateStatsCache();
-                refreshUI(['logs', 'stats']);
-
-                setTimeout(() => {
-                    closeModal('manualLogModal');
-                    btn.textContent = originalText;
-                    btn.classList.remove('success');
-                    btn.disabled = false;
-                    manualLogData = {};
-                }, 1500);
+                showButtonSuccess(mainBtn, 'WORKOUT SAVED!', 2000, null, false);
             } else {
                 btn.disabled = false;
-                btn.textContent = originalText;
+                btn.textContent = 'SAVE WORKOUT';
                 showNotification('SAVE ERROR', 'Problem saving to Firebase.');
             }
         }
