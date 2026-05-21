@@ -452,18 +452,7 @@
             return sessions;
         }
 
-        function formatSetSummary(sets) {
-            const workingSets = getWorkingSets(sets);
-            const sourceSets = workingSets.length > 0 ? workingSets : (sets || []);
-            if (sourceSets.length === 0) return 'No working sets';
 
-            return sourceSets.map(set => {
-                const weight = parseFloat(set.weight);
-                const reps = parseInt(set.reps, 10) || 0;
-                const weightLabel = Number.isFinite(weight) && weight > 0 ? `${displayWeight(weight)} lbs` : 'bodyweight';
-                return `${weightLabel} x ${reps}`;
-            }).join(', ');
-        }
 
         function getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg) {
             const thresholdKg = Math.max(0.25, (weeklyTargetIncreaseKg || 0) * 0.5);
@@ -599,12 +588,9 @@
             getBestEstimatedMaxSignal,
             evaluateProgressionSets,
             buildCoachRecommendation,
-            didSessionHitTopReps,
-            getMostRecentProgressionSession,
             getProgressionTarget,
             getBaselineProgressionSession,
             getRecentProgressionSessions,
-            formatSetSummary,
             getPlannedProgressKgForDate,
             getPlannedWeightKgForDate,
             getPaceInfo,
