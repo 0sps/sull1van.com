@@ -130,8 +130,7 @@ tags: [personal, tech]
 </style>
 
 
-## The idea
-### Drive across the country, but only for some of it
+## One month on the road with a self driving car
 
 In summer 2025, I had a pretty big goal. I wanted to drive across the entire western half of the country on a solo road trip, within the span of one month.
 
@@ -148,7 +147,7 @@ Comma's software is open source. This is great because they get feedback from th
 So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more reserach. In my case, my car wasn't supported, but all I had to do was join the Discord and learn what kind of harness I'd need, buy that one, then figure out hwo in the communty has already forked the code.
 
 
-<img src="https://comma.ai/_app/immutable/assets/comma-3x.B9aH0JPi.jpeg" alt="Comma 3X" style="max-width: 100%; height: auto;" />
+<img src="https://blog.comma.ai/img/comma3X/cover.png" alt="Comma 3X" style="max-width: 100%; height: auto;" />
 
 ## Installing it
 
@@ -233,11 +232,9 @@ Cover:
 - first boot
 - anything that felt sketchy, surprisingly easy, or annoying
 
-Tone idea: “It is weird to install a device in your car and then expect it to steer.”
 
 ### Getting it to work
 
-This should be one of the main sections.
 
 Cover:
 - the software setup
@@ -246,11 +243,8 @@ Cover:
 - what was confusing
 - what finally made it click
 
-This is probably where your technical personality can come through without turning it into a manual.
 
 ### Testing it around town
-
-This sounds like the heart of the piece.
 
 Cover:
 - first drives in your city
@@ -261,7 +255,7 @@ Cover:
 
 ### Learning when not to trust it
 
-A dedicated section for the weird stuff.
+
 
 Examples:
 - overconfidence in certain lane markings
@@ -271,18 +265,13 @@ Examples:
 - sun glare, rain, construction, bad roads
 - things humans find obvious that the car does not
 
-This can be funny and specific. The less polished, the better.
 
-### The first time it felt normal
-
-There should be a turning-point section. Not “I trusted it fully,” because that sounds irresponsible. More like:
 - when you stopped hovering over every tiny input
 - when you realized it was reducing fatigue
 - when it became a driving partner rather than a gadget
 
 ### Taking it west
 
-Now the road trip enters. Keep this brief:
 - 7,500 miles
 - highways, deserts, mountains, long empty roads
 - how often it drove
@@ -290,11 +279,8 @@ Now the road trip enters. Keep this brief:
 - what still required you
 - fatigue difference
 
-This section should feel like payoff, not the whole article.
-
 ### What it changed about driving
 
-End with reflection:
 - not “self-driving is here”
 - more like “this changed what long-distance driving felt like”
 - it made driving less tiring, but not effortless
@@ -303,4 +289,21 @@ End with reflection:
 
 ### The conclusion
 
-I drove across the country with a very good assistant that could handle the boring parts better than I expected and the weird parts about as well as you would hope from a camera taped to a windshield.
+I drove across the country with a very good assistant that could handle driving better than I expected. It handled most of the driving for the majority of the trip, with me only needing to interject to handle some unexpected situations, and ultimately made the trip significantly more enjoyable.
+
+
+
+
+### List of screenshots i need:
+- Image of the comma 3x installed on my dashboard
+- close-up of the glass display since i dropped the comma 3x and cracked it
+- image of the comma 3x wiring harness that i needed
+- screenshot of the comma openpilot repo as well as the sunnypilot github repo
+hmmm... what else would be good pictures for this article?
+- an image of the car on the road
+- screenshot of the comma app interface
+- photos of the dashboard with the comma installed
+- the car parked in the desert at night
+- the car parked with the mountains in the background
+- a screenshot of the car on the highway
+- 
