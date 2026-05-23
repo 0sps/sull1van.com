@@ -151,7 +151,7 @@ At first, I saw that [my Kia wasn't supported](https://comma.ai/vehicles), so I 
 Some helpful background: Comma's software is open source, which means the official version is only *stock* openpilot. There are plenty og community forks for different cars, different preferences, and edge cases that Comma decided not to support. To that end, a group known as Sunnypilot actually made their own fork of it, adding new features. And within that Sunnypilot Github repo, there's this fork some Hyundai/Kia/Genesis (HKG) owners made. THAT'S the one that I use. So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more research. In my case, my car **wasn't** supported, but all I had to do was join the Discord, learn what kind of harness I'd need, buy that one, and figure out who in the community had already forked the code.
 
 
-<img src="https://blog.comma.ai/img/comma3X/cover.png" alt="Comma 3X" style="max-width: 100%; height: auto;" />
+<img src="https://blog.comma.ai/img/comma3X/cover.png" alt="Comma 3X" style="max-width: 70%; height: auto;" />
 
 ## Installing it
 
@@ -163,6 +163,8 @@ You'll need to look up the Comma setup video specific to your car. I found that 
 <img src="/assets/images/commaInstallation_hyaundai.png" alt="Comma 3X installation" style="max-width: 100%; height: auto;" />
 
 The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, decodes it, and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly resilient setup.
+
+
 
 ## Setting it up
 
@@ -186,11 +188,11 @@ You'll also want to look at additional things, like how you want lane changes an
 
 ### Driver monitoring
 
-By far the most 'controversial' aspect of the Comma is that it enables hands-free driving in most cars it's installed in. To do this, the creators have developed a driver monitoring system. The Comma 3X has a wide-angle camera which is constantly watching the driver and running a neural network to assess their attention. For example, if the driver uses a phone during driving, Comma will notice that and start beeping.
+By far the most 'controversial' aspect of the Comma is that it enables hands-free driving. To accomplish this without being reckless, Comma developed a driver monitoring system that runs at all time. The Comma 3X has a wide-angle camera which constantly watches the driver and runs a neural network to assess their attention. For example, if the driver uses a phone during driving, Comma will notice that and start beeping.
 
-Since the software is completely open source, you might think you could change these settings. Turns out, **you absolutely can**. For anyone wondering, it's two files; one called helpers.py, one called monitoring.py. I have done extensive amounts of testing with mine, and have arrived at a happy medium for monitoring: I do WANT the monitoring, since hands-free driving could lead to instances where I become inattentive to what's on the road, but it shouldn't be annoying. I wanted the system to notice real inattention without yelling at me every time I glanced at navigation or checked something quickly at a stop.
+Since the software is completely open source, you might think you could change these settings. Turns out, **you absolutely can**. For anyone wondering, it's two files, helpers.py and monitoring.py. I have done extensive amounts of testing with mine, and have arrived at a happy medium for monitoring: I do WANT the monitoring, since hands-free driving could lead to instances where I become inattentive to what's on the road, but it shouldn't be annoying. I wanted the system to notice real inattention without yelling at me every time I glanced at navigation or checked something quickly at a stop. So I ended up changing the code, but only slightly. You may want to do this too.
 
-This is the sweet spot for me, and it actually improves my driving focus over what came stock on the Kia. If Comma notices me being excessively drowsy while driving, it will make the same extremely loud beep, presumably to wake me up. This *did happen* often when I would drive late at night, and I am very thankful for it. The monitoring you get with the Comma is honestly great peace of mind. You can also be assured that your face isn't being recorded and uploaded anywhere, because you control the software, end to end. It's great.
+  One thing I like about the attention tracking is that if Comma notices me being drowsy, it will make an extremely loud beep to wake me up. This *did happen* often when I would drive late at night, and I am very thankful for it. The monitoring you get with the Comma is honestly great peace of mind. You can also be assured that your face isn't being recorded and uploaded anywhere, because you control the software, end to end. It's great.
 
 
 ### Beyond the basics: Asking for help
