@@ -166,6 +166,9 @@ The interesting thing about the Comma 3X is that it sits between your car and th
 
 
 
+
+
+
 ## Setting it up
 
 ### First launch
@@ -178,13 +181,14 @@ After a ton of research, I learned you can point the Comma at a website with a r
 
 ### Getting the specifics right
 
-There are a million and one variables to configure once it launches. The Comma will try to identify your car's fingerprint, refusing to engage if there's an error. Fingerprinting is essentially the Comma identifying what car you own, and what APIs it's going to need to interact with to control your steering. By default, it should be able to fingerprint your car. If it can't, you're screwed. It will let you choose a car manually from the list, but the fact that it couldn't figure it out automatically means it can't communicate with your car properly, so you're probably running the wrong software. This happened to me *a lot* when I would try different branches of Sunnypilot. The only supported one for me is ccnc-port. So if you do this, make sure you are using the appropriate branch for your car.
+There are a million variables to configure once your Comma fully boots. The Comma will try to identify your car's fingerprint. 
+  Fingerprinting is essentially the Comma identifying what car you own, and what APIs it's going to need to interact with to control your steering. By default, it *should* be able to fingerprint your car. If it can't, you're screwed. It will let you choose a car manually from the list, but the fact that it couldn't figure it out automatically means it can't communicate with your car properly, so you really can't choose it manually. This happened to me *a lot* when I would try different branches of Sunnypilot, and led to me doing endless factory resets. For me, the only branch of Sunnypilot that can fingerprint my car is ccnc-port, so make sure you use the appropriate port for your car. You can search the Sunnypilot Discord for your make and model and see what others did to get it set up.
 
-After fingerprinting, you should go into the settings menu and configure things to your liking. It can show you the speed limit, your current speed, and many other cool metrics. I turn most of these on. One thing Comma does that I've never seen anywhere else is it will actually show you the speed of the car in front of you. I don't know why car manufacturers don't do this to begin with, because the cars know this information thanks to their ultrasound sensors. Either way, it's great to have this on the Comma.
+After fingerprinting, you should go into the settings menu and start configuring things to your liking. Using custom settings, you can have it display the current speed limit, your current speed, and many other cool metrics. I turn most of these on. One thing Comma does that I've never seen anywhere else is it will actually show you the speed of the car in front of you. I don't know why car manufacturers don't do this to begin with, since all modern ones are seeing this data with their ultrasound sensors. Either way, it's great to have this on the Comma.
 
-There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates the models from driving data. No model is ever the 'best' one, since all cars are different. You really have to just start driving with them to figure out which works well for you. For me, that meant choosing like ~10 models and just spending the entire day on the road testing them. 
+There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates them. No model is ever the 'best' one, since all cars are different. You really just have to start driving and figure out which works well for you. For me, that meant choosing like ~10 models and just spending the entire day on the road testing them. 
 
-You'll also want to look at additional things, like how you want lane changes and braking to work. The Comma won't brake by default, and it won't do lane changes by default, but can if you want it to. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my speed. 
+You'll also want to look at additional things, like how you want lane changes and braking to work. The Comma won't brake by default, and it won't do lane changes by default, but it can if you want it to. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my speed. 
 
 ### Driver monitoring
 
@@ -199,126 +203,13 @@ Since the software is completely open source, you might think you could change t
 
 If you do try to get set up with this, there can be tons of issues. Driverless car technology is insanely complicated, and was extremely difficult to get set up even for someone like me. The great thing about buying a Comma 3X, though, is that you're joining a huge community of car drivers just like you. Sunnypilot and Openpilot both have large Discord chats you can join, and a lot of the useful information is scattered across threads, branch names, harness recommendations, and people casually mentioning the one setting that makes everything work.
 
-## Testing it around town
 
-## Taking it west
+## Taking it out West
 
+The Comma ended up coming with me on the trip, as I was able to get everything set up just in time. I would turn it on during highway driving and usually not much else. It's not very well trained for steep turns, and will often overshoot them and drive the car slightly to the inside of the lane. Highway driving worked perfectly though, and it did a great job of keeping me centered. The really cool thing is that they've trained it in all kinds of driving scenarios, so it can reliably steer during the day, at night, and even during rain. 
 
-
-
-
-
-# CONSTRUCTION ZONE BELOW
+As I went across the country, I started using it more as a copilot than something which completely replaced my driving. For example, knowing I'll be going through a stretch of straight, level highway with no one else meant that I'd turn it on and then focus more on the scenery than the drive. Sometimes I'd turn it on while I'm going to change climate settings or otherwise occupied, using it as insurance that I didn't swerve when I did whatever the task was. I would also use it while I was actively steering, almost to provide insurance that I'd stay on the road. If I ever got too close to the edge of a lane, Comma would gently steer me back to the center (This is in contrast to cars that only steer to block lane departure, as they don't continue steering to KEEP you in the middle of your lane. Comma does).
 
 
 
-```text
-          _                                                       
-        ./ |                                                      
-       /  /                                                       
-     /'  /                                                        
-    /   /                                                         
-   /    \                                                         
-  |      `\                                                       
-  |        |                                ___________________   
-  |        |___________________...-------'''- - -  =- - =  - = `. 
- /|        |                   -  =  = -  -= - =  - =-   =  - =| 
- |        |                    |= -= - = - = - = - =--= = - = =| 
- \|        |___________________/- = - -= =_- =_-=_- -=_=-=_=_= -| 
-  |        |                   ```-------...___________________.' 
-  |________|                                                      
-    \    /                                                        
-    |    |                                                        
-  ,-'    `-,                                                      
-  |        |                                                      
-  `--------'                                                      
-```
-
-                                                  
-
-
-Below is an AI generated suggestion of what to put in this article. the entire thing IS written by me, but this is a list of suggestions for ways I could format the article. keeping it here til i am done.
-
-Cover:
-- unboxing
-- mounting it
-- routing the cable
-- connecting to the car harness
-- first boot
-- anything that felt sketchy, surprisingly easy, or annoying
-
-
-### Getting it to work
-
-
-Cover:
-- the software setup
-- forks, settings, toggles, car compatibility, calibration
-- any coding/configuration you had to do
-- what was confusing
-- what finally made it click
-
-
-### Testing it around town
-
-Cover:
-- first drives in your city
-- places where it worked
-- places where it absolutely did not
-- weird behavior at intersections, curves, lane markings, construction, parked cars, etc.
-- the emotional progression from “absolutely not” to “okay, I see it”
-
-### Learning when not to trust it
-
-
-
-Examples:
-- overconfidence in certain lane markings
-- hesitation
-- weird disengagements
-- driver monitoring nags
-- sun glare, rain, construction, bad roads
-- things humans find obvious that the car does not
-
-
-- when you stopped hovering over every tiny input
-- when you realized it was reducing fatigue
-- when it became a driving partner rather than a gadget
-
-### Taking it west
-
-- 7,500 miles
-- highways, deserts, mountains, long empty roads
-- how often it drove
-- what it was good at
-- what still required you
-- fatigue difference
-
-### What it changed about driving
-
-- not “self-driving is here”
-- more like “this changed what long-distance driving felt like”
-- it made driving less tiring, but not effortless
-- it made you more aware of what driving actually involves
-- it made the future feel both closer and messier
-
-### The conclusion
-
-I drove across the country with a very good assistant that could handle driving better than I expected. It handled most of the driving for the majority of the trip, with me only needing to interject to handle some unexpected situations, and ultimately made the trip significantly more enjoyable.
-
-
-
-
-### List of screenshots i need:
-- Image of the comma 3x installed on my dashboard
-- close-up of the glass display since i dropped the comma 3x and cracked it
-- image of the comma 3x wiring harness that i needed
-- screenshot of the comma openpilot repo as well as the sunnypilot github repo
-hmmm... what else would be good pictures for this article?
-- an image of the car on the road
-- screenshot of the comma app interface
-- photos of the dashboard with the comma installed
-- the car parked in the desert at night
-- the car parked with the mountains in the background
-- a screenshot of the car on the highway
-- 
+In all, it was a lot of fun. I really enjoyed being out West and I think the comma was part of the reason the trip went so well. It takes a lot of the headache out of driving, and makes it more of an adventure.
