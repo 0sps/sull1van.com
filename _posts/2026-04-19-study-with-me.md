@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "TOOL: Study for the FE with me"
+title: "[TOOL]: Study for the FE with me"
 date: 2026-04-19
 tags: [engineering]
 ---

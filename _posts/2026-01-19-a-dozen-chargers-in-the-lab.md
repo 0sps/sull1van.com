@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "PROJECT: A Dozen Chargers in the Lab"
+title: "[PROJECT] A Dozen Chargers in the Lab"
 date: 2026-01-19
 tags: [technology]
 devices:

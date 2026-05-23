@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "PROJECT: 7,500 Miles in a Self-Driving Car"
+title: "[PROJECT] 7,500 Miles in a Self-Driving Car"
 date: 2026-05-15
 tags: [personal, tech]
 ---
@@ -134,26 +134,33 @@ tags: [personal, tech]
 
 In summer 2025, I had a pretty big goal. I wanted to drive across the entire western half of the country on a solo road trip, within the span of one month.
 
-It took weeks to plan out the complete itinerary, which involved stops in over 23 states, and visiting with twelve different friends all across the country, plus working out of three different Chase offices.
+It took weeks to plan out the complete itinerary, which involved stops in over 23 states, and visiting with twelve different friends all across the country, plus working out of three different company headquarters locations.
 
-The coolest part of the trip, though, was how I drove around, thanks to the Comma 3X. 
+But the coolest part of the trip (by FAR) was how I did it with the help of a Comma 3X.
 
-By the end of the month, the car had handled a huge amount of the highway driving, but only after I spent a lot of time learning exactly when to trust it and when to take over.
+I set it up in the 2-3 weeks before the trip, and got all the kinks worked out just in time. In the end, the Comma handled the vast majority of highway driving, and I only ended up doing that last 30-40% of each drive manually.
 
-Comma.ai is a startup trying to make autonomous driving accessible to everyone. They sell small, windshield-mounted computers that take control of the steering in most production cars. The car must have some kind of lane keep assist, and also needs to be running supported software. 
+I'd love to show you how I did it!
 
-At first, I saw that my Kia wasn't supported, so I gave up my hopes of autonomous driving as soon as I got the car in 2024. A year later, I learned that there were actually a few modifications I needed to make but that it was very doable.
+### What is a Comma 3X
 
-Comma's software is open source, which means the official version is only part of the story. There are community forks for different cars, different preferences, and edge cases Comma does not officially support. To that end, a group known as Sunnypilot cloned Comma's software and made their own fork of it. Within that fork, there is a group of Hyundai/Kia/Genesis (HKG) owners who made a branch of Sunnypilot that works with newer cars. That is what I used: a fork of a fork :)
+So Comma.ai is the name of the company, and the 3X is a small, windshield-mounted computer. It takes control of the steering in *most* production cars. It runs their custom software called OpenPilot, which is a fully customizable user interface for the device.
 
-So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more research. In my case, my car wasn't supported, but all I had to do was join the Discord, learn what kind of harness I'd need, buy that one, and figure out who in the community had already forked the code.
+At first, I saw that [my Kia wasn't supported](https://comma.ai/vehicles), so I gave up my hopes of autonomous driving as soon as I got this car in 2024. A year later,though, I joined a Discord and found out that several other Kia owners had retrofitted this to their (newer) cars, so I could do it too. I just had to use this obscure fork of the software I found.
+
+Some helpful background: Comma's software is open source, which means the official version is only *stock* openpilot. There are plenty og community forks for different cars, different preferences, and edge cases that Comma decided not to support. To that end, a group known as Sunnypilot actually made their own fork of it, adding new features. And within that Sunnypilot Github repo, there's this fork some Hyundai/Kia/Genesis (HKG) owners made. THAT'S the one that I use. So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more research. In my case, my car **wasn't** supported, but all I had to do was join the Discord, learn what kind of harness I'd need, buy that one, and figure out who in the community had already forked the code.
 
 
 <img src="https://blog.comma.ai/img/comma3X/cover.png" alt="Comma 3X" style="max-width: 100%; height: auto;" />
 
 ## Installing it
 
-This is where it gets fun. You'll need to look up the Comma setup video specific to your car. I found that all HKG cars now have similar rearview mirrors and camera assemblies. After one thirty-second video, I was able to pull my assembly off and get the Comma installed.
+This is where it gets fun..
+
+You'll need to look up the Comma setup video specific to your car. I found that all HKG cars have similar installation instructions, so it was pretty easy to get mine put in. 5 minutes of looking through YouTube and you should be on your way.
+
+
+<img src="/assets/images/commaInstallation_hyaundai.png" alt="Comma 3X installation" style="max-width: 100%; height: auto;" />
 
 The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, decodes it, and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly resilient setup.
 
