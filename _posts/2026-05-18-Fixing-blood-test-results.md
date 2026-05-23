@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Fixing my poor blood test results so I can live forever"
+title: "PROJECT: Fixing my poor blood test results so I can live forever"
 date: 2026-05-15
 tags: [personal, tech]
 ---

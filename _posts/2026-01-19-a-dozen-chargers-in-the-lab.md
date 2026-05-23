@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Dozen Chargers in the Lab"
+title: "PROJECT: A Dozen Chargers in the Lab"
 date: 2026-01-19
 tags: [technology]
 devices:
@@ -1719,3 +1719,9 @@ Last thing: a huge shout out to both Ken and my good friend Spencer! I could not
   <a href= "/assets/images/spencerandsean1.jpg"><img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;"></a>
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
 </figure>
+
+
+
+
+-Sean Sullivan
+A Dozen Chargers in the lab
