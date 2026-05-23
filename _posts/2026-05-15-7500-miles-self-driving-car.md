@@ -130,7 +130,7 @@ tags: [personal, tech]
 </style>
 
 
-## One month on the road with a self driving car
+## One month on the road with a self-driving car
 
 In summer 2025, I had a pretty big goal. I wanted to drive across the entire western half of the country on a solo road trip, within the span of one month.
 
@@ -138,13 +138,15 @@ It took weeks to plan out the complete itinerary, which involved stops in over 2
 
 The coolest part of the trip, though, was how I drove around, thanks to the Comma 3X. 
 
+By the end of the month, the car had handled a huge amount of the highway driving, but only after I spent a lot of time learning exactly when to trust it and when to take over.
+
 Comma.ai is a startup trying to make autonomous driving accessible to everyone. They sell small, windshield-mounted computers that take control of the steering in most production cars. The car must have some kind of lane keep assist, and also needs to be running supported software. 
 
 At first, I saw that my Kia wasn't supported, so I gave up my hopes of autonomous driving as soon as I got the car in 2024. A year later, I learned that there were actually a few modifications I needed to make but that it was very doable.
 
-Comma's software is open source. This is great because they get feedback from the community on what works, and they also get forks of the code for custom use cases. To that end, a group known as Sunnypilot cloned Comma's software and made their own fork of it. Within that fork, there is a group of Hyandai/Kia/Genesis (HKG) owners who made a branch of Sunnypilot that works with the new cars. THIS is what I used. A fork of a fork :)
+Comma's software is open source, which means the official version is only part of the story. There are community forks for different cars, different preferences, and edge cases Comma does not officially support. To that end, a group known as Sunnypilot cloned Comma's software and made their own fork of it. Within that fork, there is a group of Hyundai/Kia/Genesis (HKG) owners who made a branch of Sunnypilot that works with newer cars. That is what I used: a fork of a fork :)
 
-So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more reserach. In my case, my car wasn't supported, but all I had to do was join the Discord and learn what kind of harness I'd need, buy that one, then figure out hwo in the communty has already forked the code.
+So if you end up googling Comma openpilot and see your car isn't supported, I highly recommend doing some more research. In my case, my car wasn't supported, but all I had to do was join the Discord, learn what kind of harness I'd need, buy that one, and figure out who in the community had already forked the code.
 
 
 <img src="https://blog.comma.ai/img/comma3X/cover.png" alt="Comma 3X" style="max-width: 100%; height: auto;" />
@@ -153,7 +155,7 @@ So if you end up googling Comma openpilot and see your car isn't supported, I hi
 
 This is where it gets fun. You'll need to look up the Comma setup video specific to your car. I found that all HKG cars now have similar rearview mirrors and camera assemblies. After one thirty-second video, I was able to pull my assembly off and get the Comma installed.
 
-The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, and decodes it and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly reslient setup.
+The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, decodes it, and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly resilient setup.
 
 ## Setting it up
 
@@ -162,31 +164,35 @@ By far the hardest thing to work on with a Comma is the software. It will instal
 
 On setup, you need to choose "Custom software", and enter in a link. What link exactly? This is where it gets weird.
 
-After TONS of research, I learned you CAN point the Comma at a website with a release image of the software you want. It's nearly impossible to figure it out, though. I literally could not find the link for sunnypilot. But then I learned that Comma will actually do it for you, as they host Sunnypilot on their own domain. You just type in "sunnypilot" in the custom software URL box, and that's it! For me, I'm using a **branch** of the sunnypilot github repo, so I do "sunnypilot/ccnc-port". And that's it.
+After a ton of research, I learned you can point the Comma at a website with a release image of the software you want. It's nearly impossible to figure it out, though. I literally could not find the link for sunnypilot. But then I learned that Comma will actually do it for you, as they host Sunnypilot on their own domain. You just type in "sunnypilot" in the custom software URL box, and that's it. For me, I'm using a **branch** of the sunnypilot GitHub repo, so I do "sunnypilot/ccnc-port".
 
 
 ### Getting the specifics right
 
-There are a million and one variables to configure once it launches. The Comma will try to ideitify your car's fingerprint, refusing to engage if there's an error. Fingerprinting is essentially the Comma identifying what car you own, and what APIs it's going to need to interact with to control your steering. By defualt, it should be able to fingerprint your car. If it can't, you're screwed. It will let you choose a car manually from the list, but the fact that it couldn't figure it out automatically means it can't communciate with your car properly, so you're probably running the wrong software. This happened to me *a lot* when I would try different branches of Sunnypilot. The only supported one for me is ccnc-port. So if you do this, make sure you are using the appropriate branch for your car.
+There are a million and one variables to configure once it launches. The Comma will try to identify your car's fingerprint, refusing to engage if there's an error. Fingerprinting is essentially the Comma identifying what car you own, and what APIs it's going to need to interact with to control your steering. By default, it should be able to fingerprint your car. If it can't, you're screwed. It will let you choose a car manually from the list, but the fact that it couldn't figure it out automatically means it can't communicate with your car properly, so you're probably running the wrong software. This happened to me *a lot* when I would try different branches of Sunnypilot. The only supported one for me is ccnc-port. So if you do this, make sure you are using the appropriate branch for your car.
 
 After fingerprinting, you should go into the settings menu and configure things to your liking. It can show you the speed limit, your current speed, and many other cool metrics. I turn most of these on. One thing Comma does that I've never seen anywhere else is it will actually show you the speed of the car in front of you. I don't know why car manufacturers don't do this to begin with, because the cars know this information thanks to their ultrasound sensors. Either way, it's great to have this on the Comma.
 
-There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates the models from driving data. No model is ever the 'best' one, since all cars are different. You really have to just start driving with them to figure out which works well for you. For me, that meant choosing like ~10 models and just spedning the entire day on the road testing them. 
+There are also a lot of configuration settings that will affect your driving. It comes with dozens of driving models, each one being about ~70MB a piece and containing a slightly modified version of a driving model based on who trained the data. Comma releases these regularly, as they have their own in-house datacenter that generates the models from driving data. No model is ever the 'best' one, since all cars are different. You really have to just start driving with them to figure out which works well for you. For me, that meant choosing like ~10 models and just spending the entire day on the road testing them. 
 
 You'll also want to look at additional things, like how you want lane changes and braking to work. The Comma won't brake by default, and it won't do lane changes by default, but can if you want it to. I personally do automated lane change, but no braking, since the Comma is pretty shit at managing my speed. 
 
 ### Driver monitoring
 
-By far the most 'controversial' aspect of the Comma is that it enables hands-free driving in most cars it's installed in. To do this, the creators have develpoed a driver monitoring system. The Comma 3X has a wide-angle camera which is constantly watching the driver and running a neural network to assess their attention. For example, if the driver uses a phone during driving, Comma will notice that and start beeping.
+By far the most 'controversial' aspect of the Comma is that it enables hands-free driving in most cars it's installed in. To do this, the creators have developed a driver monitoring system. The Comma 3X has a wide-angle camera which is constantly watching the driver and running a neural network to assess their attention. For example, if the driver uses a phone during driving, Comma will notice that and start beeping.
 
-Since the software is completely open source, you might think you could change these settings. Turns out, **you absolutely can**. For anyone wondering, it's two files; one called helpers.py, one called monitoring.py. I have done extensive amounts of testing with mine, and have arrived at a happy medium for monitoring: I do WANT the monitoring, since hands-free driving could lead to instances where I become unattentive to what's on the road, but it shouldn't be annoying. I relaxed the parameters so that if I briefly check my phone, such as to look at directions or read a text for a moment, it won't beep. However if I look at my phone for *several* seconds, it will pick that up. 
+Since the software is completely open source, you might think you could change these settings. Turns out, **you absolutely can**. For anyone wondering, it's two files; one called helpers.py, one called monitoring.py. I have done extensive amounts of testing with mine, and have arrived at a happy medium for monitoring: I do WANT the monitoring, since hands-free driving could lead to instances where I become inattentive to what's on the road, but it shouldn't be annoying. I wanted the system to notice real inattention without yelling at me every time I glanced at navigation or checked something quickly at a stop.
 
-This is the sweet spot for me, and it actully improves my driving focus over what came stock on the Kia. If Comma notices me being excessively drowsy while driving, it will make the same extremely loud beep, presumably to wake me up. This *did happen* often when I would drive late at night, and I am very thankful for it. The monitoring you get with the Comma is honestly great peace of mind. You can also be assured that your face isn't being recorded and uploaded anywhere, because you control the software, end to end. It's great.
+This is the sweet spot for me, and it actually improves my driving focus over what came stock on the Kia. If Comma notices me being excessively drowsy while driving, it will make the same extremely loud beep, presumably to wake me up. This *did happen* often when I would drive late at night, and I am very thankful for it. The monitoring you get with the Comma is honestly great peace of mind. You can also be assured that your face isn't being recorded and uploaded anywhere, because you control the software, end to end. It's great.
 
 
 ### Beyond the basics: Asking for help
 
-If you do try to get set up with this, there can be tons of issues. tons of problems. Driverless car technology is insanely complicated, and was extremely difficult to get set up even for someone like me. The great thing about buying a Comma 3X, though, is that you're joining a huge community of car drivers just like you. Sunnypilot and Openpilot both have large Discord chats you can join and 
+If you do try to get set up with this, there can be tons of issues. Driverless car technology is insanely complicated, and was extremely difficult to get set up even for someone like me. The great thing about buying a Comma 3X, though, is that you're joining a huge community of car drivers just like you. Sunnypilot and Openpilot both have large Discord chats you can join, and a lot of the useful information is scattered across threads, branch names, harness recommendations, and people casually mentioning the one setting that makes everything work.
+
+## Testing it around town
+
+## Taking it west
 
 
 

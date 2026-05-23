@@ -341,15 +341,21 @@
         :root.time-day .top-bar,
         :root.time-day .test-card,
         :root.time-day .kpi-box,
-        :root.time-day .chart-card,
-        :root.time-day .range-bar-card,
-        :root.time-day .std-timeline-card,
         :root.time-day .command-palette,
         :root.time-day .confirm-dialog {
             background: linear-gradient(160deg, rgba(255,255,255,0.28) 0%, rgba(39,130,213,0.22) 100%);
             border-color: rgba(255,255,255,0.28);
             border-top-color: rgba(255,255,255,0.52);
             box-shadow: 0 18px 48px -18px rgba(18,87,158,0.5);
+        }
+
+        :root.time-day .chart-card,
+        :root.time-day .range-bar-card,
+        :root.time-day .std-timeline-card {
+            background: rgba(255,255,255,0.14);
+            border-color: rgba(255,255,255,0.28);
+            border-top-color: rgba(255,255,255,0.34);
+            box-shadow: none;
         }
 
         :root.time-day .top-bar {
@@ -1031,12 +1037,12 @@
         /* chart */
         .chart-section { padding: 0 18px 16px; }
         .chart-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-top: 1.2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.035);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.075);
+            border-top: 1px solid rgba(255,255,255,0.11);
             border-radius: var(--card-r); padding: 16px;
-            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
+            box-shadow: none;
         }
 
         .chart-card canvas { display: block; }
@@ -1044,12 +1050,12 @@
         /* gauge */
         .range-bar-section { padding: 0 18px 16px; }
         .range-bar-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-top: 1.2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.035);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.075);
+            border-top: 1px solid rgba(255,255,255,0.11);
             border-radius: var(--card-r); padding: 18px 20px;
-            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
+            box-shadow: none;
         }
 
         .range-bar-label {
@@ -1072,33 +1078,52 @@
             transition: left 0.5s cubic-bezier(.34,1.56,.64,1);
         }
         .gauge-labels { display: flex; justify-content: space-between; font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); }
+        .gauge-caption {
+            display: flex; justify-content: space-between; gap: 12px;
+            margin-top: 6px;
+            font-family: var(--font-body); font-size: 10px; color: var(--text-tertiary);
+        }
+        .gauge-scale-note { color: var(--text-tertiary); text-align: right; }
+        .gauge-threshold {
+            position: absolute; top: -5px; bottom: -5px; width: 1px;
+            background: rgba(255,255,255,0.34);
+            transform: translateX(-50%);
+        }
+        .gauge-threshold::after {
+            content: attr(data-label);
+            position: absolute; top: -18px; left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-tertiary);
+            font-family: var(--font-body); font-size: 9px; font-weight: 700;
+            white-space: nowrap;
+        }
 
         /* STD timeline */
         .std-timeline { padding: 0 18px 16px; }
         .std-timeline-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-top: 1.2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.035);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.075);
+            border-top: 1px solid rgba(255,255,255,0.11);
             border-radius: var(--card-r); padding: 16px;
             display: flex; flex-direction: column; gap: 10px;
-            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.3);
+            box-shadow: none;
         }
         .std-timeline-label {
             font-family: var(--font-heading); font-size: 10px; font-weight: 700;
             color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase;
         }
-        .std-row { display: flex; align-items: center; gap: 12px; }
+        .std-row { display: flex; align-items: center; gap: 12px; min-height: 30px; }
         .std-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 76px; flex-shrink: 0; }
         .std-bar {
-            flex: 1; height: 30px; border-radius: 10px;
-            display: flex; align-items: center; padding: 0 12px;
+            flex: 1; min-height: 30px;
+            display: flex; align-items: center;
             font-family: var(--font-body); font-size: 12px; font-weight: 600;
-            transition: all 0.3s;
+            transition: color 0.3s;
         }
-        .std-bar.clear    { background: rgba(48,209,88,0.13); color: var(--ios-green); border: 1px solid rgba(48,209,88,0.22); }
-        .std-bar.reactive { background: rgba(255,69,58,0.13);  color: var(--ios-red);   border: 1px solid rgba(255,69,58,0.22); }
-        .std-bar.unknown  { background: rgba(255,159,10,0.13); color: var(--ios-amber); border: 1px solid rgba(255,159,10,0.22); }
+        .std-bar.clear    { color: var(--ios-green); }
+        .std-bar.reactive { color: var(--ios-red); }
+        .std-bar.unknown  { color: var(--ios-amber); }
         .std-dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
         .clear .std-dot    { background: var(--ios-green); }
         .reactive .std-dot { background: var(--ios-red); }
@@ -2955,6 +2980,39 @@
             return 'normal';
         }
 
+        function getStatusShape(status) {
+            if (status === 'high') return 'triangle';
+            if (status === 'low') return 'rectRot';
+            return 'circle';
+        }
+
+        function getReferenceText(parsed) {
+            if (!parsed) return 'Reference unavailable';
+            if (parsed.min !== undefined && parsed.max !== undefined) return `Reference: ${formatVal(parsed.min)} to ${formatVal(parsed.max)}`;
+            if (parsed.min !== undefined) return `Reference: >= ${formatVal(parsed.min)}`;
+            if (parsed.max !== undefined) return `Reference: <= ${formatVal(parsed.max)}`;
+            return 'Reference unavailable';
+        }
+
+        function getChartDomain(vals, parsed, padRatio = 0.12) {
+            const domainVals = vals.filter(v => Number.isFinite(v));
+            if (parsed?.min !== undefined) domainVals.push(parsed.min);
+            if (parsed?.max !== undefined) domainVals.push(parsed.max);
+            let min = Math.min(...domainVals);
+            let max = Math.max(...domainVals);
+            if (!Number.isFinite(min) || !Number.isFinite(max)) {
+                min = 0;
+                max = 1;
+            }
+            if (min === max) {
+                const spread = Math.abs(min || 1);
+                min -= spread * 0.5;
+                max += spread * 0.5;
+            }
+            const pad = (max - min) * padRatio;
+            return { min: min - pad, max: max + pad };
+        }
+
         // ── DIAGNOSTICS & STATE ──────────────────────────────────────
         window._labsBoot = { phase: 'init', error: null, authReady: false, dbReady: false };
         function updateBoot(step, data = {}) {
@@ -3480,7 +3538,11 @@
             const height = 168;
             const padX = 38;
             const padY = 22;
+            const rangeStr = pts[pts.length - 1]?.rawRange || test.range;
+            const parsed = parseRange(rangeStr);
             const values = pts.map(point => point.numVal);
+            if (parsed?.min !== undefined) values.push(parsed.min);
+            if (parsed?.max !== undefined) values.push(parsed.max);
             let min = Math.min(...values);
             let max = Math.max(...values);
             if (min === max) {
@@ -3491,9 +3553,29 @@
             const xFor = index => padX + (index / Math.max(1, pts.length - 1)) * (width - padX * 2);
             const yFor = value => height - padY - ((value - min) / valueRange) * (height - padY * 2);
             const coords = pts.map((point, index) => `${xFor(index).toFixed(1)},${yFor(point.numVal).toFixed(1)}`).join(' ');
-            const dots = pts.map((point, index) =>
-                `<circle cx="${xFor(index).toFixed(1)}" cy="${yFor(point.numVal).toFixed(1)}" r="4.5" />`
-            ).join('');
+            const dots = pts.map((point, index) => {
+                const status = parsed ? isInRange(point.numVal, parsed) : null;
+                const cls = status === 'normal' ? 'good' : status === 'high' || status === 'low' ? 'alert' : 'neutral';
+                return `<circle class="${cls}" cx="${xFor(index).toFixed(1)}" cy="${yFor(point.numVal).toFixed(1)}" r="4.5" />`;
+            }).join('');
+            let rangeBand = '';
+            if (parsed) {
+                let bandTop = padY;
+                let bandBottom = height - padY;
+                if (parsed.min !== undefined && parsed.max !== undefined) {
+                    bandTop = yFor(parsed.max);
+                    bandBottom = yFor(parsed.min);
+                } else if (parsed.min !== undefined) {
+                    bandBottom = yFor(parsed.min);
+                } else if (parsed.max !== undefined) {
+                    bandTop = yFor(parsed.max);
+                }
+                rangeBand = `<rect class="range-band" x="${padX}" y="${Math.min(bandTop, bandBottom).toFixed(1)}" width="${width - padX * 2}" height="${Math.abs(bandBottom - bandTop).toFixed(1)}" />`;
+            }
+            const rangeLines = parsed ? [
+                parsed.min !== undefined ? `<line class="range-line" x1="${padX}" y1="${yFor(parsed.min).toFixed(1)}" x2="${width - padX}" y2="${yFor(parsed.min).toFixed(1)}" /><text class="range-label" x="${width - padX - 34}" y="${(yFor(parsed.min) - 4).toFixed(1)}">Min</text>` : '',
+                parsed.max !== undefined ? `<line class="range-line" x1="${padX}" y1="${yFor(parsed.max).toFixed(1)}" x2="${width - padX}" y2="${yFor(parsed.max).toFixed(1)}" /><text class="range-label" x="${width - padX - 34}" y="${(yFor(parsed.max) - 4).toFixed(1)}">Max</text>` : '',
+            ].join('') : '';
 
             return `
                 <svg class="report-graph" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escStr(test.name)} history graph">
@@ -3501,6 +3583,8 @@
                     <line class="axis" x1="${padX}" y1="${padY}" x2="${padX}" y2="${height - padY}" />
                     <text class="axis-label" x="${padX}" y="18">${formatVal(max)}</text>
                     <text class="axis-label" x="${padX}" y="${height - 7}">${formatVal(min)}</text>
+                    ${rangeBand}
+                    ${rangeLines}
                     <polyline points="${coords}" />
                     ${dots}
                 </svg>
@@ -3749,9 +3833,7 @@
         display: block;
         margin: 4px 0 2px;
         border-radius: 12px;
-        background:
-            radial-gradient(circle at 100% 0%, rgba(23,163,152,0.16), transparent 42%),
-            linear-gradient(180deg, #f9fbfe, #eff6ff);
+        background: #f8fbff;
         box-shadow: inset 0 0 0 1px #dfe8f2;
     }
     .report-graph .axis {
@@ -3763,10 +3845,25 @@
         font-size: 10px;
         font-weight: 700;
     }
+    .report-graph .range-line {
+        stroke: #aebdca;
+        stroke-width: 1;
+        stroke-dasharray: 4 4;
+    }
+    .report-graph .range-band {
+        fill: rgba(18,128,92,0.07);
+    }
+    .report-graph .range-label {
+        fill: #6b7a90;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
     .report-graph polyline {
         fill: none;
         stroke: var(--teal);
-        stroke-width: 3;
+        stroke-width: 2.25;
         stroke-linecap: round;
         stroke-linejoin: round;
     }
@@ -3775,6 +3872,9 @@
         stroke: #fff;
         stroke-width: 2;
     }
+    .report-graph circle.good { fill: var(--green); }
+    .report-graph circle.alert { fill: var(--red); }
+    .report-graph circle.neutral { fill: var(--blue); }
     .graph-dates {
         display: flex;
         justify-content: space-between;
@@ -4514,12 +4614,43 @@
             const vals = t.numericPts.map(p => p.numVal);
             const rangeStr = t.numericPts[t.numericPts.length - 1]?.rawRange || t.range;
             const parsed = parseRange(rangeStr);
-            const lastStatus = parsed ? isInRange(vals[vals.length - 1], parsed) : null;
+            const statuses = vals.map(v => parsed ? isInRange(v, parsed) : null);
+            const lastStatus = statuses[statuses.length - 1];
+            const yDomain = getChartDomain(vals, parsed, 0.18);
 
             // Use cached theme colors — no getComputedStyle reflow per sparkline
             const lineColor = lastStatus === 'normal' ? themeCache['--green']
                 : lastStatus === 'high' || lastStatus === 'low' ? themeCache['--red']
                 : themeCache['--accent'];
+            const pointStyles = statuses.map(getStatusShape);
+
+            const sparkReferencePlugin = {
+                id: `sparkReference_${id}`,
+                beforeDatasetsDraw(chart) {
+                    const reference = chart.$referenceRange;
+                    if (!reference || !chart.scales.y) return;
+                    const { ctx: chartCtx, chartArea, scales } = chart;
+                    let bandTop = chartArea.top;
+                    let bandBottom = chartArea.bottom;
+                    if (reference.min !== undefined && reference.max !== undefined) {
+                        bandTop = scales.y.getPixelForValue(reference.max);
+                        bandBottom = scales.y.getPixelForValue(reference.min);
+                    } else if (reference.min !== undefined) {
+                        bandBottom = scales.y.getPixelForValue(reference.min);
+                    } else if (reference.max !== undefined) {
+                        bandTop = scales.y.getPixelForValue(reference.max);
+                    }
+                    bandTop = Math.max(chartArea.top, Math.min(chartArea.bottom, bandTop));
+                    bandBottom = Math.max(chartArea.top, Math.min(chartArea.bottom, bandBottom));
+                    const y = Math.min(bandTop, bandBottom);
+                    const h = Math.abs(bandBottom - bandTop);
+                    if (h < 1) return;
+                    chartCtx.save();
+                    chartCtx.fillStyle = 'rgba(48,209,88,0.08)';
+                    chartCtx.fillRect(chartArea.left, y, chartArea.right - chartArea.left, h);
+                    chartCtx.restore();
+                }
+            };
 
             const chart = sparklineCharts[id];
             if (chart) {
@@ -4527,6 +4658,11 @@
                     chart.data.labels = t.numericPts.map(p => p.date);
                     chart.data.datasets[0].data = vals;
                     chart.data.datasets[0].borderColor = lineColor;
+                    chart.data.datasets[0].pointBackgroundColor = lineColor;
+                    chart.data.datasets[0].pointStyle = pointStyles;
+                    chart.options.scales.y.min = yDomain.min;
+                    chart.options.scales.y.max = yDomain.max;
+                    chart.$referenceRange = parsed;
                     chart.update('none');
                     return;
                 } catch (e) {
@@ -4537,7 +4673,7 @@
             }
 
             try {
-                sparklineCharts[id] = new Chart(canvas.getContext('2d'), {
+                const newChart = new Chart(canvas.getContext('2d'), {
                     type: 'line',
                     data: {
                         labels: t.numericPts.map(p => p.date),
@@ -4545,8 +4681,12 @@
                             data: vals,
                             borderColor: lineColor,
                             borderWidth: 1.5,
-                            pointRadius: 0,
-                            tension: 0.4,
+                            pointRadius: ctx => ctx.dataIndex === vals.length - 1 ? 2.5 : 0,
+                            pointBackgroundColor: lineColor,
+                            pointBorderColor: themeCache['--bg'],
+                            pointBorderWidth: 1,
+                            pointStyle: pointStyles,
+                            tension: 0,
                             fill: false,
                         }]
                     },
@@ -4554,9 +4694,12 @@
                         animation: false,
                         responsive: false,
                         plugins: { legend: { display: false }, tooltip: { enabled: false } },
-                        scales: { x: { display: false }, y: { display: false } },
-                    }
+                        scales: { x: { display: false }, y: { display: false, min: yDomain.min, max: yDomain.max } },
+                    },
+                    plugins: [sparkReferencePlugin],
                 });
+                newChart.$referenceRange = parsed;
+                sparklineCharts[id] = newChart;
             } catch (_) { }
         }
 
@@ -4903,19 +5046,45 @@
             // Determine extent
             const hasMin = parsed.min !== undefined;
             const hasMax = parsed.max !== undefined;
-            const rangeMin = hasMin ? parsed.min : 0;
-            const rangeMax = hasMax ? parsed.max : (val * 1.5 || 1);
-            const trackMin = rangeMin - (rangeMax - rangeMin) * 0.25;
-            const trackMax = rangeMax + (rangeMax - rangeMin) * 0.25;
+            const rangeMin = parsed.min;
+            const rangeMax = parsed.max;
+            let trackMin;
+            let trackMax;
+
+            if (hasMin && hasMax) {
+                const baseRange = rangeMax - rangeMin || Math.abs(rangeMax || 1) || 1;
+                trackMin = rangeMin - baseRange * 0.25;
+                trackMax = rangeMax + baseRange * 0.25;
+                if (val < trackMin) trackMin = val - baseRange * 0.12;
+                if (val > trackMax) trackMax = val + baseRange * 0.12;
+            } else if (hasMin) {
+                const baseRange = Math.max(Math.abs(val - rangeMin), Math.abs(rangeMin) * 0.25, 1);
+                trackMin = Math.min(val, rangeMin) - baseRange * 0.25;
+                trackMax = Math.max(val, rangeMin + baseRange);
+            } else {
+                const baseRange = Math.max(Math.abs(val - rangeMax), Math.abs(rangeMax) * 0.25, 1);
+                trackMin = Math.min(val, rangeMax - baseRange);
+                trackMax = Math.max(val, rangeMax) + baseRange * 0.25;
+            }
+
             const trackRange = trackMax - trackMin;
 
-            const zoneLeft = Math.max(0, ((rangeMin - trackMin) / trackRange) * 100);
-            const zoneRight = Math.min(100, ((rangeMax - trackMin) / trackRange) * 100);
+            const zoneLeft = hasMin ? Math.max(0, ((rangeMin - trackMin) / trackRange) * 100) : 0;
+            const zoneRight = hasMax ? Math.min(100, ((rangeMax - trackMin) / trackRange) * 100) : 100;
             const zoneWidth = zoneRight - zoneLeft;
             const markerPct = Math.min(100, Math.max(0, ((val - trackMin) / trackRange) * 100));
+            const minTickPct = hasMin ? Math.max(0, Math.min(100, ((rangeMin - trackMin) / trackRange) * 100)) : null;
+            const maxTickPct = hasMax ? Math.max(0, Math.min(100, ((rangeMax - trackMin) / trackRange) * 100)) : null;
 
             const zoneColor = status === 'normal' ? 'rgba(48,209,88,0.35)' : 'rgba(10,132,255,0.2)';
             const markerColor = status === 'normal' ? 'var(--green)' : status === 'high' || status === 'low' ? 'var(--red)' : 'var(--accent)';
+            const scaleNote = status === 'high' || status === 'low'
+                ? `<span class="gauge-scale-note">Scale includes latest out-of-range value</span>`
+                : '<span></span>';
+            const thresholds = [
+                minTickPct !== null ? `<div class="gauge-threshold" style="left:${minTickPct}%;" data-label="min"></div>` : '',
+                maxTickPct !== null ? `<div class="gauge-threshold" style="left:${maxTickPct}%;" data-label="max"></div>` : '',
+            ].join('');
 
             container.insertAdjacentHTML('beforeend', `
       <div class="range-bar-section">
@@ -4923,12 +5092,17 @@
           <div class="range-bar-label">Position in range</div>
           <div class="gauge-track">
             <div class="gauge-fill-zone" style="left:${zoneLeft}%;width:${zoneWidth}%;background:${zoneColor};"></div>
+            ${thresholds}
             <div class="gauge-marker" style="left:${markerPct}%;box-shadow:0 0 0 2px ${markerColor};"></div>
             <div style="position:absolute; top:20px; left:${markerPct}%; transform:translateX(-50%); color:${markerColor}; font-weight:700; font-family:var(--font-heading); font-size:1.15rem;">${formatVal(val)}</div>
           </div>
           <div class="gauge-labels" style="margin-top:22px;">
-            <span>${hasMin ? rangeMin : '—'}</span>
-            <span>${hasMax ? rangeMax : '—'}</span>
+            <span>${formatVal(trackMin)}</span>
+            <span>${formatVal(trackMax)}</span>
+          </div>
+          <div class="gauge-caption">
+            <span>${getReferenceText(parsed)}</span>
+            ${scaleNote}
           </div>
         </div>
       </div>
@@ -4952,11 +5126,14 @@
             const vals = t.numericPts.map(p => p.numVal);
             const rangeStr = t.numericPts[t.numericPts.length - 1]?.rawRange || t.range;
             const parsed = parseRange(rangeStr);
+            const statuses = vals.map(v => parsed ? isInRange(v, parsed) : null);
+            const pointStyles = statuses.map(getStatusShape);
+            const yDomain = getChartDomain(vals, parsed, 0.14);
+            const unitText = getDisplayUnitText(t);
 
             // Point colors — use cached theme vars (no getComputedStyle reflow per point)
-            const pointColors = vals.map(v => {
+            const pointColors = statuses.map(s => {
                 if (!parsed) return themeCache['--accent'];
-                const s = isInRange(v, parsed);
                 return s === 'normal' ? themeCache['--green']
                     : s === 'high' || s === 'low' ? themeCache['--red']
                     : themeCache['--accent'];
@@ -4971,24 +5148,20 @@
             const ctx = document.getElementById(canvasId);
             if (!ctx) return;
 
-            const grd = ctx.getContext('2d').createLinearGradient(0, 0, 0, 220);
-            grd.addColorStop(0, lineColor + '33');
-            grd.addColorStop(1, lineColor + '00');
-
             const datasets = [{
                 data: vals,
-                borderWidth: 2.5,
+                borderWidth: 2.25,
                 segment: {
                     borderColor: seg => pointColors[seg.p1DataIndex]
                 },
                 pointBackgroundColor: pointColors,
                 pointBorderColor: themeCache['--bg'],
                 pointBorderWidth: 1.5,
+                pointStyle: pointStyles,
                 pointRadius: 5,
                 pointHoverRadius: 7,
-                fill: true,
-                backgroundColor: grd,
-                tension: 0.35,
+                fill: false,
+                tension: 0,
             }];
 
             if (parsed) {
@@ -5018,9 +5191,62 @@
                 }
             }
 
+            const rangeLabelPlugin = {
+                id: `${canvasId}_referenceContext`,
+                beforeDatasetsDraw(chart) {
+                    if (!parsed || !chart.scales.y) return;
+                    const { ctx: chartCtx, chartArea, scales } = chart;
+                    let bandTop = chartArea.top;
+                    let bandBottom = chartArea.bottom;
+
+                    if (parsed.min !== undefined && parsed.max !== undefined) {
+                        bandTop = scales.y.getPixelForValue(parsed.max);
+                        bandBottom = scales.y.getPixelForValue(parsed.min);
+                    } else if (parsed.min !== undefined) {
+                        bandBottom = scales.y.getPixelForValue(parsed.min);
+                    } else if (parsed.max !== undefined) {
+                        bandTop = scales.y.getPixelForValue(parsed.max);
+                    }
+
+                    bandTop = Math.max(chartArea.top, Math.min(chartArea.bottom, bandTop));
+                    bandBottom = Math.max(chartArea.top, Math.min(chartArea.bottom, bandBottom));
+                    const y = Math.min(bandTop, bandBottom);
+                    const h = Math.abs(bandBottom - bandTop);
+                    if (h < 1) return;
+
+                    chartCtx.save();
+                    chartCtx.fillStyle = 'rgba(48,209,88,0.055)';
+                    chartCtx.fillRect(chartArea.left, y, chartArea.right - chartArea.left, h);
+                    chartCtx.restore();
+                },
+                afterDatasetsDraw(chart) {
+                    const { ctx: chartCtx, chartArea, scales } = chart;
+                    const rangeDatasets = chart.data.datasets
+                        .map((dataset, index) => ({ dataset, index }))
+                        .filter(item => item.dataset.label === 'Min' || item.dataset.label === 'Max');
+
+                    if (!rangeDatasets.length || !scales.y) return;
+
+                    chartCtx.save();
+                    chartCtx.font = "700 10px 'Plus Jakarta Sans', sans-serif";
+                    chartCtx.fillStyle = themeCache['--muted'];
+                    chartCtx.textAlign = 'right';
+                    chartCtx.textBaseline = 'bottom';
+
+                    rangeDatasets.forEach(({ dataset }) => {
+                        const raw = dataset.data[0];
+                        const y = scales.y.getPixelForValue(raw);
+                        if (y < chartArea.top || y > chartArea.bottom) return;
+                        chartCtx.fillText(`${dataset.label} ${formatVal(raw)}`, chartArea.right - 4, y - 4);
+                    });
+                    chartCtx.restore();
+                }
+            };
+
             currentChart = new Chart(ctx, {
                 type: 'line',
                 data: { labels, datasets },
+                plugins: [rangeLabelPlugin],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -5038,9 +5264,15 @@
                             bodyFont:  { family: "'Plus Jakarta Sans', sans-serif", size: 12 },
                             callbacks: {
                                 title: items => items[0].label,
-                                label: item => item.datasetIndex === 0
-                                    ? ` ${item.raw}${getDisplayUnitText(t) ? ' ' + getDisplayUnitText(t) : ''}`
-                                    : ` ${item.dataset.label}: ${item.raw}`,
+                                label: item => {
+                                    if (item.datasetIndex !== 0) return ` ${item.dataset.label}: ${item.raw}`;
+                                    const status = statuses[item.dataIndex];
+                                    const statusLabel = status === 'high' ? 'high'
+                                        : status === 'low' ? 'low'
+                                        : status === 'normal' ? 'in range'
+                                        : 'value';
+                                    return ` ${item.raw}${unitText ? ' ' + unitText : ''} (${statusLabel})`;
+                                },
                             }
                         }
                     },
@@ -5058,6 +5290,14 @@
                         y: {
                             grid: { color: themeCache['--chart-grid'], drawBorder: false },
                             border: { display: false },
+                            min: yDomain.min,
+                            max: yDomain.max,
+                            title: {
+                                display: Boolean(unitText),
+                                text: unitText || '',
+                                color: themeCache['--muted'],
+                                font: { family: "'Plus Jakarta Sans', sans-serif", size: 10, weight: 700 },
+                            },
                             ticks: {
                                 color: themeCache['--muted'],
                                 font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 },
@@ -5072,9 +5312,9 @@
             const rows = t.points.map(p => {
                 const status = qualStatus(p.rawResult);
                 const barClass = status === 'clear' ? 'clear' : status === 'reactive' ? 'reactive' : 'unknown';
-                const label = status === 'clear' ? '● Nonreactive / Clear'
-                    : status === 'reactive' ? '● Reactive / Detected'
-                        : `● ${p.rawResult}`;
+                const label = status === 'clear' ? 'Nonreactive / Clear'
+                    : status === 'reactive' ? 'Reactive / Detected'
+                        : p.rawResult;
                 return `
         <div class="std-row">
           <div class="std-date">${fmtDate(p.date)}</div>
