@@ -3,6 +3,7 @@ layout: post
 title: "[PROJECT] A Dozen Chargers in the Lab"
 date: 2026-01-19
 tags: [technology]
+accent_color: "#f5d033"
 devices:
   - name: "Macbook Pro M1"
     img1: "/assets/images/macbook pro 1.png"
@@ -328,10 +329,10 @@ Most of his work went over my head at the time, but I kept thinking about whethe
 
 
 Here's the short version of what I found: 
-- GaN chargers are among the best you can buy today, and the marketing around them IS real.
-- Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.
-- Common brands like Apple generally do test favorably, but some smaller brands edge them out. 
-- There is an extreme amount of variation even within each brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.
+- **GaN chargers are among the best you can buy today, and the marketing around them IS real.**
+- **Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.**
+- **Common brands like Apple generally do test favorably, but some smaller brands edge them out.**
+- **There is an extreme amount of variation even within each brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.**
 
 <br>
 

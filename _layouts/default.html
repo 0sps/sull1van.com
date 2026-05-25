@@ -97,6 +97,21 @@
       }
     })();
   </script>
+  {% if page.accent_color %}
+  <style>
+    :root {
+      --accent-color: {{ page.accent_color }};
+    }
+    body {
+      background-image: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--accent-color) 70%, transparent) 0%,
+        color-mix(in srgb, var(--accent-color) 0%, transparent) 50%
+      ) !important;
+      background-repeat: no-repeat !important;
+    }
+  </style>
+  {% endif %}
 </head>
 <body>
 <main>

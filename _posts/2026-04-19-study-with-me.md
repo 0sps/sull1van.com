@@ -3,6 +3,7 @@ layout: post
 title: "[TOOL]: Study for the FE with me"
 date: 2026-04-19
 tags: [engineering]
+accent_color: "#a7f3d0"
 ---
 
 ### Hello!
