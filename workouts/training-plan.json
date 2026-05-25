@@ -1,87 +1,72 @@
 {
-    "name": "Push/Pull/Legs Split",
+    "name": "Simple Hypertrophy Split",
     "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
     "schedule": [
-        "PUSH A",
-        "PULL A",
-        "LEGS A",
+        "CHEST BACK ARMS",
+        "CHEST TRICEPS",
+        "QUADS GLUTES",
         "REST",
-        "PUSH B",
-        "PULL B",
-        "LEGS B"
+        "BACK BICEPS",
+        "SHOULDERS ARMS",
+        "HAMSTRINGS CALVES"
     ],
     "workouts": {
-        "PUSH A": {
-            "subtitle": "Push A (Heavy)",
+        "CHEST BACK ARMS": {
+            "subtitle": "Chest + Back + Arms",
+            "exercises": [
+                {
+                    "id": "ex018",
+                    "sets": 3,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex280",
+                    "sets": 4,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex023",
+                    "sets": 3,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "CHEST TRICEPS": {
+            "subtitle": "Chest + Triceps",
             "exercises": [
                 {
                     "id": "ex001",
                     "sets": 4,
-                    "reps": "6-8"
-                },
-                {
-                    "id": "ex005",
-                    "sets": 3,
                     "reps": "8-10"
                 },
                 {
-                    "id": "ex004",
+                    "id": "ex034",
                     "sets": 3,
-                    "reps": "12-15"
-                },
-                {
-                    "id": "ex055",
-                    "sets": 3,
-                    "reps": "10-12"
-                }
-            ]
-        },
-        "PULL A": {
-            "subtitle": "Pull A (Heavy)",
-            "exercises": [
-                {
-                    "id": "ex357",
-                    "sets": 4,
                     "reps": "10-12"
                 },
                 {
-                    "id": "ex041",
+                    "id": "ex021",
                     "sets": 3,
-                    "reps": "8-10"
-                },
-                {
-                    "id": "ex033",
-                    "sets": 3,
-                    "reps": "15-20"
-                },
-                {
-                    "id": "ex010",
-                    "sets": 3,
-                    "reps": "8-10"
+                    "reps": "10-15"
                 }
             ]
         },
-        "LEGS A": {
-            "subtitle": "Legs A (Heavy)",
+        "QUADS GLUTES": {
+            "subtitle": "Quads + Glutes",
             "exercises": [
                 {
                     "id": "ex006",
                     "sets": 4,
-                    "reps": "6-8"
+                    "reps": "6-10"
                 },
                 {
                     "id": "ex054",
                     "sets": 3,
-                    "reps": "8-10"
+                    "reps": "10/leg"
                 },
                 {
                     "id": "ex002",
                     "sets": 3,
-                    "reps": "10-12"
-                },
-                {
-                    "id": "ex007",
-                    "sets": 4,
                     "reps": "10-15"
                 }
             ]
@@ -90,67 +75,52 @@
             "subtitle": "Recovery or Light Activity",
             "exercises": []
         },
-        "PUSH B": {
-            "subtitle": "Push B (Hypertrophy)",
+        "BACK BICEPS": {
+            "subtitle": "Back + Biceps",
             "exercises": [
                 {
-                    "id": "ex057",
-                    "sets": 3,
+                    "id": "ex357",
+                    "sets": 4,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex041",
+                    "sets": 4,
                     "reps": "10-12"
                 },
                 {
-                    "id": "ex018",
+                    "id": "ex010",
                     "sets": 3,
                     "reps": "10-12"
-                },
-                {
-                    "id": "ex004",
-                    "sets": 3,
-                    "reps": "12-15"
-                },
-                {
-                    "id": "ex021",
-                    "sets": 3,
-                    "reps": "12-15"
                 }
             ]
         },
-        "PULL B": {
-            "subtitle": "Pull B (Hypertrophy)",
+        "SHOULDERS ARMS": {
+            "subtitle": "Shoulders + Arms",
             "exercises": [
                 {
-                    "id": "ex038",
-                    "sets": 3,
-                    "reps": "10-12"
-                },
-                {
-                    "id": "ex003",
-                    "sets": 3,
-                    "reps": "10-12"
-                },
-                {
-                    "id": "ex046",
-                    "sets": 3,
-                    "reps": "15-20"
+                    "id": "ex004",
+                    "sets": 4,
+                    "reps": "12-15"
                 },
                 {
                     "id": "ex014",
                     "sets": 3,
                     "reps": "10-12"
+                },
+                {
+                    "id": "ex019",
+                    "sets": 3,
+                    "reps": "10-15"
                 }
             ]
         },
-        "LEGS B": {
-            "subtitle": "Legs B (Hypertrophy)",
+        "HAMSTRINGS CALVES": {
+            "subtitle": "Hamstrings + Calves",
             "exercises": [
                 {
-                    "id": "ex013",
-                    "sets": 3,
-                    "reps": "10-12"
-                },
-                {
                     "id": "ex025",
-                    "sets": 3,
+                    "sets": 4,
                     "reps": "8-10"
                 },
                 {
@@ -159,9 +129,9 @@
                     "reps": "10-15"
                 },
                 {
-                    "id": "ex030",
+                    "id": "ex007",
                     "sets": 4,
-                    "reps": "12-15"
+                    "reps": "10-15"
                 }
             ]
         }

@@ -1,0 +1,206 @@
+{
+  "progressionPlanName": "Phase 3 Strength Block",
+  "progressionPlan_startDate": "2026-05-04",
+  "durationWeeks": 12,
+  "baselinePolicy": "Use explicit baselineWeightKg values as the plan baseline for each exercise.",
+  "currentProgressPolicy": "Use the most recent valid non-warmup log for each exercise on or after the plan start date.",
+  "targetPolicy": "Plan targets are absolute weights. targetWeightKg is the 12-week end target, and the app interpolates planned weight from baselineWeightKg to targetWeightKg.",
+  "noBaselineLabel": "No baseline data",
+  "targetHitRule": "Target is hit when all working sets use at least the target weight and reach at least the bottom of the planned rep range.",
+  "nextIncreaseRule": "Next increase is earned when all working sets use at least the target weight and reach the top of the planned rep range.",
+  "recommendationDefaults": {
+    "method": "estimatedMax",
+    "formula": "epley",
+    "validRepMin": 1,
+    "validRepMax": 12,
+    "lookbackSessions": 2,
+    "roundingMode": "floor",
+    "incrementLbs": 5
+  },
+  "exercises": {
+    "ex001": {
+      "name": "Dumbbell Incline Bench Press",
+      "baselineWeightKg": 34.019,
+      "targetWeightKg": 41.519,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "75 lb x 6-7"
+    },
+    "ex005": {
+      "name": "Dumbbell Shoulder Press",
+      "baselineWeightKg": 15.876,
+      "targetWeightKg": 20.876,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "35 lb x 8 last working set"
+    },
+    "ex004": {
+      "name": "Cable Lateral Raise",
+      "baselineWeightKg": 6.804,
+      "targetWeightKg": 9.804,
+      "progressionStepKg": 1,
+      "targetMode": "load",
+      "baselineNote": "15 lb x 6 last working set"
+    },
+    "ex055": {
+      "name": "Dip",
+      "baselineWeightKg": 9.072,
+      "targetWeightKg": 16.572,
+      "progressionStepKg": 2.5,
+      "targetMode": "added_load",
+      "baselineNote": "20 lb added x 8 for 3 sets"
+    },
+    "ex357": {
+      "name": "Single-arm Cable Row",
+      "baselineWeightKg": 31.751,
+      "targetWeightKg": 39.251,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "70 lb each arm"
+    },
+    "ex041": {
+      "name": "Wide Grip Lat Pulldown",
+      "baselineWeightKg": 54.431,
+      "targetWeightKg": 61.931,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "120 lb x 8 for 3 sets"
+    },
+    "ex033": {
+      "name": "Machine Rear Delt Fly",
+      "baselineWeightKg": 31.751,
+      "targetWeightKg": 35.751,
+      "progressionStepKg": 1,
+      "targetMode": "load",
+      "baselineNote": "70 lb for 3 x 15-20"
+    },
+    "ex010": {
+      "name": "Dumbbell Bicep Curl",
+      "baselineWeightKg": 15.876,
+      "targetWeightKg": 19.876,
+      "progressionStepKg": 1,
+      "targetMode": "load",
+      "baselineNote": "35 lb x 6 for 3 sets"
+    },
+    "ex006": {
+      "name": "Back Squat",
+      "baselineWeightKg": 124.738,
+      "targetWeightKg": 137.238,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "275 lb x 4"
+    },
+    "ex054": {
+      "name": "Dumbbell Walking Lunge",
+      "baselineWeightKg": 20.412,
+      "targetWeightKg": 25.412,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "45 lb x 3-6"
+    },
+    "ex002": {
+      "name": "Leg Extension",
+      "baselineWeightKg": 99.79,
+      "targetWeightKg": 107.29,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "220 lb x 6"
+    },
+    "ex007": {
+      "name": "Standing Machine Calf Press",
+      "baselineWeightKg": 97.522,
+      "targetWeightKg": 112.522,
+      "progressionStepKg": 5,
+      "targetMode": "load",
+      "baselineNote": "215 lb x 8 for 3 sets"
+    },
+    "ex057": {
+      "name": "Barbell Bench Press",
+      "baselineWeightKg": 102.058,
+      "targetWeightKg": 114.558,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "225 lb x 5 for 3 sets"
+    },
+    "ex018": {
+      "name": "Machine Fly",
+      "baselineWeightKg": 79.379,
+      "targetWeightKg": 86.879,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "175 lb x 4 for 3 sets"
+    },
+    "ex021": {
+      "name": "Cable Rope Overhead Triceps Extension",
+      "baselineWeightKg": 22.68,
+      "targetWeightKg": 27.68,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "50 lb x 7 for 3 sets"
+    },
+    "ex038": {
+      "name": "Seated Cable Row",
+      "baselineWeightKg": 31.751,
+      "targetWeightKg": 39.251,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "70 lb x 8 for 3 sets"
+    },
+    "ex003": {
+      "name": "Pull Up",
+      "baselineWeightKg": 0,
+      "targetWeightKg": 0,
+      "progressionStepKg": 0,
+      "targetMode": "bodyweight",
+      "baselineNote": "Bodyweight, 3 sets x 6 reps"
+    },
+    "ex046": {
+      "name": "Cable Face Pull",
+      "baselineWeightKg": 31.751,
+      "targetWeightKg": 35.751,
+      "progressionStepKg": 1,
+      "targetMode": "load",
+      "baselineNote": "70 lb x 8"
+    },
+    "ex014": {
+      "name": "Incline Dumbbell Curl",
+      "baselineWeightKg": 15.876,
+      "targetWeightKg": 19.876,
+      "progressionStepKg": 1,
+      "targetMode": "load",
+      "baselineNote": "35 lb x 6"
+    },
+    "ex013": {
+      "name": "Leg Press",
+      "baselineWeightKg": 163.293,
+      "targetWeightKg": 193.293,
+      "progressionStepKg": 5,
+      "targetMode": "load",
+      "baselineNote": "360 lb x 8"
+    },
+    "ex025": {
+      "name": "Romanian Deadlift",
+      "baselineWeightKg": 102.058,
+      "targetWeightKg": 114.558,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "225 lb x 5"
+    },
+    "ex008": {
+      "name": "Seated Leg Curl",
+      "baselineWeightKg": 90.718,
+      "targetWeightKg": 98.218,
+      "progressionStepKg": 2.5,
+      "targetMode": "load",
+      "baselineNote": "200 lb x 6"
+    },
+    "ex030": {
+      "name": "Seated Machine Calf Press",
+      "baselineWeightKg": 52.163,
+      "targetWeightKg": 67.163,
+      "progressionStepKg": 5,
+      "targetMode": "load",
+      "baselineNote": "115 lb x 8 for 3 sets"
+    }
+  }
+}
