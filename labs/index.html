@@ -5546,20 +5546,8 @@
             updateBoot('firebase_initialized');
             console.log(`[MODULE] Firebase initialized. Exposing global variables...`);
 
-            console.log(`[MODULE] Calling getRedirectResult...`);
-            getRedirectResult(auth)
-                .then(result => {
-                    console.log(`[MODULE] getRedirectResult resolved. User credential returned:`, result ? !!result.user : null);
-                })
-                .catch(err => {
-                    console.error('[MODULE] getRedirectResult failed/rejected:', err);
-                    updateBoot('auth_no_user', { msg: err.message });
-                    _hideVaultOverlay();
-                    _renderGoogleAuthRequired({
-                        message: 'Google sign-in did not complete.',
-                        detail: err?.message || 'Please try signing in again.',
-                    });
-                });
+            // We do not call getRedirectResult(auth) as we use popup login exclusively.
+            // This prevents getRedirectResult from hanging indefinitely and blocking onAuthStateChanged on iOS Safari.
 
             console.log(`[MODULE] Setting up onAuthStateChanged...`);
             onAuthStateChanged(auth, async user => {
