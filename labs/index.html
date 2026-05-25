@@ -5516,7 +5516,7 @@
                 }
 
                 if (user) {
-                    sessionStorage.removeItem('labs_redirect_started');
+                    localStorage.removeItem('labs_redirect_started_at');
                     updateBoot('auth_user_detected', { email: user.email });
                     window._labsUser = user;
 
@@ -5546,14 +5546,23 @@
                     if (!_renderAuthEnvironmentIssue()) {
                         _renderGoogleAuthRequired();
                         
-                        const redirectStarted = sessionStorage.getItem('labs_redirect_started');
-                        if (redirectStarted === 'true') {
+                        let isRedirectReturn = false;
+                        const redirectTimeStr = localStorage.getItem('labs_redirect_started_at');
+                        if (redirectTimeStr) {
+                            localStorage.removeItem('labs_redirect_started_at');
+                            const elapsed = Date.now() - Number(redirectTimeStr);
+                            if (elapsed < 5 * 60 * 1000) { // 5 minutes threshold
+                                isRedirectReturn = true;
+                            }
+                        }
+
+                        if (isRedirectReturn) {
                             // Canceled or failed redirect return: do not trigger auto-login again
-                            sessionStorage.removeItem('labs_redirect_started');
+                            console.log('Detected return from recent Google redirect login. Auto-login skipped.');
                         } else if (!window._labsHasAttemptedAutoLogin) {
                             window._labsHasAttemptedAutoLogin = true;
                             if (_shouldUseRedirectLogin()) {
-                                sessionStorage.setItem('labs_redirect_started', 'true');
+                                localStorage.setItem('labs_redirect_started_at', String(Date.now()));
                             }
                             window._labsLogin();
                         }
@@ -5577,7 +5586,7 @@
                     });
                     if (_shouldUseRedirectLogin()) {
                         updateBoot('auth_redirect_start');
-                        sessionStorage.setItem('labs_redirect_started', 'true');
+                        localStorage.setItem('labs_redirect_started_at', String(Date.now()));
                         await signInWithRedirect(auth, provider);
                         return;
                     }
@@ -5585,7 +5594,7 @@
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
                     console.error('Login failed', err);
-                    sessionStorage.removeItem('labs_redirect_started');
+                    localStorage.removeItem('labs_redirect_started_at');
                     const code = err?.code || '';
                     let message = 'Google sign-in failed.';
                     let detail = err?.message || 'Please try again.';
