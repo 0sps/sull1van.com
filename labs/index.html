@@ -3064,19 +3064,27 @@
 
         // Resilient readiness check with timeout
         function waitForReadiness(timeoutMs = 15000) {
+            console.log(`[DEBUG] waitForReadiness started with timeout ${timeoutMs}ms. Initial status: db=${!!window._labsDb}, authReady=${!!window._labsAuthReady}`);
             return new Promise((resolve, reject) => {
                 const start = Date.now();
+                let lastLogged = 0;
                 const timer = setInterval(() => {
                     const isReady = window._labsDb && window._labsAuthReady;
+                    const now = Date.now();
                     if (isReady) {
+                        console.log(`[DEBUG] waitForReadiness resolved successfully after ${now - start}ms`);
                         clearInterval(timer);
                         resolve();
-                    } else if (Date.now() - start > timeoutMs) {
+                    } else if (now - start > timeoutMs) {
+                        console.log(`[DEBUG] waitForReadiness timed out after ${now - start}ms. db=${!!window._labsDb}, authReady=${window._labsAuthReady}`);
                         clearInterval(timer);
                         const missing = [];
                         if (!window._labsDb) missing.push('Database');
                         if (!window._labsAuthReady) missing.push('Auth');
                         reject(new Error(`Readiness timeout: Missing ${missing.join(', ')}`));
+                    } else if (now - lastLogged > 2000) { // Log status every 2 seconds
+                        console.log(`[DEBUG] waitForReadiness waiting... db=${!!window._labsDb}, authReady=${!!window._labsAuthReady}, elapsed=${now - start}ms`);
+                        lastLogged = now;
                     }
                 }, 100);
             });
@@ -3311,11 +3319,15 @@
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData(forceRefresh = false) {
+            console.log(`[DEBUG] loadData() invoked. forceRefresh=${forceRefresh}, _dataLoaded=${_dataLoaded}, _loadingInProgress=${_loadingInProgress}`);
             // If called via event listener, the first arg is an Event object.
             // We only want a force refresh if explicitly passed boolean true.
             if (forceRefresh instanceof Event) forceRefresh = false;
 
-            if (_dataLoaded && !forceRefresh) return;
+            if (_dataLoaded && !forceRefresh) {
+                console.log(`[DEBUG] loadData(): Data already loaded and no force refresh requested. Returning.`);
+                return;
+            }
 
             // Concurrency guard - queue a forced reload instead of running two load paths at once.
             if (_loadingInProgress) {
@@ -3330,31 +3342,37 @@
             try {
                 // Wait for Firestore and Auth to be ready with timeout
                 updateBoot('waiting_for_firebase');
+                console.log(`[DEBUG] loadData() waiting for readiness...`);
                 try {
                     await waitForReadiness(12000); // 12s timeout
                 } catch (timeoutErr) {
+                    console.error(`[DEBUG] loadData() readiness wait failed:`, timeoutErr);
                     throw new Error("System is taking too long to connect to the cloud. Please check your internet or retry.");
                 }
 
                 updateBoot('ready_for_auth_check', { user: window._labsUser?.email });
+                console.log(`[DEBUG] loadData() readiness check completed. db=${!!window._labsDb}, user=${window._labsUser?.email}, key=${!!window._labsKey}`);
 
                 if (!window._labsDb) throw new Error('Firebase did not initialise properly.');
                 
                 // If there is no signed-in user, return silently
                 if (!window._labsUser) {
+                    console.log(`[DEBUG] loadData(): No authenticated user found, returning silently.`);
                     updateBoot('no_user_returning');
                     return;
                 }
 
                 // If user exists but no key yet, we are waiting for vault unlock.
                 if (!window._labsKey) {
+                    console.log(`[DEBUG] loadData(): Authenticated user found but vault is locked. Returning silently to wait for key.`);
                     updateBoot('waiting_for_vault');
                     return;
                 }
 
                 updateBoot('fetching_data');
-
+                console.log(`[DEBUG] loadData(): Loading encrypted vault data...`);
                 const vaultData = await loadVaultData();
+                console.log(`[DEBUG] loadData(): Vault data loaded successfully. Number of tests: ${vaultData?.tests?.length}`);
                 allTests = buildUiTestsFromVault(vaultData.tests);
                 testCardNodes = {};
 
@@ -5397,50 +5415,73 @@
 
         // ─── Key acquisition flow ──────────────────────────────────────────────────
         async function acquireKey(db) {
+            console.log(`[MODULE] acquireKey invoked.`);
             // 1. Try 30-day cached key first
+            console.log(`[MODULE] acquireKey: Checking for cached key...`);
             const cached = await loadCachedKey();
-            if (cached) return cached;
+            if (cached) {
+                console.log(`[MODULE] acquireKey: Found valid cached key. Returning cached key.`);
+                return cached;
+            }
+            console.log(`[MODULE] acquireKey: No valid cached key found. Checking Firestore vault meta state...`);
 
             const { getDoc, setDoc, doc } = Firestore;
             const metaRef  = doc(db, 'meta', 'encryption');
             updateBoot('checking_vault_status');
-            const metaSnap = await Promise.race([
-                getDoc(metaRef),
-                new Promise((_, reject) => setTimeout(() => {
-                    reject(new Error('Timed out while checking your vault. Please retry on a stable connection.'));
-                }, 12000))
-            ]);
+            
+            try {
+                console.log(`[MODULE] acquireKey: Fetching meta/encryption document...`);
+                const metaSnap = await Promise.race([
+                    getDoc(metaRef),
+                    new Promise((_, reject) => setTimeout(() => {
+                        reject(new Error('Timed out while checking your vault. Please retry on a stable connection.'));
+                    }, 12000))
+                ]);
+                console.log(`[MODULE] acquireKey: metaSnap exists=${metaSnap.exists()}`);
 
-            if (!metaSnap.exists()) {
-                // ── First run: create vault ──────────────────────────────────────
-                _setupVaultModal({ isFirstRun: true });
-                const password = await _waitVaultSubmit(true);
-                document.getElementById('vaultOverlay').classList.remove('visible');
+                if (!metaSnap.exists()) {
+                    // ── First run: create vault ──────────────────────────────────────
+                    console.log(`[MODULE] acquireKey: First run. Prompting user to create vault password...`);
+                    _setupVaultModal({ isFirstRun: true });
+                    const password = await _waitVaultSubmit(true);
+                    console.log(`[MODULE] acquireKey: Password received. Salt and key derivation starting...`);
+                    document.getElementById('vaultOverlay').classList.remove('visible');
 
-                const saltB64 = generateSalt();
-                const key     = await deriveKeyForCache(password, saltB64);
-                const { encryptedPayload: encryptedKeyCheck, iv: keyCheckIv } = await createKeyCheck(key);
-                await setDoc(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
-                await cacheKey(key);
+                    const saltB64 = generateSalt();
+                    const key     = await deriveKeyForCache(password, saltB64);
+                    const { encryptedPayload: encryptedKeyCheck, iv: keyCheckIv } = await createKeyCheck(key);
+                    console.log(`[MODULE] acquireKey: Key generated. Writing credentials to doc...`);
+                    await setDoc(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
+                    await cacheKey(key);
+                    console.log(`[MODULE] acquireKey: Vault created and key cached successfully.`);
 
-                return key;
+                    return key;
 
-            } else {
-                // ── Returning user: unlock vault ─────────────────────────────────
-                const { passwordSalt, encryptedKeyCheck, keyCheckIv } = metaSnap.data();
-                _setupVaultModal({ isFirstRun: false });
+                } else {
+                    // ── Returning user: unlock vault ─────────────────────────────────
+                    console.log(`[MODULE] acquireKey: Returning user. Prompting user to enter vault password...`);
+                    const { passwordSalt, encryptedKeyCheck, keyCheckIv } = metaSnap.data();
+                    _setupVaultModal({ isFirstRun: false });
 
-                while (true) {
-                    const password  = await _waitVaultSubmit(false);
-                    const candidate = await deriveKeyForCache(password, passwordSalt);
-                    const ok        = await verifyKey(candidate, encryptedKeyCheck, keyCheckIv);
-                    if (ok) {
-                        await cacheKey(candidate);
-                        document.getElementById('vaultOverlay').classList.remove('visible');
-                        return candidate;
+                    while (true) {
+                        const password  = await _waitVaultSubmit(false);
+                        console.log(`[MODULE] acquireKey: Password entered. Deriving candidate key...`);
+                        const candidate = await deriveKeyForCache(password, passwordSalt);
+                        const ok        = await verifyKey(candidate, encryptedKeyCheck, keyCheckIv);
+                        console.log(`[MODULE] acquireKey: Key verification result: ok=${ok}`);
+                        if (ok) {
+                            await cacheKey(candidate);
+                            document.getElementById('vaultOverlay').classList.remove('visible');
+                            console.log(`[MODULE] acquireKey: Vault successfully unlocked!`);
+                            return candidate;
+                        }
+                        console.warn(`[MODULE] acquireKey: Incorrect vault password entered.`);
+                        _showVaultError('Incorrect password. Please try again.');
                     }
-                    _showVaultError('Incorrect password. Please try again.');
                 }
+            } catch (err) {
+                console.error(`[MODULE] acquireKey Firestore check failed:`, err);
+                throw err;
             }
         }
 
@@ -5494,6 +5535,7 @@
         };
 
         try {
+            console.log(`[MODULE] Script start. Initializing Firebase...`);
             updateBoot('module_executing');
             const app = initializeApp(firebaseConfig, 'labs');
             const auth = getAuth(app);
@@ -5502,23 +5544,32 @@
             window._labsDb = db;
             window._labsFirestore = Firestore;
             updateBoot('firebase_initialized');
+            console.log(`[MODULE] Firebase initialized. Exposing global variables...`);
 
-            getRedirectResult(auth).catch(err => {
-                console.error('Redirect login failed', err);
-                updateBoot('auth_no_user', { msg: err.message });
-                _hideVaultOverlay();
-                _renderGoogleAuthRequired({
-                    message: 'Google sign-in did not complete.',
-                    detail: err?.message || 'Please try signing in again.',
+            console.log(`[MODULE] Calling getRedirectResult...`);
+            getRedirectResult(auth)
+                .then(result => {
+                    console.log(`[MODULE] getRedirectResult resolved. User credential returned:`, result ? !!result.user : null);
+                })
+                .catch(err => {
+                    console.error('[MODULE] getRedirectResult failed/rejected:', err);
+                    updateBoot('auth_no_user', { msg: err.message });
+                    _hideVaultOverlay();
+                    _renderGoogleAuthRequired({
+                        message: 'Google sign-in did not complete.',
+                        detail: err?.message || 'Please try signing in again.',
+                    });
                 });
-            });
 
+            console.log(`[MODULE] Setting up onAuthStateChanged...`);
             onAuthStateChanged(auth, async user => {
+                console.log(`[MODULE] onAuthStateChanged fired. User info:`, user ? { email: user.email, uid: user.uid } : null);
                 window._labsAuthReady = true;
 
                 // Eligibility check: Web Crypto API
                 if (!(window.crypto && crypto.subtle)) {
                     const msg = "Your browser doesn't support the required encryption (Web Crypto API). Please use a modern browser or turn off Private Mode.";
+                    console.error(`[MODULE] Eligibility check failed: Web Crypto API unsupported.`);
                     updateBoot('crypto_unsupported');
                     const errEl = document.getElementById('loadingState');
                     if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ ${msg}</div>`;
@@ -5531,33 +5582,39 @@
 
                     if (user.email && user.email.toLowerCase() === 'sspsful@gmail.com') {
                         try {
+                            console.log(`[MODULE] Authorized user sspsful@gmail.com detected. Starting acquireKey...`);
                             const key = await acquireKey(db);
+                            console.log(`[MODULE] acquireKey finished. Vault unlocked.`);
                             updateBoot('vault_unlocked');
                             window._labsKey = key;
                             loadData(true);
                         } catch (err) {
                             updateBoot('vault_error', { msg: err.message });
-                            console.error('Key acquisition failed:', err);
+                            console.error('[MODULE] Key acquisition failed:', err);
                             const errEl = document.getElementById('loadingState');
                             if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${err.message}</div>`;
                         }
                     } else {
+                        console.warn(`[MODULE] Unauthorized user email: ${user.email}. Restricting access...`);
                         updateBoot('auth_unauthorized');
                         alert('Unauthorized: Access restricted to sspsful@gmail.com');
                         signOut(auth);
                     }
                 } else {
+                    console.log(`[MODULE] onAuthStateChanged: No user session active.`);
                     updateBoot('auth_no_user');
                     window._labsUser = null;
                     window._labsKey = null;
                     _vaultDataCache = null;
                     _hideVaultOverlay();
                     if (!_renderAuthEnvironmentIssue()) {
+                        console.log(`[MODULE] Rendering Google sign-in required interface...`);
                         _renderGoogleAuthRequired();
                         
-                        // Mobile browsers block popups that are not triggered by a direct user tap.
-                        // We only auto-trigger popup sign-in if the user is on a desktop device.
-                        if (!_isMobileDevice() && !window._labsHasAttemptedAutoLogin) {
+                        const isMobile = _isMobileDevice();
+                        console.log(`[MODULE] Device check: isMobile=${isMobile}, hasAttemptedAutoLogin=${window._labsHasAttemptedAutoLogin}`);
+                        if (!isMobile && !window._labsHasAttemptedAutoLogin) {
+                            console.log(`[MODULE] Desktop device: Auto-triggering Google sign-in popup...`);
                             window._labsHasAttemptedAutoLogin = true;
                             window._labsLogin();
                         }
@@ -5580,11 +5637,13 @@
                         isBusy: true,
                     });
                     
+                    console.log(`[MODULE] _labsLogin: Launching signInWithPopup...`);
                     // Always use signInWithPopup for maximum reliability (no cross-origin redirect ITP issues in iOS Safari)
                     await signInWithPopup(auth, provider);
+                    console.log(`[MODULE] _labsLogin: signInWithPopup resolved successfully.`);
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
-                    console.error('Login failed', err);
+                    console.error('[MODULE] _labsLogin failed:', err);
                     const code = err?.code || '';
                     let message = 'Google sign-in failed.';
                     let detail = err?.message || 'Please try again.';
