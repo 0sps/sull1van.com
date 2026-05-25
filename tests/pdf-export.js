@@ -11,13 +11,13 @@
 
     // ── PUBLIC API EXPOSED TO GLOBAL SCOPE ─────────────────────────────
     window.openPdfReportPrompt = function () {
-        if (!window.allTests || !window.allTests.length) {
-            window.showConfirm({
-                icon: window.CONFIRM_ICONS.info,
+        if (!allTests || !allTests.length) {
+            showConfirm({
+                icon: CONFIRM_ICONS.info,
                 iconColor: 'var(--accent)',
                 title: 'No results available',
                 body: 'Add or load lab results before generating a PDF report.',
-                primary: { label: 'OK', className: 'confirm-btn-primary', action: window.dismissConfirm },
+                primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
             });
             return;
         }
@@ -37,7 +37,7 @@
     };
 
     window.togglePdfReportTest = function (name) {
-        const test = window.allTests.find(item => item.name === name);
+        const test = allTests.find(item => item.name === name);
         if (!test) return;
         if (_pdfReportSelectedTests.has(test.name)) {
             _pdfReportSelectedTests.delete(test.name);
@@ -100,15 +100,15 @@
             win.document.write(buildPdfReportHtml(report.title, report.tests));
             win.document.close();
             window.closePdfReportPrompt();
-            window.showSuccessToast('Report ready');
+            showSuccessToast('Report ready');
         } catch (error) {
             console.error('PDF report failed:', error);
-            window.showConfirm({
-                icon: window.CONFIRM_ICONS.error,
+            showConfirm({
+                icon: CONFIRM_ICONS.error,
                 iconColor: 'var(--red)',
                 title: 'Report failed',
                 body: error.message || 'Something went wrong while preparing your PDF report.',
-                primary: { label: 'OK', className: 'confirm-btn-primary', action: window.dismissConfirm },
+                primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
             });
         } finally {
             _pdfReportInProgress = false;
@@ -117,7 +117,7 @@
 
     // ── PRIVATE / INTERNAL MODULE FUNCTIONS ────────────────────────────
     function getLocalStorageReportTestsByName(testName) {
-        const normalizedTarget = window.normalizeTestName(testName);
+        const normalizedTarget = normalizeTestName(testName);
         const matches = [];
         try {
             for (let i = 0; i < localStorage.length; i++) {
@@ -133,9 +133,9 @@
                     : Array.isArray(parsed?.tests)
                         ? parsed.tests
                         : [];
-                const uiTests = window.buildUiTestsFromVault(candidates);
+                const uiTests = buildUiTestsFromVault(candidates);
                 uiTests.forEach(test => {
-                    if (window.normalizeTestName(test.name) === normalizedTarget) matches.push(test);
+                    if (normalizeTestName(test.name) === normalizedTarget) matches.push(test);
                 });
             }
         } catch (error) {
@@ -146,7 +146,7 @@
 
     function getPdfReportRows() {
         const term = (document.getElementById('reportSearchInput')?.value || '').trim().toLowerCase();
-        return window.allTests
+        return allTests
             .filter(test => {
                 if (!term) return true;
                 return test.name.toLowerCase().includes(term) || (test.category || 'Other').toLowerCase().includes(term);
@@ -161,8 +161,8 @@
     }
 
     function getPdfReportReadingSummary(test) {
-        const first = test.points?.[0]?.date ? window.fmtDate(test.points[0].date) : '';
-        const last = test.points?.[test.points.length - 1]?.date ? window.fmtDate(test.points[test.points.length - 1].date) : '';
+        const first = test.points?.[0]?.date ? fmtDate(test.points[0].date) : '';
+        const last = test.points?.[test.points.length - 1]?.date ? fmtDate(test.points[test.points.length - 1].date) : '';
         const count = test.points?.length || 0;
         const span = first && last && first !== last ? `${first} - ${last}` : (last || 'No date');
         return `${test.category || 'Other'} · ${count} reading${count === 1 ? '' : 's'} · ${span}`;
@@ -179,8 +179,8 @@
             selectedList.innerHTML = _pdfReportSelectedTests.size
                 ? [..._pdfReportSelectedTests].map(name => `
                     <div class="report-chip">
-                        <span>${window.escStr(name)}</span>
-                        <button type="button" data-report-remove="${window.escStr(name)}" onclick="removePdfReportTest(this.dataset.reportRemove)" aria-label="Remove ${window.escStr(name)}">×</button>
+                        <span>${escStr(name)}</span>
+                        <button type="button" data-report-remove="${escStr(name)}" onclick="removePdfReportTest(this.dataset.reportRemove)" aria-label="Remove ${escStr(name)}">×</button>
                     </div>
                 `).join('')
                 : '<div class="report-empty" style="width:100%;padding:12px 14px;">No biomarkers selected yet</div>';
@@ -190,10 +190,10 @@
             results.innerHTML = rows.length ? rows.map((test, index) => {
                 const selected = _pdfReportSelectedTests.has(test.name);
                 return `
-                    <button class="report-result${index === _pdfReportSelectedIndex ? ' selected' : ''}${selected ? ' is-added' : ''}" type="button" data-report-test="${window.escStr(test.name)}" onclick="togglePdfReportTest(this.dataset.reportTest)">
+                    <button class="report-result${index === _pdfReportSelectedIndex ? ' selected' : ''}${selected ? ' is-added' : ''}" type="button" data-report-test="${escStr(test.name)}" onclick="togglePdfReportTest(this.dataset.reportTest)">
                         <div>
-                            <div class="report-result-name">${window.escStr(test.name)}</div>
-                            <div class="report-result-meta">${window.escStr(getPdfReportReadingSummary(test))}</div>
+                            <div class="report-result-name">${escStr(test.name)}</div>
+                            <div class="report-result-meta">${escStr(getPdfReportReadingSummary(test))}</div>
                         </div>
                         <div class="report-result-action">${selected ? 'Added' : 'Add'}</div>
                     </button>
@@ -207,7 +207,7 @@
     function mergeReportTests(tests) {
         const byName = new Map();
         tests.filter(Boolean).forEach(test => {
-            const key = window.normalizeTestName(test.name);
+            const key = normalizeTestName(test.name);
             if (!key) return;
             if (!byName.has(key)) {
                 byName.set(key, { ...test, points: [...(test.points || [])] });
@@ -229,13 +229,13 @@
                     seen.add(key);
                     return true;
                 })
-                .sort((a, b) => window.parseISODate(a.date) - window.parseISODate(b.date));
+                .sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
             const numericPts = points.filter(point => point.isNumeric && point.numVal !== null);
             const qualPts = points.filter(point => !point.isNumeric);
             const type = (numericPts.length === 0 && qualPts.length > 0)
                 ? 'qualitative'
                 : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
-            const displayUnit = window.getDisplayUnitText(test) || window.findBestUnitText({ ...test, points });
+            const displayUnit = getDisplayUnitText(test) || findBestUnitText({ ...test, points });
             return {
                 ...test,
                 points,
@@ -250,8 +250,8 @@
     function getSelectedTestsForReport() {
         const selectedNames = [..._pdfReportSelectedTests];
         const selectedTests = selectedNames.flatMap(name => {
-            const direct = window.allTests.filter(test => test.name === name);
-            const local = window.normalizeTestName(name) === 'TESTOSTERONE'
+            const direct = allTests.filter(test => test.name === name);
+            const local = normalizeTestName(name) === 'TESTOSTERONE'
                 ? getLocalStorageReportTestsByName('TESTOSTERONE')
                 : [];
             return [...direct, ...local];
@@ -272,7 +272,7 @@
     function getReportPointValue(point) {
         if (!point) return '—';
         return point.numVal !== null && point.numVal !== undefined
-            ? window.formatVal(point.numVal)
+            ? formatVal(point.numVal)
             : String(point.rawResult ?? '—');
     }
 
@@ -280,11 +280,11 @@
         if (!point) return '—';
         if (point.isNumeric && point.numVal !== null) {
             const rangeStr = point.rawRange || test.range;
-            const parsed = window.parseRange(rangeStr);
-            const status = parsed ? window.isInRange(point.numVal, parsed) : null;
+            const parsed = parseRange(rangeStr);
+            const status = parsed ? isInRange(point.numVal, parsed) : null;
             return status ? status.toUpperCase() : 'RECORDED';
         }
-        return window.qualBadge(window.qualStatus(point.rawResult));
+        return qualBadge(qualStatus(point.rawResult));
     }
 
     function getReportStatusClass(statusText) {
@@ -305,7 +305,7 @@
         const padX = 38;
         const padY = 22;
         const rangeStr = pts[pts.length - 1]?.rawRange || test.range;
-        const parsed = window.parseRange(rangeStr);
+        const parsed = parseRange(rangeStr);
         const values = pts.map(point => point.numVal);
         if (parsed?.min !== undefined) values.push(parsed.min);
         if (parsed?.max !== undefined) values.push(parsed.max);
@@ -320,7 +320,7 @@
         const yFor = value => height - padY - ((value - min) / valueRange) * (height - padY * 2);
         const coords = pts.map((point, index) => `${xFor(index).toFixed(1)},${yFor(point.numVal).toFixed(1)}`).join(' ');
         const dots = pts.map((point, index) => {
-            const status = parsed ? window.isInRange(point.numVal, parsed) : null;
+            const status = parsed ? isInRange(point.numVal, parsed) : null;
             const cls = status === 'normal' ? 'good' : status === 'high' || status === 'low' ? 'alert' : 'neutral';
             return `<circle class="${cls}" cx="${xFor(index).toFixed(1)}" cy="${yFor(point.numVal).toFixed(1)}" r="4.5" />`;
         }).join('');
@@ -344,19 +344,19 @@
         ].join('') : '';
 
         return `
-            <svg class="report-graph" viewBox="0 0 ${width} ${height}" role="img" aria-label="${window.escStr(test.name)} history graph">
+            <svg class="report-graph" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escStr(test.name)} history graph">
                 <line class="axis" x1="${padX}" y1="${height - padY}" x2="${width - padX}" y2="${height - padY}" />
                 <line class="axis" x1="${padX}" y1="${padY}" x2="${padX}" y2="${height - padY}" />
-                <text class="axis-label" x="${padX}" y="18">${window.formatVal(max)}</text>
-                <text class="axis-label" x="${padX}" y="${height - 7}">${window.formatVal(min)}</text>
+                <text class="axis-label" x="${padX}" y="18">${formatVal(max)}</text>
+                <text class="axis-label" x="${padX}" y="${height - 7}">${formatVal(min)}</text>
                 ${rangeBand}
                 ${rangeLines}
                 <polyline points="${coords}" />
                 ${dots}
             </svg>
             <div class="graph-dates">
-                <span>${window.escStr(window.fmtDate(pts[0].date))}</span>
-                <span>${window.escStr(window.fmtDate(pts[pts.length - 1].date))}</span>
+                <span>${escStr(fmtDate(pts[0].date))}</span>
+                <span>${escStr(fmtDate(pts[pts.length - 1].date))}</span>
             </div>
         `;
     }
@@ -367,43 +367,43 @@
         });
         const summaryRows = tests.map(test => {
             const latest = getReportLatestPoint(test);
-            const unit = window.getDisplayUnitText(test) || window.findBestUnitText(test);
+            const unit = getDisplayUnitText(test) || findBestUnitText(test);
             const statusText = getReportStatusText(test, latest);
             return `
                 <tr>
-                    <td>${window.escStr(test.name)}</td>
-                    <td>${window.escStr(getReportPointValue(latest))}</td>
-                    <td>${window.escStr(unit || '—')}</td>
-                    <td>${window.escStr(latest?.date ? window.fmtDate(latest.date) : '—')}</td>
-                    <td><span class="status-pill ${getReportStatusClass(statusText)}">${window.escStr(statusText)}</span></td>
+                    <td>${escStr(test.name)}</td>
+                    <td>${escStr(getReportPointValue(latest))}</td>
+                    <td>${escStr(unit || '—')}</td>
+                    <td>${escStr(latest?.date ? fmtDate(latest.date) : '—')}</td>
+                    <td><span class="status-pill ${getReportStatusClass(statusText)}">${escStr(statusText)}</span></td>
                 </tr>
             `;
         }).join('');
 
         const sections = tests.map(test => {
-            const unit = window.getDisplayUnitText(test) || window.findBestUnitText(test);
+            const unit = getDisplayUnitText(test) || findBestUnitText(test);
             const latest = getReportLatestPoint(test);
             const statusText = getReportStatusText(test, latest);
             const history = [...(test.type === 'qualitative' ? test.points : (test.numericPts.length ? test.numericPts : test.points))]
                 .reverse()
                 .map(point => `
                     <tr>
-                        <td>${window.escStr(window.fmtDate(point.date))}</td>
-                        <td>${window.escStr(getReportPointValue(point))}</td>
-                        <td>${window.escStr(unit || '—')}</td>
-                        <td>${window.escStr(point.rawRange || test.range || '—')}</td>
+                        <td>${escStr(fmtDate(point.date))}</td>
+                        <td>${escStr(getReportPointValue(point))}</td>
+                        <td>${escStr(unit || '—')}</td>
+                        <td>${escStr(point.rawRange || test.range || '—')}</td>
                     </tr>
                 `).join('');
             return `
                 <section class="marker-section">
                     <div class="marker-heading">
                         <div>
-                            <h2>${window.escStr(test.name)}</h2>
-                            <span>${window.escStr((test.points || []).length)} reading${(test.points || []).length === 1 ? '' : 's'}${unit ? ` · ${window.escStr(unit)}` : ''}</span>
+                            <h2>${escStr(test.name)}</h2>
+                            <span>${escStr((test.points || []).length)} reading${(test.points || []).length === 1 ? '' : 's'}${unit ? ` · ${escStr(unit)}` : ''}</span>
                         </div>
                         <div class="marker-latest">
-                            <strong>${window.escStr(getReportPointValue(latest))}</strong>
-                            <span class="status-pill ${getReportStatusClass(statusText)}">${window.escStr(statusText)}</span>
+                            <strong>${escStr(getReportPointValue(latest))}</strong>
+                            <span class="status-pill ${getReportStatusClass(statusText)}">${escStr(statusText)}</span>
                         </div>
                     </div>
                     ${buildReportGraphSvg(test)}
@@ -420,7 +420,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${window.escStr(title)}</title>
+<title>${escStr(title)}</title>
 <style>
     @page { size: letter; margin: 0.38in; }
     * { box-sizing: border-box; }
@@ -668,19 +668,19 @@
 <div class="page">
     <header>
         <div class="eyebrow">Sean's Log</div>
-        <h1>\${window.escStr(title)}</h1>
+        <h1>${escStr(title)}</h1>
         <div class="meta">
-            <span>Generated \${window.escStr(generatedAt)}</span>
-            <span>\${tests.length} marker\${tests.length === 1 ? '' : 's'}</span>
+            <span>Generated ${escStr(generatedAt)}</span>
+            <span>${tests.length} marker${tests.length === 1 ? '' : 's'}</span>
         </div>
     </header>
     <main>
         <h2 class="section-title">Most Recent Results</h2>
         <table class="summary-table">
             <thead><tr><th>Marker</th><th>Most Recent</th><th>Unit</th><th>Date</th><th>Status</th></tr></thead>
-            <tbody>\${summaryRows}</tbody>
+            <tbody>${summaryRows}</tbody>
         </table>
-        \${sections}
+        ${sections}
     </main>
 </div>
 <script>
