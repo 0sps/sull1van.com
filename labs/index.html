@@ -5497,6 +5497,7 @@
                 }
 
                 if (user) {
+                    sessionStorage.removeItem('labs_redirect_started');
                     updateBoot('auth_user_detected', { email: user.email });
                     window._labsUser = user;
 
@@ -5525,6 +5526,18 @@
                     _hideVaultOverlay();
                     if (!_renderAuthEnvironmentIssue()) {
                         _renderGoogleAuthRequired();
+                        
+                        const redirectStarted = sessionStorage.getItem('labs_redirect_started');
+                        if (redirectStarted === 'true') {
+                            // Canceled or failed redirect return: do not trigger auto-login again
+                            sessionStorage.removeItem('labs_redirect_started');
+                        } else if (!window._labsHasAttemptedAutoLogin) {
+                            window._labsHasAttemptedAutoLogin = true;
+                            if (_shouldUseRedirectLogin()) {
+                                sessionStorage.setItem('labs_redirect_started', 'true');
+                            }
+                            window._labsLogin();
+                        }
                     }
                 }
             });
@@ -5545,6 +5558,7 @@
                     });
                     if (_shouldUseRedirectLogin()) {
                         updateBoot('auth_redirect_start');
+                        sessionStorage.setItem('labs_redirect_started', 'true');
                         await signInWithRedirect(auth, provider);
                         return;
                     }
@@ -5552,6 +5566,7 @@
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
                     console.error('Login failed', err);
+                    sessionStorage.removeItem('labs_redirect_started');
                     const code = err?.code || '';
                     let message = 'Google sign-in failed.';
                     let detail = err?.message || 'Please try again.';
