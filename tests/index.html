@@ -344,8 +344,10 @@
         :root.time-day .command-palette,
         :root.time-day .confirm-dialog {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.16) 100%);
-            border-color: rgba(0, 0, 0, 0.15);
-            border-top-color: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.24);
+            border-right-color: rgba(255, 255, 255, 0.12);
+            border-bottom-color: rgba(255, 255, 255, 0.12);
+            border-left-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 18px 48px -18px rgba(0, 0, 0, 0.3);
         }
 
@@ -353,8 +355,10 @@
         :root.time-day .range-bar-card,
         :root.time-day .std-timeline-card {
             background: rgba(0, 0, 0, 0.15);
-            border-color: rgba(0, 0, 0, 0.12);
-            border-top-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+            border-right-color: rgba(255, 255, 255, 0.08);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+            border-left-color: rgba(255, 255, 255, 0.14);
             box-shadow: none;
         }
 
@@ -365,14 +369,20 @@
 
         :root.time-day .test-card:hover {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.2) 100%);
-            border-color: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.28);
+            border-right-color: rgba(255, 255, 255, 0.14);
+            border-bottom-color: rgba(255, 255, 255, 0.14);
+            border-left-color: rgba(255, 255, 255, 0.24);
         }
 
         :root.time-day .test-card.active-card,
         :root.time-day .layout.is-grid-view #panelList .test-card.expanded {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.24) 100%);
-            border-color: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 18px 48px -18px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+            border-right-color: rgba(255, 255, 255, 0.5);
+            border-bottom-color: rgba(255, 255, 255, 0.5);
+            border-left-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset, 0 18px 48px -18px rgba(0, 0, 0, 0.4);
         }
 
         :root.time-day .top-title {
