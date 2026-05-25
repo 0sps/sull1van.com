@@ -2395,7 +2395,7 @@
         </svg>
     </button>
 
-    <script src="pdf-export.js" defer></script>
+    <script src="/labs/pdf-export.js" defer></script>
     <script>
         window.toggleLayout = function() {
             const layout = document.querySelector('.layout');
@@ -5422,7 +5422,7 @@
             if (protocol === 'file:') {
                 return {
                     message: 'Google sign-in cannot start from a local file.',
-                    detail: 'Open this page from an authorized HTTPS site instead of double-clicking tests.html. Firebase Auth needs a real web origin for first-time sign-in.',
+                    detail: 'Open this page from an authorized HTTPS site instead of double-clicking labs/index.html. Firebase Auth needs a real web origin for first-time sign-in.',
                 };
             }
 
