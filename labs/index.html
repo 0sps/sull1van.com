@@ -3144,6 +3144,15 @@
         }
 
         async function persistVaultData(vaultData) {
+            if (!window._labsKey) {
+                if (window._labsDb && window._labsAcquireKey) {
+                    updateBoot('waiting_for_vault');
+                    window._labsKey = await window._labsAcquireKey(window._labsDb);
+                    updateBoot('vault_unlocked');
+                } else {
+                    throw new Error('Vault is locked. Encryption key is missing.');
+                }
+            }
             const { setDoc } = window._labsFirestore;
             const vaultRef = getVaultDocRef();
             const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, vaultData);
@@ -3157,6 +3166,15 @@
         }
 
         async function loadVaultData() {
+            if (!window._labsKey) {
+                if (window._labsDb && window._labsAcquireKey) {
+                    updateBoot('waiting_for_vault');
+                    window._labsKey = await window._labsAcquireKey(window._labsDb);
+                    updateBoot('vault_unlocked');
+                } else {
+                    throw new Error('Vault is locked. Encryption key is missing.');
+                }
+            }
             const { getDoc } = window._labsFirestore;
             const vaultRef = getVaultDocRef();
             const vaultSnap = await getDoc(vaultRef);
@@ -5238,6 +5256,7 @@
         // Expose crypto utils to the classic script (used in loadData + executeFirebaseSave)
         window._labsEncryptValue = encryptValue;
         window._labsDecryptValue = decryptValue;
+        window._labsAcquireKey   = acquireKey;
 
         // ─── Vault modal helpers ───────────────────────────────────────────────────
         function _setupVaultModal({ isFirstRun }) {
