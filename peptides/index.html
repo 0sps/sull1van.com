@@ -345,18 +345,47 @@
       border-color: transparent;
     }
 
-    /* Main Grid Arrays */
+    /* Main Grid Arrays & SPA Views */
     .dashboard-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+      width: 100%;
+    }
+
+    .app-view {
+      display: none;
+      animation: fadeIn 0.22s ease-out forwards;
       gap: 24px;
       align-items: start;
     }
 
-    .left-stack,
-    .right-stack {
+    .app-view.active {
       display: grid;
-      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 1100px) {
+      #view-dashboard.active {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+      }
+      
+      #view-protocols.active {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+      
+      #view-calendar.active {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+      }
+      
+      #view-analytics.active {
+        display: block;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Soft Pillowy Neumorphic Card Shells */
@@ -1590,7 +1619,8 @@
     </header>
 
     <main class="dashboard-grid">
-      <section class="left-stack">
+      <!-- VIEW: DASHBOARD -->
+      <div id="view-dashboard" class="app-view active">
         <div class="hero" id="dashboard">
           <div class="hero-content">
             <span class="panel-kicker" id="greeting">Good afternoon</span>
@@ -1648,7 +1678,10 @@
             </article>
           </div>
         </section>
+      </div>
 
+      <!-- VIEW: PROTOCOLS -->
+      <div id="view-protocols" class="app-view">
         <section class="panel" id="protocols" aria-labelledby="protocol-title">
           <div class="panel-header">
             <div>
@@ -1706,7 +1739,8 @@
                 <option value="50" selected>0.5 mL (50 U)</option>
                 <option value="100">1.0 mL (100 U)</option>
               </select>
-</div            <label class="field">
+            </label>
+            <label class="field">
               <span>Frequency</span>
               <select class="control" id="protocolFrequency">
                 <option value="Daily">Daily</option>
@@ -1765,9 +1799,10 @@
             </aside>
           </div>
         </section>
-      </section>
+      </div>
 
-      <aside class="right-stack">
+      <!-- VIEW: CALENDAR -->
+      <div id="view-calendar" class="app-view">
         <section class="panel" aria-labelledby="half-title">
           <div class="panel-header">
             <div>
@@ -1812,7 +1847,10 @@
             <div class="calendar-grid" id="calendarGrid" aria-label="May 2026 calendar"></div>
           </div>
         </section>
+      </div>
 
+      <!-- VIEW: ANALYTICS -->
+      <div id="view-analytics" class="app-view">
         <section class="panel" id="analytics" aria-labelledby="analytics-title">
           <div class="panel-header">
             <div>
@@ -1843,7 +1881,7 @@
             <!-- Swapped dynamically in JavaScript -->
           </div>
         </section>
-      </aside>
+      </div>
     </main>
 
     <p class="footnote">Prototype interface only. Health, peptide administration, and medicine decisions should always be made with qualified clinical guidance.</p>
@@ -3348,6 +3386,30 @@
     window.addQuickLab = addQuickLab;
     window.addQuickJournal = addQuickJournal;
 
+    function navigateToView(hash) {
+      const activeHash = hash || "#dashboard";
+      
+      $$(".bottom-nav .nav-item").forEach(item => {
+        const itemHash = item.getAttribute("href");
+        item.classList.toggle("active", itemHash === activeHash);
+      });
+      
+      $$(".app-view").forEach(view => {
+        const targetId = `view-${activeHash.replace('#', '')}`;
+        view.classList.toggle("active", view.id === targetId);
+      });
+      
+      if (activeHash === "#calendar") {
+        setTimeout(resizeCanvas, 50);
+      }
+      
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener("hashchange", () => {
+      navigateToView(window.location.hash);
+    });
+
     // App Initialization
     lockApp("Allowed account: sspsful@gmail.com");
     applyStateToControls();
@@ -3358,6 +3420,7 @@
     switchAnalyticsTab('logs');
     resizeCanvas();
     initFirebase();
+    navigateToView(window.location.hash);
     
     window.addEventListener("resize", resizeCanvas);
   </script>
