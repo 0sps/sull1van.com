@@ -1706,35 +1706,29 @@
                 <option value="50" selected>0.5 mL (50 U)</option>
                 <option value="100">1.0 mL (100 U)</option>
               </select>
-            </label>
-            <div class="dose-readout">
-              <span>Draw Up Volumetric Output</span>
-              <strong><span id="drawUnits">10.0</span> Units</strong>
-              <span id="drawNote">Exact calculated units from 0.500 mg target dose at 5.00 mg/mL concentration.</span>
-            </div>
-            <label class="field">
+</div            <label class="field">
               <span>Frequency</span>
-              <select class="control">
-                <option>Daily</option>
-                <option>Every Other Day</option>
-                <option>Weekly</option>
-                <option>Custom Cycle Days</option>
+              <select class="control" id="protocolFrequency">
+                <option value="Daily">Daily</option>
+                <option value="Every Other Day">Every Other Day</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Custom Cycle Days">Custom Cycle Days</option>
               </select>
             </label>
             <label class="field">
               <span>Time</span>
-              <input class="control" type="time" value="13:29">
+              <input class="control" type="time" id="protocolTime" value="13:29">
             </label>
             <label class="field">
               <span>Duration</span>
-              <select class="control">
-                <option>Indefinitely</option>
-                <option>Specific End Date</option>
+              <select class="control" id="protocolDuration">
+                <option value="Indefinitely">Indefinitely</option>
+                <option value="Specific End Date">Specific End Date</option>
               </select>
             </label>
             <label class="field">
               <span>Start Date</span>
-              <input class="control" type="date" value="2026-05-26">
+              <input class="control" type="date" id="protocolStartDate" value="2026-05-26">
             </label>
           </div>
         </section>
@@ -1906,7 +1900,7 @@
     let doseUnit = "mcg";
 
     // Application state and persistence
-    const STORAGE_KEY = "peptidekit-plus-state-v1";
+    const STORAGE_KEY = "peptidekit-plus-state-v2";
     const ALLOWED_EMAIL = "sspsful@gmail.com";
     const firebaseConfig = {
       apiKey: "AIzaSyD24HQUxr311mQ1McZObg39yXwxQhN7Wy8",
@@ -1928,25 +1922,84 @@
     let cloudSaveTimer = null;
     let applyingRemoteState = false;
 
+    // Clinical half-lives mapping (hours)
+    const HALF_LIVES = {
+      "Melanotan I": 1.5,
+      "BPC-157": 4.0,
+      "Semaglutide": 168.0, // 7 days
+      "Tirzepatide": 120.0, // 5 days
+    };
+
     function getDefaultState() {
+      const now = new Date();
+      const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
       return {
-        version: 1,
-        protocol: {
-          name: "Melanotan I",
-          peptideMg: 10,
-          waterMl: 2,
-          targetDose: 500,
-          doseUnit: "mcg",
-          syringeUnits: 50
-        },
+        version: 2,
+        protocols: [
+          {
+            name: "Melanotan I",
+            peptideMg: 10,
+            waterMl: 2,
+            targetDose: 500,
+            doseUnit: "mcg",
+            syringeUnits: 50,
+            frequency: "Daily",
+            time: "08:30",
+            startDate: now.toISOString().split('T')[0],
+            duration: "Indefinitely"
+          },
+          {
+            name: "BPC-157",
+            peptideMg: 5,
+            waterMl: 2,
+            targetDose: 250,
+            doseUnit: "mcg",
+            syringeUnits: 50,
+            frequency: "Daily",
+            time: "18:15",
+            startDate: now.toISOString().split('T')[0],
+            duration: "Indefinitely"
+          }
+        ],
+        activeProtocolName: "Melanotan I",
         selectedSite: "Left Outer Thigh",
         activeDosesRemaining: 2,
-        completedAgendaIds: ["agenda-3"],
+        completedAgendaIds: [],
         logs: [
-          { id: 1, type: "Dose", title: "Melanotan I injection", value: "500 mcg", time: "Today, 8:45 AM" },
-          { id: 2, type: "Weight", title: "Morning body mass", value: "84.2 kg", time: "Today, 7:00 AM" },
-          { id: 3, type: "Symptom", title: "Mild fatigue", value: "Severity: 2/10", time: "Yesterday, 4:30 PM" },
-          { id: 4, type: "Dose", title: "BPC-157 Recovery", value: "250 mcg", time: "Yesterday, 8:15 AM" }
+          { 
+            id: 1, 
+            type: "Dose", 
+            title: "Melanotan I injection", 
+            value: "500 mcg", 
+            time: "Today, 8:45 AM",
+            timestamp: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 45).toISOString(),
+            protocolName: "Melanotan I"
+          },
+          { 
+            id: 2, 
+            type: "Weight", 
+            title: "Morning body mass", 
+            value: "84.2 kg", 
+            time: "Today, 7:00 AM",
+            timestamp: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0).toISOString()
+          },
+          { 
+            id: 3, 
+            type: "Symptom", 
+            title: "Mild fatigue", 
+            value: "Severity: 2/10", 
+            time: "Yesterday, 4:30 PM",
+            timestamp: yesterday.toISOString()
+          },
+          { 
+            id: 4, 
+            type: "Dose", 
+            title: "BPC-157 Recovery injection", 
+            value: "250 mcg", 
+            time: "Yesterday, 8:15 AM",
+            timestamp: yesterday.toISOString(),
+            protocolName: "BPC-157"
+          }
         ],
         labs: [
           { id: 1, name: "IGF-1 Growth Factor", value: "240 ng/mL", percent: 78, status: "Optimal", color: "purple" },
@@ -1965,7 +2018,8 @@
 
     function mergeState(base, incoming = {}) {
       const next = { ...base, ...incoming };
-      next.protocol = { ...base.protocol, ...(incoming.protocol || {}) };
+      next.protocols = Array.isArray(incoming.protocols) ? incoming.protocols : base.protocols;
+      next.activeProtocolName = typeof incoming.activeProtocolName === "string" ? incoming.activeProtocolName : base.activeProtocolName;
       next.logs = Array.isArray(incoming.logs) ? incoming.logs : base.logs;
       next.labs = Array.isArray(incoming.labs) ? incoming.labs : base.labs;
       next.journal = Array.isArray(incoming.journal) ? incoming.journal : base.journal;
@@ -1986,9 +2040,9 @@
       }
     }
 
-    const appState = getDefaultState();
+    const appState = loadLocalState();
     activeDosesRemaining = appState.activeDosesRemaining;
-    doseUnit = appState.protocol.doseUnit || "mcg";
+    doseUnit = appState.protocols.find(p => p.name === appState.activeProtocolName)?.doseUnit || "mcg";
 
     function setAuthGateDetail(text, variant = "") {
       authGateDetail.textContent = text;
@@ -2026,7 +2080,7 @@
 
     function toFirebaseDocument(state, user) {
       return {
-        schemaVersion: 1,
+        schemaVersion: 2,
         ownerUid: user.uid,
         ownerEmail: user.email,
         updatedAt: firebaseApi.serverTimestamp(),
@@ -2036,7 +2090,8 @@
           activeDosesRemaining: state.activeDosesRemaining,
           selectedSite: state.selectedSite,
           completedAgendaIds: state.completedAgendaIds,
-          protocol: state.protocol,
+          protocols: state.protocols,
+          activeProtocolName: state.activeProtocolName,
           logs: state.logs,
           labs: state.labs,
           journal: state.journal
@@ -2184,6 +2239,35 @@
     const selectedSite = $("#selectedSite");
     const silhouetteWrapper = $("#silhouetteWrapper");
 
+    // Update injection site rotation spacing and history dynamically
+    function updateSiteHistory(siteName) {
+      const historyList = $(".history-list");
+      if (!historyList) return;
+
+      const siteLogs = appState.logs.filter(log => log.type === 'Dose' && log.title.toLowerCase().includes(siteName.toLowerCase()));
+      historyList.innerHTML = "";
+
+      if (siteLogs.length === 0) {
+        historyList.innerHTML = `
+          <li>Last used: Never</li>
+          <li>Rotation status: Ready (100%)</li>
+          <li>Local notes: Healthy site, ready for rotation</li>
+        `;
+        return;
+      }
+
+      const lastLog = siteLogs[0];
+      const lastTimeMs = lastLog.timestamp ? Date.parse(lastLog.timestamp) : Date.now() - 3 * 24 * 60 * 60 * 1000;
+      const daysElapsed = Math.round((Date.now() - lastTimeMs) / (24 * 60 * 60 * 1000));
+      const lastUsedDate = new Date(lastTimeMs).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+
+      historyList.innerHTML = `
+        <li>Last used: ${lastUsedDate}</li>
+        <li>Rotation spacing: ${daysElapsed} days ago</li>
+        <li>Local notes: Healthy site, ready for rotation</li>
+      `;
+    }
+
     // Dynamic injection site renderer
     function renderSites(view = "front") {
       silhouetteWrapper.innerHTML = silhouettes[view];
@@ -2204,6 +2288,7 @@
           node.classList.add("selected");
           selectedSite.textContent = label;
           appState.selectedSite = label;
+          updateSiteHistory(label);
           persistState();
         });
         bodyStage.appendChild(node);
@@ -2217,6 +2302,7 @@
         const defaultSite = button.dataset.view === "face" ? "Forehead" : button.dataset.view === "back" ? "Left Rear Deltoid" : "Left Outer Thigh";
         selectedSite.textContent = defaultSite;
         appState.selectedSite = defaultSite;
+        updateSiteHistory(defaultSite);
         persistState();
         renderSites(button.dataset.view);
       });
@@ -2247,30 +2333,43 @@
         drawNote.textContent = `Exact calculated units from ${targetMg.toFixed(3)} mg target dose at ${concentration.toFixed(2)} mg/mL concentration.`;
         drawNote.style.color = "";
       }
-
-      appState.protocol.peptideMg = mass;
-      appState.protocol.waterMl = water;
-      appState.protocol.targetDose = target;
-      appState.protocol.doseUnit = doseUnit;
-      appState.protocol.syringeUnits = maxUnits;
     }
 
-    [peptideMg, waterMl, targetDose, syringe, protocolNameInput].forEach((input) => {
-      input.addEventListener("input", () => {
-        updateDoseMath();
-        persistState();
-      });
-      input.addEventListener("change", () => {
-        updateDoseMath();
-        persistState();
-      });
+    function updateDoseMathAndSave() {
+      const name = protocolNameInput.value.trim() || "Melanotan I";
+      let p = appState.protocols.find(x => x.name.toLowerCase() === name.toLowerCase());
+      if (!p) {
+        p = { name };
+        appState.protocols.push(p);
+      }
+      p.peptideMg = asPositiveNumber(peptideMg.value, 10);
+      p.waterMl = asPositiveNumber(waterMl.value, 2);
+      p.targetDose = asPositiveNumber(targetDose.value, 500);
+      p.doseUnit = doseUnit;
+      p.syringeUnits = Number.parseFloat(syringe.value);
+      p.frequency = $("#protocolFrequency").value;
+      p.time = $("#protocolTime").value;
+      p.duration = $("#protocolDuration").value;
+      p.startDate = $("#protocolStartDate").value;
+      
+      appState.activeProtocolName = name;
+      updateDoseMath();
+      renderAgenda();
+      persistState();
+    }
+
+    [peptideMg, waterMl, targetDose, syringe, protocolNameInput, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
+      if (input) {
+        input.addEventListener("input", updateDoseMathAndSave);
+        input.addEventListener("change", updateDoseMathAndSave);
+      }
     });
 
     protocolNameInput.addEventListener("input", () => {
       const name = protocolNameInput.value.trim() || "Custom Peptide";
       cardProtocolName.textContent = name;
       moleculeAbbr.textContent = name.substring(0, 2).toUpperCase();
-      appState.protocol.name = name;
+      appState.activeProtocolName = name;
       persistState();
     });
 
@@ -2280,8 +2379,7 @@
         button.classList.add("active");
         doseUnit = button.dataset.doseUnit;
         targetDose.value = doseUnit === "mcg" ? "500" : "0.5";
-        updateDoseMath();
-        persistState();
+        updateDoseMathAndSave();
       });
     });
 
@@ -2292,6 +2390,19 @@
       waterMl.value = water.toFixed(1);
       targetDose.value = target;
       doseUnit = unit;
+      
+      const existing = appState.protocols.find(p => p.name.toLowerCase() === name.toLowerCase());
+      if (existing) {
+        $("#protocolFrequency").value = existing.frequency || "Daily";
+        $("#protocolTime").value = existing.time || "08:30";
+        $("#protocolDuration").value = existing.duration || "Indefinitely";
+        $("#protocolStartDate").value = existing.startDate || new Date().toISOString().split('T')[0];
+      } else {
+        $("#protocolFrequency").value = "Daily";
+        $("#protocolTime").value = "08:30";
+        $("#protocolDuration").value = "Indefinitely";
+        $("#protocolStartDate").value = new Date().toISOString().split('T')[0];
+      }
       
       $$("[data-dose-unit]").forEach((btn) => {
         if (btn.dataset.doseUnit === unit) {
@@ -2312,12 +2423,13 @@
         else btn.classList.remove("active");
       });
       
-      updateDoseMath();
-      persistState();
+      appState.activeProtocolName = name;
+      updateDoseMathAndSave();
+      drawChart();
       showToast(`Selected ${name} preset`);
     }
 
-    // Canvas charts plotting curves
+    // Canvas charts plotting curves dynamically
     const canvas = $("#pkCanvas");
     const ctx = canvas.getContext("2d");
     const scrubLabel = $("#scrubLabel");
@@ -2326,17 +2438,37 @@
     let scrubX = null;
 
     function compoundAt(hours) {
-      const halfLifeHours = 6;
-      const doses = [
-        { hour: 0, amount: 0.5 },
-        { hour: 24, amount: 0.25 },
-        { hour: 48, amount: 0.25 },
-        { hour: 96, amount: 0.5 },
-        { hour: 144, amount: 0.25 }
-      ];
+      const protocolName = appState.activeProtocolName || "Melanotan I";
+      const protocol = appState.protocols.find(p => p.name === protocolName);
+      if (!protocol) return 0;
+      
+      const halfLifeHours = HALF_LIVES[protocol.name] || 12.0;
+      const doses = appState.logs.filter(log => log.type === 'Dose' && (log.protocolName === protocol.name || log.title.toLowerCase().includes(protocol.name.toLowerCase())));
+      
+      const totalHours = chartWindowDays * 24;
+      const nowMs = Date.now();
+      const targetTimeMs = nowMs - (totalHours - hours) * 60 * 60 * 1000;
+      
       return doses.reduce((total, dose) => {
-        if (hours < dose.hour) return total;
-        return total + dose.amount * Math.pow(0.5, (hours - dose.hour) / halfLifeHours);
+        const doseTimeMs = dose.timestamp ? Date.parse(dose.timestamp) : (nowMs - 24 * 60 * 60 * 1000);
+        if (doseTimeMs > targetTimeMs) return total;
+        
+        const hoursElapsed = (targetTimeMs - doseTimeMs) / (60 * 60 * 1000);
+        let amountMg = 0.5;
+        if (typeof dose.value === 'string') {
+          const valNum = parseFloat(dose.value);
+          if (!isNaN(valNum)) {
+            if (dose.value.includes('mcg')) {
+              amountMg = valNum / 1000;
+            } else {
+              amountMg = valNum;
+            }
+          }
+        } else if (typeof dose.value === 'number') {
+          amountMg = dose.value;
+        }
+        
+        return total + amountMg * Math.pow(0.5, hoursElapsed / halfLifeHours);
       }, 0);
     }
 
@@ -2366,7 +2498,7 @@
       
       ctx.clearRect(0, 0, width, height);
 
-      // Light Editorial Grid Coordinate system
+      // Light grid lines
       ctx.lineWidth = 1;
       ctx.strokeStyle = "rgba(76, 54, 29, 0.05)";
       
@@ -2385,7 +2517,7 @@
       ctx.lineTo(width - pad.right, height - pad.bottom);
       ctx.stroke();
 
-      // Deep teal curve gradient path plotting
+      // Plot curve
       ctx.beginPath();
       points.forEach((point, index) => {
         const x = pad.left + (point.hours / totalHours) * (width - pad.left - pad.right);
@@ -2403,7 +2535,7 @@
       ctx.lineWidth = 3.5;
       ctx.stroke();
 
-      // Text coordinate overlays
+      // Overlays and labels
       ctx.fillStyle = mutedColor;
       ctx.font = "700 10px Space Grotesk";
       ctx.fillText(`0.0 ${chartUnit}`, 8, height - pad.bottom + 3);
@@ -2418,7 +2550,6 @@
       const unit = chartUnit;
       const y = height - pad.bottom - (amountMg / maxY) * (height - pad.top - pad.bottom);
 
-      // Coordinate dotted crosshairs
       ctx.setLineDash([3, 4]);
       ctx.strokeStyle = "rgba(15, 118, 110, 0.4)";
       ctx.beginPath();
@@ -2432,7 +2563,6 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Locator point bubble
       ctx.fillStyle = "#ffffff";
       ctx.strokeStyle = accentColor;
       ctx.lineWidth = 2;
@@ -2474,7 +2604,7 @@
       });
     });
 
-    // Calendar Matrix Grid
+    // Calendar Matrix Grid powered by real logs
     function renderCalendar() {
       const grid = $("#calendarGrid");
       grid.innerHTML = "";
@@ -2486,17 +2616,30 @@
         grid.appendChild(el);
       });
       
-      const firstDayOffset = 5;
-      const events = {
-        3: ["green"],
-        6: ["green", "blue"],
-        10: ["yellow"],
-        14: ["green"],
-        19: ["red"],
-        23: ["green"],
-        26: ["red", "blue"],
-        29: ["blue"]
-      };
+      const now = new Date();
+      // Render calendar for current month
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const firstDayOffset = firstDay.getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      
+      const events = {};
+      appState.logs.forEach(log => {
+        if (!log.timestamp) return;
+        const d = new Date(log.timestamp);
+        if (d.getFullYear() === year && d.getMonth() === month) {
+          const mDay = d.getDate();
+          if (!events[mDay]) events[mDay] = [];
+          
+          let color = "blue";
+          if (log.type === "Dose") color = "green";
+          if (log.type === "Weight") color = "red";
+          if (log.type === "Symptom") color = "yellow";
+          
+          if (!events[mDay].includes(color)) events[mDay].push(color);
+        }
+      });
       
       for (let i = 0; i < firstDayOffset; i += 1) {
         const blank = document.createElement("div");
@@ -2505,9 +2648,9 @@
         grid.appendChild(blank);
       }
       
-      for (let day = 1; day <= 31; day += 1) {
+      for (let day = 1; day <= totalDays; day += 1) {
         const cell = document.createElement("div");
-        cell.className = `day${day === 26 ? " today" : ""}`;
+        cell.className = `day${day === now.getDate() ? " today" : ""}`;
         cell.textContent = day;
         if (events[day]) {
           const dots = document.createElement("span");
@@ -2521,6 +2664,13 @@
         }
         grid.appendChild(cell);
       }
+
+      // Update Calendar Month text in header
+      const monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const calTitle = $("#calendar-title").parentElement.querySelector(".panel-kicker") || { textContent: "" };
+      calTitle.textContent = `${monthsList[month]} ${year}`;
+      const calTopStrong = $(".calendar-top strong");
+      if (calTopStrong) calTopStrong.textContent = `${monthsList[month]} ${year}`;
     }
 
     function setGreeting() {
@@ -2606,7 +2756,7 @@
       container.appendChild(form);
     }
 
-    // Populate dynamic tab layouts without interpolating user text into HTML.
+    // Populate dynamic tab layouts
     function renderAnalyticsContent() {
       const container = $("#analyticsContent");
       const widgets = $("#analyticsWidgets");
@@ -2693,7 +2843,7 @@
       }
     }
 
-    // Dynamic database entries appending
+    // Dynamic database logs insertion
     function addQuickLog() {
       const input = $("#quickLogVal");
       const text = input.value.trim();
@@ -2707,11 +2857,14 @@
           type: 'Weight',
           title: 'Morning body mass',
           value: `${wt.toFixed(1)} kg`,
-          time: 'Just now'
+          time: 'Just now',
+          timestamp: new Date().toISOString()
         });
-        appState.logs = appState.logs.slice(0, 8);
+        appState.logs = appState.logs.slice(0, 15);
         $("#weightVal").textContent = `${wt.toFixed(1)} kg`;
         persistState();
+        renderCalendar();
+        renderAgenda();
         showToast(`Weight updated to ${wt.toFixed(1)} kg`);
       } else {
         appState.logs.unshift({
@@ -2719,10 +2872,13 @@
           type: 'Symptom',
           title: text,
           value: 'Logged',
-          time: 'Just now'
+          time: 'Just now',
+          timestamp: new Date().toISOString()
         });
-        appState.logs = appState.logs.slice(0, 8);
+        appState.logs = appState.logs.slice(0, 15);
         persistState();
+        renderCalendar();
+        renderAgenda();
         showToast("Logged symptom entry");
       }
       input.value = "";
@@ -2774,34 +2930,33 @@
       showToast("Recovery journal entry added");
     }
 
-    // Local agenda complete check-offs
-    function completeAgendaItem(id) {
-      const card = $(`#${id}`);
-      if (!card || card.classList.contains("done")) return;
+    // Dynamic completed agenda dose injection
+    function completeAgendaItem(protocolName) {
+      const protocol = appState.protocols.find(p => p.name === protocolName);
+      if (!protocol) return;
       
-      card.classList.add("done");
-      const chip = card.querySelector(".status-chip");
-      chip.className = "status-chip success";
-      chip.textContent = "Done";
-      chip.onclick = null;
+      const concentration = protocol.peptideMg / protocol.waterMl;
+      const targetMg = protocol.doseUnit === 'mcg' ? protocol.targetDose / 1000 : protocol.targetDose;
+      const units = (targetMg / concentration) * 100;
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       
-      const icon = card.querySelector(".status-icon");
-      icon.className = "status-icon green";
-      icon.textContent = "✓";
+      appState.logs.unshift({
+        id: Date.now(),
+        type: "Dose",
+        title: `${protocol.name} injection`,
+        value: `${protocol.targetDose} ${protocol.doseUnit}`,
+        time: `Today, ${timeStr}`,
+        timestamp: new Date().toISOString(),
+        protocolName: protocol.name
+      });
       
-      if (activeDosesRemaining > 0) {
-        activeDosesRemaining--;
-        appState.activeDosesRemaining = activeDosesRemaining;
-        if (!appState.completedAgendaIds.includes(id)) appState.completedAgendaIds.push(id);
-        $("#dosesRemainingCounter").textContent = activeDosesRemaining;
-        if (activeDosesRemaining === 0) {
-          $("#dosesRemainingCounter").textContent = "✓";
-          $("#dosesRemainingCounter").parentElement.classList.add("success");
-          showToast("All doses completed for today!");
-        } else {
-          showToast("Logged injection successfully");
-        }
-      }
+      showToast(`Logged ${protocol.name} dose successfully`);
+      
+      renderAgenda();
+      renderCalendar();
+      renderAnalyticsContent();
+      drawChart();
+      updateSiteHistory(selectedSite.textContent);
       persistState();
     }
 
@@ -2810,12 +2965,20 @@
       closeQuickSheet();
       
       if (action === 'dose') {
-        const item = $("#agenda-2");
-        if (item && !item.classList.contains("done")) {
-          completeAgendaItem("agenda-2");
+        const nextPending = appState.protocols.find(p => {
+          const todayStart = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+          return !appState.logs.some(log => 
+            log.type === "Dose" && 
+            log.protocolName === p.name && 
+            log.timestamp && Date.parse(log.timestamp) >= todayStart
+          );
+        });
+
+        if (nextPending) {
+          completeAgendaItem(nextPending.name);
           window.location.hash = "#dashboard";
         } else {
-          showToast("All agenda items are already recorded");
+          showToast("All scheduled doses are already recorded");
         }
       } 
       else if (action === 'protocol') {
@@ -2841,53 +3004,162 @@
 
     function saveProtocol() {
       const name = protocolNameInput.value.trim() || "Melanotan I";
-      appState.protocol.name = name;
-      updateDoseMath();
-      persistState();
-      showToast(`Protocol "${name}" saved locally${firebaseUser ? " and queued for sync" : ""}.`);
+      updateDoseMathAndSave();
+      showToast(`Protocol "${name}" saved successfully`);
     }
 
     function logDoseAtCurrentSite() {
       const site = selectedSite.textContent;
-      showToast(`Injection site "${site}" successfully logged in site history.`);
-      
+      const protocolName = appState.activeProtocolName || "Melanotan I";
+      const protocol = appState.protocols.find(p => p.name === protocolName);
+      if (!protocol) return;
+
       appState.logs.unshift({
         id: Date.now(),
         type: 'Dose',
-        title: `Logged injection at ${site}`,
-        value: 'Success',
-        time: 'Just now'
+        title: `${protocol.name} injection at ${site}`,
+        value: `${protocol.targetDose} ${protocol.doseUnit}`,
+        time: 'Just now',
+        timestamp: new Date().toISOString(),
+        protocolName: protocol.name
       });
-      if (selectedAnalyticsTab === 'logs') {
-        renderAnalyticsContent();
-      }
-      appState.selectedSite = site;
+
+      showToast(`Injection site "${site}" successfully logged`);
+      renderCalendar();
+      renderAgenda();
+      renderAnalyticsContent();
+      drawChart();
+      updateSiteHistory(site);
       persistState();
     }
 
-    function applyCompletedAgendaState() {
-      appState.completedAgendaIds.forEach((id) => {
-        const card = $(`#${id}`);
-        if (!card) return;
-        card.classList.add("done");
-        card.classList.remove("overdue");
-        const chip = card.querySelector(".status-chip");
-        if (chip) {
-          chip.className = "status-chip success";
-          chip.textContent = "Done";
-          chip.onclick = null;
+    function renderAgenda() {
+      const agendaList = $("#agendaList");
+      if (!agendaList) return;
+      agendaList.replaceChildren();
+      
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      
+      let dosesRemaining = 0;
+      let dosesCompleted = 0;
+      
+      const hasWeightToday = appState.logs.some(log => log.type === "Weight" && log.timestamp && Date.parse(log.timestamp) >= todayStart);
+      
+      appState.protocols.forEach((protocol) => {
+        const doseLoggedToday = appState.logs.some(log => 
+          log.type === "Dose" && 
+          (log.protocolName === protocol.name || log.title.toLowerCase().includes(protocol.name.toLowerCase())) &&
+          log.timestamp && Date.parse(log.timestamp) >= todayStart
+        );
+        
+        const concentration = protocol.peptideMg / protocol.waterMl;
+        const targetMg = protocol.doseUnit === 'mcg' ? protocol.targetDose / 1000 : protocol.targetDose;
+        const units = (targetMg / concentration) * 100;
+        
+        let isOverdue = false;
+        if (!doseLoggedToday && protocol.time) {
+          const [hrs, mins] = protocol.time.split(':').map(Number);
+          const schedTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hrs, mins).getTime();
+          isOverdue = now.getTime() > schedTime;
         }
-        const icon = card.querySelector(".status-icon");
-        if (icon) {
-          icon.className = "status-icon green";
-          icon.textContent = "✓";
+        
+        const item = document.createElement("article");
+        item.className = `agenda-item${doseLoggedToday ? " done" : (isOverdue ? " overdue" : "")}`;
+        
+        const icon = document.createElement("div");
+        icon.className = `status-icon${doseLoggedToday ? " green" : (isOverdue ? " red" : " blue")}`;
+        icon.textContent = doseLoggedToday ? "✓" : (isOverdue ? "!" : "");
+        
+        const info = document.createElement("div");
+        info.innerHTML = `
+          <h3>${protocol.name}</h3>
+          <p>Draw ${units.toFixed(1)} U, ${appState.selectedSite || "abdomen"} rotation, scheduled ${protocol.time || "12:00"}</p>
+        `;
+        
+        const action = document.createElement("button");
+        action.type = "button";
+        if (doseLoggedToday) {
+          action.className = "status-chip success";
+          action.textContent = "Done";
+          action.disabled = true;
+        } else {
+          action.className = isOverdue ? "status-chip danger" : "status-chip";
+          action.textContent = isOverdue ? "Overdue" : "Log Dose";
+          action.addEventListener("click", () => completeAgendaItem(protocol.name));
+        }
+        
+        item.appendChild(icon);
+        item.appendChild(info);
+        item.appendChild(action);
+        agendaList.appendChild(item);
+        
+        if (!doseLoggedToday) {
+          dosesRemaining++;
+        } else {
+          dosesCompleted++;
         }
       });
-      $("#dosesRemainingCounter").textContent = activeDosesRemaining === 0 ? "✓" : activeDosesRemaining;
+      
+      const wtItem = document.createElement("article");
+      wtItem.className = `agenda-item${hasWeightToday ? " done" : ""}`;
+      
+      const wtIcon = document.createElement("div");
+      wtIcon.className = `status-icon${hasWeightToday ? " green" : " blue"}`;
+      wtIcon.textContent = hasWeightToday ? "✓" : "";
+      
+      const wtInfo = document.createElement("div");
+      wtInfo.innerHTML = `
+        <h3>Weight Update</h3>
+        <p>Morning trend logged with symptom check-in</p>
+      `;
+      
+      const wtAction = hasWeightToday ? 
+        createElement("span", { className: "status-chip success", text: "Done" }) :
+        createElement("button", { className: "status-chip", text: "Log Weight", type: "button" });
+      
+      if (!hasWeightToday) {
+        wtAction.addEventListener("click", () => {
+          window.location.hash = "#analytics";
+          switchAnalyticsTab('logs');
+          setTimeout(() => {
+            $("#quickLogVal").focus();
+          }, 150);
+        });
+      }
+      
+      wtItem.appendChild(wtIcon);
+      wtItem.appendChild(wtInfo);
+      wtItem.appendChild(wtAction);
+      agendaList.appendChild(wtItem);
+      
+      $("#dosesRemainingCounter").textContent = dosesRemaining === 0 ? "✓" : dosesRemaining;
+      if (dosesRemaining === 0) {
+        $("#dosesRemainingCounter").parentElement.classList.add("success");
+      } else {
+        $("#dosesRemainingCounter").parentElement.classList.remove("success");
+      }
+      
+      const activeProtocolsMetric = $(".metric-tile.highlight strong");
+      if (activeProtocolsMetric) {
+        activeProtocolsMetric.textContent = appState.protocols.length;
+      }
+      
+      const totalPlanned = appState.protocols.length + 1;
+      const totalDone = dosesCompleted + (hasWeightToday ? 1 : 0);
+      const adherenceMetric = $(".metric-tile.success strong");
+      if (adherenceMetric) {
+        adherenceMetric.textContent = `${Math.round((totalDone / totalPlanned) * 100)}%`;
+      }
+      
+      activeDosesRemaining = dosesRemaining;
     }
 
     function applyStateToControls() {
-      const protocol = appState.protocol;
+      const name = appState.activeProtocolName || "Melanotan I";
+      const protocol = appState.protocols.find(p => p.name === name) || appState.protocols[0];
+      if (!protocol) return;
+      
       protocolNameInput.value = protocol.name || "Melanotan I";
       cardProtocolName.textContent = protocolNameInput.value;
       moleculeAbbr.textContent = protocolNameInput.value.substring(0, 2).toUpperCase();
@@ -2896,14 +3168,27 @@
       targetDose.value = protocol.targetDose || 500;
       syringe.value = String(protocol.syringeUnits || 50);
       doseUnit = protocol.doseUnit || "mcg";
+      
+      $("#protocolFrequency").value = protocol.frequency || "Daily";
+      $("#protocolTime").value = protocol.time || "08:30";
+      $("#protocolDuration").value = protocol.duration || "Indefinitely";
+      $("#protocolStartDate").value = protocol.startDate || new Date().toISOString().split('T')[0];
+
       $$("[data-dose-unit]").forEach((button) => {
         button.classList.toggle("active", button.dataset.doseUnit === doseUnit);
       });
       $("#presetMass").textContent = Number(peptideMg.value).toFixed(1);
       $("#presetWater").textContent = Number(waterMl.value).toFixed(1);
       selectedSite.textContent = appState.selectedSite || "Left Outer Thigh";
-      activeDosesRemaining = Number.isFinite(appState.activeDosesRemaining) ? appState.activeDosesRemaining : 2;
-      applyCompletedAgendaState();
+      
+      const presetButtons = $$("#protocols .preset-selector .seg-button");
+      presetButtons.forEach(btn => {
+        if (btn.textContent === protocol.name) btn.classList.add("active");
+        else btn.classList.remove("active");
+      });
+      
+      renderAgenda();
+      updateSiteHistory(selectedSite.textContent);
     }
 
     function replaceAppState(incoming) {
@@ -2913,11 +3198,15 @@
       Object.keys(appState).forEach((key) => delete appState[key]);
       Object.assign(appState, next);
       activeDosesRemaining = appState.activeDosesRemaining;
-      doseUnit = appState.protocol.doseUnit || "mcg";
+      
+      const activeP = appState.protocols.find(p => p.name === appState.activeProtocolName) || appState.protocols[0];
+      doseUnit = activeP?.doseUnit || "mcg";
+      
       applyStateToControls();
       updateDoseMath();
       renderSites("front");
       renderAnalyticsContent();
+      drawChart();
       persistState({ cloud: false });
       applyingRemoteState = false;
     }
@@ -3012,7 +3301,8 @@
               setSyncStatus("Loaded Firebase data", "online");
               setAuthGateDetail("Firebase data loaded.");
             } else {
-              replaceAppState(getDefaultState());
+              const defaultState = getDefaultState();
+              replaceAppState(defaultState);
               await firebaseApi.setDoc(ref, toFirebaseDocument(appState, user), { merge: true });
               setSyncStatus("Created Firebase data", "online");
               setAuthGateDetail("Created your Firestore document.");
