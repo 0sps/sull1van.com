@@ -2315,6 +2315,11 @@
 
     function getFirebaseErrorLabel(error) {
       const code = error?.code || "unknown";
+      if (code === "auth/unauthorized-domain") return "Firebase auth domain not authorized";
+      if (code === "auth/popup-blocked") return "Google popup blocked";
+      if (code === "auth/popup-closed-by-user") return "Google sign-in was closed";
+      if (code === "auth/cancelled-popup-request") return "Google sign-in already open";
+      if (code === "auth/network-request-failed") return "Firebase auth network failed";
       if (code === "permission-denied") return "Firebase permission denied";
       if (code === "unavailable") return "Firebase unavailable";
       if (code === "unauthenticated") return "Firebase auth required";
@@ -3794,6 +3799,7 @@
 
         const firebaseApp = appModule.initializeApp(firebaseConfig);
         const auth = authModule.getAuth(firebaseApp);
+        await authModule.setPersistence(auth, authModule.browserLocalPersistence);
         let db;
         try {
           db = firestoreModule.initializeFirestore(firebaseApp, {
@@ -3806,12 +3812,15 @@
           db = firestoreModule.getFirestore(firebaseApp);
         }
         const provider = new authModule.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
 
         firebaseApi = {
           auth,
           db,
           provider,
           signInWithPopup: authModule.signInWithPopup,
+          signInWithRedirect: authModule.signInWithRedirect,
+          getRedirectResult: authModule.getRedirectResult,
           signOut: authModule.signOut,
           onAuthStateChanged: authModule.onAuthStateChanged,
           initializeFirestore: firestoreModule.initializeFirestore,
@@ -3827,7 +3836,7 @@
 
         async function handleGoogleAuthClick() {
           try {
-            if (firebaseUser) {
+            if (firebaseUser || auth.currentUser) {
               await firebaseApi.signOut(auth);
               return;
             }
@@ -3836,14 +3845,28 @@
             await firebaseApi.signInWithPopup(auth, provider);
           } catch (error) {
             console.warn("Google sign-in failed.", error);
-            setSyncStatus("Google sign-in failed", "warn");
-            setAuthGateDetail("Google sign-in failed. Try again from an authorized domain.", "warn");
+            const label = getFirebaseErrorLabel(error);
+            if (error?.code === "auth/popup-blocked") {
+              setAuthGateDetail("Popup blocked. Redirecting to Google sign-in...", "warn");
+              await firebaseApi.signInWithRedirect(auth, provider);
+              return;
+            }
+            setSyncStatus(label, "warn");
+            setAuthGateDetail(`${label}. Check Firebase Auth authorized domains if this persists.`, "warn");
             setAuthButtonsDisabled(false, "Sign in with Google");
           }
         }
 
         authButton.addEventListener("click", handleGoogleAuthClick);
         gateAuthButton.addEventListener("click", handleGoogleAuthClick);
+
+        firebaseApi.getRedirectResult(auth).catch((error) => {
+          console.warn("Google redirect sign-in failed.", error);
+          const label = getFirebaseErrorLabel(error);
+          setSyncStatus(label, "warn");
+          setAuthGateDetail(`${label}. Check Firebase Auth authorized domains if this persists.`, "warn");
+          setAuthButtonsDisabled(false, "Sign in with Google");
+        });
 
         firebaseApi.onAuthStateChanged(auth, async (user) => {
           if (!user) {
@@ -3892,6 +3915,9 @@
           } catch (error) {
             console.warn("Could not read Firebase state.", error);
             firebaseUser = null;
+            await firebaseApi.signOut(auth).catch((signOutError) => {
+              console.warn("Could not reset Firebase auth after Firestore failure.", signOutError);
+            });
             lockApp("Firestore query failed. Check database rules and try again.", "warn");
             setSyncStatus(getFirebaseErrorLabel(error), "warn");
             setAuthButtonsDisabled(false, "Sign in with Google");
