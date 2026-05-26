@@ -2399,11 +2399,12 @@
       const hasSubcollectionData = DATA_COLLECTIONS.some((name) => subcollectionState[name]?.length);
       if (!rootSnapshot.exists() && !hasSubcollectionData) return null;
       const legacyState = rootData?.app && !hasSubcollectionData ? rootData.app : {};
+      const collectionState = hasSubcollectionData ? subcollectionState : {};
 
       return sanitizeState({
         ...legacyState,
         ...settings,
-        ...subcollectionState
+        ...collectionState
       });
     }
 
