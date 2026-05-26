@@ -188,28 +188,21 @@
       align-items: center;
     }
 
-    .sync-panel {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
     .sync-chip {
       display: inline-flex;
-      min-height: 42px;
       align-items: center;
-      padding: 0 14px;
+      padding: 3px 8px;
       border: 1px solid rgba(76, 54, 29, 0.08);
       border-radius: 999px;
       background: rgba(255, 252, 247, 0.72);
       box-shadow: var(--nm-btn);
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
       white-space: nowrap;
+      margin-left: 10px;
+      vertical-align: middle;
     }
 
     .sync-chip.online {
@@ -244,7 +237,7 @@
     }
 
     body.auth-locked .app-shell,
-    body.auth-locked .bottom-nav,
+    body.auth-locked .top-nav,
     body.auth-locked .fab,
     body.auth-locked .quick-sheet,
     body.auth-locked .sheet-overlay {
@@ -1255,58 +1248,49 @@
       background: var(--red);
     }
 
-    /* Floating Off-White Navigation Dock */
-    .bottom-nav {
-      position: fixed;
-      right: 50%;
-      bottom: 24px;
-      z-index: 50;
+    /* Top Navigation Tray Sub-Menu sitting under the banner */
+    .top-nav {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      width: min(440px, calc(100% - 144px));
       padding: 6px;
-      border: 1px solid rgba(76, 54, 29, 0.12);
-      border-radius: 18px;
-      background: rgba(255, 252, 247, 0.85);
-      box-shadow: 0 16px 48px rgba(71, 48, 18, 0.08), var(--nm-raised);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      transform: translateX(50%);
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 252, 247, 0.8);
+      box-shadow: var(--nm-sunken);
     }
 
-    .nav-item {
+    .top-nav .nav-item {
       display: flex;
-      flex-direction: column;
-      gap: 3px;
-      place-items: center;
+      gap: 8px;
+      align-items: center;
       justify-content: center;
-      min-height: 52px;
-      border-radius: 12px;
+      min-height: 44px;
+      border-radius: var(--radius-sm);
       background: transparent;
       color: var(--muted);
-      font-size: 0.74rem;
+      font-size: 0.88rem;
       font-family: var(--font-ui);
       font-weight: 700;
-      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
 
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
+    .top-nav .nav-item svg {
+      width: 18px;
+      height: 18px;
     }
 
-    /* Glowing highlights on selection, NO scale hover transitions */
-    .nav-item:hover,
-    .nav-item.active {
+    .top-nav .nav-item:hover,
+    .top-nav .nav-item.active {
       color: var(--accent);
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.7);
     }
 
-    .nav-item.active {
-      box-shadow: var(--nm-active);
-      border: 1px solid rgba(76, 54, 29, 0.04);
-      background: rgba(15, 118, 110, 0.05);
+    .top-nav .nav-item.active {
+      box-shadow: var(--nm-btn);
+      border: 1px solid rgba(76, 54, 29, 0.05);
+      background: #ffffff;
     }
 
     /* Teal Glowing FAB Trigger */
@@ -1545,18 +1529,6 @@
         min-height: 420px;
       }
 
-      .bottom-nav {
-        left: 14px;
-        right: auto;
-        bottom: 14px;
-        width: calc(100% - 100px);
-        transform: none;
-      }
-
-      .nav-item {
-        min-height: 48px;
-        font-size: 0.68rem;
-      }
 
       .fab {
         right: 16px;
@@ -1600,23 +1572,36 @@
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">PK+</div>
         <div>
-          <h1>PeptideKit+</h1>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <h1 style="margin:0;">PeptideKit+</h1>
+            <span class="sync-chip" id="syncStatus">Local cache ready</span>
+          </div>
           <p>Protocol console for dose math, site rotation, logs, and half-life review.</p>
         </div>
       </div>
       <div class="top-actions" aria-label="Global actions">
-        <div class="sync-panel">
-          <span class="sync-chip" id="syncStatus">Local cache ready</span>
-          <button class="auth-button" id="authButton" type="button">Sign in with Google</button>
-        </div>
-        <button class="icon-button" type="button" title="Search" aria-label="Search">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--text)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
-        </button>
-        <button class="icon-button" type="button" title="Privacy lock" aria-label="Privacy lock">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--text)" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-        </button>
+        <button class="auth-button" id="authButton" type="button">Sign in with Google</button>
       </div>
     </header>
+
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a class="nav-item active" href="#dashboard" id="navDash">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12 12 3l9 9"></path><path d="M5 10v10h14V10"></path></svg>
+        <span>Dash</span>
+      </a>
+      <a class="nav-item" href="#protocols" id="navProtocols">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v6l-5 8a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 19 17l-5-8V3"></path></svg>
+        <span>Protocols</span>
+      </a>
+      <a class="nav-item" href="#calendar" id="navCalendar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+        <span>Calendar</span>
+      </a>
+      <a class="nav-item" href="#analytics" id="navAnalytics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 3 5-7"></path></svg>
+        <span>Analytics</span>
+      </a>
+    </nav>
 
     <main class="dashboard-grid">
       <!-- VIEW: DASHBOARD -->
@@ -1892,24 +1877,6 @@
     <p class="footnote">Prototype interface only. Health, peptide administration, and medicine decisions should always be made with qualified clinical guidance.</p>
   </div>
 
-  <nav class="bottom-nav" aria-label="Primary navigation">
-    <a class="nav-item active" href="#dashboard" id="navDash">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12 12 3l9 9"></path><path d="M5 10v10h14V10"></path></svg>
-      <span>Dash</span>
-    </a>
-    <a class="nav-item" href="#protocols" id="navProtocols">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v6l-5 8a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 19 17l-5-8V3"></path></svg>
-      <span>Protocols</span>
-    </a>
-    <a class="nav-item" href="#calendar" id="navCalendar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
-      <span>Calendar</span>
-    </a>
-    <a class="nav-item" href="#analytics" id="navAnalytics">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 3 5-7"></path></svg>
-      <span>Analytics</span>
-    </a>
-  </nav>
 
   <div class="quick-sheet" id="quickSheet" aria-hidden="true">
     <header>
@@ -3394,7 +3361,7 @@
     function navigateToView(hash) {
       const activeHash = hash || "#dashboard";
       
-      $$(".bottom-nav .nav-item").forEach(item => {
+      $$(".top-nav .nav-item").forEach(item => {
         const itemHash = item.getAttribute("href");
         item.classList.toggle("active", itemHash === activeHash);
       });
