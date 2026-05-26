@@ -720,6 +720,12 @@
       box-shadow: 0 6px 16px rgba(15, 118, 110, 0.3);
     }
 
+    .seg-button.danger {
+      color: #ffffff;
+      background: linear-gradient(135deg, #dc2626, #a33a2a);
+      box-shadow: 0 6px 16px rgba(220, 38, 38, 0.22);
+    }
+
     /* Digital Sepia Output Panel */
     .dose-readout {
       grid-column: 1 / -1;
@@ -1469,6 +1475,71 @@
       display: block;
     }
 
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(71, 48, 18, 0.22);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .modal-overlay.open {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(520px, 100%);
+      border: 1px solid rgba(76, 54, 29, 0.14);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 252, 247, 0.98);
+      box-shadow: 0 28px 80px rgba(71, 48, 18, 0.18), var(--nm-raised);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: grid;
+      gap: 4px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.46);
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .modal-body {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .modal-body textarea.control {
+      min-height: 116px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding: 0 22px 22px;
+    }
+
+    .modal-actions .seg-button,
+    .modal-actions .mini-action {
+      min-height: 40px;
+      padding-inline: 16px;
+    }
+
     /* Feedback pop toasts */
     .toast {
       position: fixed;
@@ -1598,6 +1669,19 @@
 <body class="auth-locked">
   <div class="toast" id="toastMessage">Logged successfully</div>
   <div class="sheet-overlay" id="sheetOverlay"></div>
+  <div class="modal-overlay" id="recordModal" aria-hidden="true">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="recordModalTitle">
+      <header class="modal-header">
+        <span class="panel-kicker" id="recordModalKicker">Edit Record</span>
+        <h3 id="recordModalTitle">Update entry</h3>
+      </header>
+      <form class="modal-body" id="recordModalForm"></form>
+      <div class="modal-actions">
+        <button class="mini-action" id="recordModalCancel" type="button">Cancel</button>
+        <button class="seg-button active" id="recordModalConfirm" type="button">Save</button>
+      </div>
+    </section>
+  </div>
 
   <section class="auth-gate" aria-labelledby="authGateTitle">
     <div class="auth-card">
@@ -1946,7 +2030,11 @@
     let doseUnit = "mcg";
 
     // Application state and persistence
-    const STORAGE_KEY = "peptidekit-plus-state-v2";
+    const STORAGE_KEY = "peptidekit-plus-state-v3";
+    const LEGACY_STORAGE_KEY = "peptidekit-plus-state-v2";
+    const SCHEMA_VERSION = 3;
+    const ROOT_COLLECTION = "peptides";
+    const DATA_COLLECTIONS = ["protocols", "logs", "labs", "journal"];
     const ALLOWED_EMAIL = "sspsful@gmail.com";
     const firebaseConfig = {
       apiKey: "AIzaSyD24HQUxr311mQ1McZObg39yXwxQhN7Wy8",
@@ -1981,9 +2069,10 @@
       const now = new Date();
       const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
       return {
-        version: 2,
+        version: SCHEMA_VERSION,
         protocols: [
           {
+            id: "protocol-melanotan-i",
             name: "Melanotan I",
             peptideMg: 10,
             waterMl: 2,
@@ -1996,6 +2085,7 @@
             duration: "Indefinitely"
           },
           {
+            id: "protocol-bpc-157",
             name: "BPC-157",
             peptideMg: 5,
             waterMl: 2,
@@ -2014,7 +2104,7 @@
         completedAgendaIds: [],
         logs: [
           { 
-            id: 1, 
+            id: "log-demo-melanotan", 
             type: "Dose", 
             title: "Melanotan I injection", 
             value: "500 mcg", 
@@ -2023,7 +2113,7 @@
             protocolName: "Melanotan I"
           },
           { 
-            id: 2, 
+            id: "log-demo-weight", 
             type: "Weight", 
             title: "Morning body mass", 
             value: "84.2 kg", 
@@ -2031,7 +2121,7 @@
             timestamp: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0).toISOString()
           },
           { 
-            id: 3, 
+            id: "log-demo-symptom", 
             type: "Symptom", 
             title: "Mild fatigue", 
             value: "Severity: 2/10", 
@@ -2039,7 +2129,7 @@
             timestamp: yesterday.toISOString()
           },
           { 
-            id: 4, 
+            id: "log-demo-bpc", 
             type: "Dose", 
             title: "BPC-157 Recovery injection", 
             value: "250 mcg", 
@@ -2049,22 +2139,120 @@
           }
         ],
         labs: [
-          { id: 1, name: "IGF-1 Growth Factor", value: "240 ng/mL", percent: 78, status: "Optimal", color: "purple" },
-          { id: 2, name: "Free Testosterone", value: "810 ng/dL", percent: 85, status: "Optimal", color: "green" },
-          { id: 3, name: "HbA1c Biomarker", value: "5.1%", percent: 45, status: "Healthy", color: "cyan" },
-          { id: 4, name: "C-Reactive Protein (CRP)", value: "0.6 mg/L", percent: 22, status: "Low Inflammation", color: "green" }
+          { id: "lab-demo-igf1", name: "IGF-1 Growth Factor", value: "240 ng/mL", percent: 78, status: "Optimal", color: "purple" },
+          { id: "lab-demo-testosterone", name: "Free Testosterone", value: "810 ng/dL", percent: 85, status: "Optimal", color: "green" },
+          { id: "lab-demo-hba1c", name: "HbA1c Biomarker", value: "5.1%", percent: 45, status: "Healthy", color: "cyan" },
+          { id: "lab-demo-crp", name: "C-Reactive Protein (CRP)", value: "0.6 mg/L", percent: 22, status: "Low Inflammation", color: "green" }
         ],
         journal: [
-          { id: 1, text: "Injection site Left Outer Thigh healed cleanly, no irritation. Slept 8.5 hours.", date: "May 26, 2026" },
-          { id: 2, text: "Melanotan load phase complete. Minor flushing noted 10 mins post injection.", date: "May 24, 2026" },
-          { id: 3, text: "Recovery feeling highly accelerated. Knees feel robust during morning cardio.", date: "May 23, 2026" }
+          { id: "journal-demo-1", text: "Injection site Left Outer Thigh healed cleanly, no irritation. Slept 8.5 hours.", date: "May 26, 2026" },
+          { id: "journal-demo-2", text: "Melanotan load phase complete. Minor flushing noted 10 mins post injection.", date: "May 24, 2026" },
+          { id: "journal-demo-3", text: "Recovery feeling highly accelerated. Knees feel robust during morning cardio.", date: "May 23, 2026" }
         ],
         updatedAt: new Date().toISOString()
       };
     }
 
+    function createId(prefix) {
+      const safePrefix = String(prefix || "record").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+      if (crypto?.randomUUID) return `${safePrefix}-${crypto.randomUUID()}`;
+      return `${safePrefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    function normalizeId(value, prefix, index = 0) {
+      if (typeof value === "string" && value.trim()) return value.trim();
+      if (Number.isFinite(value)) return `${prefix}-${value}`;
+      return createId(`${prefix}-${index}`);
+    }
+
+    function sanitizeNumber(value, fallback, min = 0) {
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) && parsed >= min ? parsed : fallback;
+    }
+
+    function sanitizeProtocol(protocol = {}, index = 0) {
+      const name = typeof protocol.name === "string" && protocol.name.trim() ? protocol.name.trim() : `Protocol ${index + 1}`;
+      return {
+        id: normalizeId(protocol.id, "protocol", index),
+        name,
+        peptideMg: sanitizeNumber(protocol.peptideMg, 10, 0.01),
+        waterMl: sanitizeNumber(protocol.waterMl, 2, 0.01),
+        targetDose: sanitizeNumber(protocol.targetDose, 500, 0.001),
+        doseUnit: protocol.doseUnit === "mg" ? "mg" : "mcg",
+        syringeUnits: [30, 50, 100].includes(Number(protocol.syringeUnits)) ? Number(protocol.syringeUnits) : 50,
+        frequency: typeof protocol.frequency === "string" ? protocol.frequency : "Daily",
+        time: typeof protocol.time === "string" ? protocol.time : "08:30",
+        startDate: typeof protocol.startDate === "string" ? protocol.startDate : new Date().toISOString().split("T")[0],
+        duration: typeof protocol.duration === "string" ? protocol.duration : "Indefinitely",
+        createdAt: protocol.createdAt || new Date().toISOString(),
+        updatedAt: protocol.updatedAt || new Date().toISOString()
+      };
+    }
+
+    function sanitizeLog(log = {}, index = 0) {
+      const type = ["Dose", "Weight", "Symptom"].includes(log.type) ? log.type : "Symptom";
+      return {
+        id: normalizeId(log.id, "log", index),
+        type,
+        title: typeof log.title === "string" && log.title.trim() ? log.title.trim() : `${type} entry`,
+        value: typeof log.value === "string" || typeof log.value === "number" ? String(log.value) : "Logged",
+        time: typeof log.time === "string" ? log.time : "Just now",
+        timestamp: log.timestamp && !Number.isNaN(Date.parse(log.timestamp)) ? new Date(log.timestamp).toISOString() : new Date().toISOString(),
+        protocolName: typeof log.protocolName === "string" ? log.protocolName : "",
+        createdAt: log.createdAt || log.timestamp || new Date().toISOString(),
+        updatedAt: log.updatedAt || log.timestamp || new Date().toISOString()
+      };
+    }
+
+    function sanitizeLab(lab = {}, index = 0) {
+      return {
+        id: normalizeId(lab.id, "lab", index),
+        name: typeof lab.name === "string" && lab.name.trim() ? lab.name.trim() : `Biomarker ${index + 1}`,
+        value: typeof lab.value === "string" || typeof lab.value === "number" ? String(lab.value) : "--",
+        percent: Math.max(0, Math.min(100, sanitizeNumber(lab.percent, 50, 0))),
+        status: typeof lab.status === "string" && lab.status.trim() ? lab.status.trim() : "Tracked",
+        color: typeof lab.color === "string" ? lab.color : "cyan",
+        createdAt: lab.createdAt || new Date().toISOString(),
+        updatedAt: lab.updatedAt || new Date().toISOString()
+      };
+    }
+
+    function sanitizeJournal(entry = {}, index = 0) {
+      return {
+        id: normalizeId(entry.id, "journal", index),
+        text: typeof entry.text === "string" && entry.text.trim() ? entry.text.trim() : "Journal entry",
+        date: typeof entry.date === "string" && entry.date.trim() ? entry.date.trim() : new Date().toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" }),
+        createdAt: entry.createdAt || new Date().toISOString(),
+        updatedAt: entry.updatedAt || new Date().toISOString()
+      };
+    }
+
+    function sanitizeState(incoming = {}) {
+      const base = getDefaultState();
+      const protocols = Array.isArray(incoming.protocols) && incoming.protocols.length
+        ? incoming.protocols.map(sanitizeProtocol)
+        : base.protocols;
+      const activeProtocolName = protocols.some((protocol) => protocol.name === incoming.activeProtocolName)
+        ? incoming.activeProtocolName
+        : protocols[0]?.name || base.activeProtocolName;
+      return {
+        ...base,
+        ...incoming,
+        version: SCHEMA_VERSION,
+        protocols,
+        activeProtocolName,
+        selectedSite: typeof incoming.selectedSite === "string" ? incoming.selectedSite : base.selectedSite,
+        activeDosesRemaining: Number.isFinite(incoming.activeDosesRemaining) ? incoming.activeDosesRemaining : base.activeDosesRemaining,
+        completedAgendaIds: Array.isArray(incoming.completedAgendaIds) ? incoming.completedAgendaIds.map(String) : [],
+        logs: Array.isArray(incoming.logs) ? incoming.logs.map(sanitizeLog) : base.logs,
+        labs: Array.isArray(incoming.labs) ? incoming.labs.map(sanitizeLab) : base.labs,
+        journal: Array.isArray(incoming.journal) ? incoming.journal.map(sanitizeJournal) : base.journal,
+        updatedAt: incoming.updatedAt && !Number.isNaN(Date.parse(incoming.updatedAt)) ? incoming.updatedAt : new Date().toISOString()
+      };
+    }
+
     function mergeState(base, incoming = {}) {
-      const next = { ...base, ...incoming };
+      const next = sanitizeState({ ...base, ...incoming });
       next.protocols = Array.isArray(incoming.protocols) ? incoming.protocols : base.protocols;
       next.activeProtocolName = typeof incoming.activeProtocolName === "string" ? incoming.activeProtocolName : base.activeProtocolName;
       next.logs = Array.isArray(incoming.logs) ? incoming.logs : base.logs;
@@ -2073,14 +2261,14 @@
       next.completedAgendaIds = Array.isArray(incoming.completedAgendaIds) ? incoming.completedAgendaIds : base.completedAgendaIds;
       next.activeDosesRemaining = Number.isFinite(incoming.activeDosesRemaining) ? incoming.activeDosesRemaining : base.activeDosesRemaining;
       next.selectedSite = typeof incoming.selectedSite === "string" ? incoming.selectedSite : base.selectedSite;
-      return next;
+      return sanitizeState(next);
     }
 
     function loadLocalState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
         if (!raw) return getDefaultState();
-        return mergeState(getDefaultState(), JSON.parse(raw));
+        return sanitizeState(mergeState(getDefaultState(), JSON.parse(raw)));
       } catch (error) {
         console.warn("Could not load local PeptideKit state.", error);
         return getDefaultState();
@@ -2134,33 +2322,128 @@
       return `Firebase error: ${code}`;
     }
 
-    function toFirebaseDocument(state, user) {
+    function toRootFirebaseDocument(state, user) {
       return {
-        schemaVersion: 2,
+        schemaVersion: SCHEMA_VERSION,
         ownerUid: user.uid,
         ownerEmail: user.email,
         updatedAt: firebaseApi.serverTimestamp(),
-        app: {
-          version: state.version,
-          updatedAt: state.updatedAt,
-          activeDosesRemaining: state.activeDosesRemaining,
-          selectedSite: state.selectedSite,
-          completedAgendaIds: state.completedAgendaIds,
-          protocols: state.protocols,
-          activeProtocolName: state.activeProtocolName,
-          logs: state.logs,
-          labs: state.labs,
-          journal: state.journal
-        }
+        app: getSettingsSnapshot(state)
       };
+    }
+
+    function getSettingsSnapshot(state) {
+      return {
+        version: SCHEMA_VERSION,
+        updatedAt: state.updatedAt,
+        activeDosesRemaining: state.activeDosesRemaining,
+        selectedSite: state.selectedSite,
+        completedAgendaIds: state.completedAgendaIds,
+        activeProtocolName: state.activeProtocolName
+      };
+    }
+
+    function toCollectionFirebaseDocument(record, user) {
+      const now = new Date().toISOString();
+      return {
+        ...record,
+        schemaVersion: SCHEMA_VERSION,
+        ownerUid: user.uid,
+        ownerEmail: user.email,
+        updatedAt: record.updatedAt || now,
+        createdAt: record.createdAt || now
+      };
+    }
+
+    function fromCollectionFirebaseDocument(snapshot) {
+      const data = snapshot.data();
+      const { schemaVersion, ownerUid, ownerEmail, ...record } = data || {};
+      return { ...record, id: data?.id || snapshot.id };
     }
 
     function stateFromFirebaseDocument(data) {
       if (!data) return null;
-      if (data.schemaVersion === 2 && data.app) return data.app;
+      if (data.schemaVersion === SCHEMA_VERSION && data.app) return data.app;
       if (data.app) return data.app;
       if (data.state) return data.state;
       return null;
+    }
+
+    function getUserDocRef(user = firebaseUser) {
+      if (!firebaseApi || !user) return null;
+      return firebaseApi.doc(firebaseApi.db, ROOT_COLLECTION, user.uid);
+    }
+
+    function getCollectionRef(name, user = firebaseUser) {
+      if (!firebaseApi || !user) return null;
+      return firebaseApi.collection(firebaseApi.db, ROOT_COLLECTION, user.uid, name);
+    }
+
+    function getRecordDocRef(name, id, user = firebaseUser) {
+      if (!firebaseApi || !user || !id) return null;
+      return firebaseApi.doc(firebaseApi.db, ROOT_COLLECTION, user.uid, name, String(id));
+    }
+
+    async function loadCloudState(user) {
+      const rootRef = getUserDocRef(user);
+      const rootSnapshot = await firebaseApi.getDoc(rootRef);
+      const rootData = rootSnapshot.exists() ? rootSnapshot.data() : null;
+      const settings = stateFromFirebaseDocument(rootData) || {};
+
+      const collectionEntries = await Promise.all(DATA_COLLECTIONS.map(async (name) => {
+        const querySnapshot = await firebaseApi.getDocs(getCollectionRef(name, user));
+        return [name, querySnapshot.docs.map(fromCollectionFirebaseDocument)];
+      }));
+
+      const subcollectionState = Object.fromEntries(collectionEntries);
+      const hasSubcollectionData = DATA_COLLECTIONS.some((name) => subcollectionState[name]?.length);
+      if (!rootSnapshot.exists() && !hasSubcollectionData) return null;
+      const legacyState = rootData?.app && !hasSubcollectionData ? rootData.app : {};
+
+      return sanitizeState({
+        ...legacyState,
+        ...settings,
+        ...subcollectionState
+      });
+    }
+
+    async function saveCloudStateNow() {
+      if (!firebaseApi || !firebaseUser) return;
+      const state = sanitizeState(appState);
+      Object.assign(appState, state);
+      const rootRef = getUserDocRef();
+      const operations = [
+        { type: "set", ref: rootRef, data: toRootFirebaseDocument(state, firebaseUser) }
+      ];
+
+      for (const name of DATA_COLLECTIONS) {
+        const records = state[name] || [];
+        const existing = await firebaseApi.getDocs(getCollectionRef(name));
+        const activeIds = new Set(records.map((record) => String(record.id)));
+        records.forEach((record) => {
+          operations.push({
+            type: "set",
+            ref: getRecordDocRef(name, record.id),
+            data: toCollectionFirebaseDocument(record, firebaseUser)
+          });
+        });
+        existing.docs.forEach((docSnapshot) => {
+          if (!activeIds.has(docSnapshot.id)) operations.push({ type: "delete", ref: docSnapshot.ref });
+        });
+      }
+
+      for (let index = 0; index < operations.length; index += 450) {
+        const batch = firebaseApi.writeBatch(firebaseApi.db);
+        operations.slice(index, index + 450).forEach((operation) => {
+          if (operation.type === "delete") {
+            batch.delete(operation.ref);
+          } else {
+            batch.set(operation.ref, operation.data);
+          }
+        });
+        await batch.commit();
+      }
+      setSyncStatus("Synced to Firebase", "online");
     }
 
     function persistState({ cloud = true } = {}) {
@@ -2181,9 +2464,7 @@
       clearTimeout(cloudSaveTimer);
       cloudSaveTimer = setTimeout(async () => {
         try {
-          const ref = firebaseApi.doc(firebaseApi.db, "peptides", firebaseUser.uid);
-          await firebaseApi.setDoc(ref, toFirebaseDocument(appState, firebaseUser), { merge: true });
-          setSyncStatus("Synced to Firebase", "online");
+          await saveCloudStateNow();
         } catch (error) {
           console.warn("Firebase sync failed.", error);
           setSyncStatus(getFirebaseErrorLabel(error), "warn");
@@ -2395,7 +2676,7 @@
       const name = protocolNameInput.value.trim() || "Melanotan I";
       let p = appState.protocols.find(x => x.name.toLowerCase() === name.toLowerCase());
       if (!p) {
-        p = { name };
+        p = { id: createId("protocol"), name, createdAt: new Date().toISOString() };
         appState.protocols.push(p);
       }
       p.peptideMg = asPositiveNumber(peptideMg.value, 10);
@@ -2407,6 +2688,7 @@
       p.time = $("#protocolTime").value;
       p.duration = $("#protocolDuration").value;
       p.startDate = $("#protocolStartDate").value;
+      p.updatedAt = new Date().toISOString();
       
       appState.activeProtocolName = name;
       updateDoseMath();
@@ -2774,6 +3056,79 @@
       }, 3000);
     }
 
+    const recordModal = $("#recordModal");
+    const recordModalKicker = $("#recordModalKicker");
+    const recordModalTitle = $("#recordModalTitle");
+    const recordModalForm = $("#recordModalForm");
+    const recordModalCancel = $("#recordModalCancel");
+    const recordModalConfirm = $("#recordModalConfirm");
+    let activeModalResolve = null;
+
+    function closeRecordModal(result = null) {
+      recordModal.classList.remove("open");
+      recordModal.setAttribute("aria-hidden", "true");
+      recordModalForm.replaceChildren();
+      if (activeModalResolve) {
+        activeModalResolve(result);
+        activeModalResolve = null;
+      }
+    }
+
+    function openRecordModal({ kicker = "Edit Record", title, confirmText = "Save", danger = false, fields = [] }) {
+      return new Promise((resolve) => {
+        activeModalResolve = resolve;
+        recordModalKicker.textContent = kicker;
+        recordModalTitle.textContent = title;
+        recordModalConfirm.textContent = confirmText;
+        recordModalConfirm.classList.toggle("danger", danger);
+        recordModalForm.replaceChildren();
+
+        fields.forEach((field) => {
+          const label = createElement("label", { className: "field" });
+          label.appendChild(createElement("span", { text: field.label }));
+          const input = createElement(field.multiline ? "textarea" : "input", {
+            className: "control",
+            id: `modal-field-${field.name}`,
+            type: field.type || "text",
+            value: field.value || "",
+            placeholder: field.placeholder || ""
+          });
+          input.dataset.fieldName = field.name;
+          label.appendChild(input);
+          recordModalForm.appendChild(label);
+        });
+
+        recordModal.classList.add("open");
+        recordModal.setAttribute("aria-hidden", "false");
+        const firstInput = $(".control", recordModalForm);
+        if (firstInput) setTimeout(() => firstInput.focus(), 20);
+      });
+    }
+
+    function getModalValues() {
+      return $$(".control", recordModalForm).reduce((values, input) => {
+        values[input.dataset.fieldName] = input.value.trim();
+        return values;
+      }, {});
+    }
+
+    async function confirmDelete(title, detail) {
+      const result = await openRecordModal({
+        kicker: "Confirm Delete",
+        title,
+        confirmText: "Delete",
+        danger: true,
+        fields: [{ name: "detail", label: "This cannot be undone", value: detail, multiline: true }]
+      });
+      return result != null;
+    }
+
+    recordModalCancel.addEventListener("click", () => closeRecordModal(null));
+    recordModalConfirm.addEventListener("click", () => closeRecordModal(getModalValues()));
+    recordModal.addEventListener("click", (event) => {
+      if (event.target === recordModal) closeRecordModal(null);
+    });
+
     // Switch tab panel display in Analytics
     function switchAnalyticsTab(tabName) {
       selectedAnalyticsTab = tabName;
@@ -2932,14 +3287,15 @@
       if (isWeight) {
         const wt = parseFloat(text);
         appState.logs.unshift({
-          id: Date.now(),
+          id: createId("log"),
           type: 'Weight',
           title: 'Morning body mass',
           value: `${wt.toFixed(1)} kg`,
           time: 'Just now',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         });
-        appState.logs = appState.logs.slice(0, 15);
         $("#weightVal").textContent = `${wt.toFixed(1)} kg`;
         persistState();
         renderCalendar();
@@ -2947,14 +3303,15 @@
         showToast(`Weight updated to ${wt.toFixed(1)} kg`);
       } else {
         appState.logs.unshift({
-          id: Date.now(),
+          id: createId("log"),
           type: 'Symptom',
           title: text,
           value: 'Logged',
           time: 'Just now',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         });
-        appState.logs = appState.logs.slice(0, 15);
         persistState();
         renderCalendar();
         renderAgenda();
@@ -2973,12 +3330,14 @@
       if (!name || !val) return;
       
       appState.labs.unshift({
-        id: Date.now(),
+        id: createId("lab"),
         name: name,
         value: val,
         percent: Math.floor(Math.random() * 40) + 50,
         status: 'Optimal',
-        color: 'cyan'
+        color: 'cyan',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
       
       nameInput.value = "";
@@ -2998,9 +3357,11 @@
       const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
       
       appState.journal.unshift({
-        id: Date.now(),
+        id: createId("journal"),
         text: text,
-        date: dateStr
+        date: dateStr,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
       
       input.value = "";
@@ -3009,15 +3370,22 @@
       showToast("Recovery journal entry added");
     }
 
-    function editLog(id) {
+    async function editLog(id) {
       const log = appState.logs.find((entry) => entry.id === id);
       if (!log) return;
-      const title = prompt("Edit log title", log.title);
-      if (title == null) return;
-      const value = prompt("Edit log value", log.value);
-      if (value == null) return;
-      log.title = title.trim() || log.title;
-      log.value = value.trim() || log.value;
+      const values = await openRecordModal({
+        kicker: `${log.type} Log`,
+        title: "Edit log entry",
+        fields: [
+          { name: "title", label: "Title", value: log.title },
+          { name: "value", label: "Value", value: log.value },
+          { name: "time", label: "Display time", value: log.time }
+        ]
+      });
+      if (!values) return;
+      log.title = values.title || log.title;
+      log.value = values.value || log.value;
+      log.time = values.time || log.time;
       log.updatedAt = new Date().toISOString();
       renderAnalyticsContent();
       renderAgenda();
@@ -3027,9 +3395,11 @@
       showToast("Log updated");
     }
 
-    function deleteLog(id) {
+    async function deleteLog(id) {
       const log = appState.logs.find((entry) => entry.id === id);
-      if (!log || !confirm(`Delete "${log.title}"?`)) return;
+      if (!log) return;
+      const confirmed = await confirmDelete("Delete log entry?", log.title);
+      if (!confirmed) return;
       appState.logs = appState.logs.filter((entry) => entry.id !== id);
       renderAnalyticsContent();
       renderAgenda();
@@ -3040,55 +3410,73 @@
       showToast("Log deleted");
     }
 
-    function editLab(id) {
+    async function editLab(id) {
       const lab = appState.labs.find((entry) => entry.id === id);
       if (!lab) return;
-      const name = prompt("Edit biomarker name", lab.name);
-      if (name == null) return;
-      const value = prompt("Edit biomarker value", lab.value);
-      if (value == null) return;
-      const status = prompt("Edit biomarker status", lab.status);
-      if (status == null) return;
-      lab.name = name.trim() || lab.name;
-      lab.value = value.trim() || lab.value;
-      lab.status = status.trim() || lab.status;
+      const values = await openRecordModal({
+        kicker: "Biomarker",
+        title: "Edit lab marker",
+        fields: [
+          { name: "name", label: "Biomarker name", value: lab.name },
+          { name: "value", label: "Value", value: lab.value },
+          { name: "status", label: "Status", value: lab.status },
+          { name: "percent", label: "Percentile", value: String(lab.percent || 50), type: "number" }
+        ]
+      });
+      if (!values) return;
+      lab.name = values.name || lab.name;
+      lab.value = values.value || lab.value;
+      lab.status = values.status || lab.status;
+      lab.percent = Math.max(0, Math.min(100, sanitizeNumber(values.percent, lab.percent || 50, 0)));
       lab.updatedAt = new Date().toISOString();
       renderAnalyticsContent();
       persistState();
       showToast("Lab updated");
     }
 
-    function deleteLab(id) {
+    async function deleteLab(id) {
       const lab = appState.labs.find((entry) => entry.id === id);
-      if (!lab || !confirm(`Delete "${lab.name}"?`)) return;
+      if (!lab) return;
+      const confirmed = await confirmDelete("Delete lab marker?", lab.name);
+      if (!confirmed) return;
       appState.labs = appState.labs.filter((entry) => entry.id !== id);
       renderAnalyticsContent();
       persistState();
       showToast("Lab deleted");
     }
 
-    function editJournal(id) {
+    async function editJournal(id) {
       const entry = appState.journal.find((item) => item.id === id);
       if (!entry) return;
-      const text = prompt("Edit journal entry", entry.text);
-      if (text == null) return;
-      entry.text = text.trim() || entry.text;
+      const values = await openRecordModal({
+        kicker: "Journal",
+        title: "Edit journal entry",
+        fields: [
+          { name: "date", label: "Date", value: entry.date },
+          { name: "text", label: "Entry", value: entry.text, multiline: true }
+        ]
+      });
+      if (!values) return;
+      entry.date = values.date || entry.date;
+      entry.text = values.text || entry.text;
       entry.updatedAt = new Date().toISOString();
       renderAnalyticsContent();
       persistState();
       showToast("Journal entry updated");
     }
 
-    function deleteJournal(id) {
+    async function deleteJournal(id) {
       const entry = appState.journal.find((item) => item.id === id);
-      if (!entry || !confirm("Delete this journal entry?")) return;
+      if (!entry) return;
+      const confirmed = await confirmDelete("Delete journal entry?", entry.text);
+      if (!confirmed) return;
       appState.journal = appState.journal.filter((item) => item.id !== id);
       renderAnalyticsContent();
       persistState();
       showToast("Journal entry deleted");
     }
 
-    function deleteActiveProtocol() {
+    async function deleteActiveProtocol() {
       const name = appState.activeProtocolName || protocolNameInput.value.trim();
       const protocol = appState.protocols.find((entry) => entry.name === name);
       if (!protocol) return;
@@ -3096,7 +3484,8 @@
         showToast("Keep at least one protocol in the vault.");
         return;
       }
-      if (!confirm(`Delete protocol "${protocol.name}"? Existing logs will stay in history.`)) return;
+      const confirmed = await confirmDelete("Delete protocol?", `${protocol.name}. Existing logs will stay in history.`);
+      if (!confirmed) return;
       appState.protocols = appState.protocols.filter((entry) => entry.name !== protocol.name);
       appState.activeProtocolName = appState.protocols[0].name;
       applyStateToControls();
@@ -3118,13 +3507,15 @@
       const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       
       appState.logs.unshift({
-        id: Date.now(),
+        id: createId("log"),
         type: "Dose",
         title: `${protocol.name} injection`,
         value: `${protocol.targetDose} ${protocol.doseUnit}`,
         time: `Today, ${timeStr}`,
         timestamp: new Date().toISOString(),
-        protocolName: protocol.name
+        protocolName: protocol.name,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
       
       showToast(`Logged ${protocol.name} dose successfully`);
@@ -3192,13 +3583,15 @@
       if (!protocol) return;
 
       appState.logs.unshift({
-        id: Date.now(),
+        id: createId("log"),
         type: 'Dose',
         title: `${protocol.name} injection at ${site}`,
         value: `${protocol.targetDose} ${protocol.doseUnit}`,
         time: 'Just now',
         timestamp: new Date().toISOString(),
-        protocolName: protocol.name
+        protocolName: protocol.name,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
 
       showToast(`Injection site "${site}" successfully logged`);
@@ -3422,8 +3815,11 @@
           onAuthStateChanged: authModule.onAuthStateChanged,
           initializeFirestore: firestoreModule.initializeFirestore,
           doc: firestoreModule.doc,
+          collection: firestoreModule.collection,
           getDoc: firestoreModule.getDoc,
+          getDocs: firestoreModule.getDocs,
           setDoc: firestoreModule.setDoc,
+          writeBatch: firestoreModule.writeBatch,
           onSnapshot: firestoreModule.onSnapshot,
           serverTimestamp: firestoreModule.serverTimestamp
         };
@@ -3476,18 +3872,17 @@
           setAuthGateDetail("Signed in. Loading Firestore data...");
           setSyncStatus("Loading Firebase data", "online");
 
-          const ref = firebaseApi.doc(db, "peptides", user.uid);
+          const ref = getUserDocRef(user);
           try {
-            const snapshot = await firebaseApi.getDoc(ref);
-            const remoteState = snapshot.exists() ? stateFromFirebaseDocument(snapshot.data()) : null;
-            if (remoteState) {
+            const remoteState = await loadCloudState(user);
+            if (remoteState?.updatedAt) {
               replaceAppState(remoteState);
               setSyncStatus("Loaded Firebase data", "online");
               setAuthGateDetail("Firebase data loaded.");
             } else {
               const defaultState = getDefaultState();
               replaceAppState(defaultState);
-              await firebaseApi.setDoc(ref, toFirebaseDocument(appState, user), { merge: true });
+              await saveCloudStateNow();
               setSyncStatus("Created Firebase data", "online");
               setAuthGateDetail("Created your Firestore document.");
             }
@@ -3506,10 +3901,16 @@
           unsubscribeCloudState = firebaseApi.onSnapshot(ref, (snapshot) => {
             if (!snapshot.exists() || applyingRemoteState) return;
             const remoteState = stateFromFirebaseDocument(snapshot.data());
-            if (remoteState?.updatedAt && remoteState.updatedAt > appState.updatedAt) {
-              replaceAppState(remoteState);
-              setSyncStatus("Firebase update received", "online");
-            }
+            if (!remoteState?.updatedAt || remoteState.updatedAt <= appState.updatedAt) return;
+            loadCloudState(user).then((freshState) => {
+              if (freshState?.updatedAt && freshState.updatedAt > appState.updatedAt) {
+                replaceAppState(freshState);
+                setSyncStatus("Firebase update received", "online");
+              }
+            }).catch((error) => {
+              console.warn("Firebase refresh failed.", error);
+              setSyncStatus(getFirebaseErrorLabel(error), "warn");
+            });
           }, (error) => {
             console.warn("Firebase subscription failed.", error);
             setSyncStatus(getFirebaseErrorLabel(error), "warn");
