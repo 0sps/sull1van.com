@@ -1086,6 +1086,40 @@
       text-transform: uppercase;
     }
 
+    .record-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-action {
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 1px solid rgba(76, 54, 29, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 252, 247, 0.78);
+      box-shadow: var(--nm-btn);
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 700;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .mini-action:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(15, 118, 110, 0.2);
+    }
+
+    .mini-action.danger:hover {
+      color: var(--red);
+      border-color: rgba(220, 38, 38, 0.22);
+      background: rgba(220, 38, 38, 0.05);
+    }
+
     /* Biomarkers bars */
     .biomarkers-stack {
       display: grid;
@@ -1672,7 +1706,10 @@
               <span class="panel-kicker">Formulation Setup</span>
               <h2 class="panel-title" id="protocol-title">Add Protocol</h2>
             </div>
-            <button class="seg-button active" type="button" onclick="saveProtocol()">Save</button>
+            <div class="record-actions">
+              <button class="mini-action danger" type="button" onclick="deleteActiveProtocol()">Delete</button>
+              <button class="seg-button active" type="button" onclick="saveProtocol()">Save</button>
+            </div>
           </div>
           <div class="form-grid">
             <div class="field full">
@@ -1930,6 +1967,7 @@
     let firebaseUser = null;
     let cloudSaveTimer = null;
     let applyingRemoteState = false;
+    let unsubscribeCloudState = null;
 
     // Clinical half-lives mapping (hours)
     const HALF_LIVES = {
@@ -2087,6 +2125,15 @@
       syncStatus.classList.toggle("warn", variant === "warn");
     }
 
+    function getFirebaseErrorLabel(error) {
+      const code = error?.code || "unknown";
+      if (code === "permission-denied") return "Firebase permission denied";
+      if (code === "unavailable") return "Firebase unavailable";
+      if (code === "unauthenticated") return "Firebase auth required";
+      if (code === "failed-precondition") return "Firebase setup conflict";
+      return `Firebase error: ${code}`;
+    }
+
     function toFirebaseDocument(state, user) {
       return {
         schemaVersion: 2,
@@ -2109,7 +2156,11 @@
     }
 
     function stateFromFirebaseDocument(data) {
-      return data?.app || data?.state || null;
+      if (!data) return null;
+      if (data.schemaVersion === 2 && data.app) return data.app;
+      if (data.app) return data.app;
+      if (data.state) return data.state;
+      return null;
     }
 
     function persistState({ cloud = true } = {}) {
@@ -2135,7 +2186,7 @@
           setSyncStatus("Synced to Firebase", "online");
         } catch (error) {
           console.warn("Firebase sync failed.", error);
-          setSyncStatus("Firebase blocked, local saved", "warn");
+          setSyncStatus(getFirebaseErrorLabel(error), "warn");
         }
       }, 500);
     }
@@ -2254,14 +2305,12 @@
       if (!historyList) return;
 
       const siteLogs = appState.logs.filter(log => log.type === 'Dose' && log.title.toLowerCase().includes(siteName.toLowerCase()));
-      historyList.innerHTML = "";
+      historyList.replaceChildren();
 
       if (siteLogs.length === 0) {
-        historyList.innerHTML = `
-          <li>Last used: Never</li>
-          <li>Rotation status: Ready (100%)</li>
-          <li>Local notes: Healthy site, ready for rotation</li>
-        `;
+        ["Last used: Never", "Rotation status: Ready (100%)", "Local notes: Healthy site, ready for rotation"].forEach((text) => {
+          historyList.appendChild(createElement("li", { text }));
+        });
         return;
       }
 
@@ -2270,11 +2319,9 @@
       const daysElapsed = Math.round((Date.now() - lastTimeMs) / (24 * 60 * 60 * 1000));
       const lastUsedDate = new Date(lastTimeMs).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
 
-      historyList.innerHTML = `
-        <li>Last used: ${lastUsedDate}</li>
-        <li>Rotation spacing: ${daysElapsed} days ago</li>
-        <li>Local notes: Healthy site, ready for rotation</li>
-      `;
+      [`Last used: ${lastUsedDate}`, `Rotation spacing: ${daysElapsed} days ago`, "Local notes: Healthy site, ready for rotation"].forEach((text) => {
+        historyList.appendChild(createElement("li", { text }));
+      });
     }
 
     // Dynamic injection site renderer
@@ -2747,9 +2794,22 @@
       if (options.id) node.id = options.id;
       if (options.type) node.type = options.type;
       if (options.placeholder) node.placeholder = options.placeholder;
+      if (options.value != null) node.value = options.value;
+      if (options.disabled) node.disabled = true;
       if (options.style) Object.assign(node.style, options.style);
       children.forEach((child) => node.appendChild(child));
       return node;
+    }
+
+    function createRecordActions(editHandler, deleteHandler) {
+      const actions = createElement("div", { className: "record-actions" });
+      const edit = createElement("button", { className: "mini-action", type: "button", text: "Edit" });
+      const del = createElement("button", { className: "mini-action danger", type: "button", text: "Delete" });
+      edit.addEventListener("click", editHandler);
+      del.addEventListener("click", deleteHandler);
+      actions.appendChild(edit);
+      actions.appendChild(del);
+      return actions;
     }
 
     function appendActionForm(container, fields, buttonText, handler) {
@@ -2794,7 +2854,11 @@
             createElement("span", { text: log.time, style: { fontSize: "0.8rem", fontWeight: "600" } })
           ]);
           const badge = createElement("span", { className: "badge", text: log.value, style: badgeStyle });
-          list.appendChild(createElement("div", { className: "tab-item-card" }, [meta, badge]));
+          const side = createElement("div", { className: "record-actions" }, [
+            badge,
+            createRecordActions(() => editLog(log.id), () => deleteLog(log.id))
+          ]);
+          list.appendChild(createElement("div", { className: "tab-item-card" }, [meta, side]));
         });
         container.appendChild(list);
         appendActionForm(container, [
@@ -2821,7 +2885,10 @@
           }, [
             row,
             barContainer,
-            createElement("span", { className: "micro-label", text: lab.status, style: { fontSize: "0.68rem", fontWeight: "700" } })
+            createElement("div", { className: "record-actions", style: { justifyContent: "space-between", marginTop: "8px" } }, [
+              createElement("span", { className: "micro-label", text: lab.status, style: { fontSize: "0.68rem", fontWeight: "700" } }),
+              createRecordActions(() => editLab(lab.id), () => deleteLab(lab.id))
+            ])
           ]);
           stack.appendChild(card);
         });
@@ -2844,7 +2911,8 @@
             style: { flexDirection: "column", alignItems: "flex-start", gap: "6px" }
           }, [
             createElement("span", { className: "micro-label", text: entry.date, style: { fontSize: "0.68rem" } }),
-            createElement("p", { text: entry.text, style: { margin: "0", fontSize: "0.92rem", lineHeight: "1.5", color: "var(--text)", fontWeight: "600" } })
+            createElement("p", { text: entry.text, style: { margin: "0", fontSize: "0.92rem", lineHeight: "1.5", color: "var(--text)", fontWeight: "600" } }),
+            createRecordActions(() => editJournal(entry.id), () => deleteJournal(entry.id))
           ]));
         });
         container.appendChild(list);
@@ -2939,6 +3007,104 @@
       renderAnalyticsContent();
       persistState();
       showToast("Recovery journal entry added");
+    }
+
+    function editLog(id) {
+      const log = appState.logs.find((entry) => entry.id === id);
+      if (!log) return;
+      const title = prompt("Edit log title", log.title);
+      if (title == null) return;
+      const value = prompt("Edit log value", log.value);
+      if (value == null) return;
+      log.title = title.trim() || log.title;
+      log.value = value.trim() || log.value;
+      log.updatedAt = new Date().toISOString();
+      renderAnalyticsContent();
+      renderAgenda();
+      renderCalendar();
+      drawChart();
+      persistState();
+      showToast("Log updated");
+    }
+
+    function deleteLog(id) {
+      const log = appState.logs.find((entry) => entry.id === id);
+      if (!log || !confirm(`Delete "${log.title}"?`)) return;
+      appState.logs = appState.logs.filter((entry) => entry.id !== id);
+      renderAnalyticsContent();
+      renderAgenda();
+      renderCalendar();
+      drawChart();
+      updateSiteHistory(selectedSite.textContent);
+      persistState();
+      showToast("Log deleted");
+    }
+
+    function editLab(id) {
+      const lab = appState.labs.find((entry) => entry.id === id);
+      if (!lab) return;
+      const name = prompt("Edit biomarker name", lab.name);
+      if (name == null) return;
+      const value = prompt("Edit biomarker value", lab.value);
+      if (value == null) return;
+      const status = prompt("Edit biomarker status", lab.status);
+      if (status == null) return;
+      lab.name = name.trim() || lab.name;
+      lab.value = value.trim() || lab.value;
+      lab.status = status.trim() || lab.status;
+      lab.updatedAt = new Date().toISOString();
+      renderAnalyticsContent();
+      persistState();
+      showToast("Lab updated");
+    }
+
+    function deleteLab(id) {
+      const lab = appState.labs.find((entry) => entry.id === id);
+      if (!lab || !confirm(`Delete "${lab.name}"?`)) return;
+      appState.labs = appState.labs.filter((entry) => entry.id !== id);
+      renderAnalyticsContent();
+      persistState();
+      showToast("Lab deleted");
+    }
+
+    function editJournal(id) {
+      const entry = appState.journal.find((item) => item.id === id);
+      if (!entry) return;
+      const text = prompt("Edit journal entry", entry.text);
+      if (text == null) return;
+      entry.text = text.trim() || entry.text;
+      entry.updatedAt = new Date().toISOString();
+      renderAnalyticsContent();
+      persistState();
+      showToast("Journal entry updated");
+    }
+
+    function deleteJournal(id) {
+      const entry = appState.journal.find((item) => item.id === id);
+      if (!entry || !confirm("Delete this journal entry?")) return;
+      appState.journal = appState.journal.filter((item) => item.id !== id);
+      renderAnalyticsContent();
+      persistState();
+      showToast("Journal entry deleted");
+    }
+
+    function deleteActiveProtocol() {
+      const name = appState.activeProtocolName || protocolNameInput.value.trim();
+      const protocol = appState.protocols.find((entry) => entry.name === name);
+      if (!protocol) return;
+      if (appState.protocols.length <= 1) {
+        showToast("Keep at least one protocol in the vault.");
+        return;
+      }
+      if (!confirm(`Delete protocol "${protocol.name}"? Existing logs will stay in history.`)) return;
+      appState.protocols = appState.protocols.filter((entry) => entry.name !== protocol.name);
+      appState.activeProtocolName = appState.protocols[0].name;
+      applyStateToControls();
+      updateDoseMath();
+      renderAgenda();
+      drawChart();
+      persistState();
+      showToast("Protocol deleted");
     }
 
     // Dynamic completed agenda dose injection
@@ -3082,11 +3248,10 @@
         icon.className = `status-icon${doseLoggedToday ? " green" : (isOverdue ? " red" : " blue")}`;
         icon.textContent = doseLoggedToday ? "✓" : (isOverdue ? "!" : "");
         
-        const info = document.createElement("div");
-        info.innerHTML = `
-          <h3>${protocol.name}</h3>
-          <p>Draw ${units.toFixed(1)} U, ${appState.selectedSite || "abdomen"} rotation, scheduled ${protocol.time || "12:00"}</p>
-        `;
+        const info = createElement("div", {}, [
+          createElement("h3", { text: protocol.name }),
+          createElement("p", { text: `Draw ${units.toFixed(1)} U, ${appState.selectedSite || "abdomen"} rotation, scheduled ${protocol.time || "12:00"}` })
+        ]);
         
         const action = document.createElement("button");
         action.type = "button";
@@ -3119,11 +3284,10 @@
       wtIcon.className = `status-icon${hasWeightToday ? " green" : " blue"}`;
       wtIcon.textContent = hasWeightToday ? "✓" : "";
       
-      const wtInfo = document.createElement("div");
-      wtInfo.innerHTML = `
-        <h3>Weight Update</h3>
-        <p>Morning trend logged with symptom check-in</p>
-      `;
+      const wtInfo = createElement("div", {}, [
+        createElement("h3", { text: "Weight Update" }),
+        createElement("p", { text: "Morning trend logged with symptom check-in" })
+      ]);
       
       const wtAction = hasWeightToday ? 
         createElement("span", { className: "status-chip success", text: "Done" }) :
@@ -3236,14 +3400,18 @@
 
         const firebaseApp = appModule.initializeApp(firebaseConfig);
         const auth = authModule.getAuth(firebaseApp);
-        const db = firestoreModule.getFirestore(firebaseApp);
-        const provider = new authModule.GoogleAuthProvider();
-
+        let db;
         try {
-          await firestoreModule.enableIndexedDbPersistence(db);
+          db = firestoreModule.initializeFirestore(firebaseApp, {
+            localCache: firestoreModule.persistentLocalCache({
+              tabManager: firestoreModule.persistentSingleTabManager()
+            })
+          });
         } catch (error) {
-          console.warn("Firestore offline persistence was not enabled.", error);
+          console.warn("Persistent Firestore cache was not enabled.", error);
+          db = firestoreModule.getFirestore(firebaseApp);
         }
+        const provider = new authModule.GoogleAuthProvider();
 
         firebaseApi = {
           auth,
@@ -3252,6 +3420,7 @@
           signInWithPopup: authModule.signInWithPopup,
           signOut: authModule.signOut,
           onAuthStateChanged: authModule.onAuthStateChanged,
+          initializeFirestore: firestoreModule.initializeFirestore,
           doc: firestoreModule.doc,
           getDoc: firestoreModule.getDoc,
           setDoc: firestoreModule.setDoc,
@@ -3282,6 +3451,10 @@
         firebaseApi.onAuthStateChanged(auth, async (user) => {
           if (!user) {
             firebaseUser = null;
+            if (unsubscribeCloudState) {
+              unsubscribeCloudState();
+              unsubscribeCloudState = null;
+            }
             lockApp();
             setSyncStatus("Sign in required");
             setAuthButtonsDisabled(false, "Sign in with Google");
@@ -3324,12 +3497,13 @@
             console.warn("Could not read Firebase state.", error);
             firebaseUser = null;
             lockApp("Firestore query failed. Check database rules and try again.", "warn");
-            setSyncStatus("Firebase query failed", "warn");
+            setSyncStatus(getFirebaseErrorLabel(error), "warn");
             setAuthButtonsDisabled(false, "Sign in with Google");
             return;
           }
 
-          firebaseApi.onSnapshot(ref, (snapshot) => {
+          if (unsubscribeCloudState) unsubscribeCloudState();
+          unsubscribeCloudState = firebaseApi.onSnapshot(ref, (snapshot) => {
             if (!snapshot.exists() || applyingRemoteState) return;
             const remoteState = stateFromFirebaseDocument(snapshot.data());
             if (remoteState?.updatedAt && remoteState.updatedAt > appState.updatedAt) {
@@ -3338,7 +3512,7 @@
             }
           }, (error) => {
             console.warn("Firebase subscription failed.", error);
-            setSyncStatus("Firebase listener blocked", "warn");
+            setSyncStatus(getFirebaseErrorLabel(error), "warn");
           });
         });
       } catch (error) {
@@ -3358,6 +3532,13 @@
     window.addQuickLog = addQuickLog;
     window.addQuickLab = addQuickLab;
     window.addQuickJournal = addQuickJournal;
+    window.deleteActiveProtocol = deleteActiveProtocol;
+    window.editLog = editLog;
+    window.deleteLog = deleteLog;
+    window.editLab = editLab;
+    window.deleteLab = deleteLab;
+    window.editJournal = editJournal;
+    window.deleteJournal = deleteJournal;
 
     function navigateToView(hash) {
       const activeHash = hash || "#dashboard";
