@@ -188,6 +188,135 @@
       align-items: center;
     }
 
+    .sync-panel {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .sync-chip {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      padding: 0 14px;
+      border: 1px solid rgba(76, 54, 29, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 252, 247, 0.72);
+      box-shadow: var(--nm-btn);
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sync-chip.online {
+      border-color: rgba(15, 118, 110, 0.2);
+      background: rgba(216, 235, 229, 0.72);
+      color: var(--accent);
+    }
+
+    .sync-chip.warn {
+      border-color: rgba(220, 38, 38, 0.2);
+      background: rgba(220, 38, 38, 0.06);
+      color: var(--red);
+    }
+
+    .auth-button {
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(15, 118, 110, 0.22);
+      border-radius: 999px;
+      background: #186f68;
+      box-shadow: 0 8px 16px rgba(24, 111, 104, 0.14);
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .auth-button:hover {
+      background: #0f605b;
+      box-shadow: 0 10px 18px rgba(15, 96, 91, 0.18);
+    }
+
+    body.auth-locked .app-shell,
+    body.auth-locked .bottom-nav,
+    body.auth-locked .fab,
+    body.auth-locked .quick-sheet,
+    body.auth-locked .sheet-overlay {
+      display: none;
+    }
+
+    body.auth-ready .auth-gate {
+      display: none;
+    }
+
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(220, 185, 128, 0.32), transparent 28rem),
+        radial-gradient(circle at 82% 20%, rgba(61, 152, 141, 0.24), transparent 30rem),
+        linear-gradient(180deg, #f8f1e7 0%, #efe2d4 100%);
+    }
+
+    .auth-card {
+      display: grid;
+      width: min(520px, 100%);
+      gap: 18px;
+      padding: 28px;
+      border: 1px solid rgba(76, 54, 29, 0.13);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 250, 242, 0.96), rgba(244, 232, 210, 0.92)),
+        linear-gradient(120deg, rgba(15, 118, 110, 0.08), transparent 60%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 24px 70px rgba(71, 48, 18, 0.16);
+    }
+
+    .auth-card h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .auth-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .auth-card .auth-button {
+      width: fit-content;
+      min-height: 48px;
+      padding: 0 20px;
+    }
+
+    .auth-detail {
+      min-height: 22px;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .auth-detail.warn {
+      color: var(--red);
+    }
+
     /* Soft Tactile Neumorphic Buttons */
     .icon-button {
       display: grid;
@@ -198,7 +327,7 @@
       border-radius: var(--radius-md);
       background: rgba(255, 252, 247, 0.85);
       box-shadow: var(--nm-btn);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
       position: relative;
     }
 
@@ -377,7 +506,7 @@
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.55);
       box-shadow: var(--nm-btn);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
     }
 
     /* Gentle full border highlight tints for clinical statuses */
@@ -516,7 +645,7 @@
       padding: 12px 14px;
       outline: none;
       box-shadow: var(--nm-sunken);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
       font-weight: 600;
     }
 
@@ -551,7 +680,7 @@
       font-family: var(--font-ui);
       font-weight: 700;
       font-size: 0.86rem;
-      transition: all 0.2s ease;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -705,7 +834,7 @@
       border-radius: 50%;
       background: var(--muted);
       content: "";
-      transition: all 0.2s ease;
+      transition: background 160ms ease, box-shadow 160ms ease;
     }
 
     /* Glow increases strictly avoiding movement scales */
@@ -1130,7 +1259,7 @@
       font-size: 0.74rem;
       font-family: var(--font-ui);
       font-weight: 700;
-      transition: all 0.2s ease;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
     }
 
     .nav-item svg {
@@ -1170,7 +1299,7 @@
       line-height: 1;
       font-family: var(--font-ui);
       font-weight: 400;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
     }
 
     .fab:hover {
@@ -1198,17 +1327,17 @@
       -webkit-backdrop-filter: blur(28px);
       overflow: hidden;
       transform-origin: bottom right;
-      animation: quickSheetIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: quickSheetIn 0.18s ease-out forwards;
     }
 
     @keyframes quickSheetIn {
       from {
         opacity: 0;
-        transform: scale(0.96) translateY(8px);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: translateY(0);
       }
     }
 
@@ -1243,7 +1372,7 @@
       padding: 14px 18px;
       background: rgba(255, 252, 247, 0.98);
       text-align: left;
-      transition: all 0.2s ease;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
       font-family: var(--font-ui);
       font-weight: 600;
       font-size: 0.9rem;
@@ -1306,7 +1435,7 @@
       font-weight: 700;
       font-size: 0.95rem;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 180ms ease, transform 180ms ease;
       pointer-events: none;
       backdrop-filter: blur(8px);
     }
@@ -1423,9 +1552,19 @@
     }
   </style>
 </head>
-<body>
+<body class="auth-locked">
   <div class="toast" id="toastMessage">Logged successfully</div>
   <div class="sheet-overlay" id="sheetOverlay"></div>
+
+  <section class="auth-gate" aria-labelledby="authGateTitle">
+    <div class="auth-card">
+      <span class="panel-kicker">Private Sync Console</span>
+      <h2 id="authGateTitle">Sign in to load PeptideKit+</h2>
+      <p>This page is locked until Google sign-in succeeds, the email matches the approved account, and Firestore returns the protocol document.</p>
+      <button class="auth-button" id="gateAuthButton" type="button">Sign in with Google</button>
+      <div class="auth-detail" id="authGateDetail">Allowed account: sspsful@gmail.com</div>
+    </div>
+  </section>
 
   <div class="app-shell">
     <header class="topbar">
@@ -1437,6 +1576,10 @@
         </div>
       </div>
       <div class="top-actions" aria-label="Global actions">
+        <div class="sync-panel">
+          <span class="sync-chip" id="syncStatus">Local cache ready</span>
+          <button class="auth-button" id="authButton" type="button">Sign in with Google</button>
+        </div>
         <button class="icon-button" type="button" title="Search" aria-label="Search">
           <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--text)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
         </button>
@@ -1517,7 +1660,7 @@
           <div class="form-grid">
             <div class="field full">
               <span class="micro-label">Select Peptide Presets</span>
-              <div class="segmented" style="width: 100%; margin-bottom: 12px;" role="group" aria-label="Peptide Preset Selection">
+              <div class="segmented preset-selector" style="width: 100%; margin-bottom: 12px;" role="group" aria-label="Peptide Preset Selection">
                 <button class="seg-button active" style="flex:1" type="button" onclick="selectPreset('Melanotan I', 10.0, 2.0, 500, 'mcg')">Melanotan I</button>
                 <button class="seg-button" style="flex:1" type="button" onclick="selectPreset('BPC-157', 5.0, 2.0, 250, 'mcg')">BPC-157</button>
                 <button class="seg-button" style="flex:1" type="button" onclick="selectPreset('Semaglutide', 2.0, 2.0, 0.25, 'mg')">Semaglutide</button>
@@ -1745,7 +1888,7 @@
   </div>
   <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="quickSheet" aria-label="Open quick action menu">+</button>
 
-  <script>
+  <script type="module">
     const $ = (selector, scope = document) => scope.querySelector(selector);
     const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
@@ -1762,30 +1905,176 @@
     const protocolNameInput = $("#protocolNameInput");
     let doseUnit = "mcg";
 
-    // Application state
-    let activeDosesRemaining = 2;
-    let selectedAnalyticsTab = 'logs';
-
-    // Logs & Labs Database mock state
-    const appState = {
-      logs: [
-        { id: 1, type: 'Dose', title: 'Melanotan I injection', value: '500 mcg', time: 'Today, 8:45 AM' },
-        { id: 2, type: 'Weight', title: 'Morning body mass', value: '84.2 kg', time: 'Today, 7:00 AM' },
-        { id: 3, type: 'Symptom', title: 'Mild fatigue', value: 'Severity: 2/10', time: 'Yesterday, 4:30 PM' },
-        { id: 4, type: 'Dose', title: 'BPC-157 Recovery', value: '250 mcg', time: 'Yesterday, 8:15 AM' }
-      ],
-      labs: [
-        { name: 'IGF-1 Growth Factor', value: '240 ng/mL', percent: 78, status: 'Optimal', color: 'purple' },
-        { name: 'Free Testosterone', value: '810 ng/dL', percent: 85, status: 'Optimal', color: 'green' },
-        { name: 'HbA1c Biomarker', value: '5.1%', percent: 45, status: 'Healthy', color: 'cyan' },
-        { name: 'C-Reactive Protein (CRP)', value: '0.6 mg/L', percent: 22, status: 'Low Inflammation', color: 'green' }
-      ],
-      journal: [
-        { id: 1, text: 'Injection site Left Outer Thigh healed cleanly, no irritation. Slept 8.5 hours.', date: 'May 26, 2026' },
-        { id: 2, text: 'Melanotan load phase complete. Minor flushing noted 10 mins post injection.', date: 'May 24, 2026' },
-        { id: 3, text: 'Recovery feeling highly accelerated. Knees feel robust during morning cardio.', date: 'May 23, 2026' }
-      ]
+    // Application state and persistence
+    const STORAGE_KEY = "peptidekit-plus-state-v1";
+    const ALLOWED_EMAIL = "sspsful@gmail.com";
+    const firebaseConfig = {
+      apiKey: "AIzaSyD24HQUxr311mQ1McZObg39yXwxQhN7Wy8",
+      authDomain: "peptides-2349b.firebaseapp.com",
+      projectId: "peptides-2349b",
+      storageBucket: "peptides-2349b.firebasestorage.app",
+      messagingSenderId: "565735854222",
+      appId: "1:565735854222:web:078c27c955d38eb48db9df"
     };
+
+    const syncStatus = $("#syncStatus");
+    const authButton = $("#authButton");
+    const gateAuthButton = $("#gateAuthButton");
+    const authGateDetail = $("#authGateDetail");
+    let activeDosesRemaining = 2;
+    let selectedAnalyticsTab = "logs";
+    let firebaseApi = null;
+    let firebaseUser = null;
+    let cloudSaveTimer = null;
+    let applyingRemoteState = false;
+
+    function getDefaultState() {
+      return {
+        version: 1,
+        protocol: {
+          name: "Melanotan I",
+          peptideMg: 10,
+          waterMl: 2,
+          targetDose: 500,
+          doseUnit: "mcg",
+          syringeUnits: 50
+        },
+        selectedSite: "Left Outer Thigh",
+        activeDosesRemaining: 2,
+        completedAgendaIds: ["agenda-3"],
+        logs: [
+          { id: 1, type: "Dose", title: "Melanotan I injection", value: "500 mcg", time: "Today, 8:45 AM" },
+          { id: 2, type: "Weight", title: "Morning body mass", value: "84.2 kg", time: "Today, 7:00 AM" },
+          { id: 3, type: "Symptom", title: "Mild fatigue", value: "Severity: 2/10", time: "Yesterday, 4:30 PM" },
+          { id: 4, type: "Dose", title: "BPC-157 Recovery", value: "250 mcg", time: "Yesterday, 8:15 AM" }
+        ],
+        labs: [
+          { id: 1, name: "IGF-1 Growth Factor", value: "240 ng/mL", percent: 78, status: "Optimal", color: "purple" },
+          { id: 2, name: "Free Testosterone", value: "810 ng/dL", percent: 85, status: "Optimal", color: "green" },
+          { id: 3, name: "HbA1c Biomarker", value: "5.1%", percent: 45, status: "Healthy", color: "cyan" },
+          { id: 4, name: "C-Reactive Protein (CRP)", value: "0.6 mg/L", percent: 22, status: "Low Inflammation", color: "green" }
+        ],
+        journal: [
+          { id: 1, text: "Injection site Left Outer Thigh healed cleanly, no irritation. Slept 8.5 hours.", date: "May 26, 2026" },
+          { id: 2, text: "Melanotan load phase complete. Minor flushing noted 10 mins post injection.", date: "May 24, 2026" },
+          { id: 3, text: "Recovery feeling highly accelerated. Knees feel robust during morning cardio.", date: "May 23, 2026" }
+        ],
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function mergeState(base, incoming = {}) {
+      const next = { ...base, ...incoming };
+      next.protocol = { ...base.protocol, ...(incoming.protocol || {}) };
+      next.logs = Array.isArray(incoming.logs) ? incoming.logs : base.logs;
+      next.labs = Array.isArray(incoming.labs) ? incoming.labs : base.labs;
+      next.journal = Array.isArray(incoming.journal) ? incoming.journal : base.journal;
+      next.completedAgendaIds = Array.isArray(incoming.completedAgendaIds) ? incoming.completedAgendaIds : base.completedAgendaIds;
+      next.activeDosesRemaining = Number.isFinite(incoming.activeDosesRemaining) ? incoming.activeDosesRemaining : base.activeDosesRemaining;
+      next.selectedSite = typeof incoming.selectedSite === "string" ? incoming.selectedSite : base.selectedSite;
+      return next;
+    }
+
+    function loadLocalState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return getDefaultState();
+        return mergeState(getDefaultState(), JSON.parse(raw));
+      } catch (error) {
+        console.warn("Could not load local PeptideKit state.", error);
+        return getDefaultState();
+      }
+    }
+
+    const appState = getDefaultState();
+    activeDosesRemaining = appState.activeDosesRemaining;
+    doseUnit = appState.protocol.doseUnit || "mcg";
+
+    function setAuthGateDetail(text, variant = "") {
+      authGateDetail.textContent = text;
+      authGateDetail.classList.toggle("warn", variant === "warn");
+    }
+
+    function setAuthButtonsDisabled(disabled, label = null) {
+      [authButton, gateAuthButton].forEach((button) => {
+        button.disabled = disabled;
+        button.style.opacity = disabled ? "0.62" : "";
+        if (label) button.textContent = label;
+      });
+    }
+
+    function unlockApp() {
+      document.body.classList.remove("auth-locked");
+      document.body.classList.add("auth-ready");
+      authButton.textContent = "Sign out";
+      gateAuthButton.textContent = "Sign out";
+    }
+
+    function lockApp(detail = "Allowed account: sspsful@gmail.com", variant = "") {
+      document.body.classList.add("auth-locked");
+      document.body.classList.remove("auth-ready");
+      authButton.textContent = "Sign in with Google";
+      gateAuthButton.textContent = "Sign in with Google";
+      setAuthGateDetail(detail, variant);
+    }
+
+    function setSyncStatus(text, variant = "") {
+      syncStatus.textContent = text;
+      syncStatus.classList.toggle("online", variant === "online");
+      syncStatus.classList.toggle("warn", variant === "warn");
+    }
+
+    function toFirebaseDocument(state, user) {
+      return {
+        schemaVersion: 1,
+        ownerUid: user.uid,
+        ownerEmail: user.email,
+        updatedAt: firebaseApi.serverTimestamp(),
+        app: {
+          version: state.version,
+          updatedAt: state.updatedAt,
+          activeDosesRemaining: state.activeDosesRemaining,
+          selectedSite: state.selectedSite,
+          completedAgendaIds: state.completedAgendaIds,
+          protocol: state.protocol,
+          logs: state.logs,
+          labs: state.labs,
+          journal: state.journal
+        }
+      };
+    }
+
+    function stateFromFirebaseDocument(data) {
+      return data?.app || data?.state || null;
+    }
+
+    function persistState({ cloud = true } = {}) {
+      appState.updatedAt = new Date().toISOString();
+      appState.activeDosesRemaining = activeDosesRemaining;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        if (!firebaseUser) setSyncStatus("Saved locally");
+      } catch (error) {
+        console.warn("Could not save local PeptideKit state.", error);
+        setSyncStatus("Local save failed", "warn");
+      }
+      if (cloud && !applyingRemoteState) scheduleCloudSave();
+    }
+
+    function scheduleCloudSave() {
+      if (!firebaseApi || !firebaseUser) return;
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(async () => {
+        try {
+          const ref = firebaseApi.doc(firebaseApi.db, "peptides", firebaseUser.uid);
+          await firebaseApi.setDoc(ref, toFirebaseDocument(appState, firebaseUser), { merge: true });
+          setSyncStatus("Synced to Firebase", "online");
+        } catch (error) {
+          console.warn("Firebase sync failed.", error);
+          setSyncStatus("Firebase blocked, local saved", "warn");
+        }
+      }, 500);
+    }
 
     // Human contour outline silhouettes (Warm sepia pencil sketch style)
     const silhouettes = {
@@ -1914,6 +2203,8 @@
           $$(".site-node", bodyStage).forEach((item) => item.classList.remove("selected"));
           node.classList.add("selected");
           selectedSite.textContent = label;
+          appState.selectedSite = label;
+          persistState();
         });
         bodyStage.appendChild(node);
       });
@@ -1925,6 +2216,8 @@
         button.classList.add("active");
         const defaultSite = button.dataset.view === "face" ? "Forehead" : button.dataset.view === "back" ? "Left Rear Deltoid" : "Left Outer Thigh";
         selectedSite.textContent = defaultSite;
+        appState.selectedSite = defaultSite;
+        persistState();
         renderSites(button.dataset.view);
       });
     });
@@ -1943,29 +2236,42 @@
       const targetMg = doseUnit === "mcg" ? target / 1000 : target;
       const units = (targetMg / concentration) * 100;
       const maxUnits = Number.parseFloat(syringe.value);
-      const displayUnits = Math.min(units, maxUnits);
       
       concentrationChip.textContent = `${concentration.toFixed(2)} mg/mL`;
-      drawUnits.textContent = displayUnits.toFixed(1);
+      drawUnits.textContent = units.toFixed(1);
       
       if (units > maxUnits) {
-        drawNote.textContent = `Exceeds selected syringe capacity (${maxUnits} U max). Volumetric units clipped to safe hardware levels.`;
+        drawNote.textContent = `Warning: this exceeds selected syringe capacity (${maxUnits} U max). Use a different concentration, dose, or syringe plan.`;
         drawNote.style.color = "var(--red)";
       } else {
         drawNote.textContent = `Exact calculated units from ${targetMg.toFixed(3)} mg target dose at ${concentration.toFixed(2)} mg/mL concentration.`;
         drawNote.style.color = "";
       }
+
+      appState.protocol.peptideMg = mass;
+      appState.protocol.waterMl = water;
+      appState.protocol.targetDose = target;
+      appState.protocol.doseUnit = doseUnit;
+      appState.protocol.syringeUnits = maxUnits;
     }
 
     [peptideMg, waterMl, targetDose, syringe, protocolNameInput].forEach((input) => {
-      input.addEventListener("input", updateDoseMath);
-      input.addEventListener("change", updateDoseMath);
+      input.addEventListener("input", () => {
+        updateDoseMath();
+        persistState();
+      });
+      input.addEventListener("change", () => {
+        updateDoseMath();
+        persistState();
+      });
     });
 
     protocolNameInput.addEventListener("input", () => {
       const name = protocolNameInput.value.trim() || "Custom Peptide";
       cardProtocolName.textContent = name;
       moleculeAbbr.textContent = name.substring(0, 2).toUpperCase();
+      appState.protocol.name = name;
+      persistState();
     });
 
     $$("[data-dose-unit]").forEach((button) => {
@@ -1975,6 +2281,7 @@
         doseUnit = button.dataset.doseUnit;
         targetDose.value = doseUnit === "mcg" ? "500" : "0.5";
         updateDoseMath();
+        persistState();
       });
     });
 
@@ -1999,13 +2306,14 @@
       $("#presetMass").textContent = mass.toFixed(1);
       $("#presetWater").textContent = water.toFixed(1);
       
-      const presetButtons = $$("#protocols .seg-button");
+      const presetButtons = $$("#protocols .preset-selector .seg-button");
       presetButtons.forEach(btn => {
         if (btn.textContent === name) btn.classList.add("active");
         else btn.classList.remove("active");
       });
       
       updateDoseMath();
+      persistState();
       showToast(`Selected ${name} preset`);
     }
 
@@ -2042,6 +2350,9 @@
     }
 
     function drawChart() {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const mutedColor = rootStyles.getPropertyValue("--muted").trim() || "#69553d";
+      const accentColor = rootStyles.getPropertyValue("--accent").trim() || "#0f766e";
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
       const pad = { left: 45, right: 18, top: 30, bottom: 40 };
@@ -2093,7 +2404,7 @@
       ctx.stroke();
 
       // Text coordinate overlays
-      ctx.fillStyle = "var(--muted)";
+      ctx.fillStyle = mutedColor;
       ctx.font = "700 10px Space Grotesk";
       ctx.fillText(`0.0 ${chartUnit}`, 8, height - pad.bottom + 3);
       ctx.fillText(`${(maxY/2).toFixed(1)}`, 8, pad.top + (height - pad.top - pad.bottom) / 2 + 3);
@@ -2123,7 +2434,7 @@
 
       // Locator point bubble
       ctx.fillStyle = "#ffffff";
-      ctx.strokeStyle = "var(--accent)";
+      ctx.strokeStyle = accentColor;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(clampedX, y, 6, 0, Math.PI * 2);
@@ -2268,99 +2579,117 @@
       renderAnalyticsContent();
     }
 
-    // Populate dynamic tab layouts
+    function createElement(tag, options = {}, children = []) {
+      const node = document.createElement(tag);
+      if (options.className) node.className = options.className;
+      if (options.text != null) node.textContent = options.text;
+      if (options.id) node.id = options.id;
+      if (options.type) node.type = options.type;
+      if (options.placeholder) node.placeholder = options.placeholder;
+      if (options.style) Object.assign(node.style, options.style);
+      children.forEach((child) => node.appendChild(child));
+      return node;
+    }
+
+    function appendActionForm(container, fields, buttonText, handler) {
+      const form = createElement("div", { className: "tab-action-form" });
+      fields.forEach((field) => form.appendChild(createElement("input", {
+        className: "control",
+        id: field.id,
+        type: "text",
+        placeholder: field.placeholder,
+        style: field.style || {}
+      })));
+      const button = createElement("button", { type: "button", text: buttonText });
+      button.addEventListener("click", handler);
+      form.appendChild(button);
+      container.appendChild(form);
+    }
+
+    // Populate dynamic tab layouts without interpolating user text into HTML.
     function renderAnalyticsContent() {
       const container = $("#analyticsContent");
       const widgets = $("#analyticsWidgets");
+      container.replaceChildren();
       
-      if (selectedAnalyticsTab === 'logs') {
+      if (selectedAnalyticsTab === "logs") {
         widgets.style.display = "grid";
-        $("#weightVal").textContent = "84.2 kg";
+        const latestWeight = appState.logs.find((log) => log.type === "Weight");
+        $("#weightVal").textContent = latestWeight ? latestWeight.value : "--";
         $("#recoveryVal").textContent = "88%";
-        
-        let html = `
-          <span class="micro-label" style="display:block; margin-bottom: 10px;">Recent Events Log</span>
-          <div class="item-list">
-        `;
-        appState.logs.forEach(log => {
-          let badgeColor = "rgba(29, 78, 216, 0.08)";
-          let badgeTextCol = "var(--blue)";
-          if (log.type === 'Weight') { badgeColor = "rgba(8, 145, 178, 0.08)"; badgeTextCol = "var(--cyan)"; }
-          if (log.type === 'Symptom') { badgeColor = "rgba(180, 83, 9, 0.08)"; badgeTextCol = "var(--yellow)"; }
-          
-          html += `
-            <div class="tab-item-card">
-              <div>
-                <h4>${log.title}</h4>
-                <span style="font-size:0.8rem; font-weight:600;">${log.time}</span>
-              </div>
-              <span class="badge" style="background:${badgeColor}; color:${badgeTextCol}">${log.value}</span>
-            </div>
-          `;
+        container.appendChild(createElement("span", {
+          className: "micro-label",
+          text: "Recent Events Log",
+          style: { display: "block", marginBottom: "10px" }
+        }));
+
+        const list = createElement("div", { className: "item-list" });
+        appState.logs.forEach((log) => {
+          const badgeStyle = { background: "rgba(29, 78, 216, 0.08)", color: "var(--blue)" };
+          if (log.type === "Weight") Object.assign(badgeStyle, { background: "rgba(8, 145, 178, 0.08)", color: "var(--cyan)" });
+          if (log.type === "Symptom") Object.assign(badgeStyle, { background: "rgba(180, 83, 9, 0.08)", color: "var(--yellow)" });
+          const meta = createElement("div", {}, [
+            createElement("h4", { text: log.title }),
+            createElement("span", { text: log.time, style: { fontSize: "0.8rem", fontWeight: "600" } })
+          ]);
+          const badge = createElement("span", { className: "badge", text: log.value, style: badgeStyle });
+          list.appendChild(createElement("div", { className: "tab-item-card" }, [meta, badge]));
         });
-        html += `
-          </div>
-          <div class="tab-action-form">
-            <input class="control" type="text" id="quickLogVal" placeholder="Log weight (e.g. 84.1) or symptom...">
-            <button type="button" onclick="addQuickLog()">Log</button>
-          </div>
-        `;
-        container.innerHTML = html;
-      } 
-      
-      else if (selectedAnalyticsTab === 'labs') {
+        container.appendChild(list);
+        appendActionForm(container, [
+          { id: "quickLogVal", placeholder: "Log weight (e.g. 84.1) or symptom..." }
+        ], "Log", addQuickLog);
+      } else if (selectedAnalyticsTab === "labs") {
         widgets.style.display = "none";
-        let html = `
-          <span class="micro-label" style="display:block; margin-bottom:14px;">Clinical Biomarkers</span>
-          <div class="biomarkers-stack">
-        `;
-        appState.labs.forEach(lab => {
-          html += `
-            <div class="mini-card" style="box-shadow:none; border:1px solid rgba(76,54,29,0.08); background: rgba(255, 255, 255, 0.65);">
-              <div class="biomarker-row">
-                <span style="font-family:var(--font-ui); font-weight:700; font-size:0.95rem">${lab.name}</span>
-                <strong style="margin-top:0; font-size:1.15rem; color:var(--text)">${lab.value}</strong>
-              </div>
-              <div class="biomarker-bar-container" style="margin: 8px 0;">
-                <div class="biomarker-bar ${lab.color}" style="width: ${lab.percent}%"></div>
-              </div>
-              <span class="micro-label" style="font-size:0.68rem; font-weight:700;">${lab.status}</span>
-            </div>
-          `;
+        container.appendChild(createElement("span", {
+          className: "micro-label",
+          text: "Clinical Biomarkers",
+          style: { display: "block", marginBottom: "14px" }
+        }));
+        const stack = createElement("div", { className: "biomarkers-stack" });
+        appState.labs.forEach((lab) => {
+          const row = createElement("div", { className: "biomarker-row" }, [
+            createElement("span", { text: lab.name, style: { fontFamily: "var(--font-ui)", fontWeight: "700", fontSize: "0.95rem" } }),
+            createElement("strong", { text: lab.value, style: { marginTop: "0", fontSize: "1.15rem", color: "var(--text)" } })
+          ]);
+          const bar = createElement("div", { className: `biomarker-bar ${lab.color || ""}`, style: { width: `${Math.max(0, Math.min(100, lab.percent || 0))}%` } });
+          const barContainer = createElement("div", { className: "biomarker-bar-container", style: { margin: "8px 0" } }, [bar]);
+          const card = createElement("div", {
+            className: "mini-card",
+            style: { boxShadow: "none", border: "1px solid rgba(76,54,29,0.08)", background: "rgba(255, 255, 255, 0.65)" }
+          }, [
+            row,
+            barContainer,
+            createElement("span", { className: "micro-label", text: lab.status, style: { fontSize: "0.68rem", fontWeight: "700" } })
+          ]);
+          stack.appendChild(card);
         });
-        html += `
-          </div>
-          <div class="tab-action-form" style="margin-top: 16px;">
-            <input class="control" type="text" id="quickLabName" placeholder="Biomarker name...">
-            <input class="control" style="max-width: 100px" type="text" id="quickLabVal" placeholder="Value...">
-            <button type="button" onclick="addQuickLab()">Add</button>
-          </div>
-        `;
-        container.innerHTML = html;
-      } 
-      
-      else if (selectedAnalyticsTab === 'journal') {
+        container.appendChild(stack);
+        appendActionForm(container, [
+          { id: "quickLabName", placeholder: "Biomarker name..." },
+          { id: "quickLabVal", placeholder: "Value...", style: { maxWidth: "100px" } }
+        ], "Add", addQuickLab);
+      } else if (selectedAnalyticsTab === "journal") {
         widgets.style.display = "none";
-        let html = `
-          <span class="micro-label" style="display:block; margin-bottom: 10px;">Daily Recovery Journal</span>
-          <div class="item-list">
-        `;
-        appState.journal.forEach(entry => {
-          html += `
-            <div class="tab-item-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-              <span class="micro-label" style="font-size:0.68rem">${entry.date}</span>
-              <p style="margin: 0; font-size:0.92rem; line-height: 1.5; color:var(--text); font-weight:600;">${entry.text}</p>
-            </div>
-          `;
+        container.appendChild(createElement("span", {
+          className: "micro-label",
+          text: "Daily Recovery Journal",
+          style: { display: "block", marginBottom: "10px" }
+        }));
+        const list = createElement("div", { className: "item-list" });
+        appState.journal.forEach((entry) => {
+          list.appendChild(createElement("div", {
+            className: "tab-item-card",
+            style: { flexDirection: "column", alignItems: "flex-start", gap: "6px" }
+          }, [
+            createElement("span", { className: "micro-label", text: entry.date, style: { fontSize: "0.68rem" } }),
+            createElement("p", { text: entry.text, style: { margin: "0", fontSize: "0.92rem", lineHeight: "1.5", color: "var(--text)", fontWeight: "600" } })
+          ]));
         });
-        html += `
-          </div>
-          <div class="tab-action-form">
-            <input class="control" type="text" id="quickJournalVal" placeholder="Write daily recovery notes...">
-            <button type="button" onclick="addQuickJournal()">Post</button>
-          </div>
-        `;
-        container.innerHTML = html;
+        container.appendChild(list);
+        appendActionForm(container, [
+          { id: "quickJournalVal", placeholder: "Write daily recovery notes..." }
+        ], "Post", addQuickJournal);
       }
     }
 
@@ -2382,6 +2711,7 @@
         });
         appState.logs = appState.logs.slice(0, 8);
         $("#weightVal").textContent = `${wt.toFixed(1)} kg`;
+        persistState();
         showToast(`Weight updated to ${wt.toFixed(1)} kg`);
       } else {
         appState.logs.unshift({
@@ -2392,6 +2722,7 @@
           time: 'Just now'
         });
         appState.logs = appState.logs.slice(0, 8);
+        persistState();
         showToast("Logged symptom entry");
       }
       input.value = "";
@@ -2407,6 +2738,7 @@
       if (!name || !val) return;
       
       appState.labs.unshift({
+        id: Date.now(),
         name: name,
         value: val,
         percent: Math.floor(Math.random() * 40) + 50,
@@ -2417,6 +2749,7 @@
       nameInput.value = "";
       valInput.value = "";
       renderAnalyticsContent();
+      persistState();
       showToast(`Added blood biomarker: ${name}`);
     }
 
@@ -2426,7 +2759,7 @@
       if (!text) return;
       
       const now = new Date();
-      const months = ["May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
       const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
       
       appState.journal.unshift({
@@ -2437,6 +2770,7 @@
       
       input.value = "";
       renderAnalyticsContent();
+      persistState();
       showToast("Recovery journal entry added");
     }
 
@@ -2457,6 +2791,8 @@
       
       if (activeDosesRemaining > 0) {
         activeDosesRemaining--;
+        appState.activeDosesRemaining = activeDosesRemaining;
+        if (!appState.completedAgendaIds.includes(id)) appState.completedAgendaIds.push(id);
         $("#dosesRemainingCounter").textContent = activeDosesRemaining;
         if (activeDosesRemaining === 0) {
           $("#dosesRemainingCounter").textContent = "✓";
@@ -2466,6 +2802,7 @@
           showToast("Logged injection successfully");
         }
       }
+      persistState();
     }
 
     // Action overlays mapping
@@ -2504,7 +2841,10 @@
 
     function saveProtocol() {
       const name = protocolNameInput.value.trim() || "Melanotan I";
-      showToast(`Protocol "${name}" successfully saved to secure local vault.`);
+      appState.protocol.name = name;
+      updateDoseMath();
+      persistState();
+      showToast(`Protocol "${name}" saved locally${firebaseUser ? " and queued for sync" : ""}.`);
     }
 
     function logDoseAtCurrentSite() {
@@ -2521,15 +2861,213 @@
       if (selectedAnalyticsTab === 'logs') {
         renderAnalyticsContent();
       }
+      appState.selectedSite = site;
+      persistState();
     }
 
+    function applyCompletedAgendaState() {
+      appState.completedAgendaIds.forEach((id) => {
+        const card = $(`#${id}`);
+        if (!card) return;
+        card.classList.add("done");
+        card.classList.remove("overdue");
+        const chip = card.querySelector(".status-chip");
+        if (chip) {
+          chip.className = "status-chip success";
+          chip.textContent = "Done";
+          chip.onclick = null;
+        }
+        const icon = card.querySelector(".status-icon");
+        if (icon) {
+          icon.className = "status-icon green";
+          icon.textContent = "✓";
+        }
+      });
+      $("#dosesRemainingCounter").textContent = activeDosesRemaining === 0 ? "✓" : activeDosesRemaining;
+    }
+
+    function applyStateToControls() {
+      const protocol = appState.protocol;
+      protocolNameInput.value = protocol.name || "Melanotan I";
+      cardProtocolName.textContent = protocolNameInput.value;
+      moleculeAbbr.textContent = protocolNameInput.value.substring(0, 2).toUpperCase();
+      peptideMg.value = protocol.peptideMg || 10;
+      waterMl.value = protocol.waterMl || 2;
+      targetDose.value = protocol.targetDose || 500;
+      syringe.value = String(protocol.syringeUnits || 50);
+      doseUnit = protocol.doseUnit || "mcg";
+      $$("[data-dose-unit]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.doseUnit === doseUnit);
+      });
+      $("#presetMass").textContent = Number(peptideMg.value).toFixed(1);
+      $("#presetWater").textContent = Number(waterMl.value).toFixed(1);
+      selectedSite.textContent = appState.selectedSite || "Left Outer Thigh";
+      activeDosesRemaining = Number.isFinite(appState.activeDosesRemaining) ? appState.activeDosesRemaining : 2;
+      applyCompletedAgendaState();
+    }
+
+    function replaceAppState(incoming) {
+      applyingRemoteState = true;
+      const next = mergeState(getDefaultState(), incoming);
+      next.updatedAt = incoming?.updatedAt || new Date().toISOString();
+      Object.keys(appState).forEach((key) => delete appState[key]);
+      Object.assign(appState, next);
+      activeDosesRemaining = appState.activeDosesRemaining;
+      doseUnit = appState.protocol.doseUnit || "mcg";
+      applyStateToControls();
+      updateDoseMath();
+      renderSites("front");
+      renderAnalyticsContent();
+      persistState({ cloud: false });
+      applyingRemoteState = false;
+    }
+
+    async function initFirebase() {
+      try {
+        const [
+          appModule,
+          authModule,
+          firestoreModule
+        ] = await Promise.all([
+          import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+          import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"),
+          import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js")
+        ]);
+
+        const firebaseApp = appModule.initializeApp(firebaseConfig);
+        const auth = authModule.getAuth(firebaseApp);
+        const db = firestoreModule.getFirestore(firebaseApp);
+        const provider = new authModule.GoogleAuthProvider();
+
+        try {
+          await firestoreModule.enableIndexedDbPersistence(db);
+        } catch (error) {
+          console.warn("Firestore offline persistence was not enabled.", error);
+        }
+
+        firebaseApi = {
+          auth,
+          db,
+          provider,
+          signInWithPopup: authModule.signInWithPopup,
+          signOut: authModule.signOut,
+          onAuthStateChanged: authModule.onAuthStateChanged,
+          doc: firestoreModule.doc,
+          getDoc: firestoreModule.getDoc,
+          setDoc: firestoreModule.setDoc,
+          onSnapshot: firestoreModule.onSnapshot,
+          serverTimestamp: firestoreModule.serverTimestamp
+        };
+
+        async function handleGoogleAuthClick() {
+          try {
+            if (firebaseUser) {
+              await firebaseApi.signOut(auth);
+              return;
+            }
+            setAuthButtonsDisabled(true, "Opening Google...");
+            setAuthGateDetail("Waiting for Google sign-in...");
+            await firebaseApi.signInWithPopup(auth, provider);
+          } catch (error) {
+            console.warn("Google sign-in failed.", error);
+            setSyncStatus("Google sign-in failed", "warn");
+            setAuthGateDetail("Google sign-in failed. Try again from an authorized domain.", "warn");
+            setAuthButtonsDisabled(false, "Sign in with Google");
+          }
+        }
+
+        authButton.addEventListener("click", handleGoogleAuthClick);
+        gateAuthButton.addEventListener("click", handleGoogleAuthClick);
+
+        firebaseApi.onAuthStateChanged(auth, async (user) => {
+          if (!user) {
+            firebaseUser = null;
+            lockApp();
+            setSyncStatus("Sign in required");
+            setAuthButtonsDisabled(false, "Sign in with Google");
+            return;
+          }
+
+          if ((user.email || "").toLowerCase() !== ALLOWED_EMAIL) {
+            firebaseUser = null;
+            await firebaseApi.signOut(auth);
+            lockApp("That Google account is not authorized for this app.", "warn");
+            setSyncStatus("Unauthorized Google account", "warn");
+            showToast("Only sspsful@gmail.com can sync this app.");
+            setAuthButtonsDisabled(false, "Sign in with Google");
+            return;
+          }
+
+          firebaseUser = user;
+          setAuthButtonsDisabled(true, "Loading Firebase...");
+          setAuthGateDetail("Signed in. Loading Firestore data...");
+          setSyncStatus("Loading Firebase data", "online");
+
+          const ref = firebaseApi.doc(db, "peptides", user.uid);
+          try {
+            const snapshot = await firebaseApi.getDoc(ref);
+            const remoteState = snapshot.exists() ? stateFromFirebaseDocument(snapshot.data()) : null;
+            if (remoteState) {
+              replaceAppState(remoteState);
+              setSyncStatus("Loaded Firebase data", "online");
+              setAuthGateDetail("Firebase data loaded.");
+            } else {
+              replaceAppState(getDefaultState());
+              await firebaseApi.setDoc(ref, toFirebaseDocument(appState, user), { merge: true });
+              setSyncStatus("Created Firebase data", "online");
+              setAuthGateDetail("Created your Firestore document.");
+            }
+            unlockApp();
+            setAuthButtonsDisabled(false, "Sign out");
+          } catch (error) {
+            console.warn("Could not read Firebase state.", error);
+            firebaseUser = null;
+            lockApp("Firestore query failed. Check database rules and try again.", "warn");
+            setSyncStatus("Firebase query failed", "warn");
+            setAuthButtonsDisabled(false, "Sign in with Google");
+            return;
+          }
+
+          firebaseApi.onSnapshot(ref, (snapshot) => {
+            if (!snapshot.exists() || applyingRemoteState) return;
+            const remoteState = stateFromFirebaseDocument(snapshot.data());
+            if (remoteState?.updatedAt && remoteState.updatedAt > appState.updatedAt) {
+              replaceAppState(remoteState);
+              setSyncStatus("Firebase update received", "online");
+            }
+          }, (error) => {
+            console.warn("Firebase subscription failed.", error);
+            setSyncStatus("Firebase listener blocked", "warn");
+          });
+        });
+      } catch (error) {
+        console.warn("Firebase SDK could not load.", error);
+        setSyncStatus("Firebase SDK failed", "warn");
+        setAuthGateDetail("Firebase SDK could not load. The app stays locked.", "warn");
+        setAuthButtonsDisabled(true, "Firebase unavailable");
+      }
+    }
+
+    window.selectPreset = selectPreset;
+    window.saveProtocol = saveProtocol;
+    window.completeAgendaItem = completeAgendaItem;
+    window.triggerQuickAction = triggerQuickAction;
+    window.switchAnalyticsTab = switchAnalyticsTab;
+    window.logDoseAtCurrentSite = logDoseAtCurrentSite;
+    window.addQuickLog = addQuickLog;
+    window.addQuickLab = addQuickLab;
+    window.addQuickJournal = addQuickJournal;
+
     // App Initialization
+    lockApp("Allowed account: sspsful@gmail.com");
+    applyStateToControls();
     updateDoseMath();
     renderSites("front");
     renderCalendar();
     setGreeting();
     switchAnalyticsTab('logs');
     resizeCanvas();
+    initFirebase();
     
     window.addEventListener("resize", resizeCanvas);
   </script>
