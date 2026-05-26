@@ -2683,9 +2683,11 @@
     }
 
     function setGreeting() {
+      const el = $("#greeting");
+      if (!el) return;
       const hour = new Date().getHours();
       const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-      $("#greeting").textContent = greeting;
+      el.textContent = greeting;
     }
 
     // Modal quick sheets
