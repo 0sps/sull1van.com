@@ -4,45 +4,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PeptideKit+ Protocol Console</title>
-  <meta name="description" content="A clinical-dark premium peptide protocol tracking console with dose calculations, site rotation, pharmacokinetic curves, and wellness logs.">
+  <meta name="description" content="An elegant editorial light peptide protocol tracking console with dose calculations, site rotation, pharmacokinetic curves, and wellness logs.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
     :root {
-      color-scheme: dark;
-      --bg: #000000;
+      color-scheme: light;
+      --bg: #f7f1e8;
+      --bg-strong: #efe3d0;
+      --panel: rgba(255, 252, 247, 0.88);
+      --panel-strong: #fffaf2;
       
-      /* Tactical Cyber Palette */
-      --purple: #a855f7;
-      --blue: #3b82f6;
-      --cyan: #06b6d4;
-      --green: #10b981;
-      --red: #ef4444;
-      --yellow: #f59e0b;
+      /* Editorial Sepia & Deep Teal Palette */
+      --text: #23180a; /* Sepia-Charcoal */
+      --muted: #69553d; /* Sepia-Brown */
+      --dim: #a08d78; /* Soft Sepia-Gray */
+      --line: rgba(76, 54, 29, 0.12); /* Faint sepia borders */
       
-      --text: #ffffff;
-      --muted: #9ca3af;
-      --dim: #4b5563;
+      --accent: #0f766e; /* Deep Teal Green */
+      --accent-soft: #d8ebe5; /* Pastel Sage */
+      --purple: #7e22ce; /* Soft Grape Purple */
+      --blue: #1d4ed8; /* Navy/Royal Blue */
+      --cyan: #0891b2; /* Muted Cyan */
+      --green: #16a34a; /* Warm Emerald */
+      --red: #dc2626; /* Terracotta Red */
+      --yellow: #ca8a04; /* Deep Gold */
       
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
 
-      /* Premium AMOLED Neumorphism Shadows */
-      --nm-raised: -3px -3px 12px rgba(255, 255, 255, 0.012), 4px 4px 16px rgba(0, 0, 0, 0.85);
-      --nm-sunken: inset 2px 2px 6px rgba(0, 0, 0, 0.85), inset -2px -2px 6px rgba(255, 255, 255, 0.01);
-      --nm-btn: -2px -2px 8px rgba(255, 255, 255, 0.01), 2px 2px 8px rgba(0, 0, 0, 0.6);
-      --nm-active: inset 2px 2px 5px rgba(0, 0, 0, 0.9), inset -1px -1px 3px rgba(255, 255, 255, 0.015);
+      /* Pillowy Soft sepia neumorphic shadows */
+      --nm-raised: 
+        0 18px 45px rgba(71, 48, 18, 0.08),
+        0 4px 12px rgba(71, 48, 18, 0.04);
+      --nm-sunken: 
+        inset 1px 2px 4px rgba(71, 48, 18, 0.08),
+        inset -1px -2px 4px rgba(255, 255, 255, 0.8);
+      --nm-btn: 
+        0 6px 12px rgba(71, 48, 18, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 0 0 1px rgba(76, 54, 29, 0.04);
+      --nm-active: 
+        inset 1px 2px 4px rgba(71, 48, 18, 0.12),
+        inset -1px -1px 2px rgba(255, 255, 255, 0.6);
       
-      /* Tactile Glow FX */
-      --glow-purple: 0 0 16px rgba(168, 85, 247, 0.2);
-      --glow-blue: 0 0 16px rgba(59, 130, 246, 0.2);
-      --glow-cyan: 0 0 16px rgba(6, 182, 212, 0.25);
-      --glow-green: 0 0 16px rgba(16, 185, 129, 0.25);
-      --glow-red: 0 0 16px rgba(239, 68, 68, 0.25);
+      /* Glowing Highlights */
+      --glow-teal: 0 0 16px rgba(15, 118, 110, 0.18);
+      --glow-purple: 0 0 16px rgba(126, 34, 206, 0.12);
       
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: 'Fraunces', serif;
+      --font-ui: 'Space Grotesk', sans-serif;
       --font-mono: 'JetBrains Mono', Consolas, monospace;
     }
 
@@ -63,19 +76,20 @@
       font-family: var(--font-body);
       line-height: 1.5;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* Ambient Cockpit Mesh Background */
+    /* Ambient Editorial Sepia Background Grid */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       z-index: -1;
       background-image: 
-        radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.05), transparent 45rem),
-        radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.05), transparent 40rem),
-        linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
+        radial-gradient(circle at 10% 10%, rgba(220, 185, 128, 0.28), transparent 45rem),
+        radial-gradient(circle at 90% 10%, rgba(61, 152, 141, 0.18), transparent 40rem),
+        linear-gradient(rgba(76, 54, 29, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 54, 29, 0.015) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
       pointer-events: none;
     }
@@ -105,7 +119,7 @@
       padding: 24px 24px 100px;
     }
 
-    /* Top Navigation HUD */
+    /* Sticky Navigation HUD */
     .topbar {
       position: sticky;
       top: 0;
@@ -116,10 +130,10 @@
       align-items: center;
       margin: -24px -24px 28px;
       padding: 16px 24px;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(247, 241, 232, 0.9);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--line);
     }
 
     .brand {
@@ -135,24 +149,25 @@
       height: 44px;
       flex: 0 0 auto;
       place-items: center;
-      border: 1px solid rgba(168, 85, 247, 0.35);
+      border: 1px solid rgba(15, 118, 110, 0.3);
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.8), rgba(59, 130, 246, 0.7));
-      box-shadow: 0 0 18px rgba(168, 85, 247, 0.3);
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: -0.05em;
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.15);
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: #ffffff;
     }
 
     .brand h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: 700;
       font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       line-height: 1.1;
-      background: linear-gradient(to right, #ffffff, #d1d5db);
+      background: linear-gradient(135deg, #0f766e, #23180a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -160,11 +175,11 @@
     .brand p {
       margin: 2px 0 0;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-weight: 400;
+      font-weight: 600;
     }
 
     .top-actions {
@@ -173,26 +188,26 @@
       align-items: center;
     }
 
-    /* Tactile Neumorphic Buttons */
+    /* Soft Tactile Neumorphic Buttons */
     .icon-button {
       display: grid;
       width: 42px;
       height: 42px;
       place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
-      background: #0d0d0f;
+      background: rgba(255, 252, 247, 0.85);
       box-shadow: var(--nm-btn);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
     }
 
-    /* Glow only on hover - NO physical movement */
+    /* Glow overlays on hover only - strict no-movement compliance */
     .icon-button:hover,
     .calendar-nav:hover {
-      border-color: rgba(59, 130, 246, 0.35);
-      background: #111114;
-      box-shadow: var(--nm-btn), 0 0 14px rgba(59, 130, 246, 0.2);
+      border-color: rgba(15, 118, 110, 0.35);
+      background: var(--panel-strong);
+      box-shadow: var(--nm-btn), 0 0 12px rgba(15, 118, 110, 0.12);
     }
 
     .icon-button:active,
@@ -201,7 +216,7 @@
       border-color: transparent;
     }
 
-    /* Layout Grids */
+    /* Main Grid Arrays */
     .dashboard-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
@@ -215,11 +230,13 @@
       gap: 24px;
     }
 
-    /* Molded Tactile Card Panels */
+    /* Soft Pillowy Neumorphic Card Shells */
     .panel {
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      background: linear-gradient(145deg, #101013, #070709);
+      background: var(--panel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       box-shadow: var(--nm-raised);
       overflow: hidden;
       position: relative;
@@ -230,43 +247,44 @@
       gap: 16px;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 22px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-      background: rgba(0, 0, 0, 0.2);
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.35);
     }
 
     .panel-title {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
       letter-spacing: -0.01em;
+      color: var(--text);
     }
 
     .panel-kicker {
       display: block;
       margin-bottom: 4px;
       color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    /* Hero Dashboard Core Widget */
+    /* Editorial Hero Section Widget */
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) auto;
       gap: 24px;
       align-items: center;
-      padding: 30px;
-      border: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 34px;
+      border: 1px solid rgba(15, 118, 110, 0.15);
       border-radius: var(--radius-lg);
       background: 
-        radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.08), transparent 20rem),
-        linear-gradient(145deg, #0e0d11, #040405);
-      box-shadow: var(--nm-raised), 0 0 24px rgba(168, 85, 247, 0.05);
+        radial-gradient(circle at 100% 0%, rgba(15, 118, 110, 0.06), transparent 22rem),
+        linear-gradient(135deg, rgba(255, 252, 247, 0.98), rgba(244, 232, 210, 0.95));
+      box-shadow: var(--nm-raised);
       overflow: hidden;
     }
 
@@ -277,11 +295,11 @@
     .hero h2 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4.5vw, 3.4rem);
-      font-weight: 900;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 700;
       line-height: 1.05;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #ffffff, #a855f7, #3b82f6);
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #23180a, #0f766e, #7e22ce);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -290,65 +308,63 @@
       max-width: 520px;
       margin: 12px 0 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       line-height: 1.6;
+      font-weight: 400;
     }
 
     .status-rack {
       display: grid;
       width: 320px;
-      gap: 12px;
+      gap: 14px;
       flex-shrink: 0;
     }
 
-    /* Molded Status Metric Tiles */
+    /* Tactile Recessed Status Metrics */
     .metric-tile {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      padding: 16px;
+      padding: 16px 20px;
       border-radius: var(--radius-md);
-      background: #08080a;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       box-shadow: var(--nm-sunken);
     }
 
     .metric-tile strong {
       font-family: var(--font-display);
       font-size: 1.8rem;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1;
-      color: #ffffff;
+      color: var(--text);
     }
 
     .metric-tile span {
       color: var(--muted);
-      font-family: var(--font-mono);
+      font-family: var(--font-ui);
       font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    /* Glow variant metrics, NO physically layout-shifting states */
+    /* Tactical Highlight text accents, NO scale movement transitions */
     .metric-tile.highlight strong {
       color: var(--purple);
-      text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
     }
     .metric-tile.action strong {
-      color: var(--blue);
-      text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+      color: var(--accent);
     }
     .metric-tile.success strong {
       color: var(--green);
-      text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
     }
 
     /* Agenda Component - NO annoying left-border accent bands */
     .agenda-list {
       display: grid;
       gap: 12px;
-      padding: 20px;
+      padding: 24px;
     }
 
     .agenda-item {
@@ -356,47 +372,47 @@
       grid-template-columns: auto 1fr auto;
       gap: 18px;
       align-items: center;
-      padding: 16px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 18px 24px;
+      border: 1px solid rgba(76, 54, 29, 0.08);
       border-radius: var(--radius-md);
-      background: #09090b;
+      background: rgba(255, 255, 255, 0.55);
       box-shadow: var(--nm-btn);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Urgency feedback via full soft border/shadow glows */
+    /* Gentle full border highlight tints for clinical statuses */
     .agenda-item.overdue {
-      border-color: rgba(239, 68, 68, 0.2);
-      background: rgba(239, 68, 68, 0.01);
-      box-shadow: var(--nm-btn), inset 0 0 10px rgba(239, 68, 68, 0.03);
+      border-color: rgba(220, 38, 38, 0.22);
+      background: rgba(220, 38, 38, 0.015);
+      box-shadow: var(--nm-btn), inset 0 0 10px rgba(220, 38, 38, 0.02);
     }
 
     .agenda-item.done {
-      border-color: rgba(16, 185, 129, 0.15);
-      background: rgba(16, 185, 129, 0.01);
-      box-shadow: var(--nm-btn), inset 0 0 10px rgba(16, 185, 129, 0.03);
+      border-color: rgba(22, 163, 74, 0.18);
+      background: rgba(22, 163, 74, 0.015);
+      box-shadow: var(--nm-btn), inset 0 0 10px rgba(22, 163, 74, 0.02);
     }
 
-    /* Tactile Status Icons */
+    /* Inset Tactile Status Emblems */
     .status-icon {
       display: grid;
       place-items: center;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       box-shadow: var(--nm-sunken);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      font-size: 0.85rem;
+      border: 1px solid rgba(76, 54, 29, 0.05);
+      background: rgba(255, 255, 255, 0.85);
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
     .status-icon.red {
       color: var(--red);
-      text-shadow: var(--glow-red);
     }
 
     .status-icon.blue {
       color: var(--blue);
-      text-shadow: var(--glow-blue);
       position: relative;
     }
 
@@ -406,28 +422,28 @@
       height: 6px;
       border-radius: 50%;
       background: var(--blue);
-      box-shadow: 0 0 6px var(--blue);
     }
 
     .status-icon.green {
       color: var(--green);
-      text-shadow: var(--glow-green);
     }
 
     .agenda-item h3 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
     }
 
     .agenda-item p {
       margin: 3px 0 0;
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    /* Finished text states */
+    /* Check-off strikethrough states */
     .agenda-item.done h3,
     .agenda-item.done p {
       text-decoration: line-through;
@@ -435,39 +451,37 @@
     }
 
     .status-chip {
-      padding: 6px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 6px 14px;
+      border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 500;
-      background: #09090b;
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: rgba(255, 252, 247, 0.9);
       box-shadow: var(--nm-btn);
       white-space: nowrap;
       text-transform: uppercase;
     }
 
     .status-chip.danger {
-      border-color: rgba(239, 68, 68, 0.3);
-      color: #fca5a5;
-      background: rgba(239, 68, 68, 0.08);
-      box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+      border-color: rgba(220, 38, 38, 0.3);
+      color: var(--red);
+      background: rgba(220, 38, 38, 0.06);
     }
 
     .status-chip.success {
-      border-color: rgba(16, 185, 129, 0.3);
-      color: #a7f3d0;
-      background: rgba(16, 185, 129, 0.08);
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+      border-color: rgba(22, 163, 74, 0.3);
+      color: var(--green);
+      background: rgba(22, 163, 74, 0.06);
     }
 
-    /* Add Protocol Form UI */
+    /* Formulation Setup Form Layout */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      padding: 22px;
+      gap: 18px;
+      padding: 24px;
     }
 
     .field {
@@ -483,75 +497,76 @@
     .field label,
     .micro-label {
       color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    /* Recessed Molded Inputs */
+    /* Sunken Neumorphic Sepia Wells */
     .control {
       width: 100%;
       min-height: 46px;
-      border: 1px solid rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(76, 54, 29, 0.08);
       border-radius: var(--radius-md);
-      background: #060608;
+      background: rgba(255, 255, 255, 0.45);
       color: var(--text);
-      padding: 10px 14px;
+      padding: 12px 14px;
       outline: none;
       box-shadow: var(--nm-sunken);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-weight: 600;
     }
 
     .control:focus {
-      border-color: rgba(59, 130, 246, 0.45);
-      box-shadow: var(--nm-sunken), 0 0 10px rgba(59, 130, 246, 0.25);
+      border-color: rgba(15, 118, 110, 0.45);
+      box-shadow: var(--nm-sunken), 0 0 10px rgba(15, 118, 110, 0.15);
+      background: rgba(255, 255, 255, 0.75);
     }
 
-    /* Segmented Neumorphic Selector Slots */
+    /* Segmented Sepia Selector Slots */
     .segmented {
       display: inline-flex;
       gap: 4px;
       padding: 4px;
       border-radius: var(--radius-md);
-      background: #050506;
+      background: rgba(76, 54, 29, 0.04);
       box-shadow: var(--nm-sunken);
-      border: 1px solid rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(76, 54, 29, 0.04);
     }
 
     .seg-button {
       padding: 8px 16px;
       border-radius: var(--radius-sm);
       color: var(--muted);
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 0.86rem;
       transition: all 0.2s ease;
       white-space: nowrap;
     }
 
     .seg-button:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.3);
     }
 
     .seg-button.active {
       color: #ffffff;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      box-shadow: 0 6px 16px rgba(15, 118, 110, 0.3);
     }
 
-    /* Digital Dashboard HUD Output */
+    /* Digital Sepia Output Panel */
     .dose-readout {
       grid-column: 1 / -1;
       display: grid;
       gap: 8px;
-      padding: 24px;
-      border: 1px solid rgba(6, 182, 212, 0.15);
+      padding: 26px;
+      border: 1px solid rgba(15, 118, 110, 0.15);
       border-radius: var(--radius-md);
-      background: linear-gradient(145deg, #050a0f, #040507);
+      background: linear-gradient(145deg, #e6edea, #f3f7f5);
       box-shadow: var(--nm-sunken);
       text-align: center;
       position: relative;
@@ -561,36 +576,37 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.06), transparent 70%);
+      background: radial-gradient(circle at 50% 50%, rgba(15, 118, 110, 0.03), transparent 70%);
       pointer-events: none;
     }
 
     .dose-readout strong {
-      color: var(--cyan);
+      color: var(--accent);
       font-family: var(--font-display);
       font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 900;
+      font-weight: 700;
       line-height: 1;
-      letter-spacing: -0.03em;
-      text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8), 0 0 10px rgba(15, 118, 110, 0.15);
     }
 
     .dose-readout span {
       color: var(--muted);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
-    /* Interactive Search Presets Cards */
+    /* Molded Selection Preset Cards */
     .protocol-card {
       display: grid;
       grid-template-columns: 42px 1fr auto;
       gap: 16px;
       align-items: center;
       padding: 16px;
-      border: 1px solid rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(15, 118, 110, 0.15);
       border-radius: var(--radius-md);
-      background: rgba(168, 85, 247, 0.03);
-      box-shadow: var(--nm-raised);
+      background: rgba(15, 118, 110, 0.02);
+      box-shadow: var(--nm-btn);
     }
 
     .molecule {
@@ -599,33 +615,35 @@
       height: 42px;
       place-items: center;
       border-radius: var(--radius-sm);
-      background: rgba(59, 130, 246, 0.12);
-      color: var(--cyan);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--accent);
       font-family: var(--font-mono);
-      font-weight: 800;
+      font-weight: 700;
       box-shadow: var(--nm-sunken);
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(76, 54, 29, 0.04);
     }
 
     .protocol-card strong {
       display: block;
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
+      color: var(--text);
     }
 
     .protocol-card span {
       display: block;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    /* Site Rotation Panel */
+    /* Injection Rotation Component */
     .mapper-shell {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 220px;
+      grid-template-columns: minmax(0, 1fr) 230px;
       gap: 20px;
-      padding: 22px;
+      padding: 24px;
     }
 
     .body-stage {
@@ -633,14 +651,14 @@
       min-height: 480px;
       border-radius: var(--radius-md);
       background: 
-        radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.06), transparent 70%),
-        #040405;
+        radial-gradient(circle at 50% 30%, rgba(15, 118, 110, 0.05), transparent 70%),
+        #fffcf9;
       box-shadow: var(--nm-sunken);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(76, 54, 29, 0.08);
     }
 
     .body-figure {
@@ -657,18 +675,18 @@
       width: auto;
     }
 
-    /* Node Overlays, NO physical movement on hover states */
+    /* Medical Sites mapping coordinates overlay */
     .site-node {
       position: absolute;
       z-index: 10;
       display: grid;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1.5px solid rgba(76, 54, 29, 0.35);
       border-radius: 50%;
-      background: rgba(10, 10, 12, 0.7);
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.015);
+      background: rgba(255, 252, 247, 0.9);
+      box-shadow: 0 4px 10px rgba(71, 48, 18, 0.06);
       transform: translate(-50%, -50%);
     }
 
@@ -681,22 +699,21 @@
       transition: all 0.2s ease;
     }
 
-    /* Custom glow-intensity increases on hover without size/scale shift */
+    /* Glow increases strictly avoiding movement scales */
     .site-node:hover {
-      border-color: var(--blue);
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-      background: rgba(59, 130, 246, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(15, 118, 110, 0.5);
+      background: rgba(15, 118, 110, 0.08);
     }
 
     .site-node:hover::after {
-      background: var(--blue);
-      box-shadow: var(--glow-blue);
+      background: var(--accent);
     }
 
     .site-node.selected {
-      border-color: var(--purple);
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.6);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      box-shadow: 0 0 16px rgba(15, 118, 110, 0.4);
     }
 
     .site-node.selected::after {
@@ -713,9 +730,9 @@
 
     .site-result {
       padding: 16px;
-      border: 1px solid rgba(59, 130, 246, 0.18);
+      border: 1px solid rgba(15, 118, 110, 0.18);
       border-radius: var(--radius-md);
-      background: rgba(59, 130, 246, 0.02);
+      background: rgba(15, 118, 110, 0.02);
       box-shadow: var(--nm-sunken);
     }
 
@@ -723,10 +740,9 @@
       display: block;
       margin-top: 6px;
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: #ffffff;
-      text-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+      color: var(--text);
     }
 
     .history-list {
@@ -739,19 +755,20 @@
 
     .history-list li {
       padding: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
       color: var(--muted);
-      background: #08080a;
+      background: rgba(255, 255, 255, 0.5);
       box-shadow: var(--nm-btn);
-      font-size: 0.82rem;
+      font-size: 0.85rem;
+      font-weight: 600;
     }
 
-    /* Pharmacokinetic Interactive Monitor */
+    /* Pharmacokinetic Decay Visualizer */
     .chart-wrap {
       display: grid;
       gap: 16px;
-      padding: 22px;
+      padding: 24px;
     }
 
     .chart-controls {
@@ -767,13 +784,13 @@
       height: 320px;
       border-radius: var(--radius-md);
       background: 
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        #040405;
+        linear-gradient(rgba(76, 54, 29, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 54, 29, 0.04) 1px, transparent 1px),
+        #fffcf8;
       background-size: 100% 40px, 40px 100%;
       box-shadow: var(--nm-sunken);
       overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(76, 54, 29, 0.08);
     }
 
     #pkCanvas {
@@ -782,32 +799,31 @@
       height: 100%;
     }
 
-    /* High Tech Glass Tooltip */
+    /* Sepia Glass Tooltip coord scrub */
     .scrub-label {
       position: absolute;
       top: 16px;
       right: 16px;
       max-width: calc(100% - 32px);
       padding: 10px 14px;
-      border: 1px solid rgba(6, 182, 212, 0.35);
+      border: 1px solid rgba(15, 118, 110, 0.25);
       border-radius: var(--radius-md);
-      background: rgba(10, 10, 12, 0.85);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 32px rgba(71, 48, 18, 0.1);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      color: var(--cyan);
+      color: var(--accent);
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 0.82rem;
+      font-weight: 700;
       pointer-events: none;
-      text-shadow: var(--glow-cyan);
     }
 
-    /* Interactive Labs/Logs Panels */
+    /* Unified Logs, Labs, and Journal */
     .tabs {
       display: flex;
       gap: 6px;
-      padding: 16px 22px 0;
+      padding: 18px 24px 0;
     }
 
     .tabs .seg-button {
@@ -819,14 +835,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
-      padding: 22px 22px 12px;
+      padding: 24px 24px 12px;
     }
 
     .mini-card {
-      padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 18px;
+      border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
-      background: #08080a;
+      background: rgba(255, 255, 255, 0.6);
       box-shadow: var(--nm-raised);
     }
 
@@ -834,29 +850,29 @@
       display: block;
       margin-top: 6px;
       font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #ffffff;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text);
     }
 
     .mini-card .trend {
       display: block;
       margin-top: 4px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
+      font-size: 0.74rem;
+      font-weight: 700;
       text-transform: uppercase;
     }
 
     .mini-card .trend.green {
-      color: var(--green);
+      color: var(--accent);
     }
 
     .analytics-content {
-      padding: 0 22px 22px;
+      padding: 0 24px 24px;
     }
 
-    /* Interactive lists in tabs */
+    /* Dynamic Lists inside tab panels */
     .item-list {
       display: grid;
       gap: 10px;
@@ -878,38 +894,40 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-radius: var(--radius-md);
-      background: #09090b;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       box-shadow: var(--nm-btn);
     }
 
     .tab-item-card h4 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
     }
 
     .tab-item-card span {
-      font-size: 0.84rem;
+      font-size: 0.88rem;
       color: var(--muted);
+      font-weight: 600;
     }
 
     .tab-item-card .badge {
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-family: var(--font-mono);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
     }
 
-    /* Biomarker layouts */
+    /* Biomarkers bars */
     .biomarkers-stack {
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
 
     .biomarker-row {
@@ -921,9 +939,9 @@
 
     .biomarker-bar-container {
       grid-column: 1 / -1;
-      height: 8px;
-      border-radius: 99px;
-      background: #050506;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(76, 54, 29, 0.08);
       box-shadow: var(--nm-sunken);
       overflow: hidden;
       position: relative;
@@ -931,27 +949,25 @@
 
     .biomarker-bar {
       height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-      box-shadow: 0 0 8px rgba(6, 182, 212, 0.35);
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      box-shadow: 0 0 8px rgba(15, 118, 110, 0.2);
     }
 
     .biomarker-bar.purple {
-      background: linear-gradient(90deg, var(--purple), var(--blue));
-      box-shadow: 0 0 8px rgba(168, 85, 247, 0.35);
+      background: linear-gradient(90deg, var(--purple), #c084fc);
     }
 
     .biomarker-bar.green {
       background: var(--green);
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
     }
 
-    /* Quick Inline forms inside tabs */
+    /* Tab action adding logs forms */
     .tab-action-form {
       display: flex;
       gap: 8px;
       align-items: center;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     .tab-action-form input {
@@ -962,18 +978,19 @@
 
     .tab-action-form button {
       height: 38px;
-      padding: 0 16px;
+      padding: 0 18px;
       border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      font-family: var(--font-display);
-      font-weight: 600;
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      color: #ffffff;
+      font-family: var(--font-ui);
+      font-weight: 700;
       font-size: 0.85rem;
       box-shadow: var(--nm-btn);
     }
 
-    /* Calendar Grid Matrix */
+    /* Calendar schedule grid matrix */
     .calendar {
-      padding: 22px;
+      padding: 24px;
     }
 
     .calendar-top {
@@ -986,7 +1003,7 @@
 
     .calendar-top strong {
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
     }
 
@@ -995,9 +1012,9 @@
       width: 36px;
       height: 36px;
       place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
-      background: #0c0c0e;
+      background: rgba(255, 255, 255, 0.8);
       box-shadow: var(--nm-btn);
       font-size: 1.2rem;
       line-height: 1;
@@ -1028,20 +1045,20 @@
       display: grid;
       min-height: 44px;
       place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
-      background: #080809;
+      background: rgba(255, 255, 255, 0.5);
       box-shadow: var(--nm-raised);
       color: var(--muted);
-      font-size: 0.88rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
     .day.today {
-      border-color: rgba(168, 85, 247, 0.45);
-      color: #ffffff;
-      background: #0e0d11;
-      box-shadow: var(--nm-raised), 0 0 12px rgba(168, 85, 247, 0.15);
+      border-color: rgba(15, 118, 110, 0.45);
+      color: var(--accent);
+      background: var(--panel-strong);
+      box-shadow: var(--nm-raised), 0 0 12px rgba(15, 118, 110, 0.15);
       font-weight: 700;
     }
 
@@ -1053,29 +1070,25 @@
     }
 
     .dot {
-      width: 4px;
-      height: 4px;
+      width: 4.5px;
+      height: 4.5px;
       border-radius: 50%;
       background: var(--blue);
-      box-shadow: var(--glow-blue);
     }
 
     .dot.green {
       background: var(--green);
-      box-shadow: var(--glow-green);
     }
 
     .dot.yellow {
       background: var(--yellow);
-      box-shadow: var(--glow-yellow);
     }
 
     .dot.red {
       background: var(--red);
-      box-shadow: var(--glow-red);
     }
 
-    /* Floating Glass Navigation Dock */
+    /* Floating Off-White Navigation Dock */
     .bottom-nav {
       position: fixed;
       right: 50%;
@@ -1086,10 +1099,10 @@
       gap: 6px;
       width: min(440px, calc(100% - 144px));
       padding: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      background: rgba(10, 10, 12, 0.8);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), var(--nm-raised);
+      border: 1px solid rgba(76, 54, 29, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 252, 247, 0.85);
+      box-shadow: 0 16px 48px rgba(71, 48, 18, 0.08), var(--nm-raised);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       transform: translateX(50%);
@@ -1102,11 +1115,12 @@
       place-items: center;
       justify-content: center;
       min-height: 52px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: transparent;
       color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 500;
+      font-size: 0.74rem;
+      font-family: var(--font-ui);
+      font-weight: 700;
       transition: all 0.2s ease;
     }
 
@@ -1115,21 +1129,20 @@
       height: 20px;
     }
 
-    /* Neon glows on active buttons, NO layout scale/motion animations */
+    /* Glowing highlights on selection, NO scale hover transitions */
     .nav-item:hover,
     .nav-item.active {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .nav-item.active {
       box-shadow: var(--nm-active);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      color: var(--cyan);
-      text-shadow: var(--glow-cyan);
+      border: 1px solid rgba(76, 54, 29, 0.04);
+      background: rgba(15, 118, 110, 0.05);
     }
 
-    /* Floating Action Trigger System */
+    /* Teal Glowing FAB Trigger */
     .fab {
       position: fixed;
       right: 28px;
@@ -1141,18 +1154,18 @@
       place-items: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      box-shadow: var(--nm-btn), 0 0 28px rgba(168, 85, 247, 0.4);
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.28), var(--nm-btn);
       font-size: 2.2rem;
+      color: #ffffff;
       line-height: 1;
-      font-family: var(--font-display);
+      font-family: var(--font-ui);
       font-weight: 400;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Glow adjustments only, strict compliance with the no-translate policy */
     .fab:hover {
-      box-shadow: var(--nm-btn), 0 0 36px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 16px 36px rgba(15, 118, 110, 0.45);
       border-color: rgba(255, 255, 255, 0.35);
     }
 
@@ -1160,7 +1173,7 @@
       box-shadow: var(--nm-active);
     }
 
-    /* Context Quick Sheet Glass Panel */
+    /* Warm Off-White Quick Sheet Menu overlay */
     .quick-sheet {
       position: fixed;
       right: 28px;
@@ -1168,10 +1181,10 @@
       z-index: 55;
       display: none;
       width: min(300px, calc(100vw - 56px));
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(76, 54, 29, 0.12);
       border-radius: var(--radius-lg);
-      background: rgba(12, 12, 14, 0.95);
-      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.75), var(--nm-raised);
+      background: rgba(255, 252, 247, 0.95);
+      box-shadow: 0 24px 72px rgba(71, 48, 18, 0.1), var(--nm-raised);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       overflow: hidden;
@@ -1196,8 +1209,8 @@
 
     .quick-sheet header {
       padding: 16px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .quick-sheet h3 {
@@ -1210,7 +1223,7 @@
     .quick-actions {
       display: grid;
       gap: 1px;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(76, 54, 29, 0.06);
     }
 
     .action-button {
@@ -1219,13 +1232,16 @@
       gap: 12px;
       align-items: center;
       padding: 14px 18px;
-      background: #09090b;
+      background: rgba(255, 252, 247, 0.98);
       text-align: left;
       transition: all 0.2s ease;
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 0.9rem;
     }
 
     .action-button:hover {
-      background: #111114;
+      background: rgba(247, 241, 232, 0.7);
     }
 
     .action-button span:first-child {
@@ -1234,28 +1250,29 @@
       height: 32px;
       place-items: center;
       border-radius: var(--radius-sm);
-      background: rgba(59, 130, 246, 0.12);
-      color: var(--cyan);
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
       box-shadow: var(--nm-sunken);
-      border: 1px solid rgba(255,255,255,0.01);
+      border: 1px solid rgba(76, 54, 29, 0.04);
       font-weight: 700;
       font-size: 1rem;
     }
 
     .footnote {
       padding: 24px 24px 80px;
-      color: var(--dim);
-      font-size: 0.8rem;
+      color: var(--muted);
+      font-size: 0.85rem;
       text-align: center;
       line-height: 1.5;
+      font-weight: 600;
     }
 
-    /* Overlay full-screen glass backing on modal displays */
+    /* Glass Overlay modal backings */
     .sheet-overlay {
       position: fixed;
       inset: 0;
       z-index: 54;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(71, 48, 18, 0.15);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: none;
@@ -1264,20 +1281,20 @@
       display: block;
     }
 
-    /* Dynamic Toast Message */
+    /* Feedback pop toasts */
     .toast {
       position: fixed;
       top: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
-      background: rgba(16, 185, 129, 0.95);
+      background: rgba(15, 118, 110, 0.95);
       color: #ffffff;
       padding: 12px 24px;
       border-radius: var(--radius-md);
-      box-shadow: var(--glow-green), 0 8px 32px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 32px rgba(15, 118, 110, 0.25);
       z-index: 100;
-      font-family: var(--font-display);
-      font-weight: 600;
+      font-family: var(--font-ui);
+      font-weight: 700;
       font-size: 0.95rem;
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1397,10 +1414,10 @@
       </div>
       <div class="top-actions" aria-label="Global actions">
         <button class="icon-button" type="button" title="Search" aria-label="Search">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--text)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
         </button>
         <button class="icon-button" type="button" title="Privacy lock" aria-label="Privacy lock">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--text)" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
         </button>
       </div>
     </header>
@@ -1410,7 +1427,7 @@
         <div class="hero" id="dashboard">
           <div class="hero-content">
             <span class="panel-kicker" id="greeting">Good afternoon</span>
-            <h2>Clinical-dark command center.</h2>
+            <h2>Clinical-light command center.</h2>
             <p class="hero-copy">Track active protocols, calculate syringe draw-up units, rotate anatomical sites, and review active compound decay from one dense mobile-first dashboard.</p>
           </div>
           <div class="status-rack" aria-label="Daily status">
@@ -1570,7 +1587,7 @@
           <div class="mapper-shell">
             <div class="body-stage" id="bodyStage" aria-label="Interactive injection site map">
               <div class="body-figure" id="silhouetteWrapper" aria-hidden="true">
-                <!-- SVG silhouette overlays injected via JavaScript -->
+                <!-- SVG silhouette outlines injected via JavaScript -->
               </div>
             </div>
             <aside class="site-meta">
@@ -1583,7 +1600,7 @@
                 <li>Rotation spacing: 3 days</li>
                 <li>Local notes: no irritation logged</li>
               </ul>
-              <button class="seg-button active" style="width: 100%; border: 1px solid rgba(255,255,255,0.05)" type="button" onclick="logDoseAtCurrentSite()">Log Injection Site</button>
+              <button class="seg-button active" style="width: 100%; border: 1px solid rgba(76,54,29,0.12)" type="button" onclick="logDoseAtCurrentSite()">Log Injection Site</button>
             </aside>
           </div>
         </section>
@@ -1746,87 +1763,70 @@
       ]
     };
 
-    // Vector SVG silhouette template components
+    // Human contour outline silhouettes (Warm sepia pencil sketch style)
     const silhouettes = {
       front: `
         <svg class="body-svg" viewBox="0 0 200 450">
           <defs>
             <linearGradient id="glowFront" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.15)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.1)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.03)" />
-            </linearGradient>
-            <linearGradient id="linesFront" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.55)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.45)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.3)" />
+              <stop offset="0%" stop-color="rgba(15, 118, 110, 0.04)" />
+              <stop offset="100%" stop-color="rgba(76, 54, 29, 0.01)" />
             </linearGradient>
           </defs>
-          <circle cx="100" cy="45" r="20" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
-          <path d="M93,65 L93,76 L107,76 L107,65 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
-          <path d="M62,90 L138,90 C144,90 148,96 146,102 L130,225 C128,232 122,238 114,238 L86,238 C78,238 72,232 70,225 L54,102 C52,96 56,90 62,90 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
-          <path d="M72,120 Q100,132 128,120" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.2" />
-          <path d="M100,90 L100,238" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4" />
-          <path d="M48,100 L32,190 C30,198 22,202 18,202 L14,192 L28,100 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.2" />
-          <path d="M152,100 L168,190 C170,198 178,202 182,202 L186,192 L172,100 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.2" />
-          <path d="M70,238 L130,238 L124,285 L76,285 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
-          <path d="M76,285 L66,400 C64,410 70,418 78,418 C84,418 88,410 90,400 L98,285 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
-          <path d="M124,285 L134,400 C136,410 130,418 122,418 C116,418 112,410 110,400 L102,285 Z" fill="url(#glowFront)" stroke="url(#linesFront)" stroke-width="1.5" />
+          <!-- Sketched Silhouette contour -->
+          <circle cx="100" cy="45" r="20" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M93,65 L93,76 L107,76 L107,65 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M62,90 L138,90 C144,90 148,96 146,102 L130,225 C128,232 122,238 114,238 L86,238 C78,238 72,232 70,225 L54,102 C52,96 56,90 62,90 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M72,120 Q100,132 128,120" fill="none" stroke="rgba(76, 54, 29, 0.16)" stroke-width="1.2" />
+          <path d="M100,90 L100,238" fill="none" stroke="rgba(76, 54, 29, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+          <path d="M48,100 L32,190 C30,198 22,202 18,202 L14,192 L28,100 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.2" />
+          <path d="M152,100 L168,190 C170,198 178,202 182,202 L186,192 L172,100 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.2" />
+          <path d="M70,238 L130,238 L124,285 L76,285 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M76,285 L66,400 C64,410 70,418 78,418 C84,418 88,410 90,400 L98,285 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M124,285 L134,400 C136,410 130,418 122,418 C116,418 112,410 110,400 L102,285 Z" fill="url(#glowFront)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
         </svg>
       `,
       back: `
         <svg class="body-svg" viewBox="0 0 200 450">
           <defs>
             <linearGradient id="glowBack" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.15)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.1)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.03)" />
-            </linearGradient>
-            <linearGradient id="linesBack" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.55)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.45)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.3)" />
+              <stop offset="0%" stop-color="rgba(15, 118, 110, 0.04)" />
+              <stop offset="100%" stop-color="rgba(76, 54, 29, 0.01)" />
             </linearGradient>
           </defs>
-          <circle cx="100" cy="45" r="20" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" stroke-dasharray="10 2 10 2" />
-          <path d="M93,65 L93,76 L107,76 L107,65 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" />
-          <path d="M62,90 L138,90 C144,90 148,96 146,102 L130,225 C128,232 122,238 114,238 L86,238 C78,238 72,232 70,225 L54,102 C52,96 56,90 62,90 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" />
-          <path d="M100,90 L100,238" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="6 6" />
-          <path d="M48,100 L32,190 C30,198 22,202 18,202 L14,192 L28,100 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.2" />
-          <path d="M152,100 L168,190 C170,198 178,202 182,202 L186,192 L172,100 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.2" />
-          <path d="M70,238 L130,238 L124,285 C114,290 100,290 100,285 C100,290 86,290 76,285 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" />
-          <path d="M76,285 L66,400 C64,410 70,418 78,418 C84,418 88,410 90,400 L98,285 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" />
-          <path d="M124,285 L134,400 C136,410 130,418 122,418 C116,418 112,410 110,400 L102,285 Z" fill="url(#glowBack)" stroke="url(#linesBack)" stroke-width="1.5" />
+          <circle cx="100" cy="45" r="20" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" stroke-dasharray="10 2" />
+          <path d="M93,65 L93,76 L107,76 L107,65 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M62,90 L138,90 C144,90 148,96 146,102 L130,225 C128,232 122,238 114,238 L86,238 C78,238 72,232 70,225 L54,102 C52,96 56,90 62,90 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M100,90 L100,238" fill="none" stroke="rgba(76, 54, 29, 0.2)" stroke-width="1.5" stroke-dasharray="6 6" />
+          <path d="M48,100 L32,190 C30,198 22,202 18,202 L14,192 L28,100 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.2" />
+          <path d="M152,100 L168,190 C170,198 178,202 182,202 L186,192 L172,100 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.2" />
+          <path d="M70,238 L130,238 L124,285 C114,290 100,290 100,285 C100,290 86,290 76,285 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M76,285 L66,400 C64,410 70,418 78,418 C84,418 88,410 90,400 L98,285 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
+          <path d="M124,285 L134,400 C136,410 130,418 122,418 C116,418 112,410 110,400 L102,285 Z" fill="url(#glowBack)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.6" />
         </svg>
       `,
       face: `
         <svg class="body-svg" viewBox="0 0 200 450">
           <defs>
             <linearGradient id="glowFace" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.18)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.12)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.04)" />
-            </linearGradient>
-            <linearGradient id="linesFace" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.6)" />
-              <stop offset="50%" stop-color="rgba(59, 130, 246, 0.5)" />
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.35)" />
+              <stop offset="0%" stop-color="rgba(15, 118, 110, 0.05)" />
+              <stop offset="100%" stop-color="rgba(76, 54, 29, 0.01)" />
             </linearGradient>
           </defs>
-          <circle cx="100" cy="225" r="105" fill="url(#glowFace)" stroke="url(#linesFace)" stroke-width="1.8" />
-          <ellipse cx="68" cy="195" rx="15" ry="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-          <circle cx="68" cy="195" r="4.5" fill="var(--cyan)" />
-          <ellipse cx="132" cy="195" rx="15" ry="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-          <circle cx="132" cy="195" r="4.5" fill="var(--cyan)" />
-          <path d="M54,180 Q68,172 82,182" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
-          <path d="M146,180 Q132,172 118,182" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
-          <path d="M100,185 L94,242 L106,242 Z" fill="url(#glowFace)" stroke="url(#linesFace)" stroke-width="1.2" />
-          <path d="M80,285 Q100,310 120,285 Q100,295 80,285" fill="none" stroke="url(#linesFace)" stroke-width="1.5" />
+          <circle cx="100" cy="225" r="105" fill="url(#glowFace)" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.8" />
+          <ellipse cx="68" cy="195" rx="15" ry="8" fill="rgba(255, 255, 255, 0.5)" stroke="rgba(76, 54, 29, 0.16)" stroke-width="1" />
+          <circle cx="68" cy="195" r="4" fill="var(--accent)" />
+          <ellipse cx="132" cy="195" rx="15" ry="8" fill="rgba(255, 255, 255, 0.5)" stroke="rgba(76, 54, 29, 0.16)" stroke-width="1" />
+          <circle cx="132" cy="195" r="4" fill="var(--accent)" />
+          <path d="M54,180 Q68,172 82,182" fill="none" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.5" />
+          <path d="M146,180 Q132,172 118,182" fill="none" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.5" />
+          <path d="M100,185 L94,242 L106,242 Z" fill="url(#glowFace)" stroke="rgba(76, 54, 29, 0.3)" stroke-width="1.2" />
+          <path d="M80,285 Q100,310 120,285 Q100,295 80,285" fill="none" stroke="rgba(76, 54, 29, 0.35)" stroke-width="1.5" />
         </svg>
       `
     };
 
-    // Site mapper rotation dataset coordinates
+    // Site coordinates mappings
     const siteSets = {
       front: [
         ["Left Upper Deltoid", 30, 28],
@@ -1871,7 +1871,7 @@
     const selectedSite = $("#selectedSite");
     const silhouetteWrapper = $("#silhouetteWrapper");
 
-    // Dynamic site rendering logic
+    // Dynamic injection site renderer
     function renderSites(view = "front") {
       silhouetteWrapper.innerHTML = silhouettes[view];
       $$(".site-node", bodyStage).forEach((node) => node.remove());
@@ -1905,7 +1905,7 @@
       });
     });
 
-    // Formulation math logic
+    // Syringe volumetric calculations
     function asPositiveNumber(value, fallback) {
       const parsed = Number.parseFloat(value);
       return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
@@ -1954,7 +1954,7 @@
       });
     });
 
-    // Search and select preset logic
+    // Preset databases
     function selectPreset(name, mass, water, target, unit) {
       protocolNameInput.value = name;
       peptideMg.value = mass.toFixed(1);
@@ -1975,7 +1975,6 @@
       $("#presetMass").textContent = mass.toFixed(1);
       $("#presetWater").textContent = water.toFixed(1);
       
-      // Update the selection button states
       const presetButtons = $$("#protocols .seg-button");
       presetButtons.forEach(btn => {
         if (btn.textContent === name) btn.classList.add("active");
@@ -1986,7 +1985,7 @@
       showToast(`Selected ${name} preset`);
     }
 
-    // Chart Configuration & Decay projections
+    // Canvas charts plotting curves
     const canvas = $("#pkCanvas");
     const ctx = canvas.getContext("2d");
     const scrubLabel = $("#scrubLabel");
@@ -2032,11 +2031,10 @@
       
       ctx.clearRect(0, 0, width, height);
 
-      // Grid System
+      // Light Editorial Grid Coordinate system
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(255,255,255,0.035)";
+      ctx.strokeStyle = "rgba(76, 54, 29, 0.05)";
       
-      // Horizontal gridlines
       for (let yGrid = 0.1; yGrid < maxY; yGrid += 0.1) {
         const gridY = height - pad.bottom - (yGrid / maxY) * (height - pad.top - pad.bottom);
         ctx.beginPath();
@@ -2045,15 +2043,14 @@
         ctx.stroke();
       }
       
-      // Base Axises
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+      ctx.strokeStyle = "rgba(76, 54, 29, 0.12)";
       ctx.beginPath();
       ctx.moveTo(pad.left, pad.top);
       ctx.lineTo(pad.left, height - pad.bottom);
       ctx.lineTo(width - pad.right, height - pad.bottom);
       ctx.stroke();
 
-      // Plot primary glow curve line
+      // Deep teal curve gradient path plotting
       ctx.beginPath();
       points.forEach((point, index) => {
         const x = pad.left + (point.hours / totalHours) * (width - pad.left - pad.right);
@@ -2063,20 +2060,17 @@
       });
       
       const gradient = ctx.createLinearGradient(0, 0, width, 0);
-      gradient.addColorStop(0, "#a855f7");
-      gradient.addColorStop(0.5, "#06b6d4");
-      gradient.addColorStop(1, "#3b82f6");
+      gradient.addColorStop(0, "#7e22ce");
+      gradient.addColorStop(0.5, "#0f766e");
+      gradient.addColorStop(1, "#1d4ed8");
       
       ctx.strokeStyle = gradient;
       ctx.lineWidth = 3.5;
-      ctx.shadowColor = "rgba(6, 182, 212, 0.35)";
-      ctx.shadowBlur = 12;
       ctx.stroke();
-      ctx.shadowBlur = 0;
 
-      // Coordinate axes text overlays
+      // Text coordinate overlays
       ctx.fillStyle = "var(--muted)";
-      ctx.font = "10px JetBrains Mono";
+      ctx.font = "700 10px Space Grotesk";
       ctx.fillText(`0.0 ${chartUnit}`, 8, height - pad.bottom + 3);
       ctx.fillText(`${(maxY/2).toFixed(1)}`, 8, pad.top + (height - pad.top - pad.bottom) / 2 + 3);
       ctx.fillText(`${maxY.toFixed(1)}`, 8, pad.top + 3);
@@ -2089,9 +2083,9 @@
       const unit = chartUnit;
       const y = height - pad.bottom - (amountMg / maxY) * (height - pad.top - pad.bottom);
 
-      // Neon coordinate crosshair, dotted logic
+      // Coordinate dotted crosshairs
       ctx.setLineDash([3, 4]);
-      ctx.strokeStyle = "rgba(6, 182, 212, 0.4)";
+      ctx.strokeStyle = "rgba(15, 118, 110, 0.4)";
       ctx.beginPath();
       ctx.moveTo(clampedX, pad.top);
       ctx.lineTo(clampedX, height - pad.bottom);
@@ -2103,14 +2097,14 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Glowing locator point
+      // Locator point bubble
       ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "rgba(6, 182, 212, 0.8)";
-      ctx.shadowBlur = 8;
+      ctx.strokeStyle = "var(--accent)";
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(clampedX, y, 5, 0, Math.PI * 2);
+      ctx.arc(clampedX, y, 6, 0, Math.PI * 2);
       ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.stroke();
 
       const labelTime = chartWindowDays === 1 ? `Hour ${Math.round(hours)}` : `Day ${(hours / 24).toFixed(1)}`;
       scrubLabel.textContent = `${labelTime} • ${value.toFixed(chartUnit === "mg" ? 3 : 0)} ${unit}`;
@@ -2200,7 +2194,7 @@
       $("#greeting").textContent = greeting;
     }
 
-    // Modal sheet controls
+    // Modal quick sheets
     const fab = $("#fab");
     const quickSheet = $("#quickSheet");
     const sheetOverlay = $("#sheetOverlay");
@@ -2227,7 +2221,7 @@
       }
     });
 
-    // Feedback Toast trigger
+    // Toast pop trigger
     function showToast(message) {
       const toast = $("#toastMessage");
       toast.textContent = message;
@@ -2237,12 +2231,11 @@
       }, 3000);
     }
 
-    // Switch active Tab interface in Analytics
+    // Switch tab panel display in Analytics
     function switchAnalyticsTab(tabName) {
       selectedAnalyticsTab = tabName;
       const tabButtons = $$("#analytics .tabs .seg-button");
       
-      // Update active styling
       tabButtons.forEach(btn => {
         if (btn.textContent.toLowerCase() === tabName) btn.classList.add("active");
         else btn.classList.remove("active");
@@ -2251,7 +2244,7 @@
       renderAnalyticsContent();
     }
 
-    // Render corresponding analytics list layout
+    // Populate dynamic tab layouts
     function renderAnalyticsContent() {
       const container = $("#analyticsContent");
       const widgets = $("#analyticsWidgets");
@@ -2266,16 +2259,16 @@
           <div class="item-list">
         `;
         appState.logs.forEach(log => {
-          let badgeColor = "rgba(59, 130, 246, 0.15)";
+          let badgeColor = "rgba(29, 78, 216, 0.08)";
           let badgeTextCol = "var(--blue)";
-          if (log.type === 'Weight') { badgeColor = "rgba(6, 182, 212, 0.15)"; badgeTextCol = "var(--cyan)"; }
-          if (log.type === 'Symptom') { badgeColor = "rgba(245, 158, 11, 0.15)"; badgeTextCol = "var(--yellow)"; }
+          if (log.type === 'Weight') { badgeColor = "rgba(8, 145, 178, 0.08)"; badgeTextCol = "var(--cyan)"; }
+          if (log.type === 'Symptom') { badgeColor = "rgba(180, 83, 9, 0.08)"; badgeTextCol = "var(--yellow)"; }
           
           html += `
             <div class="tab-item-card">
               <div>
                 <h4>${log.title}</h4>
-                <span>${log.time}</span>
+                <span style="font-size:0.8rem; font-weight:600;">${log.time}</span>
               </div>
               <span class="badge" style="background:${badgeColor}; color:${badgeTextCol}">${log.value}</span>
             </div>
@@ -2299,15 +2292,15 @@
         `;
         appState.labs.forEach(lab => {
           html += `
-            <div class="mini-card" style="box-shadow:none; border:1px solid rgba(255,255,255,0.03); background: #08080a;">
+            <div class="mini-card" style="box-shadow:none; border:1px solid rgba(76,54,29,0.08); background: rgba(255, 255, 255, 0.65);">
               <div class="biomarker-row">
-                <span style="font-family:var(--font-display); font-weight:600; font-size:0.95rem">${lab.name}</span>
+                <span style="font-family:var(--font-ui); font-weight:700; font-size:0.95rem">${lab.name}</span>
                 <strong style="margin-top:0; font-size:1.15rem; color:var(--text)">${lab.value}</strong>
               </div>
               <div class="biomarker-bar-container" style="margin: 8px 0;">
                 <div class="biomarker-bar ${lab.color}" style="width: ${lab.percent}%"></div>
               </div>
-              <span class="micro-label" style="font-size:0.65rem">${lab.status}</span>
+              <span class="micro-label" style="font-size:0.68rem; font-weight:700;">${lab.status}</span>
             </div>
           `;
         });
@@ -2331,8 +2324,8 @@
         appState.journal.forEach(entry => {
           html += `
             <div class="tab-item-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-              <span class="micro-label" style="font-size:0.65rem">${entry.date}</span>
-              <p style="margin: 0; font-size:0.88rem; line-height: 1.5; color:var(--text)">${entry.text}</p>
+              <span class="micro-label" style="font-size:0.68rem">${entry.date}</span>
+              <p style="margin: 0; font-size:0.92rem; line-height: 1.5; color:var(--text); font-weight:600;">${entry.text}</p>
             </div>
           `;
         });
@@ -2347,7 +2340,7 @@
       }
     }
 
-    // Dynamic actions in database
+    // Dynamic database entries appending
     function addQuickLog() {
       const input = $("#quickLogVal");
       const text = input.value.trim();
@@ -2363,7 +2356,7 @@
           value: `${wt.toFixed(1)} kg`,
           time: 'Just now'
         });
-        appState.logs = appState.logs.slice(0, 8); // clamp
+        appState.logs = appState.logs.slice(0, 8);
         $("#weightVal").textContent = `${wt.toFixed(1)} kg`;
         showToast(`Weight updated to ${wt.toFixed(1)} kg`);
       } else {
@@ -2423,7 +2416,7 @@
       showToast("Recovery journal entry added");
     }
 
-    // Local buttons agenda check-offs
+    // Local agenda complete check-offs
     function completeAgendaItem(id) {
       const card = $(`#${id}`);
       if (!card || card.classList.contains("done")) return;
@@ -2451,7 +2444,7 @@
       }
     }
 
-    // Floating action button quick logs
+    // Action overlays mapping
     function triggerQuickAction(action) {
       closeQuickSheet();
       
@@ -2494,7 +2487,6 @@
       const site = selectedSite.textContent;
       showToast(`Injection site "${site}" successfully logged in site history.`);
       
-      // Update logs in real-time
       appState.logs.unshift({
         id: Date.now(),
         type: 'Dose',
