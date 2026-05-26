@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAllowedOwner(userId) {
+      return request.auth != null
+        && request.auth.uid == userId
+        && request.auth.token.email == "sspsful@gmail.com";
+    }
+
+    function hasValidEnvelope(userId) {
+      return request.resource.data.schemaVersion == 2
+        && request.resource.data.ownerUid == userId
+        && request.resource.data.ownerEmail == request.auth.token.email
+        && request.resource.data.keys().hasOnly([
+          "schemaVersion",
+          "ownerUid",
+          "ownerEmail",
+          "updatedAt",
+          "app"
+        ]);
+    }
+
+    match /peptides/{userId} {
+      allow read: if isAllowedOwner(userId);
+      allow create, update: if isAllowedOwner(userId) && hasValidEnvelope(userId);
+      allow delete: if isAllowedOwner(userId);
+    }
+  }
+}
