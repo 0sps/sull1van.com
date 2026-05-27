@@ -1125,11 +1125,21 @@
         }
         .std-row { display: flex; align-items: center; gap: 12px; min-height: 30px; }
         .std-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 76px; flex-shrink: 0; }
+        .std-reading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
         .std-bar {
-            flex: 1; min-height: 30px;
+            min-height: 18px;
             display: flex; align-items: center;
             font-family: var(--font-body); font-size: 12px; font-weight: 600;
             transition: color 0.3s;
+        }
+        .std-source {
+            font-family: var(--font-body);
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .std-bar.clear    { color: var(--ios-green); }
         .std-bar.reactive { color: var(--ios-red); }
@@ -1155,7 +1165,18 @@
         }
         .history-row:last-child { border-bottom: none; }
         .hist-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 82px; flex-shrink: 0; }
-        .hist-val  { font-family: var(--font-heading); font-size: 17px; font-weight: 600; flex: 1; }
+        .hist-reading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+        .hist-val  { font-family: var(--font-heading); font-size: 17px; font-weight: 600; }
+        .hist-source {
+            font-family: var(--font-body);
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            line-height: 1.35;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         .hist-delta { font-family: var(--font-body); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
         .delta-up   { background: rgba(255,69,58,0.13);  color: var(--ios-red); }
         .delta-down { background: rgba(48,209,88,0.13);  color: var(--ios-green); }
@@ -3115,7 +3136,10 @@
                         unit: normalizeUnitString(p.unit),
                         testResultId: p.testResultId || null,
                         lab: p.lab || null,
-                        sourceFile: p.sourceFile || null,
+                        sourceFile: p.sourceFile || p.filename || p.fileName || p.source_filename || null,
+                        sourcePage: p.sourcePage || null,
+                        reviewStatus: p.reviewStatus || null,
+                        verificationStatus: p.verificationStatus || null,
                     };
                 });
 
@@ -4683,11 +4707,15 @@
                 const label = status === 'clear' ? 'Nonreactive / Clear'
                     : status === 'reactive' ? 'Reactive / Detected'
                         : p.rawResult;
+                const sourceText = getPointSourceText(p);
                 return `
         <div class="std-row">
           <div class="std-date">${fmtDate(p.date)}</div>
-          <div class="std-bar ${barClass}">
-            <div class="std-dot"></div>${label}
+          <div class="std-reading">
+            <div class="std-bar ${barClass}">
+              <div class="std-dot"></div>${escStr(label)}
+            </div>
+            ${sourceText ? `<div class="std-source" title="${escStr(sourceText)}">${escStr(sourceText)}</div>` : ''}
           </div>
         </div>`;
             }).join('');
@@ -4700,6 +4728,20 @@
         </div>
       </div>
     `);
+        }
+
+        function humanizeStatus(value) {
+            if (!value) return '';
+            return String(value).replace(/_/g, ' ');
+        }
+
+        function getPointSourceText(p) {
+            const parts = [];
+            if (p.sourceFile) parts.push(p.sourceFile);
+            if (p.sourcePage) parts.push(`p. ${p.sourcePage}`);
+            if (p.verificationStatus) parts.push(humanizeStatus(p.verificationStatus));
+            else if (p.reviewStatus) parts.push(humanizeStatus(p.reviewStatus));
+            return parts.join(' · ');
         }
 
         function renderHistoryTable(t, container) {
@@ -4729,11 +4771,15 @@
                 }
 
                 const valColor = status === 'normal' ? 'c-green' : status === 'high' || status === 'low' ? 'c-red' : 'c-text';
+                const sourceText = getPointSourceText(p);
 
                 return `
         <div class="history-row">
           <div class="hist-date">${fmtDate(p.date)}</div>
-          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
+          <div class="hist-reading">
+            <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
+            ${sourceText ? `<div class="hist-source" title="${escStr(sourceText)}">${escStr(sourceText)}</div>` : ''}
+          </div>
           ${deltaHtml}
         </div>`;
             }).join('');
