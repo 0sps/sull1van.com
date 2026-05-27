@@ -1125,21 +1125,11 @@
         }
         .std-row { display: flex; align-items: center; gap: 12px; min-height: 30px; }
         .std-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 76px; flex-shrink: 0; }
-        .std-reading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
         .std-bar {
-            min-height: 18px;
+            flex: 1; min-height: 30px;
             display: flex; align-items: center;
             font-family: var(--font-body); font-size: 12px; font-weight: 600;
             transition: color 0.3s;
-        }
-        .std-source {
-            font-family: var(--font-body);
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
         .std-bar.clear    { color: var(--ios-green); }
         .std-bar.reactive { color: var(--ios-red); }
@@ -1165,19 +1155,36 @@
         }
         .history-row:last-child { border-bottom: none; }
         .hist-date { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); width: 82px; flex-shrink: 0; }
-        .hist-reading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-        .hist-val  { font-family: var(--font-heading); font-size: 17px; font-weight: 600; }
-        .hist-source {
-            font-family: var(--font-body);
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            line-height: 1.35;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .hist-val  { font-family: var(--font-heading); font-size: 17px; font-weight: 600; flex: 1; min-width: 0; }
         .hist-delta { font-family: var(--font-body); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+        .source-more-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 0.5px solid rgba(255,255,255,0.11);
+            background: rgba(255,255,255,0.075);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: background 0.16s, border-color 0.16s, color 0.16s, opacity 0.16s;
+        }
+        .source-more-btn:hover,
+        .source-more-btn:focus-visible {
+            background: rgba(255,255,255,0.13);
+            border-color: rgba(255,255,255,0.2);
+            color: var(--text-primary);
+            outline: none;
+        }
+        .source-more-btn:active { opacity: 0.72; }
+        .source-more-btn svg { width: 16px; height: 16px; }
+        .source-more-placeholder {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+        }
         .delta-up   { background: rgba(255,69,58,0.13);  color: var(--ios-red); }
         .delta-down { background: rgba(48,209,88,0.13);  color: var(--ios-green); }
         .delta-flat { background: rgba(255,255,255,0.07); color: var(--text-secondary); }
@@ -1912,6 +1919,159 @@
             box-shadow: 0 4px 16px rgba(10,132,255,0.32);
         }
 
+        /* ── SOURCE PLATTER ───────────────────────────────────────── */
+        .source-platter-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1700;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0,0,0,0.46);
+            backdrop-filter: blur(12px) saturate(130%);
+            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .source-platter-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .source-platter {
+            width: min(640px, 100%);
+            max-height: min(680px, calc(100dvh - 44px));
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-top: 1.5px solid rgba(255,255,255,0.25);
+            background: linear-gradient(180deg, rgba(24,28,42,0.82), rgba(8,12,22,0.76));
+            backdrop-filter: blur(46px) saturate(150%) brightness(0.84);
+            -webkit-backdrop-filter: blur(46px) saturate(150%) brightness(0.84);
+            box-shadow: 0 28px 90px -28px rgba(0,0,0,0.9);
+            transform: translateY(22px) scale(0.98);
+            transition: transform 0.24s cubic-bezier(0.25,1,0.5,1);
+        }
+        .source-platter-overlay.visible .source-platter { transform: translateY(0) scale(1); }
+        .source-platter-handle {
+            width: 40px;
+            height: 5px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.2);
+            margin: 12px auto 2px;
+            flex-shrink: 0;
+        }
+        .source-platter-head {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) auto;
+            gap: 14px;
+            align-items: start;
+            padding: 16px 18px 14px;
+            border-bottom: 0.5px solid var(--ios-separator);
+        }
+        .source-platter-label {
+            font-family: var(--font-heading);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+        }
+        .source-platter-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 760;
+            color: var(--text-primary);
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+        }
+        .source-platter-subtitle {
+            margin-top: 6px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 650;
+            color: var(--text-secondary);
+        }
+        .source-platter-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 0.5px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.16s, opacity 0.16s;
+        }
+        .source-platter-close:hover,
+        .source-platter-close:focus-visible {
+            background: rgba(255,255,255,0.14);
+            outline: none;
+        }
+        .source-platter-close:active { opacity: 0.72; }
+        .source-records {
+            display: grid;
+            gap: 8px;
+            overflow-y: auto;
+            padding: 12px 14px calc(16px + env(safe-area-inset-bottom));
+        }
+        .source-record {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) auto;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 13px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.045);
+        }
+        .source-record-main {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .source-record-name {
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 740;
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .source-record-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-family: var(--font-body);
+            font-size: 10.5px;
+            font-weight: 650;
+            color: var(--text-tertiary);
+        }
+        .source-record-value {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 760;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .source-record-unit {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
         /* ── VAULT PASSWORD MODAL ─────────────────────────────────── */
         .vault-overlay {
             position: fixed; inset: 0; z-index: 9000;
@@ -2167,6 +2327,22 @@
                 <button class="report-btn report-btn-secondary" type="button" onclick="closePdfReportPrompt()">Cancel</button>
                 <button class="report-btn report-btn-primary" type="button" onclick="generateSelectedPdfReport()">Generate</button>
             </div>
+        </div>
+    </div>
+    <div class="source-platter-overlay" id="sourcePlatterOverlay" onclick="if(event.target === this) closeSourcePlatter();">
+        <div class="source-platter" role="dialog" aria-modal="true" aria-labelledby="sourcePlatterTitle">
+            <div class="source-platter-handle"></div>
+            <div class="source-platter-head">
+                <div>
+                    <div class="source-platter-label">Source file</div>
+                    <div class="source-platter-title" id="sourcePlatterTitle"></div>
+                    <div class="source-platter-subtitle" id="sourcePlatterSubtitle"></div>
+                </div>
+                <button class="source-platter-close" type="button" onclick="closeSourcePlatter()" aria-label="Close source file details">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="source-records" id="sourcePlatterRecords"></div>
         </div>
     </div>
     <input type="file" id="unitImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;">
@@ -3818,6 +3994,12 @@
                 return;
             }
 
+            if (event.key === 'Escape' && document.getElementById('sourcePlatterOverlay')?.classList.contains('visible')) {
+                event.preventDefault();
+                closeSourcePlatter();
+                return;
+            }
+
             if (!commandPaletteOpen) return;
 
             if (event.key === 'Escape') {
@@ -4707,15 +4889,11 @@
                 const label = status === 'clear' ? 'Nonreactive / Clear'
                     : status === 'reactive' ? 'Reactive / Detected'
                         : p.rawResult;
-                const sourceText = getPointSourceText(p);
                 return `
         <div class="std-row">
           <div class="std-date">${fmtDate(p.date)}</div>
-          <div class="std-reading">
-            <div class="std-bar ${barClass}">
-              <div class="std-dot"></div>${escStr(label)}
-            </div>
-            ${sourceText ? `<div class="std-source" title="${escStr(sourceText)}">${escStr(sourceText)}</div>` : ''}
+          <div class="std-bar ${barClass}">
+            <div class="std-dot"></div>${escStr(label)}
           </div>
         </div>`;
             }).join('');
@@ -4735,13 +4913,71 @@
             return String(value).replace(/_/g, ' ');
         }
 
-        function getPointSourceText(p) {
-            const parts = [];
-            if (p.sourceFile) parts.push(p.sourceFile);
-            if (p.sourcePage) parts.push(`p. ${p.sourcePage}`);
-            if (p.verificationStatus) parts.push(humanizeStatus(p.verificationStatus));
-            else if (p.reviewStatus) parts.push(humanizeStatus(p.reviewStatus));
-            return parts.join(' · ');
+        function sourceMoreButtonHtml(sourceFile) {
+            if (!sourceFile) return '<span class="source-more-placeholder" aria-hidden="true"></span>';
+            return `
+          <button class="source-more-btn" type="button" data-source-file="${escStr(sourceFile)}" onclick="event.stopPropagation(); openSourcePlatter(this.dataset.sourceFile)" aria-label="Show all records from ${escStr(sourceFile)}">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="5" cy="12" r="2.1"></circle>
+              <circle cx="12" cy="12" r="2.1"></circle>
+              <circle cx="19" cy="12" r="2.1"></circle>
+            </svg>
+          </button>`;
+        }
+
+        function getRecordsForSourceFile(sourceFile) {
+            if (!sourceFile) return [];
+            return allTests.flatMap(test => {
+                const points = Array.isArray(test.points) ? test.points : [];
+                return points
+                    .filter(point => point && point.sourceFile === sourceFile)
+                    .map(point => ({ test, point }));
+            }).sort((a, b) => {
+                const dateDiff = parseISODate(a.point.date) - parseISODate(b.point.date);
+                if (dateDiff !== 0) return dateDiff;
+                return String(a.test.name).localeCompare(String(b.test.name));
+            });
+        }
+
+        function renderSourceRecord({ test, point }) {
+            const unitText = normalizeUnitString(point.unit) || getDisplayUnitText(test) || normalizeUnitString(test.unitFallback);
+            const valueText = point.rawResult ?? (point.numVal !== null && point.numVal !== undefined ? formatVal(point.numVal) : '—');
+            const metaParts = [fmtDate(point.date)];
+            if (point.sourcePage) metaParts.push(`p. ${point.sourcePage}`);
+            if (point.rawRange) metaParts.push(`ref ${point.rawRange}`);
+            if (point.verificationStatus) metaParts.push(humanizeStatus(point.verificationStatus));
+            else if (point.reviewStatus) metaParts.push(humanizeStatus(point.reviewStatus));
+            return `
+        <div class="source-record">
+          <div class="source-record-main">
+            <div class="source-record-name">${escStr(test.name)}</div>
+            <div class="source-record-meta">${metaParts.map(part => `<span>${escStr(part)}</span>`).join('')}</div>
+          </div>
+          <div class="source-record-value">
+            <span>${escStr(valueText)}</span>
+            ${unitText ? `<span class="source-record-unit">${escStr(unitText)}</span>` : ''}
+          </div>
+        </div>`;
+        }
+
+        function openSourcePlatter(sourceFile) {
+            const overlay = document.getElementById('sourcePlatterOverlay');
+            const title = document.getElementById('sourcePlatterTitle');
+            const subtitle = document.getElementById('sourcePlatterSubtitle');
+            const recordsEl = document.getElementById('sourcePlatterRecords');
+            if (!overlay || !title || !subtitle || !recordsEl) return;
+
+            const records = getRecordsForSourceFile(sourceFile);
+            title.textContent = sourceFile || 'Unknown source';
+            subtitle.textContent = `${records.length} captured ${records.length === 1 ? 'record' : 'records'}`;
+            recordsEl.innerHTML = records.length
+                ? records.map(renderSourceRecord).join('')
+                : '<div class="report-empty">No cached records found for this source.</div>';
+            overlay.classList.add('visible');
+        }
+
+        function closeSourcePlatter() {
+            document.getElementById('sourcePlatterOverlay')?.classList.remove('visible');
         }
 
         function renderHistoryTable(t, container) {
@@ -4771,16 +5007,13 @@
                 }
 
                 const valColor = status === 'normal' ? 'c-green' : status === 'high' || status === 'low' ? 'c-red' : 'c-text';
-                const sourceText = getPointSourceText(p);
 
                 return `
         <div class="history-row">
           <div class="hist-date">${fmtDate(p.date)}</div>
-          <div class="hist-reading">
-            <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
-            ${sourceText ? `<div class="hist-source" title="${escStr(sourceText)}">${escStr(sourceText)}</div>` : ''}
-          </div>
+          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
           ${deltaHtml}
+          ${sourceMoreButtonHtml(p.sourceFile)}
         </div>`;
             }).join('');
 
