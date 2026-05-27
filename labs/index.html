@@ -1924,81 +1924,74 @@
             position: fixed;
             inset: 0;
             z-index: 1700;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 18px;
-            background: rgba(0,0,0,0.46);
-            backdrop-filter: blur(12px) saturate(130%);
-            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            display: block;
+            background: transparent;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.12s ease;
         }
         .source-platter-overlay.visible {
             opacity: 1;
             pointer-events: auto;
         }
         .source-platter {
-            width: min(640px, 100%);
-            max-height: min(680px, calc(100dvh - 44px));
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: min(70vw, 560px);
+            max-width: calc(100vw - 20px);
+            max-height: 66dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border-radius: 28px;
+            border-radius: 18px;
             border: 1px solid rgba(255,255,255,0.13);
             border-top: 1.5px solid rgba(255,255,255,0.25);
-            background: linear-gradient(180deg, rgba(24,28,42,0.82), rgba(8,12,22,0.76));
-            backdrop-filter: blur(46px) saturate(150%) brightness(0.84);
-            -webkit-backdrop-filter: blur(46px) saturate(150%) brightness(0.84);
-            box-shadow: 0 28px 90px -28px rgba(0,0,0,0.9);
-            transform: translateY(22px) scale(0.98);
-            transition: transform 0.24s cubic-bezier(0.25,1,0.5,1);
+            background: linear-gradient(180deg, rgba(24,28,42,0.92), rgba(8,12,22,0.88));
+            backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
+            -webkit-backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
+            box-shadow: 0 16px 34px -20px rgba(0,0,0,0.82), 0 2px 10px rgba(0,0,0,0.26);
+            transform: scale(0.985);
+            transform-origin: top right;
+            transition: transform 0.14s ease, opacity 0.12s ease;
         }
-        .source-platter-overlay.visible .source-platter { transform: translateY(0) scale(1); }
-        .source-platter-handle {
-            width: 40px;
-            height: 5px;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.2);
-            margin: 12px auto 2px;
-            flex-shrink: 0;
-        }
+        .source-platter-overlay.visible .source-platter { transform: scale(1); }
+        .source-platter-handle { display: none; }
         .source-platter-head {
             display: grid;
             grid-template-columns: minmax(0,1fr) auto;
-            gap: 14px;
+            gap: 10px;
             align-items: start;
-            padding: 16px 18px 14px;
+            padding: 13px 14px 11px;
             border-bottom: 0.5px solid var(--ios-separator);
         }
         .source-platter-label {
             font-family: var(--font-heading);
-            font-size: 10px;
+            font-size: 8.7px;
             font-weight: 800;
             letter-spacing: 0.7px;
             text-transform: uppercase;
             color: var(--text-tertiary);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .source-platter-title {
             font-family: var(--font-heading);
-            font-size: 18px;
+            font-size: 16.7px;
             font-weight: 760;
             color: var(--text-primary);
             line-height: 1.25;
             overflow-wrap: anywhere;
         }
         .source-platter-subtitle {
-            margin-top: 6px;
+            margin-top: 5px;
             font-family: var(--font-body);
-            font-size: 12px;
+            font-size: 10.7px;
             font-weight: 650;
             color: var(--text-secondary);
         }
         .source-platter-close {
-            width: 34px;
-            height: 34px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: 0.5px solid rgba(255,255,255,0.12);
             background: rgba(255,255,255,0.08);
@@ -2017,17 +2010,17 @@
         .source-platter-close:active { opacity: 0.72; }
         .source-records {
             display: grid;
-            gap: 8px;
+            gap: 6px;
             overflow-y: auto;
-            padding: 12px 14px calc(16px + env(safe-area-inset-bottom));
+            padding: 9px 10px 10px;
         }
         .source-record {
             display: grid;
             grid-template-columns: minmax(0,1fr) auto;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            padding: 12px 13px;
-            border-radius: 16px;
+            padding: 9px 10px;
+            border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.08);
             background: rgba(255,255,255,0.045);
         }
@@ -2039,35 +2032,26 @@
         }
         .source-record-name {
             font-family: var(--font-heading);
-            font-size: 14px;
+            font-size: 12.7px;
             font-weight: 740;
             color: var(--text-primary);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .source-record-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            font-family: var(--font-body);
-            font-size: 10.5px;
-            font-weight: 650;
-            color: var(--text-tertiary);
-        }
         .source-record-value {
             display: flex;
             align-items: baseline;
-            gap: 6px;
+            gap: 5px;
             font-family: var(--font-heading);
-            font-size: 18px;
+            font-size: 16.7px;
             font-weight: 760;
             color: var(--text-primary);
             white-space: nowrap;
         }
         .source-record-unit {
             font-family: var(--font-body);
-            font-size: 11px;
+            font-size: 9.7px;
             font-weight: 700;
             color: var(--text-secondary);
         }
@@ -4908,15 +4892,10 @@
     `);
         }
 
-        function humanizeStatus(value) {
-            if (!value) return '';
-            return String(value).replace(/_/g, ' ');
-        }
-
         function sourceMoreButtonHtml(sourceFile) {
             if (!sourceFile) return '<span class="source-more-placeholder" aria-hidden="true"></span>';
             return `
-          <button class="source-more-btn" type="button" data-source-file="${escStr(sourceFile)}" onclick="event.stopPropagation(); openSourcePlatter(this.dataset.sourceFile)" aria-label="Show all records from ${escStr(sourceFile)}">
+          <button class="source-more-btn" type="button" data-source-file="${escStr(sourceFile)}" onclick="event.stopPropagation(); openSourcePlatter(this.dataset.sourceFile, this)" aria-label="Show all records from ${escStr(sourceFile)}">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <circle cx="5" cy="12" r="2.1"></circle>
               <circle cx="12" cy="12" r="2.1"></circle>
@@ -4939,19 +4918,21 @@
             });
         }
 
+        function getSourceDateText(records) {
+            const dates = [...new Set(records.map(item => item.point.date).filter(Boolean))]
+                .sort((a, b) => parseISODate(a) - parseISODate(b));
+            if (dates.length === 0) return 'Date unavailable';
+            if (dates.length === 1) return `Tests taken ${fmtDate(dates[0])}`;
+            return `Tests taken ${fmtDate(dates[0])} to ${fmtDate(dates[dates.length - 1])}`;
+        }
+
         function renderSourceRecord({ test, point }) {
             const unitText = normalizeUnitString(point.unit) || getDisplayUnitText(test) || normalizeUnitString(test.unitFallback);
             const valueText = point.rawResult ?? (point.numVal !== null && point.numVal !== undefined ? formatVal(point.numVal) : '—');
-            const metaParts = [fmtDate(point.date)];
-            if (point.sourcePage) metaParts.push(`p. ${point.sourcePage}`);
-            if (point.rawRange) metaParts.push(`ref ${point.rawRange}`);
-            if (point.verificationStatus) metaParts.push(humanizeStatus(point.verificationStatus));
-            else if (point.reviewStatus) metaParts.push(humanizeStatus(point.reviewStatus));
             return `
         <div class="source-record">
           <div class="source-record-main">
             <div class="source-record-name">${escStr(test.name)}</div>
-            <div class="source-record-meta">${metaParts.map(part => `<span>${escStr(part)}</span>`).join('')}</div>
           </div>
           <div class="source-record-value">
             <span>${escStr(valueText)}</span>
@@ -4960,7 +4941,36 @@
         </div>`;
         }
 
-        function openSourcePlatter(sourceFile) {
+        function positionSourcePlatter(anchorEl) {
+            const platter = document.querySelector('#sourcePlatterOverlay .source-platter');
+            if (!platter) return;
+
+            const margin = 10;
+            const anchorRect = anchorEl && anchorEl.getBoundingClientRect ? anchorEl.getBoundingClientRect() : null;
+            const platterRect = platter.getBoundingClientRect();
+            let top = (window.innerHeight - platterRect.height) / 2;
+            let left = (window.innerWidth - platterRect.width) / 2;
+            let originX = 'center';
+
+            if (anchorRect) {
+                top = anchorRect.top + anchorRect.height / 2 - platterRect.height / 2;
+                left = anchorRect.right + 8;
+                originX = 'left';
+
+                if (left + platterRect.width + margin > window.innerWidth) {
+                    left = anchorRect.left - platterRect.width - 8;
+                    originX = 'right';
+                }
+            }
+
+            top = Math.max(margin, Math.min(top, window.innerHeight - platterRect.height - margin));
+            left = Math.max(margin, Math.min(left, window.innerWidth - platterRect.width - margin));
+            platter.style.top = `${top}px`;
+            platter.style.left = `${left}px`;
+            platter.style.transformOrigin = `${originX} center`;
+        }
+
+        function openSourcePlatter(sourceFile, anchorEl = null) {
             const overlay = document.getElementById('sourcePlatterOverlay');
             const title = document.getElementById('sourcePlatterTitle');
             const subtitle = document.getElementById('sourcePlatterSubtitle');
@@ -4969,11 +4979,12 @@
 
             const records = getRecordsForSourceFile(sourceFile);
             title.textContent = sourceFile || 'Unknown source';
-            subtitle.textContent = `${records.length} captured ${records.length === 1 ? 'record' : 'records'}`;
+            subtitle.textContent = `${getSourceDateText(records)} · ${records.length} ${records.length === 1 ? 'record' : 'records'}`;
             recordsEl.innerHTML = records.length
                 ? records.map(renderSourceRecord).join('')
                 : '<div class="report-empty">No cached records found for this source.</div>';
             overlay.classList.add('visible');
+            requestAnimationFrame(() => positionSourcePlatter(anchorEl));
         }
 
         function closeSourcePlatter() {
