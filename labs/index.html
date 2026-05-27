@@ -342,6 +342,7 @@
         :root.time-day .test-card,
         :root.time-day .kpi-box,
         :root.time-day .detail-header::before,
+        :root.time-day .action-sheet,
         :root.time-day .command-palette,
         :root.time-day .confirm-dialog {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.16) 100%);
@@ -784,55 +785,62 @@
         /* ── ACTION SHEET ── */
         .action-sheet-overlay {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.52);
-            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            background: transparent;
+            backdrop-filter: none; -webkit-backdrop-filter: none;
             z-index: 1000; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.16s ease;
         }
         .action-sheet-overlay.visible { opacity: 1; pointer-events: auto; }
 
         .action-sheet {
-            position: fixed; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(14,18,32,0.62) 0%, rgba(6,8,18,0.56) 100%);
-            backdrop-filter: blur(40px) saturate(150%) brightness(0.8);
-            -webkit-backdrop-filter: blur(40px) saturate(150%) brightness(0.8);
-            border-radius: 32px 32px 0 0;
-            padding: 16px 24px calc(env(safe-area-inset-bottom, 20px) + 24px);
+            position: fixed;
+            top: var(--action-sheet-top, calc(env(safe-area-inset-top, 0px) + 70px));
+            right: var(--action-sheet-right, 18px);
+            width: min(360px, calc(100vw - 28px));
+            max-height: min(520px, calc(100dvh - var(--action-sheet-top, 90px) - 16px));
+            overflow-y: auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 10px;
             z-index: 1001;
-            border-top: 2px solid rgba(255,255,255,0.18);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            border-right: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 -16px 64px rgba(0,0,0,0.8);
-            transform: translateY(100%) scale(0.96);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-top: 1.2px solid rgba(255,255,255,0.17);
+            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.32);
+            transform: translateY(-6px) scale(0.98);
+            transform-origin: top right;
             opacity: 0;
-            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+            pointer-events: none;
+            transition: transform 0.18s var(--spring), opacity 0.16s ease;
+            scrollbar-width: none;
         }
-        .action-sheet.visible { transform: translateY(0) scale(1); opacity: 1; }
+        .action-sheet::-webkit-scrollbar { display: none; }
+        .action-sheet.visible { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
         .sheet-handle {
-            width: 36px; height: 5px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 3px; margin: 0 auto 20px;
+            display: none;
         }
 
         .sheet-title {
             font-family: var(--font-heading); font-size: 11px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;
-            margin-bottom: 4px; padding-bottom: 14px;
-            border-bottom: 0.5px solid var(--ios-separator);
+            padding: 8px 10px 10px;
         }
 
         .sheet-action {
             display: flex; align-items: center; gap: 14px;
-            padding: 18px 0;
-            border-bottom: 0.5px solid var(--ios-separator);
-            font-family: var(--font-heading); font-size: 18px; font-weight: 600;
+            padding: 12px 10px;
+            border-top: 0.5px solid var(--ios-separator);
+            border-bottom: none;
+            border-radius: 12px;
+            font-family: var(--font-heading); font-size: 14px; font-weight: 700;
             cursor: pointer; color: var(--text-primary);
-            transition: opacity 0.15s;
+            transition: background 0.16s, opacity 0.16s;
         }
+        .sheet-action:hover { background: rgba(255,255,255,0.07); }
         .sheet-action:active { opacity: 0.5; }
-        .sheet-action:last-child { border-bottom: none; }
-        .sheet-action svg { color: var(--ios-blue); }
+        .sheet-action svg { color: var(--ios-blue); width: 18px; height: 18px; flex-shrink: 0; }
 
         /* ── PANEL LIST ── */
         .panel-list {
@@ -2594,7 +2602,7 @@
                             <div class="detail-title" id="detailTitle">—</div>
                             <div class="detail-unit" id="detailUnit"></div>
                         </div>
-                        <button class="detail-nav-btn" aria-label="More Actions" onclick="toggleActionSheet(true)">
+                        <button class="detail-nav-btn" aria-label="More Actions" onclick="toggleActionSheet(true, this)">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" />
                             </svg>
@@ -4326,10 +4334,30 @@
         }
 
         // ── ACTION SHEET ─────────────────────────────────────────────
-        function toggleActionSheet(show) {
+        function positionActionSheet(anchorEl) {
+            const sheet = document.getElementById('actionSheet');
+            if (!sheet) return;
+            const margin = 14;
+            const anchorRect = anchorEl?.getBoundingClientRect();
+            if (!anchorRect) {
+                sheet.style.removeProperty('--action-sheet-top');
+                sheet.style.removeProperty('--action-sheet-right');
+                return;
+            }
+
+            const sheetWidth = Math.min(360, window.innerWidth - (margin * 2));
+            const top = Math.max(margin, anchorRect.bottom + 10);
+            const right = Math.max(margin, window.innerWidth - anchorRect.right);
+            const maxRight = Math.max(margin, window.innerWidth - margin - sheetWidth);
+            sheet.style.setProperty('--action-sheet-top', `${top}px`);
+            sheet.style.setProperty('--action-sheet-right', `${Math.min(right, maxRight)}px`);
+        }
+
+        function toggleActionSheet(show, anchorEl = null) {
             const sheet = document.getElementById('actionSheet');
             const overlay = document.getElementById('actionSheetOverlay');
             if (show) {
+                positionActionSheet(anchorEl);
                 sheet.classList.add('visible');
                 overlay.classList.add('visible');
             } else {
