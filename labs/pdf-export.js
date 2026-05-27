@@ -116,34 +116,6 @@
     };
 
     // ── PRIVATE / INTERNAL MODULE FUNCTIONS ────────────────────────────
-    function getLocalStorageReportTestsByName(testName) {
-        const normalizedTarget = normalizeTestName(testName);
-        const matches = [];
-        try {
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (!key || key === 'health_enc_key') continue;
-                const raw = localStorage.getItem(key);
-                if (!raw || raw.length > 1500000) continue;
-                let parsed;
-                try { parsed = JSON.parse(raw); } catch (_) { continue; }
-
-                const candidates = Array.isArray(parsed)
-                    ? parsed
-                    : Array.isArray(parsed?.tests)
-                        ? parsed.tests
-                        : [];
-                const uiTests = buildUiTestsFromVault(candidates);
-                uiTests.forEach(test => {
-                    if (normalizeTestName(test.name) === normalizedTarget) matches.push(test);
-                });
-            }
-        } catch (error) {
-            console.warn('Local report lookup failed:', error);
-        }
-        return matches;
-    }
-
     function getPdfReportRows() {
         const term = (document.getElementById('reportSearchInput')?.value || '').trim().toLowerCase();
         return allTests
@@ -250,11 +222,7 @@
     function getSelectedTestsForReport() {
         const selectedNames = [..._pdfReportSelectedTests];
         const selectedTests = selectedNames.flatMap(name => {
-            const direct = allTests.filter(test => test.name === name);
-            const local = normalizeTestName(name) === 'TESTOSTERONE'
-                ? getLocalStorageReportTestsByName('TESTOSTERONE')
-                : [];
-            return [...direct, ...local];
+            return allTests.filter(test => test.name === name);
         });
         const tests = mergeReportTests(selectedTests).sort((a, b) => a.name.localeCompare(b.name));
         const title = tests.length === 1 ? `${tests[0].name} REPORT` : 'BIOMARKER REPORT';
@@ -686,7 +654,11 @@
     </main>
 </div>
 <script>
-    window.addEventListener('load', () => setTimeout(() => window.print(), 250));
+    if (document.readyState === 'complete') {
+        setTimeout(() => window.print(), 250);
+    } else {
+        window.addEventListener('load', () => setTimeout(() => window.print(), 250));
+    }
 <\/script>
 </body>
 </html>`;

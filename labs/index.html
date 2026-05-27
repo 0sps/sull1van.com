@@ -30,13 +30,9 @@
 
             /* Legacy aliases — required by JS themeCache */
             --green: #30d158;
-            --green-bg: rgba(48, 209, 88, 0.13);
             --red: #ff453a;
-            --red-bg: rgba(255, 69, 58, 0.13);
             --amber: #ff9f0a;
-            --amber-bg: rgba(255, 159, 10, 0.13);
             --blue: #0a84ff;
-            --blue-bg: rgba(10, 132, 255, 0.13);
             --accent: #0a84ff;
             --bg: #000814;
             --text: #ffffff;
@@ -46,7 +42,6 @@
             --card-border: rgba(255, 255, 255, 0.1);
             --chart-grid: rgba(255, 255, 255, 0.06);
             --surface: rgba(28, 28, 34, 0.65);
-            --surface2: rgba(40, 42, 54, 0.55);
 
             /* Glass system */
             --glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
@@ -55,16 +50,12 @@
             --glass-shadow: 0 8px 32px -8px rgba(0,0,0,0.55);
 
             /* Geometry */
-            --radius-l: 16px;
             --radius-xl: 20px;
             --card-r: 20px;
-            --pill-r: 999px;
 
             /* Animation */
             --spring: cubic-bezier(0.25, 1, 0.5, 1);
 
-            /* Legacy layout var used in places */
-            --top-bar-h: 64px;
             --gauge-bg: rgba(20, 22, 32, 0.85);
         }
 
@@ -81,13 +72,9 @@
             --text-tertiary: rgba(255, 255, 255, 0.5);
 
             --green: #30d158;
-            --green-bg: rgba(48, 209, 88, 0.2);
             --red: #ff3b30;
-            --red-bg: rgba(255, 59, 48, 0.16);
             --amber: #ffd60a;
-            --amber-bg: rgba(255, 214, 10, 0.18);
             --blue: #1679d6;
-            --blue-bg: rgba(22, 121, 214, 0.18);
             --accent: #ffffff;
             --bg: #58aeea;
             --text: #ffffff;
@@ -97,7 +84,6 @@
             --card-border: rgba(255, 255, 255, 0.24);
             --chart-grid: rgba(255, 255, 255, 0.22);
             --surface: rgba(42, 138, 219, 0.48);
-            --surface2: rgba(64, 157, 230, 0.42);
             --gauge-bg: rgba(37, 119, 197, 0.9);
         }
 
@@ -1616,7 +1602,6 @@
             opacity: 1;
             transition: none;
         }
-        .add-sheet.visible { transform: none; opacity: 1; }
 
         .add-field-group {
             margin-bottom: 0;
@@ -2443,7 +2428,7 @@
                         </button>
                     </div>
                     <div class="command-add-content">
-                        <div class="add-sheet visible" id="addSheet">
+                        <div class="add-sheet" id="addSheet">
                             <div class="add-field-group">
                                 <div class="add-field-label">Date of Test</div>
                                 <input type="date" class="add-date-input" id="addResultDate">
@@ -2776,7 +2761,7 @@
         function parseISODate(str) {
             if (!str) return new Date(NaN);
             const parts = String(str).split('-');
-            if (parts.length === 3) {
+            if (parts.length === 3 && parts.every(part => /^\d+$/.test(part))) {
                 return new Date(+parts[0], +parts[1] - 1, +parts[2]);
             }
             return new Date(str); // fallback for unexpected formats
@@ -3052,7 +3037,7 @@
 
         async function applyUnitImport(preview) {
             const vaultData = _vaultDataCache || await loadVaultData();
-            const tests = Array.isArray(vaultData?.tests) ? [...vaultData.tests] : [];
+            const tests = JSON.parse(JSON.stringify(vaultData?.tests || []));
 
             preview.updates.forEach(({ testIndex, pointIndex, unitText }) => {
                 const test = tests[testIndex];
@@ -3232,7 +3217,7 @@
 
         function parseRange(rangeStr) {
             if (!rangeStr || typeof rangeStr !== 'string') return null;
-            const r = rangeStr.trim();
+            const r = rangeStr.replace(/[^0-9.\-<>=\s].*$/, '').trim();
             // "min-max" - careful with negative numbers
             const dash = r.match(/^(-?[0-9.]+)\s*-\s*([0-9.]+)$/); // allow negative min (e.g. "-0.5-2.0")
             if (dash) return { min: parseFloat(dash[1]), max: parseFloat(dash[2]) };
@@ -3375,7 +3360,7 @@
                         unit: normalizeUnitString(p.unit),
                         testResultId: p.testResultId || null,
                         lab: p.lab || null,
-                        sourceFile: p.sourceFile || p.filename || p.fileName || p.source_filename || null,
+                        sourceFile: getPointSourceFile(p) || null,
                         sourcePage: p.sourcePage || null,
                         reviewStatus: p.reviewStatus || null,
                         verificationStatus: p.verificationStatus || null,
@@ -3501,7 +3486,7 @@
                         'Reference Range': point.rawRange || test.range || '',
                         'Type': point.isNumeric ? 'numeric' : 'qualitative',
                         'Lab': point.lab || '',
-                        'Source File': point.sourceFile || '',
+                        'Source File': getPointSourceFile(point),
                         'Test Result ID': point.testResultId || '',
                     });
                 });
@@ -3638,6 +3623,7 @@
                 console.log(`[DEBUG] loadData(): Vault data loaded successfully. Number of tests: ${vaultData?.tests?.length}`);
                 allTests = buildUiTestsFromVault(vaultData.tests);
                 testCardNodes = {};
+                destroySparklineCharts();
 
                 allTests.sort((a, b) => b.points.length - a.points.length || a.name.localeCompare(b.name));
 
@@ -3657,7 +3643,9 @@
                 console.error(e);
                 const errEl = document.getElementById('panelList');
                 if (errEl) {
-                    errEl.innerHTML = '<div style="color:var(--red);padding:20px;text-align:center;">⚠ Failed to load — ' + e.message + '</div>';
+                    errEl.innerHTML = '<div style="color:var(--red);padding:20px;text-align:center;">⚠ Failed to load — <span id="loadErrorDetail"></span></div>';
+                    const detail = document.getElementById('loadErrorDetail');
+                    if (detail) detail.textContent = e?.message || 'Unknown error';
                 }
             } finally {
                 _loadingInProgress = false;
@@ -4169,6 +4157,13 @@
             });
         }
 
+        function destroySparklineCharts() {
+            Object.keys(sparklineCharts).forEach(id => {
+                try { sparklineCharts[id].destroy(); } catch (_) {}
+                delete sparklineCharts[id];
+            });
+        }
+
         function renderTestCard(t) {
             const id = getTestDomId(t.name);
             const isCurrent = t.name === currentTestName;
@@ -4291,21 +4286,26 @@
 
             const chart = sparklineCharts[id];
             if (chart) {
-                try {
-                    chart.data.labels = t.numericPts.map(p => p.date);
-                    chart.data.datasets[0].data = vals;
-                    chart.data.datasets[0].borderColor = lineColor;
-                    chart.data.datasets[0].pointBackgroundColor = lineColor;
-                    chart.data.datasets[0].pointStyle = pointStyles;
-                    chart.options.scales.y.min = yDomain.min;
-                    chart.options.scales.y.max = yDomain.max;
-                    chart.$referenceRange = parsed;
-                    chart.update('none');
-                    return;
-                } catch (e) {
-                    console.error("Failed to update existing sparkline chart", e);
+                if (chart.canvas !== canvas) {
                     try { chart.destroy(); } catch (_) {}
                     delete sparklineCharts[id];
+                } else {
+                    try {
+                        chart.data.labels = t.numericPts.map(p => p.date);
+                        chart.data.datasets[0].data = vals;
+                        chart.data.datasets[0].borderColor = lineColor;
+                        chart.data.datasets[0].pointBackgroundColor = lineColor;
+                        chart.data.datasets[0].pointStyle = pointStyles;
+                        chart.options.scales.y.min = yDomain.min;
+                        chart.options.scales.y.max = yDomain.max;
+                        chart.$referenceRange = parsed;
+                        chart.update('none');
+                        return;
+                    } catch (e) {
+                        console.error("Failed to update existing sparkline chart", e);
+                        try { chart.destroy(); } catch (_) {}
+                        delete sparklineCharts[id];
+                    }
                 }
             }
 
@@ -5015,7 +5015,7 @@
             return allTests.flatMap(test => {
                 const points = Array.isArray(test.points) ? test.points : [];
                 return points
-                    .filter(point => point && point.sourceFile === sourceFile)
+                    .filter(point => getPointSourceFile(point) === sourceFile)
                     .map(point => ({ test, point }));
             }).sort((a, b) => {
                 const dateDiff = parseISODate(a.point.date) - parseISODate(b.point.date);
@@ -5130,7 +5130,7 @@
           <div class="hist-date">${fmtDate(p.date)}</div>
           <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
           ${deltaHtml}
-          ${sourceMoreButtonHtml(p.sourceFile)}
+          ${sourceMoreButtonHtml(getPointSourceFile(p))}
         </div>`;
             }).join('');
 
@@ -5228,11 +5228,16 @@
                 .slice(0, 220);
         }
 
+        function getPointSourceFile(point) {
+            if (!point) return '';
+            return normalizeSourceFile(point.sourceFile || point.filename || point.fileName || point.source_filename || '');
+        }
+
         function getSourceFileNames() {
             const names = new Set();
             (allTests || []).forEach(test => {
                 (test.points || []).forEach(point => {
-                    const sourceFile = normalizeSourceFile(point && point.sourceFile);
+                    const sourceFile = getPointSourceFile(point);
                     if (sourceFile) names.add(sourceFile);
                 });
             });
@@ -5374,7 +5379,6 @@
             // Add one blank row to start
             addResultRow();
 
-            document.getElementById('addSheet')?.classList.add('visible');
             requestAnimationFrame(() => {
                 document.getElementById('addSourceFile')?.focus({ preventScroll: true });
             });
@@ -5574,7 +5578,7 @@
                             point &&
                             point.date === dateVal &&
                             String(point.rawResult !== undefined ? point.rawResult : point.value) === entry.value &&
-                            normalizeSourceFile(point.sourceFile || point.filename || point.fileName || point.source_filename) === sourceFile
+                            getPointSourceFile(point) === sourceFile
                         );
                         if (!duplicatePoint) currentPts.push(newPoint);
                         tests[existingIndex] = {
@@ -5674,8 +5678,8 @@
     <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
     <script type="module">
         import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js';
-        import { getAuth, onAuthStateChanged, signOut, getRedirectResult,
-                 signInWithPopup, signInWithRedirect, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
+        import { getAuth, onAuthStateChanged, signOut,
+                 signInWithPopup, GoogleAuthProvider }    from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
         import * as Firestore                             from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js';
 
         // ─── Crypto helpers (inlined from crypto.js) ──────────────────────────────
@@ -6023,9 +6027,6 @@
             updateBoot('firebase_initialized');
             console.log(`[MODULE] Firebase initialized. Exposing global variables...`);
 
-            // We do not call getRedirectResult(auth) as we use popup login exclusively.
-            // This prevents getRedirectResult from hanging indefinitely and blocking onAuthStateChanged on iOS Safari.
-
             console.log(`[MODULE] Setting up onAuthStateChanged...`);
             onAuthStateChanged(auth, async user => {
                 console.log(`[MODULE] onAuthStateChanged fired. User info:`, user ? { email: user.email, uid: user.uid } : null);
@@ -6037,7 +6038,11 @@
                     console.error(`[MODULE] Eligibility check failed: Web Crypto API unsupported.`);
                     updateBoot('crypto_unsupported');
                     const errEl = document.getElementById('panelList');
-                    if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ ${msg}</div>`;
+                    if (errEl) {
+                        errEl.innerHTML = '<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ <span id="cryptoErrorDetail"></span></div>';
+                        const detail = document.getElementById('cryptoErrorDetail');
+                        if (detail) detail.textContent = msg;
+                    }
                     return;
                 }
 
