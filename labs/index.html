@@ -405,6 +405,7 @@
 
         :root.time-day #testSearch,
         :root.time-day .add-date-input,
+        :root.time-day .add-source-input,
         :root.time-day .add-result-row input.add-test-name,
         :root.time-day .add-result-row input.add-test-result,
         :root.time-day .vault-input {
@@ -414,6 +415,7 @@
 
         :root.time-day #testSearch:focus,
         :root.time-day .add-date-input:focus,
+        :root.time-day .add-source-input:focus,
         :root.time-day .add-result-row input.add-test-name:focus,
         :root.time-day .add-result-row input.add-test-result:focus {
             background: rgba(255,255,255,0.28);
@@ -1347,6 +1349,7 @@
                 margin-bottom: 7px;
             }
             .add-date-input,
+            .add-source-input,
             .add-result-row input.add-test-name,
             .add-result-row input.add-test-result {
                 padding: 11px 13px;
@@ -1598,15 +1601,20 @@
             font-family: var(--font-heading); font-size: 11px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
         }
-        .add-date-input {
+        .add-date-input,
+        .add-source-input {
             width: 100%; padding: 13px 16px;
             background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15);
             border-radius: 14px; color: var(--text-primary);
             font-family: var(--font-body); font-size: 16px; outline: none;
-            transition: border-color 0.2s; -webkit-appearance: none; color-scheme: dark;
+            transition: border-color 0.2s, background 0.2s; -webkit-appearance: none;
         }
+        .add-date-input { color-scheme: dark; }
 
-        .add-date-input:focus { border-color: rgba(10,132,255,0.5); background: rgba(10,132,255,0.06); }
+        .add-date-input:focus,
+        .add-source-input:focus { border-color: rgba(10,132,255,0.5); background: rgba(10,132,255,0.06); }
+
+        .add-source-input::placeholder { color: rgba(255,255,255,0.32); }
 
         .add-rows-container { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 
@@ -2406,6 +2414,22 @@
                             <div class="add-field-group">
                                 <div class="add-field-label">Date of Test</div>
                                 <input type="date" class="add-date-input" id="addResultDate">
+                            </div>
+                            <div class="add-field-group">
+                                <div class="add-field-label">Source File</div>
+                                <input
+                                    type="text"
+                                    class="add-source-input"
+                                    id="addSourceFile"
+                                    list="addSourceFileSuggestions"
+                                    placeholder="2026-03-28-metabolicPanel.pdf"
+                                    autocomplete="off"
+                                    autocapitalize="none"
+                                    spellcheck="false"
+                                    maxlength="220"
+                                    onblur="this.value = normalizeSourceFile(this.value)"
+                                >
+                                <datalist id="addSourceFileSuggestions"></datalist>
                             </div>
                             <div class="add-field-group">
                                 <div class="add-field-label">Results</div>
@@ -5143,6 +5167,34 @@
             return [];
         }
 
+        function normalizeSourceFile(value) {
+            return String(value || '')
+                .replace(/[\u0000-\u001F\u007F]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .slice(0, 220);
+        }
+
+        function getSourceFileNames() {
+            const names = new Set();
+            (allTests || []).forEach(test => {
+                (test.points || []).forEach(point => {
+                    const sourceFile = normalizeSourceFile(point && point.sourceFile);
+                    if (sourceFile) names.add(sourceFile);
+                });
+            });
+            return [...names].sort((a, b) => b.localeCompare(a));
+        }
+
+        function populateSourceFileSuggestions() {
+            const datalist = document.getElementById('addSourceFileSuggestions');
+            if (!datalist) return;
+            datalist.innerHTML = getSourceFileNames()
+                .slice(0, 80)
+                .map(name => `<option value="${escStr(name)}"></option>`)
+                .join('');
+        }
+
         function getMatchingTestNames(query, limit = 8) {
             const normalizedQuery = normalizeTestName(query);
             if (!normalizedQuery) return [];
@@ -5253,6 +5305,9 @@
             // Reset the form
             const dateInput = document.getElementById('addResultDate');
             dateInput.value = new Date().toISOString().split('T')[0];
+            const sourceInput = document.getElementById('addSourceFile');
+            if (sourceInput) sourceInput.value = '';
+            populateSourceFileSuggestions();
             const container = document.getElementById('addRowsContainer');
             container.innerHTML = '';
             _addSheetRowCounter = 0;
@@ -5268,11 +5323,13 @@
 
             document.getElementById('addSheet')?.classList.add('visible');
             requestAnimationFrame(() => {
-                document.querySelector('#addRowsContainer .add-test-name')?.focus({ preventScroll: true });
+                document.getElementById('addSourceFile')?.focus({ preventScroll: true });
             });
         }
 
         function addSheetHasData() {
+            const sourceInput = document.getElementById('addSourceFile');
+            if (sourceInput && sourceInput.value.trim()) return true;
             const rows = document.querySelectorAll('#addRowsContainer .add-result-row');
             for (const row of rows) {
                 const sel = row.querySelector('.add-test-name');
@@ -5350,6 +5407,8 @@
         // ── SAVE RESULTS ──────────────────────────────────────────────
         async function handleSaveResults() {
             const dateVal = document.getElementById('addResultDate').value;
+            const sourceInput = document.getElementById('addSourceFile');
+            const sourceFile = normalizeSourceFile(sourceInput ? sourceInput.value : '');
             if (!dateVal) {
                 showConfirm({
                     icon: CONFIRM_ICONS.info,
@@ -5360,16 +5419,50 @@
                 });
                 return;
             }
+            if (!sourceFile) {
+                showConfirm({
+                    icon: CONFIRM_ICONS.info,
+                    iconColor: 'var(--amber)',
+                    title: 'Missing source file',
+                    body: 'Enter the filename these results came from. Use Manual entry if there is no source file.',
+                    primary: { label: 'OK', className: 'confirm-btn-primary', action: () => {
+                        dismissConfirm();
+                        sourceInput?.focus({ preventScroll: true });
+                    } },
+                });
+                return;
+            }
 
             // Collect valid rows
             const rows = document.querySelectorAll('#addRowsContainer .add-result-row');
             const entries = [];
+            const entryKeys = new Set();
+            let incompleteRows = 0;
             for (const row of rows) {
                 const sel = row.querySelector('.add-test-name');
                 const inp = row.querySelector('.add-test-result');
                 const name = sel ? normalizeTestName(sel.value) : '';
                 const val = inp ? inp.value.trim() : '';
-                if (name && val) entries.push({ name, value: val });
+                if (name && val) {
+                    const key = `${name}||${val}`;
+                    if (!entryKeys.has(key)) {
+                        entries.push({ name, value: val });
+                        entryKeys.add(key);
+                    }
+                } else if (name || val) {
+                    incompleteRows += 1;
+                }
+            }
+
+            if (incompleteRows > 0) {
+                showConfirm({
+                    icon: CONFIRM_ICONS.info,
+                    iconColor: 'var(--amber)',
+                    title: 'Incomplete result row',
+                    body: 'Each result row needs both a test name and a result value before saving.',
+                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+                });
+                return;
             }
 
             if (entries.length === 0) {
@@ -5388,13 +5481,13 @@
                 icon: CONFIRM_ICONS.save,
                 iconColor: 'var(--accent)',
                 title: 'Save these results?',
-                body: `${entries.length} result${entries.length > 1 ? 's' : ''} will be saved for ${dateVal}.`,
+                body: `${entries.length} result${entries.length > 1 ? 's' : ''} will be saved for ${dateVal} from ${sourceFile}.`,
                 secondary: { label: 'Cancel', className: 'confirm-btn-secondary', action: dismissConfirm },
-                primary: { label: 'Save', className: 'confirm-btn-primary', action: () => { dismissConfirm(); executeFirebaseSave(dateVal, entries); } },
+                primary: { label: 'Save', className: 'confirm-btn-primary', action: () => { dismissConfirm(); executeFirebaseSave(dateVal, sourceFile, entries); } },
             });
         }
 
-        async function executeFirebaseSave(dateVal, entries) {
+        async function executeFirebaseSave(dateVal, sourceFile, entries) {
             const saveBtn = document.getElementById('addSaveBtn');
             saveBtn.disabled = true;
             saveBtn.textContent = 'Saving…';
@@ -5415,7 +5508,7 @@
                         date: dateVal,
                         rawResult: entry.value,
                         lab: 'manual_entry',
-                        sourceFile: 'user_input',
+                        sourceFile,
                         testResultId: `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
                     };
 
@@ -5424,7 +5517,13 @@
                     if (existingIndex >= 0) {
                         const existing = tests[existingIndex];
                         const currentPts = Array.isArray(existing.points) ? [...existing.points] : [];
-                        currentPts.push(newPoint);
+                        const duplicatePoint = currentPts.some(point =>
+                            point &&
+                            point.date === dateVal &&
+                            String(point.rawResult !== undefined ? point.rawResult : point.value) === entry.value &&
+                            normalizeSourceFile(point.sourceFile || point.filename || point.fileName || point.source_filename) === sourceFile
+                        );
+                        if (!duplicatePoint) currentPts.push(newPoint);
                         tests[existingIndex] = {
                             ...existing,
                             name: entry.name,
