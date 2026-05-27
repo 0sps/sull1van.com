@@ -4487,11 +4487,11 @@
               setSyncStatus("Loaded Firebase data", "online");
               setAuthGateDetail("Firebase data loaded.");
             } else {
-              const defaultState = getDefaultState();
-              replaceAppState(defaultState);
+              // Gracefully handle first-use when Firebase has no data:
+              // Backup the user's existing local state to the cloud instead of wiping it out.
               await saveCloudStateNow();
               setSyncStatus("Created Firebase data", "online");
-              setAuthGateDetail("Created your Firestore document.");
+              setAuthGateDetail("Backed up your local data to Firebase.");
             }
             unlockApp();
             setAuthButtonsDisabled(false, "Sign out");
