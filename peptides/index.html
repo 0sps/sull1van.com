@@ -2267,11 +2267,17 @@
           <div class="panel-header">
             <div>
               <span class="panel-kicker">Formulation Setup</span>
-              <h2 class="panel-title" id="protocol-title">Add Protocol</h2>
+              <h2 class="panel-title" id="protocol-title">Edit Protocol</h2>
             </div>
             <div class="record-actions">
-              <button class="mini-action danger" type="button" onclick="deleteActiveProtocol()">Delete</button>
+              <button class="mini-action danger" id="deleteProtocolBtn" type="button" onclick="deleteActiveProtocol()">Delete</button>
               <button class="seg-button active" type="button" onclick="saveProtocol()">Save</button>
+            </div>
+          </div>
+          <div class="vault-container" style="padding: 16px 24px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.15);">
+            <span class="micro-label" style="display: block; margin-bottom: 8px;">Active Protocol Vault</span>
+            <div id="vaultSelector" class="segmented" role="group" aria-label="Active Protocol Vault">
+              <!-- Dynamically populated via JS -->
             </div>
           </div>
           <div class="form-grid">
@@ -2519,6 +2525,24 @@
     const cardProtocolName = $("#cardProtocolName");
     const protocolNameInput = $("#protocolNameInput");
     let doseUnit = "mcg";
+    let isAddNewMode = false;
+
+    /**
+     * @typedef {Object} PeptideProtocol
+     * @property {string} id : Unique identifier for the protocol.
+     * @property {string} name : The human readable name of the peptide.
+     * @property {number} peptideMg : Total mass of the peptide in milligrams.
+     * @property {number} waterMl : Total volume of bacteriostatic water in milliliters.
+     * @property {number} targetDose : Target dosage amount.
+     * @property {string} doseUnit : Dosage unit (mcg or mg).
+     * @property {number} syringeUnits : Capacity of the syringe in units (such as 30, 50, 100).
+     * @property {string} frequency : Injection frequency (Daily, Every Other Day, Weekly, Custom Cycle Days).
+     * @property {string} time : Time of day for injection (HH:MM format).
+     * @property {string} startDate : Start date of the protocol (YYYY-MM-DD format).
+     * @property {string} duration : Duration of the protocol (such as Indefinitely, Specific End Date).
+     * @property {string} [createdAt] : ISO timestamp when the protocol was created.
+     * @property {string} [updatedAt] : ISO timestamp when the protocol was last updated.
+     */
 
     // Application state and persistence
     const STORAGE_KEY = "peptidekit-plus-state-v3";
@@ -3177,43 +3201,139 @@
       }
     }
 
-    function updateDoseMathAndSave() {
-      const name = protocolNameInput.value.trim() || "Melanotan I";
-      let p = appState.protocols.find(x => x.name.toLowerCase() === name.toLowerCase());
-      if (!p) {
-        p = { id: createId("protocol"), name, createdAt: new Date().toISOString() };
-        appState.protocols.push(p);
+    function updateActiveProtocolFromInputs() {
+      if (isAddNewMode) return;
+
+      const activeName = appState.activeProtocolName;
+      const protocol = appState.protocols.find(p => p.name === activeName);
+      if (!protocol) return;
+
+      const name = protocolNameInput.value.trim();
+      if (name && name.toLowerCase() !== activeName.toLowerCase()) {
+        const exists = appState.protocols.some(p => p.name.toLowerCase() === name.toLowerCase());
+        if (!exists) {
+          protocol.name = name;
+          appState.activeProtocolName = name;
+        }
       }
-      p.peptideMg = asPositiveNumber(peptideMg.value, 10);
-      p.waterMl = asPositiveNumber(waterMl.value, 2);
-      p.targetDose = asPositiveNumber(targetDose.value, 500);
-      p.doseUnit = doseUnit;
-      p.syringeUnits = Number.parseFloat(syringe.value);
-      p.frequency = $("#protocolFrequency").value;
-      p.time = $("#protocolTime").value;
-      p.duration = $("#protocolDuration").value;
-      p.startDate = $("#protocolStartDate").value;
-      p.updatedAt = new Date().toISOString();
-      
-      appState.activeProtocolName = name;
-      updateDoseMath();
+
+      protocol.peptideMg = asPositiveNumber(peptideMg.value, 10);
+      protocol.waterMl = asPositiveNumber(waterMl.value, 2);
+      protocol.targetDose = asPositiveNumber(targetDose.value, 500);
+      protocol.doseUnit = doseUnit;
+      protocol.syringeUnits = Number.parseFloat(syringe.value);
+      protocol.frequency = $("#protocolFrequency").value;
+      protocol.time = $("#protocolTime").value;
+      protocol.duration = $("#protocolDuration").value;
+      protocol.startDate = $("#protocolStartDate").value;
+      protocol.updatedAt = new Date().toISOString();
+
       renderAgenda();
+      renderVaultSelector();
+      renderDashboardOps();
+      drawChart();
       persistState();
     }
 
-    [peptideMg, waterMl, targetDose, syringe, protocolNameInput, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
+    function renderVaultSelector() {
+      const vault = $("#vaultSelector");
+      if (!vault) return;
+      vault.replaceChildren();
+
+      appState.protocols.forEach((protocol) => {
+        const isActive = !isAddNewMode && appState.activeProtocolName === protocol.name;
+        const btn = createElement("button", {
+          className: `seg-button${isActive ? " active" : ""}`,
+          type: "button",
+          text: protocol.name
+        });
+        btn.addEventListener("click", () => {
+          isAddNewMode = false;
+          appState.activeProtocolName = protocol.name;
+          applyStateToControls();
+          updateDoseMath();
+          drawChart();
+          persistState();
+        });
+        vault.appendChild(btn);
+      });
+
+      const addNewBtn = createElement("button", {
+        className: `seg-button${isAddNewMode ? " active" : ""}`,
+        type: "button",
+        text: "+ Add New"
+      });
+      addNewBtn.addEventListener("click", () => {
+        enterAddNewMode();
+      });
+      vault.appendChild(addNewBtn);
+    }
+
+    function enterAddNewMode() {
+      isAddNewMode = true;
+      
+      $("#protocol-title").textContent = "Add Protocol";
+      const delBtn = $("#deleteProtocolBtn");
+      if (delBtn) {
+        delBtn.style.display = "none";
+      }
+
+      protocolNameInput.value = "";
+      cardProtocolName.textContent = "New Protocol";
+      moleculeAbbr.textContent = "NP";
+      
+      peptideMg.value = "10.0";
+      waterMl.value = "2.0";
+      targetDose.value = "500";
+      doseUnit = "mcg";
+      syringe.value = "50";
+      
+      $("#protocolFrequency").value = "Daily";
+      $("#protocolTime").value = "08:30";
+      $("#protocolDuration").value = "Indefinitely";
+      $("#protocolStartDate").value = new Date().toISOString().split('T')[0];
+
+      $$("[data-dose-unit]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.doseUnit === doseUnit);
+      });
+      $("#presetMass").textContent = "10.0";
+      $("#presetWater").textContent = "2.0";
+      
+      const presetButtons = $$("#protocols .preset-selector .seg-button");
+      presetButtons.forEach(btn => btn.classList.remove("active"));
+
+      updateDoseMath();
+      renderVaultSelector();
+    }
+
+    // Real-time reactive calculations on typing/modifying (without saving to state)
+    [peptideMg, waterMl, targetDose, syringe, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
       if (input) {
-        input.addEventListener("input", updateDoseMathAndSave);
-        input.addEventListener("change", updateDoseMathAndSave);
+        input.addEventListener("input", updateDoseMath);
       }
     });
 
     protocolNameInput.addEventListener("input", () => {
-      const name = protocolNameInput.value.trim() || "Custom Peptide";
+      const name = protocolNameInput.value.trim() || (isAddNewMode ? "New Protocol" : "Custom Peptide");
       cardProtocolName.textContent = name;
       moleculeAbbr.textContent = name.substring(0, 2).toUpperCase();
-      appState.activeProtocolName = name;
-      persistState();
+      updateDoseMath();
+    });
+
+    // Write to state and persist on change (exiting form fields) or blur
+    [peptideMg, waterMl, targetDose, syringe, protocolNameInput, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
+      if (input) {
+        input.addEventListener("change", () => {
+          if (!isAddNewMode) {
+            updateActiveProtocolFromInputs();
+          }
+        });
+        input.addEventListener("blur", () => {
+          if (!isAddNewMode) {
+            updateActiveProtocolFromInputs();
+          }
+        });
+      }
     });
 
     $$("[data-dose-unit]").forEach((button) => {
@@ -3222,7 +3342,11 @@
         button.classList.add("active");
         doseUnit = button.dataset.doseUnit;
         targetDose.value = doseUnit === "mcg" ? "500" : "0.5";
-        updateDoseMathAndSave();
+        
+        updateDoseMath();
+        if (!isAddNewMode) {
+          updateActiveProtocolFromInputs();
+        }
       });
     });
 
@@ -3248,11 +3372,7 @@
       }
       
       $$("[data-dose-unit]").forEach((btn) => {
-        if (btn.dataset.doseUnit === unit) {
-          btn.classList.add("active");
-        } else {
-          btn.classList.remove("active");
-        }
+        btn.classList.toggle("active", btn.dataset.doseUnit === unit);
       });
 
       cardProtocolName.textContent = name;
@@ -3266,10 +3386,15 @@
         else btn.classList.remove("active");
       });
       
-      appState.activeProtocolName = name;
-      updateDoseMathAndSave();
+      updateDoseMath();
+
+      if (!isAddNewMode) {
+        updateActiveProtocolFromInputs();
+        showToast(`Applied ${name} preset to active protocol`);
+      } else {
+        showToast(`Loaded ${name} preset parameters`);
+      }
       drawChart();
-      showToast(`Selected ${name} preset`);
     }
 
     // Canvas charts plotting curves dynamically
@@ -3993,6 +4118,9 @@
       if (!confirmed) return;
       appState.protocols = appState.protocols.filter((entry) => entry.name !== protocol.name);
       appState.activeProtocolName = appState.protocols[0].name;
+      
+      isAddNewMode = false;
+      
       applyStateToControls();
       updateDoseMath();
       renderAgenda();
@@ -4076,9 +4204,80 @@
     }
 
     function saveProtocol() {
-      const name = protocolNameInput.value.trim() || "Melanotan I";
-      updateDoseMathAndSave();
-      showToast(`Protocol "${name}" saved successfully`);
+      const name = protocolNameInput.value.trim();
+      if (!name) {
+        showToast("Please enter a protocol name.");
+        protocolNameInput.focus();
+        return;
+      }
+
+      if (isAddNewMode) {
+        const exists = appState.protocols.some(p => p.name.toLowerCase() === name.toLowerCase());
+        if (exists) {
+          showToast(`A protocol named "${name}" already exists.`);
+          protocolNameInput.focus();
+          return;
+        }
+
+        const newProtocol = {
+          id: createId("protocol"),
+          name: name,
+          peptideMg: asPositiveNumber(peptideMg.value, 10),
+          waterMl: asPositiveNumber(waterMl.value, 2),
+          targetDose: asPositiveNumber(targetDose.value, 500),
+          doseUnit: doseUnit,
+          syringeUnits: Number.parseFloat(syringe.value),
+          frequency: $("#protocolFrequency").value,
+          time: $("#protocolTime").value,
+          duration: $("#protocolDuration").value,
+          startDate: $("#protocolStartDate").value,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        appState.protocols.push(newProtocol);
+        appState.activeProtocolName = name;
+        isAddNewMode = false;
+        
+        showToast(`Protocol "${name}" created successfully`);
+      } else {
+        const activeName = appState.activeProtocolName;
+        const protocol = appState.protocols.find(p => p.name === activeName);
+        if (!protocol) {
+          showToast("Active protocol not found.");
+          return;
+        }
+
+        if (name.toLowerCase() !== activeName.toLowerCase()) {
+          const exists = appState.protocols.some(p => p.name.toLowerCase() === name.toLowerCase());
+          if (exists) {
+            showToast(`A protocol named "${name}" already exists.`);
+            protocolNameInput.focus();
+            return;
+          }
+        }
+
+        protocol.name = name;
+        protocol.peptideMg = asPositiveNumber(peptideMg.value, 10);
+        protocol.waterMl = asPositiveNumber(waterMl.value, 2);
+        protocol.targetDose = asPositiveNumber(targetDose.value, 500);
+        protocol.doseUnit = doseUnit;
+        protocol.syringeUnits = Number.parseFloat(syringe.value);
+        protocol.frequency = $("#protocolFrequency").value;
+        protocol.time = $("#protocolTime").value;
+        protocol.duration = $("#protocolDuration").value;
+        protocol.startDate = $("#protocolStartDate").value;
+        protocol.updatedAt = new Date().toISOString();
+
+        appState.activeProtocolName = name;
+        showToast(`Protocol "${name}" updated successfully`);
+      }
+
+      applyStateToControls();
+      updateDoseMath();
+      renderDashboardOps();
+      drawChart();
+      persistState();
     }
 
     function logDoseAtCurrentSite() {
@@ -4313,10 +4512,21 @@
     }
 
     function applyStateToControls() {
+      isAddNewMode = false;
+      
       const name = appState.activeProtocolName || "Melanotan I";
       const protocol = appState.protocols.find(p => p.name === name) || appState.protocols[0];
       if (!protocol) return;
       
+      appState.activeProtocolName = protocol.name;
+
+      $("#protocol-title").textContent = `Edit Protocol: ${protocol.name}`;
+      
+      const delBtn = $("#deleteProtocolBtn");
+      if (delBtn) {
+        delBtn.style.display = "";
+      }
+
       protocolNameInput.value = protocol.name || "Melanotan I";
       cardProtocolName.textContent = protocolNameInput.value;
       moleculeAbbr.textContent = protocolNameInput.value.substring(0, 2).toUpperCase();
@@ -4346,6 +4556,7 @@
       
       renderAgenda();
       updateSiteHistory(selectedSite.textContent);
+      renderVaultSelector();
     }
 
     function replaceAppState(incoming) {
