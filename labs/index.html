@@ -991,6 +991,25 @@
             position: sticky; top: 0; z-index: 100;
             background: transparent;
         }
+        .detail-header::before {
+            content: '';
+            position: absolute;
+            inset: 6px 12px 6px;
+            border-radius: 22px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(22px) saturate(145%);
+            -webkit-backdrop-filter: blur(22px) saturate(145%);
+            border: 1px solid rgba(255,255,255,0.12);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+            box-shadow: 0 12px 34px -26px rgba(0,0,0,0.75);
+        }
+        .panel-detail.has-scrolled-detail .detail-header::before { opacity: 1; }
+        .detail-header > * {
+            position: relative;
+            z-index: 1;
+        }
 
 
         .detail-nav-btn {
@@ -1947,7 +1966,7 @@
             border-radius: 18px;
             border: 1px solid rgba(255,255,255,0.13);
             border-top: 1.5px solid rgba(255,255,255,0.25);
-            background: linear-gradient(180deg, rgba(24,28,42,0.92), rgba(8,12,22,0.88));
+            background: linear-gradient(180deg, rgba(24,28,42,0.7), rgba(8,12,22,0.7));
             backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
             -webkit-backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
             box-shadow: 0 16px 34px -20px rgba(0,0,0,0.82), 0 2px 10px rgba(0,0,0,0.26);
@@ -4274,6 +4293,12 @@
             }
         }
 
+        function updateDetailHeaderScrim() {
+            const panel = document.getElementById('panelDetail');
+            if (!panel) return;
+            panel.classList.toggle('has-scrolled-detail', panel.scrollTop > 18);
+        }
+
         // ── OPEN TEST ────────────────────────────────────────────────
         function isDesktop() { return window.innerWidth >= 900; }
 
@@ -4544,6 +4569,7 @@
             // Scroll detail panel to top
             const dp = document.getElementById('panelDetail');
             dp.scrollTop = 0;
+            updateDetailHeaderScrim();
         }
 
         function renderKPIs(t) {
@@ -4922,8 +4948,8 @@
             const dates = [...new Set(records.map(item => item.point.date).filter(Boolean))]
                 .sort((a, b) => parseISODate(a) - parseISODate(b));
             if (dates.length === 0) return 'Date unavailable';
-            if (dates.length === 1) return `Tests taken ${fmtDate(dates[0])}`;
-            return `Tests taken ${fmtDate(dates[0])} to ${fmtDate(dates[dates.length - 1])}`;
+            if (dates.length === 1) return dates[0];
+            return `${dates[0]} to ${dates[dates.length - 1]}`;
         }
 
         function renderSourceRecord({ test, point }) {
@@ -5478,6 +5504,12 @@
             const unitImportInput = document.getElementById('unitImportFileInput');
             if (unitImportInput) {
                 unitImportInput.addEventListener('change', handleUnitImportFileChange);
+            }
+
+            const detailPanel = document.getElementById('panelDetail');
+            if (detailPanel) {
+                detailPanel.addEventListener('scroll', updateDetailHeaderScrim, { passive: true });
+                updateDetailHeaderScrim();
             }
         });
         // Re-triggered after Google sign-in (dispatched by the Firebase module below)
