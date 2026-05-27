@@ -10,16 +10,16 @@
 
     :root {
       color-scheme: light;
-      --bg: #f7f1e8;
-      --bg-strong: #efe3d0;
-      --panel: rgba(255, 252, 247, 0.88);
-      --panel-strong: #fffaf2;
+      --bg: #f7f2e9;
+      --bg-strong: #efe4d3;
+      --panel: rgba(255, 253, 248, 0.94);
+      --panel-strong: #fffdf8;
       
       /* Editorial Sepia & Deep Teal Palette */
-      --text: #23180a; /* Sepia-Charcoal */
-      --muted: #69553d; /* Sepia-Brown */
-      --dim: #a08d78; /* Soft Sepia-Gray */
-      --line: rgba(76, 54, 29, 0.12); /* Faint sepia borders */
+      --text: #21170b; /* Sepia-Charcoal */
+      --muted: #56432f; /* Sepia-Brown */
+      --dim: #766350; /* Soft Sepia-Gray */
+      --line: rgba(76, 54, 29, 0.14); /* Faint sepia borders */
       
       --accent: #0f766e; /* Deep Teal Green */
       --accent-soft: #d8ebe5; /* Pastel Sage */
@@ -52,6 +52,8 @@
       /* Glowing Highlights */
       --glow-teal: 0 0 16px rgba(15, 118, 110, 0.18);
       --glow-purple: 0 0 16px rgba(126, 34, 206, 0.12);
+      --shadow-card: 0 18px 52px rgba(71, 48, 18, 0.1);
+      --focus-ring: 0 0 0 4px rgba(8, 145, 178, 0.22);
       
       --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-display: 'Fraunces', serif;
@@ -61,7 +63,6 @@
 
     * {
       box-sizing: border-box;
-      outline: none;
     }
 
     html {
@@ -77,6 +78,10 @@
       line-height: 1.5;
       overflow-x: hidden;
       min-height: 100vh;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overscroll-behavior-y: contain;
     }
 
     /* Ambient Editorial Sepia Background Grid */
@@ -106,6 +111,18 @@
       border: 0;
       cursor: pointer;
       background: none;
+      touch-action: manipulation;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(8, 145, 178, 0.74);
+      outline-offset: 3px;
+      box-shadow: var(--focus-ring);
     }
 
     a {
@@ -125,7 +142,7 @@
       top: 0;
       z-index: 40;
       display: grid;
-      grid-template-columns: 60px 1fr 60px;
+      grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
       gap: 16px;
       align-items: center;
       margin: -24px -24px 0px;
@@ -136,12 +153,23 @@
       border-bottom: 1px solid var(--line);
     }
 
+    .topbar-spacer {
+      min-width: 140px;
+    }
+
     .brand {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       gap: 4px;
+      min-width: 0;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       min-width: 0;
     }
 
@@ -158,8 +186,26 @@
       font-family: var(--font-ui);
       font-weight: 700;
       font-size: 1.1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       color: #ffffff;
+    }
+
+    .brand.compact .brand-mark {
+      width: 36px;
+      height: 36px;
+      margin: 0;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+    }
+
+    .brand.compact h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 5vw, 1.6rem);
+    }
+
+    .brand.compact .sync-chip {
+      align-self: center;
+      margin: 4px 0 0;
     }
 
     .brand h1 {
@@ -167,7 +213,7 @@
       font-family: var(--font-display);
       font-weight: 700;
       font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
       line-height: 1.1;
       background: linear-gradient(135deg, #0f766e, #23180a);
       -webkit-background-clip: text;
@@ -188,6 +234,8 @@
       display: flex;
       gap: 10px;
       align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
     }
 
     .sync-chip {
@@ -200,7 +248,7 @@
       box-shadow: var(--nm-btn);
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       white-space: nowrap;
       margin-left: 10px;
@@ -220,7 +268,7 @@
     }
 
     .auth-button {
-      min-height: 42px;
+      min-height: 44px;
       padding: 0 16px;
       border: 1px solid rgba(15, 118, 110, 0.22);
       border-radius: 999px;
@@ -283,7 +331,7 @@
       font-family: var(--font-display);
       font-size: clamp(2rem, 8vw, 3.4rem);
       line-height: 0.98;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       color: var(--text);
     }
 
@@ -347,7 +395,6 @@
 
     .app-view {
       display: none;
-      animation: fadeIn 0.22s ease-out forwards;
       gap: 24px;
       align-items: start;
     }
@@ -378,9 +425,46 @@
       }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    .dashboard-summary {
+      display: grid;
+      gap: 22px;
+      padding: 28px;
+      border: 1px solid rgba(15, 118, 110, 0.16);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 253, 248, 1), rgba(247, 252, 250, 0.96)),
+        radial-gradient(circle at 90% 12%, rgba(8, 145, 178, 0.14), transparent 22rem);
+      box-shadow: var(--shadow-card);
+    }
+
+    .summary-copy {
+      display: grid;
+      gap: 10px;
+      max-width: 680px;
+    }
+
+    .summary-copy h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.35rem);
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .summary-copy p {
+      max-width: 58ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    .summary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
     }
 
     /* Soft Pillowy Neumorphic Card Shells */
@@ -390,7 +474,7 @@
       background: var(--panel);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--nm-raised);
+      box-shadow: var(--shadow-card);
       overflow: hidden;
       position: relative;
     }
@@ -410,7 +494,7 @@
       font-family: var(--font-display);
       font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
       color: var(--text);
     }
 
@@ -419,7 +503,7 @@
       margin-bottom: 4px;
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -451,7 +535,7 @@
       font-size: clamp(1.8rem, 4.5vw, 3.2rem);
       font-weight: 700;
       line-height: 1.05;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       background: linear-gradient(135deg, #23180a, #0f766e, #7e22ce);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -473,6 +557,11 @@
       flex-shrink: 0;
     }
 
+    .dashboard-metrics {
+      width: 100%;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     /* Tactile Recessed Status Metrics */
     .metric-tile {
       display: flex;
@@ -480,7 +569,7 @@
       gap: 4px;
       padding: 16px 20px;
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.82);
       border: 1px solid rgba(76, 54, 29, 0.05);
       box-shadow: var(--nm-sunken);
     }
@@ -496,7 +585,7 @@
     .metric-tile span {
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -522,7 +611,7 @@
 
     .agenda-item {
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       gap: 18px;
       align-items: center;
       padding: 18px 24px;
@@ -550,8 +639,8 @@
     .status-icon {
       display: grid;
       place-items: center;
-      width: 30px;
-      height: 30px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       box-shadow: var(--nm-sunken);
       border: 1px solid rgba(76, 54, 29, 0.05);
@@ -604,12 +693,16 @@
     }
 
     .status-chip {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 6px 14px;
       border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       font-weight: 700;
       background: rgba(255, 252, 247, 0.9);
       box-shadow: var(--nm-btn);
@@ -652,7 +745,7 @@
     .micro-label {
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -667,7 +760,6 @@
       background: rgba(255, 255, 255, 0.45);
       color: var(--text);
       padding: 12px 14px;
-      outline: none;
       box-shadow: var(--nm-sunken);
       transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
       font-weight: 600;
@@ -697,7 +789,17 @@
       display: none;
     }
 
+    .preset-selector {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .preset-selector .seg-button {
+      flex: 1 0 auto;
+    }
+
     .seg-button {
+      min-height: 44px;
       padding: 8px 16px;
       border-radius: var(--radius-sm);
       color: var(--muted);
@@ -734,7 +836,7 @@
       padding: 26px;
       border: 1px solid rgba(15, 118, 110, 0.15);
       border-radius: var(--radius-md);
-      background: linear-gradient(145deg, #e6edea, #f3f7f5);
+      background: linear-gradient(145deg, #eaf5f2, #f8fbfa);
       box-shadow: var(--nm-sunken);
       text-align: center;
       position: relative;
@@ -754,7 +856,7 @@
       font-size: clamp(2.4rem, 6vw, 4rem);
       font-weight: 700;
       line-height: 1;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       text-shadow: 0 1px 2px rgba(255,255,255,0.8), 0 0 10px rgba(15, 118, 110, 0.15);
     }
 
@@ -767,7 +869,7 @@
     /* Molded Selection Preset Cards */
     .protocol-card {
       display: grid;
-      grid-template-columns: 42px 1fr auto;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
       gap: 16px;
       align-items: center;
       padding: 16px;
@@ -816,7 +918,7 @@
 
     .body-stage {
       position: relative;
-      min-height: 480px;
+      min-height: 500px;
       border-radius: var(--radius-md);
       background: 
         radial-gradient(circle at 50% 30%, rgba(15, 118, 110, 0.05), transparent 70%),
@@ -848,8 +950,8 @@
       position: absolute;
       z-index: 10;
       display: grid;
-      width: 26px;
-      height: 26px;
+      width: 36px;
+      height: 36px;
       place-items: center;
       border: 1.5px solid rgba(76, 54, 29, 0.35);
       border-radius: 50%;
@@ -858,9 +960,16 @@
       transform: translate(-50%, -50%);
     }
 
+    .site-node::before {
+      position: absolute;
+      inset: -6px;
+      content: "";
+      border-radius: 50%;
+    }
+
     .site-node::after {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--muted);
       content: "";
@@ -911,6 +1020,11 @@
       font-size: 1.3rem;
       font-weight: 700;
       color: var(--text);
+    }
+
+    .site-log-button {
+      width: 100%;
+      border: 1px solid rgba(76, 54, 29, 0.12);
     }
 
     .history-list {
@@ -1027,7 +1141,7 @@
       display: block;
       margin-top: 4px;
       font-family: var(--font-mono);
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
     }
@@ -1086,7 +1200,7 @@
     .tab-item-card .badge {
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-family: var(--font-mono);
       font-weight: 700;
       text-transform: uppercase;
@@ -1101,15 +1215,15 @@
     }
 
     .mini-action {
-      min-height: 30px;
-      padding: 4px 10px;
+      min-height: 44px;
+      padding: 6px 12px;
       border: 1px solid rgba(76, 54, 29, 0.1);
       border-radius: 999px;
       background: rgba(255, 252, 247, 0.78);
       box-shadow: var(--nm-btn);
       color: var(--muted);
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
     }
@@ -1174,12 +1288,12 @@
 
     .tab-action-form input {
       flex: 1;
-      height: 38px;
+      min-height: 44px;
       border-radius: var(--radius-sm);
     }
 
     .tab-action-form button {
-      height: 38px;
+      min-height: 44px;
       padding: 0 18px;
       border-radius: var(--radius-sm);
       background: linear-gradient(135deg, #0f766e, #0d9488);
@@ -1211,8 +1325,8 @@
 
     .calendar-nav {
       display: grid;
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       place-items: center;
       border: 1px solid rgba(76, 54, 29, 0.05);
       border-radius: var(--radius-md);
@@ -1237,7 +1351,7 @@
     .weekday {
       color: var(--dim);
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       padding-bottom: 4px;
     }
@@ -1295,7 +1409,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 4px;
-      padding: 6px 24px;
+      padding: 8px 24px;
       margin: 0 -24px 24px;
       border-bottom: 1px solid var(--line);
       background: rgba(247, 241, 232, 0.95);
@@ -1309,11 +1423,11 @@
       gap: 3px;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
+      min-height: 56px;
       border-radius: var(--radius-sm);
       background: transparent;
       color: var(--muted);
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       font-family: var(--font-ui);
       font-weight: 700;
       transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -1374,7 +1488,7 @@
       bottom: 98px;
       z-index: 55;
       display: none;
-      width: min(300px, calc(100vw - 56px));
+      width: min(330px, calc(100vw - 56px));
       border: 1px solid rgba(76, 54, 29, 0.12);
       border-radius: var(--radius-lg);
       background: rgba(255, 252, 247, 0.95);
@@ -1422,9 +1536,10 @@
 
     .action-button {
       display: grid;
-      grid-template-columns: 32px 1fr;
+      grid-template-columns: 38px minmax(0, 1fr);
       gap: 12px;
       align-items: center;
+      min-height: 56px;
       padding: 14px 18px;
       background: rgba(255, 252, 247, 0.98);
       text-align: left;
@@ -1440,8 +1555,8 @@
 
     .action-button span:first-child {
       display: grid;
-      width: 32px;
-      height: 32px;
+      width: 38px;
+      height: 38px;
       place-items: center;
       border-radius: var(--radius-sm);
       background: rgba(15, 118, 110, 0.08);
@@ -1450,6 +1565,12 @@
       border: 1px solid rgba(76, 54, 29, 0.04);
       font-weight: 700;
       font-size: 1rem;
+    }
+
+    .action-button svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
     }
 
     .footnote {
@@ -1585,12 +1706,16 @@
       }
 
       .topbar {
-        grid-template-columns: 44px 1fr 44px;
+        grid-template-columns: 1fr auto;
         gap: 12px;
         margin: -16px -16px 0px;
         padding: 10px 16px;
         background: rgba(247, 241, 232, 0.98);
         box-shadow: 0 4px 20px rgba(71, 48, 18, 0.05);
+      }
+
+      .topbar-spacer {
+        display: none;
       }
 
       .top-nav {
@@ -1606,8 +1731,8 @@
       }
 
       .icon-button {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
       }
 
       .top-actions {
@@ -1622,7 +1747,17 @@
         padding: 20px;
       }
 
+      .dashboard-summary {
+        gap: 18px;
+        padding: 24px;
+      }
+
+      .summary-copy h2 {
+        font-size: clamp(2rem, 12vw, 2.85rem);
+      }
+
       .status-rack,
+      .dashboard-metrics,
       .form-grid,
       .analytics-grid {
         grid-template-columns: 1fr;
@@ -1642,12 +1777,34 @@
         min-height: 420px;
       }
 
+      .tab-action-form,
+      .chart-controls,
+      .modal-actions,
+      .summary-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .summary-actions {
+        padding-right: 72px;
+      }
+
+      .tab-action-form button,
+      .summary-actions .seg-button,
+      .summary-actions .mini-action {
+        width: 100%;
+      }
+
 
       .fab {
         right: 16px;
-        bottom: 14px;
+        bottom: 22px;
         width: 56px;
         height: 56px;
+      }
+
+      #view-dashboard {
+        padding-bottom: 70px;
       }
 
       .quick-sheet {
@@ -1667,7 +1824,7 @@
   </style>
 </head>
 <body class="auth-locked">
-  <div class="toast" id="toastMessage">Logged successfully</div>
+  <div class="toast" id="toastMessage" role="status" aria-live="polite">Logged successfully</div>
   <div class="sheet-overlay" id="sheetOverlay"></div>
   <div class="modal-overlay" id="recordModal" aria-hidden="true">
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="recordModalTitle">
@@ -1695,16 +1852,16 @@
 
   <div class="app-shell">
     <header class="topbar">
-      <div style="width: 60px;"></div>
-      <div class="brand">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div class="brand-mark" aria-hidden="true" style="width: 36px; height: 36px; font-size: 0.95rem; margin: 0;">PK+</div>
-          <h1 style="margin: 0; font-size: clamp(1.2rem, 5vw, 1.6rem);">PeptideKit+</h1>
+      <div class="topbar-spacer" aria-hidden="true"></div>
+      <div class="brand compact">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">PK+</div>
+          <h1>PeptideKit+</h1>
         </div>
-        <span class="sync-chip" id="syncStatus" style="margin: 4px 0 0 0; align-self: center;">Local cache ready</span>
+        <span class="sync-chip" id="syncStatus">Local cache ready</span>
       </div>
-      <div class="top-actions" style="justify-self: end; width: 60px; display: flex; justify-content: flex-end;">
-        <button class="auth-button" id="authButton" type="button" style="white-space: nowrap;">Sign in</button>
+      <div class="top-actions">
+        <button class="auth-button" id="authButton" type="button">Sign in</button>
       </div>
     </header>
 
@@ -1730,20 +1887,31 @@
     <main class="dashboard-grid">
       <!-- VIEW: DASHBOARD -->
       <div id="view-dashboard" class="app-view active">
-        <div class="status-rack" aria-label="Daily status" style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px;">
-          <div class="metric-tile highlight">
-            <span>Active Protocols</span>
-            <strong>3</strong>
+        <section class="dashboard-summary" aria-labelledby="dashboard-summary-title">
+          <div class="summary-copy">
+            <span class="panel-kicker">Private Protocol Console</span>
+            <h2 id="dashboard-summary-title"><span id="greeting">Good afternoon</span>, Sean</h2>
+            <p>Track today’s protocol work, sync safely to Firebase, and keep dose math, injection rotation, and recovery notes in one place.</p>
           </div>
-          <div class="metric-tile action">
-            <span>Doses Remaining</span>
-            <strong id="dosesRemainingCounter">2</strong>
+          <div class="status-rack dashboard-metrics" aria-label="Daily status">
+            <div class="metric-tile highlight">
+              <span>Active Protocols</span>
+              <strong>3</strong>
+            </div>
+            <div class="metric-tile action">
+              <span>Doses Remaining</span>
+              <strong id="dosesRemainingCounter">2</strong>
+            </div>
+            <div class="metric-tile success">
+              <span>Adherence</span>
+              <strong>94%</strong>
+            </div>
           </div>
-          <div class="metric-tile success">
-            <span>Adherence</span>
-            <strong>94%</strong>
+          <div class="summary-actions" aria-label="Dashboard shortcuts">
+            <button class="seg-button active" type="button" onclick="triggerQuickAction('dose')">Log Next Dose</button>
+            <button class="mini-action" type="button" onclick="triggerQuickAction('weight')">Update Weight</button>
           </div>
-        </div>
+        </section>
 
         <section class="panel" aria-labelledby="agenda-title">
           <div class="panel-header">
@@ -1798,11 +1966,11 @@
           <div class="form-grid">
             <div class="field full">
               <span class="micro-label">Select Peptide Presets</span>
-              <div class="segmented preset-selector" style="width: 100%; margin-bottom: 12px;" role="group" aria-label="Peptide Preset Selection">
-                <button class="seg-button active" style="flex:1" type="button" onclick="selectPreset('Melanotan I', 10.0, 2.0, 500, 'mcg')">Melanotan I</button>
-                <button class="seg-button" style="flex:1" type="button" onclick="selectPreset('BPC-157', 5.0, 2.0, 250, 'mcg')">BPC-157</button>
-                <button class="seg-button" style="flex:1" type="button" onclick="selectPreset('Semaglutide', 2.0, 2.0, 0.25, 'mg')">Semaglutide</button>
-                <button class="seg-button" style="flex:1" type="button" onclick="selectPreset('Tirzepatide', 10.0, 2.0, 2.5, 'mg')">Tirzepatide</button>
+              <div class="segmented preset-selector" role="group" aria-label="Peptide Preset Selection">
+                <button class="seg-button active" type="button" onclick="selectPreset('Melanotan I', 10.0, 2.0, 500, 'mcg')">Melanotan I</button>
+                <button class="seg-button" type="button" onclick="selectPreset('BPC-157', 5.0, 2.0, 250, 'mcg')">BPC-157</button>
+                <button class="seg-button" type="button" onclick="selectPreset('Semaglutide', 2.0, 2.0, 0.25, 'mg')">Semaglutide</button>
+                <button class="seg-button" type="button" onclick="selectPreset('Tirzepatide', 10.0, 2.0, 2.5, 'mg')">Tirzepatide</button>
               </div>
 
               <div class="protocol-card">
@@ -1905,7 +2073,7 @@
                 <li>Rotation spacing: 3 days</li>
                 <li>Local notes: no irritation logged</li>
               </ul>
-              <button class="seg-button active" style="width: 100%; border: 1px solid rgba(76,54,29,0.12)" type="button" onclick="logDoseAtCurrentSite()">Log Injection Site</button>
+              <button class="seg-button active site-log-button" type="button" onclick="logDoseAtCurrentSite()">Log Injection Site</button>
             </aside>
           </div>
         </section>
@@ -2004,10 +2172,22 @@
       <h3>What would you like to record?</h3>
     </header>
     <div class="quick-actions">
-      <button class="action-button" type="button" onclick="triggerQuickAction('dose')"><span>+</span><span>Log a Dose</span></button>
-      <button class="action-button" type="button" onclick="triggerQuickAction('protocol')"><span>∑</span><span>Add Protocol</span></button>
-      <button class="action-button" type="button" onclick="triggerQuickAction('symptom')"><span>!</span><span>Record Symptom</span></button>
-      <button class="action-button" type="button" onclick="triggerQuickAction('weight')"><span>↧</span><span>Update Weight</span></button>
+      <button class="action-button" type="button" onclick="triggerQuickAction('dose')">
+        <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 2v6"></path><path d="M14 2v6"></path><path d="M8 8h8l1 10a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4Z"></path><path d="M8 13h8"></path></svg></span>
+        <span>Log a Dose</span>
+      </button>
+      <button class="action-button" type="button" onclick="triggerQuickAction('protocol')">
+        <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 3h6"></path><path d="M10 3v6l-5 8a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 19 17l-5-8V3"></path><path d="M8 17h8"></path></svg></span>
+        <span>Add Protocol</span>
+      </button>
+      <button class="action-button" type="button" onclick="triggerQuickAction('symptom')">
+        <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v10"></path><path d="M12 17h.01"></path><path d="M10.3 21h3.4a7 7 0 1 0-3.4 0Z"></path></svg></span>
+        <span>Record Symptom</span>
+      </button>
+      <button class="action-button" type="button" onclick="triggerQuickAction('weight')">
+        <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 7h12"></path><path d="M8 7a4 4 0 0 1 8 0"></path><rect x="4" y="7" width="16" height="14" rx="3"></rect><path d="M12 12v4"></path><path d="m9.5 14.5 2.5 2.5 2.5-2.5"></path></svg></span>
+        <span>Update Weight</span>
+      </button>
     </div>
   </div>
   <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="quickSheet" aria-label="Open quick action menu">+</button>
