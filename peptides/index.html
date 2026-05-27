@@ -2067,6 +2067,19 @@
         <h3 id="recordModalTitle">Update entry</h3>
       </header>
       <form class="modal-body" id="recordModalForm"></form>
+      <div id="recordModalWarning" style="display: none; flex-direction: column; align-items: center; text-align: center; padding: 22px 22px 10px; gap: 14px;">
+        <div class="warning-icon-wrapper" style="display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(220, 38, 38, 0.08); color: #dc2626;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+            <path d="M3 6h18"></path>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+            <line x1="10" x2="10" y1="11" y2="17"></line>
+            <line x1="14" x2="14" y1="11" y2="17"></line>
+          </svg>
+        </div>
+        <p id="recordModalWarningDetail" style="margin: 0; color: var(--text-dark); font-size: 0.98rem; font-weight: 500; line-height: 1.5;"></p>
+        <span style="font-size: 0.85rem; font-weight: 600; color: #dc2626; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(220, 38, 38, 0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(220, 38, 38, 0.12); font-family: var(--font-ui);">This action cannot be undone</span>
+      </div>
       <div class="modal-actions">
         <button class="mini-action" id="recordModalCancel" type="button">Cancel</button>
         <button class="seg-button active" id="recordModalConfirm" type="button">Save</button>
@@ -2264,14 +2277,21 @@
       <!-- VIEW: PROTOCOLS -->
       <div id="view-protocols" class="app-view">
         <section class="panel" id="protocols" aria-labelledby="protocol-title">
-          <div class="panel-header">
+          <div class="panel-header" id="protocolPanelHeader" style="transition: background-color 200ms ease, border-color 200ms ease;">
             <div>
               <span class="panel-kicker">Formulation Setup</span>
               <h2 class="panel-title" id="protocol-title">Edit Protocol</h2>
             </div>
             <div class="record-actions">
-              <button class="mini-action danger" id="deleteProtocolBtn" type="button" onclick="deleteActiveProtocol()">Delete</button>
-              <button class="seg-button active" type="button" onclick="saveProtocol()">Save</button>
+              <button class="mini-action danger" id="deleteProtocolBtn" type="button" onclick="deleteActiveProtocol()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 14px; transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+                <span>Delete</span>
+              </button>
+              <button class="seg-button active" id="saveProtocolBtn" type="button" onclick="saveProtocol()" style="transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;">Save</button>
             </div>
           </div>
           <div class="vault-container" style="padding: 16px 24px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.15);">
@@ -3273,6 +3293,22 @@
       isAddNewMode = true;
       
       $("#protocol-title").textContent = "Add Protocol";
+      
+      const header = $("#protocolPanelHeader");
+      if (header) {
+        header.style.background = "rgba(16, 185, 129, 0.05)";
+        header.style.borderBottom = "1px solid rgba(16, 185, 129, 0.15)";
+      }
+      
+      const saveBtn = $("#saveProtocolBtn");
+      if (saveBtn) {
+        saveBtn.textContent = "Create Protocol";
+        saveBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+        saveBtn.style.borderColor = "#059669";
+        saveBtn.style.boxShadow = "0 4px 12px rgba(16, 185, 129, 0.22)";
+        saveBtn.style.color = "white";
+      }
+
       const delBtn = $("#deleteProtocolBtn");
       if (delBtn) {
         delBtn.style.display = "none";
@@ -3321,7 +3357,7 @@
     });
 
     // Write to state and persist on change (exiting form fields) or blur
-    [peptideMg, waterMl, targetDose, syringe, protocolNameInput, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
+    [peptideMg, waterMl, targetDose, syringe, $("#protocolFrequency"), $("#protocolTime"), $("#protocolDuration"), $("#protocolStartDate")].forEach((input) => {
       if (input) {
         input.addEventListener("change", () => {
           if (!isAddNewMode) {
@@ -3698,40 +3734,61 @@
       recordModal.classList.remove("open");
       recordModal.setAttribute("aria-hidden", "true");
       recordModalForm.replaceChildren();
+      const warningDiv = $("#recordModalWarning");
+      if (warningDiv) warningDiv.style.display = "none";
+      recordModalForm.style.display = "grid";
       if (activeModalResolve) {
         activeModalResolve(result);
         activeModalResolve = null;
       }
     }
 
-    function openRecordModal({ kicker = "Edit Record", title, confirmText = "Save", danger = false, fields = [] }) {
+    function openRecordModal({ kicker = "Edit Record", title, confirmText = "Save", danger = false, fields = [], warningMode = false, warningDetail = "" }) {
       return new Promise((resolve) => {
         activeModalResolve = resolve;
         recordModalKicker.textContent = kicker;
         recordModalTitle.textContent = title;
         recordModalConfirm.textContent = confirmText;
         recordModalConfirm.classList.toggle("danger", danger);
-        recordModalForm.replaceChildren();
-
-        fields.forEach((field) => {
-          const label = createElement("label", { className: "field" });
-          label.appendChild(createElement("span", { text: field.label }));
-          const input = createElement(field.multiline ? "textarea" : "input", {
-            className: "control",
-            id: `modal-field-${field.name}`,
-            type: field.type || "text",
-            value: field.value || "",
-            placeholder: field.placeholder || ""
+        
+        const warningDiv = $("#recordModalWarning");
+        if (warningMode) {
+          recordModalForm.style.display = "none";
+          recordModalForm.replaceChildren();
+          if (warningDiv) {
+            warningDiv.style.display = "flex";
+            const detailEl = $("#recordModalWarningDetail");
+            if (detailEl) detailEl.textContent = warningDetail || "";
+          }
+        } else {
+          if (warningDiv) warningDiv.style.display = "none";
+          recordModalForm.style.display = "grid";
+          recordModalForm.replaceChildren();
+          fields.forEach((field) => {
+            const label = createElement("label", { className: "field" });
+            label.appendChild(createElement("span", { text: field.label }));
+            const input = createElement(field.multiline ? "textarea" : "input", {
+              className: "control",
+              id: `modal-field-${field.name}`,
+              type: field.type || "text",
+              value: field.value || "",
+              placeholder: field.placeholder || ""
+            });
+            input.dataset.fieldName = field.name;
+            label.appendChild(input);
+            recordModalForm.appendChild(label);
           });
-          input.dataset.fieldName = field.name;
-          label.appendChild(input);
-          recordModalForm.appendChild(label);
-        });
+        }
 
         recordModal.classList.add("open");
         recordModal.setAttribute("aria-hidden", "false");
-        const firstInput = $(".control", recordModalForm);
-        if (firstInput) setTimeout(() => firstInput.focus(), 20);
+        
+        if (!warningMode) {
+          const firstInput = $(".control", recordModalForm);
+          if (firstInput) setTimeout(() => firstInput.focus(), 20);
+        } else {
+          setTimeout(() => recordModalConfirm.focus(), 20);
+        }
       });
     }
 
@@ -3745,16 +3802,21 @@
     async function confirmDelete(title, detail) {
       const result = await openRecordModal({
         kicker: "Confirm Delete",
-        title,
+        title: title,
         confirmText: "Delete",
         danger: true,
-        fields: [{ name: "detail", label: "This cannot be undone", value: detail, multiline: true }]
+        warningMode: true,
+        warningDetail: detail
       });
       return result != null;
     }
 
     recordModalCancel.addEventListener("click", () => closeRecordModal(null));
-    recordModalConfirm.addEventListener("click", () => closeRecordModal(getModalValues()));
+    recordModalConfirm.addEventListener("click", () => {
+      // If we are in warningMode, form has no controls so getModalValues() is empty.
+      // This is perfectly fine since result != null is true.
+      closeRecordModal(getModalValues());
+    });
     recordModal.addEventListener("click", (event) => {
       if (event.target === recordModal) closeRecordModal(null);
     });
@@ -3788,8 +3850,29 @@
 
     function createRecordActions(editHandler, deleteHandler) {
       const actions = createElement("div", { className: "record-actions" });
+      
       const edit = createElement("button", { className: "mini-action", type: "button", text: "Edit" });
-      const del = createElement("button", { className: "mini-action danger", type: "button", text: "Delete" });
+      edit.style.display = "flex";
+      edit.style.alignItems = "center";
+      edit.style.justifyContent = "center";
+      edit.style.gap = "4px";
+      edit.style.padding = "6px 12px";
+      
+      const del = createElement("button", { className: "mini-action danger", type: "button" });
+      del.style.display = "flex";
+      del.style.alignItems = "center";
+      del.style.justifyContent = "center";
+      del.style.gap = "6px";
+      del.style.padding = "6px 12px";
+      del.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 13px; height: 13px;">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+        </svg>
+        <span>Delete</span>
+      `;
+      
       edit.addEventListener("click", editHandler);
       del.addEventListener("click", deleteHandler);
       actions.appendChild(edit);
@@ -4021,6 +4104,7 @@
       renderAgenda();
       renderCalendar();
       drawChart();
+      renderDashboardOps();
       persistState();
       showToast("Log updated");
     }
@@ -4035,6 +4119,7 @@
       renderAgenda();
       renderCalendar();
       drawChart();
+      renderDashboardOps();
       updateSiteHistory(selectedSite.textContent);
       persistState();
       showToast("Log deleted");
@@ -4107,17 +4192,38 @@
     }
 
     async function deleteActiveProtocol() {
-      const name = appState.activeProtocolName || protocolNameInput.value.trim();
-      const protocol = appState.protocols.find((entry) => entry.name === name);
-      if (!protocol) return;
+      // Find the active protocol to delete with robust fallbacks
+      const name = (appState.activeProtocolName || protocolNameInput.value || "").trim();
+      let protocol = appState.protocols.find((entry) => entry.name === name);
+      if (!protocol && name) {
+        // Fallback 1: Case-insensitive search
+        protocol = appState.protocols.find((entry) => entry.name.toLowerCase() === name.toLowerCase());
+      }
+      if (!protocol) {
+        // Fallback 2: Find active protocol by activeProtocolName state
+        protocol = appState.protocols.find((entry) => entry.name === appState.activeProtocolName);
+      }
+      if (!protocol) {
+        // Fallback 3: Select the currently viewed active protocol or first protocol
+        const activeName = appState.activeProtocolName || "Melanotan I";
+        protocol = appState.protocols.find(p => p.name === activeName) || appState.protocols[0];
+      }
+
+      if (!protocol) {
+        showToast("No active protocol to delete.");
+        return;
+      }
+
       if (appState.protocols.length <= 1) {
         showToast("Keep at least one protocol in the vault.");
         return;
       }
+
       const confirmed = await confirmDelete("Delete protocol?", `${protocol.name}. Existing logs will stay in history.`);
       if (!confirmed) return;
-      appState.protocols = appState.protocols.filter((entry) => entry.name !== protocol.name);
-      appState.activeProtocolName = appState.protocols[0].name;
+
+      appState.protocols = appState.protocols.filter((entry) => entry.id !== protocol.id);
+      appState.activeProtocolName = appState.protocols[0]?.name || "";
       
       isAddNewMode = false;
       
@@ -4126,7 +4232,7 @@
       renderAgenda();
       drawChart();
       persistState();
-      showToast("Protocol deleted");
+      showToast(`Protocol "${protocol.name}" deleted`);
     }
 
     // Dynamic completed agenda dose injection
@@ -4381,9 +4487,17 @@
           ]));
         } else {
           rows.forEach((log) => {
-            recent.appendChild(createElement("div", { className: "activity-row" }, [
+            const meta = createElement("div", { style: { display: "flex", flexDirection: "column", gap: "2px" } }, [
               createElement("strong", { text: log.title }),
               createElement("span", { text: log.time || log.type })
+            ]);
+            const actions = createRecordActions(() => editLog(log.id), () => deleteLog(log.id));
+            recent.appendChild(createElement("div", { 
+              className: "activity-row",
+              style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px" }
+            }, [
+              meta,
+              actions
             ]));
           });
         }
@@ -4522,9 +4636,28 @@
 
       $("#protocol-title").textContent = `Edit Protocol: ${protocol.name}`;
       
+      const header = $("#protocolPanelHeader");
+      if (header) {
+        header.style.background = "rgba(255, 255, 255, 0.35)";
+        header.style.borderBottom = "1px solid var(--line)";
+      }
+
+      const saveBtn = $("#saveProtocolBtn");
+      if (saveBtn) {
+        saveBtn.textContent = "Save Changes";
+        saveBtn.style.background = "#186f68";
+        saveBtn.style.borderColor = "rgba(15, 118, 110, 0.22)";
+        saveBtn.style.boxShadow = "0 8px 16px rgba(24, 111, 104, 0.14)";
+        saveBtn.style.color = "white";
+      }
+
       const delBtn = $("#deleteProtocolBtn");
       if (delBtn) {
         delBtn.style.display = "";
+        delBtn.style.background = "linear-gradient(135deg, #dc2626, #b91c1c)";
+        delBtn.style.borderColor = "#b91c1c";
+        delBtn.style.boxShadow = "0 4px 12px rgba(220, 38, 38, 0.18)";
+        delBtn.style.color = "white";
       }
 
       protocolNameInput.value = protocol.name || "Melanotan I";
