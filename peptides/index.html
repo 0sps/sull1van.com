@@ -407,7 +407,8 @@
     @media (min-width: 1100px) {
       #view-dashboard.active {
         display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px;
       }
       
       #view-protocols.active {
@@ -427,14 +428,34 @@
 
     .dashboard-summary {
       display: grid;
-      gap: 22px;
-      padding: 28px;
+      gap: 18px;
+      padding: 24px;
       border: 1px solid rgba(15, 118, 110, 0.16);
       border-radius: var(--radius-lg);
       background:
         linear-gradient(145deg, rgba(255, 253, 248, 1), rgba(247, 252, 250, 0.96)),
         radial-gradient(circle at 90% 12%, rgba(8, 145, 178, 0.14), transparent 22rem);
       box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 1100px) {
+      .dashboard-summary {
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1.25fr) minmax(440px, 0.75fr) auto;
+        align-items: center;
+      }
+
+      .dashboard-summary .summary-actions {
+        justify-content: flex-end;
+      }
+
+      #view-dashboard > .panel {
+        grid-column: span 7;
+      }
+
+      .ops-stack {
+        grid-column: span 5;
+      }
     }
 
     .summary-copy {
@@ -446,7 +467,7 @@
     .summary-copy h2 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.35rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       line-height: 1;
       color: var(--text);
     }
@@ -465,6 +486,185 @@
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
+    }
+
+    .ops-stack {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .compact-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .compact-panel-header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid rgba(76, 54, 29, 0.1);
+    }
+
+    .compact-panel-header h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      line-height: 1.1;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px 18px 18px;
+    }
+
+    .command-tile {
+      display: grid;
+      gap: 6px;
+      min-height: 94px;
+      padding: 14px;
+      border: 1px solid rgba(76, 54, 29, 0.08);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: var(--nm-btn);
+      text-align: left;
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .command-tile:hover {
+      border-color: rgba(15, 118, 110, 0.22);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--nm-btn), 0 0 14px rgba(15, 118, 110, 0.1);
+    }
+
+    .command-tile strong {
+      font-family: var(--font-display);
+      font-size: 1.03rem;
+      line-height: 1.12;
+    }
+
+    .command-tile span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .dashboard-dense-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px 18px 18px;
+    }
+
+    .clinical-readout {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid rgba(76, 54, 29, 0.08);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.56);
+      box-shadow: var(--nm-sunken);
+    }
+
+    .clinical-readout strong {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.6vw, 1.72rem);
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .clinical-readout span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 650;
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background:
+        linear-gradient(rgba(76, 54, 29, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 54, 29, 0.04) 1px, transparent 1px),
+        rgba(255, 252, 247, 0.76);
+      background-size: 100% 16px, 28px 100%;
+    }
+
+    .protocol-runway {
+      display: grid;
+      gap: 10px;
+      padding: 14px 18px 18px;
+    }
+
+    .runway-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid rgba(76, 54, 29, 0.07);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: var(--nm-btn);
+    }
+
+    .runway-row strong {
+      display: block;
+      margin-bottom: 2px;
+      overflow-wrap: anywhere;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    .runway-row span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+    }
+
+    .recent-activity {
+      display: grid;
+      gap: 8px;
+      padding: 14px 18px 18px;
+    }
+
+    .activity-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(76, 54, 29, 0.08);
+    }
+
+    .activity-row:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-row strong {
+      display: block;
+      overflow-wrap: anywhere;
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      line-height: 1.15;
+    }
+
+    .activity-row span {
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     /* Soft Pillowy Neumorphic Card Shells */
@@ -1763,6 +1963,34 @@
         grid-template-columns: 1fr;
       }
 
+      .ops-stack {
+        gap: 14px;
+      }
+
+      .compact-panel-header {
+        padding: 14px 16px 10px;
+      }
+
+      .command-grid,
+      .dashboard-dense-grid,
+      .protocol-runway,
+      .recent-activity {
+        padding: 12px 16px 16px;
+      }
+
+      .command-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .command-tile {
+        min-height: 104px;
+        padding: 12px;
+      }
+
+      .dashboard-dense-grid {
+        grid-template-columns: 1fr;
+      }
+
       .agenda-item {
         grid-template-columns: auto 1fr;
       }
@@ -1891,7 +2119,7 @@
           <div class="summary-copy">
             <span class="panel-kicker">Private Protocol Console</span>
             <h2 id="dashboard-summary-title"><span id="greeting">Good afternoon</span>, Sean</h2>
-            <p>Track today’s protocol work, sync safely to Firebase, and keep dose math, injection rotation, and recovery notes in one place.</p>
+            <p>Today’s protocol work, dose math, site rotation, Firebase sync, and recovery data in one command surface.</p>
           </div>
           <div class="status-rack dashboard-metrics" aria-label="Daily status">
             <div class="metric-tile highlight">
@@ -1909,6 +2137,7 @@
           </div>
           <div class="summary-actions" aria-label="Dashboard shortcuts">
             <button class="seg-button active" type="button" onclick="triggerQuickAction('dose')">Log Next Dose</button>
+            <button class="mini-action" type="button" onclick="window.location.hash='#protocols'">Edit Protocol</button>
             <button class="mini-action" type="button" onclick="triggerQuickAction('weight')">Update Weight</button>
           </div>
         </section>
@@ -1948,6 +2177,82 @@
             </article>
           </div>
         </section>
+
+        <aside class="ops-stack" aria-label="Protocol operations">
+          <section class="compact-panel" aria-labelledby="command-title">
+            <div class="compact-panel-header">
+              <div>
+                <span class="panel-kicker">Fast Paths</span>
+                <h3 id="command-title">No-Click Detours</h3>
+              </div>
+              <span class="status-chip" id="syncMiniStatus">Synced</span>
+            </div>
+            <div class="command-grid">
+              <button class="command-tile" type="button" onclick="triggerQuickAction('dose')">
+                <strong>Log dose</strong>
+                <span id="nextDoseShortcut">Next scheduled protocol</span>
+              </button>
+              <button class="command-tile" type="button" onclick="window.location.hash='#protocols'">
+                <strong>Dose math</strong>
+                <span>Edit concentration, syringe, schedule</span>
+              </button>
+              <button class="command-tile" type="button" onclick="logDoseAtCurrentSite()">
+                <strong>Use site</strong>
+                <span id="siteShortcut">Left Outer Thigh</span>
+              </button>
+              <button class="command-tile" type="button" onclick="window.location.hash='#calendar'">
+                <strong>PK lab</strong>
+                <span>Half-life and calendar matrix</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="compact-panel" aria-labelledby="protocol-runway-title">
+            <div class="compact-panel-header">
+              <div>
+                <span class="panel-kicker">Protocol Vault</span>
+                <h3 id="protocol-runway-title">Active Runway</h3>
+              </div>
+              <button class="mini-action" type="button" onclick="window.location.hash='#protocols'">Manage</button>
+            </div>
+            <div class="protocol-runway" id="protocolRunway"></div>
+          </section>
+
+          <section class="compact-panel" aria-labelledby="clinical-snapshot-title">
+            <div class="compact-panel-header">
+              <div>
+                <span class="panel-kicker">Live Snapshot</span>
+                <h3 id="clinical-snapshot-title">Rotation & Levels</h3>
+              </div>
+              <button class="mini-action" type="button" onclick="window.location.hash='#analytics'">Open Logs</button>
+            </div>
+            <div class="dashboard-dense-grid">
+              <div class="clinical-readout">
+                <span>Selected Site</span>
+                <strong id="dashboardSite">Left Outer Thigh</strong>
+                <span id="dashboardSiteMeta">Rotation spacing: 3 days</span>
+              </div>
+              <div class="clinical-readout">
+                <span>Estimated Active</span>
+                <strong id="dashboardPkLevel">0.00 mg</strong>
+                <svg class="sparkline" viewBox="0 0 180 48" role="img" aria-label="Estimated active compound trend">
+                  <path d="M4 40 C 34 38, 38 22, 62 24 S 96 38, 114 25 S 142 10, 176 18" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round"></path>
+                </svg>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact-panel" aria-labelledby="recent-activity-title">
+            <div class="compact-panel-header">
+              <div>
+                <span class="panel-kicker">Audit Trail</span>
+                <h3 id="recent-activity-title">Recent Activity</h3>
+              </div>
+              <button class="mini-action" type="button" onclick="window.location.hash='#analytics'">Review</button>
+            </div>
+            <div class="recent-activity" id="dashboardRecentActivity"></div>
+          </section>
+        </aside>
       </div>
 
       <!-- VIEW: PROTOCOLS -->
@@ -2491,6 +2796,12 @@
       syncStatus.textContent = text;
       syncStatus.classList.toggle("online", variant === "online");
       syncStatus.classList.toggle("warn", variant === "warn");
+      const syncMiniStatus = $("#syncMiniStatus");
+      if (syncMiniStatus) {
+        syncMiniStatus.textContent = variant === "warn" ? "Sync Issue" : (variant === "online" ? "Synced" : "Local");
+        syncMiniStatus.classList.toggle("danger", variant === "warn");
+        syncMiniStatus.classList.toggle("success", variant === "online");
+      }
     }
 
     function getFirebaseErrorLabel(error) {
@@ -2778,6 +3089,7 @@
         ["Last used: Never", "Rotation status: Ready (100%)", "Local notes: Healthy site, ready for rotation"].forEach((text) => {
           historyList.appendChild(createElement("li", { text }));
         });
+        if (typeof renderDashboardOps === "function") renderDashboardOps();
         return;
       }
 
@@ -2789,6 +3101,7 @@
       [`Last used: ${lastUsedDate}`, `Rotation spacing: ${daysElapsed} days ago`, "Local notes: Healthy site, ready for rotation"].forEach((text) => {
         historyList.appendChild(createElement("li", { text }));
       });
+      if (typeof renderDashboardOps === "function") renderDashboardOps();
     }
 
     // Dynamic injection site renderer
@@ -3789,6 +4102,89 @@
       persistState();
     }
 
+    function formatProtocolDose(protocol) {
+      const concentration = protocol.peptideMg / protocol.waterMl;
+      const targetMg = protocol.doseUnit === "mcg" ? protocol.targetDose / 1000 : protocol.targetDose;
+      const units = concentration > 0 ? (targetMg / concentration) * 100 : 0;
+      return `${protocol.targetDose} ${protocol.doseUnit}, ${units.toFixed(1)} U`;
+    }
+
+    function renderDashboardOps() {
+      const runway = $("#protocolRunway");
+      if (runway) {
+        runway.replaceChildren();
+        appState.protocols.slice(0, 4).forEach((protocol) => {
+          const row = createElement("button", { className: "runway-row", type: "button" }, [
+            createElement("div", {}, [
+              createElement("strong", { text: protocol.name }),
+              createElement("span", { text: `${formatProtocolDose(protocol)} • ${protocol.frequency} at ${protocol.time || "12:00"}` })
+            ]),
+            createElement("span", { className: "status-chip", text: protocol.name === appState.activeProtocolName ? "Active" : "Select" })
+          ]);
+          row.addEventListener("click", () => {
+            appState.activeProtocolName = protocol.name;
+            applyStateToControls();
+            updateDoseMath();
+            drawChart();
+            persistState();
+            window.location.hash = "#protocols";
+          });
+          runway.appendChild(row);
+        });
+      }
+
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+      const nextProtocol = appState.protocols.find((protocol) => !appState.logs.some((log) => (
+        log.type === "Dose" &&
+        log.protocolName === protocol.name &&
+        log.timestamp &&
+        Date.parse(log.timestamp) >= todayStart.getTime()
+      ))) || appState.protocols[0];
+
+      const nextDoseShortcut = $("#nextDoseShortcut");
+      if (nextDoseShortcut && nextProtocol) {
+        nextDoseShortcut.textContent = `${nextProtocol.name}: ${formatProtocolDose(nextProtocol)}`;
+      }
+
+      const siteName = appState.selectedSite || selectedSite.textContent || "Left Outer Thigh";
+      const siteShortcut = $("#siteShortcut");
+      const dashboardSite = $("#dashboardSite");
+      if (siteShortcut) siteShortcut.textContent = siteName;
+      if (dashboardSite) dashboardSite.textContent = siteName;
+
+      const siteLogs = appState.logs.filter((log) => log.type === "Dose" && log.title.toLowerCase().includes(siteName.toLowerCase()));
+      const dashboardSiteMeta = $("#dashboardSiteMeta");
+      if (dashboardSiteMeta) {
+        dashboardSiteMeta.textContent = siteLogs.length ? `Last used: ${siteLogs[0].time}` : "No site-specific log yet";
+      }
+
+      const pkLevel = $("#dashboardPkLevel");
+      if (pkLevel) {
+        const currentMg = compoundAt(chartWindowDays * 24);
+        pkLevel.textContent = chartUnit === "mcg" ? `${Math.round(currentMg * 1000)} mcg` : `${currentMg.toFixed(3)} mg`;
+      }
+
+      const recent = $("#dashboardRecentActivity");
+      if (recent) {
+        recent.replaceChildren();
+        const rows = appState.logs.slice(0, 5);
+        if (!rows.length) {
+          recent.appendChild(createElement("div", { className: "activity-row" }, [
+            createElement("strong", { text: "No entries yet" }),
+            createElement("span", { text: "Start logging" })
+          ]));
+        } else {
+          rows.forEach((log) => {
+            recent.appendChild(createElement("div", { className: "activity-row" }, [
+              createElement("strong", { text: log.title }),
+              createElement("span", { text: log.time || log.type })
+            ]));
+          });
+        }
+      }
+    }
+
     function renderAgenda() {
       const agendaList = $("#agendaList");
       if (!agendaList) return;
@@ -3907,6 +4303,7 @@
       }
       
       activeDosesRemaining = dosesRemaining;
+      renderDashboardOps();
     }
 
     function applyStateToControls() {
