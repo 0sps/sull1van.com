@@ -342,7 +342,6 @@
         :root.time-day .test-card,
         :root.time-day .kpi-box,
         :root.time-day .detail-header::before,
-        :root.time-day .action-sheet,
         :root.time-day .command-palette,
         :root.time-day .confirm-dialog {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.16) 100%);
@@ -796,18 +795,19 @@
             position: fixed;
             top: var(--action-sheet-top, calc(env(safe-area-inset-top, 0px) + 70px));
             right: var(--action-sheet-right, 18px);
-            width: min(360px, calc(100vw - 28px));
+            width: min(70vw, 560px);
+            max-width: calc(100vw - 20px);
             max-height: min(520px, calc(100dvh - var(--action-sheet-top, 90px) - 16px));
             overflow-y: auto;
-            background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(180deg, rgba(24,28,42,0.7), rgba(8,12,22,0.7));
+            backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
+            -webkit-backdrop-filter: blur(30px) saturate(145%) brightness(0.9);
             border-radius: 18px;
             padding: 10px;
             z-index: 1001;
-            border: 1px solid rgba(255,255,255,0.09);
-            border-top: 1.2px solid rgba(255,255,255,0.17);
-            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.32);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-top: 1.5px solid rgba(255,255,255,0.25);
+            box-shadow: 0 16px 34px -20px rgba(0,0,0,0.82), 0 2px 10px rgba(0,0,0,0.26);
             transform: translateY(-6px) scale(0.98);
             transform-origin: top right;
             opacity: 0;
@@ -825,20 +825,27 @@
         .sheet-title {
             font-family: var(--font-heading); font-size: 11px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;
-            padding: 8px 10px 10px;
+            padding: 4px 4px 10px;
+            margin: 0 4px 6px;
+            border-bottom: 0.5px solid var(--ios-separator);
         }
 
         .sheet-action {
             display: flex; align-items: center; gap: 14px;
             padding: 12px 10px;
-            border-top: 0.5px solid var(--ios-separator);
+            margin-top: 6px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.045);
             border-bottom: none;
             border-radius: 12px;
             font-family: var(--font-heading); font-size: 14px; font-weight: 700;
             cursor: pointer; color: var(--text-primary);
-            transition: background 0.16s, opacity 0.16s;
+            transition: background 0.16s, border-color 0.16s, opacity 0.16s;
         }
-        .sheet-action:hover { background: rgba(255,255,255,0.07); }
+        .sheet-action:hover {
+            background: rgba(255,255,255,0.075);
+            border-color: rgba(255,255,255,0.13);
+        }
         .sheet-action:active { opacity: 0.5; }
         .sheet-action svg { color: var(--ios-blue); width: 18px; height: 18px; flex-shrink: 0; }
 
@@ -4345,7 +4352,7 @@
                 return;
             }
 
-            const sheetWidth = Math.min(360, window.innerWidth - (margin * 2));
+            const sheetWidth = Math.min(window.innerWidth * 0.7, 560, window.innerWidth - (margin * 2));
             const top = Math.max(margin, anchorRect.bottom + 10);
             const right = Math.max(margin, window.innerWidth - anchorRect.right);
             const maxRight = Math.max(margin, window.innerWidth - margin - sheetWidth);
