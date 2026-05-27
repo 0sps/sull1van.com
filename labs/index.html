@@ -4091,16 +4091,9 @@
                 currentChart = null;
             }
 
-            // Build active IDs set for filteredTests
-            const activeIds = new Set(filteredTests.map(t => getTestDomId(t.name)));
-
-            // Clean up sparkline charts of biomarkers that have been filtered out (to avoid memory leaks)
-            Object.keys(sparklineCharts).forEach(id => {
-                if (!activeIds.has(id)) {
-                    try { sparklineCharts[id].destroy(); } catch (_) {}
-                    delete sparklineCharts[id];
-                }
-            });
+            // Reused card nodes are detached and reattached below. Recreate sparklines
+            // after the active canvas elements are back in the document.
+            destroySparklineCharts();
 
             // Group by category
             const byCategory = {};
