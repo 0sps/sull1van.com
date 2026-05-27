@@ -341,6 +341,7 @@
         :root.time-day .top-bar,
         :root.time-day .test-card,
         :root.time-day .kpi-box,
+        :root.time-day .detail-header::before,
         :root.time-day .command-palette,
         :root.time-day .confirm-dialog {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.16) 100%);
@@ -1001,14 +1002,15 @@
             bottom: 8px;
             left: 12px;
             border-radius: 24px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(22px) saturate(145%);
-            -webkit-backdrop-filter: blur(22px) saturate(145%);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-top: 1.2px solid rgba(255,255,255,0.17);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.18s ease;
-            box-shadow: 0 12px 34px -26px rgba(0,0,0,0.75);
+            box-shadow: 0 4px 16px -4px rgba(0,0,0,0.32);
         }
         .panel-detail.has-scrolled-detail .detail-header::before { opacity: 1; }
         .detail-header > * {
