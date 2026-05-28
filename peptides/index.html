@@ -2019,6 +2019,11 @@
         flex-direction: column;
       }
 
+      .protocol-danger-zone {
+        grid-template-columns: 1fr;
+        margin: 0 16px 18px;
+      }
+
       .summary-actions {
         padding-right: 0;
       }
@@ -2478,6 +2483,15 @@
       border-color: rgba(255,69,58,0.32);
     }
 
+    .mini-action.danger:hover,
+    .seg-button.danger:hover,
+    .status-chip.danger:hover {
+      color: #fff;
+      background: rgba(255,69,58,0.24);
+      border-color: rgba(255,69,58,0.52);
+      box-shadow: 0 12px 34px -18px rgba(255,69,58,0.84), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
     .status-chip.success {
       color: #fff;
       background: rgba(48,209,88,0.14);
@@ -2589,6 +2603,136 @@
       -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
 
+    .protocol-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .protocol-danger-zone {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin: 0 24px 24px;
+      padding: 18px;
+      border: 1px solid rgba(255,69,58,0.22);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(135deg, rgba(255,69,58,0.08), rgba(255,69,58,0.025)),
+        rgba(255,255,255,0.035);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .protocol-danger-zone h3 {
+      margin: 0;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 780;
+      line-height: 1.15;
+    }
+
+    .protocol-danger-zone p {
+      max-width: 64ch;
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .protocol-danger-zone.is-disabled {
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.035);
+      opacity: 0.72;
+    }
+
+    #protocols.is-delete-pending {
+      border-color: rgba(255,69,58,0.44);
+      box-shadow: 0 18px 58px -18px rgba(0,0,0,0.78), 0 0 0 1px rgba(255,69,58,0.24);
+    }
+
+    #protocols.is-delete-pending #protocolPanelHeader,
+    .modal-overlay.danger-modal .modal-header {
+      background:
+        linear-gradient(135deg, rgba(255,69,58,0.18), rgba(255,69,58,0.04)) !important;
+      border-color: rgba(255,69,58,0.28) !important;
+    }
+
+    .modal-overlay.danger-modal .modal-card {
+      border-color: rgba(255,69,58,0.34);
+      box-shadow: 0 28px 80px -22px rgba(0,0,0,0.92), 0 0 0 1px rgba(255,69,58,0.18);
+    }
+
+    .modal-warning {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 24px 22px 12px;
+      text-align: center;
+    }
+
+    .modal-warning-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255,69,58,0.32);
+      border-radius: 50%;
+      background: rgba(255,69,58,0.14);
+      color: var(--ios-red);
+      box-shadow: 0 0 28px rgba(255,69,58,0.18);
+    }
+
+    .modal-warning-detail {
+      max-width: 42ch;
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 0.98rem;
+      font-weight: 620;
+      line-height: 1.5;
+    }
+
+    .modal-warning-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 11px;
+      border: 1px solid rgba(255,69,58,0.26);
+      border-radius: 999px;
+      background: rgba(255,69,58,0.11);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .modal-warning-list {
+      display: grid;
+      gap: 8px;
+      width: min(390px, 100%);
+      margin: 2px 0 0;
+      padding: 0;
+      list-style: none;
+      text-align: left;
+    }
+
+    .modal-warning-list li {
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.055);
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
     .auth-gate {
       background: transparent;
     }
@@ -2687,6 +2831,11 @@
         min-height: 52px;
         font-size: 0.72rem;
       }
+
+      .protocol-danger-zone {
+        grid-template-columns: 1fr;
+        margin: 0 16px 18px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2712,8 +2861,8 @@
         <h3 id="recordModalTitle">Update entry</h3>
       </header>
       <form class="modal-body" id="recordModalForm"></form>
-      <div id="recordModalWarning" style="display: none; flex-direction: column; align-items: center; text-align: center; padding: 22px 22px 10px; gap: 14px;">
-        <div class="warning-icon-wrapper" style="display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(220, 38, 38, 0.08); color: #dc2626;">
+      <div class="modal-warning" id="recordModalWarning">
+        <div class="modal-warning-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
             <path d="M3 6h18"></path>
             <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
@@ -2722,8 +2871,9 @@
             <line x1="14" x2="14" y1="11" y2="17"></line>
           </svg>
         </div>
-        <p id="recordModalWarningDetail" style="margin: 0; color: var(--text-dark); font-size: 0.98rem; font-weight: 500; line-height: 1.5;"></p>
-        <span style="font-size: 0.85rem; font-weight: 600; color: #dc2626; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(220, 38, 38, 0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(220, 38, 38, 0.12); font-family: var(--font-ui);">This action cannot be undone</span>
+        <p class="modal-warning-detail" id="recordModalWarningDetail"></p>
+        <ul class="modal-warning-list" id="recordModalWarningList"></ul>
+        <span class="modal-warning-badge">This action cannot be undone</span>
       </div>
       <div class="modal-actions">
         <button class="mini-action" id="recordModalCancel" type="button">Cancel</button>
@@ -2927,15 +3077,7 @@
               <span class="panel-kicker">Formulation Setup</span>
               <h2 class="panel-title" id="protocol-title">Edit Protocol</h2>
             </div>
-            <div class="record-actions">
-              <button class="mini-action danger" id="deleteProtocolBtn" type="button" onclick="deleteActiveProtocol()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 14px; transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
-                  <path d="M3 6h18"></path>
-                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                </svg>
-                <span>Delete</span>
-              </button>
+            <div class="protocol-actions">
               <button class="seg-button active" id="saveProtocolBtn" type="button" onclick="saveProtocol()" style="transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;">Save</button>
             </div>
           </div>
@@ -3024,6 +3166,21 @@
               <span>Start Date</span>
               <input class="control" type="date" id="protocolStartDate" value="2026-05-26">
             </label>
+          </div>
+          <div class="protocol-danger-zone" aria-labelledby="protocolDangerTitle">
+            <div>
+              <span class="panel-kicker">Danger Zone</span>
+              <h3 id="protocolDangerTitle">Delete this protocol</h3>
+              <p>Remove the active protocol from the vault. Historical logs stay in analytics, but this schedule and dose setup will be removed.</p>
+            </div>
+            <button class="mini-action danger" id="deleteProtocolBtn" type="button" onclick="deleteActiveProtocol()" aria-describedby="protocolDangerTitle" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;" aria-hidden="true">
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+              <span>Delete Protocol</span>
+            </button>
           </div>
         </section>
 
@@ -3959,6 +4116,9 @@
         delBtn.style.display = "none";
       }
 
+      const dangerZone = $(".protocol-danger-zone");
+      if (dangerZone) dangerZone.style.display = "none";
+
       protocolNameInput.value = "";
       cardProtocolName.textContent = "New Protocol";
       moleculeAbbr.textContent = "NP";
@@ -4377,26 +4537,34 @@
 
     function closeRecordModal(result = null) {
       recordModal.classList.remove("open");
+      recordModal.classList.remove("danger-modal");
       recordModal.setAttribute("aria-hidden", "true");
       recordModalForm.replaceChildren();
       const warningDiv = $("#recordModalWarning");
       if (warningDiv) warningDiv.style.display = "none";
+      const warningList = $("#recordModalWarningList");
+      if (warningList) warningList.replaceChildren();
       recordModalForm.style.display = "grid";
+      const pendingDeletePanel = $("#protocols.is-delete-pending");
+      if (pendingDeletePanel) pendingDeletePanel.classList.remove("is-delete-pending");
       if (activeModalResolve) {
         activeModalResolve(result);
         activeModalResolve = null;
       }
     }
 
-    function openRecordModal({ kicker = "Edit Record", title, confirmText = "Save", danger = false, fields = [], warningMode = false, warningDetail = "" }) {
+    function openRecordModal({ kicker = "Edit Record", title, confirmText = "Save", danger = false, fields = [], warningMode = false, warningDetail = "", warningItems = [] }) {
       return new Promise((resolve) => {
         activeModalResolve = resolve;
         recordModalKicker.textContent = kicker;
         recordModalTitle.textContent = title;
         recordModalConfirm.textContent = confirmText;
         recordModalConfirm.classList.toggle("danger", danger);
+        recordModal.classList.toggle("danger-modal", danger);
         
         const warningDiv = $("#recordModalWarning");
+        const warningList = $("#recordModalWarningList");
+        if (warningList) warningList.replaceChildren();
         if (warningMode) {
           recordModalForm.style.display = "none";
           recordModalForm.replaceChildren();
@@ -4404,6 +4572,11 @@
             warningDiv.style.display = "flex";
             const detailEl = $("#recordModalWarningDetail");
             if (detailEl) detailEl.textContent = warningDetail || "";
+            if (warningList && warningItems.length) {
+              warningItems.forEach((item) => {
+                warningList.appendChild(createElement("li", { text: item }));
+              });
+            }
           }
         } else {
           if (warningDiv) warningDiv.style.display = "none";
@@ -4444,14 +4617,15 @@
       }, {});
     }
 
-    async function confirmDelete(title, detail) {
+    async function confirmDelete(title, detail, warningItems = []) {
       const result = await openRecordModal({
         kicker: "Confirm Delete",
         title: title,
         confirmText: "Delete",
         danger: true,
         warningMode: true,
-        warningDetail: detail
+        warningDetail: detail,
+        warningItems
       });
       return result != null;
     }
@@ -4864,7 +5038,17 @@
         return;
       }
 
-      const confirmed = await confirmDelete("Delete protocol?", `${protocol.name}. Existing logs will stay in history.`);
+      const protocolPanel = $("#protocols");
+      if (protocolPanel) protocolPanel.classList.add("is-delete-pending");
+      const confirmed = await confirmDelete(
+        "Delete protocol?",
+        `You are about to delete "${protocol.name}" from the protocol vault.`,
+        [
+          "The saved dose setup, schedule, and concentration math for this protocol will be removed.",
+          "Existing dose logs, lab records, and journal entries will stay in analytics.",
+          "The next protocol in the vault will become active after deletion."
+        ]
+      );
       if (!confirmed) return;
 
       appState.protocols = appState.protocols.filter((entry) => entry.id !== protocol.id);
@@ -5299,10 +5483,19 @@
       const delBtn = $("#deleteProtocolBtn");
       if (delBtn) {
         delBtn.style.display = "";
+        delBtn.disabled = appState.protocols.length <= 1;
+        delBtn.setAttribute("aria-disabled", String(appState.protocols.length <= 1));
         delBtn.style.background = "rgba(255, 69, 58, 0.18)";
         delBtn.style.borderColor = "rgba(255, 69, 58, 0.36)";
         delBtn.style.boxShadow = "0 10px 30px -18px rgba(255, 69, 58, 0.8)";
         delBtn.style.color = "white";
+        delBtn.querySelector("span").textContent = appState.protocols.length <= 1 ? "Last Protocol" : "Delete Protocol";
+      }
+
+      const dangerZone = $(".protocol-danger-zone");
+      if (dangerZone) {
+        dangerZone.style.display = "";
+        dangerZone.classList.toggle("is-disabled", appState.protocols.length <= 1);
       }
 
       protocolNameInput.value = protocol.name || "Melanotan I";
