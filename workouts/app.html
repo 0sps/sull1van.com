@@ -2816,7 +2816,7 @@
         import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
-            authDomain: "workout-c7be0.firebaseapp.com",
+            authDomain: window.location.hostname === 'sull1van.com' ? 'sull1van.com' : 'workout-c7be0.firebaseapp.com',
             projectId: "workout-c7be0",
             storageBucket: "workout-c7be0.firebasestorage.app",
             messagingSenderId: "625595909146",

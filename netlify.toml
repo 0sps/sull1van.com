@@ -13,3 +13,15 @@
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
+
+[[redirects]]
+  from = "/__/auth/*"
+  to = "https://workout-c7be0.firebaseapp.com/__/auth/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/__/firebase/init.json"
+  to = "https://workout-c7be0.firebaseapp.com/__/firebase/init.json"
+  status = 200
+  force = true
