@@ -1072,6 +1072,176 @@
       font-weight: 600;
     }
 
+    .syringe-visual {
+      --syringe-fill: 0%;
+      --syringe-fill-scale: 0;
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr) 38px;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: 620px;
+      margin: 14px auto 0;
+      text-align: left;
+    }
+
+    .syringe-plunger {
+      width: 30px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: 0;
+      border-radius: 12px 0 0 12px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+        rgba(255,255,255,0.055);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), var(--nm-btn);
+    }
+
+    .syringe-barrel {
+      position: relative;
+      height: 70px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.035)),
+        rgba(10,16,29,0.46);
+      box-shadow: var(--nm-sunken), inset 0 0 0 1px rgba(255,255,255,0.055);
+      overflow: visible;
+    }
+
+    .syringe-barrel::before {
+      content: "";
+      position: absolute;
+      inset: 13px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 5px rgba(0,0,0,0.38);
+    }
+
+    .syringe-fill {
+      position: absolute;
+      top: 13px;
+      bottom: 13px;
+      left: 12px;
+      z-index: 1;
+      width: calc(100% - 24px);
+      border-radius: 999px 8px 8px 999px;
+      background:
+        linear-gradient(90deg, rgba(10,132,255,0.9), rgba(100,210,255,0.72)),
+        rgba(10,132,255,0.6);
+      box-shadow: 0 0 22px rgba(10,132,255,0.34), inset 0 1px 0 rgba(255,255,255,0.24);
+      transform: scaleX(var(--syringe-fill-scale));
+      transform-origin: left center;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    .syringe-dose-line {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      z-index: 3;
+      width: 2px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      box-shadow: 0 0 14px rgba(255,255,255,0.28);
+      left: clamp(12px, var(--syringe-fill), calc(100% - 12px));
+      transition: left 180ms ease;
+    }
+
+    .syringe-ticks {
+      position: absolute;
+      inset: 0 12px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .syringe-tick {
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: var(--tick-left);
+      width: 1px;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .syringe-tick.major {
+      width: 2px;
+      background: rgba(255,255,255,0.48);
+    }
+
+    .syringe-tick-label {
+      position: absolute;
+      top: 100%;
+      left: var(--tick-left);
+      margin-top: 7px;
+      color: rgba(255,255,255,0.58);
+      font-family: var(--font-heading);
+      font-size: 0.66rem;
+      font-weight: 750;
+      line-height: 1;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .syringe-tick-label.is-first {
+      transform: translateX(0);
+    }
+
+    .syringe-tick-label.is-last {
+      transform: translateX(-100%);
+    }
+
+    .syringe-needle {
+      display: flex;
+      align-items: center;
+      height: 70px;
+    }
+
+    .syringe-needle::before {
+      content: "";
+      width: 16px;
+      height: 28px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-left: 0;
+      border-radius: 0 10px 10px 0;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .syringe-needle span {
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      box-shadow: 0 0 12px rgba(255,255,255,0.16);
+    }
+
+    .syringe-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      width: min(620px, 100%);
+      margin: 10px auto 0;
+      color: rgba(255,255,255,0.66);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-align: left;
+    }
+
+    .syringe-caption span {
+      color: rgba(255,255,255,0.66);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    .dose-readout.is-over-capacity .syringe-fill {
+      background:
+        linear-gradient(90deg, rgba(255,69,58,0.92), rgba(255,159,10,0.78)),
+        rgba(255,69,58,0.6);
+      box-shadow: 0 0 24px rgba(255,69,58,0.34), inset 0 1px 0 rgba(255,255,255,0.24);
+    }
+
     /* Molded Selection Preset Cards */
     .protocol-card {
       display: grid;
@@ -3382,6 +3552,19 @@
             <div class="dose-readout">
               <span>Draw Up Volumetric Output</span>
               <strong><span id="drawUnits">10.0</span> Units</strong>
+              <div class="syringe-visual" id="syringeVisual" role="img" aria-label="Syringe fill visualization">
+                <div class="syringe-plunger" aria-hidden="true"></div>
+                <div class="syringe-barrel" aria-hidden="true">
+                  <div class="syringe-fill" id="syringeFill"></div>
+                  <div class="syringe-dose-line" id="syringeDoseLine"></div>
+                  <div class="syringe-ticks" id="syringeTicks"></div>
+                </div>
+                <div class="syringe-needle" aria-hidden="true"><span></span></div>
+              </div>
+              <div class="syringe-caption">
+                <span id="syringeCapacityLabel">0.5 mL syringe</span>
+                <span id="syringeFillLabel">10.0 / 50 U</span>
+              </div>
               <span id="drawNote">Exact calculated units from 0.500 mg target dose at 5.00 mg/mL concentration.</span>
             </div>
             <label class="field">
@@ -3542,8 +3725,6 @@
         </section>
       </div>
     </main>
-
-    <p class="footnote">Prototype interface only. Health, peptide administration, and medicine decisions should always be made with qualified clinical guidance.</p>
   </div>
 
 
@@ -3584,6 +3765,11 @@
     const syringe = $("#syringe");
     const drawUnits = $("#drawUnits");
     const drawNote = $("#drawNote");
+    const doseReadout = $(".dose-readout");
+    const syringeVisual = $("#syringeVisual");
+    const syringeTicks = $("#syringeTicks");
+    const syringeCapacityLabel = $("#syringeCapacityLabel");
+    const syringeFillLabel = $("#syringeFillLabel");
     const concentrationChip = $("#concentrationChip");
     const moleculeAbbr = $("#moleculeAbbr");
     const cardProtocolName = $("#cardProtocolName");
@@ -4256,6 +4442,57 @@
       return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
     }
 
+    function getSyringeVolumeLabel(maxUnits) {
+      return `${(maxUnits / 100).toFixed(1)} mL syringe`;
+    }
+
+    function renderSyringeTicks(maxUnits) {
+      if (!syringeTicks || syringeTicks.dataset.capacity === String(maxUnits)) return;
+
+      syringeTicks.dataset.capacity = String(maxUnits);
+      syringeTicks.replaceChildren();
+
+      const minorStep = maxUnits <= 30 ? 5 : 10;
+      const labelStep = maxUnits <= 50 ? 10 : 20;
+
+      for (let unit = 0; unit <= maxUnits; unit += minorStep) {
+        const left = `${(unit / maxUnits) * 100}%`;
+        const isMajor = unit === 0 || unit === maxUnits || unit % labelStep === 0;
+        const tick = createElement("span", {
+          className: `syringe-tick${isMajor ? " major" : ""}`
+        });
+        tick.style.setProperty("--tick-left", left);
+        syringeTicks.appendChild(tick);
+
+        if (isMajor) {
+          const label = createElement("span", {
+            className: `syringe-tick-label${unit === 0 ? " is-first" : ""}${unit === maxUnits ? " is-last" : ""}`,
+            text: String(unit)
+          });
+          label.style.setProperty("--tick-left", left);
+          syringeTicks.appendChild(label);
+        }
+      }
+    }
+
+    function updateSyringeVisual(units, maxUnits) {
+      if (!syringeVisual || !doseReadout) return;
+
+      const boundedUnits = Math.max(0, Math.min(units, maxUnits));
+      const fillRatio = maxUnits > 0 ? boundedUnits / maxUnits : 0;
+      renderSyringeTicks(maxUnits);
+
+      syringeVisual.style.setProperty("--syringe-fill", `${(fillRatio * 100).toFixed(1)}%`);
+      syringeVisual.style.setProperty("--syringe-fill-scale", fillRatio.toFixed(4));
+      syringeVisual.setAttribute(
+        "aria-label",
+        `${units.toFixed(1)} units drawn in a ${getSyringeVolumeLabel(maxUnits)} with ${maxUnits} total units`
+      );
+      syringeCapacityLabel.textContent = getSyringeVolumeLabel(maxUnits);
+      syringeFillLabel.textContent = `${units.toFixed(1)} / ${maxUnits} U`;
+      doseReadout.classList.toggle("is-over-capacity", units > maxUnits);
+    }
+
     function updateDoseMath() {
       const mass = asPositiveNumber(peptideMg.value, 10);
       const water = asPositiveNumber(waterMl.value, 2);
@@ -4267,6 +4504,7 @@
       
       concentrationChip.textContent = `${concentration.toFixed(2)} mg/mL`;
       drawUnits.textContent = units.toFixed(1);
+      updateSyringeVisual(units, maxUnits);
       
       if (units > maxUnits) {
         drawNote.textContent = `Warning: this exceeds selected syringe capacity (${maxUnits} U max). Use a different concentration, dose, or syringe plan.`;
