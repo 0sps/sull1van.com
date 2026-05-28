@@ -2555,6 +2555,66 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
 
+    .protocol-card {
+      grid-template-columns: 52px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .protocol-card > div {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .protocol-card strong {
+      overflow-wrap: anywhere;
+      font-size: clamp(1.12rem, 4.8vw, 1.35rem);
+      line-height: 1.1;
+    }
+
+    .protocol-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .protocol-card-meta > span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.055);
+      color: rgba(255,255,255,0.72);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 760;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .protocol-card #concentrationChip {
+      align-self: center;
+      min-width: 118px;
+      min-height: 42px;
+      padding-inline: 14px;
+      color: #fff;
+      border-color: rgba(48,209,88,0.38);
+      background: rgba(48,209,88,0.16);
+      font-size: 0.78rem;
+      box-shadow: 0 10px 30px -20px rgba(48,209,88,0.9), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .molecule {
+      width: 52px;
+      height: 52px;
+      color: rgba(255,255,255,0.86);
+      font-size: 0.86rem;
+    }
+
     .body-svg path,
     .body-svg ellipse,
     .body-svg circle {
@@ -2818,11 +2878,46 @@
       .topbar {
         left: calc(10px + env(safe-area-inset-left));
         right: calc(10px + env(safe-area-inset-right));
+        top: calc(8px + env(safe-area-inset-top));
+        min-height: 58px;
+        height: auto;
+        padding: 9px 12px;
         grid-template-columns: 1fr auto;
+        border-radius: 18px;
+      }
+
+      .topbar-spacer {
+        display: none;
+      }
+
+      .topbar .brand {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .topbar .brand-row {
+        justify-content: flex-start;
+      }
+
+      .topbar .auth-button {
+        min-height: 44px;
+        padding-inline: 14px;
+      }
+
+      .brand.compact h1 {
+        font-size: 16px;
+      }
+
+      .brand.compact .sync-chip {
+        align-self: flex-start;
+        margin-top: 3px;
+        padding: 0;
+        color: var(--ios-blue);
+        font-size: 8px;
       }
 
       .top-nav {
-        top: calc(82px + env(safe-area-inset-top));
+        top: calc(76px + env(safe-area-inset-top));
         width: 100%;
         margin-bottom: 14px;
       }
@@ -2835,6 +2930,43 @@
       .protocol-danger-zone {
         grid-template-columns: 1fr;
         margin: 0 16px 18px;
+      }
+
+      #protocolPanelHeader {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      #protocolPanelHeader .protocol-actions,
+      #saveProtocolBtn {
+        width: 100%;
+      }
+
+      #protocol-title {
+        overflow-wrap: anywhere;
+        line-height: 1.08;
+      }
+
+      .protocol-card {
+        grid-template-columns: 58px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+        padding: 16px;
+      }
+
+      .protocol-card #concentrationChip {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .molecule {
+        width: 58px;
+        height: 58px;
+        font-size: 0.82rem;
       }
     }
 
@@ -3098,10 +3230,13 @@
               </div>
 
               <div class="protocol-card">
-                <span class="molecule" aria-hidden="true" id="moleculeAbbr">M1</span>
+                <span class="molecule" aria-hidden="true" id="moleculeAbbr">MI</span>
                 <div>
                   <strong id="cardProtocolName">Melanotan I</strong>
-                  <span><span id="presetMass">10.0</span> mg * <span id="presetWater">2.0</span> mL</span>
+                  <span class="protocol-card-meta">
+                    <span><span id="presetMass">10.0</span> mg</span>
+                    <span><span id="presetWater">2.0</span> mL BAC</span>
+                  </span>
                 </div>
                 <span class="status-chip success" id="concentrationChip">5.00 mg/mL</span>
               </div>
@@ -3401,6 +3536,18 @@
       "Semaglutide": 168.0, // 7 days
       "Tirzepatide": 120.0, // 5 days
     };
+
+    function getProtocolAbbr(name) {
+      const words = String(name || "")
+        .trim()
+        .match(/[A-Za-z0-9]+/g) || [];
+      if (!words.length) return "PK";
+      if (words[0].length <= 3 && words[0].toUpperCase() === words[0]) {
+        return words[0].slice(0, 3).toUpperCase();
+      }
+      const initials = words.slice(0, 2).map((word) => word[0]).join("");
+      return (initials || words[0].slice(0, 2)).toUpperCase();
+    }
 
     function getDefaultState() {
       const now = new Date();
@@ -4157,7 +4304,7 @@
     protocolNameInput.addEventListener("input", () => {
       const name = protocolNameInput.value.trim() || (isAddNewMode ? "New Protocol" : "Custom Peptide");
       cardProtocolName.textContent = name;
-      moleculeAbbr.textContent = name.substring(0, 2).toUpperCase();
+      moleculeAbbr.textContent = getProtocolAbbr(name);
       updateDoseMath();
     });
 
@@ -4217,7 +4364,7 @@
       });
 
       cardProtocolName.textContent = name;
-      moleculeAbbr.textContent = name.substring(0, 2).toUpperCase();
+      moleculeAbbr.textContent = getProtocolAbbr(name);
       $("#presetMass").textContent = mass.toFixed(1);
       $("#presetWater").textContent = water.toFixed(1);
       
@@ -5500,7 +5647,7 @@
 
       protocolNameInput.value = protocol.name || "Melanotan I";
       cardProtocolName.textContent = protocolNameInput.value;
-      moleculeAbbr.textContent = protocolNameInput.value.substring(0, 2).toUpperCase();
+      moleculeAbbr.textContent = getProtocolAbbr(protocolNameInput.value);
       peptideMg.value = protocol.peptideMg || 10;
       waterMl.value = protocol.waterMl || 2;
       targetDose.value = protocol.targetDose || 500;
