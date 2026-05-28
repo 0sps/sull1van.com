@@ -2860,7 +2860,9 @@
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
-                await ensureUserProfile(user);
+                ensureUserProfile(user).catch((error) => {
+                    console.warn('Could not update user profile metadata:', error);
+                });
                 window.firebaseReady = true;
                 if (window.onFirebaseReady) window.onFirebaseReady();
             } else {

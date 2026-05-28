@@ -1094,7 +1094,9 @@
             } else {
                 currentUser = user;
                 document.getElementById('userEmail').textContent = user.email || '';
-                await ensureUserProfile(user);
+                ensureUserProfile(user).catch((error) => {
+                    console.warn('Could not update user profile metadata:', error);
+                });
             }
         });
 
