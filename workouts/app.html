@@ -2825,6 +2825,19 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        function getUserEmailKey(user) {
+            return (user?.email || '').trim().toLowerCase();
+        }
+        async function ensureUserProfile(user) {
+            const email = getUserEmailKey(user);
+            if (!email) throw new Error('Authenticated user is missing an email address.');
+            await setDoc(window.firebaseDoc(db, 'users', email), {
+                email,
+                displayName: user.displayName || '',
+                photoURL: user.photoURL || '',
+                lastLoginAt: new Date().toISOString()
+            }, { merge: true });
+        }
         // Make Firebase functions available globally
         window.firebaseDb = db;
         window.firebaseCollection = collection;
@@ -2835,12 +2848,19 @@
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
         window.firebaseLimit = limit;
+        window.getWorkoutCollectionRef = function () {
+            return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
+        };
+        window.getWorkoutDocRef = function (logId) {
+            return doc(db, 'users', getUserEmailKey(window.currentUser), 'workouts', logId.toString());
+        };
         // Check auth state
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
+                await ensureUserProfile(user);
                 window.firebaseReady = true;
                 if (window.onFirebaseReady) window.onFirebaseReady();
             } else {
@@ -3503,12 +3523,12 @@
 
                 const q = limitCount > 0
                     ? window.firebaseQuery(
-                        window.firebaseCollection(window.firebaseDb, 'workouts'),
+                        window.getWorkoutCollectionRef(),
                         window.firebaseOrderBy('date', 'desc'),
                         window.firebaseLimit(limitCount)
                     )
                     : window.firebaseQuery(
-                        window.firebaseCollection(window.firebaseDb, 'workouts'),
+                        window.getWorkoutCollectionRef(),
                         window.firebaseOrderBy('date', 'desc')
                     );
 
@@ -3527,7 +3547,7 @@
                     updateSyncStatus('error');
                     return false;
                 }
-                const docRef = window.firebaseDoc(window.firebaseDb, 'workouts', log.id.toString());
+                const docRef = window.getWorkoutDocRef(log.id);
                 await window.firebaseSetDoc(docRef, { ...log, updatedAt: new Date().toISOString() });
             }, 'save');
         }
@@ -3550,7 +3570,7 @@
                     updateSyncStatus('error');
                     return false;
                 }
-                const docRef = window.firebaseDoc(window.firebaseDb, 'workouts', logId.toString());
+                const docRef = window.getWorkoutDocRef(logId);
                 await window.firebaseDeleteDoc(docRef);
             }, 'delete');
         }

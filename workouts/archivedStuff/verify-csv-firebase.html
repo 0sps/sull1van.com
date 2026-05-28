@@ -89,6 +89,15 @@
 
         let csvData = null;
         let firebaseData = null;
+        let currentUser = null;
+
+        function getUserEmailKey(user) {
+            return (user?.email || '').trim().toLowerCase();
+        }
+
+        function getWorkoutCollectionRef() {
+            return collection(db, 'users', getUserEmailKey(currentUser), 'workouts');
+        }
 
         function log(message, type = 'info') {
             const output = document.getElementById('output');
@@ -148,7 +157,7 @@
             try {
                 // Load Firebase data
                 log('📥 Loading Firebase workout logs...');
-                const snapshot = await getDocs(collection(db, 'workouts'));
+                const snapshot = await getDocs(getWorkoutCollectionRef());
 
                 firebaseData = {};
                 snapshot.forEach(doc => {
@@ -232,6 +241,7 @@
         // Check auth
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                currentUser = user;
                 log(`✅ Authenticated as: ${user.email}\n`, 'success');
             } else {
                 log(`❌ Not authenticated! Please log in to the main app first.`, 'error');

@@ -1370,7 +1370,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1385,18 +1385,37 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        function getUserEmailKey(user) {
+            return (user?.email || '').trim().toLowerCase();
+        }
+
+        async function ensureUserProfile(user) {
+            const email = getUserEmailKey(user);
+            if (!email) throw new Error('Authenticated user is missing an email address.');
+            await setDoc(doc(db, 'users', email), {
+                email,
+                displayName: user.displayName || '',
+                photoURL: user.photoURL || '',
+                lastLoginAt: new Date().toISOString()
+            }, { merge: true });
+        }
+
         window.firebaseDb = db;
         window.firebaseCollection = collection;
         window.firebaseGetDocs = getDocs;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
         window.firebaseSignOut = signOut;
+        window.getWorkoutCollectionRef = function () {
+            return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
+        };
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
+                await ensureUserProfile(user);
                 init();
             } else {
                 window.location.href = 'index.html?redirect=progression.html';
@@ -2197,7 +2216,7 @@
         async function loadWorkoutLogs() {
             setSyncStatus('syncing');
             const q = window.firebaseQuery(
-                window.firebaseCollection(window.firebaseDb, 'workouts'),
+                window.getWorkoutCollectionRef(),
                 window.firebaseOrderBy('date', 'desc')
             );
             const snapshot = await window.firebaseGetDocs(q);

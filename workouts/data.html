@@ -892,7 +892,7 @@
         <div class="header-right">
             <div id="syncStatus" class="sync-status synced">Synced</div>
             <div class="user-info">
-                <span id="userEmail">sspsful@gmail.com</span>
+                <span id="userEmail"></span>
             </div>
             <button class="btn-base btn-ghost" style="padding: 6px 12px; font-size: 0.8rem;"
                 onclick="logout()">Logout</button>
@@ -1051,6 +1051,30 @@
         let selectedLogIds = new Set();
         let activeLogId = null;
         let exerciseLibrary = {};
+        let currentUser = null;
+
+        function getUserEmailKey(user) {
+            return (user?.email || '').trim().toLowerCase();
+        }
+
+        async function ensureUserProfile(user) {
+            const email = getUserEmailKey(user);
+            if (!email) throw new Error('Authenticated user is missing an email address.');
+            await setDoc(doc(db, 'users', email), {
+                email,
+                displayName: user.displayName || '',
+                photoURL: user.photoURL || '',
+                lastLoginAt: new Date().toISOString()
+            }, { merge: true });
+        }
+
+        function getWorkoutCollectionRef() {
+            return collection(db, 'users', getUserEmailKey(currentUser), 'workouts');
+        }
+
+        function getWorkoutDocRef(logId) {
+            return doc(db, 'users', getUserEmailKey(currentUser), 'workouts', logId.toString());
+        }
 
         // Load Exercise Library for validation
         async function loadExerciseLibrary() {
@@ -1064,11 +1088,13 @@
         loadExerciseLibrary();
 
         // AUTH GUARD
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'index.html';
             } else {
+                currentUser = user;
                 document.getElementById('userEmail').textContent = user.email || '';
+                await ensureUserProfile(user);
             }
         });
 
@@ -1127,7 +1153,7 @@
                 showLoading(true, `Fetching last ${limitCount || 'all'} logs...`);
                 setSyncStatus('Syncing');
 
-                let q = query(collection(db, 'workouts'), orderBy('date', 'desc'));
+                let q = query(getWorkoutCollectionRef(), orderBy('date', 'desc'));
                 if (limitCount > 0) q = query(q, limit(limitCount));
 
                 const snapshot = await getDocs(q);
@@ -1160,7 +1186,7 @@
                 const endISO = new Date(new Date(end).setHours(23, 59, 59, 999)).toISOString();
 
                 const q = query(
-                    collection(db, 'workouts'),
+                    getWorkoutCollectionRef(),
                     where('date', '>=', startISO),
                     where('date', '<=', endISO),
                     orderBy('date', 'desc')
@@ -1451,7 +1477,7 @@
         async function executeSave(data, originalId) {
             showLoading(true, "Saving to Firebase...");
             try {
-                await setDoc(doc(db, 'workouts', data.id.toString()), data);
+                await setDoc(getWorkoutDocRef(data.id), data);
 
                 // Update local state
                 const idx = currentLogs.findIndex(l => l.id.toString() === originalId.toString());
@@ -1559,7 +1585,7 @@
 
             pendingActionTimeout = setTimeout(async () => {
                 try {
-                    await deleteDoc(doc(db, 'workouts', pendingId.toString()));
+                    await deleteDoc(getWorkoutDocRef(pendingId));
                     showToast("Log permanently deleted");
                 } catch (err) {
                     console.error(err);

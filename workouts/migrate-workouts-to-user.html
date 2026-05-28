@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Firestore Migration</title>
+    <style>
+        :root {
+            --bg: #0b0b0d;
+            --panel: #151519;
+            --border: #2d2d33;
+            --text: #f6f6f8;
+            --muted: #9a9aa3;
+            --accent: #ff5a1f;
+            --danger: #ff4264;
+            --success: #46d48c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        main {
+            width: min(760px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 28px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 22px 0 8px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: #0f0f12;
+            color: var(--text);
+            padding: 12px 14px;
+            font: inherit;
+        }
+
+        button {
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: #120704;
+            font: inherit;
+            font-weight: 700;
+            padding: 12px 16px;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: filter 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 0 24px rgba(255, 90, 31, 0.18);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+
+        .secondary {
+            background: transparent;
+            color: var(--text);
+            border-color: var(--border);
+            margin-left: 8px;
+        }
+
+        .status {
+            margin-top: 18px;
+            color: var(--muted);
+        }
+
+        pre {
+            min-height: 220px;
+            max-height: 420px;
+            overflow: auto;
+            margin: 20px 0 0;
+            padding: 16px;
+            background: #09090b;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            white-space: pre-wrap;
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        .error {
+            color: var(--danger);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Workout Firestore Migration</h1>
+        <p>
+            Copies every document from <code>workouts/{workoutId}</code> to
+            <code>users/{email}/workouts/{workoutId}</code>. Document IDs are preserved.
+        </p>
+
+        <label for="targetEmail">Target user email</label>
+        <input id="targetEmail" value="sspsful@gmail.com" autocomplete="email">
+
+        <div>
+            <button id="signInBtn">Sign in with Google</button>
+            <button id="copyBtn" disabled>Copy workouts</button>
+            <button class="secondary" id="verifyBtn" disabled>Verify counts</button>
+        </div>
+
+        <div class="status" id="status">Not signed in.</div>
+        <pre id="log"></pre>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+            authDomain: "workout-c7be0.firebaseapp.com",
+            projectId: "workout-c7be0",
+            storageBucket: "workout-c7be0.firebasestorage.app",
+            messagingSenderId: "625595909146",
+            appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        const signInBtn = document.getElementById('signInBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const targetEmailInput = document.getElementById('targetEmail');
+        const statusEl = document.getElementById('status');
+        const logEl = document.getElementById('log');
+
+        function emailKey(value) {
+            return value.trim().toLowerCase();
+        }
+
+        function log(message, className = '') {
+            const line = document.createElement('div');
+            line.textContent = message;
+            if (className) line.className = className;
+            logEl.appendChild(line);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function targetEmail() {
+            const email = emailKey(targetEmailInput.value);
+            if (!email) throw new Error('Enter a target email.');
+            return email;
+        }
+
+        async function readCounts(email) {
+            const sourceSnapshot = await getDocs(collection(db, 'workouts'));
+            const targetSnapshot = await getDocs(collection(db, 'users', email, 'workouts'));
+            return {
+                source: sourceSnapshot.size,
+                target: targetSnapshot.size
+            };
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                statusEl.textContent = 'Not signed in.';
+                copyBtn.disabled = true;
+                verifyBtn.disabled = true;
+                return;
+            }
+
+            statusEl.textContent = `Signed in as ${user.email || 'unknown user'}.`;
+            copyBtn.disabled = false;
+            verifyBtn.disabled = false;
+            if (user.email) targetEmailInput.value = emailKey(targetEmailInput.value || user.email);
+        });
+
+        signInBtn.addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error(error);
+                log(`Sign in failed: ${error.message}`, 'error');
+            }
+        });
+
+        verifyBtn.addEventListener('click', async () => {
+            try {
+                const email = targetEmail();
+                const counts = await readCounts(email);
+                log(`Source workouts: ${counts.source}`);
+                log(`Target users/${email}/workouts: ${counts.target}`);
+            } catch (error) {
+                console.error(error);
+                log(`Verify failed: ${error.message}`, 'error');
+            }
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            copyBtn.disabled = true;
+            verifyBtn.disabled = true;
+
+            try {
+                const user = auth.currentUser;
+                if (!user) throw new Error('Sign in first.');
+
+                const email = targetEmail();
+                log(`Starting copy to users/${email}/workouts...`);
+
+                await setDoc(doc(db, 'users', email), {
+                    email,
+                    migratedFrom: 'workouts',
+                    migratedBy: user.email || '',
+                    migratedAt: new Date().toISOString()
+                }, { merge: true });
+
+                const sourceSnapshot = await getDocs(collection(db, 'workouts'));
+                log(`Found ${sourceSnapshot.size} source workouts.`);
+
+                let batch = writeBatch(db);
+                let pending = 0;
+                let copied = 0;
+
+                for (const sourceDoc of sourceSnapshot.docs) {
+                    const targetRef = doc(db, 'users', email, 'workouts', sourceDoc.id);
+                    batch.set(targetRef, sourceDoc.data());
+                    pending += 1;
+                    copied += 1;
+
+                    if (pending === 450) {
+                        await batch.commit();
+                        log(`Committed ${copied} workouts...`);
+                        batch = writeBatch(db);
+                        pending = 0;
+                    }
+                }
+
+                if (pending > 0) {
+                    await batch.commit();
+                }
+
+                const counts = await readCounts(email);
+                log(`Done. Source: ${counts.source}. Target: ${counts.target}.`, 'success');
+            } catch (error) {
+                console.error(error);
+                log(`Copy failed: ${error.message}`, 'error');
+            } finally {
+                copyBtn.disabled = false;
+                verifyBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

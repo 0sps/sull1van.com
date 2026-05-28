@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedInAs(email) {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email.lower() == email;
+    }
+
+    match /users/{email}/{document=**} {
+      allow read, write: if signedInAs(email);
+    }
+
+    match /workouts/{workoutId} {
+      allow read: if signedInAs("sspsful@gmail.com");
+      allow write: if false;
+    }
+  }
+}

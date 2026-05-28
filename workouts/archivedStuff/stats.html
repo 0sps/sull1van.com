@@ -1167,8 +1167,17 @@
                 let filteredLogs = [];
                 let exerciseData = {};
                 let currentRange = 'all';
+                let currentUser = null;
 
                 function kgToLbs(kg) { return kg * 2.20462; }
+
+                function getUserEmailKey(user) {
+                    return (user?.email || '').trim().toLowerCase();
+                }
+
+                function getWorkoutCollectionRef() {
+                    return collection(db, 'users', getUserEmailKey(currentUser), 'workouts');
+                }
 
                 async function loadData() {
                     try {
@@ -1177,7 +1186,7 @@
                         exerciseData = await exRes.json();
 
                         // Load Workouts
-                        const q = query(collection(db, 'workouts'), orderBy('date', 'desc'));
+                        const q = query(getWorkoutCollectionRef(), orderBy('date', 'desc'));
                         const snapshot = await getDocs(q);
                         workoutLogs = snapshot.docs.map(doc => doc.data());
                         console.log('Loaded workouts:', workoutLogs.length);
@@ -1652,10 +1661,10 @@
 
                 // Initialize
                 async function init() {
-                    await loadData();
-
                     onAuthStateChanged(auth, async (user) => {
                         if (!user) return;
+                        currentUser = user;
+                        await loadData();
 
                         const ls = document.getElementById('loadingState');
                         const sc = document.getElementById('statsContent');
