@@ -6,7 +6,7 @@
   <title>PeptideKit+ Protocol Console</title>
   <meta name="description" content="An elegant editorial light peptide protocol tracking console with dose calculations, site rotation, pharmacokinetic curves, and wellness logs.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
     :root {
       color-scheme: light;
@@ -3246,14 +3246,623 @@
       }
     }
 
+    /* UI UX Pro Max clinical-light refresh */
+    :root {
+      color-scheme: light;
+      --font-heading: 'Raleway', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: 'Raleway', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: 'Lora', Georgia, serif;
+      --font-ui: var(--font-heading);
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+
+      --bg: #eefbfc;
+      --bg-strong: #d9f2f4;
+      --panel: rgba(255, 255, 255, 0.92);
+      --panel-strong: #ffffff;
+      --text: #12323b;
+      --text-dark: #12323b;
+      --muted: #47656e;
+      --dim: #718890;
+      --line: rgba(20, 79, 92, 0.14);
+
+      --accent: #087f95;
+      --accent-soft: rgba(8, 127, 149, 0.12);
+      --purple: #5964bf;
+      --blue: #0f6fb8;
+      --cyan: #14b8c8;
+      --green: #0f8f61;
+      --red: #c33a32;
+      --yellow: #b7790f;
+      --ios-blue: var(--blue);
+      --ios-red: var(--red);
+      --ios-green: var(--green);
+      --ios-amber: var(--yellow);
+
+      --radius-lg: 8px;
+      --radius-md: 8px;
+      --radius-sm: 6px;
+      --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 253, 253, 0.92));
+      --glass-border: 1px solid var(--line);
+      --glass-border-top: 1px solid rgba(255, 255, 255, 0.86);
+      --glass-shadow: 0 18px 48px rgba(20, 79, 92, 0.1);
+      --shadow-card: var(--glass-shadow);
+      --nm-raised: 0 12px 28px rgba(20, 79, 92, 0.08);
+      --nm-sunken: inset 0 1px 2px rgba(20, 79, 92, 0.08), inset 0 -1px 0 rgba(255,255,255,0.72);
+      --nm-btn: 0 8px 18px rgba(20, 79, 92, 0.08), inset 0 1px 0 rgba(255,255,255,0.78);
+      --nm-active: inset 0 1px 4px rgba(20, 79, 92, 0.18);
+      --focus-ring: 0 0 0 4px rgba(8, 127, 149, 0.22);
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 18% 8%, rgba(20, 184, 200, 0.16), transparent 30rem),
+        radial-gradient(circle at 85% 10%, rgba(15, 143, 97, 0.12), transparent 30rem),
+        linear-gradient(180deg, #f4feff 0%, #eaf8f9 48%, #f7fbf8 100%);
+      color: var(--text);
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 1000;
+      min-height: 44px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel-strong);
+      color: var(--accent);
+      box-shadow: var(--shadow-card);
+      font-family: var(--font-ui);
+      font-weight: 800;
+      transform: translateY(-90px);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .nebula {
+      filter: none;
+      opacity: 1;
+      background:
+        linear-gradient(rgba(8, 127, 149, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 127, 149, 0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      animation: none;
+    }
+
+    .stars,
+    .moon,
+    .sun-container {
+      display: none;
+    }
+
+    .vignette {
+      background: radial-gradient(circle at 50% 0%, transparent 35%, rgba(222, 244, 245, 0.48) 100%);
+    }
+
+    .grain {
+      opacity: 0.018;
+      mix-blend-mode: multiply;
+    }
+
+    .app-shell {
+      width: min(1380px, 100%);
+      padding: 18px 22px 104px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 12px;
+      left: auto;
+      right: auto;
+      z-index: 90;
+      height: auto;
+      min-height: 64px;
+      margin: 0 0 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(20, 79, 92, 0.16);
+      box-shadow: 0 14px 34px rgba(20, 79, 92, 0.1);
+      backdrop-filter: blur(22px) saturate(135%);
+      -webkit-backdrop-filter: blur(22px) saturate(135%);
+    }
+
+    .brand-mark {
+      display: grid;
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      color: #fff;
+      border: 0;
+      box-shadow: 0 10px 22px rgba(8, 127, 149, 0.2);
+    }
+
+    .brand.compact h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+      font-weight: 700;
+      color: var(--text);
+      background: none;
+      -webkit-text-fill-color: currentColor;
+      filter: none;
+    }
+
+    .sync-chip {
+      min-height: 24px;
+      margin-top: 4px;
+      padding: 3px 9px;
+      border: 1px solid rgba(8, 127, 149, 0.16);
+      border-radius: 999px;
+      background: rgba(8, 127, 149, 0.08);
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      box-shadow: none;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 88px;
+      z-index: 80;
+      width: min(760px, 100%);
+      margin: 0 auto 20px;
+      padding: 5px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(20, 79, 92, 0.14);
+      box-shadow: 0 12px 30px rgba(20, 79, 92, 0.08);
+      backdrop-filter: blur(20px) saturate(135%);
+      -webkit-backdrop-filter: blur(20px) saturate(135%);
+    }
+
+    .top-nav .nav-item {
+      min-height: 50px;
+      color: var(--muted);
+      border-radius: var(--radius-md);
+      font-weight: 800;
+    }
+
+    .top-nav .nav-item:hover,
+    .top-nav .nav-item.active {
+      color: var(--accent);
+      background: rgba(8, 127, 149, 0.1);
+      border-color: rgba(8, 127, 149, 0.2);
+      box-shadow: none;
+    }
+
+    .panel,
+    .compact-panel,
+    .dashboard-summary,
+    .auth-card,
+    .modal-card,
+    .quick-sheet {
+      background: var(--panel);
+      border: 1px solid rgba(20, 79, 92, 0.14);
+      border-top: 1px solid rgba(255,255,255,0.9);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(20px) saturate(135%);
+      -webkit-backdrop-filter: blur(20px) saturate(135%);
+    }
+
+    .panel-header,
+    .compact-panel-header,
+    .modal-header,
+    .quick-sheet header,
+    .vault-container {
+      background: rgba(242, 251, 252, 0.74) !important;
+      border-color: rgba(20, 79, 92, 0.12) !important;
+    }
+
+    .dashboard-summary {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(20, 184, 200, 0.16), transparent 22rem),
+        linear-gradient(135deg, rgba(255,255,255,0.98), rgba(237, 250, 251, 0.92));
+    }
+
+    .summary-copy h2 {
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.35rem);
+      font-weight: 700;
+      line-height: 1.04;
+    }
+
+    .summary-copy p,
+    .agenda-item p,
+    .command-tile span,
+    .runway-row span,
+    .clinical-readout span,
+    .protocol-card span,
+    .tab-item-card span,
+    .auth-card p,
+    .footnote,
+    .protocol-danger-zone p {
+      color: var(--muted);
+    }
+
+    .panel-title,
+    .compact-panel-header h3,
+    .agenda-item h3,
+    .command-tile strong,
+    .runway-row strong,
+    .activity-row strong,
+    .clinical-readout strong,
+    .protocol-card strong,
+    .site-result strong,
+    .mini-card strong,
+    .tab-item-card h4 {
+      color: var(--text);
+      font-family: var(--font-display);
+    }
+
+    .panel-kicker,
+    .micro-label,
+    .field label,
+    .field > span,
+    .metric-tile span {
+      color: #52727b;
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-tile,
+    .command-tile,
+    .clinical-readout,
+    .runway-row,
+    .agenda-item,
+    .protocol-card,
+    .site-result,
+    .history-list li,
+    .mini-card,
+    .tab-item-card,
+    .day,
+    .calendar-nav,
+    .action-button,
+    .molecule {
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(20, 79, 92, 0.12);
+      color: var(--text);
+      box-shadow: 0 6px 16px rgba(20, 79, 92, 0.06);
+    }
+
+    .runway-row {
+      transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .metric-tile {
+      min-height: 106px;
+      justify-content: space-between;
+      padding: 17px;
+    }
+
+    .metric-tile strong,
+    .dose-readout strong {
+      color: var(--text);
+      text-shadow: none;
+    }
+
+    .metric-tile.highlight strong,
+    .metric-tile.action strong,
+    .dose-readout strong,
+    .molecule,
+    .site-result strong {
+      color: var(--accent);
+    }
+
+    .metric-tile.success strong,
+    .trend.green {
+      color: var(--green);
+    }
+
+    .segmented {
+      background: rgba(8, 127, 149, 0.07);
+      border: 1px solid rgba(20, 79, 92, 0.12);
+      box-shadow: inset 0 1px 2px rgba(20, 79, 92, 0.08);
+    }
+
+    .seg-button,
+    .mini-action,
+    .status-chip {
+      min-height: 44px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(20, 79, 92, 0.14);
+      box-shadow: 0 6px 16px rgba(20, 79, 92, 0.06);
+      font-weight: 800;
+    }
+
+    .auth-button,
+    .seg-button.active,
+    .tab-action-form button {
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      border: 1px solid rgba(8, 127, 149, 0.34);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(8, 127, 149, 0.2);
+    }
+
+    .auth-button:hover,
+    .seg-button.active:hover,
+    .tab-action-form button:hover,
+    .fab:hover {
+      background: linear-gradient(135deg, #076c7d, #0c7a53);
+      border-color: rgba(8, 127, 149, 0.48);
+      box-shadow: 0 12px 28px rgba(8, 127, 149, 0.24);
+    }
+
+    .seg-button:hover,
+    .mini-action:hover,
+    .status-chip:hover,
+    .command-tile:hover,
+    .calendar-nav:hover,
+    .action-button:hover,
+    .runway-row:hover {
+      color: var(--accent);
+      background: #ffffff;
+      border-color: rgba(8, 127, 149, 0.24);
+      box-shadow: 0 10px 22px rgba(20, 79, 92, 0.1);
+    }
+
+    .mini-action.danger,
+    .seg-button.danger,
+    .status-chip.danger {
+      color: var(--red);
+      background: rgba(195, 58, 50, 0.08);
+      border-color: rgba(195, 58, 50, 0.24);
+    }
+
+    .mini-action.danger:hover,
+    .seg-button.danger:hover,
+    .status-chip.danger:hover {
+      color: var(--red);
+      background: rgba(195, 58, 50, 0.12);
+      border-color: rgba(195, 58, 50, 0.34);
+      box-shadow: 0 10px 22px rgba(195, 58, 50, 0.12);
+    }
+
+    .status-chip.success {
+      color: var(--green);
+      background: rgba(15, 143, 97, 0.09);
+      border-color: rgba(15, 143, 97, 0.26);
+    }
+
+    .agenda-item.overdue {
+      border-color: rgba(195, 58, 50, 0.3);
+      background: rgba(195, 58, 50, 0.045);
+    }
+
+    .agenda-item.done {
+      border-color: rgba(15, 143, 97, 0.28);
+      background: rgba(15, 143, 97, 0.045);
+    }
+
+    .control {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.86);
+      border-color: rgba(20, 79, 92, 0.16);
+      box-shadow: inset 0 1px 2px rgba(20, 79, 92, 0.08);
+    }
+
+    .control:focus {
+      color: var(--text);
+      background: #ffffff;
+      border-color: rgba(8, 127, 149, 0.56);
+      box-shadow: inset 0 1px 2px rgba(20, 79, 92, 0.08), var(--focus-ring);
+    }
+
+    .control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+      color: #7c949b;
+    }
+
+    select.control option {
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .dose-readout,
+    .canvas-frame,
+    .body-stage,
+    .sparkline {
+      background:
+        linear-gradient(rgba(8, 127, 149, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 127, 149, 0.04) 1px, transparent 1px),
+        rgba(246, 253, 254, 0.9);
+      border: 1px solid rgba(20, 79, 92, 0.12);
+    }
+
+    .syringe-plunger,
+    .syringe-barrel,
+    .syringe-needle::before {
+      border-color: rgba(20, 79, 92, 0.16);
+      background: rgba(255,255,255,0.72);
+    }
+
+    .syringe-barrel::before {
+      background: rgba(8, 127, 149, 0.08);
+      box-shadow: inset 0 1px 3px rgba(20, 79, 92, 0.12);
+    }
+
+    .syringe-fill {
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      box-shadow: 0 0 18px rgba(8, 127, 149, 0.28), inset 0 1px 0 rgba(255,255,255,0.32);
+    }
+
+    .syringe-dose-line,
+    .syringe-needle span {
+      background: var(--text);
+      box-shadow: 0 0 12px rgba(8, 127, 149, 0.16);
+    }
+
+    .syringe-tick {
+      background: rgba(18, 50, 59, 0.22);
+    }
+
+    .syringe-tick.major {
+      background: rgba(18, 50, 59, 0.42);
+    }
+
+    .syringe-caption,
+    .syringe-caption span,
+    .syringe-tick-label {
+      color: var(--muted);
+    }
+
+    .protocol-card-meta > span {
+      color: var(--muted);
+      background: rgba(8, 127, 149, 0.07);
+      border-color: rgba(20, 79, 92, 0.12);
+    }
+
+    .protocol-card #concentrationChip {
+      color: var(--green);
+      background: rgba(15, 143, 97, 0.1);
+      border-color: rgba(15, 143, 97, 0.24);
+      box-shadow: none;
+    }
+
+    .body-svg [stroke] {
+      stroke: rgba(18, 50, 59, 0.28);
+    }
+
+    .site-node {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(8, 127, 149, 0.32);
+    }
+
+    .site-node::after {
+      background: var(--accent);
+    }
+
+    .site-node:hover,
+    .site-node.selected {
+      border-color: var(--accent);
+      background: rgba(8, 127, 149, 0.14);
+      box-shadow: 0 0 18px rgba(8, 127, 149, 0.28);
+    }
+
+    .scrub-label,
+    .toast {
+      color: var(--text);
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(20, 79, 92, 0.14);
+      box-shadow: var(--shadow-card);
+    }
+
+    .toast {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .sheet-overlay,
+    .modal-overlay {
+      background: rgba(18, 50, 59, 0.18);
+    }
+
+    .protocol-danger-zone {
+      border-color: rgba(195, 58, 50, 0.24);
+      background: rgba(195, 58, 50, 0.05);
+    }
+
+    .protocol-danger-zone h3,
+    .auth-card h2,
+    .modal-warning-detail {
+      color: var(--text);
+    }
+
+    .quick-sheet {
+      background: rgba(255,255,255,0.94);
+    }
+
+    .quick-actions {
+      background: rgba(20, 79, 92, 0.08);
+    }
+
+    .action-button span:first-child {
+      background: rgba(8, 127, 149, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(8, 127, 149, 0.18);
+    }
+
+    .fab {
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      border: 1px solid rgba(8, 127, 149, 0.34);
+      color: #fff;
+      box-shadow: 0 16px 34px rgba(8, 127, 149, 0.24);
+    }
+
+    .day.today {
+      color: var(--accent);
+      background: rgba(8, 127, 149, 0.12);
+      border-color: rgba(8, 127, 149, 0.32);
+      box-shadow: 0 0 0 1px rgba(8, 127, 149, 0.08), 0 8px 18px rgba(20, 79, 92, 0.08);
+    }
+
+    .dot { background: var(--blue); }
+    .dot.green { background: var(--green); }
+    .dot.yellow { background: var(--yellow); }
+    .dot.red { background: var(--red); }
+
+    :focus-visible {
+      outline: 3px solid rgba(8, 127, 149, 0.72);
+      outline-offset: 3px;
+      box-shadow: var(--focus-ring);
+    }
+
+    @media (min-width: 1100px) {
+      .dashboard-summary {
+        grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.8fr) minmax(180px, auto);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        padding: 12px 14px 96px;
+      }
+
+      .topbar {
+        position: relative;
+        top: auto;
+        margin-bottom: 10px;
+      }
+
+      .top-nav {
+        position: relative;
+        top: auto;
+        width: 100%;
+        margin-bottom: 14px;
+      }
+
+      .dashboard-summary {
+        padding: 18px;
+      }
+
+      .metric-tile {
+        min-height: 86px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .nebula {
         animation: none !important;
+      }
+
+      .skip-link {
+        transition: none !important;
       }
     }
   </style>
 </head>
 <body class="auth-locked">
+  <a class="skip-link" href="#mainContent">Skip to dashboard</a>
   <div class="nebula" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
   <div class="stars" aria-hidden="true"></div>
@@ -3334,14 +3943,14 @@
       </a>
     </nav>
 
-    <main class="dashboard-grid">
+    <main class="dashboard-grid" id="mainContent">
       <!-- VIEW: DASHBOARD -->
       <div id="view-dashboard" class="app-view active">
         <section class="dashboard-summary" aria-labelledby="dashboard-summary-title">
           <div class="summary-copy">
             <span class="panel-kicker">Private Protocol Console</span>
             <h2 id="dashboard-summary-title"><span id="greeting">Good afternoon</span>, Sean</h2>
-            <p>Today’s protocol work, dose math, site rotation, Firebase sync, and recovery data in one command surface.</p>
+            <p>Today's protocol work, dose math, site rotation, Firebase sync, and recovery data in one command surface.</p>
           </div>
           <div class="status-rack dashboard-metrics" aria-label="Daily status">
             <div class="metric-tile highlight">
@@ -3405,7 +4014,7 @@
             <div class="compact-panel-header">
               <div>
                 <span class="panel-kicker">Fast Paths</span>
-                <h3 id="command-title">No-Click Detours</h3>
+                <h3 id="command-title">Protocol Shortcuts</h3>
               </div>
               <span class="status-chip" id="syncMiniStatus">Synced</span>
             </div>
@@ -3730,7 +4339,7 @@
 
   <div class="quick-sheet" id="quickSheet" aria-hidden="true">
     <header>
-      <span class="panel-kicker">Quick Add HUD</span>
+      <span class="panel-kicker">Quick Add</span>
       <h3>What would you like to record?</h3>
     </header>
     <div class="quick-actions">
