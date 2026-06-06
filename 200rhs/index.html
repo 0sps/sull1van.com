@@ -94,13 +94,6 @@
       line-height: 1;
     }
 
-    .board-note {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
     .summary {
       display: grid;
       grid-template-columns: repeat(3, minmax(118px, 1fr));
@@ -308,12 +301,14 @@
     }
 
     .drawer-toggle {
-      position: absolute;
-      top: 14px;
-      left: -46px;
-      width: 46px;
-      min-height: 54px;
+      position: fixed;
+      z-index: 30;
+      top: calc(120px + env(safe-area-inset-top));
+      right: 0;
+      width: 42px;
+      min-height: 72px;
       border: 1px solid var(--line);
+      border-right: 0;
       border-radius: 8px 0 0 8px;
       background: #172033;
       color: #fff;
@@ -483,6 +478,10 @@
         width: min(360px, calc(100vw - 58px));
         max-height: calc(100dvh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       }
+
+      .drawer-toggle {
+        top: calc(96px + env(safe-area-inset-top));
+      }
     }
 
     @media (max-width: 430px) {
@@ -515,7 +514,6 @@
       <header class="board-header">
         <div>
           <h1>200 RHS Room Board</h1>
-          <p class="board-note">Click an open bed slot to assign the profile from the drawer.</p>
         </div>
         <section class="summary" aria-label="Signup summary">
           <div class="metric">
@@ -554,10 +552,10 @@
       </section>
     </section>
 
+      <button class="drawer-toggle" type="button" id="drawerToggle" aria-label="Open assignment drawer" aria-expanded="false">&lsaquo;</button>
       <aside class="sidebar" id="assignmentDrawer" aria-label="Person assignment panel">
-        <button class="drawer-toggle" type="button" id="drawerToggle" aria-label="Open assignment drawer" aria-expanded="false">&lsaquo;</button>
         <h2>Assign person</h2>
-        <p>Fill this out, then click an open bed slot. Click an assigned slot to clear it.</p>
+        <p>Fill this out, then select a bed. Select an assigned bed to clear it.</p>
         <form id="personForm">
           <div class="field-grid">
             <div class="field">
@@ -900,7 +898,7 @@
         rankValue: rankSelect.value,
         shop: shopSelect.value
       };
-      formStatus.textContent = currentUserReady() ? "Profile saved. Click an open bed slot to assign it." : "First name and last name are required.";
+      formStatus.textContent = currentUserReady() ? "Profile saved." : "First name and last name are required.";
       render();
     });
 
