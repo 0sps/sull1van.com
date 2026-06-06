@@ -11,7 +11,6 @@
     :root {
       --bg: #f8fafc;
       --surface: #ffffff;
-      --surface-2: #eef4ff;
       --ink: #172033;
       --muted: #667085;
       --line: #d9e2f2;
@@ -37,7 +36,7 @@
     html {
       min-height: 100%;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.96)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.96)),
         repeating-linear-gradient(90deg, rgba(23, 32, 51, 0.035) 0 1px, transparent 1px 80px),
         repeating-linear-gradient(0deg, rgba(23, 32, 51, 0.03) 0 1px, transparent 1px 80px);
     }
@@ -52,7 +51,8 @@
     }
 
     button,
-    input {
+    input,
+    select {
       font: inherit;
     }
 
@@ -61,103 +61,63 @@
     }
 
     button:focus-visible,
-    input:focus-visible {
+    input:focus-visible,
+    select:focus-visible {
       outline: 3px solid color-mix(in srgb, var(--focus), transparent 35%);
       outline-offset: 3px;
     }
 
     .page {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1360px, calc(100% - 32px));
       margin: 0 auto;
-      padding: calc(28px + env(safe-area-inset-top)) 0 calc(40px + env(safe-area-inset-bottom));
+      padding: calc(24px + env(safe-area-inset-top)) 0 calc(40px + env(safe-area-inset-bottom));
     }
 
-    .topbar {
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .board-header {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 20px;
+      gap: 16px;
       align-items: end;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
 
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 720px;
-      margin: 0;
+    h1,
+    h2,
+    h3 {
       font-family: var(--font-heading);
-      font-size: clamp(2.1rem, 5vw, 4.7rem);
-      line-height: 0.95;
-      font-weight: 700;
       letter-spacing: 0;
     }
 
-    .signup-panel {
-      width: min(370px, 100%);
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.84);
-      box-shadow: var(--shadow);
+    h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1;
     }
 
-    .signup-panel label {
-      display: block;
-      margin-bottom: 8px;
+    .board-note {
+      margin: 6px 0 0;
       color: var(--muted);
-      font-size: 0.84rem;
-      font-weight: 700;
-    }
-
-    .signup-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 8px;
-    }
-
-    .name-input {
-      min-width: 0;
-      min-height: 44px;
-      padding: 0 12px;
-      border: 1px solid var(--line-strong);
-      border-radius: 7px;
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .clear-button {
-      min-height: 44px;
-      padding: 0 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 7px;
-      background: #172033;
-      color: #fff;
-      font-weight: 700;
-      transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
-    }
-
-    .clear-button:hover {
-      background: #26344f;
-      border-color: #26344f;
+      font-size: 0.92rem;
+      font-weight: 600;
     }
 
     .summary {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(3, minmax(118px, 1fr));
+      gap: 8px;
+      min-width: min(460px, 100%);
     }
 
     .metric {
-      min-height: 86px;
-      padding: 14px;
+      min-height: 72px;
+      padding: 12px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255, 255, 255, 0.76);
@@ -167,14 +127,14 @@
       display: block;
       margin-bottom: 2px;
       font-family: var(--font-heading);
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-size: 2rem;
       line-height: 1;
     }
 
     .metric span {
       color: var(--muted);
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
 
     .legend {
@@ -183,11 +143,11 @@
       gap: 8px;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.64);
+      background: rgba(255, 255, 255, 0.72);
     }
 
     .legend-items {
@@ -206,7 +166,7 @@
       border-radius: 999px;
       background: #fff;
       color: var(--muted);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
     }
 
@@ -228,7 +188,7 @@
     }
 
     .floor {
-      margin-top: 22px;
+      margin-top: 18px;
     }
 
     .floor-heading {
@@ -241,34 +201,33 @@
 
     .floor-heading h2 {
       margin: 0;
-      font-family: var(--font-heading);
-      font-size: 1.18rem;
-      letter-spacing: 0;
+      font-size: 1.12rem;
     }
 
     .floor-heading span {
       color: var(--muted);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
     }
 
     .room-grid {
       display: grid;
-      grid-template-columns: repeat(19, minmax(48px, 1fr));
+      grid-template-columns: repeat(19, minmax(54px, 1fr));
       gap: 8px;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.74);
       box-shadow: var(--shadow);
     }
 
     .room {
       position: relative;
       min-width: 0;
+      min-height: 132px;
       padding: 8px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: var(--radius);
       background: var(--surface);
       transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
     }
@@ -290,7 +249,7 @@
 
     .room-number {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       font-family: var(--font-heading);
       font-size: 1rem;
       font-weight: 700;
@@ -307,11 +266,36 @@
       font-weight: 700;
     }
 
+    .occupants {
+      display: grid;
+      gap: 4px;
+      min-height: 44px;
+      margin-bottom: 7px;
+    }
+
+    .occupant {
+      min-width: 0;
+      padding: 4px 5px;
+      border: 1px solid rgba(20, 34, 57, 0.1);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.66);
+      color: var(--ink);
+      font-size: 0.71rem;
+      font-weight: 700;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+    }
+
+    .occupant.is-empty {
+      color: var(--muted);
+      font-weight: 600;
+      opacity: 0.76;
+    }
+
     .capacity {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 4px;
-      margin-bottom: 7px;
     }
 
     .bed {
@@ -346,12 +330,113 @@
       border-color: var(--half);
     }
 
-    .room-status {
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar h2 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+      line-height: 1.1;
+    }
+
+    .sidebar p {
+      margin: 0 0 14px;
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.8rem;
       font-weight: 700;
-      line-height: 1.2;
-      min-height: 1.8em;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .form-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .action-button {
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      background: #172033;
+      color: #fff;
+      font-weight: 700;
+      transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+    }
+
+    .action-button:hover {
+      background: #26344f;
+      border-color: #26344f;
+    }
+
+    .action-button.secondary {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .action-button.secondary:hover {
+      background: #f1f5f9;
+      border-color: #aebbd0;
+    }
+
+    .selected-card {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+    }
+
+    .selected-card strong {
+      display: block;
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+    }
+
+    .selected-card span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .status-line {
+      margin-top: 10px;
+      min-height: 1.4em;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
     }
 
     .sr-only {
@@ -366,29 +451,47 @@
       border: 0;
     }
 
-    @media (max-width: 1080px) {
+    @media (max-width: 1220px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+
+      .field-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .room-grid {
-        grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
       }
     }
 
     @media (max-width: 760px) {
       .page {
-        width: min(100% - 20px, 1180px);
-        padding-top: calc(18px + env(safe-area-inset-top));
+        width: min(100% - 20px, 1360px);
+        padding-top: calc(14px + env(safe-area-inset-top));
       }
 
-      .topbar,
-      .summary {
+      .board-header,
+      .summary,
+      .field-grid {
         grid-template-columns: 1fr;
       }
 
-      .signup-panel {
-        width: 100%;
+      .summary {
+        gap: 8px;
+      }
+
+      .metric {
+        min-height: auto;
       }
 
       .room-grid {
-        grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
         gap: 7px;
         padding: 8px;
       }
@@ -399,16 +502,8 @@
     }
 
     @media (max-width: 430px) {
-      .signup-row {
+      .form-actions {
         grid-template-columns: 1fr;
-      }
-
-      .summary {
-        gap: 8px;
-      }
-
-      .metric {
-        min-height: auto;
       }
 
       .floor-heading {
@@ -432,121 +527,294 @@
 </head>
 <body>
   <main class="page">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Room signup</p>
-        <h1>Pick a bed, see what is left.</h1>
-      </div>
-      <form class="signup-panel" id="signupForm">
-        <label for="nameInput">Your name</label>
-        <div class="signup-row">
-          <input class="name-input" id="nameInput" name="name" autocomplete="name" placeholder="Type your name" aria-describedby="nameHelp">
-          <button class="clear-button" type="button" id="resetButton">Reset</button>
+    <div class="layout">
+      <section class="board" aria-label="Room board">
+        <header class="board-header">
+          <div>
+            <h1>200 RHS Room Board</h1>
+            <p class="board-note">Click an open bed slot to assign the profile from the right panel.</p>
+          </div>
+          <section class="summary" aria-label="Signup summary">
+            <div class="metric">
+              <strong id="openBeds">76</strong>
+              <span>beds left</span>
+            </div>
+            <div class="metric">
+              <strong id="halfRooms">0</strong>
+              <span>rooms half booked</span>
+            </div>
+            <div class="metric">
+              <strong id="fullRooms">0</strong>
+              <span>rooms full</span>
+            </div>
+          </section>
+        </header>
+
+        <section class="legend" aria-label="Legend">
+          <div class="legend-items">
+            <span class="legend-item"><span class="swatch" aria-hidden="true"></span> 2 beds left</span>
+            <span class="legend-item"><span class="swatch is-half" aria-hidden="true"></span> 1 bed left</span>
+            <span class="legend-item"><span class="swatch is-full" aria-hidden="true"></span> full</span>
+          </div>
+          <span class="legend-item">Names show rank abbreviation plus last name</span>
+        </section>
+
+        <section class="floor" aria-labelledby="floorOne">
+          <div class="floor-heading">
+            <h2 id="floorOne">First floor</h2>
+            <span id="floorOneCount">38 beds left</span>
+          </div>
+          <div class="room-grid" id="floorOneGrid"></div>
+        </section>
+
+        <section class="floor" aria-labelledby="floorTwo">
+          <div class="floor-heading">
+            <h2 id="floorTwo">Second floor</h2>
+            <span id="floorTwoCount">38 beds left</span>
+          </div>
+          <div class="room-grid" id="floorTwoGrid"></div>
+        </section>
+      </section>
+
+      <aside class="sidebar" aria-label="Person assignment panel">
+        <h2>Assign person</h2>
+        <p>Fill this out, then click an open bed slot. Click an assigned slot to clear it.</p>
+        <form id="personForm">
+          <div class="field-grid">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input id="firstName" name="firstName" autocomplete="given-name" required>
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input id="lastName" name="lastName" autocomplete="family-name" required>
+            </div>
+            <div class="field">
+              <label for="rank">Military rank</label>
+              <select id="rank" name="rank" required></select>
+            </div>
+            <div class="field">
+              <label for="shop">Shop</label>
+              <select id="shop" name="shop" required>
+                <option value="ENGR">ENGR</option>
+                <option value="DIRT">DIRT</option>
+                <option value="SUPP">SUPP</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="action-button" type="submit">Save profile</button>
+            <button class="action-button secondary" type="button" id="resetButton">Reset board</button>
+          </div>
+          <p class="status-line" id="formStatus" aria-live="polite"></p>
+        </form>
+        <div class="selected-card" aria-live="polite">
+          <strong id="selectedName">No profile saved</strong>
+          <span id="selectedMeta">Save a profile before assigning a bed.</span>
         </div>
-        <p class="sr-only" id="nameHelp">Click an open bed slot in any room to claim it locally in this browser.</p>
-      </form>
-    </header>
-
-    <section class="summary" aria-label="Signup summary">
-      <div class="metric">
-        <strong id="openBeds">76</strong>
-        <span>beds left</span>
-      </div>
-      <div class="metric">
-        <strong id="halfRooms">0</strong>
-        <span>rooms half booked</span>
-      </div>
-      <div class="metric">
-        <strong id="fullRooms">0</strong>
-        <span>rooms full</span>
-      </div>
-    </section>
-
-    <section class="legend" aria-label="Legend">
-      <div class="legend-items">
-        <span class="legend-item"><span class="swatch" aria-hidden="true"></span> 2 beds left</span>
-        <span class="legend-item"><span class="swatch is-half" aria-hidden="true"></span> 1 bed left</span>
-        <span class="legend-item"><span class="swatch is-full" aria-hidden="true"></span> full</span>
-      </div>
-      <span class="legend-item">Click a slot to claim or release it</span>
-    </section>
-
-    <section class="floor" aria-labelledby="floorOne">
-      <div class="floor-heading">
-        <h2 id="floorOne">First floor</h2>
-        <span id="floorOneCount">38 beds left</span>
-      </div>
-      <div class="room-grid" id="floorOneGrid"></div>
-    </section>
-
-    <section class="floor" aria-labelledby="floorTwo">
-      <div class="floor-heading">
-        <h2 id="floorTwo">Second floor</h2>
-        <span id="floorTwoCount">38 beds left</span>
-      </div>
-      <div class="room-grid" id="floorTwoGrid"></div>
-    </section>
+      </aside>
+    </div>
   </main>
 
   <script>
+    const rankOptions = [
+      { value: "airman-basic", label: "Airman Basic", abbr: "AB" },
+      { value: "airman", label: "Airman", abbr: "Amn" },
+      { value: "airman-first-class", label: "Airman First Class", abbr: "A1C" },
+      { value: "senior-airman", label: "Senior Airman", abbr: "SrA" },
+      { value: "staff-sergeant", label: "Staff Sergeant", abbr: "SSgt" },
+      { value: "technical-sergeant", label: "Technical Sergeant", abbr: "TSgt" },
+      { value: "master-sergeant", label: "Master Sergeant", abbr: "MSgt" },
+      { value: "senior-master-sergeant", label: "Senior Master Sergeant", abbr: "SMSgt" },
+      { value: "chief-master-sergeant", label: "Chief Master Sergeant", abbr: "CMSgt" },
+      { value: "command-chief-master-sergeant", label: "Command Chief Master Sergeant", abbr: "CCM" },
+      { value: "chief-master-sergeant-of-the-air-force", label: "Chief Master Sergeant of the Air Force", abbr: "CMSAF" },
+      { value: "second-lieutenant", label: "Second Lieutenant", abbr: "2d Lt" },
+      { value: "first-lieutenant", label: "First Lieutenant", abbr: "1st Lt" },
+      { value: "captain", label: "Captain", abbr: "Capt" },
+      { value: "major", label: "Major", abbr: "Maj" },
+      { value: "lieutenant-colonel", label: "Lieutenant Colonel", abbr: "Lt Col" },
+      { value: "colonel", label: "Colonel", abbr: "Col" },
+      { value: "brigadier-general", label: "Brigadier General", abbr: "Brig Gen" },
+      { value: "major-general", label: "Major General", abbr: "Maj Gen" },
+      { value: "lieutenant-general", label: "Lieutenant General", abbr: "Lt Gen" },
+      { value: "general", label: "General", abbr: "Gen" }
+    ];
+
+    const shops = ["ENGR", "DIRT", "SUPP"];
     const floors = {
       floorOneGrid: Array.from({ length: 19 }, (_, index) => String(101 + index)),
       floorTwoGrid: Array.from({ length: 19 }, (_, index) => String(201 + index))
     };
+    const storageKey = "rhs-200-room-signup-v2";
+    const legacyStorageKey = "rhs-200-room-signup-v1";
 
-    const storageKey = "rhs-200-room-signup-v1";
-    const nameKey = "rhs-200-room-signup-name";
-    const initialClaims = {
-      101: ["Maya", ""],
-      104: ["Ari", "Sam"],
-      108: ["", "Nora"],
-      112: ["June", ""],
-      116: ["Taylor", "Chris"],
-      203: ["Leo", ""],
-      207: ["Iris", "Max"],
-      211: ["", "Ella"],
-      215: ["Rae", ""],
-      219: ["Kai", "Noah"]
+    const makePerson = (id, firstName, lastName, rankValue, shop) => ({
+      id,
+      firstName,
+      lastName,
+      rankValue,
+      rankAbbr: rankOptions.find((rank) => rank.value === rankValue)?.abbr || "",
+      shop
+    });
+
+    const initialRooms = {
+      101: [makePerson("sample-101-a", "Maya", "Sullivan", "airman-first-class", "ENGR"), null],
+      104: [makePerson("sample-104-a", "Ari", "Brookhalter", "staff-sergeant", "DIRT"), makePerson("sample-104-b", "Sam", "Carter", "senior-airman", "SUPP")],
+      108: [null, makePerson("sample-108-b", "Nora", "Price", "technical-sergeant", "ENGR")],
+      112: [makePerson("sample-112-a", "June", "Reyes", "airman", "DIRT"), null],
+      116: [makePerson("sample-116-a", "Taylor", "Hayes", "captain", "SUPP"), makePerson("sample-116-b", "Chris", "Morgan", "master-sergeant", "ENGR")],
+      203: [makePerson("sample-203-a", "Leo", "Foster", "senior-airman", "DIRT"), null],
+      207: [makePerson("sample-207-a", "Iris", "Kim", "second-lieutenant", "SUPP"), makePerson("sample-207-b", "Max", "Allen", "staff-sergeant", "ENGR")],
+      211: [null, makePerson("sample-211-b", "Ella", "Nguyen", "airman-first-class", "DIRT")],
+      215: [makePerson("sample-215-a", "Rae", "Bennett", "major", "SUPP"), null],
+      219: [makePerson("sample-219-a", "Kai", "Torres", "technical-sergeant", "ENGR"), makePerson("sample-219-b", "Noah", "Wright", "colonel", "SUPP")]
     };
 
-    const nameInput = document.querySelector("#nameInput");
+    const rankSelect = document.querySelector("#rank");
+    const firstNameInput = document.querySelector("#firstName");
+    const lastNameInput = document.querySelector("#lastName");
+    const shopSelect = document.querySelector("#shop");
+    const personForm = document.querySelector("#personForm");
     const resetButton = document.querySelector("#resetButton");
+    const formStatus = document.querySelector("#formStatus");
+    const selectedName = document.querySelector("#selectedName");
+    const selectedMeta = document.querySelector("#selectedMeta");
     const openBeds = document.querySelector("#openBeds");
     const halfRooms = document.querySelector("#halfRooms");
     const fullRooms = document.querySelector("#fullRooms");
     const floorOneCount = document.querySelector("#floorOneCount");
     const floorTwoCount = document.querySelector("#floorTwoCount");
 
-    const createBlankState = () => {
+    const createRooms = () => {
       const allRooms = [...floors.floorOneGrid, ...floors.floorTwoGrid];
-      return allRooms.reduce((state, room) => {
-        state[room] = initialClaims[room] ? [...initialClaims[room]] : ["", ""];
-        return state;
+      return allRooms.reduce((rooms, room) => {
+        rooms[room] = initialRooms[room] ? initialRooms[room].map((person) => person ? { ...person } : null) : [null, null];
+        return rooms;
       }, {});
+    };
+
+    const createInitialState = () => ({
+      currentUser: {
+        firstName: "",
+        lastName: "",
+        rankValue: "airman-first-class",
+        shop: "ENGR"
+      },
+      rooms: createRooms()
+    });
+
+    const normalizePerson = (person, room, bedIndex) => {
+      if (!person) return null;
+      if (typeof person === "string") {
+        return makePerson(`legacy-${room}-${bedIndex}`, "", person, "airman-first-class", "ENGR");
+      }
+      const rankValue = person.rankValue || "airman-first-class";
+      return {
+        id: person.id || `person-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        firstName: person.firstName || "",
+        lastName: person.lastName || "",
+        rankValue,
+        rankAbbr: rankOptions.find((rank) => rank.value === rankValue)?.abbr || person.rankAbbr || "",
+        shop: shops.includes(person.shop) ? person.shop : "ENGR"
+      };
+    };
+
+    const normalizeState = (saved) => {
+      const base = createInitialState();
+      const sourceRooms = saved?.rooms || saved || {};
+      Object.keys(base.rooms).forEach((room) => {
+        if (Array.isArray(sourceRooms[room])) {
+          base.rooms[room] = [0, 1].map((bedIndex) => normalizePerson(sourceRooms[room][bedIndex], room, bedIndex));
+        }
+      });
+
+      if (saved?.currentUser) {
+        base.currentUser = {
+          firstName: saved.currentUser.firstName || "",
+          lastName: saved.currentUser.lastName || "",
+          rankValue: saved.currentUser.rankValue || "airman-first-class",
+          shop: shops.includes(saved.currentUser.shop) ? saved.currentUser.shop : "ENGR"
+        };
+      }
+
+      return base;
     };
 
     const loadState = () => {
       try {
         const saved = JSON.parse(localStorage.getItem(storageKey));
-        return saved && typeof saved === "object" ? { ...createBlankState(), ...saved } : createBlankState();
+        if (saved) return normalizeState(saved);
+        const legacy = JSON.parse(localStorage.getItem(legacyStorageKey));
+        return legacy ? normalizeState(legacy) : createInitialState();
       } catch {
-        return createBlankState();
+        return createInitialState();
       }
     };
 
-    let state = loadState();
+    let appState = loadState();
 
     const saveState = () => {
-      localStorage.setItem(storageKey, JSON.stringify(state));
+      localStorage.setItem(storageKey, JSON.stringify(appState));
+      window.roomSignupState = appState;
+      window.roomSignupFirebasePayload = {
+        currentUser: appState.currentUser,
+        rooms: appState.rooms,
+        updatedAt: new Date().toISOString()
+      };
     };
 
-    const claimedCount = (room) => state[room].filter(Boolean).length;
+    const rankByValue = (value) => rankOptions.find((rank) => rank.value === value) || rankOptions[0];
+    const formatPerson = (person) => `${person.rankAbbr || rankByValue(person.rankValue).abbr} ${person.lastName || "Unknown"}`;
+    const fullPersonLabel = (person) => `${rankByValue(person.rankValue).label} ${person.firstName} ${person.lastName}, ${person.shop}`;
+    const claimedCount = (room) => appState.rooms[room].filter(Boolean).length;
 
     const roomStatusText = (room) => {
       const taken = claimedCount(room);
       if (taken === 0) return "2 beds left";
       if (taken === 1) return "1 bed left";
       return "full";
+    };
+
+    const currentUserReady = () => Boolean(appState.currentUser.firstName.trim() && appState.currentUser.lastName.trim());
+
+    const currentUserPerson = () => {
+      const rank = rankByValue(appState.currentUser.rankValue);
+      return {
+        id: `person-${Date.now()}`,
+        firstName: appState.currentUser.firstName.trim(),
+        lastName: appState.currentUser.lastName.trim(),
+        rankValue: rank.value,
+        rankAbbr: rank.abbr,
+        shop: appState.currentUser.shop
+      };
+    };
+
+    const populateRankOptions = () => {
+      rankSelect.replaceChildren(...rankOptions.map((rank) => {
+        const option = document.createElement("option");
+        option.value = rank.value;
+        option.textContent = `${rank.label} (${rank.abbr})`;
+        return option;
+      }));
+    };
+
+    const syncForm = () => {
+      firstNameInput.value = appState.currentUser.firstName;
+      lastNameInput.value = appState.currentUser.lastName;
+      rankSelect.value = appState.currentUser.rankValue;
+      shopSelect.value = appState.currentUser.shop;
+    };
+
+    const updateSelectedCard = () => {
+      if (!currentUserReady()) {
+        selectedName.textContent = "No profile saved";
+        selectedMeta.textContent = "Save a profile before assigning a bed.";
+        return;
+      }
+      const rank = rankByValue(appState.currentUser.rankValue);
+      selectedName.textContent = `${rank.abbr} ${appState.currentUser.lastName}`;
+      selectedMeta.textContent = `${appState.currentUser.firstName} ${appState.currentUser.lastName}, ${appState.currentUser.shop}`;
     };
 
     const updateSummary = () => {
@@ -565,6 +833,14 @@
       floorTwoCount.textContent = `${floorTwoOpen} beds left`;
     };
 
+    const makeOccupantLabel = (person) => {
+      const label = document.createElement("div");
+      label.className = person ? "occupant" : "occupant is-empty";
+      label.textContent = person ? formatPerson(person) : "Open bed";
+      if (person) label.title = fullPersonLabel(person);
+      return label;
+    };
+
     const renderRoom = (room) => {
       const taken = claimedCount(room);
       const statusClass = taken === 2 ? "is-full" : taken === 1 ? "is-half" : "";
@@ -576,24 +852,32 @@
       heading.className = "room-number";
       heading.innerHTML = `<span>${room}</span><span class="room-count">${taken}/2</span>`;
 
+      const occupants = document.createElement("div");
+      occupants.className = "occupants";
+      occupants.replaceChildren(...appState.rooms[room].map(makeOccupantLabel));
+
       const capacity = document.createElement("div");
       capacity.className = "capacity";
 
-      state[room].forEach((claim, bedIndex) => {
+      appState.rooms[room].forEach((person, bedIndex) => {
         const bedButton = document.createElement("button");
-        const isTaken = Boolean(claim);
-        const isMine = nameInput.value.trim() && claim === nameInput.value.trim();
+        const isTaken = Boolean(person);
         bedButton.type = "button";
         bedButton.className = isTaken ? "bed is-taken" : "bed";
-        bedButton.setAttribute("aria-label", isTaken ? `Room ${room}, bed ${bedIndex + 1} claimed by ${claim}` : `Claim room ${room}, bed ${bedIndex + 1}`);
-        bedButton.title = isTaken ? `${claim}` : `Claim bed ${bedIndex + 1}`;
+        bedButton.setAttribute("aria-label", isTaken ? `Clear room ${room}, bed ${bedIndex + 1}, currently ${fullPersonLabel(person)}` : `Assign room ${room}, bed ${bedIndex + 1}`);
+        bedButton.title = isTaken ? `Clear ${formatPerson(person)}` : `Assign bed ${bedIndex + 1}`;
 
         bedButton.addEventListener("click", () => {
-          const name = nameInput.value.trim() || "Reserved";
-          if (!state[room][bedIndex]) {
-            state[room][bedIndex] = name;
-          } else if (isMine || state[room][bedIndex] === "Reserved") {
-            state[room][bedIndex] = "";
+          if (isTaken) {
+            appState.rooms[room][bedIndex] = null;
+            formStatus.textContent = `Cleared bed ${bedIndex + 1} in room ${room}.`;
+          } else if (!currentUserReady()) {
+            formStatus.textContent = "Enter and save a first name and last name before assigning a bed.";
+            firstNameInput.focus();
+            return;
+          } else {
+            appState.rooms[room][bedIndex] = currentUserPerson();
+            formStatus.textContent = `Assigned ${rankByValue(appState.currentUser.rankValue).abbr} ${appState.currentUser.lastName} to room ${room}.`;
           }
           saveState();
           render();
@@ -602,11 +886,7 @@
         capacity.appendChild(bedButton);
       });
 
-      const status = document.createElement("div");
-      status.className = "room-status";
-      status.textContent = roomStatusText(room);
-
-      card.append(heading, capacity, status);
+      card.append(heading, occupants, capacity);
       return card;
     };
 
@@ -619,22 +899,55 @@
       renderFloor("floorOneGrid", floors.floorOneGrid);
       renderFloor("floorTwoGrid", floors.floorTwoGrid);
       updateSummary();
+      updateSelectedCard();
+      saveState();
     };
 
-    nameInput.value = localStorage.getItem(nameKey) || "";
-    nameInput.addEventListener("input", () => {
-      localStorage.setItem(nameKey, nameInput.value);
+    populateRankOptions();
+    syncForm();
+
+    personForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      appState.currentUser = {
+        firstName: firstNameInput.value.trim(),
+        lastName: lastNameInput.value.trim(),
+        rankValue: rankSelect.value,
+        shop: shopSelect.value
+      };
+      formStatus.textContent = currentUserReady() ? "Profile saved. Click an open bed slot to assign it." : "First name and last name are required.";
       render();
+    });
+
+    [firstNameInput, lastNameInput, rankSelect, shopSelect].forEach((field) => {
+      field.addEventListener("change", () => {
+        appState.currentUser = {
+          firstName: firstNameInput.value.trim(),
+          lastName: lastNameInput.value.trim(),
+          rankValue: rankSelect.value,
+          shop: shopSelect.value
+        };
+        updateSelectedCard();
+        saveState();
+      });
+    });
+
+    [firstNameInput, lastNameInput].forEach((field) => {
+      field.addEventListener("input", () => {
+        appState.currentUser = {
+          firstName: firstNameInput.value.trim(),
+          lastName: lastNameInput.value.trim(),
+          rankValue: rankSelect.value,
+          shop: shopSelect.value
+        };
+        updateSelectedCard();
+        saveState();
+      });
     });
 
     resetButton.addEventListener("click", () => {
-      state = createBlankState();
-      saveState();
+      appState.rooms = createRooms();
+      formStatus.textContent = "Board reset to sample room assignments.";
       render();
-    });
-
-    document.querySelector("#signupForm").addEventListener("submit", (event) => {
-      event.preventDefault();
     });
 
     render();
