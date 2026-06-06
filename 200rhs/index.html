@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>200 RHS Room Signup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-2: #eef4ff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e2f2;
+      --line-strong: #b8c5da;
+      --empty: #e7eef8;
+      --open: #2f6fbb;
+      --half: #b25e16;
+      --full: #7f1d1d;
+      --open-soft: #dceeff;
+      --half-soft: #fff0d8;
+      --full-soft: #ffe2e2;
+      --focus: #2563eb;
+      --shadow: 0 18px 42px rgba(20, 34, 57, 0.08);
+      --radius: 8px;
+      --font-heading: "Outfit", system-ui, sans-serif;
+      --font-body: "Work Sans", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.96)),
+        repeating-linear-gradient(90deg, rgba(23, 32, 51, 0.035) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient(0deg, rgba(23, 32, 51, 0.03) 0 1px, transparent 1px 80px);
+    }
+
+    body {
+      min-height: 100dvh;
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--focus), transparent 35%);
+      outline-offset: 3px;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: calc(28px + env(safe-area-inset-top)) 0 calc(40px + env(safe-area-inset-bottom));
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(2.1rem, 5vw, 4.7rem);
+      line-height: 0.95;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .signup-panel {
+      width: min(370px, 100%);
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .signup-panel label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .signup-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .name-input {
+      min-width: 0;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .clear-button {
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      background: #172033;
+      color: #fff;
+      font-weight: 700;
+      transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+    }
+
+    .clear-button:hover {
+      background: #26344f;
+      border-color: #26344f;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      min-height: 86px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      line-height: 1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .swatch {
+      width: 28px;
+      height: 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: var(--open-soft);
+      overflow: hidden;
+    }
+
+    .swatch.is-half {
+      background: linear-gradient(90deg, var(--half) 0 50%, var(--empty) 50% 100%);
+    }
+
+    .swatch.is-full {
+      background: var(--full);
+    }
+
+    .floor {
+      margin-top: 22px;
+    }
+
+    .floor-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .floor-heading h2 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      letter-spacing: 0;
+    }
+
+    .floor-heading span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(19, minmax(48px, 1fr));
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow);
+    }
+
+    .room {
+      position: relative;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .room:hover {
+      border-color: #9fb1cc;
+      box-shadow: 0 8px 22px rgba(20, 34, 57, 0.08);
+    }
+
+    .room.is-half {
+      background: var(--half-soft);
+      border-color: #f1c57d;
+    }
+
+    .room.is-full {
+      background: var(--full-soft);
+      border-color: #f0a3a3;
+    }
+
+    .room-number {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .room-count {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .capacity {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+      margin-bottom: 7px;
+    }
+
+    .bed {
+      min-height: 28px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.64) 0 24%, transparent 24% 100%),
+        var(--open-soft);
+      color: #184a80;
+      font-size: 0;
+      transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+    }
+
+    .bed:hover {
+      border-color: var(--open);
+      background-color: #c9e3ff;
+    }
+
+    .bed.is-taken {
+      background:
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 4px, transparent 4px 8px),
+        var(--full);
+      border-color: var(--full);
+      color: #fff;
+    }
+
+    .room.is-half .bed.is-taken {
+      background:
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 4px, transparent 4px 8px),
+        var(--half);
+      border-color: var(--half);
+    }
+
+    .room-status {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.2;
+      min-height: 1.8em;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1080px) {
+      .room-grid {
+        grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: calc(18px + env(safe-area-inset-top));
+      }
+
+      .topbar,
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .signup-panel {
+        width: 100%;
+      }
+
+      .room-grid {
+        grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+        gap: 7px;
+        padding: 8px;
+      }
+
+      .room {
+        padding: 7px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .signup-row {
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        gap: 8px;
+      }
+
+      .metric {
+        min-height: auto;
+      }
+
+      .floor-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Room signup</p>
+        <h1>Pick a bed, see what is left.</h1>
+      </div>
+      <form class="signup-panel" id="signupForm">
+        <label for="nameInput">Your name</label>
+        <div class="signup-row">
+          <input class="name-input" id="nameInput" name="name" autocomplete="name" placeholder="Type your name" aria-describedby="nameHelp">
+          <button class="clear-button" type="button" id="resetButton">Reset</button>
+        </div>
+        <p class="sr-only" id="nameHelp">Click an open bed slot in any room to claim it locally in this browser.</p>
+      </form>
+    </header>
+
+    <section class="summary" aria-label="Signup summary">
+      <div class="metric">
+        <strong id="openBeds">76</strong>
+        <span>beds left</span>
+      </div>
+      <div class="metric">
+        <strong id="halfRooms">0</strong>
+        <span>rooms half booked</span>
+      </div>
+      <div class="metric">
+        <strong id="fullRooms">0</strong>
+        <span>rooms full</span>
+      </div>
+    </section>
+
+    <section class="legend" aria-label="Legend">
+      <div class="legend-items">
+        <span class="legend-item"><span class="swatch" aria-hidden="true"></span> 2 beds left</span>
+        <span class="legend-item"><span class="swatch is-half" aria-hidden="true"></span> 1 bed left</span>
+        <span class="legend-item"><span class="swatch is-full" aria-hidden="true"></span> full</span>
+      </div>
+      <span class="legend-item">Click a slot to claim or release it</span>
+    </section>
+
+    <section class="floor" aria-labelledby="floorOne">
+      <div class="floor-heading">
+        <h2 id="floorOne">First floor</h2>
+        <span id="floorOneCount">38 beds left</span>
+      </div>
+      <div class="room-grid" id="floorOneGrid"></div>
+    </section>
+
+    <section class="floor" aria-labelledby="floorTwo">
+      <div class="floor-heading">
+        <h2 id="floorTwo">Second floor</h2>
+        <span id="floorTwoCount">38 beds left</span>
+      </div>
+      <div class="room-grid" id="floorTwoGrid"></div>
+    </section>
+  </main>
+
+  <script>
+    const floors = {
+      floorOneGrid: Array.from({ length: 19 }, (_, index) => String(101 + index)),
+      floorTwoGrid: Array.from({ length: 19 }, (_, index) => String(201 + index))
+    };
+
+    const storageKey = "rhs-200-room-signup-v1";
+    const nameKey = "rhs-200-room-signup-name";
+    const initialClaims = {
+      101: ["Maya", ""],
+      104: ["Ari", "Sam"],
+      108: ["", "Nora"],
+      112: ["June", ""],
+      116: ["Taylor", "Chris"],
+      203: ["Leo", ""],
+      207: ["Iris", "Max"],
+      211: ["", "Ella"],
+      215: ["Rae", ""],
+      219: ["Kai", "Noah"]
+    };
+
+    const nameInput = document.querySelector("#nameInput");
+    const resetButton = document.querySelector("#resetButton");
+    const openBeds = document.querySelector("#openBeds");
+    const halfRooms = document.querySelector("#halfRooms");
+    const fullRooms = document.querySelector("#fullRooms");
+    const floorOneCount = document.querySelector("#floorOneCount");
+    const floorTwoCount = document.querySelector("#floorTwoCount");
+
+    const createBlankState = () => {
+      const allRooms = [...floors.floorOneGrid, ...floors.floorTwoGrid];
+      return allRooms.reduce((state, room) => {
+        state[room] = initialClaims[room] ? [...initialClaims[room]] : ["", ""];
+        return state;
+      }, {});
+    };
+
+    const loadState = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        return saved && typeof saved === "object" ? { ...createBlankState(), ...saved } : createBlankState();
+      } catch {
+        return createBlankState();
+      }
+    };
+
+    let state = loadState();
+
+    const saveState = () => {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    };
+
+    const claimedCount = (room) => state[room].filter(Boolean).length;
+
+    const roomStatusText = (room) => {
+      const taken = claimedCount(room);
+      if (taken === 0) return "2 beds left";
+      if (taken === 1) return "1 bed left";
+      return "full";
+    };
+
+    const updateSummary = () => {
+      const allRooms = [...floors.floorOneGrid, ...floors.floorTwoGrid];
+      const counts = allRooms.map(claimedCount);
+      const totalOpen = counts.reduce((sum, taken) => sum + (2 - taken), 0);
+      const halfTotal = counts.filter((taken) => taken === 1).length;
+      const fullTotal = counts.filter((taken) => taken === 2).length;
+      const floorOneOpen = floors.floorOneGrid.reduce((sum, room) => sum + (2 - claimedCount(room)), 0);
+      const floorTwoOpen = floors.floorTwoGrid.reduce((sum, room) => sum + (2 - claimedCount(room)), 0);
+
+      openBeds.textContent = totalOpen;
+      halfRooms.textContent = halfTotal;
+      fullRooms.textContent = fullTotal;
+      floorOneCount.textContent = `${floorOneOpen} beds left`;
+      floorTwoCount.textContent = `${floorTwoOpen} beds left`;
+    };
+
+    const renderRoom = (room) => {
+      const taken = claimedCount(room);
+      const statusClass = taken === 2 ? "is-full" : taken === 1 ? "is-half" : "";
+      const card = document.createElement("article");
+      card.className = `room ${statusClass}`.trim();
+      card.setAttribute("aria-label", `Room ${room}, ${roomStatusText(room)}`);
+
+      const heading = document.createElement("div");
+      heading.className = "room-number";
+      heading.innerHTML = `<span>${room}</span><span class="room-count">${taken}/2</span>`;
+
+      const capacity = document.createElement("div");
+      capacity.className = "capacity";
+
+      state[room].forEach((claim, bedIndex) => {
+        const bedButton = document.createElement("button");
+        const isTaken = Boolean(claim);
+        const isMine = nameInput.value.trim() && claim === nameInput.value.trim();
+        bedButton.type = "button";
+        bedButton.className = isTaken ? "bed is-taken" : "bed";
+        bedButton.setAttribute("aria-label", isTaken ? `Room ${room}, bed ${bedIndex + 1} claimed by ${claim}` : `Claim room ${room}, bed ${bedIndex + 1}`);
+        bedButton.title = isTaken ? `${claim}` : `Claim bed ${bedIndex + 1}`;
+
+        bedButton.addEventListener("click", () => {
+          const name = nameInput.value.trim() || "Reserved";
+          if (!state[room][bedIndex]) {
+            state[room][bedIndex] = name;
+          } else if (isMine || state[room][bedIndex] === "Reserved") {
+            state[room][bedIndex] = "";
+          }
+          saveState();
+          render();
+        });
+
+        capacity.appendChild(bedButton);
+      });
+
+      const status = document.createElement("div");
+      status.className = "room-status";
+      status.textContent = roomStatusText(room);
+
+      card.append(heading, capacity, status);
+      return card;
+    };
+
+    const renderFloor = (gridId, rooms) => {
+      const grid = document.querySelector(`#${gridId}`);
+      grid.replaceChildren(...rooms.map(renderRoom));
+    };
+
+    const render = () => {
+      renderFloor("floorOneGrid", floors.floorOneGrid);
+      renderFloor("floorTwoGrid", floors.floorTwoGrid);
+      updateSummary();
+    };
+
+    nameInput.value = localStorage.getItem(nameKey) || "";
+    nameInput.addEventListener("input", () => {
+      localStorage.setItem(nameKey, nameInput.value);
+      render();
+    });
+
+    resetButton.addEventListener("click", () => {
+      state = createBlankState();
+      saveState();
+      render();
+    });
+
+    document.querySelector("#signupForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+
+    render();
+  </script>
+</body>
+</html>
