@@ -70,7 +70,14 @@
     .page {
       width: min(1600px, calc(100% - 32px));
       margin: 0 auto;
-      padding: calc(24px + env(safe-area-inset-top)) 64px calc(40px + env(safe-area-inset-bottom)) 0;
+      padding: calc(24px + env(safe-area-inset-top)) 0 calc(40px + env(safe-area-inset-bottom));
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 18px;
+      align-items: start;
     }
 
     .board-header {
@@ -280,31 +287,28 @@
     }
 
     .sidebar {
-      position: fixed;
-      z-index: 20;
+      position: sticky;
       top: calc(24px + env(safe-area-inset-top));
-      right: 16px;
-      width: min(380px, calc(100vw - 64px));
-      max-height: calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-      overflow-y: auto;
+      width: 100%;
       padding: 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.88);
+      background: #ffffff;
       box-shadow: var(--shadow);
       transition: transform 220ms ease, box-shadow 220ms ease;
     }
 
     body.drawer-closed .sidebar {
-      transform: translateX(calc(100% + 16px));
+      transform: none;
       box-shadow: 0 8px 24px rgba(20, 34, 57, 0.08);
     }
 
     .drawer-toggle {
-      position: fixed;
+      display: none;
+      position: absolute;
+      top: 112px;
+      left: -42px;
       z-index: 30;
-      top: calc(120px + env(safe-area-inset-top));
-      right: 0;
       width: 42px;
       min-height: 72px;
       border: 1px solid var(--line);
@@ -436,6 +440,32 @@
     }
 
     @media (max-width: 1220px) {
+      .page {
+        padding-right: 52px;
+      }
+
+      .workspace {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        z-index: 20;
+        top: calc(24px + env(safe-area-inset-top));
+        right: 10px;
+        width: min(380px, calc(100vw - 58px));
+        max-height: calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        overflow-y: auto;
+      }
+
+      body.drawer-closed .sidebar {
+        transform: translateX(calc(100% + 10px));
+      }
+
+      .drawer-toggle {
+        display: block;
+      }
+
       .field-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -480,7 +510,7 @@
       }
 
       .drawer-toggle {
-        top: calc(96px + env(safe-area-inset-top));
+        top: 82px;
       }
     }
 
@@ -510,6 +540,7 @@
 </head>
 <body class="drawer-closed">
   <main class="page">
+    <div class="workspace">
     <section class="board" aria-label="Room board">
       <header class="board-header">
         <div>
@@ -552,8 +583,8 @@
       </section>
     </section>
 
-      <button class="drawer-toggle" type="button" id="drawerToggle" aria-label="Open assignment drawer" aria-expanded="false">&lsaquo;</button>
       <aside class="sidebar" id="assignmentDrawer" aria-label="Person assignment panel">
+        <button class="drawer-toggle" type="button" id="drawerToggle" aria-label="Open assignment drawer" aria-expanded="false">&lsaquo;</button>
         <h2>Assign person</h2>
         <p>Fill this out, then select a bed. Select an assigned bed to clear it.</p>
         <form id="personForm">
@@ -590,6 +621,7 @@
           <span id="selectedMeta">Save a profile before assigning a bed.</span>
         </div>
       </aside>
+    </div>
   </main>
 
   <script>
