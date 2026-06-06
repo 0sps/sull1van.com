@@ -222,11 +222,13 @@
     .occupants {
       display: grid;
       gap: 4px;
-      min-height: 52px;
-      margin-bottom: 7px;
+      min-height: 72px;
     }
 
     .occupant {
+      display: block;
+      width: 100%;
+      min-height: 34px;
       min-width: 0;
       padding: 5px 7px;
       border: 1px solid rgba(20, 34, 57, 0.1);
@@ -236,54 +238,24 @@
       font-size: 0.78rem;
       font-weight: 700;
       line-height: 1.1;
+      text-align: left;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, opacity 180ms ease;
+    }
+
+    .occupant:hover {
+      border-color: #9fb1cc;
+      background: #ffffff;
     }
 
     .occupant.is-empty {
       color: var(--muted);
       font-weight: 600;
       opacity: 0.76;
-    }
-
-    .capacity {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 4px;
-    }
-
-    .bed {
-      min-height: 28px;
-      border: 1px solid var(--line-strong);
-      border-radius: 6px;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.64) 0 24%, transparent 24% 100%),
-        var(--open-soft);
-      color: #184a80;
-      font-size: 0;
-      transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
-    }
-
-    .bed:hover {
-      border-color: var(--open);
-      background-color: #c9e3ff;
-    }
-
-    .bed.is-taken {
-      background:
-        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 4px, transparent 4px 8px),
-        var(--full);
-      border-color: var(--full);
-      color: #fff;
-    }
-
-    .room.is-half .bed.is-taken {
-      background:
-        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 4px, transparent 4px 8px),
-        var(--half);
-      border-color: var(--half);
     }
 
     .sidebar {
@@ -842,11 +814,31 @@
       floorTwoCount.textContent = `${floorTwoOpen} beds left`;
     };
 
-    const makeOccupantLabel = (person) => {
-      const label = document.createElement("div");
+    const toggleBed = (room, bedIndex) => {
+      const person = appState.rooms[room][bedIndex];
+      if (person) {
+        appState.rooms[room][bedIndex] = null;
+        formStatus.textContent = `Cleared bed ${bedIndex + 1} in room ${room}.`;
+      } else if (!currentUserReady()) {
+        formStatus.textContent = "Enter and save a first name and last name before assigning a bed.";
+        firstNameInput.focus();
+        return;
+      } else {
+        appState.rooms[room][bedIndex] = currentUserPerson();
+        formStatus.textContent = `Assigned ${rankByValue(appState.currentUser.rankValue).abbr} ${appState.currentUser.lastName} to room ${room}.`;
+      }
+      saveState();
+      render();
+    };
+
+    const makeOccupantLabel = (person, room, bedIndex) => {
+      const label = document.createElement("button");
       label.className = person ? "occupant" : "occupant is-empty";
+      label.type = "button";
       label.textContent = person ? formatPerson(person) : "Open bed";
-      if (person) label.title = fullPersonLabel(person);
+      label.setAttribute("aria-label", person ? `Clear room ${room}, bed ${bedIndex + 1}, currently ${fullPersonLabel(person)}` : `Assign room ${room}, bed ${bedIndex + 1}`);
+      label.title = person ? `Clear ${formatPerson(person)}` : `Assign room ${room}, bed ${bedIndex + 1}`;
+      label.addEventListener("click", () => toggleBed(room, bedIndex));
       return label;
     };
 
@@ -863,39 +855,9 @@
 
       const occupants = document.createElement("div");
       occupants.className = "occupants";
-      occupants.replaceChildren(...appState.rooms[room].map(makeOccupantLabel));
+      occupants.replaceChildren(...appState.rooms[room].map((person, bedIndex) => makeOccupantLabel(person, room, bedIndex)));
 
-      const capacity = document.createElement("div");
-      capacity.className = "capacity";
-
-      appState.rooms[room].forEach((person, bedIndex) => {
-        const bedButton = document.createElement("button");
-        const isTaken = Boolean(person);
-        bedButton.type = "button";
-        bedButton.className = isTaken ? "bed is-taken" : "bed";
-        bedButton.setAttribute("aria-label", isTaken ? `Clear room ${room}, bed ${bedIndex + 1}, currently ${fullPersonLabel(person)}` : `Assign room ${room}, bed ${bedIndex + 1}`);
-        bedButton.title = isTaken ? `Clear ${formatPerson(person)}` : `Assign bed ${bedIndex + 1}`;
-
-        bedButton.addEventListener("click", () => {
-          if (isTaken) {
-            appState.rooms[room][bedIndex] = null;
-            formStatus.textContent = `Cleared bed ${bedIndex + 1} in room ${room}.`;
-          } else if (!currentUserReady()) {
-            formStatus.textContent = "Enter and save a first name and last name before assigning a bed.";
-            firstNameInput.focus();
-            return;
-          } else {
-            appState.rooms[room][bedIndex] = currentUserPerson();
-            formStatus.textContent = `Assigned ${rankByValue(appState.currentUser.rankValue).abbr} ${appState.currentUser.lastName} to room ${room}.`;
-          }
-          saveState();
-          render();
-        });
-
-        capacity.appendChild(bedButton);
-      });
-
-      card.append(heading, occupants, capacity);
+      card.append(heading, occupants);
       return card;
     };
 
