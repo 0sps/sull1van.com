@@ -3547,6 +3547,10 @@
                     console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
                     return cached.data;
                 }
+                if (!forceRefresh) {
+                    console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
+                    return fetchSeedConfig(jsonPath);
+                }
                 throw error;
             }
         }
@@ -3567,8 +3571,7 @@
                 jsonPath: 'training-plan.json',
                 apply(data) {
                     trainingPlanData = data;
-                    clearWorkoutProgress();
-                    updateWorkoutDisplay(true);
+                    updateWorkoutDisplay(false);
                     renderPlanView();
                 }
             },

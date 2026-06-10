@@ -2277,7 +2277,8 @@
                     console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
                     return cached.data;
                 }
-                throw error;
+                console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
+                return fetchSeedConfig(jsonPath);
             }
         }
 
