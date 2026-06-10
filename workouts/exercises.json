@@ -1,4 +1,5 @@
 {
+  "lastUpdatedDate": "2026-06-10",
   "ex001": {
     "name": "Dumbbell Incline Bench Press",
     "muscles": [],
@@ -3674,6 +3675,47 @@
     "instructions": "sit down on the seated machine (or stand if necessary) and row your elbow back toward your hip, letting your torso rotate slightly into the stretch at the front. Pause and squeeze your lat, then control the handle back out without letting the stack slam.",
     "notes": "Constant-tension lat row with a big stretch",
     "exportName": "Single-arm Cable Row",
+    "multiplier": 1
+  },
+  "ex358": {
+    "name": "Standing Multi Flight",
+    "muscles": [
+      "Pecs",
+      "Posterior Delt",
+      "Lateral Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Machine",
+    "instructions": "Adjust both arms to match the movement you want: forward for rear delts, open and slightly behind you for chest fly, or lower for lateral raises. Set the chest pad so your torso stays supported and your shoulders line up with the handles. Keep a small bend in your elbows and move in a wide arc instead of turning it into a press or row. Pause for a clean squeeze, then control the handles back without letting the stack slam.",
+    "notes": "Multi-use fly machine. Use the arm position to choose chest fly, rear delt fly, or lateral raise.",
+    "exportName": "Standing Multi Flight",
+    "multiplier": 1
+  },
+  "ex359": {
+    "name": "Hammer Strength Lateral Raise",
+    "muscles": [
+      "Lateral Delt",
+      "Anterior Delt"
+    ],
+    "category": "Shoulders",
+    "equipment": "Machine",
+    "instructions": "Sit facing the machine with your chest against the pad and your upper arms under the roller pads. Keep your shoulders down and your elbows slightly bent. Raise your elbows out to the sides until your upper arms are about parallel with the floor. Lead with the elbows, not the hands, and avoid shrugging. Lower slowly until the stack almost touches.",
+    "notes": "Machine lateral raise. Great for controlled side delt work without needing to stabilize dumbbells.",
+    "exportName": "Hammer Strength Lateral Raise",
+    "multiplier": 1
+  },
+  "ex360": {
+    "name": "MegaMass Leverage Chest Press",
+    "muscles": [
+      "Pecs",
+      "Anterior Delt",
+      "Triceps"
+    ],
+    "category": "Chest",
+    "equipment": "Machine",
+    "instructions": "Adjust the seat so the handles start around mid-chest, then sit tall with your back pinned to the pad. Pull your shoulder blades back and down before you start. Press the handles forward in a smooth arc, keeping your elbows a little below shoulder height instead of flared straight out. Stop just short of locking out, squeeze your chest, then lower under control until you feel a stretch across your pecs.",
+    "notes": "Plate-loaded leverage chest press with independent arms. Use controlled reps and match loading on both sides.",
+    "exportName": "MegaMass Leverage Chest Press",
     "multiplier": 1
   }
 }

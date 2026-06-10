@@ -1120,7 +1120,72 @@
             return response.json();
         }
 
+        function parseConfigUpdatedDate(data) {
+            const value = data?.lastUpdatedDate;
+            if (typeof value !== 'string' || !value.trim()) return null;
+            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
+                ? `${value.trim()}T00:00:00Z`
+                : value.trim();
+            const time = Date.parse(normalized);
+            return Number.isFinite(time) ? time : null;
+        }
+
+        function isExercisesConfig(configId, jsonPath) {
+            return configId === 'exercises' && jsonPath === 'exercises.json';
+        }
+
+        async function loadExercisesConfig(jsonPath) {
+            const localData = await fetchSeedConfig(jsonPath);
+            const localUpdatedAt = parseConfigUpdatedDate(localData);
+            if (localUpdatedAt === null) {
+                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+            }
+
+            const cached = readCachedUserConfig('exercises');
+            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
+            if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                return cached.data;
+            }
+
+            try {
+                const docRef = getUserConfigDocRef('exercises');
+                const snapshot = await getDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const firebaseData = snapshot.data();
+                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
+
+                    if (firebaseUpdatedAt === null) {
+                        console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
+                        await setDoc(docRef, localData);
+                        writeCachedUserConfig('exercises', localData);
+                        return localData;
+                    }
+
+                    if (firebaseUpdatedAt >= localUpdatedAt) {
+                        writeCachedUserConfig('exercises', firebaseData);
+                        return firebaseData;
+                    }
+                }
+
+                await setDoc(docRef, localData);
+                writeCachedUserConfig('exercises', localData);
+                return localData;
+            } catch (error) {
+                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                    console.warn('Using cached exercises config because Firebase refresh failed:', error);
+                    return cached.data;
+                }
+                console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
+                return localData;
+            }
+        }
+
         async function loadUserConfig(configId, jsonPath) {
+            if (isExercisesConfig(configId, jsonPath)) {
+                return loadExercisesConfig(jsonPath);
+            }
+
             const cached = readCachedUserConfig(configId);
             if (cached?.isFresh) return cached.data;
 

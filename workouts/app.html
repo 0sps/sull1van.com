@@ -3295,6 +3295,14 @@
             invalidateLogCache(); // Also clear log calculation cache
         }
 
+        function isExerciseEntry(id, data) {
+            return /^ex\d+$/.test(id) && data && typeof data === 'object';
+        }
+
+        function getExerciseEntries() {
+            return Object.entries(exercisesData).filter(([id, data]) => isExerciseEntry(id, data));
+        }
+
         function getExercise(id) {
             return exercisesData[id] || null;
         }
@@ -3574,6 +3582,20 @@
             return response.json();
         }
 
+        function parseConfigUpdatedDate(data) {
+            const value = data?.lastUpdatedDate;
+            if (typeof value !== 'string' || !value.trim()) return null;
+            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
+                ? `${value.trim()}T00:00:00Z`
+                : value.trim();
+            const time = Date.parse(normalized);
+            return Number.isFinite(time) ? time : null;
+        }
+
+        function isExercisesConfig(configId, jsonPath) {
+            return configId === 'exercises' && jsonPath === 'exercises.json';
+        }
+
         function assertUserConfigFirebaseReady() {
             if (!window.currentUser?.email) {
                 throw new Error('Sign in before syncing Firebase config.');
@@ -3583,7 +3605,63 @@
             }
         }
 
+        async function loadExercisesConfig(jsonPath, options = {}) {
+            const forceRefresh = !!options.forceRefresh;
+            const localData = await fetchSeedConfig(jsonPath);
+            const localUpdatedAt = parseConfigUpdatedDate(localData);
+            if (localUpdatedAt === null) {
+                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+            }
+
+            const cached = readCachedUserConfig('exercises');
+            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
+            if (!forceRefresh && cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                return cached.data;
+            }
+
+            try {
+                assertUserConfigFirebaseReady();
+                const docRef = window.getUserConfigDocRef('exercises');
+                const snapshot = await window.firebaseGetDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const firebaseData = snapshot.data();
+                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
+
+                    if (firebaseUpdatedAt === null) {
+                        console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
+                        await window.firebaseSetDoc(docRef, localData);
+                        writeCachedUserConfig('exercises', localData);
+                        return localData;
+                    }
+
+                    if (firebaseUpdatedAt >= localUpdatedAt) {
+                        writeCachedUserConfig('exercises', firebaseData);
+                        return firebaseData;
+                    }
+                }
+
+                await window.firebaseSetDoc(docRef, localData);
+                writeCachedUserConfig('exercises', localData);
+                return localData;
+            } catch (error) {
+                if (!forceRefresh) {
+                    if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                        console.warn('Using cached exercises config because Firebase refresh failed:', error);
+                        return cached.data;
+                    }
+                    console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
+                    return localData;
+                }
+                throw error;
+            }
+        }
+
         async function loadUserConfig(configId, jsonPath, options = {}) {
+            if (isExercisesConfig(configId, jsonPath)) {
+                return loadExercisesConfig(jsonPath, options);
+            }
+
             const forceRefresh = !!options.forceRefresh;
             const cached = readCachedUserConfig(configId);
             if (!forceRefresh && cached?.isFresh) return cached.data;
@@ -5162,7 +5240,7 @@
         }
         function togglePlanDay(day) { document.getElementById(`plan-${day}`).classList.toggle('expanded'); }
         function renderLibrary() {
-            const exercisesList = Object.entries(exercisesData).map(([id, data]) => ({ id, ...data }));
+            const exercisesList = getExerciseEntries().map(([id, data]) => ({ id, ...data }));
             const categories = [...new Set(exercisesList.map(e => e.category))];
 
             document.getElementById('muscleFilter').innerHTML = `
@@ -5336,7 +5414,7 @@
                 return;
             }
 
-            const matches = Object.entries(exercisesData)
+            const matches = getExerciseEntries()
                 .filter(([id, data]) => data.name.toLowerCase().includes(query))
                 .slice(0, 10);
 

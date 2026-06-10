@@ -1148,7 +1148,7 @@
             <script type="module">
                 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
                 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-                import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+                import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
                 const firebaseConfig = {
                     apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1179,11 +1179,104 @@
                     return collection(db, 'users', getUserEmailKey(currentUser), 'workouts');
                 }
 
+                function getUserConfigDocRef(configId) {
+                    return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
+                }
+
+                function getUserConfigCacheKey(configId) {
+                    return `seans-log:user-config:${getUserEmailKey(currentUser)}:${configId}:v1`;
+                }
+
+                function readCachedUserConfig(configId) {
+                    try {
+                        const raw = localStorage.getItem(getUserConfigCacheKey(configId));
+                        if (!raw) return null;
+                        const cached = JSON.parse(raw);
+                        if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
+                        return cached;
+                    } catch (error) {
+                        console.warn(`Ignoring invalid cached config for ${configId}:`, error);
+                        return null;
+                    }
+                }
+
+                function writeCachedUserConfig(configId, data) {
+                    try {
+                        localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
+                            cachedAt: Date.now(),
+                            data
+                        }));
+                    } catch (error) {
+                        console.warn(`Could not cache config for ${configId}:`, error);
+                    }
+                }
+
+                async function fetchSeedConfig(jsonPath) {
+                    const response = await fetch(jsonPath);
+                    if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
+                    return response.json();
+                }
+
+                function parseConfigUpdatedDate(data) {
+                    const value = data?.lastUpdatedDate;
+                    if (typeof value !== 'string' || !value.trim()) return null;
+                    const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
+                        ? `${value.trim()}T00:00:00Z`
+                        : value.trim();
+                    const time = Date.parse(normalized);
+                    return Number.isFinite(time) ? time : null;
+                }
+
+                async function loadExercisesConfig(jsonPath) {
+                    const localData = await fetchSeedConfig(jsonPath);
+                    const localUpdatedAt = parseConfigUpdatedDate(localData);
+                    if (localUpdatedAt === null) {
+                        throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+                    }
+
+                    const cached = readCachedUserConfig('exercises');
+                    const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
+                    if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                        return cached.data;
+                    }
+
+                    try {
+                        const docRef = getUserConfigDocRef('exercises');
+                        const snapshot = await getDoc(docRef);
+
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.data();
+                            const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
+
+                            if (firebaseUpdatedAt === null) {
+                                console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
+                                await setDoc(docRef, localData);
+                                writeCachedUserConfig('exercises', localData);
+                                return localData;
+                            }
+
+                            if (firebaseUpdatedAt >= localUpdatedAt) {
+                                writeCachedUserConfig('exercises', firebaseData);
+                                return firebaseData;
+                            }
+                        }
+
+                        await setDoc(docRef, localData);
+                        writeCachedUserConfig('exercises', localData);
+                        return localData;
+                    } catch (error) {
+                        if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                            console.warn('Using cached exercises config because Firebase refresh failed:', error);
+                            return cached.data;
+                        }
+                        console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
+                        return localData;
+                    }
+                }
+
                 async function loadData() {
                     try {
-                        // Load Exercises
-                        const exRes = await fetch('exercises.json');
-                        exerciseData = await exRes.json();
+                        exerciseData = await loadExercisesConfig('exercises.json');
 
                         // Load Workouts
                         const q = query(getWorkoutCollectionRef(), orderBy('date', 'desc'));
