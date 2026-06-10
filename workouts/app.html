@@ -655,6 +655,16 @@
             box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
 
+        .btn-utility {
+            background: var(--gradient-fire);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 109, 61, 0.45);
+        }
+
+        .btn-utility:hover {
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
         /* Success Toast */
         .success-toast {
             position: fixed;
@@ -2483,6 +2493,29 @@
             color: var(--success);
         }
 
+        .utility-banner {
+            background: linear-gradient(135deg, rgba(255, 61, 0, 0.14) 0%, rgba(255, 109, 61, 0.07) 100%);
+            border: 1px solid rgba(255, 61, 0, 0.35);
+            padding: 16px 20px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .utility-banner + .export-banner {
+            margin-top: 14px;
+        }
+
+        .utility-banner-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--accent-secondary);
+        }
+
         .force-sync-options {
             display: grid;
             gap: 12px;
@@ -2687,15 +2720,20 @@
                 <div id="fullHistory"></div>
             </div>
         </div>
+        <div class="utility-banner">
+            <span class="utility-banner-text">WORKOUT UTILITIES</span>
+            <div class="flex-wrap-gap">
+                <a class="btn btn-utility btn-small" href="training-plan-editor.html">CHANGE TRAINING PLAN</a>
+                <button class="btn btn-utility btn-small" onclick="openForceSyncModal()">FORCE MANUAL SYNC
+                    OPTIONS</button>
+                <button class="btn btn-secondary btn-small btn-delete" onclick="openDeleteSetModal()">DELETE
+                    SETS</button>
+            </div>
+        </div>
         <div class="export-banner">
             <span class="export-banner-text">📤 Export complete workout history for analytics</span>
             <div class="flex-wrap-gap">
-                <a class="btn btn-secondary btn-small" href="training-plan-editor.html">CHANGE TRAINING PLAN</a>
-                <button class="btn btn-secondary btn-small" onclick="openForceSyncModal()">FORCE MANUAL SYNC
-                    OPTIONS</button>
                 <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
-                <button class="btn btn-secondary btn-small btn-delete" onclick="openDeleteSetModal()">DELETE
-                    SETS</button>
             </div>
         </div>
     </div>
@@ -2746,21 +2784,21 @@
                         <div class="force-sync-title">Exercise Database</div>
                         <div class="force-sync-detail">Exercises and instructions</div>
                     </div>
-                    <button class="btn btn-secondary btn-small" data-force-sync="exercises">SYNC</button>
+                    <button class="btn btn-utility btn-small" data-force-sync="exercises">SYNC</button>
                 </div>
                 <div class="force-sync-option">
                     <div class="force-sync-copy">
                         <div class="force-sync-title">Training Plan</div>
                         <div class="force-sync-detail">Workout schedule, days, sets, and reps</div>
                     </div>
-                    <button class="btn btn-secondary btn-small" data-force-sync="trainingPlan">SYNC</button>
+                    <button class="btn btn-utility btn-small" data-force-sync="trainingPlan">SYNC</button>
                 </div>
                 <div class="force-sync-option">
                     <div class="force-sync-copy">
                         <div class="force-sync-title">Progression Plan</div>
                         <div class="force-sync-detail">Targets, baselines, and coach rules</div>
                     </div>
-                    <button class="btn btn-secondary btn-small" data-force-sync="progressionPlan">SYNC</button>
+                    <button class="btn btn-utility btn-small" data-force-sync="progressionPlan">SYNC</button>
                 </div>
             </div>
             <div class="force-sync-status" id="forceSyncStatus"></div>
@@ -3523,12 +3561,22 @@
             return response.json();
         }
 
+        function assertUserConfigFirebaseReady() {
+            if (!window.currentUser?.email) {
+                throw new Error('Sign in before syncing Firebase config.');
+            }
+            if (!window.getUserConfigDocRef || !window.firebaseGetDoc || !window.firebaseSetDoc) {
+                throw new Error('Firebase config helpers are not ready yet.');
+            }
+        }
+
         async function loadUserConfig(configId, jsonPath, options = {}) {
             const forceRefresh = !!options.forceRefresh;
             const cached = readCachedUserConfig(configId);
             if (!forceRefresh && cached?.isFresh) return cached.data;
 
             try {
+                assertUserConfigFirebaseReady();
                 const docRef = window.getUserConfigDocRef(configId);
                 const snapshot = await window.firebaseGetDoc(docRef);
 
@@ -3611,7 +3659,7 @@
                 if (statusEl) statusEl.textContent = `Synced ${target.label}. Cache refreshed for 7 days.`;
             } catch (error) {
                 console.error(`Failed to force sync ${configId}:`, error);
-                if (statusEl) statusEl.textContent = `Could not sync ${target.label}. Check connection and Firebase permissions.`;
+                if (statusEl) statusEl.textContent = error.message || `Could not sync ${target.label}. Check connection and Firebase permissions.`;
             } finally {
                 if (button) {
                     button.disabled = false;
