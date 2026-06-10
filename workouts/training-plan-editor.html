@@ -725,7 +725,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
+        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Same weekly config refresh window as app.html.
         const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         let currentUser = null;
@@ -771,6 +771,8 @@
             return (user?.email || '').trim().toLowerCase();
         }
 
+        // The editor reads exercises and writes trainingPlan at:
+        // users/{email}/config/{configId}.
         function getUserConfigDocRef(configId) {
             return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
         }
@@ -820,21 +822,28 @@
                 const docRef = getUserConfigDocRef(configId);
                 const snapshot = await getDoc(docRef);
 
+                // Existing Firestore config is the source of truth. The bundled JSON is
+                // only a seed/fallback and is ignored once the doc exists.
                 if (snapshot.exists()) {
                     const data = snapshot.data();
                     writeCachedUserConfig(configId, data);
                     return data;
                 }
 
+                // First editor load for this user/config: seed Firebase from bundled JSON
+                // and cache that seeded payload for 7 days.
                 const data = await fetchSeedConfig(jsonPath);
                 await setDoc(docRef, data);
                 writeCachedUserConfig(configId, data);
                 return data;
             } catch (error) {
+                // Stale cache keeps the editor usable when weekly refresh cannot reach Firebase.
                 if (cached) {
                     console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
                     return cached.data;
                 }
+                // No confirmed Firebase read and no cache: allow boot from bundled JSON, but
+                // do not mark it as cached user config.
                 console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
                 return fetchSeedConfig(jsonPath);
             }
@@ -1211,6 +1220,8 @@
 
             try {
                 await setDoc(getUserConfigDocRef('trainingPlan'), pendingPlan);
+                // Only refresh the local trainingPlan config cache after Firebase confirms
+                // the overwrite. Workout logs and workoutProgress are intentionally untouched.
                 writeCachedUserConfig('trainingPlan', pendingPlan);
                 originalTrainingPlan = clone(pendingPlan);
                 setSubmitReady(false);

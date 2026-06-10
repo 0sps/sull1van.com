@@ -1,4 +1,6 @@
 const CACHE_NAME = 'seans-log-v3';
+// Keep the service worker focused on the app shell. exercises/trainingPlan/
+// progressionPlan are user config data now, cached by page code after Firebase reads.
 const ASSETS_TO_CACHE = [
     './app.html',
     './training-plan-editor.html',
@@ -33,7 +35,8 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch Event - Network First for app shell, Cache First for static assets
+// Fetch Event - Network First for app shell, Cache First for static assets.
+// Do not special-case bundled JSON here; it is only a seed/emergency fallback.
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 

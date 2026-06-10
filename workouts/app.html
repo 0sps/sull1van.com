@@ -2945,6 +2945,8 @@
         window.getWorkoutDocRef = function (logId) {
             return doc(db, 'users', getUserEmailKey(window.currentUser), 'workouts', logId.toString());
         };
+        // Per-user editable config lives alongside workout logs, but under config docs:
+        // users/{email}/config/exercises, trainingPlan, and progressionPlan.
         window.getUserConfigDocRef = function (configId) {
             return doc(db, 'users', getUserEmailKey(window.currentUser), 'config', configId);
         };
@@ -2989,7 +2991,7 @@
             HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
             SET_DELETION_LOG_SLICE: 15,
-            CONFIG_CACHE_TTL: 7 * 24 * 60 * 60 * 1000
+            CONFIG_CACHE_TTL: 7 * 24 * 60 * 60 * 1000 // Exercises/plans refresh from Firebase weekly.
         };
 
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -2997,9 +2999,9 @@
         // ============================================================================
         // 2. STATE VARIABLES
         // ============================================================================
-        let exercisesData = {};  // Loaded from per-user config cache/Firebase, seeded from exercises.json when missing
-        let trainingPlanData = null;  // Loaded from per-user config cache/Firebase, seeded from training-plan.json when missing
-        let progressionPlanData = null;  // Loaded from per-user config cache/Firebase, seeded from progression-plan.json when missing
+        let exercisesData = {};  // Loaded as the same plain object shape the old JSON loader returned.
+        let trainingPlanData = null;  // Firestore/cache replaces the source, not the rest of app logic.
+        let progressionPlanData = null;  // Missing Firestore docs are seeded once from bundled JSON.
         let workoutLogs = [];
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
@@ -3523,6 +3525,8 @@
         // 7. DATA OPERATIONS (JSON, Firebase, LocalStorage)
         // ===================================
 
+        // App-managed config cache. This is intentionally separate from workoutProgress,
+        // which is the unsaved workout draft cache and keeps its own 48-hour lifecycle.
         function getUserConfigCacheKey(configId) {
             const email = (window.currentUser?.email || '').trim().toLowerCase();
             return `seans-log:user-config:${email}:${configId}:v1`;
@@ -3580,22 +3584,31 @@
                 const docRef = window.getUserConfigDocRef(configId);
                 const snapshot = await window.firebaseGetDoc(docRef);
 
+                // Existence is the migration boundary: if the user's Firestore doc exists,
+                // it is the source of truth, even if the bundled JSON has changed later.
                 if (snapshot.exists()) {
                     const data = snapshot.data();
                     writeCachedUserConfig(configId, data);
                     return data;
                 }
 
+                // First boot for this user/config: seed Firestore from the bundled JSON once,
+                // then cache that same payload so subsequent loads ignore the JSON file.
                 const data = await fetchSeedConfig(jsonPath);
                 await window.firebaseSetDoc(docRef, data);
                 writeCachedUserConfig(configId, data);
                 return data;
             } catch (error) {
+                // A stale config cache is still useful offline. Weekly refresh is preferred,
+                // but not strict enough to make the app unusable on day 8 without network.
                 if (cached && !forceRefresh) {
                     console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
                     return cached.data;
                 }
                 if (!forceRefresh) {
+                    // Last-resort app boot fallback when Firebase is unavailable and no config
+                    // cache exists yet. Do not write this as fresh cache because it was not
+                    // confirmed against the user's Firestore config.
                     console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
                     return fetchSeedConfig(jsonPath);
                 }
@@ -3653,6 +3666,8 @@
                 }
                 if (statusEl) statusEl.textContent = `Syncing ${target.label} from Firebase...`;
 
+                // Manual sync deliberately bypasses the 7-day cache and refreshes only this
+                // config doc. It does not clear workoutProgress or any saved workout logs.
                 const data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
                 target.apply(data);
 

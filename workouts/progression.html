@@ -1412,6 +1412,8 @@
         window.getWorkoutCollectionRef = function () {
             return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
         };
+        // Shared config docs used by the main app and editor:
+        // users/{email}/config/exercises, trainingPlan, and progressionPlan.
         window.getUserConfigDocRef = function (configId) {
             return doc(db, 'users', getUserEmailKey(window.currentUser), 'config', configId);
         };
@@ -1445,7 +1447,7 @@
         let selectedExerciseId = null;
         let chartMetric = 'strength';
         let initStarted = false;
-        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
+        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Refresh Firebase config weekly.
 
         const DateFormats = {
             SHORT: { month: 'short', day: 'numeric' },
@@ -2262,21 +2264,28 @@
                 const docRef = window.getUserConfigDocRef(configId);
                 const snapshot = await window.firebaseGetDoc(docRef);
 
+                // If the Firestore doc exists, use it as-is and do not compare or repair
+                // from bundled JSON. The user-owned config doc is the source of truth.
                 if (snapshot.exists()) {
                     const data = snapshot.data();
                     writeCachedUserConfig(configId, data);
                     return data;
                 }
 
+                // First load for this user/config: seed the Firestore doc from bundled JSON,
+                // then cache it locally for the same 7-day behavior as normal Firebase reads.
                 const data = await fetchSeedConfig(jsonPath);
                 await window.firebaseSetDoc(docRef, data);
                 writeCachedUserConfig(configId, data);
                 return data;
             } catch (error) {
+                // Stale config is acceptable as an offline fallback after the 7-day window.
                 if (cached) {
                     console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
                     return cached.data;
                 }
+                // No cache yet and Firebase failed: use bundled JSON to keep the page usable,
+                // but do not write a fresh app cache because Firestore was not confirmed.
                 console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
                 return fetchSeedConfig(jsonPath);
             }
