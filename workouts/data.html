@@ -1028,7 +1028,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         // CONFIGURATION
         const firebaseConfig = {
@@ -1052,6 +1052,7 @@
         let activeLogId = null;
         let exerciseLibrary = {};
         let currentUser = null;
+        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
 
         function getUserEmailKey(user) {
             return (user?.email || '').trim().toLowerCase();
@@ -1076,16 +1077,82 @@
             return doc(db, 'users', getUserEmailKey(currentUser), 'workouts', logId.toString());
         }
 
+        function getUserConfigDocRef(configId) {
+            return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
+        }
+
+        function getUserConfigCacheKey(configId) {
+            return `seans-log:user-config:${getUserEmailKey(currentUser)}:${configId}:v1`;
+        }
+
+        function readCachedUserConfig(configId) {
+            try {
+                const raw = localStorage.getItem(getUserConfigCacheKey(configId));
+                if (!raw) return null;
+                const cached = JSON.parse(raw);
+                if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
+                return {
+                    data: cached.data,
+                    isFresh: Date.now() - cached.cachedAt < CONFIG_CACHE_TTL
+                };
+            } catch (error) {
+                console.warn(`Ignoring invalid cached config for ${configId}:`, error);
+                return null;
+            }
+        }
+
+        function writeCachedUserConfig(configId, data) {
+            try {
+                localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
+                    cachedAt: Date.now(),
+                    data
+                }));
+            } catch (error) {
+                console.warn(`Could not cache config for ${configId}:`, error);
+            }
+        }
+
+        async function fetchSeedConfig(jsonPath) {
+            const response = await fetch(jsonPath);
+            if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
+            return response.json();
+        }
+
+        async function loadUserConfig(configId, jsonPath) {
+            const cached = readCachedUserConfig(configId);
+            if (cached?.isFresh) return cached.data;
+
+            try {
+                const docRef = getUserConfigDocRef(configId);
+                const snapshot = await getDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    writeCachedUserConfig(configId, data);
+                    return data;
+                }
+
+                const data = await fetchSeedConfig(jsonPath);
+                await setDoc(docRef, data);
+                writeCachedUserConfig(configId, data);
+                return data;
+            } catch (error) {
+                if (cached) {
+                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
+        }
+
         // Load Exercise Library for validation
         async function loadExerciseLibrary() {
             try {
-                const response = await fetch('exercises.json');
-                exerciseLibrary = await response.json();
+                exerciseLibrary = await loadUserConfig('exercises', 'exercises.json');
             } catch (err) {
-                console.error("Failed to load exercises.json for validation:", err);
+                console.error("Failed to load exercises config for validation:", err);
             }
         }
-        loadExerciseLibrary();
 
         // AUTH GUARD
         onAuthStateChanged(auth, async (user) => {
@@ -1097,6 +1164,7 @@
                 ensureUserProfile(user).catch((error) => {
                     console.warn('Could not update user profile metadata:', error);
                 });
+                loadExerciseLibrary();
             }
         });
 

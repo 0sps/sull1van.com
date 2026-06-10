@@ -1370,7 +1370,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1402,12 +1402,18 @@
 
         window.firebaseDb = db;
         window.firebaseCollection = collection;
+        window.firebaseDoc = doc;
+        window.firebaseGetDoc = getDoc;
         window.firebaseGetDocs = getDocs;
+        window.firebaseSetDoc = setDoc;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
         window.firebaseSignOut = signOut;
         window.getWorkoutCollectionRef = function () {
             return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
+        };
+        window.getUserConfigDocRef = function (configId) {
+            return doc(db, 'users', getUserEmailKey(window.currentUser), 'config', configId);
         };
 
         onAuthStateChanged(auth, async (user) => {
@@ -1439,6 +1445,7 @@
         let selectedExerciseId = null;
         let chartMetric = 'strength';
         let initStarted = false;
+        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
 
         const DateFormats = {
             SHORT: { month: 'short', day: 'numeric' },
@@ -2209,10 +2216,69 @@
                 </svg>`;
         }
 
-        async function loadJson(path) {
-            const response = await fetch(path);
-            if (!response.ok) throw new Error(`Failed to load ${path}: HTTP ${response.status}`);
+        function getUserConfigCacheKey(configId) {
+            const email = (window.currentUser?.email || '').trim().toLowerCase();
+            return `seans-log:user-config:${email}:${configId}:v1`;
+        }
+
+        function readCachedUserConfig(configId) {
+            try {
+                const raw = localStorage.getItem(getUserConfigCacheKey(configId));
+                if (!raw) return null;
+                const cached = JSON.parse(raw);
+                if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
+                return {
+                    data: cached.data,
+                    isFresh: Date.now() - cached.cachedAt < CONFIG_CACHE_TTL
+                };
+            } catch (error) {
+                console.warn(`Ignoring invalid cached config for ${configId}:`, error);
+                return null;
+            }
+        }
+
+        function writeCachedUserConfig(configId, data) {
+            try {
+                localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
+                    cachedAt: Date.now(),
+                    data
+                }));
+            } catch (error) {
+                console.warn(`Could not cache config for ${configId}:`, error);
+            }
+        }
+
+        async function fetchSeedConfig(jsonPath) {
+            const response = await fetch(jsonPath);
+            if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
             return response.json();
+        }
+
+        async function loadUserConfig(configId, jsonPath) {
+            const cached = readCachedUserConfig(configId);
+            if (cached?.isFresh) return cached.data;
+
+            try {
+                const docRef = window.getUserConfigDocRef(configId);
+                const snapshot = await window.firebaseGetDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    writeCachedUserConfig(configId, data);
+                    return data;
+                }
+
+                const data = await fetchSeedConfig(jsonPath);
+                await window.firebaseSetDoc(docRef, data);
+                writeCachedUserConfig(configId, data);
+                return data;
+            } catch (error) {
+                if (cached) {
+                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
         }
 
         async function loadWorkoutLogs() {
@@ -2240,9 +2306,9 @@
             initStarted = true;
             try {
                 [exercisesData, trainingPlanData, progressionPlanData] = await Promise.all([
-                    loadJson('exercises.json'),
-                    loadJson('training-plan.json'),
-                    loadJson('progression-plan.json')
+                    loadUserConfig('exercises', 'exercises.json'),
+                    loadUserConfig('trainingPlan', 'training-plan.json'),
+                    loadUserConfig('progressionPlan', 'progression-plan.json')
                 ]);
                 await loadWorkoutLogs();
                 renderAll();

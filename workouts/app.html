@@ -2483,6 +2483,48 @@
             color: var(--success);
         }
 
+        .force-sync-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .force-sync-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .force-sync-option:last-child {
+            border-bottom: none;
+        }
+
+        .force-sync-copy {
+            min-width: 0;
+        }
+
+        .force-sync-title {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .force-sync-detail {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 4px;
+        }
+
+        .force-sync-status {
+            min-height: 20px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 16px;
+        }
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -2648,6 +2690,8 @@
         <div class="export-banner">
             <span class="export-banner-text">📤 Export complete workout history for analytics</span>
             <div class="flex-wrap-gap">
+                <button class="btn btn-secondary btn-small" onclick="openForceSyncModal()">FORCE MANUAL SYNC
+                    OPTIONS</button>
                 <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
                 <button class="btn btn-secondary btn-small btn-delete" onclick="openDeleteSetModal()">DELETE
                     SETS</button>
@@ -2689,6 +2733,38 @@
             <div id="trainingPlanModalContent"></div>
             <div class="modal-actions"><button class="btn btn-secondary"
                     onclick="closeModal('trainingPlanModal')">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="forceSyncModal">
+        <div class="modal">
+            <h3 class="modal-title">FORCE MANUAL SYNC OPTIONS</h3>
+            <div class="force-sync-options">
+                <div class="force-sync-option">
+                    <div class="force-sync-copy">
+                        <div class="force-sync-title">Exercise Database</div>
+                        <div class="force-sync-detail">Exercises and instructions</div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" data-force-sync="exercises">SYNC</button>
+                </div>
+                <div class="force-sync-option">
+                    <div class="force-sync-copy">
+                        <div class="force-sync-title">Training Plan</div>
+                        <div class="force-sync-detail">Workout schedule, days, sets, and reps</div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" data-force-sync="trainingPlan">SYNC</button>
+                </div>
+                <div class="force-sync-option">
+                    <div class="force-sync-copy">
+                        <div class="force-sync-title">Progression Plan</div>
+                        <div class="force-sync-detail">Targets, baselines, and coach rules</div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" data-force-sync="progressionPlan">SYNC</button>
+                </div>
+            </div>
+            <div class="force-sync-status" id="forceSyncStatus"></div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('forceSyncModal')">Close</button>
             </div>
         </div>
     </div>
@@ -2788,7 +2864,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
             authDomain: window.location.hostname === 'sull1van.com' ? 'sull1van.com' : 'workout-c7be0.firebaseapp.com',
@@ -2817,6 +2893,7 @@
         window.firebaseDb = db;
         window.firebaseCollection = collection;
         window.firebaseDoc = doc;
+        window.firebaseGetDoc = getDoc;
         window.firebaseGetDocs = getDocs;
         window.firebaseSetDoc = setDoc;
         window.firebaseDeleteDoc = deleteDoc;
@@ -2828,6 +2905,9 @@
         };
         window.getWorkoutDocRef = function (logId) {
             return doc(db, 'users', getUserEmailKey(window.currentUser), 'workouts', logId.toString());
+        };
+        window.getUserConfigDocRef = function (configId) {
+            return doc(db, 'users', getUserEmailKey(window.currentUser), 'config', configId);
         };
         // Check auth state
         onAuthStateChanged(auth, async (user) => {
@@ -2869,7 +2949,8 @@
             LOCAL_STORAGE_TTL: 48 * 60 * 60 * 1000, // 48 hours
             HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
-            SET_DELETION_LOG_SLICE: 15
+            SET_DELETION_LOG_SLICE: 15,
+            CONFIG_CACHE_TTL: 7 * 24 * 60 * 60 * 1000
         };
 
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -2877,9 +2958,9 @@
         // ============================================================================
         // 2. STATE VARIABLES
         // ============================================================================
-        let exercisesData = {};  // Will be loaded from exercises.json
-        let trainingPlanData = null;  // Will be loaded from training-plan.json
-        let progressionPlanData = null;  // Will be loaded from progression-plan.json
+        let exercisesData = {};  // Loaded from per-user config cache/Firebase, seeded from exercises.json when missing
+        let trainingPlanData = null;  // Loaded from per-user config cache/Firebase, seeded from training-plan.json when missing
+        let progressionPlanData = null;  // Loaded from per-user config cache/Firebase, seeded from progression-plan.json when missing
         let workoutLogs = [];
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
@@ -3403,35 +3484,163 @@
         // 7. DATA OPERATIONS (JSON, Firebase, LocalStorage)
         // ===================================
 
+        function getUserConfigCacheKey(configId) {
+            const email = (window.currentUser?.email || '').trim().toLowerCase();
+            return `seans-log:user-config:${email}:${configId}:v1`;
+        }
+
+        function readCachedUserConfig(configId) {
+            try {
+                const raw = localStorage.getItem(getUserConfigCacheKey(configId));
+                if (!raw) return null;
+                const cached = JSON.parse(raw);
+                if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
+                return {
+                    data: cached.data,
+                    isFresh: Date.now() - cached.cachedAt < CONFIG.CONFIG_CACHE_TTL
+                };
+            } catch (error) {
+                console.warn(`Ignoring invalid cached config for ${configId}:`, error);
+                return null;
+            }
+        }
+
+        function writeCachedUserConfig(configId, data) {
+            try {
+                localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
+                    cachedAt: Date.now(),
+                    data
+                }));
+            } catch (error) {
+                console.warn(`Could not cache config for ${configId}:`, error);
+            }
+        }
+
+        async function fetchSeedConfig(jsonPath) {
+            const response = await fetch(jsonPath);
+            if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
+            return response.json();
+        }
+
+        async function loadUserConfig(configId, jsonPath, options = {}) {
+            const forceRefresh = !!options.forceRefresh;
+            const cached = readCachedUserConfig(configId);
+            if (!forceRefresh && cached?.isFresh) return cached.data;
+
+            try {
+                const docRef = window.getUserConfigDocRef(configId);
+                const snapshot = await window.firebaseGetDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    writeCachedUserConfig(configId, data);
+                    return data;
+                }
+
+                const data = await fetchSeedConfig(jsonPath);
+                await window.firebaseSetDoc(docRef, data);
+                writeCachedUserConfig(configId, data);
+                return data;
+            } catch (error) {
+                if (cached && !forceRefresh) {
+                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
+        }
+
+        const CONFIG_SYNC_TARGETS = {
+            exercises: {
+                label: 'exercise database',
+                jsonPath: 'exercises.json',
+                apply(data) {
+                    exercisesData = data;
+                    renderExercises();
+                    renderPlanView();
+                    renderLibrary();
+                }
+            },
+            trainingPlan: {
+                label: 'training plan',
+                jsonPath: 'training-plan.json',
+                apply(data) {
+                    trainingPlanData = data;
+                    updateWorkoutDisplay(false);
+                    renderPlanView();
+                }
+            },
+            progressionPlan: {
+                label: 'progression plan',
+                jsonPath: 'progression-plan.json',
+                apply(data) {
+                    progressionPlanData = data;
+                    renderExercises();
+                }
+            }
+        };
+
+        function openForceSyncModal() {
+            const statusEl = document.getElementById('forceSyncStatus');
+            if (statusEl) statusEl.textContent = '';
+            openModal('forceSyncModal');
+        }
+
+        async function forceSyncUserConfig(configId, button = null) {
+            const target = CONFIG_SYNC_TARGETS[configId];
+            if (!target) return;
+
+            const statusEl = document.getElementById('forceSyncStatus');
+            const originalText = button?.textContent || '';
+
+            try {
+                if (button) {
+                    button.disabled = true;
+                    button.textContent = 'SYNCING...';
+                }
+                if (statusEl) statusEl.textContent = `Syncing ${target.label} from Firebase...`;
+
+                const data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
+                target.apply(data);
+
+                if (statusEl) statusEl.textContent = `Synced ${target.label}. Cache refreshed for 7 days.`;
+            } catch (error) {
+                console.error(`Failed to force sync ${configId}:`, error);
+                if (statusEl) statusEl.textContent = `Could not sync ${target.label}. Check connection and Firebase permissions.`;
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }
+            }
+        }
+
         async function loadExerciseData() {
             try {
-                const response = await fetch('exercises.json');
-                exercisesData = await response.json();
+                exercisesData = await loadUserConfig('exercises', 'exercises.json');
                 return true;
             } catch (error) {
-                console.error('Failed to load exercises.json:', error);
+                console.error('Failed to load exercises config:', error);
                 return false;
             }
         }
 
         async function loadTrainingPlan() {
             try {
-                const response = await fetch('training-plan.json');
-                trainingPlanData = await response.json();
+                trainingPlanData = await loadUserConfig('trainingPlan', 'training-plan.json');
                 return true;
             } catch (error) {
-                console.error('Failed to load training-plan.json:', error);
+                console.error('Failed to load training plan config:', error);
                 return false;
             }
         }
 
         async function loadProgressionPlan() {
             try {
-                const response = await fetch('progression-plan.json');
-                progressionPlanData = await response.json();
+                progressionPlanData = await loadUserConfig('progressionPlan', 'progression-plan.json');
                 return true;
             } catch (error) {
-                console.error('Failed to load progression-plan.json:', error);
+                console.error('Failed to load progression plan config:', error);
                 progressionPlanData = null;
                 return false;
             }
@@ -3816,6 +4025,13 @@
                     if (logId) exportSingleLog(logId);
                     return;
                 }
+
+                // Force config sync
+                const forceSyncBtn = e.target.closest('[data-force-sync]');
+                if (forceSyncBtn) {
+                    await forceSyncUserConfig(forceSyncBtn.dataset.forceSync, forceSyncBtn);
+                    return;
+                }
             });
 
             // Input change handler for exercise data
@@ -3864,7 +4080,7 @@
 
         async function init() {
             if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
-            // Load exercise and training plan data from JSON files
+            // Load exercise and training plan data from per-user config cache/Firebase
             const exercisesLoaded = await loadExerciseData();
             const planLoaded = await loadTrainingPlan();
             const progressionLoaded = await loadProgressionPlan();

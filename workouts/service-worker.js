@@ -1,10 +1,8 @@
-const CACHE_NAME = 'seans-log-v2';
+const CACHE_NAME = 'seans-log-v3';
 const ASSETS_TO_CACHE = [
     './app.html',
     './manifest.json',
     './apple-touch-icon.png',
-    './exercises.json',
-    './training-plan.json',
     'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap'
 ];
 
@@ -34,12 +32,12 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch Event - Network First for HTML/JSON, Stale-While-Revalidate for others
+// Fetch Event - Network First for app shell, Cache First for static assets
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Strategy: Network First for Data and App Shell (to get latest updates)
-    if (url.pathname.endsWith('app.html') || url.pathname.endsWith('.json')) {
+    // Strategy: Network First for the app shell. User config data is cached by the app after Firebase reads.
+    if (url.pathname.endsWith('app.html')) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {
