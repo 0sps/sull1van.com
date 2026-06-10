@@ -2638,8 +2638,8 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
             </button>
-            <a href="body.html" class="nav-tab">BODY</a>
-            <a href="progression.html" class="nav-tab">PROGRESSION</a>
+            <a href="body.html" class="nav-tab" data-admin-only hidden>BODY</a>
+            <a href="progression.html" class="nav-tab" data-admin-only hidden>PROGRESSION</a>
         </nav>
 
         <div id="statsDashboardWrapper" class="stats-dashboard-wrapper">
@@ -2915,8 +2915,15 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const ADMIN_NAV_EMAIL = 'sspsful@gmail.com';
         function getUserEmailKey(user) {
             return (user?.email || '').trim().toLowerCase();
+        }
+        function updateAdminNav(user) {
+            const isAdmin = getUserEmailKey(user) === ADMIN_NAV_EMAIL;
+            document.querySelectorAll('[data-admin-only]').forEach((element) => {
+                element.hidden = !isAdmin;
+            });
         }
         async function ensureUserProfile(user) {
             const email = getUserEmailKey(user);
@@ -2956,12 +2963,14 @@
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
+                updateAdminNav(user);
                 ensureUserProfile(user).catch((error) => {
                     console.warn('Could not update user profile metadata:', error);
                 });
                 window.firebaseReady = true;
                 if (window.onFirebaseReady) window.onFirebaseReady();
             } else {
+                updateAdminNav(null);
                 console.log("No user session found, redirecting to login.");
                 window.location.href = 'index.html';
             }
