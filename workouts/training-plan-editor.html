@@ -210,6 +210,13 @@
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
+        .btn-success {
+            background: rgba(0, 255, 136, 0.16);
+            border-color: rgba(0, 255, 136, 0.58);
+            color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.16);
+        }
+
         .btn-danger {
             border-color: rgba(255, 61, 90, 0.5);
             color: var(--danger);
@@ -479,6 +486,10 @@
             padding: 14px;
         }
 
+        .validation-box[hidden] {
+            display: none;
+        }
+
         .validation-box.valid {
             border-color: rgba(0, 255, 136, 0.34);
             background: rgba(0, 255, 136, 0.055);
@@ -688,7 +699,7 @@
                 </div>
                 <div id="plannedExercises" class="exercise-list"></div>
 
-                <div id="validationBox" class="validation-box invalid">
+                <div id="validationBox" class="validation-box" hidden>
                     <h3>Validation</h3>
                     <ul id="validationList"></ul>
                 </div>
@@ -757,6 +768,7 @@
         let editorDays = [];
         let selectedDayIndex = 0;
         let latestValidation = { valid: false, errors: [] };
+        let hasValidationResult = false;
         let pendingPlan = null;
         let submitReady = false;
         let savedPlanFingerprint = '';
@@ -1019,7 +1031,15 @@
         }
 
         function renderValidation() {
-            latestValidation = validatePlan(buildTrainingPlan());
+            el.validationBox.hidden = !hasValidationResult;
+            el.validateBtn.classList.toggle('btn-success', hasValidationResult && latestValidation.valid);
+
+            if (!hasValidationResult) {
+                el.validationBox.classList.remove('valid', 'invalid');
+                el.validationList.innerHTML = '';
+                return;
+            }
+
             el.validationBox.classList.toggle('valid', latestValidation.valid);
             el.validationBox.classList.toggle('invalid', !latestValidation.valid);
 
@@ -1051,11 +1071,14 @@
 
         function markPlanDirty() {
             pendingPlan = null;
+            hasValidationResult = false;
             setSubmitReady(false);
+            renderValidation();
         }
 
         function validateForSubmit() {
             latestValidation = validatePlan(buildTrainingPlan());
+            hasValidationResult = true;
             renderValidation();
             setSubmitReady(latestValidation.valid);
         }
@@ -1188,7 +1211,6 @@
             selectedDayIndex = index;
             renderDayGrid();
             renderSelectedDay();
-            renderValidation();
         }
 
         function findMatchingWorkoutDay(workoutName, skipIndex = -1) {
@@ -1252,6 +1274,7 @@
             if (!submitReady) return;
             pendingPlan = buildTrainingPlan();
             latestValidation = validatePlan(pendingPlan);
+            hasValidationResult = true;
             renderValidation();
             if (!latestValidation.valid) return;
             setSubmitReady(true);
@@ -1272,6 +1295,7 @@
             const validation = validatePlan(pendingPlan);
             if (!validation.valid) {
                 latestValidation = validation;
+                hasValidationResult = true;
                 renderValidation();
                 closeConfirmModal();
                 return;
