@@ -2690,6 +2690,7 @@
         <div class="export-banner">
             <span class="export-banner-text">📤 Export complete workout history for analytics</span>
             <div class="flex-wrap-gap">
+                <a class="btn btn-secondary btn-small" href="training-plan-editor.html">CHANGE TRAINING PLAN</a>
                 <button class="btn btn-secondary btn-small" onclick="openForceSyncModal()">FORCE MANUAL SYNC
                     OPTIONS</button>
                 <button class="btn btn-export btn-small" onclick="exportToCSV()">EXPORT ALL TO CSV</button>
@@ -3566,7 +3567,8 @@
                 jsonPath: 'training-plan.json',
                 apply(data) {
                     trainingPlanData = data;
-                    updateWorkoutDisplay(false);
+                    clearWorkoutProgress();
+                    updateWorkoutDisplay(true);
                     renderPlanView();
                 }
             },

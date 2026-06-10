@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <title>SEAN'S LOG | Training Plan Editor</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sean's Log">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #1a1a1d;
+            --accent-primary: #ff3d00;
+            --accent-secondary: #ff6d3d;
+            --accent-glow: rgba(255, 61, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a5;
+            --text-muted: #606065;
+            --success: #00ff88;
+            --warning: #ffbb00;
+            --danger: #ff3d5a;
+            --border: #2a2a2d;
+            --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 16% 12%, rgba(255, 61, 0, 0.08), transparent 46%),
+                radial-gradient(ellipse at 82% 24%, rgba(255, 187, 0, 0.045), transparent 42%),
+                radial-gradient(ellipse at 54% 92%, rgba(255, 109, 61, 0.045), transparent 48%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 24px;
+        }
+
+        .loading-spinner {
+            width: 46px;
+            height: 46px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 20px 0 36px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 4px;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+        }
+
+        .sync-status {
+            border: 1px solid rgba(255, 187, 0, 0.28);
+            background: rgba(255, 187, 0, 0.08);
+            color: var(--warning);
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sync-status.synced {
+            border-color: rgba(0, 255, 136, 0.28);
+            background: rgba(0, 255, 136, 0.08);
+            color: var(--success);
+        }
+
+        .sync-status.error {
+            border-color: rgba(255, 61, 90, 0.35);
+            background: rgba(255, 61, 90, 0.08);
+            color: var(--danger);
+        }
+
+        .btn {
+            min-height: 42px;
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s, opacity 0.2s;
+        }
+
+        .btn:hover:not(:disabled) {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-danger {
+            border-color: rgba(255, 61, 90, 0.5);
+            color: var(--danger);
+        }
+
+        .btn-small {
+            min-height: 34px;
+            padding: 7px 10px;
+            font-size: 0.7rem;
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.42;
+            box-shadow: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .nav-tab {
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .page-copy {
+            max-width: 920px;
+            margin-bottom: 22px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-size: 0.9rem;
+        }
+
+        .editor-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 420px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            background: rgba(17, 17, 19, 0.94);
+            border: 1px solid var(--border);
+            padding: 22px;
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .panel-title h2,
+        .panel-title h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        .panel-title h2 {
+            font-size: 2rem;
+        }
+
+        .panel-title h3 {
+            font-size: 1.5rem;
+        }
+
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .day-button {
+            min-height: 70px;
+            padding: 10px 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .day-button strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .day-button span {
+            display: block;
+            overflow: hidden;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            line-height: 1.25;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .day-button.active {
+            border-color: var(--accent-primary);
+            box-shadow: inset 0 0 0 1px var(--accent-primary), 0 0 18px rgba(255, 61, 0, 0.14);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            padding: 10px 12px;
+            border-radius: 0;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 1px rgba(255, 61, 0, 0.35);
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .planned-exercise {
+            display: grid;
+            grid-template-columns: minmax(160px, 1fr) 82px 112px auto;
+            gap: 10px;
+            align-items: end;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            padding: 12px;
+        }
+
+        .exercise-name {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.35;
+        }
+
+        .exercise-meta {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            line-height: 1.35;
+            margin-top: 5px;
+        }
+
+        .empty-state {
+            border: 1px dashed var(--border);
+            color: var(--text-muted);
+            padding: 18px;
+            text-align: center;
+            font-size: 0.84rem;
+        }
+
+        .library-panel {
+            position: sticky;
+            top: 20px;
+        }
+
+        .library-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 560px;
+            overflow: auto;
+            padding-right: 4px;
+        }
+
+        .library-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            padding: 12px;
+        }
+
+        .library-item strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.84rem;
+            line-height: 1.35;
+        }
+
+        .library-item span,
+        .hint {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            line-height: 1.45;
+        }
+
+        .validation-box {
+            margin-top: 18px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            padding: 14px;
+        }
+
+        .validation-box.valid {
+            border-color: rgba(0, 255, 136, 0.34);
+            background: rgba(0, 255, 136, 0.055);
+        }
+
+        .validation-box.invalid {
+            border-color: rgba(255, 61, 90, 0.34);
+            background: rgba(255, 61, 90, 0.055);
+        }
+
+        .validation-box h3 {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .validation-box ul {
+            margin-left: 18px;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            line-height: 1.55;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1200;
+            max-width: min(380px, calc(100vw - 40px));
+            border: 1px solid rgba(0, 255, 136, 0.35);
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--success);
+            padding: 14px 16px;
+            font-size: 0.82rem;
+            transform: translateY(24px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .toast.error {
+            border-color: rgba(255, 61, 90, 0.35);
+            background: rgba(255, 61, 90, 0.1);
+            color: var(--danger);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.72);
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: min(560px, 100%);
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            padding: 24px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        .modal h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1040px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .library-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                padding: 14px;
+            }
+
+            .logo h1 {
+                font-size: 2.35rem;
+            }
+
+            .day-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .form-grid,
+            .planned-exercise {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-pattern"></div>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">Loading training plan editor...</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>SEAN'S LOG</h1>
+                <span>Training Plan Editor</span>
+            </div>
+            <div class="header-right">
+                <a class="btn" href="app.html">Back To App</a>
+                <div id="syncStatus" class="sync-status">Loading</div>
+                <div class="user-info">
+                    <img id="userAvatar" class="user-avatar" alt="">
+                    <span id="userEmail"></span>
+                </div>
+                <button class="btn" id="logoutBtn" type="button">Logout</button>
+            </div>
+        </header>
+
+        <nav class="nav-tabs" aria-label="Workout navigation">
+            <a class="nav-tab" href="app.html">Tracker</a>
+            <a class="nav-tab" href="progression.html">Progression</a>
+            <a class="nav-tab" href="data.html">Data</a>
+            <span class="nav-tab active">Plan Editor</span>
+        </nav>
+
+        <p class="page-copy">
+            Edit the weekly schedule and exercise prescriptions. Changes stay local on this page until you submit and confirm,
+            then the plan is written to your Firebase training plan config.
+        </p>
+
+        <main class="editor-layout">
+            <section class="panel" aria-label="Seven day plan editor">
+                <div class="panel-title">
+                    <h2>Weekly Schedule</h2>
+                    <span id="planName" class="hint"></span>
+                </div>
+
+                <div id="dayGrid" class="day-grid"></div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="workoutNameInput">Workout Name</label>
+                        <input id="workoutNameInput" type="text" autocomplete="off" list="workoutNameOptions" placeholder="CHEST BACK ARMS">
+                        <datalist id="workoutNameOptions"></datalist>
+                    </div>
+                    <div class="field">
+                        <label for="subtitleInput">Subtitle</label>
+                        <input id="subtitleInput" type="text" autocomplete="off" placeholder="Chest + Back + Arms">
+                    </div>
+                </div>
+
+                <div class="panel-title">
+                    <h3 id="selectedDayTitle">Exercises</h3>
+                    <span id="selectedDayCount" class="hint"></span>
+                </div>
+                <div id="plannedExercises" class="exercise-list"></div>
+
+                <div id="validationBox" class="validation-box invalid">
+                    <h3>Validation</h3>
+                    <ul id="validationList"></ul>
+                </div>
+
+                <div class="actions">
+                    <span class="hint">Saved format remains schedule plus workouts map.</span>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="validateBtn" class="btn" type="button">Validate Plan</button>
+                        <button id="submitBtn" class="btn btn-primary" type="button" disabled>Submit Training Plan</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="panel library-panel" aria-label="Exercise library">
+                <div class="panel-title">
+                    <h3>Exercise Library</h3>
+                    <span id="libraryCount" class="hint"></span>
+                </div>
+                <div class="field full">
+                    <label for="librarySearch">Search</label>
+                    <input id="librarySearch" type="search" autocomplete="off" placeholder="Name, category, equipment">
+                </div>
+                <div id="libraryList" class="library-list" style="margin-top: 14px;"></div>
+            </aside>
+        </main>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="modal">
+            <h2 id="confirmTitle">Confirm Plan Update</h2>
+            <p id="confirmSummary"></p>
+            <p>This will replace your current training plan at <strong>users/{email}/config/trainingPlan</strong>. The app cache updates only after Firebase accepts the write.</p>
+            <div class="modal-actions">
+                <button id="cancelConfirmBtn" class="btn" type="button">Cancel</button>
+                <button id="confirmSaveBtn" class="btn btn-primary" type="button">Confirm Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
+            authDomain: window.location.hostname === 'sull1van.com' ? 'sull1van.com' : 'workout-c7be0.firebaseapp.com',
+            projectId: "workout-c7be0",
+            storageBucket: "workout-c7be0.firebasestorage.app",
+            messagingSenderId: "625595909146",
+            appId: "1:625595909146:web:c9808282e5a4c3ad0cbda3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
+        const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        let currentUser = null;
+        let exercisesData = {};
+        let exerciseRows = [];
+        let originalTrainingPlan = null;
+        let editorDays = [];
+        let selectedDayIndex = 0;
+        let latestValidation = { valid: false, errors: [] };
+        let pendingPlan = null;
+        let submitReady = false;
+
+        const el = {
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            loadingText: document.getElementById('loadingText'),
+            userEmail: document.getElementById('userEmail'),
+            userAvatar: document.getElementById('userAvatar'),
+            syncStatus: document.getElementById('syncStatus'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            planName: document.getElementById('planName'),
+            dayGrid: document.getElementById('dayGrid'),
+            workoutNameInput: document.getElementById('workoutNameInput'),
+            workoutNameOptions: document.getElementById('workoutNameOptions'),
+            subtitleInput: document.getElementById('subtitleInput'),
+            selectedDayTitle: document.getElementById('selectedDayTitle'),
+            selectedDayCount: document.getElementById('selectedDayCount'),
+            plannedExercises: document.getElementById('plannedExercises'),
+            validationBox: document.getElementById('validationBox'),
+            validationList: document.getElementById('validationList'),
+            validateBtn: document.getElementById('validateBtn'),
+            submitBtn: document.getElementById('submitBtn'),
+            librarySearch: document.getElementById('librarySearch'),
+            libraryList: document.getElementById('libraryList'),
+            libraryCount: document.getElementById('libraryCount'),
+            confirmModal: document.getElementById('confirmModal'),
+            confirmSummary: document.getElementById('confirmSummary'),
+            cancelConfirmBtn: document.getElementById('cancelConfirmBtn'),
+            confirmSaveBtn: document.getElementById('confirmSaveBtn'),
+            toast: document.getElementById('toast')
+        };
+
+        function getUserEmailKey(user) {
+            return (user?.email || '').trim().toLowerCase();
+        }
+
+        function getUserConfigDocRef(configId) {
+            return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
+        }
+
+        function getUserConfigCacheKey(configId) {
+            return `seans-log:user-config:${getUserEmailKey(currentUser)}:${configId}:v1`;
+        }
+
+        function readCachedUserConfig(configId) {
+            try {
+                const raw = localStorage.getItem(getUserConfigCacheKey(configId));
+                if (!raw) return null;
+                const cached = JSON.parse(raw);
+                if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
+                return {
+                    data: cached.data,
+                    isFresh: Date.now() - cached.cachedAt < CONFIG_CACHE_TTL
+                };
+            } catch (error) {
+                console.warn(`Ignoring invalid cached config for ${configId}:`, error);
+                return null;
+            }
+        }
+
+        function writeCachedUserConfig(configId, data) {
+            try {
+                localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
+                    cachedAt: Date.now(),
+                    data
+                }));
+            } catch (error) {
+                console.warn(`Could not cache config for ${configId}:`, error);
+            }
+        }
+
+        async function fetchSeedConfig(jsonPath) {
+            const response = await fetch(jsonPath);
+            if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
+            return response.json();
+        }
+
+        async function loadUserConfig(configId, jsonPath) {
+            const cached = readCachedUserConfig(configId);
+            if (cached?.isFresh) return cached.data;
+
+            try {
+                const docRef = getUserConfigDocRef(configId);
+                const snapshot = await getDoc(docRef);
+
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    writeCachedUserConfig(configId, data);
+                    return data;
+                }
+
+                const data = await fetchSeedConfig(jsonPath);
+                await setDoc(docRef, data);
+                writeCachedUserConfig(configId, data);
+                return data;
+            } catch (error) {
+                if (cached) {
+                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
+        }
+
+        async function ensureUserProfile(user) {
+            const email = getUserEmailKey(user);
+            if (!email) throw new Error('Authenticated user is missing an email address.');
+            await setDoc(doc(db, 'users', email), {
+                email,
+                displayName: user.displayName || '',
+                photoURL: user.photoURL || '',
+                lastLoginAt: new Date().toISOString()
+            }, { merge: true });
+        }
+
+        function clone(value) {
+            return JSON.parse(JSON.stringify(value));
+        }
+
+        function normalizeExerciseRows(data) {
+            return Object.entries(data || {})
+                .map(([id, exercise]) => ({
+                    id,
+                    name: exercise?.name || exercise?.exportName || id,
+                    category: exercise?.category || '',
+                    equipment: exercise?.equipment || '',
+                    muscles: Array.isArray(exercise?.muscles) ? exercise.muscles.join(', ') : ''
+                }))
+                .sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        function createEditorDays(trainingPlan) {
+            const schedule = Array.isArray(trainingPlan?.schedule) ? trainingPlan.schedule : [];
+            const workouts = trainingPlan?.workouts && typeof trainingPlan.workouts === 'object' ? trainingPlan.workouts : {};
+
+            return DAYS.map((day, index) => {
+                const workoutName = String(schedule[index] || 'REST').trim() || 'REST';
+                const workout = workouts[workoutName] || { subtitle: '', exercises: [] };
+                return {
+                    day,
+                    workoutName,
+                    subtitle: String(workout.subtitle || ''),
+                    exercises: Array.isArray(workout.exercises) ? clone(workout.exercises) : []
+                };
+            });
+        }
+
+        function getExerciseLabel(id) {
+            const exercise = exercisesData[id];
+            if (!exercise) return id || 'Unknown exercise';
+            return exercise.name || exercise.exportName || id;
+        }
+
+        function getExerciseMeta(id) {
+            const exercise = exercisesData[id];
+            if (!exercise) return 'Missing from exercise config';
+            return [exercise.category, exercise.equipment].filter(Boolean).join(' | ') || 'No category or equipment';
+        }
+
+        function renderDayGrid() {
+            el.dayGrid.innerHTML = editorDays.map((day, index) => `
+                <button class="day-button ${index === selectedDayIndex ? 'active' : ''}" type="button" data-day-index="${index}">
+                    <strong>${DAYS[index].slice(0, 3)}</strong>
+                    <span>${escapeHtml(day.workoutName || 'Missing')}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderSelectedDay() {
+            const day = editorDays[selectedDayIndex];
+            el.selectedDayTitle.textContent = `${day.day} Exercises`;
+            el.selectedDayCount.textContent = `${day.exercises.length} planned`;
+            el.workoutNameInput.value = day.workoutName;
+            el.subtitleInput.value = day.subtitle;
+            renderWorkoutNameOptions();
+
+            if (!day.exercises.length) {
+                el.plannedExercises.innerHTML = '<div class="empty-state">No exercises planned for this day. Add one from the library.</div>';
+                return;
+            }
+
+            el.plannedExercises.innerHTML = day.exercises.map((item, index) => `
+                <div class="planned-exercise" data-exercise-index="${index}">
+                    <div>
+                        <div class="exercise-name">${escapeHtml(getExerciseLabel(item.id))}</div>
+                        <div class="exercise-meta">${escapeHtml(item.id)} | ${escapeHtml(getExerciseMeta(item.id))}</div>
+                    </div>
+                    <div class="field">
+                        <label for="sets-${index}">Sets</label>
+                        <input id="sets-${index}" type="number" min="1" step="1" value="${escapeHtml(String(item.sets ?? ''))}" data-field="sets" data-exercise-index="${index}">
+                    </div>
+                    <div class="field">
+                        <label for="reps-${index}">Reps</label>
+                        <input id="reps-${index}" type="text" value="${escapeHtml(String(item.reps ?? ''))}" data-field="reps" data-exercise-index="${index}">
+                    </div>
+                    <button class="btn btn-danger btn-small" type="button" data-remove-exercise="${index}">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function renderLibrary() {
+            const query = el.librarySearch.value.trim().toLowerCase();
+            const filtered = exerciseRows.filter((exercise) => {
+                const haystack = `${exercise.name} ${exercise.category} ${exercise.equipment} ${exercise.muscles} ${exercise.id}`.toLowerCase();
+                return haystack.includes(query);
+            });
+            const visible = filtered.slice(0, 140);
+            el.libraryCount.textContent = `${filtered.length} match${filtered.length === 1 ? '' : 'es'}`;
+
+            if (!visible.length) {
+                el.libraryList.innerHTML = '<div class="empty-state">No exercises match this search.</div>';
+                return;
+            }
+
+            el.libraryList.innerHTML = visible.map((exercise) => `
+                <div class="library-item">
+                    <div>
+                        <strong>${escapeHtml(exercise.name)}</strong>
+                        <span>${escapeHtml([exercise.category, exercise.equipment].filter(Boolean).join(' | ') || exercise.id)}</span>
+                    </div>
+                    <button class="btn btn-small" type="button" data-add-exercise="${escapeHtml(exercise.id)}">Add</button>
+                </div>
+            `).join('');
+        }
+
+        function renderWorkoutNameOptions() {
+            const names = new Set([
+                ...Object.keys(originalTrainingPlan?.workouts || {}),
+                ...editorDays.map((day) => day.workoutName).filter(Boolean),
+                'REST'
+            ]);
+            el.workoutNameOptions.innerHTML = [...names]
+                .sort((a, b) => a.localeCompare(b))
+                .map((name) => `<option value="${escapeHtml(name)}"></option>`)
+                .join('');
+        }
+
+        function renderValidation() {
+            latestValidation = validatePlan(buildTrainingPlan());
+            el.validationBox.classList.toggle('valid', latestValidation.valid);
+            el.validationBox.classList.toggle('invalid', !latestValidation.valid);
+
+            if (latestValidation.valid) {
+                el.validationList.innerHTML = '<li>Plan is valid and ready to submit.</li>';
+                return;
+            }
+
+            el.validationList.innerHTML = latestValidation.errors.map((error) => `<li>${escapeHtml(error)}</li>`).join('');
+        }
+
+        function setSubmitReady(isReady) {
+            submitReady = !!isReady;
+            el.submitBtn.disabled = !submitReady;
+        }
+
+        function markPlanDirty() {
+            pendingPlan = null;
+            setSubmitReady(false);
+        }
+
+        function validateForSubmit() {
+            latestValidation = validatePlan(buildTrainingPlan());
+            renderValidation();
+            setSubmitReady(latestValidation.valid);
+        }
+
+        function renderAll() {
+            el.planName.textContent = originalTrainingPlan?.name || 'Training plan';
+            renderDayGrid();
+            renderSelectedDay();
+            renderLibrary();
+            renderValidation();
+        }
+
+        function buildTrainingPlan() {
+            const schedule = editorDays.map((day) => String(day.workoutName || '').trim());
+            const workouts = {};
+
+            editorDays.forEach((day) => {
+                const workoutName = String(day.workoutName || '').trim();
+                if (!workoutName) return;
+                workouts[workoutName] = {
+                    subtitle: String(day.subtitle || '').trim(),
+                    exercises: day.exercises.map((item) => ({
+                        id: String(item.id || '').trim(),
+                        sets: Number(item.sets),
+                        reps: String(item.reps || '').trim()
+                    }))
+                };
+            });
+
+            return {
+                ...(originalTrainingPlan?.name ? { name: originalTrainingPlan.name } : {}),
+                _READ_THIS_BEFORE_EDITING: "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
+                schedule,
+                workouts
+            };
+        }
+
+        function validatePlan(plan) {
+            const errors = [];
+            if (!Array.isArray(plan.schedule) || plan.schedule.length !== 7) {
+                errors.push('Schedule must contain exactly 7 entries.');
+            }
+
+            if (!plan.workouts || typeof plan.workouts !== 'object' || Array.isArray(plan.workouts)) {
+                errors.push('Workouts must be an object keyed by workout name.');
+                return { valid: false, errors };
+            }
+
+            const workouts = plan.workouts;
+            (plan.schedule || []).forEach((workoutName, dayIndex) => {
+                const trimmedName = String(workoutName || '').trim();
+                if (!trimmedName) {
+                    errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} needs a workout name.`);
+                    return;
+                }
+                if (!workouts[trimmedName]) {
+                    errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} references missing workout "${trimmedName}".`);
+                }
+            });
+
+            Object.entries(workouts).forEach(([workoutName, workout]) => {
+                if (!workout || typeof workout !== 'object') {
+                    errors.push(`Workout "${workoutName}" must be an object.`);
+                    return;
+                }
+                if (!Array.isArray(workout.exercises)) {
+                    errors.push(`Workout "${workoutName}" must have an exercises array.`);
+                    return;
+                }
+
+                workout.exercises.forEach((exercise, index) => {
+                    const label = `${workoutName} exercise ${index + 1}`;
+                    const id = String(exercise?.id || '').trim();
+                    const sets = Number(exercise?.sets);
+                    const reps = String(exercise?.reps || '').trim();
+
+                    if (!id) errors.push(`${label} needs an exercise id.`);
+                    if (id && !exercisesData[id]) errors.push(`${label} uses unknown exercise id "${id}".`);
+                    if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
+                    if (!reps) errors.push(`${label} needs a reps value.`);
+                });
+            });
+
+            return { valid: errors.length === 0, errors };
+        }
+
+        function showToast(message, isError = false) {
+            el.toast.textContent = message;
+            el.toast.classList.toggle('error', isError);
+            el.toast.classList.add('show');
+            window.setTimeout(() => el.toast.classList.remove('show'), 3600);
+        }
+
+        function setSyncStatus(text, mode = '') {
+            el.syncStatus.textContent = text;
+            el.syncStatus.className = `sync-status ${mode}`.trim();
+        }
+
+        function hideLoading() {
+            el.loadingOverlay.style.display = 'none';
+        }
+
+        function showLoadingError(message) {
+            el.loadingText.textContent = message;
+            setSyncStatus('Error', 'error');
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function selectDay(index) {
+            selectedDayIndex = index;
+            renderDayGrid();
+            renderSelectedDay();
+            renderValidation();
+        }
+
+        function findMatchingWorkoutDay(workoutName, skipIndex = -1) {
+            const normalizedName = String(workoutName || '').trim();
+            if (!normalizedName) return null;
+            return editorDays.find((day, index) =>
+                index !== skipIndex && String(day.workoutName || '').trim() === normalizedName
+            ) || null;
+        }
+
+        function syncMatchingWorkoutDays(sourceIndex) {
+            const source = editorDays[sourceIndex];
+            const normalizedName = String(source?.workoutName || '').trim();
+            if (!source || !normalizedName) return;
+
+            editorDays.forEach((day, index) => {
+                if (index === sourceIndex) return;
+                if (String(day.workoutName || '').trim() !== normalizedName) return;
+                day.subtitle = source.subtitle;
+                day.exercises = clone(source.exercises);
+            });
+        }
+
+        function updateSelectedDayFields() {
+            markPlanDirty();
+            const day = editorDays[selectedDayIndex];
+            const previousName = String(day.workoutName || '').trim();
+            const nextName = el.workoutNameInput.value;
+            const nextNameTrimmed = String(nextName || '').trim();
+            day.workoutName = nextName;
+
+            if (nextNameTrimmed && nextNameTrimmed !== previousName) {
+                const matchingDay = findMatchingWorkoutDay(nextNameTrimmed, selectedDayIndex);
+                if (matchingDay) {
+                    day.subtitle = matchingDay.subtitle;
+                    day.exercises = clone(matchingDay.exercises);
+                    renderSelectedDay();
+                } else {
+                    day.subtitle = el.subtitleInput.value;
+                }
+            } else {
+                day.subtitle = el.subtitleInput.value;
+                syncMatchingWorkoutDays(selectedDayIndex);
+            }
+
+            renderDayGrid();
+            renderValidation();
+        }
+
+        function addExerciseToSelectedDay(id) {
+            markPlanDirty();
+            editorDays[selectedDayIndex].exercises.push({ id, sets: 3, reps: '10-12' });
+            syncMatchingWorkoutDays(selectedDayIndex);
+            renderSelectedDay();
+            renderValidation();
+        }
+
+        function openConfirmModal() {
+            if (!submitReady) return;
+            pendingPlan = buildTrainingPlan();
+            latestValidation = validatePlan(pendingPlan);
+            renderValidation();
+            if (!latestValidation.valid) return;
+            setSubmitReady(true);
+
+            const exerciseCount = Object.values(pendingPlan.workouts).reduce((sum, workout) => sum + workout.exercises.length, 0);
+            el.confirmSummary.textContent = `Ready to save ${pendingPlan.schedule.length} schedule entries, ${Object.keys(pendingPlan.workouts).length} workouts, and ${exerciseCount} planned exercise rows.`;
+            el.confirmModal.classList.add('active');
+        }
+
+        function closeConfirmModal() {
+            el.confirmModal.classList.remove('active');
+            pendingPlan = null;
+        }
+
+        async function savePendingPlan() {
+            if (!pendingPlan) return;
+
+            const validation = validatePlan(pendingPlan);
+            if (!validation.valid) {
+                latestValidation = validation;
+                renderValidation();
+                closeConfirmModal();
+                return;
+            }
+
+            el.confirmSaveBtn.disabled = true;
+            el.confirmSaveBtn.textContent = 'Saving...';
+            setSyncStatus('Saving', '');
+
+            try {
+                await setDoc(getUserConfigDocRef('trainingPlan'), pendingPlan);
+                writeCachedUserConfig('trainingPlan', pendingPlan);
+                originalTrainingPlan = clone(pendingPlan);
+                setSubmitReady(false);
+                closeConfirmModal();
+                setSyncStatus('Saved', 'synced');
+                showToast('Training plan saved.');
+            } catch (error) {
+                console.error('Failed to save training plan:', error);
+                setSyncStatus('Save failed', 'error');
+                showToast(error.message || 'Failed to save training plan.', true);
+            } finally {
+                el.confirmSaveBtn.disabled = false;
+                el.confirmSaveBtn.textContent = 'Confirm Save';
+            }
+        }
+
+        el.logoutBtn.addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        });
+
+        el.dayGrid.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-day-index]');
+            if (!button) return;
+            selectDay(Number(button.dataset.dayIndex));
+        });
+
+        el.workoutNameInput.addEventListener('input', updateSelectedDayFields);
+        el.subtitleInput.addEventListener('input', updateSelectedDayFields);
+        el.librarySearch.addEventListener('input', renderLibrary);
+
+        el.libraryList.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-add-exercise]');
+            if (!button) return;
+            addExerciseToSelectedDay(button.dataset.addExercise);
+        });
+
+        el.plannedExercises.addEventListener('input', (event) => {
+            const input = event.target.closest('[data-field]');
+            if (!input) return;
+            const index = Number(input.dataset.exerciseIndex);
+            const field = input.dataset.field;
+            markPlanDirty();
+            editorDays[selectedDayIndex].exercises[index][field] = field === 'sets' ? Number(input.value) : input.value;
+            syncMatchingWorkoutDays(selectedDayIndex);
+            renderValidation();
+        });
+
+        el.plannedExercises.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-remove-exercise]');
+            if (!button) return;
+            markPlanDirty();
+            editorDays[selectedDayIndex].exercises.splice(Number(button.dataset.removeExercise), 1);
+            syncMatchingWorkoutDays(selectedDayIndex);
+            renderSelectedDay();
+            renderValidation();
+        });
+
+        el.validateBtn.addEventListener('click', validateForSubmit);
+        el.submitBtn.addEventListener('click', openConfirmModal);
+        el.cancelConfirmBtn.addEventListener('click', closeConfirmModal);
+        el.confirmSaveBtn.addEventListener('click', savePendingPlan);
+        el.confirmModal.addEventListener('click', (event) => {
+            if (event.target === el.confirmModal) closeConfirmModal();
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'index.html?redirect=training-plan-editor.html';
+                return;
+            }
+
+            currentUser = user;
+            el.userEmail.textContent = user.email || '';
+            el.userAvatar.src = user.photoURL || '';
+            setSyncStatus('Loading');
+
+            ensureUserProfile(user).catch((error) => {
+                console.warn('Could not update user profile metadata:', error);
+            });
+
+            try {
+                const [loadedExercises, loadedTrainingPlan] = await Promise.all([
+                    loadUserConfig('exercises', 'exercises.json'),
+                    loadUserConfig('trainingPlan', 'training-plan.json')
+                ]);
+
+                exercisesData = loadedExercises || {};
+                exerciseRows = normalizeExerciseRows(exercisesData);
+                originalTrainingPlan = loadedTrainingPlan || {};
+                editorDays = createEditorDays(originalTrainingPlan);
+                renderAll();
+                setSyncStatus('Ready', 'synced');
+                hideLoading();
+            } catch (error) {
+                console.error('Failed to load editor data:', error);
+                showLoadingError(error.message || 'Failed to load editor data. Please refresh and try again.');
+            }
+        });
+    </script>
+</body>
+
+</html>

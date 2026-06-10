@@ -1,6 +1,7 @@
 const CACHE_NAME = 'seans-log-v3';
 const ASSETS_TO_CACHE = [
     './app.html',
+    './training-plan-editor.html',
     './manifest.json',
     './apple-touch-icon.png',
     'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap'
@@ -37,7 +38,7 @@ self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
     // Strategy: Network First for the app shell. User config data is cached by the app after Firebase reads.
-    if (url.pathname.endsWith('app.html')) {
+    if (url.pathname.endsWith('app.html') || url.pathname.endsWith('training-plan-editor.html')) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {
