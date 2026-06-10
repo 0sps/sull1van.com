@@ -196,6 +196,13 @@
             border-color: var(--accent-primary);
         }
 
+        .btn:focus-visible,
+        .day-button:focus-visible,
+        .nav-tab:focus-visible {
+            outline: 2px solid var(--accent-secondary);
+            outline-offset: 3px;
+        }
+
         .btn-primary {
             background: var(--accent-primary);
             border-color: var(--accent-primary);
@@ -310,6 +317,12 @@
             font-family: 'Space Mono', monospace;
             text-align: left;
             cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        .day-button:hover {
+            border-color: rgba(255, 61, 0, 0.72);
+            color: var(--text-primary);
         }
 
         .day-button strong {
@@ -400,6 +413,7 @@
             color: var(--text-primary);
             font-size: 0.9rem;
             line-height: 1.35;
+            overflow-wrap: anywhere;
         }
 
         .exercise-meta {
@@ -407,6 +421,7 @@
             font-size: 0.72rem;
             line-height: 1.35;
             margin-top: 5px;
+            overflow-wrap: anywhere;
         }
 
         .empty-state {
@@ -446,6 +461,7 @@
             color: var(--text-primary);
             font-size: 0.84rem;
             line-height: 1.35;
+            overflow-wrap: anywhere;
         }
 
         .library-item span,
@@ -453,6 +469,7 @@
             color: var(--text-muted);
             font-size: 0.72rem;
             line-height: 1.45;
+            overflow-wrap: anywhere;
         }
 
         .validation-box {
@@ -592,8 +609,13 @@
             }
 
             .form-grid,
+            .library-item,
             .planned-exercise {
                 grid-template-columns: 1fr;
+            }
+
+            .planned-exercise .btn {
+                width: 100%;
             }
 
             .panel {
@@ -651,12 +673,12 @@
                 <div class="form-grid">
                     <div class="field">
                         <label for="workoutNameInput">Workout Name</label>
-                        <input id="workoutNameInput" type="text" autocomplete="off" list="workoutNameOptions" placeholder="CHEST BACK ARMS">
+                        <input id="workoutNameInput" type="text" autocomplete="off" list="workoutNameOptions" maxlength="100" placeholder="CHEST BACK ARMS">
                         <datalist id="workoutNameOptions"></datalist>
                     </div>
                     <div class="field">
                         <label for="subtitleInput">Subtitle</label>
-                        <input id="subtitleInput" type="text" autocomplete="off" placeholder="Chest + Back + Arms">
+                        <input id="subtitleInput" type="text" autocomplete="off" maxlength="200" placeholder="Chest + Back + Arms">
                     </div>
                 </div>
 
@@ -737,6 +759,7 @@
         let latestValidation = { valid: false, errors: [] };
         let pendingPlan = null;
         let submitReady = false;
+        let savedPlanFingerprint = '';
 
         const el = {
             loadingOverlay: document.getElementById('loadingOverlay'),
@@ -904,6 +927,10 @@
             return [exercise.category, exercise.equipment].filter(Boolean).join(' | ') || 'No category or equipment';
         }
 
+        function isValidDayIndex(index) {
+            return Number.isInteger(index) && index >= 0 && index < editorDays.length;
+        }
+
         function renderDayGrid() {
             el.dayGrid.innerHTML = editorDays.map((day, index) => `
                 <button class="day-button ${index === selectedDayIndex ? 'active' : ''}" type="button" data-day-index="${index}">
@@ -914,7 +941,16 @@
         }
 
         function renderSelectedDay() {
+            if (!isValidDayIndex(selectedDayIndex)) selectedDayIndex = 0;
             const day = editorDays[selectedDayIndex];
+            if (!day) {
+                el.selectedDayTitle.textContent = 'Exercises';
+                el.selectedDayCount.textContent = '0 planned';
+                el.workoutNameInput.value = '';
+                el.subtitleInput.value = '';
+                el.plannedExercises.innerHTML = '<div class="empty-state">Training plan data is unavailable.</div>';
+                return;
+            }
             el.selectedDayTitle.textContent = `${day.day} Exercises`;
             el.selectedDayCount.textContent = `${day.exercises.length} planned`;
             el.workoutNameInput.value = day.workoutName;
@@ -934,11 +970,11 @@
                     </div>
                     <div class="field">
                         <label for="sets-${index}">Sets</label>
-                        <input id="sets-${index}" type="number" min="1" step="1" value="${escapeHtml(String(item.sets ?? ''))}" data-field="sets" data-exercise-index="${index}">
+                        <input id="sets-${index}" type="number" min="1" max="99" step="1" inputmode="numeric" value="${escapeHtml(String(item.sets ?? ''))}" data-field="sets" data-exercise-index="${index}">
                     </div>
                     <div class="field">
                         <label for="reps-${index}">Reps</label>
-                        <input id="reps-${index}" type="text" value="${escapeHtml(String(item.reps ?? ''))}" data-field="reps" data-exercise-index="${index}">
+                        <input id="reps-${index}" type="text" maxlength="50" value="${escapeHtml(String(item.reps ?? ''))}" data-field="reps" data-exercise-index="${index}">
                     </div>
                     <button class="btn btn-danger btn-small" type="button" data-remove-exercise="${index}">Remove</button>
                 </div>
@@ -998,6 +1034,19 @@
         function setSubmitReady(isReady) {
             submitReady = !!isReady;
             el.submitBtn.disabled = !submitReady;
+        }
+
+        function getPlanFingerprint(plan) {
+            return JSON.stringify(plan);
+        }
+
+        function setSavedPlanSnapshot() {
+            savedPlanFingerprint = getPlanFingerprint(buildTrainingPlan());
+        }
+
+        function hasUnsavedChanges() {
+            if (!savedPlanFingerprint) return false;
+            return getPlanFingerprint(buildTrainingPlan()) !== savedPlanFingerprint;
         }
 
         function markPlanDirty() {
@@ -1062,15 +1111,24 @@
                     errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} needs a workout name.`);
                     return;
                 }
+                if (trimmedName.length > 100) {
+                    errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} workout name is too long (max 100 characters).`);
+                }
                 if (!workouts[trimmedName]) {
                     errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} references missing workout "${trimmedName}".`);
                 }
             });
 
             Object.entries(workouts).forEach(([workoutName, workout]) => {
+                if (String(workoutName || '').trim().length > 100) {
+                    errors.push(`Workout "${workoutName}" name is too long (max 100 characters).`);
+                }
                 if (!workout || typeof workout !== 'object') {
                     errors.push(`Workout "${workoutName}" must be an object.`);
                     return;
+                }
+                if (workout.subtitle && String(workout.subtitle).length > 200) {
+                    errors.push(`Workout "${workoutName}" subtitle is too long (max 200 characters).`);
                 }
                 if (!Array.isArray(workout.exercises)) {
                     errors.push(`Workout "${workoutName}" must have an exercises array.`);
@@ -1086,7 +1144,9 @@
                     if (!id) errors.push(`${label} needs an exercise id.`);
                     if (id && !exercisesData[id]) errors.push(`${label} uses unknown exercise id "${id}".`);
                     if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
+                    if (Number.isInteger(sets) && sets > 99) errors.push(`${label} sets is too high (max 99).`);
                     if (!reps) errors.push(`${label} needs a reps value.`);
+                    if (reps.length > 50) errors.push(`${label} reps value is too long (max 50 characters).`);
                 });
             });
 
@@ -1124,6 +1184,7 @@
         }
 
         function selectDay(index) {
+            if (!isValidDayIndex(index)) return;
             selectedDayIndex = index;
             renderDayGrid();
             renderSelectedDay();
@@ -1152,6 +1213,7 @@
         }
 
         function updateSelectedDayFields() {
+            if (!isValidDayIndex(selectedDayIndex)) return;
             markPlanDirty();
             const day = editorDays[selectedDayIndex];
             const previousName = String(day.workoutName || '').trim();
@@ -1178,6 +1240,7 @@
         }
 
         function addExerciseToSelectedDay(id) {
+            if (!isValidDayIndex(selectedDayIndex) || !exercisesData[id]) return;
             markPlanDirty();
             editorDays[selectedDayIndex].exercises.push({ id, sets: 3, reps: '10-12' });
             syncMatchingWorkoutDays(selectedDayIndex);
@@ -1224,6 +1287,7 @@
                 // the overwrite. Workout logs and workoutProgress are intentionally untouched.
                 writeCachedUserConfig('trainingPlan', pendingPlan);
                 originalTrainingPlan = clone(pendingPlan);
+                setSavedPlanSnapshot();
                 setSubmitReady(false);
                 closeConfirmModal();
                 setSyncStatus('Saved', 'synced');
@@ -1264,8 +1328,16 @@
             if (!input) return;
             const index = Number(input.dataset.exerciseIndex);
             const field = input.dataset.field;
+            const day = editorDays[selectedDayIndex];
+            if (!day || !Number.isInteger(index) || !day.exercises[index] || !['sets', 'reps'].includes(field)) return;
             markPlanDirty();
-            editorDays[selectedDayIndex].exercises[index][field] = field === 'sets' ? Number(input.value) : input.value;
+
+            let value = input.value;
+            if (field === 'sets') {
+                value = input.value === '' ? '' : Number(input.value);
+            }
+
+            day.exercises[index][field] = value;
             syncMatchingWorkoutDays(selectedDayIndex);
             renderValidation();
         });
@@ -1273,8 +1345,11 @@
         el.plannedExercises.addEventListener('click', (event) => {
             const button = event.target.closest('[data-remove-exercise]');
             if (!button) return;
+            const index = Number(button.dataset.removeExercise);
+            const day = editorDays[selectedDayIndex];
+            if (!day || !Number.isInteger(index) || !day.exercises[index]) return;
             markPlanDirty();
-            editorDays[selectedDayIndex].exercises.splice(Number(button.dataset.removeExercise), 1);
+            day.exercises.splice(index, 1);
             syncMatchingWorkoutDays(selectedDayIndex);
             renderSelectedDay();
             renderValidation();
@@ -1288,6 +1363,13 @@
             if (event.target === el.confirmModal) closeConfirmModal();
         });
 
+        window.addEventListener('beforeunload', (event) => {
+            if (hasUnsavedChanges()) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        });
+
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'index.html?redirect=training-plan-editor.html';
@@ -1295,6 +1377,10 @@
             }
 
             currentUser = user;
+            if (!getUserEmailKey(user)) {
+                showLoadingError('Authenticated user is missing an email address.');
+                return;
+            }
             el.userEmail.textContent = user.email || '';
             el.userAvatar.src = user.photoURL || '';
             setSyncStatus('Loading');
@@ -1313,6 +1399,7 @@
                 exerciseRows = normalizeExerciseRows(exercisesData);
                 originalTrainingPlan = loadedTrainingPlan || {};
                 editorDays = createEditorDays(originalTrainingPlan);
+                setSavedPlanSnapshot();
                 renderAll();
                 setSyncStatus('Ready', 'synced');
                 hideLoading();
