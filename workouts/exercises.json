@@ -1,5 +1,5 @@
 {
-  "lastUpdatedDate": "2026-06-10",
+  "lastUpdatedDate": "2026-06-11",
   "ex001": {
     "name": "Dumbbell Incline Bench Press",
     "muscles": [],
@@ -3716,6 +3716,71 @@
     "instructions": "Adjust the seat so the handles start around mid-chest, then sit tall with your back pinned to the pad. Pull your shoulder blades back and down before you start. Press the handles forward in a smooth arc, keeping your elbows a little below shoulder height instead of flared straight out. Stop just short of locking out, squeeze your chest, then lower under control until you feel a stretch across your pecs.",
     "notes": "Plate-loaded leverage chest press with independent arms. Use controlled reps and match loading on both sides.",
     "exportName": "MegaMass Leverage Chest Press",
+    "multiplier": 1
+  },
+  "ex361": {
+    "name": "Machine Pullover",
+    "muscles": [
+      "Lats",
+      "Teres Major"
+    ],
+    "category": "Back",
+    "equipment": "Machine",
+    "instructions": "Adjust the seat so your shoulders line up with the machine's pivot point and the pad or handles sit against your upper arms. Keep your chest against the pad and your ribs down. Drive your elbows down and back in an arc until your upper arms are near your sides. Squeeze your lats at the bottom, then let the handles come back up slowly until you feel a stretch without letting the weight stack slam.",
+    "notes": "Machine lat isolation. Keep the movement at the shoulders instead of turning it into a triceps pressdown.",
+    "exportName": "Machine Pullover",
+    "multiplier": 1
+  },
+  "ex362": {
+    "name": "Cable Rear Delt Crossover",
+    "muscles": [
+      "Posterior Delt",
+      "Rhomboids",
+      "Traps"
+    ],
+    "category": "Shoulders",
+    "equipment": "Cable",
+    "instructions": "Set both cable pulleys around shoulder height and remove the handles if the cable ends are easier to grip. Grab the left cable with your right hand and the right cable with your left hand so your arms cross in front of you. Step back, keep a soft bend in your elbows, and pull your hands apart until your arms are out to your sides. Squeeze the back of your shoulders, then return slowly without letting the weight pull your shoulders forward.",
+    "notes": "Rear delt cable fly variation with constant tension. Use light weight and control the stretch.",
+    "exportName": "Cable Rear Delt Crossover",
+    "multiplier": 1
+  },
+  "ex363": {
+    "name": "Preacher Curl Machine",
+    "muscles": [
+      "Biceps",
+      "Brachialis"
+    ],
+    "category": "Biceps",
+    "equipment": "Machine",
+    "instructions": "Adjust the seat so your upper arms rest flat on the preacher pad and your armpits are close to the top edge. Grab the handles with your wrists straight. Curl the handles up by bending your elbows, squeeze your biceps at the top, then lower slowly until your arms are almost straight. Keep your chest against the pad and do not lift your elbows off the support.",
+    "notes": "Wrist-friendly machine curl that makes cheating hard. Avoid fully relaxing at the bottom.",
+    "exportName": "Preacher Curl Machine",
+    "multiplier": 1
+  },
+  "ex364": {
+    "name": "Seated Dumbbell Shrug",
+    "muscles": [
+      "Traps",
+      "Levator Scapulae"
+    ],
+    "category": "Traps",
+    "equipment": "Dumbbells",
+    "instructions": "Sit tall on a bench with a dumbbell in each hand and your arms hanging straight at your sides. Keep your chest up and your neck neutral. Shrug your shoulders straight up toward your ears, pause briefly at the top, then lower under control until you feel your traps stretch. Do not roll your shoulders forward or backward.",
+    "notes": "Seated version of dumbbell shrugs. Removes leg drive and keeps the movement strict.",
+    "exportName": "Seated Dumbbell Shrug",
+    "multiplier": 2
+  },
+  "ex365": {
+    "name": "Leg Press Calf Raise",
+    "muscles": [
+      "Calves"
+    ],
+    "category": "Calves",
+    "equipment": "Machine",
+    "instructions": "Sit in the leg press and place the balls of your feet on the lower edge of the platform with your heels hanging off. Keep a slight bend in your knees and unlock the safety handles. Let your heels drop slowly until you feel a calf stretch, then press through the balls of your feet and raise your heels as high as possible. Pause at the top, then lower under control. Keep the sled stable and do not bounce out of the bottom.",
+    "notes": "Calf raise performed on the leg press. Use the safeties and keep the range controlled.",
+    "exportName": "Leg Press Calf Raise",
     "multiplier": 1
   }
 }
