@@ -381,7 +381,8 @@
         }
 
         input,
-        select {
+        select,
+        textarea {
             width: 100%;
             min-height: 44px;
             border: 1px solid var(--border);
@@ -394,10 +395,60 @@
         }
 
         input:focus,
-        select:focus {
+        select:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 1px rgba(255, 61, 0, 0.35);
+        }
+
+        textarea {
+            min-height: 420px;
+            resize: vertical;
+            line-height: 1.45;
+            tab-size: 2;
+        }
+
+        .mode-switch {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .mode-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        .mode-option:has(input:checked) {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+            box-shadow: inset 0 0 0 1px var(--accent-primary), 0 0 18px rgba(255, 61, 0, 0.14);
+        }
+
+        .mode-option input {
+            width: auto;
+            min-height: 0;
+            accent-color: var(--accent-primary);
+        }
+
+        .mode-option span {
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        [hidden] {
+            display: none !important;
         }
 
         .exercise-list {
@@ -629,6 +680,10 @@
                 width: 100%;
             }
 
+            .mode-option {
+                flex: 1 1 100%;
+            }
+
             .panel {
                 padding: 16px;
             }
@@ -672,30 +727,54 @@
 
         <main class="editor-layout">
             <section class="panel" aria-label="Seven day plan editor">
-                <div class="panel-title">
-                    <h2>Weekly Schedule</h2>
-                    <span id="planName" class="hint"></span>
+                <div class="mode-switch" role="radiogroup" aria-label="Training plan entry mode">
+                    <label class="mode-option">
+                        <input type="radio" name="planMode" value="build" checked>
+                        <span>Build Plan</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="planMode" value="import">
+                        <span>Import JSON</span>
+                    </label>
                 </div>
 
-                <div id="dayGrid" class="day-grid"></div>
-
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="workoutNameInput">Workout Name</label>
-                        <input id="workoutNameInput" type="text" autocomplete="off" list="workoutNameOptions" maxlength="100" placeholder="CHEST BACK ARMS">
-                        <datalist id="workoutNameOptions"></datalist>
+                <div id="buildModeContent">
+                    <div class="panel-title">
+                        <h2>Weekly Schedule</h2>
+                        <span id="planName" class="hint"></span>
                     </div>
-                    <div class="field">
-                        <label for="subtitleInput">Subtitle</label>
-                        <input id="subtitleInput" type="text" autocomplete="off" maxlength="200" placeholder="Chest + Back + Arms">
+
+                    <div id="dayGrid" class="day-grid"></div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="workoutNameInput">Workout Name</label>
+                            <input id="workoutNameInput" type="text" autocomplete="off" list="workoutNameOptions" maxlength="100" placeholder="CHEST BACK ARMS">
+                            <datalist id="workoutNameOptions"></datalist>
+                        </div>
+                        <div class="field">
+                            <label for="subtitleInput">Subtitle</label>
+                            <input id="subtitleInput" type="text" autocomplete="off" maxlength="200" placeholder="Chest + Back + Arms">
+                        </div>
                     </div>
+
+                    <div class="panel-title">
+                        <h3 id="selectedDayTitle">Exercises</h3>
+                        <span id="selectedDayCount" class="hint"></span>
+                    </div>
+                    <div id="plannedExercises" class="exercise-list"></div>
                 </div>
 
-                <div class="panel-title">
-                    <h3 id="selectedDayTitle">Exercises</h3>
-                    <span id="selectedDayCount" class="hint"></span>
+                <div id="importModeContent" hidden>
+                    <div class="panel-title">
+                        <h2>Import JSON</h2>
+                        <span class="hint">Paste the full training plan object.</span>
+                    </div>
+                    <div class="field full">
+                        <label for="importJsonInput">Training Plan JSON</label>
+                        <textarea id="importJsonInput" spellcheck="false" autocomplete="off" placeholder='{"schedule":["REST","REST","REST","REST","REST","REST","REST"],"workouts":{"REST":{"subtitle":"Recovery","exercises":[]}}}'></textarea>
+                    </div>
                 </div>
-                <div id="plannedExercises" class="exercise-list"></div>
 
                 <div id="validationBox" class="validation-box" hidden>
                     <h3>Validation</h3>
@@ -703,7 +782,7 @@
                 </div>
 
                 <div class="actions">
-                    <span class="hint">Saved format remains schedule plus workouts map.</span>
+                    <span class="hint">Saved format remains schedule plus workouts map, plus a debug timestamp.</span>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button id="validateBtn" class="btn" type="button">Validate Plan</button>
                         <button id="submitBtn" class="btn btn-primary" type="button" disabled>Submit Training Plan</button>
@@ -758,6 +837,7 @@
         const db = getFirestore(app);
         const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Same weekly config refresh window as app.html.
         const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const TRAINING_PLAN_DEBUG_TIMESTAMP_KEY = 'lastGeneratedAt';
 
         let currentUser = null;
         let exercisesData = {};
@@ -770,6 +850,7 @@
         let pendingPlan = null;
         let submitReady = false;
         let savedPlanFingerprint = '';
+        let planMode = 'build';
 
         const el = {
             loadingOverlay: document.getElementById('loadingOverlay'),
@@ -786,6 +867,9 @@
             selectedDayTitle: document.getElementById('selectedDayTitle'),
             selectedDayCount: document.getElementById('selectedDayCount'),
             plannedExercises: document.getElementById('plannedExercises'),
+            buildModeContent: document.getElementById('buildModeContent'),
+            importModeContent: document.getElementById('importModeContent'),
+            importJsonInput: document.getElementById('importJsonInput'),
             validationBox: document.getElementById('validationBox'),
             validationList: document.getElementById('validationList'),
             validateBtn: document.getElementById('validateBtn'),
@@ -793,6 +877,8 @@
             librarySearch: document.getElementById('librarySearch'),
             libraryList: document.getElementById('libraryList'),
             libraryCount: document.getElementById('libraryCount'),
+            libraryPanel: document.querySelector('.library-panel'),
+            planModeInputs: document.querySelectorAll('input[name="planMode"]'),
             confirmModal: document.getElementById('confirmModal'),
             confirmSummary: document.getElementById('confirmSummary'),
             cancelConfirmBtn: document.getElementById('cancelConfirmBtn'),
@@ -962,6 +1048,48 @@
             return JSON.parse(JSON.stringify(value));
         }
 
+        function formatLocalTimestampToSecond(date = new Date()) {
+            const pad = (value) => String(value).padStart(2, '0');
+            const offsetMinutes = -date.getTimezoneOffset();
+            const offsetSign = offsetMinutes >= 0 ? '+' : '-';
+            const absoluteOffsetMinutes = Math.abs(offsetMinutes);
+            const offsetHours = pad(Math.floor(absoluteOffsetMinutes / 60));
+            const offsetRemainderMinutes = pad(absoluteOffsetMinutes % 60);
+
+            return [
+                date.getFullYear(),
+                '-',
+                pad(date.getMonth() + 1),
+                '-',
+                pad(date.getDate()),
+                'T',
+                pad(date.getHours()),
+                ':',
+                pad(date.getMinutes()),
+                ':',
+                pad(date.getSeconds()),
+                offsetSign,
+                offsetHours,
+                ':',
+                offsetRemainderMinutes
+            ].join('');
+        }
+
+        function withTrainingPlanDebugTimestamp(plan) {
+            const planWithoutPreviousTimestamp = clone(plan || {});
+            delete planWithoutPreviousTimestamp[TRAINING_PLAN_DEBUG_TIMESTAMP_KEY];
+            return {
+                ...planWithoutPreviousTimestamp,
+                [TRAINING_PLAN_DEBUG_TIMESTAMP_KEY]: formatLocalTimestampToSecond()
+            };
+        }
+
+        function getComparableTrainingPlan(plan) {
+            const comparablePlan = clone(plan || {});
+            delete comparablePlan[TRAINING_PLAN_DEBUG_TIMESTAMP_KEY];
+            return comparablePlan;
+        }
+
         function isExerciseEntry(id, exercise) {
             return /^ex\d+$/.test(id) && exercise && typeof exercise === 'object';
         }
@@ -1125,15 +1253,20 @@
         }
 
         function getPlanFingerprint(plan) {
-            return JSON.stringify(plan);
+            return JSON.stringify(getComparableTrainingPlan(plan));
         }
 
-        function setSavedPlanSnapshot() {
-            savedPlanFingerprint = getPlanFingerprint(buildTrainingPlan());
+        function setSavedPlanSnapshot(plan = buildTrainingPlan()) {
+            savedPlanFingerprint = getPlanFingerprint(plan);
         }
 
         function hasUnsavedChanges() {
             if (!savedPlanFingerprint) return false;
+            if (planMode === 'import') {
+                const parsed = parseImportedTrainingPlan();
+                if (!parsed.valid) return el.importJsonInput.value.trim().length > 0;
+                return getPlanFingerprint(parsed.plan) !== savedPlanFingerprint;
+            }
             return getPlanFingerprint(buildTrainingPlan()) !== savedPlanFingerprint;
         }
 
@@ -1145,14 +1278,27 @@
         }
 
         function validateForSubmit() {
-            latestValidation = validatePlan(buildTrainingPlan());
+            const planResult = getActiveTrainingPlan();
+            latestValidation = planResult.valid
+                ? validatePlan(planResult.plan)
+                : { valid: false, errors: [planResult.error] };
             hasValidationResult = true;
             renderValidation();
             setSubmitReady(latestValidation.valid);
         }
 
+        function renderMode() {
+            el.buildModeContent.hidden = planMode !== 'build';
+            el.importModeContent.hidden = planMode !== 'import';
+            el.libraryPanel.hidden = planMode !== 'build';
+            if (planMode === 'import' && !el.importJsonInput.value.trim()) {
+                el.importJsonInput.value = JSON.stringify(buildTrainingPlan(), null, 2);
+            }
+        }
+
         function renderAll() {
             el.planName.textContent = originalTrainingPlan?.name || 'Training plan';
+            renderMode();
             renderDayGrid();
             renderSelectedDay();
             renderLibrary();
@@ -1184,8 +1330,34 @@
             };
         }
 
+        function parseImportedTrainingPlan() {
+            const raw = el.importJsonInput.value.trim();
+            if (!raw) {
+                return { valid: false, error: 'Paste a training plan JSON object before validating.' };
+            }
+
+            try {
+                const plan = JSON.parse(raw);
+                if (!plan || typeof plan !== 'object' || Array.isArray(plan)) {
+                    return { valid: false, error: 'Imported JSON must be one training plan object.' };
+                }
+                return { valid: true, plan };
+            } catch (error) {
+                return { valid: false, error: `Imported JSON is not valid: ${error.message}` };
+            }
+        }
+
+        function getActiveTrainingPlan() {
+            if (planMode === 'import') return parseImportedTrainingPlan();
+            return { valid: true, plan: buildTrainingPlan() };
+        }
+
         function validatePlan(plan) {
             const errors = [];
+            if (!plan || typeof plan !== 'object' || Array.isArray(plan)) {
+                return { valid: false, errors: ['Training plan must be one JSON object.'] };
+            }
+
             if (!Array.isArray(plan.schedule) || plan.schedule.length !== 7) {
                 errors.push('Schedule must contain exactly 7 entries.');
             }
@@ -1340,7 +1512,17 @@
 
         function openConfirmModal() {
             if (!submitReady) return;
-            pendingPlan = buildTrainingPlan();
+            const planResult = getActiveTrainingPlan();
+            if (!planResult.valid) {
+                pendingPlan = null;
+                latestValidation = { valid: false, errors: [planResult.error] };
+                hasValidationResult = true;
+                renderValidation();
+                setSubmitReady(false);
+                return;
+            }
+
+            pendingPlan = planResult.plan;
             latestValidation = validatePlan(pendingPlan);
             hasValidationResult = true;
             renderValidation();
@@ -1374,12 +1556,16 @@
             setSyncStatus('Saving', '');
 
             try {
-                await setDoc(getUserConfigDocRef('trainingPlan'), pendingPlan);
+                const planToSave = withTrainingPlanDebugTimestamp(pendingPlan);
+                await setDoc(getUserConfigDocRef('trainingPlan'), planToSave);
                 // Only refresh the local trainingPlan config cache after Firebase confirms
                 // the overwrite. Workout logs and workoutProgress are intentionally untouched.
-                writeCachedUserConfig('trainingPlan', pendingPlan);
-                originalTrainingPlan = clone(pendingPlan);
-                setSavedPlanSnapshot();
+                writeCachedUserConfig('trainingPlan', planToSave);
+                originalTrainingPlan = clone(planToSave);
+                editorDays = createEditorDays(originalTrainingPlan);
+                el.importJsonInput.value = JSON.stringify(originalTrainingPlan, null, 2);
+                setSavedPlanSnapshot(originalTrainingPlan);
+                renderAll();
                 setSubmitReady(false);
                 closeConfirmModal();
                 setSyncStatus('Saved', 'synced');
@@ -1408,6 +1594,19 @@
         el.workoutNameInput.addEventListener('input', updateSelectedDayFields);
         el.subtitleInput.addEventListener('input', updateSelectedDayFields);
         el.librarySearch.addEventListener('input', renderLibrary);
+        el.importJsonInput.addEventListener('input', markPlanDirty);
+
+        el.planModeInputs.forEach((input) => {
+            input.addEventListener('change', () => {
+                if (!input.checked) return;
+                planMode = input.value;
+                pendingPlan = null;
+                hasValidationResult = false;
+                setSubmitReady(false);
+                renderMode();
+                renderValidation();
+            });
+        });
 
         el.libraryList.addEventListener('click', (event) => {
             const button = event.target.closest('[data-add-exercise]');
