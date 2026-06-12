@@ -2270,21 +2270,29 @@
             return configId === 'exercises' && jsonPath === 'exercises.json';
         }
 
-        async function loadExercisesConfig(jsonPath) {
+        function isProgressionPlanConfig(configId, jsonPath) {
+            return configId === 'progressionPlan' && jsonPath === 'progression-plan.json';
+        }
+
+        function isVersionedSeedConfig(configId, jsonPath) {
+            return isExercisesConfig(configId, jsonPath) || isProgressionPlanConfig(configId, jsonPath);
+        }
+
+        async function loadVersionedSeedConfig(configId, jsonPath) {
             const localData = await fetchSeedConfig(jsonPath);
             const localUpdatedAt = parseConfigUpdatedDate(localData);
             if (localUpdatedAt === null) {
                 throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
             }
 
-            const cached = readCachedUserConfig('exercises');
+            const cached = readCachedUserConfig(configId);
             const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
             if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
                 return cached.data;
             }
 
             try {
-                const docRef = window.getUserConfigDocRef('exercises');
+                const docRef = window.getUserConfigDocRef(configId);
                 const snapshot = await window.firebaseGetDoc(docRef);
 
                 if (snapshot.exists()) {
@@ -2292,34 +2300,34 @@
                     const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
 
                     if (firebaseUpdatedAt === null) {
-                        console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
+                        console.warn(`Ignoring Firebase ${configId} config because it has no valid lastUpdatedDate. Syncing bundled ${jsonPath}.`);
                         await window.firebaseSetDoc(docRef, localData);
-                        writeCachedUserConfig('exercises', localData);
+                        writeCachedUserConfig(configId, localData);
                         return localData;
                     }
 
                     if (firebaseUpdatedAt >= localUpdatedAt) {
-                        writeCachedUserConfig('exercises', firebaseData);
+                        writeCachedUserConfig(configId, firebaseData);
                         return firebaseData;
                     }
                 }
 
                 await window.firebaseSetDoc(docRef, localData);
-                writeCachedUserConfig('exercises', localData);
+                writeCachedUserConfig(configId, localData);
                 return localData;
             } catch (error) {
                 if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                    console.warn('Using cached exercises config because Firebase refresh failed:', error);
+                    console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);
                     return cached.data;
                 }
-                console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
+                console.warn(`Using bundled ${jsonPath} because Firebase refresh failed:`, error);
                 return localData;
             }
         }
 
         async function loadUserConfig(configId, jsonPath) {
-            if (isExercisesConfig(configId, jsonPath)) {
-                return loadExercisesConfig(jsonPath);
+            if (isVersionedSeedConfig(configId, jsonPath)) {
+                return loadVersionedSeedConfig(configId, jsonPath);
             }
 
             const cached = readCachedUserConfig(configId);
