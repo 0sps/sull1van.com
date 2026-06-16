@@ -217,6 +217,16 @@
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.16);
         }
 
+        .btn-success:hover:not(:disabled) {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .btn-success:focus-visible {
+            outline-color: var(--success);
+        }
+
         .btn-danger {
             border-color: rgba(255, 61, 90, 0.5);
             color: var(--danger);
@@ -722,7 +732,7 @@
 
         <p class="page-copy">
             Edit the weekly schedule and exercise prescriptions. Changes stay local on this page until you submit and confirm,
-            then the plan is written to your Firebase training plan config.
+            then the plan is synced to the server.
         </p>
 
         <main class="editor-layout">
@@ -808,7 +818,7 @@
         <div class="modal">
             <h2 id="confirmTitle">Confirm Plan Update</h2>
             <p id="confirmSummary"></p>
-            <p>This will replace your current training plan at <strong>users/{email}/config/trainingPlan</strong>. The app cache updates only after Firebase accepts the write.</p>
+            <p>This will replace your current training plan. The app updates only after the server accepts the sync.</p>
             <div class="modal-actions">
                 <button id="cancelConfirmBtn" class="btn" type="button">Cancel</button>
                 <button id="confirmSaveBtn" class="btn btn-primary" type="button">Confirm Save</button>
@@ -1277,14 +1287,56 @@
             renderValidation();
         }
 
-        function validateForSubmit() {
+        async function loadFirebaseExercisesForValidation() {
+            const snapshot = await getDoc(getUserConfigDocRef('exercises'));
+            if (!snapshot.exists()) {
+                throw new Error('The server exercise list is not ready yet. Refresh the page so the editor can sync it, then validate again.');
+            }
+
+            const firebaseExercises = snapshot.data();
+            const exerciseCount = Object.entries(firebaseExercises || {})
+                .filter(([id, exercise]) => isExerciseEntry(id, exercise))
+                .length;
+
+            if (!exerciseCount) {
+                throw new Error('The server exercise list does not contain any valid exercise IDs.');
+            }
+
+            return firebaseExercises;
+        }
+
+        async function validateForSubmit() {
             const planResult = getActiveTrainingPlan();
-            latestValidation = planResult.valid
-                ? validatePlan(planResult.plan)
-                : { valid: false, errors: [planResult.error] };
-            hasValidationResult = true;
-            renderValidation();
-            setSubmitReady(latestValidation.valid);
+            if (!planResult.valid) {
+                latestValidation = { valid: false, errors: [planResult.error] };
+                hasValidationResult = true;
+                renderValidation();
+                setSubmitReady(false);
+                return latestValidation;
+            }
+
+            const originalButtonText = el.validateBtn.textContent;
+            el.validateBtn.disabled = true;
+            el.validateBtn.textContent = 'Validating...';
+            setSubmitReady(false);
+
+            try {
+                const firebaseExercises = await loadFirebaseExercisesForValidation();
+                latestValidation = validatePlan(planResult.plan, firebaseExercises);
+            } catch (error) {
+                latestValidation = {
+                    valid: false,
+                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                };
+            } finally {
+                hasValidationResult = true;
+                renderValidation();
+                setSubmitReady(latestValidation.valid);
+                el.validateBtn.disabled = false;
+                el.validateBtn.textContent = originalButtonText;
+            }
+
+            return latestValidation;
         }
 
         function renderMode() {
@@ -1352,7 +1404,7 @@
             return { valid: true, plan: buildTrainingPlan() };
         }
 
-        function validatePlan(plan) {
+        function validatePlan(plan, exerciseCatalog = exercisesData) {
             const errors = [];
             if (!plan || typeof plan !== 'object' || Array.isArray(plan)) {
                 return { valid: false, errors: ['Training plan must be one JSON object.'] };
@@ -1405,7 +1457,7 @@
                     const reps = String(exercise?.reps || '').trim();
 
                     if (!id) errors.push(`${label} needs an exercise id.`);
-                    if (id && !exercisesData[id]) errors.push(`${label} uses unknown exercise id "${id}".`);
+                    if (id && !exerciseCatalog?.[id]) errors.push(`${label} uses exercise id "${id}", which does not exist in the server exercise list.`);
                     if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
                     if (Number.isInteger(sets) && sets > 99) errors.push(`${label} sets is too high (max 99).`);
                     if (!reps) errors.push(`${label} needs a reps value.`);
@@ -1510,7 +1562,7 @@
             renderValidation();
         }
 
-        function openConfirmModal() {
+        async function openConfirmModal() {
             if (!submitReady) return;
             const planResult = getActiveTrainingPlan();
             if (!planResult.valid) {
@@ -1523,10 +1575,27 @@
             }
 
             pendingPlan = planResult.plan;
-            latestValidation = validatePlan(pendingPlan);
+            el.submitBtn.disabled = true;
+            el.submitBtn.textContent = 'Checking...';
+            try {
+                const firebaseExercises = await loadFirebaseExercisesForValidation();
+                latestValidation = validatePlan(pendingPlan, firebaseExercises);
+            } catch (error) {
+                latestValidation = {
+                    valid: false,
+                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                };
+            } finally {
+                el.submitBtn.textContent = 'Submit Training Plan';
+                el.submitBtn.disabled = false;
+            }
+
             hasValidationResult = true;
             renderValidation();
-            if (!latestValidation.valid) return;
+            if (!latestValidation.valid) {
+                setSubmitReady(false);
+                return;
+            }
             setSubmitReady(true);
 
             const exerciseCount = Object.values(pendingPlan.workouts).reduce((sum, workout) => sum + workout.exercises.length, 0);
@@ -1542,7 +1611,17 @@
         async function savePendingPlan() {
             if (!pendingPlan) return;
 
-            const validation = validatePlan(pendingPlan);
+            let validation;
+            try {
+                const firebaseExercises = await loadFirebaseExercisesForValidation();
+                validation = validatePlan(pendingPlan, firebaseExercises);
+            } catch (error) {
+                validation = {
+                    valid: false,
+                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                };
+            }
+
             if (!validation.valid) {
                 latestValidation = validation;
                 hasValidationResult = true;
