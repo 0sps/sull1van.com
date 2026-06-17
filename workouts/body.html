@@ -1009,8 +1009,9 @@ document.addEventListener('keydown', (event) => {
 // HEIGHT DISPLAY
 // ============================================================================
 function formatHeightFtIn(inches) {
-    const ft = Math.floor(inches / 12);
-    const remainIn = Math.round(inches % 12);
+    const totalInches = Math.round(inches);
+    const ft = Math.floor(totalInches / 12);
+    const remainIn = totalInches % 12;
     return `${ft}ft ${remainIn}in`;
 }
 
@@ -1836,7 +1837,7 @@ function explorerProfile() {
 function getExplorerRows(eventKey, ageGroup, genderIdx, gender) {
     const event = PFRA_EVENTS[eventKey];
     if (eventKey === 'whtr') {
-        return WHTR_TABLE.map(row => ({ pts: row.pts, value: row.max, zone: row.pts >= 18 ? 'Elite' : row.pts >= 10 ? 'Passing' : row.pts >= 2.5 ? 'Minimum' : 'No score' }));
+        return WHTR_TABLE.map(row => ({ pts: row.pts, value: row.max, zone: row.pts >= 18 ? 'Elite' : row.pts >= PFRA_EVENTS.whtr.pass ? 'Passing' : 'No score' }));
     }
     if (eventKey === 'walk') {
         return [{ pts: 'PASS', value: WALK_MAX[gender][ageGroup], zone: 'Max allowed time' }];

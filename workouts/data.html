@@ -1277,6 +1277,18 @@
             return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         }
 
+        function parseDateInputAsLocalDate(value, endOfDay = false) {
+            const parts = String(value || '').split('-').map(Number);
+            if (parts.length !== 3 || parts.some(part => !Number.isInteger(part))) {
+                return null;
+            }
+
+            const [year, month, day] = parts;
+            const date = new Date(year, month - 1, day);
+            date.setHours(endOfDay ? 23 : 0, endOfDay ? 59 : 0, endOfDay ? 59 : 0, endOfDay ? 999 : 0);
+            return date;
+        }
+
         function updateSelectionControls() {
             const count = selectedLogIds.size;
             const countEl = document.getElementById('selectionCount');
@@ -1326,8 +1338,16 @@
 
             try {
                 showLoading(true, "Searching date range...");
-                const startISO = new Date(start).toISOString();
-                const endISO = new Date(new Date(end).setHours(23, 59, 59, 999)).toISOString();
+                const startDate = parseDateInputAsLocalDate(start);
+                const endDate = parseDateInputAsLocalDate(end, true);
+
+                if (!startDate || !endDate) {
+                    showToast("Invalid date range", "error");
+                    return;
+                }
+
+                const startISO = startDate.toISOString();
+                const endISO = endDate.toISOString();
 
                 const q = query(
                     getWorkoutCollectionRef(),
@@ -1482,9 +1502,17 @@
                 const updatedData = JSON.parse(editor.value);
                 const originalId = editor.dataset.originalId;
 
+                if (!updatedData || typeof updatedData !== 'object' || Array.isArray(updatedData)) {
+                    throw new Error("Root value must be a JSON object");
+                }
+
+                if (updatedData.id === undefined || updatedData.id === null || updatedData.id === '') {
+                    throw new Error("Missing required 'id' field");
+                }
+
                 // Validate ID consistency
                 if (updatedData.id.toString() !== originalId.toString()) {
-                    if (!confirm("The 'id' in JSON has changed. This will create a NEW document. Continue?")) return;
+                    if (!confirm("The 'id' in JSON has changed. This will move the log to the new document ID and delete the old document. Continue?")) return;
                 }
 
                 // Run full validation
@@ -1621,15 +1649,23 @@
         async function executeSave(data, originalId) {
             showLoading(true, "Saving to Firebase...");
             try {
-                await setDoc(getWorkoutDocRef(data.id), data);
+                const nextId = data.id.toString();
+                const previousId = originalId.toString();
+                await setDoc(getWorkoutDocRef(nextId), data);
+
+                if (nextId !== previousId) {
+                    await deleteDoc(getWorkoutDocRef(previousId));
+                    selectedLogIds.delete(previousId);
+                    activeLogId = nextId;
+                }
 
                 // Update local state
-                const idx = currentLogs.findIndex(l => l.id.toString() === originalId.toString());
+                const idx = currentLogs.findIndex(l => l.id.toString() === previousId);
                 if (idx !== -1) currentLogs[idx] = data;
                 else currentLogs.unshift(data);
 
                 renderLogList(currentLogs);
-                selectLog(data.id.toString());
+                selectLog(nextId);
                 showToast("Log saved successfully");
                 document.getElementById('validationMsg').textContent = "";
             } catch (err) {

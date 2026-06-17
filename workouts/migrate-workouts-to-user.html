@@ -132,7 +132,7 @@
         </p>
 
         <label for="targetEmail">Target user email</label>
-        <input id="targetEmail" value="sspsful@gmail.com" autocomplete="email">
+        <input id="targetEmail" placeholder="you@example.com" autocomplete="email">
 
         <div>
             <button id="signInBtn">Sign in with Google</button>
@@ -241,14 +241,22 @@
                 if (!user) throw new Error('Sign in first.');
 
                 const email = targetEmail();
-                log(`Starting copy to users/${email}/workouts...`);
+                const beforeCounts = await readCounts(email);
+                if (beforeCounts.target > 0) {
+                    const ok = confirm(`users/${email}/workouts already has ${beforeCounts.target} documents. Copying will merge source fields into matching workout documents. Continue?`);
+                    if (!ok) {
+                        log('Copy cancelled.');
+                        return;
+                    }
+                }
 
-                await setDoc(doc(db, 'users', email), {
-                    email,
-                    migratedFrom: 'workouts',
-                    migratedBy: user.email || '',
-                    migratedAt: new Date().toISOString()
-                }, { merge: true });
+                const ok = confirm(`Copy ${beforeCounts.source} workouts to users/${email}/workouts?`);
+                if (!ok) {
+                    log('Copy cancelled.');
+                    return;
+                }
+
+                log(`Starting copy to users/${email}/workouts...`);
 
                 const sourceSnapshot = await getDocs(collection(db, 'workouts'));
                 log(`Found ${sourceSnapshot.size} source workouts.`);
@@ -259,7 +267,7 @@
 
                 for (const sourceDoc of sourceSnapshot.docs) {
                     const targetRef = doc(db, 'users', email, 'workouts', sourceDoc.id);
-                    batch.set(targetRef, sourceDoc.data());
+                    batch.set(targetRef, sourceDoc.data(), { merge: true });
                     pending += 1;
                     copied += 1;
 
@@ -274,6 +282,14 @@
                 if (pending > 0) {
                     await batch.commit();
                 }
+
+                await setDoc(doc(db, 'users', email), {
+                    email,
+                    migratedFrom: 'workouts',
+                    migratedBy: user.email || '',
+                    migratedAt: new Date().toISOString(),
+                    migratedWorkoutCount: copied
+                }, { merge: true });
 
                 const counts = await readCounts(email);
                 log(`Done. Source: ${counts.source}. Target: ${counts.target}.`, 'success');

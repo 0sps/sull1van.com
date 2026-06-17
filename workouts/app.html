@@ -3059,6 +3059,28 @@
             return `<div class="empty-state"><div class="empty-state-icon">${icon}</div><p>${message}</p></div>`;
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function escapeAttr(value) {
+            return escapeHtml(value);
+        }
+
+        function escapeJsString(value) {
+            return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        }
+
+        function escapeInlineJsString(value) {
+            return escapeAttr(escapeJsString(value));
+        }
+
         function showButtonSuccess(button, label = 'WORKOUT SAVED!', duration = 2000, afterRestore = null, showToast = true) {
             if (!button) return;
             const originalText = button.textContent;
@@ -3079,6 +3101,14 @@
 
         function formatDateFull(date) {
             return formatDate(date, DateFormats.FULL);
+        }
+
+        function getLocalDateKey(date) {
+            const localDate = new Date(date);
+            const year = localDate.getFullYear();
+            const month = String(localDate.getMonth() + 1).padStart(2, '0');
+            const day = String(localDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
 
 
@@ -3309,7 +3339,17 @@
 
         function getExerciseForUI(id) {
             const data = exercisesData[id];
-            if (!data) return null;
+            if (!data) {
+                return {
+                    id: id,
+                    name: `Unknown Exercise (${id})`,
+                    muscles: [],
+                    category: 'Missing',
+                    equipment: '',
+                    instructions: 'This exercise is referenced by a log or plan but is missing from the exercise library.',
+                    notes: ''
+                };
+            }
             return {
                 id: id,
                 name: data.name,
@@ -3334,7 +3374,7 @@
         function formatDateForCSV(date) {
             const d = new Date(date);
             const pad = n => String(n).padStart(2, '0');
-            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} +0000`;
+            return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} +0000`;
         }
 
         function compareLogIds(id1, id2) { return id1.toString() === id2.toString(); }
@@ -3439,9 +3479,9 @@
             if (isEdit) {
                 commonAttrs = `data-mode="edit" data-ex-idx="${exIdx}" data-set-idx="${setIdx}"`;
             } else if (isManual) {
-                commonAttrs = `data-mode="manual" data-exercise="${key}" data-set="${setIdx}"`;
+                commonAttrs = `data-mode="manual" data-exercise="${escapeAttr(key)}" data-set="${setIdx}"`;
             } else {
-                commonAttrs = `data-mode="workout" data-exercise="${key}" data-set="${setIdx}"`;
+                commonAttrs = `data-mode="workout" data-exercise="${escapeAttr(key)}" data-set="${setIdx}"`;
             }
 
             const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
@@ -3453,9 +3493,9 @@
                     <span class="set-label">Set ${setIdx + 1}</span>
                     <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
                     <div class="set-inputs">
-                        <input type="number" class="${inputClass}" placeholder="${repsPlaceholder}" value="${reps || ''}" data-type="reps" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" placeholder="${escapeAttr(repsPlaceholder)}" value="${escapeAttr(reps || '')}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
-                        <input type="number" class="${inputClass}" placeholder="${weightPlaceholder}" value="${displayWeightValue || ''}" data-type="weight" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" placeholder="${escapeAttr(weightPlaceholder)}" value="${escapeAttr(displayWeightValue || '')}" data-type="weight" ${commonAttrs}>
                     </div>
                 </div>`;
         }
@@ -3470,8 +3510,8 @@
 
             const headerActions = isEdit ? '' : `
                 <div class="exercise-meta-col">
-                    <button class="btn-history" data-exercise-name="${exercise.name}">History</button>
-                    ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${key}" data-exercise-key="${key}">Coach</button>` : ''}
+                    <button class="btn-history" data-exercise-name="${escapeAttr(exercise.name)}">History</button>
+                    ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${escapeAttr(key)}" data-exercise-key="${escapeAttr(key)}">Coach</button>` : ''}
                 </div>`;
 
             const footerActions = isEdit ? `
@@ -3481,21 +3521,21 @@
                     <button class="btn btn-danger btn-small" data-action="remove-exercise" data-ex-idx="${exIdx}">Remove Exercise</button>
                 </div>` : `
                 <div class="button-row">
-                    <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="workout" data-exercise-key="${key}" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
-                    <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="workout" data-exercise-key="${key}">+ Add Set</button>
+                    <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
+                    <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}">+ Add Set</button>
                 </div>`;
 
             const volumeIndicator = isEdit ? '' : `
-                <div class="exercise-volume" id="exercise-volume-${key}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
+                <div class="exercise-volume" id="exercise-volume-${escapeAttr(key)}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
 
             return `
-                <div class="exercise-item" id="${isEdit ? '' : `exercise-${key}`}" data-mode="${mode}">
+                <div class="exercise-item" id="${isEdit ? '' : `exercise-${escapeAttr(key)}`}" data-mode="${mode}">
                     <div class="exercise-header">
                         <div class="exercise-info-col">
-                            <h4 class="exercise-name ${isEdit ? '' : 'cursor-pointer'}" ${isEdit ? '' : `data-exercise-id="${exercise.id}"`}>
-                                ${exercise.name.toUpperCase()}
+                            <h4 class="exercise-name ${isEdit ? '' : 'cursor-pointer'}" ${isEdit ? '' : `data-exercise-id="${escapeAttr(exercise.id)}"`}>
+                                ${escapeHtml(String(exercise.name || '').toUpperCase())}
                             </h4>
-                            <p class="exercise-muscles">${(exercise.muscles || []).join(' • ')}</p>
+                            <p class="exercise-muscles">${escapeHtml((exercise.muscles || []).join(' • '))}</p>
                         </div>
                         ${headerActions}
                     </div>
@@ -3523,11 +3563,11 @@
                 <div class="log-entry">
                     ${isFull ? `<div class="log-entry-content"><div>` : ''}
                     <div class="log-date">${dateStr}</div>
-                    <div class="log-workout-name">${log.workoutName}</div>
+                    <div class="log-workout-name">${escapeHtml(log.workoutName)}</div>
                     <div class="log-stats">${totalSets} sets • ${displayVol} lbs</div>
                     <div class="log-actions">
-                        <button class="btn btn-secondary btn-small" data-action="view-log" data-log-id="${log.id}">View</button>
-                        <button class="btn btn-export btn-small" data-action="export-log" data-log-id="${log.id}">CSV</button>
+                        <button class="btn btn-secondary btn-small" data-action="view-log" data-log-id="${escapeAttr(log.id)}">View</button>
+                        <button class="btn btn-export btn-small" data-action="export-log" data-log-id="${escapeAttr(log.id)}">CSV</button>
                     </div>
                     ${isFull ? `</div></div>` : ''}
                 </div>`;
@@ -3831,6 +3871,24 @@
                     };
                 })
             };
+        }
+
+        function getWorkoutDayNumber(dayIndex) {
+            if (!trainingPlanData) return dayIndex + 1;
+            let workoutNumber = 0;
+
+            for (let i = 0; i <= dayIndex; i++) {
+                const workout = getWorkoutData(i);
+                if (workout && workout.exercises.length > 0) workoutNumber++;
+            }
+
+            return workoutNumber;
+        }
+
+        function getWorkoutDayBadge(dayIndex) {
+            const workout = getWorkoutData(dayIndex);
+            if (!workout || workout.exercises.length === 0) return 'REST';
+            return `DAY ${getWorkoutDayNumber(dayIndex)}`;
         }
 
         // --- Firebase Error Handling Wrapper ---
@@ -4282,7 +4340,7 @@
             }
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
-            document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay + 1}`;
+            document.getElementById('workoutDayBadge').textContent = getWorkoutDayBadge(currentWorkoutDay);
             document.getElementById('workoutName').textContent = workout.name;
             const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets || 0), 0);
             document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${totalSets} Sets Total`;
@@ -4912,7 +4970,7 @@
 
                 html += `
                     <div class="m-b-16">
-                        <h4 class="exercise-name cursor-pointer" onclick="showInstructions('${exerciseId}')">${ex.name}</h4>
+                        <h4 class="exercise-name cursor-pointer" onclick="showInstructions('${escapeInlineJsString(exerciseId)}')">${escapeHtml(ex.name)}</h4>
                         <div class="grid-4">${setsHtml}</div>
                         <div class="exercise-volume">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>
                     </div>`;
@@ -4974,7 +5032,7 @@
             const goalLbsLabel = targetPlanWeightKg !== null ? formatWeightLbs(targetPlanWeightKg) : 'No goal';
             const confidence = target.confidence || coach.getCoachConfidence(target.recentSessions?.length || 0);
             const lowConfidenceNote = confidence.className === 'low'
-                ? `<div class="coach-low-confidence-note">${confidence.detail}. Use the block plan today if the recommendation is uncertain.</div>`
+                ? `<div class="coach-low-confidence-note">${escapeHtml(confidence.detail)}. Use the block plan today if the recommendation is uncertain.</div>`
                 : '';
             const confidenceLevel = confidence.className === 'low' ? 1 : 3;
             const confidenceBars = [1, 2, 3].map(level => {
@@ -4982,6 +5040,11 @@
                 const lowClass = confidence.className === 'low' ? 'low' : '';
                 return `<span class="coach-signal-bar ${activeClass} ${lowClass}"></span>`;
             }).join('');
+            const planNameLabel = escapeHtml(progressionPlanData?.progressionPlanName || 'Training Plan');
+            const exerciseNameLabel = escapeHtml((exercise?.name || target.exerciseId).toUpperCase());
+            const confidenceLabel = escapeHtml(confidence.label);
+            const confidenceClass = confidence.className === 'low' ? 'low' : 'high';
+            const paceClass = ['ahead', 'on-track', 'behind'].includes(pace.className) ? pace.className : '';
 
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
@@ -4991,8 +5054,8 @@
                             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
                         <div>
-                            <div class="training-coach-kicker">${progressionPlanData?.progressionPlanName || 'Training Plan'}</div>
-                            <div class="training-coach-name">${(exercise?.name || target.exerciseId).toUpperCase()}</div>
+                            <div class="training-coach-kicker">${planNameLabel}</div>
+                            <div class="training-coach-name">${exerciseNameLabel}</div>
                         </div>
                     </div>
 
@@ -5008,7 +5071,7 @@
                                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                                     <span>Today's Target</span>
                                 </div>
-                                <div class="coach-confidence-badge ${confidence.className}">${confidence.label} Confidence</div>
+                                <div class="coach-confidence-badge ${confidenceClass}">${confidenceLabel} Confidence</div>
                             </div>
                             
                             <div class="coach-dial-container">
@@ -5019,16 +5082,16 @@
                                 </div>
                             </div>
                             
-                            <div class="coach-command-reps">${target.repRange.label} Reps</div>
+                            <div class="coach-command-reps">${escapeHtml(target.repRange.label)} Reps</div>
                             
                             <div class="training-plan-rule-row">
                                 <div class="training-plan-rule">
                                     <div class="training-plan-rule-label">Complete</div>
-                                    <div class="training-plan-rule-value">${target.repRange.min}+ reps</div>
+                                    <div class="training-plan-rule-value">${escapeHtml(target.repRange.min)}+ reps</div>
                                 </div>
                                 <div class="training-plan-rule progress">
                                     <div class="training-plan-rule-label">Progress</div>
-                                    <div class="training-plan-rule-value">${target.repRange.max} reps</div>
+                                    <div class="training-plan-rule-value">${escapeHtml(target.repRange.max)} reps</div>
                                 </div>
                             </div>
                             ${lowConfidenceNote}
@@ -5040,22 +5103,22 @@
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:middle;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                                     <span>Signal Quality</span>
                                 </div>
-                                <div class="coach-signal-meter" aria-label="${confidence.label} confidence">
+                                <div class="coach-signal-meter" aria-label="${escapeAttr(confidence.label)} confidence">
                                     ${confidenceBars}
                                 </div>
                                 <div class="training-plan-pace-mini">
                                     <span>Confidence Rating</span>
-                                    <strong class="${confidence.className === 'low' ? 'text-error' : 'text-success'}">${confidence.label}</strong>
+                                    <strong class="${confidence.className === 'low' ? 'text-error' : 'text-success'}">${confidenceLabel}</strong>
                                 </div>
                             </div>
 
-                            <div class="coach-glass-card ${pace.className}">
+                            <div class="coach-glass-card ${paceClass}">
                                 <div class="training-plan-pace-label">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:middle;"><path d="M22 12A10 10 0 0 0 2 12M12 2v4M20 20l-4-4M12 12l2-4"/></svg>
                                     <span>Block Pace</span>
                                 </div>
-                                <div class="training-plan-pace-value ${pace.className}">${pace.label}</div>
-                                <div class="training-plan-pace-detail">${pace.detail}</div>
+                                <div class="training-plan-pace-value ${paceClass}">${escapeHtml(pace.label)}</div>
+                                <div class="training-plan-pace-detail">${escapeHtml(pace.detail)}</div>
                                 <div class="training-plan-progress-track">
                                     <div class="training-plan-progress-fill" style="width: ${progressPercent}%"></div>
                                 </div>
@@ -5082,7 +5145,7 @@
                         <div class="coach-glass-card training-plan-phase-panel">
                             <div class="training-plan-panel-top">
                                 <div>
-                                    <div class="training-plan-panel-title">Block Progress Since ${startDate}</div>
+                                    <div class="training-plan-panel-title">Block Progress Since ${escapeHtml(startDate)}</div>
                                     <div class="training-plan-panel-subtitle">Current load vs baseline, goal, and today's plan line</div>
                                 </div>
                                 <div class="training-plan-phase-percent">${progressPercent}%</div>
@@ -5183,7 +5246,8 @@
             for (let i = 0; i < CONFIG.HISTORY_LIMIT_DAYS; i++) {
                 const checkDate = new Date(today);
                 checkDate.setDate(checkDate.getDate() - i);
-                const hasWorkout = workoutLogs.some(log => new Date(log.date).toDateString() === checkDate.toDateString());
+                const checkDateKey = getLocalDateKey(checkDate);
+                const hasWorkout = workoutLogs.some(log => getLocalDateKey(log.date) === checkDateKey);
                 const isRestDay = getWorkoutData(checkDate.getDay()).exercises.length === 0;
                 if (hasWorkout) {
                     streak++;
@@ -5226,8 +5290,8 @@
                 <div class="plan-day" id="plan-${idx}">
                     <div class="plan-day-header" onclick="togglePlanDay('${idx}')">
                         <div>
-                            <div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${idx + 1} - ${workout.name}`}</div>
-                            <div class="plan-day-subtitle">${label} • ${workout.subtitle}</div>
+                            <div class="plan-day-title">${isRest ? 'REST DAY' : `DAY ${getWorkoutDayNumber(idx)} - ${escapeHtml(workout.name)}`}</div>
+                            <div class="plan-day-subtitle">${escapeHtml(label)} • ${escapeHtml(workout.subtitle)}</div>
                         </div>
                         <span class="toggle-arrow">▼</span>
                     </div>
@@ -5237,8 +5301,8 @@
                     return `
                             <div class="plan-exercise">
                                 <div class="plan-exercise-row">
-                                    <span class="cursor-pointer text-bold exercise-name-col" onclick="showInstructions('${exercise.id}')">${exercise.name}</span>
-                                    <span class="text-accent exercise-stats-col">${ex.sets} × ${ex.reps}</span>
+                                    <span class="cursor-pointer text-bold exercise-name-col" onclick="showInstructions('${escapeInlineJsString(exercise.id)}')">${escapeHtml(exercise.name)}</span>
+                                    <span class="text-accent exercise-stats-col">${escapeHtml(ex.sets)} × ${escapeHtml(ex.reps)}</span>
                                 </div>
                             </div>`;
                 }).join('')}
@@ -5253,7 +5317,7 @@
 
             document.getElementById('muscleFilter').innerHTML = `
                 <span class="filter-chip ${!activeFilter ? 'active' : ''}" onclick="filterLibrary(null)">All</span>
-                ${categories.map(cat => `<span class="filter-chip ${activeFilter === cat ? 'active' : ''}" onclick="filterLibrary('${cat}')">${cat}</span>`).join('')}`;
+                ${categories.map(cat => `<span class="filter-chip ${activeFilter === cat ? 'active' : ''}" onclick="filterLibrary('${escapeInlineJsString(cat)}')">${escapeHtml(cat)}</span>`).join('')}`;
 
             const searchTerm = document.getElementById('librarySearch')?.value?.toLowerCase() || '';
             const filtered = exercisesList.filter(ex =>
@@ -5262,10 +5326,10 @@
             );
 
             document.getElementById('libraryGrid').innerHTML = filtered.map(ex => `
-                <div class="library-exercise" onclick="showExerciseInfo('${ex.id}')">
-                    <h4 class="library-exercise-name">${ex.name}</h4>
-                    <p class="library-exercise-muscles">${ex.muscles.join(' • ')}</p>
-                    <span class="library-exercise-category">${ex.category}</span>
+                <div class="library-exercise" onclick="showExerciseInfo('${escapeInlineJsString(ex.id)}')">
+                    <h4 class="library-exercise-name">${escapeHtml(ex.name)}</h4>
+                    <p class="library-exercise-muscles">${escapeHtml(ex.muscles.join(' • '))}</p>
+                    <span class="library-exercise-category">${escapeHtml(ex.category)}</span>
                 </div>`).join('');
         }
         function filterLibrary(category) { activeFilter = category; renderLibrary(); }
@@ -5273,7 +5337,7 @@
             const ex = getExerciseForUI(id);
             if (!ex) return;
             document.getElementById('modalExerciseName').textContent = ex.name;
-            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong class="text-bold">Category:</strong> ${ex.category}</p><p><strong class="text-bold">Equipment:</strong> ${ex.equipment}</p><p><strong class="text-bold">Target:</strong> ${ex.muscles.join(', ')}</p><div class="hr-muted"></div><p class="m-b-16"><strong class="text-bold">Instructions:</strong><br>${ex.instructions || "No instructions given"}</p><div class="hr-muted"></div><p class="text-sm text-muted"><strong class="text-bold">CSV Name:</strong> ${getExportName(id)}</p><p class="text-sm text-muted"><strong class="text-bold">Multiplier:</strong> ${getMultiplier(id)}</p>`;
+            document.getElementById('modalExerciseDetails').innerHTML = `<p><strong class="text-bold">Category:</strong> ${escapeHtml(ex.category)}</p><p><strong class="text-bold">Equipment:</strong> ${escapeHtml(ex.equipment)}</p><p><strong class="text-bold">Target:</strong> ${escapeHtml(ex.muscles.join(', '))}</p><div class="hr-muted"></div><p class="m-b-16"><strong class="text-bold">Instructions:</strong><br>${escapeHtml(ex.instructions || "No instructions given")}</p><div class="hr-muted"></div><p class="text-sm text-muted"><strong class="text-bold">CSV Name:</strong> ${escapeHtml(getExportName(id))}</p><p class="text-sm text-muted"><strong class="text-bold">Multiplier:</strong> ${escapeHtml(getMultiplier(id))}</p>`;
             // Hide Edit button for library view
             const modal = document.getElementById('exerciseModal');
             modal.dataset.logId = '';
@@ -5282,14 +5346,17 @@
             openModal('exerciseModal');
         }
         function switchWorkout() {
-            const labels = ['Sunday - Day 1', 'Monday - Day 2', 'Tuesday - Day 3', 'Wednesday - Rest', 'Thursday - Day 4', 'Friday - Day 5', 'Saturday - Day 6'];
+            const labels = dayNames.map((day, idx) => {
+                const workout = getWorkoutData(idx);
+                return workout.exercises.length === 0 ? `${day} - Rest` : `${day} - Day ${getWorkoutDayNumber(idx)}`;
+            });
             document.getElementById('daySelector').innerHTML = labels.map((label, idx) => {
                 const workout = getWorkoutData(idx);
                 const isCurrent = idx === currentWorkoutDay;
                 return `
                 <div class="day-selector-item ${isCurrent ? 'active' : ''}" onclick="selectWorkoutDay(${idx})">
-                    <div class="exercise-name text-lg">${workout.name}</div>
-                    <div class="text-muted-xs">${label}</div>
+                    <div class="exercise-name text-lg">${escapeHtml(workout.name)}</div>
+                    <div class="text-muted-xs">${escapeHtml(label)}</div>
                 </div>`;
             }).join('');
             openModal('switchModal');
@@ -5302,7 +5369,7 @@
             // Update header labels (badge, name, meta)
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
-            document.getElementById('workoutDayBadge').textContent = isRest ? 'REST' : `DAY ${currentWorkoutDay + 1}`;
+            document.getElementById('workoutDayBadge').textContent = getWorkoutDayBadge(currentWorkoutDay);
             document.getElementById('workoutName').textContent = workout.name;
             const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets || 0), 0);
             document.getElementById('workoutMeta').textContent = isRest ? workout.subtitle : `${workout.subtitle} • ${totalSets} Sets Total`;
@@ -5432,9 +5499,9 @@
             }
 
             resultsContainer.innerHTML = matches.map(([id, data]) => `
-                <div class="history-set" style="cursor: pointer; border-left: 3px solid var(--accent-secondary);" onclick="selectManualExercise('${id}')">
+                <div class="history-set" style="cursor: pointer; border-left: 3px solid var(--accent-secondary);" onclick="selectManualExercise('${escapeInlineJsString(id)}')">
                     <div class="set-info">
-                        <span class="set-weight">${data.name}</span>
+                        <span class="set-weight">${escapeHtml(data.name)}</span>
                     </div>
                 </div>
             `).join('');

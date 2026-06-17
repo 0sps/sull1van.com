@@ -1765,7 +1765,7 @@
             const start = getProgressionStartDate();
             for (const log of workoutLogs) {
                 const logDate = new Date(log.date);
-                if (logDate < start) break;
+                if (logDate < start) continue;
                 const exerciseLogs = (log.exercises || []).filter(ex => ex.id === exerciseId);
                 if (exerciseLogs.length === 0) continue;
 
@@ -1797,7 +1797,7 @@
             for (const log of workoutLogs.slice().reverse()) {
                 const logDate = new Date(log.date);
                 if (logDate < start) continue;
-                const dayKey = logDate.toISOString().slice(0, 10);
+                const dayKey = getLocalDateKey(logDate);
                 const exerciseLogs = (log.exercises || []).filter(ex => ex.id === exerciseId);
                 if (exerciseLogs.length === 0) continue;
 
@@ -1841,7 +1841,8 @@
                 const baselineKg = Number(entry.planExercise.baselineWeightKg);
                 const coachConfig = getCoachConfig(entry.planExercise);
                 const signalSessions = getRecentLiftSessions(entry.id, 14);
-                const bestSignal = getBestEstimatedMaxSignal(signalSessions.slice(0, coachConfig.lookbackSessions || 2), coachConfig);
+                const windowedSignalSessions = signalSessions.slice(0, coachConfig.lookbackSessions || 2);
+                const bestSignal = getBestEstimatedMaxSignal(windowedSignalSessions, coachConfig);
                 const targetSignalKg = coachConfig.method === 'estimatedMax'
                     ? calculateEstimatedMaxKg(targetTodayKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
                     : null;
@@ -1863,7 +1864,7 @@
                     coachConfig,
                     signalSessions,
                     bestSignal,
-                    confidence: getCoachConfidence(signalSessions.length),
+                    confidence: getCoachConfidence(windowedSignalSessions.length),
                     dailyAverages: getDailyAverages(entry.id)
                 };
                 row.status = getPlanStatus(row);
@@ -2184,9 +2185,9 @@
             const yForKg = kg => margin.top + (1 - ((kg - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
             const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.chartKg).toFixed(1)}`).join(' ');
             const planPoints = [
-                { date: start.toISOString().slice(0, 10), kg: baselineValueKg },
-                { date: new Date().toISOString().slice(0, 10), kg: targetTodayValueKg },
-                { date: end.toISOString().slice(0, 10), kg: goalValueKg }
+                { date: getLocalDateKey(start), kg: baselineValueKg },
+                { date: getLocalDateKey(new Date()), kg: targetTodayValueKg },
+                { date: getLocalDateKey(end), kg: goalValueKg }
             ];
             const planPath = planPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.kg).toFixed(1)}`).join(' ');
             const yTicks = [yMin, (yMin + yMax) / 2, yMax];
