@@ -269,7 +269,7 @@
 
         function getRedirectTarget() {
             const redirect = new URLSearchParams(window.location.search).get('redirect');
-            const allowedTargets = new Set(['app.html', 'progression.html', 'body.html', 'data.html', 'training-plan-editor.html']);
+            const allowedTargets = new Set(['app.html', 'progression.html', 'data.html', 'training-plan-editor.html']);
             return allowedTargets.has(redirect) ? redirect : 'app.html';
         }
 

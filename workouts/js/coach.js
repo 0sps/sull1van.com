@@ -94,6 +94,15 @@
             return (sets || []).filter(set => !set.isWarmup);
         }
 
+        function getLogExercises(log) {
+            return Array.isArray(log?.exercises) ? log.exercises : [];
+        }
+
+        function parseValidDate(value) {
+            const date = new Date(value);
+            return Number.isFinite(date.getTime()) ? date : null;
+        }
+
         function normalizeSet(set) {
             const parsedWeight = parseFloat(set.weight);
             return {
@@ -156,7 +165,7 @@
             const sourceLogs = getLogs().slice(0, logLimit);
 
             for (const log of sourceLogs) {
-                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                const exerciseLog = getLogExercises(log).find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
@@ -284,10 +293,11 @@
             if (!startDate || workoutLogs.length === 0) return null;
 
             for (const log of workoutLogs) {
-                const logDate = new Date(log.date);
+                const logDate = parseValidDate(log.date);
+                if (!logDate) continue;
                 if (logDate < startDate) break;
 
-                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                const exerciseLog = getLogExercises(log).find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
@@ -413,10 +423,11 @@
 
             let baseline = null;
             for (const log of workoutLogs) {
-                const logDate = new Date(log.date);
+                const logDate = parseValidDate(log.date);
+                if (!logDate) continue;
                 if (logDate < startDate) break;
 
-                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                const exerciseLog = getLogExercises(log).find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
@@ -436,10 +447,11 @@
             const sessions = [];
 
             for (const log of getLogs()) {
-                const logDate = new Date(log.date);
+                const logDate = parseValidDate(log.date);
+                if (!logDate) continue;
                 if (logDate < effectiveCutoff) break;
 
-                const exerciseLog = log.exercises.find(ex => ex.id === exerciseId);
+                const exerciseLog = getLogExercises(log).find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
@@ -486,9 +498,13 @@
                 return '<div class="training-plan-chart-empty">No progression logs in the last 14 days.</div>';
             }
 
-            const chartSessions = [...sessions].reverse();
+            const chartSessions = [...sessions].filter(session => parseValidDate(session?.log?.date)).reverse();
+            if (chartSessions.length === 0) {
+                return '<div class="training-plan-chart-empty">No chartable progression logs in the last 14 days.</div>';
+            }
             const baselineWeightKg = baseline.representativeWeightKg;
             const points = chartSessions.map(session => {
+                const sessionDate = parseValidDate(session.log.date);
                 const plannedWeightKg = getPlannedWeightKgForDate(
                     baselineWeightKg,
                     session.log.date,
@@ -503,7 +519,7 @@
                     : null;
 
                 return {
-                    date: new Date(session.log.date),
+                    date: sessionDate,
                     actualKg: session.representativeWeightKg,
                     plannedKg: plannedWeightKg,
                     hitPlan: evaluation ? evaluation.planComplete || evaluation.progressEarned : plannedWeightKg === null || session.representativeWeightKg >= plannedWeightKg - 0.01
@@ -511,6 +527,9 @@
             });
 
             const values = points.flatMap(point => [point.actualKg, point.plannedKg]).filter(Number.isFinite);
+            if (values.length === 0) {
+                return '<div class="training-plan-chart-empty">No chartable progression weights in the last 14 days.</div>';
+            }
             const minValue = Math.min(...values);
             const maxValue = Math.max(...values);
             const yPadding = Math.max(1, (maxValue - minValue) * 0.2);

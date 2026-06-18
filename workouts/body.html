@@ -1038,6 +1038,11 @@ window.updateHeightDisplay = updateHeightDisplay;
 async function saveBodyMeasurements() {
     const btn = document.getElementById('saveMeasurementsBtn');
 
+    if (!window.currentUser) {
+        alert('Please login before saving measurements.');
+        return;
+    }
+
     // Gather values
     const fields = {
         weight:     parseFloat(document.getElementById('mWeight').value) || null,
@@ -1073,7 +1078,7 @@ async function saveBodyMeasurements() {
     const doc = {
         id: docId,
         date: new Date().toISOString(),
-        userId: window.currentUser ? window.currentUser.uid : null,
+        userId: window.currentUser.uid,
         ...storageFields,
         updatedAt: new Date().toISOString()
     };

@@ -1028,7 +1028,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, writeBatch, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         // CONFIGURATION
         const firebaseConfig = {
@@ -1053,6 +1053,7 @@
         let exerciseLibrary = {};
         let currentUser = null;
         const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Refresh Firebase config weekly.
+        const ADMIN_EMAIL = 'sspsful@gmail.com';
 
         function getUserEmailKey(user) {
             return (user?.email || '').trim().toLowerCase();
@@ -1232,6 +1233,8 @@
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'index.html';
+            } else if ((user.email || '').toLowerCase() !== ADMIN_EMAIL) {
+                window.location.href = 'app.html';
             } else {
                 currentUser = user;
                 document.getElementById('userEmail').textContent = user.email || '';
@@ -1318,12 +1321,13 @@
 
                 renderLogList(currentLogs);
                 showToast(`Loaded ${currentLogs.length} logs`);
+                setSyncStatus('Synced');
             } catch (err) {
                 console.error(err);
                 showToast("Fetch failed", "error");
+                setSyncStatus('Error');
             } finally {
                 showLoading(false);
-                setSyncStatus('Synced');
             }
         }
 
@@ -1651,18 +1655,23 @@
             try {
                 const nextId = data.id.toString();
                 const previousId = originalId.toString();
-                await setDoc(getWorkoutDocRef(nextId), data);
+                const dataToSave = { ...data, updatedAt: new Date().toISOString() };
 
                 if (nextId !== previousId) {
-                    await deleteDoc(getWorkoutDocRef(previousId));
+                    const batch = writeBatch(db);
+                    batch.set(getWorkoutDocRef(nextId), dataToSave);
+                    batch.delete(getWorkoutDocRef(previousId));
+                    await batch.commit();
                     selectedLogIds.delete(previousId);
                     activeLogId = nextId;
+                } else {
+                    await setDoc(getWorkoutDocRef(nextId), dataToSave);
                 }
 
                 // Update local state
                 const idx = currentLogs.findIndex(l => l.id.toString() === previousId);
-                if (idx !== -1) currentLogs[idx] = data;
-                else currentLogs.unshift(data);
+                if (idx !== -1) currentLogs[idx] = dataToSave;
+                else currentLogs.unshift(dataToSave);
 
                 renderLogList(currentLogs);
                 selectLog(nextId);

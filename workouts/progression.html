@@ -1464,21 +1464,28 @@
             const rounded = mode === 'ceil' ? Math.ceil(scaled) : mode === 'nearest' ? Math.round(scaled) : Math.floor(scaled);
             return rounded * increment;
         }
+        function parseDateLocal(value) {
+            if (typeof value === 'string') {
+                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (match) return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+            }
+            return new Date(value);
+        }
         function formatDate(date, format = DateFormats.LONG) {
-            return new Date(date).toLocaleDateString('en-US', format);
+            return parseDateLocal(date).toLocaleDateString('en-US', format);
         }
         function formatRangeDate(date) {
-            return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
+            return parseDateLocal(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
         }
         function getLocalDateKey(date) {
-            const localDate = new Date(date);
+            const localDate = parseDateLocal(date);
             const year = localDate.getFullYear();
             const month = String(localDate.getMonth() + 1).padStart(2, '0');
             const day = String(localDate.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
         }
         function startOfLocalDay(date) {
-            const localDate = new Date(date);
+            const localDate = parseDateLocal(date);
             localDate.setHours(0, 0, 0, 0);
             return localDate;
         }
@@ -1718,8 +1725,43 @@
             return baseline + (target - baseline) * progress;
         }
 
+        function evaluateProgressionSets(workingSets, target) {
+            if (!target || !workingSets || workingSets.length === 0) {
+                return { planComplete: false, progressEarned: false };
+            }
+
+            const planComplete = workingSets.every(set => {
+                const reps = parseInt(set.reps, 10);
+                const weightKg = parseFloat(set.weight);
+                return Number.isFinite(reps) && reps >= target.repRange.min &&
+                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
+            });
+            const progressEarned = workingSets.every(set => {
+                const reps = parseInt(set.reps, 10);
+                const weightKg = parseFloat(set.weight);
+                return Number.isFinite(reps) && reps >= target.repRange.max &&
+                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
+            });
+
+            return { planComplete, progressEarned };
+        }
+
         function getPlanStatus(row) {
             const thresholdKg = Math.max(0.25, getWeeklyTargetIncreaseKg(row.planExercise) * 0.5);
+            if (row.latest?.workingSets?.length && Number.isFinite(row.targetTodayKg)) {
+                const evaluation = evaluateProgressionSets(row.latest.workingSets, {
+                    repRange: row.repRange,
+                    targetWeightKg: row.targetTodayKg
+                });
+                if (evaluation.progressEarned) {
+                    return { label: 'Ahead', className: 'good', deltaKg: row.latest.maxWeightKg - row.targetTodayKg, mode: 'load' };
+                }
+                if (evaluation.planComplete) {
+                    return { label: 'On Track', className: 'good', deltaKg: row.latest.maxWeightKg - row.targetTodayKg, mode: 'load' };
+                }
+                return { label: 'Behind', className: 'bad', deltaKg: row.latest.maxWeightKg - row.targetTodayKg, mode: 'load' };
+            }
+
             if (row.bestSignal && Number.isFinite(row.targetSignalKg)) {
                 const deltaKg = row.bestSignal.estimatedMaxKg - row.targetSignalKg;
                 if (deltaKg >= thresholdKg) return { label: 'Ahead', className: 'good', deltaKg, mode: 'strength' };
@@ -1783,7 +1825,7 @@
                     }
                 }
 
-                if (best) return { ...best, date: log.date };
+                if (best) return { ...best, date: log.date, workingSets };
             }
             return null;
         }
@@ -2053,28 +2095,28 @@
         function renderLiftTable() {
             document.getElementById('liftTableBody').innerHTML = liftRows.map(row => {
                 const latest = row.latest
-                    ? `<span class="num-strong">${formatLiftWeight(row.latest.maxWeightKg, row.planExercise)} × ${row.latest.reps}</span><div class="lift-meta">${formatDate(row.latest.date, DateFormats.SHORT)}</div>`
+                    ? `<span class="num-strong">${escapeHtml(formatLiftWeight(row.latest.maxWeightKg, row.planExercise))} × ${escapeHtml(row.latest.reps)}</span><div class="lift-meta">${escapeHtml(formatDate(row.latest.date, DateFormats.SHORT))}</div>`
                     : '<span class="status-pill warn">No Data</span>';
-                const target = `<span class="num-strong target-glow">${formatLiftWeight(row.targetTodayKg, row.planExercise)} × ${row.repRange.label}</span>`;
-                const status = `<span class="status-pill ${row.status.className}">${row.status.label}</span>`;
-                const confidence = `<span class="status-pill ${row.confidence.className}">${row.confidence.label}</span><div class="lift-meta">${row.signalSessions.length} recent signal${row.signalSessions.length === 1 ? '' : 's'}</div>`;
+                const target = `<span class="num-strong target-glow">${escapeHtml(formatLiftWeight(row.targetTodayKg, row.planExercise))} × ${escapeHtml(row.repRange.label)}</span>`;
+                const status = `<span class="status-pill ${escapeHtml(row.status.className)}">${escapeHtml(row.status.label)}</span>`;
+                const confidence = `<span class="status-pill ${escapeHtml(row.confidence.className)}">${escapeHtml(row.confidence.label)}</span><div class="lift-meta">${escapeHtml(row.signalSessions.length)} recent signal${row.signalSessions.length === 1 ? '' : 's'}</div>`;
                 const strengthMeta = row.bestSignal
-                    ? `<div class="lift-meta">Signal ${formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise)} est. max</div>`
+                    ? `<div class="lift-meta">Signal ${escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise))} est. max</div>`
                     : '';
 
                 return `
                     <tr>
                         <td data-label="Lift">
                             <div class="lift-name">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
-                            <div class="lift-meta">${escapeHtml(row.dayName)} · ${row.sets} sets · ${row.reps} reps</div>
+                            <div class="lift-meta">${escapeHtml(row.dayName)} · ${escapeHtml(row.sets)} sets · ${escapeHtml(row.reps)} reps</div>
                             <div class="lift-meta">${escapeHtml(row.planExercise.baselineNote || '')}</div>
                         </td>
-                        <td data-label="Baseline"><span class="num-strong">${formatLiftWeight(row.baselineKg, row.planExercise)}</span></td>
+                        <td data-label="Baseline"><span class="num-strong">${escapeHtml(formatLiftWeight(row.baselineKg, row.planExercise))}</span></td>
                         <td data-label="Most Recent">${latest}${strengthMeta}</td>
                         <td data-label="Target Today">${target}</td>
                         <td data-label="Confidence">${confidence}</td>
-                        <td data-label="Goal"><span class="num-strong">${formatLiftWeight(row.goalKg, row.planExercise)}</span></td>
-                        <td data-label="Status">${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : `${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'} ${row.status.mode === 'strength' ? 'signal' : 'load'}`}</div></td>
+                        <td data-label="Goal"><span class="num-strong">${escapeHtml(formatLiftWeight(row.goalKg, row.planExercise))}</span></td>
+                        <td data-label="Status">${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : escapeHtml(`${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'} ${row.status.mode === 'strength' ? 'signal' : 'load'}`)}</div></td>
                     </tr>`;
             }).join('');
         }
@@ -2113,24 +2155,24 @@
                 <div class="side-stat">
                     <div class="mini-label">Selected Lift</div>
                     <div class="num-strong">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
-                    <div class="mini-note">${row.sets} sets · ${row.reps} reps</div>
+                    <div class="mini-note">${escapeHtml(row.sets)} sets · ${escapeHtml(row.reps)} reps</div>
                 </div>
                 <div class="side-stat">
                     <div class="mini-label">Strength Signal</div>
-                    <div class="num-strong">${row.bestSignal ? formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise) : 'No signal'}</div>
-                    <div class="mini-note">${row.bestSignal ? `${row.bestSignal.reps} reps signal · ${row.confidence.label} confidence` : row.confidence.detail}</div>
+                    <div class="num-strong">${row.bestSignal ? escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise)) : 'No signal'}</div>
+                    <div class="mini-note">${row.bestSignal ? escapeHtml(`${row.bestSignal.reps} reps signal · ${row.confidence.label} confidence`) : escapeHtml(row.confidence.detail)}</div>
                 </div>
                 <div class="side-stat">
                     <div class="mini-label">Latest Max Set</div>
-                    <div class="num-strong">${latest ? `${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}` : 'No data'}</div>
-                    <div class="mini-note">${latest ? formatDate(latest.date, DateFormats.LONG) : 'No post-start log'}</div>
+                    <div class="num-strong">${latest ? escapeHtml(`${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}`) : 'No data'}</div>
+                    <div class="mini-note">${latest ? escapeHtml(formatDate(latest.date, DateFormats.LONG)) : 'No post-start log'}</div>
                 </div>
                 <div class="side-stat">
                     <div class="mini-label">${chartMetric === 'strength' ? 'Best Daily Signal' : 'Best Daily Average'}</div>
                     <div class="num-strong">${chartMetric === 'strength'
-                    ? (bestSignalPoint ? formatLiftWeight(bestSignalPoint.bestEstimatedMaxKg, row.planExercise) : 'No signal')
-                    : (best ? formatLiftWeight(best.avgWeightKg, row.planExercise) : 'No data')}</div>
-                    <div class="mini-note">${selectedBest ? `${formatDate(selectedBest.date, DateFormats.LONG)} · ${Math.round(avgReps * 10) / 10 || '--'} avg reps` : 'No chartable sets'}</div>
+                    ? (bestSignalPoint ? escapeHtml(formatLiftWeight(bestSignalPoint.bestEstimatedMaxKg, row.planExercise)) : 'No signal')
+                    : (best ? escapeHtml(formatLiftWeight(best.avgWeightKg, row.planExercise)) : 'No data')}</div>
+                    <div class="mini-note">${selectedBest ? escapeHtml(`${formatDate(selectedBest.date, DateFormats.LONG)} · ${Math.round(avgReps * 10) / 10 || '--'} avg reps`) : 'No chartable sets'}</div>
                 </div>`;
         }
 
@@ -2178,10 +2220,10 @@
             const plotWidth = width - margin.left - margin.right;
             const plotHeight = height - margin.top - margin.bottom;
             const startMs = start.getTime();
-            const endMs = Math.max(end.getTime(), new Date(points[points.length - 1].date).getTime());
+            const endMs = Math.max(end.getTime(), parseDateLocal(points[points.length - 1].date).getTime());
             const dateSpan = Math.max(1, endMs - startMs);
 
-            const xForDate = date => margin.left + ((new Date(date).getTime() - startMs) / dateSpan) * plotWidth;
+            const xForDate = date => margin.left + ((parseDateLocal(date).getTime() - startMs) / dateSpan) * plotWidth;
             const yForKg = kg => margin.top + (1 - ((kg - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
             const actualPath = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xForDate(point.date).toFixed(1)} ${yForKg(point.chartKg).toFixed(1)}`).join(' ');
             const planPoints = [
@@ -2280,14 +2322,25 @@
         }
 
         async function loadVersionedSeedConfig(configId, jsonPath) {
-            const localData = await fetchSeedConfig(jsonPath);
-            const localUpdatedAt = parseConfigUpdatedDate(localData);
-            if (localUpdatedAt === null) {
-                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
-            }
-
             const cached = readCachedUserConfig(configId);
             const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
+            let localData = null;
+            let localUpdatedAt = null;
+
+            try {
+                localData = await fetchSeedConfig(jsonPath);
+                localUpdatedAt = parseConfigUpdatedDate(localData);
+                if (localUpdatedAt === null) {
+                    throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+                }
+            } catch (error) {
+                if (cached && cachedUpdatedAt !== null) {
+                    console.warn(`Using cached ${configId} config because bundled ${jsonPath} could not be loaded:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
+
             if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
                 return cached.data;
             }

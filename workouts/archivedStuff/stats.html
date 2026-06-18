@@ -202,7 +202,6 @@
             border-color: var(--accent-primary);
             color: var(--text-primary);
             box-shadow: 0 0 30px var(--accent-glow);
-            transform: translateY(-2px);
         }
 
         /* Ultra Glassmorphism Cards */
@@ -1028,7 +1027,7 @@
                 <h1>SEAN'S STATS</h1>
                 <span class="subtitle">ANALYTICS DASHBOARD</span>
             </div>
-            <a href="app.html" class="btn btn-secondary">← BACK TO WORKOUTS</a>
+            <a href="../app.html" class="btn btn-secondary">← BACK TO WORKOUTS</a>
         </header>
 
         <div id="loadingState" class="loading">
@@ -1276,7 +1275,7 @@
 
                 async function loadData() {
                     try {
-                        exerciseData = await loadExercisesConfig('exercises.json');
+                        exerciseData = await loadExercisesConfig('../exercises.json');
 
                         // Load Workouts
                         const q = query(getWorkoutCollectionRef(), orderBy('date', 'desc'));

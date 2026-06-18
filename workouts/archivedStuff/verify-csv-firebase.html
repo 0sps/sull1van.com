@@ -186,29 +186,23 @@
                 for (const csvDate of csvDates) {
                     const csvExercises = Array.from(csvData[csvDate]);
 
-                    // Try to find matching Firebase workout
-                    let found = false;
-                    for (const fbDate in firebaseData) {
-                        const fbExercises = firebaseData[fbDate].exercises;
+                    const csvSet = new Set(csvExercises);
+                    const fbExercises = firebaseData[csvDate]?.exercises || [];
+                    const fbSet = new Set(fbExercises);
+                    const found = csvExercises.every(ex => fbSet.has(ex)) && csvSet.size === fbSet.size;
 
-                        // Check if exercises match
-                        const csvSet = new Set(csvExercises);
-                        const fbSet = new Set(fbExercises);
-
-                        // If all CSV exercises are in Firebase workout
-                        const allMatch = csvExercises.every(ex => fbSet.has(ex));
-
-                        if (allMatch && csvSet.size === fbSet.size) {
-                            found = true;
-                            foundCount++;
-                            break;
-                        }
-                    }
-
-                    if (!found) {
+                    if (found) {
+                        foundCount++;
+                    } else {
                         notFoundCount++;
+                        const crossDateMatch = Object.entries(firebaseData).find(([fbDate, data]) => {
+                            if (fbDate === csvDate) return false;
+                            const otherSet = new Set(data.exercises);
+                            return csvExercises.every(ex => otherSet.has(ex)) && csvSet.size === otherSet.size;
+                        });
                         if (notFoundCount <= 10) {
-                            log(`⚠️  ${csvDate}: Not found or mismatch (${csvExercises.length} exercises)`, 'warning');
+                            const suffix = crossDateMatch ? `; same exercises found on ${crossDateMatch[0]}` : '';
+                            log(`⚠️  ${csvDate}: Not found or mismatch (${csvExercises.length} exercises${suffix})`, 'warning');
                         }
                     }
                 }

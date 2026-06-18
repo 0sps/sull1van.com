@@ -3081,6 +3081,15 @@
             return escapeAttr(escapeJsString(value));
         }
 
+        function escapeCsvCell(value) {
+            let text = String(value ?? '');
+            if (/^[=+\-@]/.test(text)) text = `'${text}`;
+            if (/[",\r\n]/.test(text)) {
+                text = `"${text.replace(/"/g, '""')}"`;
+            }
+            return text;
+        }
+
         function showButtonSuccess(button, label = 'WORKOUT SAVED!', duration = 2000, afterRestore = null, showToast = true) {
             if (!button) return;
             const originalText = button.textContent;
@@ -4098,24 +4107,31 @@
         }
 
         function buildWorkoutCSV(logs) {
-            let csv = 'Date,Exercise,Reps,Weight(kg),Duration(s),Distance(m),Incline,Resistance,isWarmup,Note,multiplier\n';
+            const rows = [['Date', 'Exercise', 'Reps', 'Weight(kg)', 'Duration(s)', 'Distance(m)', 'Incline', 'Resistance', 'isWarmup', 'Note', 'multiplier']];
             logs.forEach(log => {
                 const dateStr = formatDateForCSV(log.date);
-                log.exercises.forEach(ex => {
+                (log.exercises || []).forEach(ex => {
                     const exportName = getExportName(ex.id);
                     const multiplier = getMultiplier(ex.id);
-                    ex.sets.forEach(set => {
+                    (ex.sets || []).forEach(set => {
                         const weightKg = set.weight || 0;
                         const isWarmup = set.isWarmup ? 'True' : 'False';
-                        csv += `${dateStr},${exportName},${set.reps || 0},${weightKg},0.0,0.0,0.0,0.0,${isWarmup},,${multiplier}.0\n`;
+                        rows.push([dateStr, exportName, set.reps || 0, weightKg, '0.0', '0.0', '0.0', '0.0', isWarmup, '', `${multiplier}.0`]);
                     });
                 });
             });
-            return csv;
+            return `${rows.map(row => row.map(escapeCsvCell).join(',')).join('\n')}\n`;
         }
 
-        function exportToCSV() {
+        async function exportToCSV() {
             if (workoutLogs.length === 0) { showNotification('EXPORT ERROR', 'No workout data to export!'); return; }
+            if (!isFullHistoryLoaded) {
+                const loaded = await loadFromFirebase(0);
+                if (!loaded) {
+                    showNotification('EXPORT ERROR', 'Could not load full workout history before export.');
+                    return;
+                }
+            }
             const sorted = workoutLogs.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
             const csv = buildWorkoutCSV(sorted);
             downloadCSV(csv, `WorkoutExport_${new Date().toISOString().split('T')[0]}.csv`);
@@ -4166,6 +4182,8 @@
                     e.preventDefault();
                     const mode = warmupBtn.dataset.mode;
                     if (mode === 'workout') {
+                        toggleWarmup(warmupBtn);
+                    } else if (mode === 'manual') {
                         toggleWarmup(warmupBtn);
                     } else if (mode === 'edit') {
                         const exIdx = parseInt(e.target.closest('[data-ex-idx]').dataset.exIdx);
@@ -4844,14 +4862,14 @@
                         <tr class="row-relative ${emptyClass}"
                             id="deleteRow_${idx}"
                             onclick="selectSetForDeletion(${idx})">
-                            <td>${dateStr}</td>
+                            <td>${escapeHtml(dateStr)}</td>
                             <td class="${set.isEmptyWorkout ? 'text-muted italic' : ''}">
-                                <strong>${set.exerciseName}</strong>
+                                <strong>${escapeHtml(set.exerciseName)}</strong>
                             </td>
                             <td>${set.isEmptyWorkout ? '<span class="text-muted">(Empty)</span>' : `${weightLbs} lbs`}</td>
-                            <td>${set.isEmptyWorkout ? '<span class="text-muted">(Empty)</span>' : set.reps}</td>
+                            <td>${set.isEmptyWorkout ? '<span class="text-muted">(Empty)</span>' : escapeHtml(set.reps)}</td>
                             <td style="color: ${set.isEmptyWorkout ? 'var(--text-muted)' : typeColor};">
-                                ${set.isEmptyWorkout ? 'System Log' : typeLabel}
+                                ${set.isEmptyWorkout ? 'System Log' : escapeHtml(typeLabel)}
                             </td>
                             <td></td>
                         </tr>`;
@@ -4915,7 +4933,8 @@
                 }
                 if (isEmptyWorkout) {
                     // It's an empty workout placeholder - delete the entire document
-                    await deleteFromFirebase(workoutId);
+                    const deleted = await deleteFromFirebase(workoutId);
+                    if (!deleted) throw new Error('Firebase delete failed.');
                     workoutLogs.splice(workoutIdx, 1);
                 } else {
                     const workout = JSON.parse(JSON.stringify(workoutLogs[workoutIdx]));
@@ -4927,11 +4946,13 @@
                     }
                     // If workout has no exercises left, delete the entire workout
                     if (workout.exercises.length === 0) {
-                        await deleteFromFirebase(workoutId);
+                        const deleted = await deleteFromFirebase(workoutId);
+                        if (!deleted) throw new Error('Firebase delete failed.');
                         workoutLogs.splice(workoutIdx, 1);
                     } else {
                         // Update the workout
-                        await saveToFirebase(workout);
+                        const saved = await saveToFirebase(workout);
+                        if (!saved) throw new Error('Firebase save failed.');
                         workoutLogs[workoutIdx] = workout;
                     }
                 }
@@ -4964,7 +4985,7 @@
                     return `
                         <div class="stat-pill text-sm" style="border-left: 2px solid ${set.isWarmup ? 'var(--warning)' : 'var(--accent-primary)'};">
                             <div class="text-xs text-muted">${set.isWarmup ? 'WARM' : 'SET ' + (i + 1)}</div>
-                            <div>${weightLbs}lbs × ${set.reps}</div>
+                            <div>${escapeHtml(weightLbs)}lbs × ${escapeHtml(set.reps)} reps</div>
                         </div>`;
                 }).join('');
 
@@ -5218,8 +5239,8 @@
                     const warmupClass = set.isWarmup ? 'warmup' : '';
                     const label = set.isWarmup ? 'WARM' : `SET ${i + 1} `;
                     html += `<div class="history-set ${warmupClass}">
-                        <span>${label}</span>
-                        <span><strong>${weightLbs} lbs</strong> × ${set.reps} reps</span>
+                        <span>${escapeHtml(label)}</span>
+                        <span><strong>${escapeHtml(weightLbs)} lbs</strong> × ${escapeHtml(set.reps)} reps</span>
                     </div>`;
                 });
                 html += `</div>`;

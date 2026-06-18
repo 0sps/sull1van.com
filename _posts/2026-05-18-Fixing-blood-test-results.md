@@ -7,6 +7,8 @@ published: false
 ---
 
 
+Nearly one year ago, I made the decision to start focusing on my bloodwork. I had just received a bad blood test result,
+
 # CONSTRUCTION ZONE BELOW
 
 Haven't built out this blog post just yet...

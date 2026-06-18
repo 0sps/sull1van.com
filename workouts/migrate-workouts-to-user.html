@@ -185,6 +185,10 @@
         function targetEmail() {
             const email = emailKey(targetEmailInput.value);
             if (!email) throw new Error('Enter a target email.');
+            const signedInEmail = emailKey(auth.currentUser?.email || '');
+            if (signedInEmail && email !== signedInEmail) {
+                throw new Error('This client migration can only copy workouts to the signed-in user email.');
+            }
             return email;
         }
 
@@ -202,6 +206,7 @@
                 statusEl.textContent = 'Not signed in.';
                 copyBtn.disabled = true;
                 verifyBtn.disabled = true;
+                targetEmailInput.disabled = false;
                 return;
             }
 
@@ -209,6 +214,7 @@
             copyBtn.disabled = false;
             verifyBtn.disabled = false;
             if (user.email) targetEmailInput.value = emailKey(targetEmailInput.value || user.email);
+            targetEmailInput.disabled = true;
         });
 
         signInBtn.addEventListener('click', async () => {

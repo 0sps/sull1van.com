@@ -1359,7 +1359,7 @@
 
         function buildTrainingPlan() {
             const schedule = editorDays.map((day) => String(day.workoutName || '').trim());
-            const workouts = {};
+            const workouts = clone(originalTrainingPlan?.workouts || {});
 
             editorDays.forEach((day) => {
                 const workoutName = String(day.workoutName || '').trim();
@@ -1380,6 +1380,11 @@
                 schedule,
                 workouts
             };
+        }
+
+        function isExerciseCatalogEntry(id, exerciseCatalog) {
+            const entry = exerciseCatalog?.[id];
+            return /^ex\d+$/.test(id) && entry && typeof entry === 'object';
         }
 
         function parseImportedTrainingPlan() {
@@ -1420,6 +1425,9 @@
             }
 
             const workouts = plan.workouts;
+            const scheduledWorkouts = new Set(
+                (plan.schedule || []).map((workoutName) => String(workoutName || '').trim()).filter(Boolean)
+            );
             (plan.schedule || []).forEach((workoutName, dayIndex) => {
                 const trimmedName = String(workoutName || '').trim();
                 if (!trimmedName) {
@@ -1435,6 +1443,9 @@
             });
 
             Object.entries(workouts).forEach(([workoutName, workout]) => {
+                if (!scheduledWorkouts.has(String(workoutName || '').trim())) {
+                    errors.push(`Workout "${workoutName}" is not referenced by the 7-day schedule.`);
+                }
                 if (String(workoutName || '').trim().length > 100) {
                     errors.push(`Workout "${workoutName}" name is too long (max 100 characters).`);
                 }
@@ -1457,7 +1468,7 @@
                     const reps = String(exercise?.reps || '').trim();
 
                     if (!id) errors.push(`${label} needs an exercise id.`);
-                    if (id && !exerciseCatalog?.[id]) errors.push(`${label} uses exercise id "${id}", which does not exist in the server exercise list.`);
+                    if (id && !isExerciseCatalogEntry(id, exerciseCatalog)) errors.push(`${label} uses exercise id "${id}", which does not exist in the server exercise list.`);
                     if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
                     if (Number.isInteger(sets) && sets > 99) errors.push(`${label} sets is too high (max 99).`);
                     if (!reps) errors.push(`${label} needs a reps value.`);
