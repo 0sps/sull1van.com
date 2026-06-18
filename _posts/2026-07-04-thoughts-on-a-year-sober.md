@@ -7,6 +7,11 @@ tags: [meta, blogging]
 
 One full year! Crazy to say it. Today officially marks one year since I went sober.
 
+## What happened
+
+I had toyed with the idea of going sober bascially ever since I graduated college. It just felt weird to be constantly drinking like I did in college, but with a real job and real adult responsibilities to deal with. It felt like that was only ever supposed to be a part of my life, and that I should move on. I kept having night after night where I got more drunk than I inteneded, and some concerning blood tests made me take my health more seriously. I wanted to drink less, but it felt too hard to moderate myself. So eventually I decided to just stop.
+
+
 ## The rules of my sobriety
 
 Going sober was pretty daunting at first. I didn't really know what was in the bounds vs. out of the bounds of being sober. It sounds easy on the surface, but technicalities quickly arose as I got into it. For example, what if I drink a "non-alcoholic" beer that actually has 0.1% or 0.5% alcohol? 
