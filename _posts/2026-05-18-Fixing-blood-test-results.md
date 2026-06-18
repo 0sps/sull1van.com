@@ -12,7 +12,7 @@ Nearly one year ago, I made the decision to start focusing on my bloodwork. I ha
 I started by looking at the data. Literally, looking *at* it. I had some two-dozen PDFs of all my blood test results dating back to 2018 in a folder on my computer. Every time i get a blood test result, I save the pdf into one folder. I'd been doing that now for about eight years, and while the data store grew larger every month, I didn't really do anything with them.
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);" />
+    <img src="/assets/images/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
 </div>
 
 Now, with the advent of Claude Cowork and Codex, I could make use of them. 
