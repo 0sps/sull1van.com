@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[PROJECT] Fixing my poor blood test results so I can live forever"
-date: 2026-05-15
+date: 2026-05-18
 tags: [personal, tech]
 published: true
 ---
@@ -33,6 +33,10 @@ Simple, right?
 ### Steps 1-4: Data conversion
 The process was honestly easier than I expected. The agents did a great job converting the blood test results to an excel sheet, and the verification bots didn't find any errors, they just found instances in which the wrong units were used. For example, an ALT test from 2018 used ng/dL, while the ALT from 2020 used ug/L. 
 
+
+<div style="text-align: center; margin: 2rem auto;">
+    <img src="/assets/images/bloodTestExcel.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
+</div>
 
 
 ### Step 5: The Dashboard
