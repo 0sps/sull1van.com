@@ -12,7 +12,7 @@ Nearly one year ago, I made the decision to start focusing on my bloodwork. I ha
 I started by looking at the data. Literally, looking *at* it. I had some two-dozen PDFs of all my blood test results dating back to 2018 in a folder on my computer. Every time i get a blood test result, I save the pdf into one folder. I'd been doing that now for about eight years, and while the data store grew larger every month, I didn't really do anything with them.
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
+    <img src="/assets/images/bloodtest/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
 </div>
 
 Now, with the advent of Claude Cowork and Codex, I could make use of them. 
@@ -35,7 +35,7 @@ The process was honestly easier than I expected. The agents did a great job conv
 
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodTestExcel.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
+    <img src="/assets/images/bloodtest/bloodTestExcel.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
 </div>
 
 
@@ -48,6 +48,18 @@ But what constitutes a 'normal range'? **Depends who you ask!**
 
   Either way, I ended up making a system for that: each blood test record in my backend database, and in my spreadsheet, *includes* the reference range that the lab gave me for that test at the time of taking. Then, the web UI parses it and shows the *most recent* normal range given. Sometimes they don't give a normal range for a test, so the website will keep crawling older and older records, until it finds a record with a reference range. That will be the reference range you see on the display.
 
+
+It iterated a few times, and the early prototypes were ugly. Being inspired by the latest slop iOS update, and wanting something a little better than flat, I pushed the AI to develop a glassmorphic UI. The result is something I'm really proud of:
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; margin: 2rem auto;">
+    <img src="/assets/images/bloodtest/screen1.jpg" alt="Prototype Screen 1" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen2.jpg" alt="Prototype Screen 2" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen3.jpg" alt="Prototype Screen 3" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen4.jpg" alt="Prototype Screen 4" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen5.jpg" alt="Prototype Screen 5" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+    <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+</div>
 
 # CONSTRUCTION ZONE BELOW
 
