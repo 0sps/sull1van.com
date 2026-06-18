@@ -51,14 +51,95 @@ But what constitutes a 'normal range'? **Depends who you ask!**
 
 It iterated a few times, and the early prototypes were ugly. Being inspired by the latest slop iOS update, and wanting something a little better than flat, I pushed the AI to develop a glassmorphic UI. The result is something I'm really proud of:
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; margin: 2rem auto;">
-    <img src="/assets/images/bloodtest/screen1.jpg" alt="Prototype Screen 1" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen2.jpg" alt="Prototype Screen 2" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen3.jpg" alt="Prototype Screen 3" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen4.jpg" alt="Prototype Screen 4" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen5.jpg" alt="Prototype Screen 5" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
-    <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" style="width: 100%; border: 4px solid #bbb; border-radius: 20px; box-sizing: border-box;" />
+<style>
+  .gallery-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 2rem auto;
+  }
+  .gallery-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .gallery-images-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .gallery-caption {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: #666;
+  }
+  html[data-theme="dark"] .gallery-caption {
+    color: #aaa;
+  }
+  .gallery-img {
+    width: 100%;
+    border: 4px solid #bbb;
+    border-radius: 27px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+  }
+  @media (min-width: 550px) {
+    .gallery-row.layout-2-1 {
+      grid-template-columns: 2fr 1fr;
+    }
+    .gallery-row.layout-1-1 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<div class="gallery-section">
+  <!-- Row 1: screen1 & screen2 + caption -->
+  <div class="gallery-row layout-2-1">
+    <div class="gallery-images-double">
+      <img src="/assets/images/bloodtest/screen1.jpg" alt="Prototype Card View" class="gallery-img" />
+      <img src="/assets/images/bloodtest/screen2.jpg" alt="Prototype List View" class="gallery-img" />
+    </div>
+    <div class="gallery-caption">
+      Card versus list UI view
+    </div>
+  </div>
+
+  <!-- Row 2: screen3 + caption -->
+  <div class="gallery-row layout-1-1">
+    <div>
+      <img src="/assets/images/bloodtest/screen3.jpg" alt="Midnight Mode" class="gallery-img" />
+    </div>
+    <div class="gallery-caption">
+      The UI comes with many different modes, meant to highlight different points throughout the day. This is the 'midnight' mode.
+    </div>
+  </div>
+
+  <!-- Row 3: screen4 & screen5 + caption -->
+  <div class="gallery-row layout-2-1">
+    <div class="gallery-images-double">
+      <img src="/assets/images/bloodtest/screen4.jpg" alt="Detail View" class="gallery-img" />
+      <img src="/assets/images/bloodtest/screen5.jpg" alt="History and Context Menus" class="gallery-img" />
+    </div>
+    <div class="gallery-caption">
+      Left: detail view showing most recent test, normal range, and units. Right: view when you scroll down. Shows all test history, and offers context menus which present additional options
+    </div>
+  </div>
+
+  <!-- Row 4: screen6 -->
+  <div class="gallery-row">
+    <div style="max-width: 500px; margin: 0 auto; width: 100%;">
+      <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
+    </div>
+  </div>
+
+  <!-- Row 5: screen7 -->
+  <div class="gallery-row">
+    <div style="max-width: 500px; margin: 0 auto; width: 100%;">
+      <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
+    </div>
+  </div>
 </div>
 
 # CONSTRUCTION ZONE BELOW
