@@ -79,6 +79,9 @@ It iterated a few times, and the early prototypes were ugly. Being inspired by t
   }
   .gallery-img {
     width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+    display: block;
     border: 4px solid #bbb;
     border-radius: 27px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
