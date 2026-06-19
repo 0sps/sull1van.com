@@ -81,7 +81,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
   }
   .gallery-img {
     width: 100%;
-    max-width: 220px;
+    max-width: 253px;
     margin: 0 auto;
     display: block;
     border: 4px solid #bbb;
@@ -91,7 +91,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
   }
   @media (min-width: 550px) {
     .gallery-row.layout-2-1 {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 2.2fr 1fr;
     }
     .gallery-row.layout-1-1 {
       grid-template-columns: 1fr 1fr;
