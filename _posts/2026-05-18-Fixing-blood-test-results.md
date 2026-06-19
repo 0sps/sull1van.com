@@ -139,14 +139,24 @@ Claude iterated on my design requests a few times, and the early prototypes were
     </div>
   </div>
 
-  <!-- Row 5: screen7 -->
-  <div class="gallery-row">
-    <div style="max-width: 500px; margin: 0 auto; width: 100%;">
+  <!-- Row 5: screen7 + caption -->
+  <div class="gallery-row layout-1-1">
+    <div>
       <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
+    </div>
+    <div class="gallery-caption">
+      Screenshot of Cmd+K. It genuinely is triggered by Cmd+K on desktop, but I didn't think of a better name, so on mobile I call it Cmd+K too.
     </div>
   </div>
 </div>
 
+After I finished, I pulled up some more claude subagents and dispatched them to do bug catching. While in the middle of that, one of them offered up a new feature suggestion that I really liked. That's what you're seeing in the last screenshot: it's a power menu, triggered by tapping the little flask on mobile or hitting Cmd+K on desktop.
+
+When you open it, you can instantly pull up test results, create an export PDF, or even add a new lab. It's really powerful and designed to be my place to drop in when I need to locate a result as fast as possible.
+
+---
+
+That's pretty much the entirety of the UI. I really loved designing it, especially the glass background. I was going for an immitation of Apple Weather, and think that we (me/Claude) knocked it out of the park.
 
 
 ### The Backend
