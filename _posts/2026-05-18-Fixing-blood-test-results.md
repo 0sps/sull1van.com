@@ -7,7 +7,7 @@ published: true
 ---
 
 
-Nearly one year ago, I made the decision to start focusing on my bloodwork. I had just received a bad blood test result, and I realized that a bigger effort was needed if I was going to take charge of my health.
+Nearly one year ago, I made the decision to start focusing on my bloodwork. Coming off the heels of graduating college, I had just received a bad blood test result, and I realized that a bigger effort was needed if I was going to take charge of my health.
 
 I started by looking at the data. Literally, looking *at* it. I had some two-dozen PDFs of all my blood test results dating back to 2018 in a folder on my computer. Every time i get a blood test result, I save the pdf into one folder. I'd been doing that now for about eight years, and while the data store grew larger every month, I didn't really do anything with them.
 
@@ -49,7 +49,9 @@ But what constitutes a 'normal range'? **Depends who you ask!**
   Either way, I ended up making a system for that: each blood test record in my backend database, and in my spreadsheet, *includes* the reference range that the lab gave me for that test at the time of taking. Then, the web UI parses it and shows the *most recent* normal range given. Sometimes they don't give a normal range for a test, so the website will keep crawling older and older records, until it finds a record with a reference range. That will be the reference range you see on the display.
 
 
-It iterated a few times, and the early prototypes were ugly. Being inspired by the latest slop iOS update, and wanting something a little better than flat, I pushed the AI to develop a glassmorphic UI. The result is something I'm really proud of:
+### The Frontend
+
+Claude iterated on my design requests a few times, and the early prototypes were ugly. Being inspired by the latest slop iOS update, and wanting something a little better than flat, I pushed the AI to develop a glassmorphic UI. The result is something I'm really proud of:
 
 <style>
   .gallery-section {
@@ -144,6 +146,66 @@ It iterated a few times, and the early prototypes were ugly. Being inspired by t
     </div>
   </div>
 </div>
+
+
+
+### The Backend
+
+For backend data storage, I decided to use Google Firebase. Why? Well, the only real alternative people seem to be using nowadays is Supabase, and that has an awful free tier. Google's seemed to be better for long-term use, so I went with them. The data model I made was quite funny, hoenstly.
+
+Google Firebase offers you 50K Reads/writes a day, totally free. After that it's some insanely low rate, like $0.03 / 100K reads (don't quote me on that). The other great thing about Firebase is that it has a data record limit of 1MB.
+
+**1 *Megabyte*.**
+
+That's about 1 million characters. For reference, the Great Gatsby is estimated to be about 240,000. 
+
+My blood test results will never be as long as the Great Gatsby. For that reason, **we are storing the entire set of blood test results in one Firestore entry.** I can modify my data fifty-thousand times a day for free. That's one hell of a free tier!
+
+
+It's safe to say this setup will never cost me a dime. I iterated with Claude and we settled on the following schema for the data we'll send to Fireabse
+  {
+    "schemaVersion": 1,
+    "tests": [
+      {
+        "name": "string",
+        "unit": "",
+        "range": "",
+        "type": "",
+        "points": [
+          {
+            "date": "YYYY-MM-DD",
+            "rawResult": "",
+            "lab": "",
+            "sourceFile": "",
+            "testResultId": "",
+            "rawRange": "",
+            "unit": "",
+            "sourcePage": "",
+            "reviewStatus": "",
+            "verificationStatus": ""
+          }
+        ]
+      }
+    ]
+  }
+
+This schema looked pretty good. I was almost ready to send it to firebase, but only had one issue. **How do we protect the confidentiality of this information?** This is literally private, sensitive health data, and while it isn't personally identifying, anyone who see's its in the "sull1van.com" google firestore database will know who it belongs to.
+
+Claude offered to encrypt the values. I thought that was stupid. The metadata is equally as important. For that reason, I settled on this: make it a *Base64 AES-GCM ciphertext of JSON.stringify(vaultData).*
+
+This essentially encrypts the entire database of health records as one blob of text, then sends that to firebase. All firebase sees is 1 entry, with this massive blob of text. E2E encrypted, so there's no way to examine the data in transit or at rest.
+
+---
+
+And with that, it finally looked good. I wired up the Firebase integration, and ran a one-time script to push all my data. Crazy enough, it worked on the first try. I've even done multiple verification passes since then, and it's never missed a single data point. 
+
+The firestore database has essentially become my new source of truth for blood test results. I do realize how important it is that our encrypted data stays safe in Firebase, as even a single character changing could poision the entire dataset and make it useless. For that reason, I actually run the Firestore database and Excel sheet in parallel, making sure they contain the same data every time I add a new blood test result. It's a little extra effort, but worth the hassle IMO.
+
+
+## Closing thoughts
+
+
+This project was genuinely a lot of fun.
 
 # CONSTRUCTION ZONE BELOW
 
