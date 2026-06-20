@@ -85,7 +85,7 @@ I'll also say there were _countless_ people who were incredibly supportive. Peop
 
 ## Will I stay sober past one year?
 
-As of right now, I haven't broken sobriety. But that could change. I achieved pretty much everything I was looking for this year, and I don't have anything left to prove to myself by going longer. Now I know that if I can make a decision like this before, I can do it again. It was really about convincing myself that I *could*, and resetting my relationship with alcohol. 
+Probably not. For me, it was about getting healthier and getting rid of my craving to drink. A year later, I achieved pretty much everything I was looking for. I so want to keep this same relationship with alcohol going forward, but with the ability to have a drink if I want it. For me, being sober long term.
 
 It's also been incredible to see how much I could accomplish in the in-between, having repurposed all the weekends I wasn't going out. I refined my self-driving car project. I honed my health and got the best blood test results of my entire life. I worked on a passion project project that graded two dozen phone chargers, continuing a Google engineer's work. I created a half-dozen AI-assisted vibe coding projects, replacing stuff like my Spotify and my workout app with custom-coded alternatives that are 100% free to operate (article coming soon). A lot of stuff.
 

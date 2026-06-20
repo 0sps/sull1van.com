@@ -214,7 +214,7 @@ The firestore database has essentially become my new source of truth for blood t
 
 ## Closing thoughts
 
-This project was genuinely a lot of fun. It
+This project was genuinely a lot of fun. It 
 
 # CONSTRUCTION ZONE BELOW
 
