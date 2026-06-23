@@ -145,7 +145,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
       <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
     </div>
     <div class="gallery-caption">
-      Screenshot of Cmd+K. It genuinely is triggered by Cmd+K on desktop, but I didn't think of a better name, so on mobile I call it Cmd+K too.
+      Screenshot of Cmd+K. I don't have a better name for it, but it's triggered by Cmd+K on desktop, so 
     </div>
   </div>
 </div>
@@ -173,6 +173,7 @@ My blood test results will never be as long as the Great Gatsby. For that reason
 
 
 It's safe to say this setup will never cost me a dime. I iterated with Claude and we settled on the following schema for the data we'll send to Fireabse
+```json
   {
     "schemaVersion": 1,
     "tests": [
@@ -198,6 +199,8 @@ It's safe to say this setup will never cost me a dime. I iterated with Claude an
       }
     ]
   }
+```
+
 
 This schema looked pretty good. I was almost ready to send it to firebase, but only had one issue. **How do we protect the confidentiality of this information?** This is literally private, sensitive health data, and while it isn't personally identifying, anyone who see's its in the "sull1van.com" google firestore database will know who it belongs to.
 
