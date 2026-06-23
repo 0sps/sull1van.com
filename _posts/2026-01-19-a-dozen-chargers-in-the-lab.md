@@ -319,7 +319,11 @@ devices:
 
 ## A Dozen+ Chargers in the Lab: Apple is Okay, but Not the Best
 
-<!-- INTRO: Write your opening paragraph(s) here. Why did you test this? What inspired you? (e.g. Ken Shirriff) What is the reader going to learn? -->
+<figure>
+  <img src="/assets/images/allchargers.jpg" alt="all chargers">
+  <figcaption>Ken Shirriff's original charger teardown article from 2012</figcaption>
+</figure>
+
 
 Have you ever wondered if there are 'good' and 'bad' chargers? Is there really a difference between a $5 brick you get at an airport and a $30 one you order direct from a name brand? As it turns out, cheaply made chargers can operate far differently from name-brand ones, and can sometimes be dangerous to use.
 
