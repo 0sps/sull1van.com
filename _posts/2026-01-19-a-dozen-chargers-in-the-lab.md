@@ -321,7 +321,6 @@ devices:
 
 <figure>
   <img src="/assets/images/allchargers.jpg" alt="all chargers">
-  <figcaption>Ken Shirriff's original charger teardown article from 2012</figcaption>
 </figure>
 
 
