@@ -3658,6 +3658,12 @@
         }
 
         function isVersionedSeedConfig(configId, jsonPath) {
+            // Intentional source-of-truth split:
+            // - trainingPlan is user/Firebase-owned after first seed.
+            // - exercises/progressionPlan are bundled-version-owned when the checked-in
+            //   JSON has a newer lastUpdatedDate, so force sync may promote that bundle to
+            //   Firebase. Sean wants this so curated exercise/coach updates can ship from
+            //   the repo while personal training-plan edits stay Firebase-owned.
             return isExercisesConfig(configId, jsonPath) || isProgressionPlanConfig(configId, jsonPath);
         }
 
