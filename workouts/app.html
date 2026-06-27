@@ -1362,35 +1362,12 @@
             margin-top: 24px;
         }
 
-        .training-plan-target-card,
-        .training-plan-pace-card {
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 184, 92, 0.3);
-            padding: 16px;
-            box-shadow: inset 0 0 24px rgba(255, 154, 61, 0.06);
-        }
-
         .training-plan-target-title {
             color: var(--text-muted);
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1.4px;
             margin-bottom: 8px;
-        }
-
-        .training-plan-pace-card {
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .training-plan-pace-card.on-track,
-        .training-plan-pace-card.ahead {
-            border-color: rgba(0, 255, 136, 0.45);
-            box-shadow: inset 0 0 24px rgba(0, 255, 136, 0.06), 0 0 18px rgba(0, 255, 136, 0.1);
-        }
-
-        .training-plan-pace-card.behind {
-            border-color: rgba(255, 74, 116, 0.55);
-            box-shadow: inset 0 0 24px rgba(255, 74, 116, 0.07), 0 0 18px rgba(255, 74, 116, 0.12);
         }
 
         .training-plan-pace-label {
@@ -2314,11 +2291,6 @@
             }
         }
 
-        @keyframes coachProgressFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
         @media (prefers-reduced-motion: reduce) {
             .coach-dial-container {
                 animation: none;
@@ -2903,7 +2875,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
             authDomain: window.location.hostname === 'sull1van.com' ? 'sull1van.com' : 'workout-c7be0.firebaseapp.com',
@@ -2943,6 +2915,7 @@
         window.firebaseGetDocs = getDocs;
         window.firebaseSetDoc = setDoc;
         window.firebaseDeleteDoc = deleteDoc;
+        window.firebaseRunTransaction = runTransaction;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
         window.firebaseLimit = limit;
@@ -3033,12 +3006,41 @@
         // ============================================================================
 
         // --- Modal Management ---
+        const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        let lastFocusedBeforeModal = null;
+
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            lastFocusedBeforeModal = document.activeElement;
+            modal.classList.add('active');
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            // Move focus into the dialog for keyboard/screen-reader users.
+            const focusable = modal.querySelector(FOCUSABLE_SELECTOR);
+            if (focusable) { try { focusable.focus(); } catch (e) { } }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.remove('active');
+            modal.removeAttribute('aria-modal');
+            // Restore focus to whatever opened the modal.
+            if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+                try { lastFocusedBeforeModal.focus(); } catch (e) { }
+            }
+            lastFocusedBeforeModal = null;
+        }
+
+        // Route a close request through any modal-specific cleanup so backdrop clicks and
+        // Escape behave like the dedicated close buttons.
+        function dispatchCloseModal(modalId) {
+            switch (modalId) {
+                case 'editModal': closeEditModal(); break;
+                case 'zeroRepsModal': closeZeroRepsModal(); break;
+                default: closeModal(modalId);
+            }
         }
 
         function showNotification(title, message) {
@@ -3383,7 +3385,13 @@
         function formatDateForCSV(date) {
             const d = new Date(date);
             const pad = n => String(n).padStart(2, '0');
-            return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} +0000`;
+            // Use local time (with the local UTC offset) so exported days match the
+            // in-app local-date grouping; a late-night workout stays on the same day.
+            const offsetMin = -d.getTimezoneOffset();
+            const sign = offsetMin >= 0 ? '+' : '-';
+            const offH = pad(Math.floor(Math.abs(offsetMin) / 60));
+            const offM = pad(Math.abs(offsetMin) % 60);
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} ${sign}${offH}${offM}`;
         }
 
         function compareLogIds(id1, id2) { return id1.toString() === id2.toString(); }
@@ -3500,11 +3508,11 @@
             return `
                 <div class="set-input-group" data-mode="${mode}">
                     <span class="set-label">Set ${setIdx + 1}</span>
-                    <button class="warmup-btn ${isWarmup ? 'active' : ''}" ${commonAttrs}>W</button>
+                    <button class="warmup-btn ${isWarmup ? 'active' : ''}" aria-label="Toggle warm-up for set ${setIdx + 1}" aria-pressed="${isWarmup ? 'true' : 'false'}" ${commonAttrs}>W</button>
                     <div class="set-inputs">
-                        <input type="number" class="${inputClass}" placeholder="${escapeAttr(repsPlaceholder)}" value="${escapeAttr(reps || '')}" data-type="reps" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" aria-label="Set ${setIdx + 1} reps" placeholder="${escapeAttr(repsPlaceholder)}" value="${escapeAttr(reps || '')}" data-type="reps" ${commonAttrs}>
                         <span class="input-separator">/</span>
-                        <input type="number" class="${inputClass}" placeholder="${escapeAttr(weightPlaceholder)}" value="${escapeAttr(displayWeightValue || '')}" data-type="weight" ${commonAttrs}>
+                        <input type="number" class="${inputClass}" aria-label="Set ${setIdx + 1} weight" placeholder="${escapeAttr(weightPlaceholder)}" value="${escapeAttr(displayWeightValue || '')}" data-type="weight" ${commonAttrs}>
                     </div>
                 </div>`;
         }
@@ -3808,7 +3816,7 @@
                     button.disabled = true;
                     button.textContent = 'SYNCING...';
                 }
-                if (statusEl) statusEl.textContent = `Syncing ${target.label} from Firebase...`;
+                if (statusEl) statusEl.textContent = `Refreshing ${target.label}...`;
 
                 // Manual sync deliberately bypasses the 7-day cache and refreshes only this
                 // config doc. It does not clear workoutProgress or any saved workout logs.
@@ -3918,6 +3926,11 @@
                 console.error(`Firebase ${operationName} error:`, error);
                 updateSyncStatus('error');
 
+                if (error && error.isStaleWrite) {
+                    showNotification('OUT OF DATE', 'This workout was changed on another device. Reload before saving to avoid overwriting newer data.');
+                    return false;
+                }
+
                 // User-friendly messages
                 if (error.code === 'permission-denied') {
                     console.error('Permission denied. Check authentication.');
@@ -3956,6 +3969,21 @@
             }, 'load');
         }
 
+        // Guards against rapid double-taps creating duplicate saves.
+        let isSaving = false;
+
+        // Collision-resistant id: Date.now() alone collides when two saves land in the
+        // same millisecond (double-tap) or across devices. The random suffix avoids that.
+        function generateLogId() {
+            return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        }
+
+        // Marker error so callers can distinguish "someone else has a newer copy"
+        // from a generic network/permission failure.
+        class StaleWriteError extends Error {
+            constructor() { super('STALE_WRITE'); this.name = 'StaleWriteError'; this.isStaleWrite = true; }
+        }
+
         async function saveToFirebase(log) {
             return withFirebaseErrorHandling(async () => {
                 const user = window.currentUser;
@@ -3964,14 +3992,41 @@
                     return false;
                 }
                 const docRef = window.getWorkoutDocRef(log.id);
-                await window.firebaseSetDoc(docRef, { ...log, updatedAt: new Date().toISOString() });
+                const baseUpdatedAt = log.updatedAt || null;
+                const newUpdatedAt = new Date().toISOString();
+
+                // Use a transaction so a stale tab/device can't silently clobber a newer
+                // remote copy (e.g. resurrect sets that were deleted elsewhere). If the
+                // remote doc was updated after the version we loaded, abort.
+                if (window.firebaseRunTransaction && window.firebaseDb) {
+                    await window.firebaseRunTransaction(window.firebaseDb, async (tx) => {
+                        const snap = await tx.get(docRef);
+                        if (snap.exists()) {
+                            const remote = snap.data();
+                            if (remote && remote.updatedAt && baseUpdatedAt && remote.updatedAt > baseUpdatedAt) {
+                                throw new StaleWriteError();
+                            }
+                        }
+                        tx.set(docRef, { ...log, updatedAt: newUpdatedAt });
+                    });
+                } else {
+                    await window.firebaseSetDoc(docRef, { ...log, updatedAt: newUpdatedAt });
+                }
+                // Keep the in-memory copy's version in sync for any subsequent save.
+                log.updatedAt = newUpdatedAt;
             }, 'save');
         }
 
         async function saveWorkoutLog(log, refreshComponents = ['logs', 'stats']) {
             const success = await saveToFirebase(log);
             if (!success) return false;
-            workoutLogs.unshift(log);
+            // Upsert by id so a retried/duplicated save can't create a local duplicate.
+            const existingIndex = workoutLogs.findIndex(l => compareLogIds(l.id, log.id));
+            if (existingIndex !== -1) {
+                workoutLogs[existingIndex] = log;
+            } else {
+                workoutLogs.unshift(log);
+            }
             invalidateStatsCache();
             if (refreshComponents.length > 0) {
                 refreshUI(refreshComponents);
@@ -4001,10 +4056,30 @@
             else { icon.textContent = '!'; text.textContent = 'Sync Error'; }
         }
 
+        // Drafts are scoped per signed-in user so two accounts on the same browser
+        // can't inherit each other's in-progress workout.
+        function getProgressStorageKey() {
+            const email = window.currentUser?.email;
+            return email ? `workoutProgress_${email}` : 'workoutProgress_anon';
+        }
+
+        // One-time move of any pre-scoping global draft into the current user's key.
+        function migrateLegacyProgressKey() {
+            try {
+                const legacy = localStorage.getItem('workoutProgress');
+                if (legacy === null) return;
+                const userKey = getProgressStorageKey();
+                if (userKey !== 'workoutProgress' && localStorage.getItem(userKey) === null) {
+                    localStorage.setItem(userKey, legacy);
+                }
+                localStorage.removeItem('workoutProgress');
+            } catch (e) { /* non-fatal */ }
+        }
+
         function saveWorkoutProgress() {
             try {
                 let allProgress = {};
-                const saved = localStorage.getItem('workoutProgress');
+                const saved = localStorage.getItem(getProgressStorageKey());
                 if (saved) {
                     try {
                         allProgress = JSON.parse(saved);
@@ -4020,7 +4095,7 @@
                     setCounts: currentSetCounts,
                     timestamp: Date.now()
                 };
-                localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                localStorage.setItem(getProgressStorageKey(), JSON.stringify(allProgress));
             } catch (e) {
                 console.error('Error saving workout progress:', e);
             }
@@ -4028,7 +4103,8 @@
 
         function loadWorkoutProgress() {
             try {
-                const saved = localStorage.getItem('workoutProgress');
+                migrateLegacyProgressKey();
+                const saved = localStorage.getItem(getProgressStorageKey());
                 if (!saved) return false;
                 let allProgress = JSON.parse(saved);
 
@@ -4047,7 +4123,7 @@
                         setCounts: legacyData.setCounts,
                         timestamp: legacyData.timestamp
                     };
-                    localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                    localStorage.setItem(getProgressStorageKey(), JSON.stringify(allProgress));
                 }
 
                 const now = Date.now();
@@ -4063,9 +4139,9 @@
 
                 if (hasChanges) {
                     if (Object.keys(allProgress).length === 0) {
-                        localStorage.removeItem('workoutProgress');
+                        localStorage.removeItem(getProgressStorageKey());
                     } else {
-                        localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                        localStorage.setItem(getProgressStorageKey(), JSON.stringify(allProgress));
                     }
                 }
 
@@ -4084,21 +4160,22 @@
 
         function clearWorkoutProgress() {
             try {
-                const saved = localStorage.getItem('workoutProgress');
+                const key = getProgressStorageKey();
+                const saved = localStorage.getItem(key);
                 if (!saved) return;
                 let allProgress = JSON.parse(saved);
 
                 if (allProgress.hasOwnProperty('workoutDay')) {
-                    localStorage.removeItem('workoutProgress');
+                    localStorage.removeItem(key);
                     return;
                 }
 
                 if (allProgress[currentWorkoutDay]) {
                     delete allProgress[currentWorkoutDay];
                     if (Object.keys(allProgress).length === 0) {
-                        localStorage.removeItem('workoutProgress');
+                        localStorage.removeItem(key);
                     } else {
-                        localStorage.setItem('workoutProgress', JSON.stringify(allProgress));
+                        localStorage.setItem(key, JSON.stringify(allProgress));
                     }
                 }
             } catch (e) {
@@ -4163,7 +4240,7 @@
                 // Modal overlay close
                 if (e.target.classList.contains('modal-overlay')) {
                     const modalId = e.target.id;
-                    if (modalId) closeModal(modalId);
+                    if (modalId) dispatchCloseModal(modalId);
                     return;
                 }
 
@@ -4211,7 +4288,7 @@
 
                 // Add set button
                 const addSetBtn = e.target.closest('.btn-add-set-style');
-                if (addSetBtn && !addSetBtn.dataset.handled) {
+                if (addSetBtn) {
                     const mode = addSetBtn.dataset.mode;
                     if (mode === 'edit') {
                         const exIdx = parseInt(addSetBtn.dataset.exIdx);
@@ -4227,7 +4304,7 @@
 
                 // Remove set button
                 const removeSetBtn = e.target.closest('.btn-remove-set-style');
-                if (removeSetBtn && !removeSetBtn.dataset.handled && !removeSetBtn.disabled) {
+                if (removeSetBtn && !removeSetBtn.disabled) {
                     const mode = removeSetBtn.dataset.mode;
                     if (mode === 'edit') {
                         const exIdx = parseInt(removeSetBtn.dataset.exIdx);
@@ -4273,6 +4350,33 @@
                 }
             });
 
+            // Modal keyboard support: Escape to close, Tab to trap focus inside the dialog.
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'Escape' && e.key !== 'Tab') return;
+                const activeModals = document.querySelectorAll('.modal-overlay.active');
+                if (!activeModals.length) return;
+                const modal = activeModals[activeModals.length - 1]; // topmost
+
+                if (e.key === 'Escape') {
+                    if (modal.id) dispatchCloseModal(modal.id);
+                    return;
+                }
+
+                // Tab trap
+                const focusables = Array.from(modal.querySelectorAll(FOCUSABLE_SELECTOR))
+                    .filter(el => el.offsetParent !== null || el === document.activeElement);
+                if (!focusables.length) return;
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+
             // Input change handler for exercise data
             document.addEventListener('change', (e) => {
                 if (e.target.classList.contains('set-input')) {
@@ -4288,11 +4392,23 @@
                 }
             });
 
-            // Keep per-lift volume responsive while typing.
+            // Persist on every keystroke (not just blur) so backgrounding/killing the PWA
+            // mid-entry doesn't lose the latest typed reps/weight. Also keep per-lift
+            // volume responsive while typing.
             document.addEventListener('input', (e) => {
                 if (!e.target.classList.contains('set-input')) return;
-                if (e.target.dataset.mode !== 'workout') return;
+                const mode = e.target.dataset.mode;
 
+                if (mode === 'workout' || mode === 'manual') {
+                    updateExerciseData(e.target);
+                } else if (mode === 'edit') {
+                    const exIdx = parseInt(e.target.dataset.exIdx);
+                    const setIdx = parseInt(e.target.dataset.setIdx);
+                    const type = e.target.dataset.type;
+                    updateEditExerciseData(exIdx, setIdx, type, e.target.value);
+                }
+
+                if (mode !== 'workout') return;
                 const key = e.target.dataset.exercise;
                 if (!key) return;
 
@@ -4457,14 +4573,18 @@
                 if (!manualLogData[key]) manualLogData[key] = {};
                 if (!manualLogData[key][idx]) manualLogData[key][idx] = {};
                 btn.classList.toggle('active');
-                manualLogData[key][idx].isWarmup = btn.classList.contains('active');
+                const on = btn.classList.contains('active');
+                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                manualLogData[key][idx].isWarmup = on;
                 return;
             }
 
             if (!currentExerciseData[key]) currentExerciseData[key] = {};
             if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = {};
             btn.classList.toggle('active');
-            currentExerciseData[key][idx].isWarmup = btn.classList.contains('active');
+            const on = btn.classList.contains('active');
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            currentExerciseData[key][idx].isWarmup = on;
             checkExerciseCompletion(key);
             saveWorkoutProgress(); // Save to localStorage
         }
@@ -4524,6 +4644,7 @@
             if (coachBtn) coachBtn.classList.toggle('achieved', targetHit);
         }
         async function completeWorkout(shouldExport = false) {
+            if (isSaving) return null;
             const workout = getWorkoutData(currentWorkoutDay);
             if (workout.exercises.length === 0) { showNotification('REST DAY', 'Today is a rest day!'); return null; }
 
@@ -4566,24 +4687,32 @@
             return await saveWorkoutData(logExercises, shouldExport);
         }
         async function saveWorkoutData(exercises, shouldExport = false) {
-            const workout = getWorkoutData(currentWorkoutDay);
-            const logId = Date.now();
-            const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
+            if (isSaving) return null;
+            isSaving = true;
+            const btn = document.getElementById('completeWorkoutBtn');
+            if (btn) btn.disabled = true;
+            try {
+                const workout = getWorkoutData(currentWorkoutDay);
+                const logId = generateLogId();
+                const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
 
-            const success = await saveWorkoutLog(log, []);
+                const success = await saveWorkoutLog(log, []);
 
-            if (success) {
-                const btn = document.getElementById('completeWorkoutBtn');
-                showButtonSuccess(btn);
-                currentExerciseData = {};
-                currentSetCounts = {};
-                clearWorkoutProgress();
-                refreshUI(['exercises', 'logs', 'stats']);
-                if (shouldExport) exportSingleWorkout(log);
-            } else {
-                showNotification('SAVE ERROR', 'There was a problem saving your workout to Firebase. Please check your connection and try again.');
+                if (success) {
+                    showButtonSuccess(btn);
+                    currentExerciseData = {};
+                    currentSetCounts = {};
+                    clearWorkoutProgress();
+                    refreshUI(['exercises', 'logs', 'stats']);
+                    if (shouldExport) exportSingleWorkout(log);
+                } else {
+                    if (btn) btn.disabled = false;
+                    showNotification('SAVE ERROR', 'There was a problem saving your workout to Firebase. Please check your connection and try again.');
+                }
+                return success ? log : null;
+            } finally {
+                isSaving = false;
             }
-            return success ? log : null;
         }
         function closeZeroRepsModal() {
             closeModal('zeroRepsModal');
@@ -4592,6 +4721,12 @@
         async function confirmCompleteWorkout() {
             if (!pendingWorkoutData) return;
             const { exercises, shouldExport, isEdit, isManual } = pendingWorkoutData;
+            // After dropping zero-rep sets there may be nothing left to save.
+            if (!exercises || exercises.length === 0) {
+                closeZeroRepsModal();
+                showNotification('MISSING DATA', 'Enter reps for at least one set before saving.');
+                return;
+            }
             closeZeroRepsModal();
             if (isEdit) {
                 editingLogData.exercises = exercises;
@@ -4692,7 +4827,9 @@
         function toggleEditWarmup(exIdx, setIdx, btn) {
             if (!editingLogData) return;
             btn.classList.toggle('active');
-            editingLogData.exercises[exIdx].sets[setIdx].isWarmup = btn.classList.contains('active');
+            const on = btn.classList.contains('active');
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            editingLogData.exercises[exIdx].sets[setIdx].isWarmup = on;
         }
         function removeExerciseFromEdit(exIdx) {
             if (!editingLogData) return;
@@ -4706,6 +4843,10 @@
         async function saveEditedWorkout() {
             if (!editingLogData) return;
             const { cleanedExercises, hasZeroReps } = validateAndCleanWorkout(editingLogData.exercises);
+            if (cleanedExercises.length === 0) {
+                showNotification('MISSING DATA', 'Enter reps for at least one set, or delete the workout instead.');
+                return;
+            }
             if (hasZeroReps) {
                 pendingWorkoutData = { exercises: cleanedExercises, shouldExport: false, isEdit: true };
                 openModal('zeroRepsModal');
@@ -4715,6 +4856,10 @@
             await finalizeEditedWorkoutSave();
         }
         async function finalizeEditedWorkoutSave() {
+            if (isSaving) return;
+            isSaving = true;
+            const saveBtn = document.getElementById('saveEditsBtn');
+            if (saveBtn) saveBtn.disabled = true;
             try {
                 // Save to Firebase - Use the original log ID and data structure
                 const success = await saveToFirebase(editingLogData);
@@ -4741,11 +4886,15 @@
                         closeEditModal();
                     }
                 } else {
+                    if (saveBtn) saveBtn.disabled = false;
                     showNotification('ERROR', '❌ Error saving changes. Please try again.');
                 }
             } catch (error) {
                 console.error('FAILED TO FINALIZE EDIT:', error);
+                if (saveBtn) saveBtn.disabled = false;
                 showNotification('ERROR', '❌ Error saving changes. Please try again.');
+            } finally {
+                isSaving = false;
             }
         }
         function closeEditModal() {
@@ -5474,10 +5623,56 @@
     </script>
     <script>
         if ('serviceWorker' in navigator) {
+            let swRefreshing = false;
+            // When the waiting worker takes control, reload once so the user runs new code.
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (swRefreshing) return;
+                swRefreshing = true;
+                window.location.reload();
+            });
+
+            function showUpdatePrompt(worker) {
+                if (document.getElementById('swUpdateBanner')) return;
+                const banner = document.createElement('div');
+                banner.id = 'swUpdateBanner';
+                banner.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:9999;background:#1c1c1c;color:#fff;border:1px solid rgba(255,184,92,0.5);border-radius:8px;padding:12px 16px;display:flex;gap:12px;align-items:center;font-size:0.85rem;box-shadow:0 6px 24px rgba(0,0,0,0.4);max-width:90vw;';
+                const msg = document.createElement('span');
+                msg.textContent = 'A new version is available.';
+                const btn = document.createElement('button');
+                btn.textContent = 'UPDATE';
+                btn.style.cssText = 'background:#ff9a3d;color:#1c1c1c;border:none;border-radius:6px;padding:6px 12px;font-weight:700;cursor:pointer;';
+                btn.addEventListener('click', () => {
+                    btn.disabled = true;
+                    btn.textContent = 'UPDATING...';
+                    worker.postMessage({ type: 'SKIP_WAITING' });
+                });
+                const dismiss = document.createElement('button');
+                dismiss.textContent = 'Later';
+                dismiss.style.cssText = 'background:transparent;color:#aaa;border:none;cursor:pointer;';
+                dismiss.addEventListener('click', () => banner.remove());
+                banner.append(msg, btn, dismiss);
+                document.body.appendChild(banner);
+            }
+
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
                     .then(registration => {
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                        // If an update is already waiting on load, surface it.
+                        if (registration.waiting && navigator.serviceWorker.controller) {
+                            showUpdatePrompt(registration.waiting);
+                        }
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            if (!newWorker) return;
+                            newWorker.addEventListener('statechange', () => {
+                                // Only prompt when this is an update to an already-controlled page,
+                                // not the very first install.
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdatePrompt(newWorker);
+                                }
+                            });
+                        });
                     })
                     .catch(err => {
                         console.log('ServiceWorker registration failed: ', err);
@@ -5618,9 +5813,10 @@
         }
 
         async function finalizeManualLogSave(exercises) {
+            if (isSaving) return;
             const btn = document.getElementById('submitManualLogBtn');
 
-            const logId = Date.now();
+            const logId = generateLogId();
             const log = {
                 id: logId,
                 date: new Date().toISOString(),
@@ -5630,10 +5826,16 @@
                 weightUnit: 'kg'
             };
 
+            isSaving = true;
             btn.disabled = true;
             btn.textContent = 'SAVING...';
 
-            const success = await saveWorkoutLog(log, ['logs', 'stats']);
+            let success = false;
+            try {
+                success = await saveWorkoutLog(log, ['logs', 'stats']);
+            } finally {
+                isSaving = false;
+            }
 
             if (success) {
                 // Success state for the modal button

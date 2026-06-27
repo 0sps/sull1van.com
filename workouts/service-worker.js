@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v4';
+const CACHE_NAME = 'seans-log-v5';
 // Keep the service worker focused on the app shell. exercises/trainingPlan/
 // progressionPlan are user config data now, cached by page code after Firebase reads.
 const ASSETS_TO_CACHE = [
@@ -46,7 +46,7 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// Activate Event - Clean up old caches
+// Activate Event - Clean up old caches and take control of open pages.
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -57,8 +57,16 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
+});
+
+// Allow the page to activate a waiting worker immediately (used by the in-app
+// "Update" prompt) so users aren't pinned to old code after a deploy.
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 });
 
 // Fetch Event - Network First for app shell, Cache First for static assets.
