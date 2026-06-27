@@ -3075,8 +3075,20 @@
             return escapeHtml(value);
         }
 
+        // Escapes a value for safe embedding inside a JS string literal. Also neutralizes
+        // characters that could break out of a <script> context (<, >, newlines, line/
+        // paragraph separators) so it's safe even if used outside an HTML attribute.
         function escapeJsString(value) {
-            return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            return String(value ?? '')
+                .replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'")
+                .replace(/"/g, '\\"')
+                .replace(/</g, '\\x3C')
+                .replace(/>/g, '\\x3E')
+                .replace(/\r/g, '\\r')
+                .replace(/\n/g, '\\n')
+                .replace(/\u2028/g, '\\u2028')
+                .replace(/\u2029/g, '\\u2029');
         }
 
         function escapeInlineJsString(value) {
@@ -4718,6 +4730,9 @@
                 return success ? log : null;
             } finally {
                 isSaving = false;
+                // Re-enable so another workout can be logged this session; the guard only
+                // needs the button disabled during the in-flight save.
+                if (btn) btn.disabled = false;
             }
         }
         function closeZeroRepsModal() {
@@ -4901,6 +4916,8 @@
                 showNotification('ERROR', '❌ Error saving changes. Please try again.');
             } finally {
                 isSaving = false;
+                // Re-enable so a later edit isn't blocked by a leftover disabled state.
+                if (saveBtn) saveBtn.disabled = false;
             }
         }
         function closeEditModal() {
@@ -5071,14 +5088,7 @@
         async function executeDeleteSet(idx) {
             if (!selectedSetForDeletion) return;
             const overlay = document.getElementById(`overlay_${idx}`);
-            // Show green "Deleted!" overlay
-            if (overlay) {
-                overlay.classList.add('deleted-state');
-                overlay.innerHTML = '<span class="exercise-name" style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
-            }
             const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
-            // Small delay for the "Deleted!" visual
-            await new Promise(r => setTimeout(r, 600));
             try {
                 // Find the workout
                 const workoutIdx = workoutLogs.findIndex(l => compareLogIds(l.id, workoutId));
@@ -5111,6 +5121,12 @@
                         workoutLogs[workoutIdx] = workout;
                     }
                 }
+                // Persisted successfully — only now paint the green "Deleted!" confirmation.
+                if (overlay) {
+                    overlay.classList.add('deleted-state');
+                    overlay.innerHTML = '<span class="exercise-name" style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
+                    await new Promise(r => setTimeout(r, 500)); // brief visual confirmation
+                }
                 invalidateStatsCache();
                 // Refresh UI
                 renderRecentLogs();
@@ -5118,10 +5134,11 @@
                 if (document.getElementById('historyTab').style.display === 'block') {
                     renderFullHistory();
                 }
-                // Keep the row showing "Deleted!" - don't re-render
                 selectedSetForDeletion = null;
             } catch (error) {
                 console.error('FAILED TO DELETE SET:', error);
+                // Nothing was changed and the row was never altered — leave the selection
+                // intact so the user can retry.
                 showNotification('ERROR', '❌ Error deleting set. Please try again.');
             }
         }
@@ -5413,10 +5430,14 @@
                 document.getElementById('currentStreak').textContent = cachedStats.streak;
                 return;
             }
-            // Recalculate stats
-            const totalWorkouts = workoutLogs.length;
-            const totalSets = calculateTotalSets(workoutLogs);
-            const totalVolume = calculateTotalVolume(workoutLogs);
+            // Recalculate stats. Cap the totals at the most recent 60 logs so the numbers
+            // match the dashboard caption ("based on your last 60 workouts") even after
+            // "Load All History" pulls the full archive into workoutLogs. (workoutLogs is
+            // ordered newest-first.) Streak still scans full history since it's day-based.
+            const statsLogs = workoutLogs.slice(0, CONFIG.FIREBASE_INIT_LIMIT);
+            const totalWorkouts = statsLogs.length;
+            const totalSets = calculateTotalSets(statsLogs);
+            const totalVolume = calculateTotalVolume(statsLogs);
             let streak = 0;
             const today = new Date(); today.setHours(0, 0, 0, 0);
             for (let i = 0; i < CONFIG.HISTORY_LIMIT_DAYS; i++) {
