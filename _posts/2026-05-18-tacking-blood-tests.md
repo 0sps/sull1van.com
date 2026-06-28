@@ -13,16 +13,17 @@ accent_color: "#93c5fd"
     float: right;
     margin: 0.5rem 0 1.5rem 2rem;
     width: 180px;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
     border-radius: 16px;
     padding: 1.25rem;
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: inherit;
   }
   html[data-theme="dark"] .biomarker-card {
-    background: rgba(220, 38, 38, 0.1);
-    border-color: rgba(220, 38, 38, 0.3);
+    background: #161616;
+    border-color: #333;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
   .biomarker-item {
@@ -31,10 +32,10 @@ accent_color: "#93c5fd"
   .biomarker-item:first-child {
     margin-bottom: 1.25rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid #fee2e2;
+    border-bottom: 1px solid #e5e7eb;
   }
   html[data-theme="dark"] .biomarker-item:first-child {
-    border-bottom-color: rgba(220, 38, 38, 0.2);
+    border-bottom-color: #333;
   }
   .biomarker-value {
     font-size: 2.75rem;
@@ -47,20 +48,12 @@ accent_color: "#93c5fd"
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: #991b1b;
     margin-top: 0.25rem;
-  }
-  html[data-theme="dark"] .biomarker-name {
-    color: #fca5a5;
   }
   .biomarker-range {
     font-size: 0.75rem;
-    color: #b91c1c;
     margin-top: 0.1rem;
-    opacity: 0.8;
-  }
-  html[data-theme="dark"] .biomarker-range {
-    color: #fca5a5;
+    opacity: 0.7;
   }
 </style>
 
