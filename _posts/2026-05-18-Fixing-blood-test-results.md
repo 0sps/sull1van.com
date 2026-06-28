@@ -4,6 +4,7 @@ title: "[PROJECT] A better way to track blood test results"
 date: 2026-05-18
 tags: [personal, tech]
 published: true
+accent_color: "#93c5fd"
 ---
 
 
