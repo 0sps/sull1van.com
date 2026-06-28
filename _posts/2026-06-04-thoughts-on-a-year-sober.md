@@ -10,7 +10,7 @@ Today officially marks one year since I went sober.
 
 ## Background
 
-I had toyed with the idea of going sober basically ever since I graduated college. It felt weird to be constantly drinking the way I did in school when I had a real job and real adult responsibilities to deal with.
+I had toyed with the idea of going sober basically ever since graduating college. It felt weird to be constantly drinking the way I did in school when I had a real job and real adult responsibilities to deal with.
 
 Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. I felt like getting anything more than a light buzz should only ever be apart of my yougner years. I drank plenty in high school and college, so when I graduated, it felt like time to move on. But as the months went by, I kept having night after night where I got more drunk than inteneded, and I hated it. Yes, I could always control whether I drank -  I did plenty of months where I was entirely sober in college - but I was never the kind of person who would have one or two drinks and stop. (those em dashes were ME btw, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much-needed reset.
 
