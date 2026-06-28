@@ -57,20 +57,6 @@ I stared at him for a second. It never even occurred to me that I could go longe
 But yeah, I could. Just go longer. So that's exactly what I did. Two months turned into six, then at six months I said twelve. Here we are, twelve months later. It's crazy.
 
 
-## Things I missed while sober
-
-Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz that comes after one, maybe two drinks. Thinking back to college and how often I would go out, I don't miss it. While it used to be a lot of fun, I know what's waiting for me now at the bottom of any bottle of something strong, and it's a nasty hangover.
-
-Near the start of my sobriety (the weeks before), I could feel the hangovers kick in while I was still drunk. Drinking heavily had already started to lose its appeal, which is why I had only been drinking once or twice a month before I went sober. I don't ever want to go back to that state of getting seriously drunk, no matter how infrequent. That nice state where you have the tiniest buzz from a single drink, THAT is the state I miss.
-
-And that's really the center of this whole year. Not having alcohol is fine, I'll live, but I would very much like to experience it again in moderation. Without alcohol, social commitments took on a slightly flatter feeling. Not significantly worse or anything, just a little less excitement. The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, a birthday dinner, and one drink would be perfect to soften the mood. It's also just apart of culture here in the Midwest, and if we had better scenery or warm weather year-round, people might bond over outdoor activities. But since we have neither of those, alcohol is pretty ingrained into society.
-
-Going 100% sober is a great way to realize that most times you REALLY drank, you didn't need to. The four-plus-drink kind of nights, the ones where you need an entire Sunday to recover. Good riddance to those.
-
-And that's why I wouldn't recommend going fully sober to most people. There's something to be said about having the option to use these things like as a tool. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it as simple as caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. 
-
-And, like it or hate it, alcohol really is apart of society in the Midwest. So for those who have the opportunity to participate in that society responsibly, I would want you to be able to do that. A *lot* of people have asked me that question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for you, then absolutley go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to 1-2 drinks a night, if you can. That's my take at least.
-
 
 
 ## What changed
@@ -92,7 +78,24 @@ And on that note: NA beers are awesome. They're not for everyone, but a ton of s
 
 
 
-## What I learned about people
+## What I miss
+
+Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz that comes after one, maybe two drinks. But being drunk? Thinking back to college and how often I would go out, I don't miss it. While it used to be a lot of fun, I know what's waiting for me now at the bottom of any bottle of something strong, and it's a nasty hangover.
+
+Near the start of my sobriety (the weeks before), I could feel the hangovers kick in while I was still drunk. Drinking heavily had already started to lose its appeal, which is why I had been slowly reducing the number of nights a month I drank. I don't ever want to go back to that state of getting seriously drunk, no matter how infrequent. The four-plus-drink kind of nights, the ones where you need an entire Sunday to recover. Good riddance to those.
+
+But that nice state where you have the tiniest buzz from a single drink, THAT is the state I miss. And that's really the center of this whole year. Not having alcohol is fine, I'll live, but I would very much like to experience it again in moderation. Without alcohol, social commitments take on a slightly flatter feeling. Not significantly worse or anything, just a little less excitement. 
+
+The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, a birthday dinner, and one drink would be perfect to soften the mood. It's also just a part of culture here in the Midwest, we don't have as much of the great outdoors as other regions of the country, and we have some pretty bad winters. Alcohol is pretty ingrained into how people connect out here, and going 100% sober made that very obvious.
+
+### My recommendation for you
+
+And that's why I wouldn't recommend going fully sober to most people. There's something to be said about having the option to use alcohol as a tool. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it like caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. For those who have the opportunity to participate in that responsibly, I would want you to take advantage where possible. A lot of people have asked me this question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for *you*, then yes, go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to one or two drinks a night, if you can. That's my take at least.
+
+
+
+
+## What I learned about people while sober
 
 People ask constant questions, and most of them are supportive. I've had tons of questions about my sobriety and never once been shamed for it. What I do get, sometimes, is a quiet guilt. I'll see other people drinking and they almost seem upset that I'm not. Like if you went out for a friend's birthday and you brought your own food because you're on a meal plan. It breaks social norms and confuses people. The alternative is to stay home and skip social events, which is a terrible alternative.
 
