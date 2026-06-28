@@ -86,7 +86,7 @@ accent_color: "#93c5fd"
     width: 180px;
     background: #eee;
     border: 1px solid #999;
-    border-radius: 0.35rem;
+    border-radius: 0;
     padding: 1.1rem 1.2rem;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.12);
     font-family: inherit;
@@ -113,7 +113,7 @@ accent_color: "#93c5fd"
     border-bottom-color: #444;
   }
   .biomarker-value {
-    font-size: 2.6rem;
+    font-size: 2.08rem;
     font-weight: 800;
     color: #555;
     line-height: 1;
