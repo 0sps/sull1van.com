@@ -130,7 +130,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
       <img src="/assets/images/bloodtest/screen5.jpg" alt="History and Context Menus" class="gallery-img" />
     </div>
     <div class="gallery-caption">
-      Left: detail view showing most recent test, normal range, and units. Right: view when you scroll down. Shows all test history, and offers context menus which present additional options
+      **Left**: detail view showing most recent test, normal range, and units. **Right**: view when you scroll down. Shows all test history, and offers context menus which present additional options
     </div>
   </div>
 
@@ -138,6 +138,9 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <div class="gallery-row">
     <div style="max-width: 500px; margin: 0 auto; width: 100%;">
       <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
+    </div>
+        <div class="gallery-caption">
+      The card view with daytime mode enabled. It was extremely hard to get the UI to this state, so hoenstly I'm blown away it all works.
     </div>
   </div>
 
