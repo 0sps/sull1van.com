@@ -12,7 +12,7 @@ Today officially marks one full year since I went sober.
 
 I had toyed with the idea of going sober basically ever since I graduated college. It felt weird to be constantly drinking the way I did in school when I had a real job and real adult responsibilities to deal with.
 
-Everyone has different relationships with substances in their lives, and mine with alcohol always felt like it should be temporary. I felt like getting anything more than a light buzz should only ever be apart of my yougner years. I drank plenty in high school and college, so when I graduated, it felt like time to move on. But as the months went by, I kept having night after night where I got more drunk than inteneded, and I hated it. Yes, I could always control whether I drank -  I did plenty of months where I was entirely sober in college - but I was never the kind of person who would have one or two drinks and stop. (those em dashes were ME btw, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much-needed reset.
+Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. I felt like getting anything more than a light buzz should only ever be apart of my yougner years. I drank plenty in high school and college, so when I graduated, it felt like time to move on. But as the months went by, I kept having night after night where I got more drunk than inteneded, and I hated it. Yes, I could always control whether I drank -  I did plenty of months where I was entirely sober in college - but I was never the kind of person who would have one or two drinks and stop. (those em dashes were ME btw, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much-needed reset.
 
 What really kicked it off, though, was some concerning blood tests I got in early 2025. They made me take my health much more seriously. I started doing things like [creating a web dashboard](https://sull1van.com/fixing-blood-test-results) to track my blood test results, so I could watch them closely as they hopefully improved. 
 
@@ -37,7 +37,7 @@ You might say these are permissive rules, and that's fair. They worked for me. I
 
 ---
 
-Another tenet of my sobriety was that it was actually threefold. It included **weed, nicotine, and alcohol**. To be honest, I know plenty of people who don't do any of these things, so I don't think that makes me special in any kind of way, but I just wanted to make it a more 'true' sobriety for me. Also I've never been a big weed or nicotine guy so it was easy brownie points. 
+Another point of my sobriety was that it was actually threefold. It included **smoking and vaping, not just drinking**. I know plenty of people who don't do any of these things, so I don't think that makes me special in any way, but I just wanted to make it a little more challenging. Also, I've never been huge on weed or nicotine, so I thought they were good to add in. 
 
 
 ## Just go longer
@@ -67,9 +67,9 @@ And that's really the center of this whole year. Not having alcohol is fine, I'l
 
 Going 100% sober is a great way to realize that most times you REALLY drank, you didn't need to. The four-plus-drink kind of nights, the ones where you need an entire Sunday to recover. Good riddance to those.
 
-And that's why I wouldn't recommend going fully sober to most people. There's something to be said for having the option to use things like alcohol as a tool. The same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even something as simple as caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. And, like it or hate it, alcohol really is apart of society in the Midwest. So for those who have the opportunity to participate in that society responsibly, I would want you to be able to do that.
+And that's why I wouldn't recommend going fully sober to most people. There's something to be said about having the option to use these things like as a tool. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it as simple as caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. 
 
-A *lot* of people have asked me that question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for you, absolutley go after it. I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to 1-2 drinks a night, if you can. That's my take at least.
+And, like it or hate it, alcohol really is apart of society in the Midwest. So for those who have the opportunity to participate in that society responsibly, I would want you to be able to do that. A *lot* of people have asked me that question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for you, then absolutley go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to 1-2 drinks a night, if you can. That's my take at least.
 
 
 
