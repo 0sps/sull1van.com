@@ -119,7 +119,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
       <img src="/assets/images/bloodtest/screen3.jpg" alt="Midnight Mode" class="gallery-img" />
     </div>
     <div class="gallery-caption">
-      The UI comes with many different modes, meant to highlight different points throughout the day. This is the 'midnight' mode.
+      The UI comes with many different modes, meant to highlight different points throughout the day. I wanted to smiulate the UI of the Apple Weather app, because that is my ideal design for something that shows health data. It actually took a long time to achieve this UI, so I'm proud of the result.
     </div>
   </div>
 
@@ -169,12 +169,12 @@ Google Firebase offers you 50K Reads/writes a day, totally free. After that it's
 
 **1 Megabyte! 😂**
 
-That's about 1 million characters. For reference, the Great Gatsby is estimated to be about 240,000. 
+So 1 megabyte is about !1 million characters. For reference, the Great Gatsby is estimated to be about 240,000.
 
-My blood test results will never be as long as the Great Gatsby. For that reason, **we are storing the entire set of blood test results in one Firestore entry.** I can modify my data fifty-thousand times a day for free. That's one hell of a free tier!
+That's a lot of characters! My blood test results will never be as long as the Great Gatsby. And so for that reason, **we are storing the entire set of blood test results in one Firestore entry!** 
 
 
-It's safe to say this setup will never cost me a dime. I iterated with Claude and we settled on the following schema for the data we'll send to Fireabse
+So it's safe to say that this setup will never cost me a dime. The only remaining question is what the data will look like when we send it to Firebase. I iterated with Claude, and we settled on the following schema for the master dataset:
 ```json
   {
     "schemaVersion": 1,
@@ -204,22 +204,20 @@ It's safe to say this setup will never cost me a dime. I iterated with Claude an
 ```
 
 
-This schema looked pretty good. I was almost ready to send it to firebase, but only had one issue. **How do we protect the confidentiality of this information?** This is literally private, sensitive health data, and while it isn't personally identifying, anyone who see's its in the "sull1van.com" google firestore database will know who it belongs to.
+This schema looked pretty good. I sent it to firebase, but then realized this was private health data gettting stored into plaintext. There should ideally be some encryption protecting it. 
 
-Claude offered to encrypt the values. I thought that was stupid. The metadata is equally as important. For that reason, I settled on this: make it a *Base64 AES-GCM ciphertext of JSON.stringify(vaultData).*
-
-This essentially encrypts the entire database of health records as one blob of text, then sends that to firebase. All firebase sees is 1 entry, with this massive blob of text. E2E encrypted, so there's no way to examine the data in transit or at rest.
+I thought about different ways to encrypt it. We could encrypt the values themselves, but thought that was stupid. The metadata (test name, test date) is equally as important. For that reason, I settled on this: make it a *Base64 AES-GCM ciphertext of JSON.stringify(vaultData).* Turn the entire thing into a string and then encrypt it all. 
 
 ---
 
-And with that, it finally looked good. I wired up the Firebase integration, and ran a one-time script to push all my data. Crazy enough, it worked on the first try. I've even done multiple verification passes since then, and it's never missed a single data point. 
+And with that, it finally looked good. I wired up the Firebase integration, and ran a one-time script to push all my data. It worked on the first try. And since then, I've been using this site to track my test resuls. 
 
-The firestore database has essentially become my new source of truth for blood test results. I do realize how important it is that our encrypted data stays safe in Firebase, as even a single character changing could poision the entire dataset and make it useless. For that reason, I actually run the Firestore database and Excel sheet in parallel, making sure they contain the same data every time I add a new blood test result. It's a little extra effort, but worth the hassle IMO.
+The firestore database has essentially become my new source of truth. I do make regular exports so that we have the Firestore database and Excel sheet running in parallel, giving me dual sources of truth. It's a little extra effort, but I want to be protected incase something gets mangled in the databsae and my data becomes unusable. 
 
 
 ## Closing thoughts
 
-This project was genuinely a lot of fun. It 
+This project was genuinely a lot of fun. I've been using the web app regularly whenever I need to source blood test values. It's also cool becuase as I stumble upon new issues or feature ideas in the UI, I can implement them easily. I've added a ton of cool funcitonality to the site over time, and it's become a very robust landing place for my data. It also makes it very easy to share the results with others.
 
 
 
