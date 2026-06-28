@@ -89,7 +89,6 @@ But that nice state where you have the tiniest buzz from a single drink, THAT is
 The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, a birthday dinner, and one drink would be perfect to soften the mood. It's also just a part of culture here in the Midwest, we don't have as much of the great outdoors as other regions of the country, and we have some pretty bad winters. Alcohol is pretty ingrained into how people connect out here, and going 100% sober made that very obvious.
 
 #### My recommendation for you
-
 And that's why I wouldn't recommend going fully sober to most people. There's something to be said about having the option to use alcohol as a tool. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it like caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. For those who have the opportunity to participate in that responsibly, I would want you to take advantage where possible. A lot of people have asked me this question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for *you*, then yes, go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to one or two drinks a night, if you can. That's my take at least.
 
 
