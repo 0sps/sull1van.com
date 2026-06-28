@@ -167,7 +167,7 @@ For backend data storage, I decided to use Google Firebase. Why? Well, the only 
 
 Google Firebase offers you 50K Reads/writes a day, totally free. After that it's some insanely low rate, like $0.03 / 100K reads (don't quote me on that). The other great thing about Firebase is that it has a data record limit of 1MB.
 
-**1 *Megabyte*.**
+**1 Megabyte! 😂**
 
 That's about 1 million characters. For reference, the Great Gatsby is estimated to be about 240,000. 
 
