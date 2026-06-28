@@ -1,37 +1,39 @@
 ---
 layout: post
-title: "[PROJECT] Fixing my poor blood test results so I can live forever"
+title: "[PROJECT] Achieving the best blood test results of my entire life"
 date: 2026-05-18
 tags: [personal, tech]
 published: true
 ---
 
 
-Nearly one year ago, I made the decision to start focusing on my bloodwork. Coming off the heels of graduating college, I had just received a bad blood test result, and I realized that a bigger effort was needed if I was going to take charge of my health.
+Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there some some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. My liver enzymes ALT and AST were extemely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
-I started by looking at the data. Literally, looking *at* it. I had some two-dozen PDFs of all my blood test results dating back to 2018 in a folder on my computer. Every time i get a blood test result, I save the pdf into one folder. I'd been doing that now for about eight years, and while the data store grew larger every month, I didn't really do anything with them.
+
+I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF an drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
 
 <div style="text-align: center; margin: 2rem auto;">
     <img src="/assets/images/bloodtest/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
 </div>
 
-Now, with the advent of Claude Cowork and Codex, I could make use of them. 
+
+Enter AI. Now that we have tools like Claude Cowork and OpenAI Codex, I could just delegate some agents to do the heavy lifting for me. 
 
 ## My Plan
 
 My plan was pretty simple, just:
-1. Command claude or Codex to delegate an army of subagents to processing my PDFs.
-2. File by file, read them with Vision (not some python pdf reader) and take note of all blood test values by hand.
+1. Command claude or Codex to delegate an army of subagents to process all my PDFs
+2. File by file, comprehensively pull all numeric and non-numeric test results out
 3. Create a master datasheet with all these results
 4. Run a separate set of agents to check the first agents' work, and report any inaccuracies they find.
-5. Create a central dashboard to read and manage all my blood test results, so I no longer needed to rely on PDFs anymore. Create a new source of truth for my data.
+5. Create a central dashboard to read and manage all my blood test results
 
-Simple, right?
+Scope creep is lowkey a problem when AI gives you infinite resources, lol. But since I knew I would only be verifying the work, not actually doing it, this all seemed possible.
 
 ## How it went
 
 ### Steps 1-4: Data conversion
-The process was honestly easier than I expected. The agents did a great job converting the blood test results to an excel sheet, and the verification bots didn't find any errors, they just found instances in which the wrong units were used. For example, an ALT test from 2018 used ng/dL, while the ALT from 2020 used ug/L. 
+The process was honestly easier than I expected. Claude and Codex both did a great job dispatching agents and converting the blood test results to an excel sheet. What's also really cool is the verification bots didn't find any errors, they just found instances in which the wrong units were used. For example, an ALT test from 2018 used ng/dL, while the ALT from 2020 used ug/L. I did a manual spot check throughout the entire dataset and it looked great.
 
 
 <div style="text-align: center; margin: 2rem auto;">
@@ -41,7 +43,7 @@ The process was honestly easier than I expected. The agents did a great job conv
 
 ### Step 5: The Dashboard
 
-This was the part where I had some fun. I started by asking Claude and Codex to both design some rudimentary visual for the labs. My thought process was pretty straightforward: let's make a dual layout, card-based and list-based. User selects between these two views, and it's either one card or one list item per blood test. They will always show the *most recent* result, followed by the relevant unit. They will be color coded green or red, based on whether they fall outside the normal range for that test.
+With the data in *some* kind of usable format, this was the part where I had some fun. I started by asking Claude and Codex to both design some rudimentary visual for the labs. My thought process was pretty straightforward: let's make a dual layout, card-based and list-based. User selects between these two views, and it's either one card or one list item per blood test. They will always show the *most recent* result, followed by the relevant unit. They will be color coded green or red, based on whether they fall outside the normal range for that test.
 
 But what constitutes a 'normal range'? **Depends who you ask!**
   My blood test results frequently showed different refernce ranges for the same blood test across the years. I attribute this mainly to the slight differences between how the two behemoths in the space, LabCorp and Quest Diagnostics, calculate their normal range. I did not find significant variability from within the same company, however. 
@@ -219,30 +221,9 @@ The firestore database has essentially become my new source of truth for blood t
 
 This project was genuinely a lot of fun. It 
 
-# CONSTRUCTION ZONE BELOW
-
-Haven't built out this blog post just yet...
 
 
-```text
-          _                                                       
-        ./ |                                                      
-       /  /                                                       
-     /'  /                                                        
-    /   /                                                         
-   /    \                                                         
-  |      `\                                                       
-  |        |                                ___________________   
-  |        |___________________...-------'''- - -  =- - =  - = `. 
- /|        |                   -  =  = -  -= - =  - =-   =  - =| 
- |        |                    |= -= - = - = - = - =--= = - = =| 
- \|        |___________________/- = - -= =_- =_-=_- -=_=-=_=_= -| 
-  |        |                   ```-------...___________________.' 
-  |________|                                                      
-    \    /                                                        
-    |    |                                                        
-  ,-'    `-,                                                      
-  |        |                                                      
-  `--------'                                                      
-```
+### References
+[1] Per NIH, [https://pmc.ncbi.nlm.nih.gov/articles/PMC4155359/](https://pmc.ncbi.nlm.nih.gov/articles/PMC4155359/): 
+  "In most types of liver damage, ALT is higher than AST. However, in alcohol-related liver injury, the enzyme AST is typically two to three times higher than ALT. An AST-to-ALT ratio greater than 2:1 strongly suggests alcohol is the cause."
 
