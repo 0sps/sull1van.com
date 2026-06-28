@@ -18,12 +18,14 @@ accent_color: "#93c5fd"
   html[data-theme="dark"] .liver-enzymes-tooltip {
     border-bottom-color: #f87171;
   }
+  /* Default: render on top of the text when screenspace is limited */
   .tooltip-card-container {
     position: absolute;
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px) scale(0.95);
     display: flex;
+    flex-direction: column;
     align-items: center;
     opacity: 0;
     pointer-events: none;
@@ -32,18 +34,38 @@ accent_color: "#93c5fd"
   }
   .liver-enzymes-tooltip:hover .tooltip-card-container {
     opacity: 1;
-    transform: translateY(-50%) translateX(20px);
+    transform: translateX(-50%) translateY(0) scale(1);
     pointer-events: auto;
   }
   .tooltip-connector-line {
-    width: 40px;
-    height: 3px;
-    background: #dc2626;
-    flex-shrink: 0;
+    display: none; /* Hide connector on small screens */
   }
-  html[data-theme="dark"] .tooltip-connector-line {
-    background: #f87171;
+
+  /* Wide screens: render card in the right margin with a connector line */
+  @media (min-width: 1100px) {
+    .tooltip-card-container {
+      bottom: auto;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%) translateX(10px) scale(0.95);
+      flex-direction: row;
+      align-items: center;
+    }
+    .liver-enzymes-tooltip:hover .tooltip-card-container {
+      transform: translateY(-50%) translateX(20px) scale(1);
+    }
+    .tooltip-connector-line {
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: #dc2626;
+      flex-shrink: 0;
+    }
+    html[data-theme="dark"] .tooltip-connector-line {
+      background: #f87171;
+    }
   }
+
   .tooltip-card {
     width: 180px;
     background: rgba(0, 0, 0, 0.11);
