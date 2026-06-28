@@ -59,7 +59,7 @@ But yeah, I could. Just go longer. So that's exactly what I did. Two months turn
 
 
 
-## What changed
+## How my body changed
 
 The changes in my body showed up fast, within ~3 months. I noticed increased energy during the day and whiter eyes. Honestly, a great combo. I love how white my eyes are now. I also worked on my general health and designed a custom supplement stack that I've been taking for about nine months now. These biomarkers trended to the best levels I've ever tested for:
 - ALT
