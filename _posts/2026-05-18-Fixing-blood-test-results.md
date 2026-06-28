@@ -22,7 +22,7 @@ Enter AI. Now that we have tools like Claude Cowork and OpenAI Codex, I could ju
 ## My Plan
 
 My plan was pretty simple, just:
-1. Command claude or Codex to delegate an army of subagents to process all my PDFs
+1. Command Claude or Codex to delegate an army of subagents to process all my PDFs
 2. File by file, comprehensively pull all numeric and non-numeric test results out
 3. Create a master datasheet with all these results
 4. Run a separate set of agents to check the first agents' work, and report any inaccuracies they find.
@@ -207,7 +207,7 @@ So it's safe to say that this setup will never cost me a dime. The only remainin
 ```
 
 
-This schema looked pretty good. I sent it to firebase, but then realized this was private health data getting stored into plaintext. There should ideally be some encryption protecting it. 
+This schema looked pretty good. I sent it to firebase, but then realized this was private health data getting stored in plaintext. There should ideally be some encryption protecting it. 
 
 I thought about different ways to encrypt it. We could encrypt the values themselves, but thought that was stupid. The metadata (test name, test date) is equally as important. For that reason, I settled on this: make it a *Base64 AES-GCM ciphertext of JSON.stringify(vaultData).* Turn the entire thing into a string and then encrypt it all. 
 
@@ -220,7 +220,7 @@ The firestore database has essentially become my new source of truth. I do make 
 
 ## Closing thoughts
 
-This project was genuinely a lot of fun. I've been using the web app regularly whenever I need to source blood test values. It's also cool becuase as I stumble upon new issues or feature ideas in the UI, I can implement them easily. I've added a ton of cool functionality to the site over time, and it's become a very robust landing place for my data. It also makes it very easy to share the results with others.
+This project was genuinely a lot of fun. I've been using the web app regularly whenever I need to source blood test values. It's also cool because as I stumble upon new issues or feature ideas in the UI, I can implement them easily. I've added a ton of cool functionality to the site over time, and it's become a very robust landing place for my data. It also makes it very easy to share the results with others.
 
 It also helps fuel my obsession for optimizing these blood test results, and my biomarkers have continued to get better and better ever since I built this dashboard. I've changed my diet and experimented with a bunch of supplements over the last year, looking to figure out what moves the needle. That could honestly be another blog post itself. But for now, I'll stick to sharing the way I track all this stuff. If there's enough interest then I may definitely start to explain how I used it to actually track and drive improvement.
 
