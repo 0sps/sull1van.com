@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[PROJECT] A better way to track blood test results"
-date: 2026-05-18
+title: "[PROJECT] How to get the best liver of all time"
+date: 2026-05-19
 tags: [personal, tech]
 published: true
-accent_color: "#93c5fd"
+accent_color: "#62cf98ff"
 ---
 
 
