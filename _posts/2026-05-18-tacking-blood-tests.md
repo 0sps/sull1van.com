@@ -13,8 +13,8 @@ accent_color: "#93c5fd"
     float: right;
     margin: 0.5rem 0 1.5rem 2rem;
     width: 180px;
-    background: #fafafa;
-    border: 1px solid #e5e7eb;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 16px;
     padding: 1.25rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -22,8 +22,8 @@ accent_color: "#93c5fd"
     color: inherit;
   }
   html[data-theme="dark"] .biomarker-card {
-    background: #161616;
-    border-color: #333;
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
   .biomarker-item {
@@ -32,10 +32,10 @@ accent_color: "#93c5fd"
   .biomarker-item:first-child {
     margin-bottom: 1.25rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   }
   html[data-theme="dark"] .biomarker-item:first-child {
-    border-bottom-color: #333;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
   }
   .biomarker-value {
     font-size: 2.75rem;
