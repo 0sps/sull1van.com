@@ -14,11 +14,19 @@ accent_color: "#93c5fd"
     cursor: pointer;
     position: relative;
     display: inline;
+    outline-offset: 0.2em;
   }
   html[data-theme="dark"] .liver-enzymes-tooltip {
     border-bottom-color: #f87171;
   }
-  /* Default: render on top of the text when screenspace is limited */
+  .liver-enzymes-tooltip:focus-visible {
+    outline: 2px solid #dc2626;
+    border-radius: 0.15em;
+  }
+  html[data-theme="dark"] .liver-enzymes-tooltip:focus-visible {
+    outline-color: #f87171;
+  }
+  /* Default: render on top of the text when screenspace is limited or JS is unavailable */
   .tooltip-card-container {
     position: absolute;
     bottom: 130%;
@@ -32,38 +40,63 @@ accent_color: "#93c5fd"
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
   }
-  .liver-enzymes-tooltip:hover .tooltip-card-container {
+  .liver-enzymes-tooltip:hover .tooltip-card-container,
+  .liver-enzymes-tooltip:focus-visible .tooltip-card-container,
+  .liver-enzymes-tooltip.is-pinned .tooltip-card-container {
     opacity: 1;
     transform: translateX(-50%) translateY(0) scale(1);
     pointer-events: auto;
   }
   .tooltip-connector-line {
-    display: none; /* Hide connector on small screens */
+    display: none;
   }
 
-  /* Wide screens: render card in the right margin with a connector line */
-  @media (min-width: 1100px) {
-    .tooltip-card-container {
-      bottom: auto;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%) translateX(10px) scale(0.95);
-      flex-direction: row;
-      align-items: center;
-    }
-    .liver-enzymes-tooltip:hover .tooltip-card-container {
-      transform: translateY(-50%) translateX(20px) scale(1);
-    }
-    .tooltip-connector-line {
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: #dc2626;
-      flex-shrink: 0;
-    }
-    html[data-theme="dark"] .tooltip-connector-line {
-      background: #f87171;
-    }
+  .tooltip-card-container.is-measured {
+    bottom: auto;
+    left: var(--tooltip-left);
+    top: var(--tooltip-top);
+  }
+  .tooltip-card-container.is-margin {
+    position: fixed;
+    transform: translateY(-50%) translateX(var(--tooltip-rest-x, 0)) scale(0.96);
+    flex-direction: row;
+    align-items: center;
+  }
+  .tooltip-card-container.is-margin.is-left {
+    flex-direction: row-reverse;
+  }
+  .liver-enzymes-tooltip:hover .tooltip-card-container.is-margin,
+  .liver-enzymes-tooltip:focus-visible .tooltip-card-container.is-margin,
+  .liver-enzymes-tooltip.is-pinned .tooltip-card-container.is-margin {
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+  .tooltip-card-container.is-margin .tooltip-connector-line {
+    display: block;
+    width: var(--tooltip-connector-width, 40px);
+    height: 3px;
+    background: #dc2626;
+    flex-shrink: 0;
+  }
+  html[data-theme="dark"] .tooltip-card-container.is-margin .tooltip-connector-line {
+    background: #f87171;
+  }
+  .tooltip-card-container.is-margin .tooltip-card {
+    position: relative;
+  }
+  .tooltip-card-container.is-margin .tooltip-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 -1px;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: #dc2626;
+  }
+  .tooltip-card-container.is-left .tooltip-card::before {
+    inset: 0 -1px 0 auto;
+    border-radius: 0 3px 3px 0;
+  }
+  html[data-theme="dark"] .tooltip-card-container.is-margin .tooltip-card::before {
+    background: #f87171;
   }
 
   .tooltip-card {
@@ -101,7 +134,7 @@ accent_color: "#93c5fd"
     font-weight: 800;
     color: #e11d48;
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     display: block;
   }
   html[data-theme="dark"] .biomarker-value {
@@ -122,7 +155,108 @@ accent_color: "#93c5fd"
   }
 </style>
 
-Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span></span></span></span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.liver-enzymes-tooltip'));
+    var marginGap = 18;
+    var viewportPadding = 16;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function positionTooltip(trigger) {
+      var cardContainer = trigger.querySelector('.tooltip-card-container');
+      var card = trigger.querySelector('.tooltip-card');
+      var connector = trigger.querySelector('.tooltip-connector-line');
+      var main = trigger.closest('main') || document.querySelector('main');
+
+      if (!cardContainer || !card || !main) return;
+
+      cardContainer.classList.remove('is-measured', 'is-margin', 'is-left');
+      cardContainer.style.removeProperty('--tooltip-left');
+      cardContainer.style.removeProperty('--tooltip-top');
+      cardContainer.style.removeProperty('--tooltip-rest-x');
+      cardContainer.style.removeProperty('--tooltip-connector-width');
+
+      var mainRect = main.getBoundingClientRect();
+      var triggerRect = trigger.getBoundingClientRect();
+      var cardRect = card.getBoundingClientRect();
+      var connectorWidth = connector ? connector.getBoundingClientRect().width : 40;
+      var neededWidth = cardRect.width + connectorWidth + marginGap;
+      var rightSpace = window.innerWidth - mainRect.right - marginGap - viewportPadding;
+      var leftSpace = mainRect.left - marginGap - viewportPadding;
+      var cardTop = clamp(
+        triggerRect.top + triggerRect.height / 2,
+        viewportPadding + cardRect.height / 2,
+        window.innerHeight - viewportPadding - cardRect.height / 2
+      );
+
+      if (rightSpace >= neededWidth) {
+        var connector = Math.min(56, Math.max(24, rightSpace - cardRect.width));
+        cardContainer.classList.add('is-measured', 'is-margin');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap) + 'px');
+        cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
+        cardContainer.style.setProperty('--tooltip-rest-x', '10px');
+        cardContainer.style.setProperty('--tooltip-connector-width', connector + 'px');
+        return;
+      }
+
+      if (leftSpace >= neededWidth) {
+        var leftConnector = Math.min(56, Math.max(24, leftSpace - cardRect.width));
+        cardContainer.classList.add('is-measured', 'is-margin', 'is-left');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width) + 'px');
+        cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
+        cardContainer.style.setProperty('--tooltip-rest-x', '-10px');
+        cardContainer.style.setProperty('--tooltip-connector-width', leftConnector + 'px');
+      }
+    }
+
+    function refreshOpenTooltips() {
+      triggers.forEach(function (trigger) {
+        if (trigger.matches(':hover, :focus-visible') || trigger.classList.contains('is-pinned')) {
+          positionTooltip(trigger);
+        }
+      });
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('mouseenter', function () {
+        positionTooltip(trigger);
+      });
+      trigger.addEventListener('focus', function () {
+        positionTooltip(trigger);
+      });
+      trigger.addEventListener('click', function (event) {
+        event.stopPropagation();
+        var isPinned = trigger.classList.toggle('is-pinned');
+        trigger.setAttribute('aria-expanded', isPinned ? 'true' : 'false');
+        positionTooltip(trigger);
+      });
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          trigger.click();
+        }
+        if (event.key === 'Escape') {
+          trigger.classList.remove('is-pinned');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('click', function () {
+      triggers.forEach(function (trigger) {
+        trigger.classList.remove('is-pinned');
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    window.addEventListener('resize', refreshOpenTooltips);
+    window.addEventListener('scroll', refreshOpenTooltips, { passive: true });
+  });
+</script>
+
+Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" role="button" tabindex="0" aria-expanded="false">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span></span></span></span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
@@ -344,4 +478,3 @@ It also helps fuel my obsession for optimizing these blood test results, and my 
 ### References
 [1] Per NIH, [https://pmc.ncbi.nlm.nih.gov/articles/PMC4155359/](https://pmc.ncbi.nlm.nih.gov/articles/PMC4155359/): 
   "In most types of liver damage, ALT is higher than AST. However, in alcohol-related liver injury, the enzyme AST is typically two to three times higher than ALT. An AST-to-ALT ratio greater than 2:1 strongly suggests alcohol is the cause."
-
