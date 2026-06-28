@@ -10,41 +10,40 @@ accent_color: "#93c5fd"
 
 <style>
   .liver-enzymes-tooltip {
-    border-bottom: 3px solid #dc2626;
+    border-bottom: 3px solid #777;
     cursor: pointer;
     position: relative;
     display: inline;
     outline-offset: 0.2em;
   }
   html[data-theme="dark"] .liver-enzymes-tooltip {
-    border-bottom-color: #f87171;
+    border-bottom-color: #aaa;
   }
   .liver-enzymes-tooltip:focus-visible {
-    outline: 2px solid #dc2626;
+    outline: 2px solid #777;
     border-radius: 0.15em;
   }
   html[data-theme="dark"] .liver-enzymes-tooltip:focus-visible {
-    outline-color: #f87171;
+    outline-color: #aaa;
   }
   /* Default: render on top of the text when screenspace is limited or JS is unavailable */
   .tooltip-card-container {
     position: absolute;
     bottom: 130%;
     left: 50%;
-    transform: translateX(-50%) translateY(10px) scale(0.95);
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
   }
-  .liver-enzymes-tooltip:hover .tooltip-card-container,
+  .liver-enzymes-tooltip:not(.is-hover-suppressed):hover .tooltip-card-container,
   .liver-enzymes-tooltip:focus-visible .tooltip-card-container,
   .liver-enzymes-tooltip.is-pinned .tooltip-card-container {
     opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
     pointer-events: auto;
   }
   .tooltip-connector-line {
@@ -57,46 +56,45 @@ accent_color: "#93c5fd"
     top: var(--tooltip-top);
   }
   .tooltip-card-container.is-margin {
-    position: fixed;
-    transform: translateY(-50%) translateX(var(--tooltip-rest-x, 0)) scale(0.96);
+    transform: translateY(-50%);
     flex-direction: row;
     align-items: center;
   }
   .tooltip-card-container.is-margin.is-left {
     flex-direction: row-reverse;
   }
-  .liver-enzymes-tooltip:hover .tooltip-card-container.is-margin,
+  .liver-enzymes-tooltip:not(.is-hover-suppressed):hover .tooltip-card-container.is-margin,
   .liver-enzymes-tooltip:focus-visible .tooltip-card-container.is-margin,
   .liver-enzymes-tooltip.is-pinned .tooltip-card-container.is-margin {
-    transform: translateY(-50%) translateX(0) scale(1);
+    transform: translateY(-50%);
   }
   .tooltip-card-container.is-margin .tooltip-connector-line {
     display: block;
     width: var(--tooltip-connector-width, 40px);
     height: 3px;
-    background: #dc2626;
+    background: #777;
     flex-shrink: 0;
   }
   html[data-theme="dark"] .tooltip-card-container.is-margin .tooltip-connector-line {
-    background: #f87171;
+    background: #aaa;
   }
   .tooltip-card-container.is-margin .tooltip-card {
     position: relative;
   }
   .tooltip-card-container.is-left .tooltip-card {
     border-left: 1px solid #999;
-    border-right: 4px solid #dc2626;
+    border-right: 4px solid #777;
   }
   html[data-theme="dark"] .tooltip-card-container.is-left .tooltip-card {
     border-left-color: #555;
-    border-right-color: #f87171;
+    border-right-color: #aaa;
   }
 
   .tooltip-card {
     width: 180px;
     background: #eee;
     border: 1px solid #999;
-    border-left: 4px solid #dc2626;
+    border-left: 4px solid #777;
     border-radius: 0.35rem;
     padding: 1.1rem 1.2rem;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.12);
@@ -109,7 +107,7 @@ accent_color: "#93c5fd"
   html[data-theme="dark"] .tooltip-card {
     background: #1b1b1b;
     border-color: #555;
-    border-left-color: #f87171;
+    border-left-color: #aaa;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.45);
   }
   .biomarker-item {
@@ -127,13 +125,13 @@ accent_color: "#93c5fd"
   .biomarker-value {
     font-size: 2.6rem;
     font-weight: 800;
-    color: #e11d48;
+    color: #555;
     line-height: 1;
     letter-spacing: 0;
     display: block;
   }
   html[data-theme="dark"] .biomarker-value {
-    color: #f87171;
+    color: #ddd;
   }
   .biomarker-name {
     font-size: 0.85rem;
@@ -156,10 +154,6 @@ accent_color: "#93c5fd"
     var marginGap = 18;
     var viewportPadding = 16;
 
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
-    }
-
     function positionTooltip(trigger) {
       var cardContainer = trigger.querySelector('.tooltip-card-container');
       var card = trigger.querySelector('.tooltip-card');
@@ -171,7 +165,6 @@ accent_color: "#93c5fd"
       cardContainer.classList.remove('is-measured', 'is-margin', 'is-left');
       cardContainer.style.removeProperty('--tooltip-left');
       cardContainer.style.removeProperty('--tooltip-top');
-      cardContainer.style.removeProperty('--tooltip-rest-x');
       cardContainer.style.removeProperty('--tooltip-connector-width');
 
       var mainRect = main.getBoundingClientRect();
@@ -181,18 +174,13 @@ accent_color: "#93c5fd"
       var neededWidth = cardRect.width + connectorWidth + marginGap;
       var rightSpace = window.innerWidth - mainRect.right - marginGap - viewportPadding;
       var leftSpace = mainRect.left - marginGap - viewportPadding;
-      var cardTop = clamp(
-        triggerRect.top + triggerRect.height / 2,
-        viewportPadding + cardRect.height / 2,
-        window.innerHeight - viewportPadding - cardRect.height / 2
-      );
+      var cardTop = triggerRect.height / 2;
 
       if (rightSpace >= neededWidth) {
         var connector = Math.min(56, Math.max(24, rightSpace - cardRect.width));
         cardContainer.classList.add('is-measured', 'is-margin');
-        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap) + 'px');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap - triggerRect.left) + 'px');
         cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
-        cardContainer.style.setProperty('--tooltip-rest-x', '10px');
         cardContainer.style.setProperty('--tooltip-connector-width', connector + 'px');
         return;
       }
@@ -200,16 +188,15 @@ accent_color: "#93c5fd"
       if (leftSpace >= neededWidth) {
         var leftConnector = Math.min(56, Math.max(24, leftSpace - cardRect.width));
         cardContainer.classList.add('is-measured', 'is-margin', 'is-left');
-        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width) + 'px');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width - triggerRect.left) + 'px');
         cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
-        cardContainer.style.setProperty('--tooltip-rest-x', '-10px');
         cardContainer.style.setProperty('--tooltip-connector-width', leftConnector + 'px');
       }
     }
 
     function refreshOpenTooltips() {
       triggers.forEach(function (trigger) {
-        if (trigger.matches(':hover, :focus-visible') || trigger.classList.contains('is-pinned')) {
+        if ((trigger.matches(':hover') && !trigger.classList.contains('is-hover-suppressed')) || trigger.matches(':focus-visible') || trigger.classList.contains('is-pinned')) {
           positionTooltip(trigger);
         }
       });
@@ -219,13 +206,26 @@ accent_color: "#93c5fd"
       trigger.addEventListener('mouseenter', function () {
         positionTooltip(trigger);
       });
+      trigger.addEventListener('mouseleave', function () {
+        trigger.classList.remove('is-hover-suppressed');
+      });
       trigger.addEventListener('focus', function () {
         positionTooltip(trigger);
       });
       trigger.addEventListener('click', function (event) {
         event.stopPropagation();
-        var isPinned = trigger.classList.toggle('is-pinned');
-        trigger.setAttribute('aria-expanded', isPinned ? 'true' : 'false');
+        var wasPinned = trigger.classList.contains('is-pinned');
+
+        if (wasPinned) {
+          trigger.classList.remove('is-pinned');
+          trigger.classList.add('is-hover-suppressed');
+          trigger.setAttribute('aria-expanded', 'false');
+          return;
+        }
+
+        trigger.classList.remove('is-hover-suppressed');
+        trigger.classList.add('is-pinned');
+        trigger.setAttribute('aria-expanded', 'true');
         positionTooltip(trigger);
       });
       trigger.addEventListener('keydown', function (event) {
@@ -247,7 +247,6 @@ accent_color: "#93c5fd"
       });
     });
     window.addEventListener('resize', refreshOpenTooltips);
-    window.addEventListener('scroll', refreshOpenTooltips, { passive: true });
   });
 </script>
 
