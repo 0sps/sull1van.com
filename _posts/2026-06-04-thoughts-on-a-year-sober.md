@@ -40,7 +40,7 @@ Another point of my sobriety was that it was actually threefold. It included **s
 
 ## Just go longer
 
-While my sobriety was threefold, it was only alcohol that made me afraid of relapse. As I said earlier, I told myself I was sober for now, not forever. I told my parents and friends I was doing it for two months, just to see where things went. I didn't commit to going longer because I genuinely did not think that was possible.
+While my sobriety was threefold, it was only alcohol that made me afraid of relapse. As I said earlier, I told myself I was sober *for now*, not forever. I told my parents and friends I was doing it for two months, just to see where things went. I didn't commit to going longer because I genuinely did not think that was possible.
 
 Cravings are like that. At first, they seem impossible to get rid of, but they quickly fall off and don't really come back. As I neared the halfway mark of those two months, the daily panic about when I would drink next started to fade, and things started to feel more normal. Around that time, I caught up with a friend who offered what might be the single greatest piece of advice I heard throughout this entire journey.
 
