@@ -11,7 +11,7 @@ accent_color: "#93c5fd"
 <style>
   .liver-enzymes-tooltip {
     border-bottom: 3px solid #dc2626;
-    cursor: help;
+    cursor: pointer;
     position: relative;
     display: inline;
   }
