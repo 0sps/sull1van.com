@@ -9,25 +9,62 @@ accent_color: "#93c5fd"
 
 
 <style>
-  .biomarker-card {
-    float: right;
-    margin: 0.5rem 0 1.5rem 2rem;
+  .liver-enzymes-tooltip {
+    border-bottom: 3px solid #dc2626;
+    cursor: help;
+    position: relative;
+    display: inline;
+  }
+  html[data-theme="dark"] .liver-enzymes-tooltip {
+    border-bottom-color: #f87171;
+  }
+  .tooltip-card-container {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+  }
+  .liver-enzymes-tooltip:hover .tooltip-card-container {
+    opacity: 1;
+    transform: translateY(-50%) translateX(20px);
+    pointer-events: auto;
+  }
+  .tooltip-connector-line {
+    width: 40px;
+    height: 3px;
+    background: #dc2626;
+    flex-shrink: 0;
+  }
+  html[data-theme="dark"] .tooltip-connector-line {
+    background: #f87171;
+  }
+  .tooltip-card {
     width: 180px;
-    background: rgba(0, 0, 0, 0.22);
+    background: rgba(0, 0, 0, 0.11);
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 16px;
     padding: 1.25rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
   }
-  html[data-theme="dark"] .biomarker-card {
-    background: rgba(255, 255, 255, 0.22);
+  html[data-theme="dark"] .tooltip-card {
+    background: rgba(255, 255, 255, 0.11);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
   .biomarker-item {
     text-align: center;
+    display: block;
   }
   .biomarker-item:first-child {
     margin-bottom: 1.25rem;
@@ -43,70 +80,27 @@ accent_color: "#93c5fd"
     color: #e11d48;
     line-height: 1;
     letter-spacing: -0.02em;
+    display: block;
+  }
+  html[data-theme="dark"] .biomarker-value {
+    color: #f87171;
   }
   .biomarker-name {
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     margin-top: 0.25rem;
+    display: block;
   }
   .biomarker-range {
     font-size: 0.75rem;
     margin-top: 0.1rem;
     opacity: 0.7;
-  }
-  .liver-enzymes-tooltip {
-    border-bottom: 3px solid #dc2626;
-    cursor: help;
-    position: relative;
-    display: inline;
-  }
-  .liver-enzymes-tooltip::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 130%;
-    left: 50%;
-    transform: translateX(-50%) scale(0.95);
-    background: #222;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
-    z-index: 10;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  html[data-theme="dark"] .liver-enzymes-tooltip::after {
-    background: #fafafa;
-    color: #111;
-    border: 1px solid rgba(0,0,0,0.1);
-  }
-  .liver-enzymes-tooltip:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-6px) scale(1);
+    display: block;
   }
 </style>
 
-<div class="biomarker-card">
-  <div class="biomarker-item">
-    <div class="biomarker-value">147</div>
-    <div class="biomarker-name">AST</div>
-    <div class="biomarker-range">Normal: 10–40 U/L</div>
-  </div>
-  <div class="biomarker-item">
-    <div class="biomarker-value">71</div>
-    <div class="biomarker-name">ALT</div>
-    <div class="biomarker-range">Normal: 9–46 U/L</div>
-  </div>
-</div>
-
-Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" data-tooltip="AST: 147 U/L (Normal: 10–40)  •  ALT: 71 U/L (Normal: 9–46)">My liver enzymes ALT and AST</span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
+Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span></span></span></span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
