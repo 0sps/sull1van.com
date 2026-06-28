@@ -17,10 +17,7 @@ Enter [This site](https://sull1van.com/FEStudy). I found a reddit post from anot
 
 If you're interested in studying, take a look. I built it for myself but it should be pretty easy for others to pick up.
 
-<div style="text-align: center; margin: 2rem auto;">
-  <a href="https://sull1van.com/FEStudy">
-    <img src="/assets/images/FEStudy.png" alt="FE Study Portal" style="max-width: 100%; max-height: 450px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);" />
-  </a>
-</div>
+
+
 
 [https://sull1van.com/FEStudy](https://sull1van.com/FEStudy)
