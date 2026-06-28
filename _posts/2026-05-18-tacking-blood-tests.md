@@ -83,54 +83,49 @@ accent_color: "#93c5fd"
   .tooltip-card-container.is-margin .tooltip-card {
     position: relative;
   }
-  .tooltip-card-container.is-margin .tooltip-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 -1px;
-    width: 3px;
-    border-radius: 3px 0 0 3px;
-    background: #dc2626;
+  .tooltip-card-container.is-left .tooltip-card {
+    border-left: 1px solid #999;
+    border-right: 4px solid #dc2626;
   }
-  .tooltip-card-container.is-left .tooltip-card::before {
-    inset: 0 -1px 0 auto;
-    border-radius: 0 3px 3px 0;
-  }
-  html[data-theme="dark"] .tooltip-card-container.is-margin .tooltip-card::before {
-    background: #f87171;
+  html[data-theme="dark"] .tooltip-card-container.is-left .tooltip-card {
+    border-left-color: #555;
+    border-right-color: #f87171;
   }
 
   .tooltip-card {
     width: 180px;
-    background: rgba(0, 0, 0, 0.11);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 16px;
-    padding: 1.25rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #eee;
+    border: 1px solid #999;
+    border-left: 4px solid #dc2626;
+    border-radius: 0.35rem;
+    padding: 1.1rem 1.2rem;
+    box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.12);
+    font-family: inherit;
     color: inherit;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
   }
   html[data-theme="dark"] .tooltip-card {
-    background: rgba(255, 255, 255, 0.11);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: #1b1b1b;
+    border-color: #555;
+    border-left-color: #f87171;
+    box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.45);
   }
   .biomarker-item {
     text-align: center;
     display: block;
   }
   .biomarker-item:first-child {
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #bbb;
   }
   html[data-theme="dark"] .biomarker-item:first-child {
-    border-bottom-color: rgba(255, 255, 255, 0.15);
+    border-bottom-color: #444;
   }
   .biomarker-value {
-    font-size: 2.75rem;
+    font-size: 2.6rem;
     font-weight: 800;
     color: #e11d48;
     line-height: 1;
@@ -143,7 +138,7 @@ accent_color: "#93c5fd"
   .biomarker-name {
     font-size: 0.85rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0;
     margin-top: 0.25rem;
     display: block;
   }
