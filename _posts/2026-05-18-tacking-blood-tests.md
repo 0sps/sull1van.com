@@ -81,20 +81,11 @@ accent_color: "#93c5fd"
   .tooltip-card-container.is-margin .tooltip-card {
     position: relative;
   }
-  .tooltip-card-container.is-left .tooltip-card {
-    border-left: 1px solid #999;
-    border-right: 4px solid #777;
-  }
-  html[data-theme="dark"] .tooltip-card-container.is-left .tooltip-card {
-    border-left-color: #555;
-    border-right-color: #aaa;
-  }
 
   .tooltip-card {
     width: 180px;
     background: #eee;
     border: 1px solid #999;
-    border-left: 4px solid #777;
     border-radius: 0.35rem;
     padding: 1.1rem 1.2rem;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.12);
@@ -107,7 +98,6 @@ accent_color: "#93c5fd"
   html[data-theme="dark"] .tooltip-card {
     background: #1b1b1b;
     border-color: #555;
-    border-left-color: #aaa;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.45);
   }
   .biomarker-item {
@@ -256,7 +246,7 @@ Over one year ago, I made the decision to start focusing on my bloodwork. I had 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodtest/bloodTest.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
+    <img src="/assets/images/bloodtest/bloodTest.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
 </div>
 
 
@@ -280,7 +270,7 @@ The process was honestly easier than I expected. Claude and Codex both did a gre
 
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodtest/bloodTestExcel.png" alt="List of PDFs" style="max-width: 1000px; max-height: 450px;" />
+    <img src="/assets/images/bloodtest/bloodTestExcel.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
 </div>
 
 
@@ -325,8 +315,8 @@ Claude iterated on my design requests a few times, and the early prototypes were
     color: #aaa;
   }
   .gallery-img {
-    width: 100%;
-    max-width: 253px;
+    width: min(100%, 253px);
+    max-width: 100%;
     margin: 0 auto;
     display: block;
     border: 4px solid #bbb;
@@ -379,7 +369,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
 
   <!-- Row 4: screen6 -->
   <div class="gallery-row">
-    <div style="max-width: 500px; margin: 0 auto; width: 100%;">
+    <div style="max-width: 100%; margin: 0 auto; width: 100%;">
       <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
     </div>
         <div class="gallery-caption">
