@@ -55,6 +55,38 @@ accent_color: "#93c5fd"
     margin-top: 0.1rem;
     opacity: 0.7;
   }
+  .liver-enzymes-tooltip {
+    border-bottom: 3px solid #dc2626;
+    cursor: help;
+    position: relative;
+    display: inline;
+  }
+  .liver-enzymes-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+  }
+  html[data-theme="dark"] .liver-enzymes-tooltip::after {
+    background: #fafafa;
+    color: #111;
+  }
+  .liver-enzymes-tooltip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px);
+  }
 </style>
 
 <div class="biomarker-card">
@@ -70,7 +102,7 @@ accent_color: "#93c5fd"
   </div>
 </div>
 
-Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. My liver enzymes ALT and AST were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
+Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" data-tooltip="AST: 147 U/L | ALT: 71 U/L">My liver enzymes ALT and AST</span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
