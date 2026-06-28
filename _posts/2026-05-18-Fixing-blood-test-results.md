@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[PROJECT] Achieving the best blood test results of my entire life"
+title: "[PROJECT] A better way to track blood test results"
 date: 2026-05-18
 tags: [personal, tech]
 published: true
@@ -221,6 +221,8 @@ The firestore database has essentially become my new source of truth. I do make 
 ## Closing thoughts
 
 This project was genuinely a lot of fun. I've been using the web app regularly whenever I need to source blood test values. It's also cool becuase as I stumble upon new issues or feature ideas in the UI, I can implement them easily. I've added a ton of cool funcitonality to the site over time, and it's become a very robust landing place for my data. It also makes it very easy to share the results with others.
+
+It also helps fuel my obsession for optimizing these blood test results, and my biomarkers have continued to get better and better ever since I built this dashboard. I've changed my diet and experimented with a bunch of supplements over the last year, looking to figure out what moves the needle. That could hoenstly be another blog post itself. But for now, I'll stick to sharing the way I track all this stuff. If there's enough interest then I may definitely start to explain how I used it to actually track and drive improvement.
 
 
 
