@@ -66,26 +66,30 @@ accent_color: "#93c5fd"
     position: absolute;
     bottom: 130%;
     left: 50%;
-    transform: translateX(-50%);
-    background: #333;
+    transform: translateX(-50%) scale(0.95);
+    background: #222;
     color: #fff;
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
     z-index: 10;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   html[data-theme="dark"] .liver-enzymes-tooltip::after {
     background: #fafafa;
     color: #111;
+    border: 1px solid rgba(0,0,0,0.1);
   }
   .liver-enzymes-tooltip:hover::after {
     opacity: 1;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(-6px) scale(1);
   }
 </style>
 
@@ -102,7 +106,7 @@ accent_color: "#93c5fd"
   </div>
 </div>
 
-Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" data-tooltip="AST: 147 U/L | ALT: 71 U/L">My liver enzymes ALT and AST</span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
+Over one year ago, I made the decision to start focusing on my bloodwork. I had graduated college and taken a renewed interest in my personal health, but I learned that there was some latent damage in my organs. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" data-tooltip="AST: 147 U/L (Normal: 10–40)  •  ALT: 71 U/L (Normal: 9–46)">My liver enzymes ALT and AST</span> were extremely high, in such an embarrassing way that it screamed *this person drinks too much alcohol*[1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
