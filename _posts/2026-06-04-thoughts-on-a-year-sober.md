@@ -5,8 +5,8 @@ date: 2026-06-04
 tags: [meta, blogging]
 ---
 
-One full year. 
-Today officially marks one full year since I went sober.
+Sheesh, one full year. 
+Today officially marks one year since I went sober.
 
 ## Background
 
