@@ -44,22 +44,22 @@ While my sobriety was threefold, it was only alcohol that made me afraid of rela
 
 Cravings are like that. At first, they seem impossible to get rid of, but they quickly fall off and don't really come back. As I neared the halfway mark of those two months, the daily panic about when I would drink next started to fade, and things started to feel more normal. Around that time, I caught up with a friend who offered what might be the single greatest piece of advice I heard throughout this entire journey.
 
-We got into chatting, and I explained the sobriety, my two-month goal. He had been sober his entire life, and so he asked why I settled on two months.
+We got into chatting, and I explained the sobriety, my two-month goal. He had been sober his entire life, so this probably didn't seem to difficuly for him. He asked why I settled on two months.
 
-I don't know, I said. It was the best I thought I could do.
+I don't know, I told him. It was the best I thought I could do.
 
-He heard that and said: *"Why don't you just go longer?"*
+*"Why don't you just go longer?"*
 
 I stared at him for a second. It never even occurred to me that I could go longer than two months.
 
-But yeah, I could. Just go longer. So that's exactly what I did. Two months turned into six, then at six months I said twelve. Here we are, twelve months later. It's crazy.
+But yeah, I could. Just go longer. So that's exactly what I did. At the end of the two months I decided to keep going. Two months turned into six, then at six months I said twelve.  Now here we are, twelve months later. It's crazy.
 
 
 
 
 ## How my body changed
 
-The changes in my body showed up fast, within ~3 months. I noticed increased energy during the day and whiter eyes. Honestly, a great combo. I love how white my eyes are now. I also worked on my general health and designed a custom supplement stack that I've been taking for about nine months now. These biomarkers trended to the best levels I've ever tested for:
+The changes in my body showed up fast, within ~3 months of going sober. I noticed increased energy during the day and whiter eyes. Honestly, a great combo. I love how white my eyes are now. I also worked on my general health and designed a custom supplement stack that I've been taking for about nine months now. These biomarkers trended to the best levels I've ever tested for:
 - ALT
 - AST
 - HDL Cholesterol
