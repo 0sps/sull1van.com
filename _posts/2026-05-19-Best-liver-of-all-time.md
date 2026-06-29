@@ -156,16 +156,95 @@ This was the differentiator. A short few weeks later, May 2026 came around.
 
 Here is the oldest test against the newest test, complete with the trends we talked about before:
 
-| Analyte | 2018 report, age 17 | 2026 report, age 25 | My Opinion |
-| --- | ---: | ---: | --- |
-| Total protein | 7.1 g/dL | 7.2 g/dL | Slightly better in 2026 |
-| Albumin | 4.7 g/dL | 4.7 g/dL | Dead even |
-| Globulin | 2.4 g/dL | 2.5 g/dL | Better, since 2.7 is technical best |
-| A/G ratio | 2.0 | 1.9 | Slightly worse, barely |
-| Total bilirubin | 0.7 mg/dL | 1.0 mg/dL | Doesn't matter |
-| Alkaline phosphatase | 90 U/L | 79 U/L | Better in 2026. |
-| AST | 28 U/L | 25 U/L | Better in 2026. |
-| ALT | 17 U/L | 17 U/L | Equal |
+<style>
+  .bloat-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: sans-serif;
+    font-size: calc(1em - 1px);
+  }
+  .bloat-table th, .bloat-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px 10px;
+  }
+  .bloat-table th {
+    background-color: #f2f2f2;
+  }
+  .bloat-table td.diff-pos { color: #228B22; font-weight: 700; }
+  .bloat-table td.diff-neg { color: #C41C00; font-weight: 700; }
+  @media (prefers-color-scheme: dark) {
+    .bloat-table th, .bloat-table td { border-color: #2a2a2a; }
+    .bloat-table th { background-color: #181818; }
+  }
+  html[data-theme="dark"] .bloat-table th, html[data-theme="dark"] .bloat-table td { border-color: #2a2a2a; }
+  html[data-theme="dark"] .bloat-table th { background-color: #181818; }
+  html[data-theme="light"] .bloat-table th, html[data-theme="light"] .bloat-table td { border-color: #dddddd; }
+  html[data-theme="light"] .bloat-table th { background-color: #f2f2f2; }
+</style>
+
+<div class="table-wrapper">
+<table class="bloat-table">
+  <thead>
+    <tr>
+      <th>Analyte</th>
+      <th>2018 report, age 17</th>
+      <th>2026 report, age 25</th>
+      <th>My Opinion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total protein</td>
+      <td>7.1 g/dL</td>
+      <td class="diff-pos">7.2 g/dL</td>
+      <td>Slightly better in 2026</td>
+    </tr>
+    <tr>
+      <td>Albumin</td>
+      <td>4.7 g/dL</td>
+      <td>4.7 g/dL</td>
+      <td>Dead even</td>
+    </tr>
+    <tr>
+      <td>Globulin</td>
+      <td>2.4 g/dL</td>
+      <td class="diff-pos">2.5 g/dL</td>
+      <td>Better, since 2.7 is technical best</td>
+    </tr>
+    <tr>
+      <td>A/G ratio</td>
+      <td>2.0</td>
+      <td class="diff-neg">1.9</td>
+      <td>Slightly worse, barely</td>
+    </tr>
+    <tr>
+      <td>Total bilirubin</td>
+      <td>0.7 mg/dL</td>
+      <td>1.0 mg/dL</td>
+      <td>Doesn't matter</td>
+    </tr>
+    <tr>
+      <td>Alkaline phosphatase</td>
+      <td>90 U/L</td>
+      <td class="diff-pos">79 U/L</td>
+      <td>Better in 2026.</td>
+    </tr>
+    <tr>
+      <td>AST</td>
+      <td>28 U/L</td>
+      <td class="diff-pos">25 U/L</td>
+      <td>Better in 2026.</td>
+    </tr>
+    <tr>
+      <td>ALT</td>
+      <td>17 U/L</td>
+      <td>17 U/L</td>
+      <td>Equal</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 I started chuckling at the new result. 2026 wins.
