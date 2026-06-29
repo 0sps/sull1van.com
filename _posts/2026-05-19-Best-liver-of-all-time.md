@@ -7,9 +7,9 @@ published: true
 accent_color: "#62cf98ff"
 ---
 
-I'm pretty excited to write this one.
 
-Earlier this year, I got bloodwork back and my liver enzymes were way higher than they should be. Not necessarily high enough that I should panic, but high enough that I should take notice. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that it should probably change.
+
+Earlier in 2025, I did bloodwork for the first time in a while, and had some high liver enzymes. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that it should probably change.
 
 One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
@@ -18,7 +18,7 @@ So my goal was simple, I wanted the best liver test results I have ever personal
 
 ## The baseline
 
-The main markers came from a Comprehensive Metabolic Panel. I casually call this a liver panel, but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
+The main markers came from a Comprehensive Metabolic Panel. I used to call this a liver panel, but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
 
 - Total protein
 - Albumin
@@ -29,7 +29,7 @@ The main markers came from a Comprehensive Metabolic Panel. I casually call this
 - AST
 - ALT
 
-ALT and AST are the big ones for me because they are the main liver stress enzymes [<a href="#ref-0" class="cite-link">0</a>]. They don't tell the whole story of overall liver function, but if you have been drinking and those numbers are high, they get your attention pretty quickly.
+ALT and AST are the big ones for me because they are the main liver stress enzymes [<a href="#ref-0" class="cite-link">0</a>]. They don't tell the whole story of liver function, but if you have been drinking and those numbers are high, they get your attention pretty quickly.
 
 Albumin, total protein, globulin, and A/G ratio tell more of the surrounding story, helping to explain things like immune activity and whether the body is keeping its basic chemistry in a good place. (I sound like I know what I'm talking about, but most of this is from Google). Bilirubin and alkaline phosphatase are worth watching too, though bilirubin can bounce around for reasons that do not automatically worry me, and alkaline phosphatase is not purely a liver marker.
 
@@ -226,8 +226,8 @@ Here is the oldest test against the newest test, complete with the trends we tal
     <tr>
       <td>Albumin</td>
       <td>4.7 g/dL</td>
-      <td class="diff-pos">4.7 g/dL</td>
-      <td>Even</td>
+      <td>4.7 g/dL</td>
+      <td>Equal</td>
     </tr>
     <tr>
       <td>Globulin</td>
@@ -262,7 +262,7 @@ Here is the oldest test against the newest test, complete with the trends we tal
     <tr>
       <td>ALT</td>
       <td>17 U/L</td>
-      <td class="diff-pos">17 U/L</td>
+      <td>17 U/L</td>
       <td>Equal</td>
     </tr>
   </tbody>
