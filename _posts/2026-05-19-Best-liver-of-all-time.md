@@ -174,8 +174,10 @@ This was the differentiator. A short few weeks later, May 2026 came around.
 Here is the oldest test against the newest test, complete with the trends we talked about before:
 
 <style>
-  .cite-link { color: #0000EE; text-decoration: none; }
-  .cite-link:visited { color: #551A8B; }
+  .cite-link { color: #0000EE !important; text-decoration: underline !important; }
+  .cite-link:visited { color: #551A8B !important; }
+  .ref-marker { color: #0000EE !important; text-decoration: underline !important; }
+  .ref-marker:visited { color: #551A8B !important; }
   .bloat-table {
     border-collapse: collapse;
     width: auto;
@@ -355,15 +357,15 @@ B.L.O.A.T. achieved.
 
 ## Sources I used
 
-<p id="ref-0">[0] Liver Function Tests: <a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/">https://www.ncbi.nlm.nih.gov/books/NBK482489/</a></p>
-<p id="ref-1">[1] Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches: <a href="https://pubmed.ncbi.nlm.nih.gov/40143049/">https://pubmed.ncbi.nlm.nih.gov/40143049/</a></p>
-<p id="ref-2">[2] Oral Administration of S-acetyl-glutathione: Impact on the Levels of Glutathione in Plasma and in Erythrocytes of Healthy Volunteers: <a href="https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/">https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/</a></p>
-<p id="ref-3">[3] Safety assessment of S-Acetyl Glutathione for use in foods and dietary supplements: <a href="https://www.sciencedirect.com/science/article/pii/S0278691525000468">https://www.sciencedirect.com/science/article/pii/S0278691525000468</a></p>
-<p id="ref-4">[4] Grape Seed Extract to Improve Liver Function in Patients with Nonalcoholic Fatty Liver Change: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/</a></p>
-<p id="ref-5">[5] Effects of grape seed extract supplementation on cardiovascular risk factors, liver enzymes: <a href="https://link.springer.com/article/10.1186/s12906-024-04477-3">https://link.springer.com/article/10.1186/s12906-024-04477-3</a></p>
-<p id="ref-6">[6] Effect of injectable glutathione for treatment of liver disease: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/">https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/</a></p>
-<p id="ref-7">[7] How the body synthesises NAC into glutathione: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/">https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/</a></p>
-<p id="ref-8">[8] Baseline clinical study about TMG which shows it is promising for use in lifting: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/</a></p>
+<p id="ref-0"><a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/" class="ref-marker">[0]</a> Liver Function Tests: <a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/">https://www.ncbi.nlm.nih.gov/books/NBK482489/</a></p>
+<p id="ref-1"><a href="https://pubmed.ncbi.nlm.nih.gov/40143049/" class="ref-marker">[1]</a> Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches: <a href="https://pubmed.ncbi.nlm.nih.gov/40143049/">https://pubmed.ncbi.nlm.nih.gov/40143049/</a></p>
+<p id="ref-2"><a href="https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/" class="ref-marker">[2]</a> Oral Administration of S-acetyl-glutathione: Impact on the Levels of Glutathione in Plasma and in Erythrocytes of Healthy Volunteers: <a href="https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/">https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/</a></p>
+<p id="ref-3"><a href="https://www.sciencedirect.com/science/article/pii/S0278691525000468" class="ref-marker">[3]</a> Safety assessment of S-Acetyl Glutathione for use in foods and dietary supplements: <a href="https://www.sciencedirect.com/science/article/pii/S0278691525000468">https://www.sciencedirect.com/science/article/pii/S0278691525000468/</a></p>
+<p id="ref-4"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/" class="ref-marker">[4]</a> Grape Seed Extract to Improve Liver Function in Patients with Nonalcoholic Fatty Liver Change: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/</a></p>
+<p id="ref-5"><a href="https://link.springer.com/article/10.1186/s12906-024-04477-3" class="ref-marker">[5]</a> Effects of grape seed extract supplementation on cardiovascular risk factors, liver enzymes: <a href="https://link.springer.com/article/10.1186/s12906-024-04477-3">https://link.springer.com/article/10.1186/s12906-024-04477-3/</a></p>
+<p id="ref-6"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/" class="ref-marker">[6]</a> Effect of injectable glutathione for treatment of liver disease: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/">https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/</a></p>
+<p id="ref-7"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/" class="ref-marker">[7]</a> How the body synthesises NAC into glutathione: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/">https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/</a></p>
+<p id="ref-8"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/" class="ref-marker">[8]</a> Baseline clinical study about TMG which shows it is promising for use in lifting: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/</a></p>
 
 <style>
   .img-lightbox-trigger { cursor: zoom-in; }
