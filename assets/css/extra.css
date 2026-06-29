@@ -24,12 +24,16 @@ figcaption {
 table {
   margin-top: 1em;
   margin-bottom: 1em;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  width: 100%;
 }
 th {
   text-align: left;
 }
 th, td {
-  padding-right: 1em;
+  padding: 0.4em 0.6em;
+  border: thin solid #999;
 }
 td *:first-child {
   margin-top: 0;
