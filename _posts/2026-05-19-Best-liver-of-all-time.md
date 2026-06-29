@@ -33,7 +33,9 @@ After some Googling, I came across these 'trend' inclinations for what makes som
 
 Also, it's important to note that there really isn't such thing as a 'liver panel', however you can get a Comprehensive Metabolic Panel, which tests basically all of these and more. From my CMP results, I filtered out these values, since they are the most relevant in my opinion.
 
+
 ### Seventeen year-old Sean
+
 | Analyte | Patient Value |
 | --- | --- |
 | **PROTEIN, TOTAL** | 7.1 g/dL |
@@ -46,6 +48,7 @@ Also, it's important to note that there really isn't such thing as a 'liver pane
 | **ALT** | 17 U/L |
 
 ### Twenty-four year-old Sean
+
 | Analyte | Patient Value |
 | --- | --- |
 | **TOTAL PROTEIN** | 6.7 g/dL |
@@ -58,9 +61,40 @@ Also, it's important to note that there really isn't such thing as a 'liver pane
 | **ALT** | 71 U/L |
 
 
-Now that we have the values, let's take a look at what can change them!
+Now that we have the values, let's take a look at how we can change them.
 
-First and foremost, I stopped all drinking. Then, I started to experiment with both new and old supplements. I started reseraching. Previously, in 2022, I had supplemented with intramuscular Glutathione, after a men's clinic saw that my liver was stressed. 
+First and foremost, I stopped all drinking. giving my liver straight up poison while I was trying to heal would not be productive. After that, I saw that the enzymes didn't really go down that quickly. I realized that I would need to start supplementing to achieve optimal liver health. Previously, in 2022, I had supplemented with intramuscular Glutathione, after a men's clinic saw that my liver was stressed. I tried injecting their glutathione but it was extremely painful so I stopped. My liver was mostly normal anyway, so the glutathione wasn't necessary, and it was too painful for me to see it as worth it.
+
+Glutathione is avaialable as an oral supplement, which you can freely buy if you're interested. The issue with it, and the reason most people inject, is becasue it has almost no bioavilability when taken orally. It breaks apart in the stomach. I started to research this again, having not touched any of this info in three years. I discovered a new substance, called S-Acetyl-L-Glutathione, which might actually do the trick. It's difficult to manufacture, so it's expensive, but it is more stable and potentially more bioavilable than pure glutathione.
+
+How bioavialable? No one knows. But guesstimating from the literature, I settled on a conservative estimate of ~30%. Having remembered that the men's clinic put me on 400mg of glutathione weekly, I reasoned that if I was taking it every day, I would need about 200mg a day to get the same equivalent dose.
+
+Weekly dose:
+400mg GLUTA INJECTION weekly == 200mg S-ACETYL * 30% bioavailability * 7 days
+
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC11945201/
+https://www.sciencedirect.com/science/article/pii/S0278691525000468
+https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/
+
+
+Going further than glutathione, I decided that it was definitely time to resurrect a supplement stack. I settled on these
+
+I settled on the following:
+- Grape Seed Extract
+- Fish Oil, specifically Nordic Naturals Complete Omega Xtra
+- S-Acetyl-L-Glutathione, 200mg a day
+- TMG, 4g a day (that is not a typo)
+- NAC, 600mg a day
+- Turmeric, 1g a day
+- Elderberry extract, 500mg a day
+
+The last few weren't really for my liver, but for overall health. 
+
+After running this stack, I took a blood test and saw that I was back in the normal range. Nice! But what I also saw was that it was *not* the best test I'd ever taken. So I went one step further. I got glutathione again, and started injecting with 600mg weekly. While it was painful, I reasoned this would be a temporary discomfort for a permanent liver regeneration that would help me finally achieve my goal.
+
+Finally, in May of 2026, I got what was the first truly successful test. Let's take a look of my oldest and newest tests, side by side:
+
 
 ### Side-by-Side Comparison of my oldest and newest blood test reports
 
@@ -78,3 +112,7 @@ First and foremost, I stopped all drinking. Then, I started to experiment with b
 ---
 
 ### The Verdict: The Clear Overall Winner is **2026**
+
+As I said before, liver / metabolic health is a composite of multiple readings, not just one. I highlight ALT and AST since they are the canaries for alcohol consumption. But there are others. And when you take a look at the entire metabolic picture, you can see that I clearly win out in my latest blood test.
+
+Success. I now have the best functioning liver of my entire life.
