@@ -225,9 +225,6 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
     .gallery-row.layout-2-1 {
       grid-template-columns: 2.2fr 1fr;
     }
-    .gallery-row.layout-1-1 {
-      grid-template-columns: 1fr 1fr;
-    }
   }
 </style>
 

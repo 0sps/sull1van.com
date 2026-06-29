@@ -176,11 +176,11 @@ accent_color: "#93c5fd"
       var cardTop = triggerRect.height / 2;
 
       if (rightSpace >= neededWidth) {
-        var connector = Math.min(56, Math.max(24, rightSpace - cardRect.width));
+        var connectorWidthPx = Math.min(56, Math.max(24, rightSpace - cardRect.width));
         cardContainer.classList.add('is-measured', 'is-margin');
         cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap - triggerRect.left) + 'px');
         cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
-        cardContainer.style.setProperty('--tooltip-connector-width', connector + 'px');
+        cardContainer.style.setProperty('--tooltip-connector-width', connectorWidthPx + 'px');
         return;
       }
 

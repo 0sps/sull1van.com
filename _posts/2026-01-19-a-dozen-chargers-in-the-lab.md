@@ -481,7 +481,6 @@ They look confusing at first glance, but you don't need to be an electrical engi
   }
   .stats-table td.diff-pos { color: #228B22; font-weight: 700; }
   .stats-table td.diff-neg { color: #C41C00; font-weight: 700; }
-  .stats-table td.diff-zero { color: #555; font-weight: 700; }
   .usba-badge {
     display: inline-block;
     margin-left: 7px;
@@ -536,9 +535,6 @@ They look confusing at first glance, but you don't need to be an electrical engi
   <div class="card-column">
     <div class="card-title-above">{{ item.name }}</div>
     <div class="device-card" style="background: {{ item.bg }};">
-      <div class="vertical-title-bar">
-        <div class="vertical-title-text">{{ item.name }}</div>
-      </div>
       <div class="device-content" onclick='openModal({{ item | jsonify | escape }}, this)'>
         <div class="device-images">
           {% if item.img1 %}
@@ -1076,20 +1072,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
     overflow: hidden;
     transition: transform 0.2s ease;
   }
-  .vertical-title-bar {
-    display: none;
-  }
-  .vertical-title-text {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    text-transform: uppercase;
-    font-family: sans-serif;
-    font-size: 0.95em;
-    letter-spacing: 2px;
-    font-weight: 800;
-    color: #3a3a3a;
-    text-align: center;
-  }
   .device-content {
     flex: 1;
     display: flex;
@@ -1249,10 +1231,7 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
     user-select: none;
     pointer-events: none;
   }
-  .modal-dismiss-hint.top    { top: 18px;    left: 50%; transform: translateX(-50%); }
   .modal-dismiss-hint.bottom { bottom: 18px; left: 50%; transform: translateX(-50%); }
-  .modal-dismiss-hint.left   { left: 18px;   top: 50%;  transform: translateY(-50%) rotate(-90deg); }
-  .modal-dismiss-hint.right  { right: 18px;  top: 50%;  transform: translateY(-50%) rotate(90deg); }
   .modal-wrapper {
     position: relative;
     width: 90%;
@@ -1336,16 +1315,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
     width: 100%;
     object-fit: contain;
     cursor: zoom-in;
-  }
-  .modal-body p {
-    font-size: 1.05em;
-    font-family: sans-serif;
-    line-height: 1.6;
-    color: #eee;
-    margin: 0;
-    padding: 20px 40px 40px;
-    white-space: pre-wrap;
-    background: transparent;
   }
   .modal-body p::-webkit-scrollbar {
     width: 10px;
@@ -1470,9 +1439,6 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
       height: auto;
       flex: 1;
       padding-left: 0;
-    }
-    .vertical-title-bar {
-      display: none;
     }
     .device-content {
       flex-direction: column;
