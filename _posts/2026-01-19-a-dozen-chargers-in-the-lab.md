@@ -221,7 +221,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit ATnT 1.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: Bad. A quick glance on the 5ms timeframe and the voltage almost looks normal, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. I will give it 1 lightning bolt.
+    caption: Bad. A quick glance on the 5ms timeframe and the voltage almost looks normal, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. 1 lightning bolt.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -233,9 +233,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker A121B 100w 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      This is a "GaN" flagship charger released by anker sometime in late 2025. They hype it up so much on their website that I was looking to be impressed. And after testing it, I can say I am definitely surprised! But not impressed.
+      This is a "GaN" flagship charger released by anker sometime in late 2025. 
       
-      It's better than its 45W cousin (the Anker A121D), but this charger isn't that great. It does push out the advertised voltage and current, but it does so with a wall of noise. Zooming in to the smaller timeframe is telling, as we can see little tiny voltage peaks every few microseconds. What a strange design from Anker, who claim this to be a GaN charger. It is clearly not made that well.
+      It's better than its 45W cousin (the Anker A121D), but this charger isn't that great. It does push out the advertised voltage and current, but it does so with a wall of noise. Zooming in to the smaller timeframe shows voltage peaks every few microseconds. What a strange design from Anker, who claim this to be a GaN charger. It is clearly not made well.
     rating: 2
     noise_rating: 2
     ripple_rating: 2
@@ -247,7 +247,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Amazon 1.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
-    caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V when I tested the output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it 1 bolt."
+    caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it 1 bolt."
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -260,7 +260,7 @@ devices:
     caption: |
       Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of both low-frequency and high-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
       
-      I was really surprised by this test. I also happened to have two of these chargers, one from a HomePod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to do that. $20 can get you a much better charger than this.
+      This test was surprising. We also happened to have two of these chargers, one from a HomePod and one from an iPhone of years past. This charger is actually the same as the Apple 20W [you can buy directly from their website](https://www.apple.com/shop/product/mwvv3am/a/20w-usb-c-power-adapter). And while you could, I have no idea why you would want to. $20 can get you a much better charger than this.
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -273,8 +273,7 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      Being marketed as a GaN charger, this is another disappointment. The voltage has a lot of noise, 332mV to be exact, and the frequency spectrum is elevated across the board, showing no serious attempt at filtering. The voltage looks a little more concentrated than it does on the Apple HomePod Mini chart, suggesting to me that this charger might actually be a little better. But in terms of absolute noise, this is worse. 
-
+      Being marketed as a GaN charger, this is another disappointment. The voltage has a lot of noise, 332mV of it, and the frequency spectrum is elevated across the board. The voltage looks a little more concentrated than it does on the Apple HomePod Mini chart, suggesting to me that this charger might actually be a little better. But in terms of absolute noise, it's worse. 
 
     rating: 1
     noise_rating: 1
@@ -289,11 +288,11 @@ devices:
     caption: |
       Is this even GaN???
 
-      Easily the most disappointing charger of the bunch. Anker JUST released this (late 2025) and couldn't help themselves from marketing just how amazing it was. How it used GaN, how it supports PPS, how it can bring endless joy and happiness to your life. But this charger is just awful. 
+      Easily the most disappointing charger of the bunch. Anker just released this (late 2025) and couldn't help themselves from marketing just how great it was.
 
-      The only good thing I can say about this charger is that it does output its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and constant high-voltage spikes that you can see in the lower timeframe. Also, at that lower timeframe, it's unclear what the charger is actually *doing*. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but also just resembling noise. After some research, I suspect Anker actually did not use GaN technology at all but used traditional technology with aggressive frequency dithering to help ease the noise. This may not be the case but it is my suspicion. 
+      The only good thing about this charger is that it outputs its advertised voltage and current. Aside from that, it's awful. Noise everywhere, and constant high-voltage spikes that you can see in the lower timeframe. Also, at that lower timeframe, it's unclear what the charger is actually doing. It seems to be constantly sending out various voltages, somewhat resembling a sawtooth but also just resembling noise. 
 
-      <em>Sidenote: you might point out that earlier I mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, which I'm estimating to be 90KHz, and they needed to spread that noise out. So they do employ a variable switching frequency but only vary it by 20-50KHz. Constantly moving the switching frequency up and down, so the noise doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI has no noise to begin with, so when they change the switching frequency, it's only happening once (I suspect only when the requested voltage changes). They don't need to constantly switch up and down, because their aim is not to spread noise out. </em>
+      <em>Sidenote: you might point out that earlier we mentioned the AOHI GaN chargers have the ability to change their switching frequency as needed. You may be saying, how is that any different from what you are saying Anker did here? It's a valid question. The difference is that Anker clearly had too much noise at the switching frequency of the charger, at ~90KHz, and they needed to spread that noise out. So they employ a variable switching frequency but only vary it by 20-50KHz. Constantly moving the switching frequency up and down, so the noise doesn't make any one peak so high that it fails regulatory testing. On the other hand, AOHI has no noise to begin with, so when they change the switching frequency, it's only happening once (I suspect only when the requested voltage changes). They don't need to constantly switch up and down, because their aim is not to spread the noise out. </em>
     rating: 1
     noise_rating: 1
     ripple_rating: 2
@@ -305,9 +304,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
-      The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. The original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, but I wanted to evaluate all my chargers on the same scale so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? Even when I took the net voltage, it still failed other tests. It provided 4.4V when 5V was requested, so it doesn't even pass USB spec.
+      The worst one of the bunch, but that would be expected with a counterfeit charger. The original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, but we wanted to evaluate all the chargers on the same scale, so you can see how bad some of these really are. On this image, it's tough to figure out what this charger is even trying to do. It provided 4.4V when 5V was requested, so it doesn't even pass USB spec.
       
-      Another issue I noticed was overcurrent. The other chargers would allow a slight or moderate amount of current past their max rating, but would cleanly shut off before the voltage became too low. As I suspected, this charger let its voltage sag and allowed the current to rise nearly a whole amp above what it claims to support. This 10W charger was pumping out nearly 14W before it finally shut off. Yikes.
+      Another issue was overcurrent. This charger allowed the current to rise nearly 1A past its rated upper limit. This 10W charger was pumping out nearly 14W before it finally shut off. None of the other chargers did this.
     rating: 1
     noise_rating: 1
     ripple_rating: 1
@@ -345,7 +344,7 @@ Here's the synopsis of everything below:
 
 ---
 
-## What I tested
+## What we tested
 
 To get as much out of this project as possible, we tested a lot of chargers. Here's the full list:
 - Anker ASPD053a USB C 
