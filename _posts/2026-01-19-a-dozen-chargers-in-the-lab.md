@@ -321,6 +321,7 @@ devices:
 
 <figure>
   <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/allchargers.jpg" alt="all chargers">
+  <figcaption> 12 of the ~two dozen we tested</figcaption>
 </figure>
 
 
