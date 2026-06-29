@@ -7,7 +7,7 @@ published: true
 accent_color: "#62cf98ff"
 ---
 
-I have been weirdly excited to write this one.
+I'm pretty excited to write this one.
 
 Earlier this year, I got bloodwork back and my liver enzymes were way higher than I wanted. It was not an emergency room situation. It was not "you need to panic" territory. Still, it was high enough that I could not keep treating my liver like some abstract health thing I would deal with later.
 
