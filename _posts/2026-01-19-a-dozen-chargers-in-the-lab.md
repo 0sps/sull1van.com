@@ -10,7 +10,7 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      The MacBook Pro had some of the cleanest power of the devices I tested. This is pretty unsurprising since it's just pulling DC current from its internal battery, and it doesn't have to chop up AC power like the chargers do.
+      The MacBook Pro had some of the cleanest power of the devices we tested. This is pretty unsurprising since it's just pulling DC current from its internal battery, and it doesn't have to chop up AC power like the chargers do.
       
       There's also no high frequency switching noise. This makes sense, since it doesn't have to switch thousands of times a second to step down AC voltage into something manageable.
     rating: 5
@@ -24,7 +24,7 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      Without a doubt the best AC power adapter. Very low noise, very low ripple. The only noticeable peak in the FFT is the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply I have seen.
+      The best AC power adapter. Very low noise, very low ripple. The only noticeable peak in the FFT is the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply we saw.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -38,7 +38,7 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      No switching noise or ripple seen here. The one small issue in my testing was that it measured 4.74V, just barely under the 4.75V USB limit. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in my table. The power quality itself is excellent so I'll keep it at a high rating.
+      No switching noise or ripple seen here. The one small issue in testing was that it measured 4.74V, just barely under the 4.75V USB limit. The power quality itself is excellent so it stays at a high rating.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -50,9 +50,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Spigen PowerArc 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      I was originally skeptical of this one, due to my first few tests being pretty bad. Turns out it was an issue on my side, and all subsequent tests have been great. 
+      We were originally skeptical of this one, but it turned out very well.
       
-      This was marketed as one of the first GaN chargers, having been released sometime back in 2023. It's using a ~140KHz switching frequency, which seems to be the only source of switching ripple on the 50us graph. I zoomed out and there was a tiny amount of additional noise on the FFT, but not enough to be truly noticeable. The zoomed-out graph looks pretty similar to the one in this image, so I'm just showing you the zoomed in one here. Good charger. 
+      This was marketed as one of the first GaN chargers, having been released sometime back in 2023. It's using a ~140KHz switching frequency, which seems to be the only source of switching ripple on the 50us graph. I zoomed out and there was a tiny amount of additional noise on the FFT, but not enough to be truly noticeable. The zoomed-out graph looks pretty similar to the one in this image, so I'm just showing the zoomed in one here.
     rating: 5
     noise_rating: 5
     ripple_rating: 5
@@ -63,9 +63,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/eero2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one confused me. For such a random charger, one that you can't even purchase yourself, it is of pretty high quality. It comes included with Eero devices, and looks to be custom-built just for them. I'm not sure if Amazon/Eero bought this one off the shelf and rebranded it or it's their own circuit design.
+      For such a random charger, one that you can't even purchase yourself, it is surprisingly high quality. It comes included with Eero devices, and looks to be custom-built just for them. Not sure if Amazon/Eero bought this one off the shelf and rebranded it or it's their own circuit design.
       
-      Some switching ripple exists, as you can see on the bottom graph, but it does a great job at filtering out most other noise. It also has a sawtooth waveform, so there is noise, but it is pretty small. Good charger!
+      Some switching ripple exists, as you can see on the bottom graph, but it does a great job at filtering out most other noise. It also has a sawtooth waveform, so there is noise, but it is pretty small. 
     rating: 4
     noise_rating: 5
     ripple_rating: 3
@@ -76,11 +76,11 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
-      This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
+      This one performed very well. From our research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. It's a little disappointing that the power signature isn't better. It is good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
 
-      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. I didn't test this, but it does have that capability.
+      The really cool thing about this charger is that it supports PPS and has the ability to step the voltage in small increments, when needed by the device. We didn't test this, but it does have that capability.
       
-      One truly interesting thing about this charger was how it managed its voltage. At low current, it hovered around 12V exactly. But as the current approached the 2-3A range, the voltage rose with current, topping out at 12.36V when I pulled 3A. This is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system. Absolutely incredible.
+      One truly interesting thing about this charger was how it managed its voltage. As the current approached the 2-3A range, the voltage actually increased, topping out at 12.36V when I pulled 3A. This is the first charger I tested that dynamically increased its voltage to account for resistance in the charging system.
     rating: 5
     noise_rating: 4
     ripple_rating: 5
@@ -93,16 +93,16 @@ devices:
     caption: |
       This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming.
       
-      As you can tell, this is only the test of the USB C port. I didn't bother testing the noise of the USB A port for two reasons: one, they sit on the same circuit board so they likely share the same voltage regulation, and two, most people will not be using the USB A port on this.
+      As you can tell, it's only the test of the USB C port. We didn't bother testing the noise of the USB A port since they sit on the same circuit board (so likely share the same voltage regulation), and also most people will not be using the USB A port on this.
 
-      One other interesting note about this charger: During overcurrent testing, it happily provided far above its rated current. I suspect it is because this specific charger has these configurations:  
+      One other interesting note about this charger: During overcurrent testing, it happily provided far above its rated current. It's probably because the charger supports
       1) 5v 3a, 
       2) 9v 3a, 
       3) 12v 3a, 
       4) 15v 3a, 
       5) 20v 3.25a
 
-      As you can see, it will actually go above 3 A at the highest voltage. I think they just didn't think anyone would actually use over 3 A at the lower voltages. It was able to happily provide current all the way until shutoff that was within the +/- 5% of voltage spec, as per USB standards. So even though it pumps out way more current than advertised, I don't see it as a necessarily bad thing.
+      As you can see, it will actually go above 3 A at the highest voltage. They probably just didn't think anyone would actually use over 3 A at the lower voltages.
 
       
     rating: 5
@@ -116,7 +116,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit chinese outlet 1.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "This was another charger that surprised me simply because of how well it tested under the oscilloscope. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency noise in the 50us graph, which I would be more concerned about if the voltage itself wasn't stable. In all, this charger would seem to be great. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger. I give it 1 bolt because of this."
+    caption: "This was another charger that tested surprisingly well. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency noise in the 50us graph, but the voltage is pretty stable. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger. It gets 1 bolt because of this."
     rating: 1
     noise_rating: 4
     ripple_rating: 3
@@ -128,7 +128,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple96W3.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
-    caption: "Good, but I would expect a little bit better for how expensive this charger is. I don't believe this is a GaN charger, but it is Apple, so it should be high quality. The total noise is low at 92mV, but there is some noise visible within those intermittent peaks when you go into the lower timeframe. There's also high-frequency ripple with plenty of harmonics. Lastly, it also delivered less voltage than advertised, going down to 8.63V when I would try to pull 9V and 3A. Overall rating is a 3 because of that high-frequency noise and the voltage sag. Again, not bad, but we should expect better for the price."
+    caption: "Good, but should be better for how expensive this charger is. The total noise is low at 92mV, but there is some noise visible within those intermittent peaks when you go into the lower timeframe. There's also high-frequency ripple with plenty of harmonics. It also delivered less voltage than advertised, going down to 8.63V when we'd try to pull 3A @ 9V. Overall rating is a 3 because of that high-frequency noise and the voltage sag. Not bad but should be better for $100."
     rating: 3
     noise_rating: 4
     ripple_rating: 4
@@ -141,11 +141,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
-      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. I imagine this happened because nobody at Apple expected customers to use this charger for 5 W of power, being USB C, and designed it accordingly. 
+      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. That probably happens becasue nobody at appel Apple expected people to use this charger for 5 W of power, being USB C. 
       
-      I also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, I needed to achieve a grand total of AT LEAST 7.5 Watts before the charger noise dropped out into the graph you see here. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. 
-      
-      I'll give it an overall rating of a 4 as it's a solid charger for typical use cases - providing you don't trickle charge with it.
+      We also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, it needed to achieve a grand total of 7.5W before the nosie graph smoothed out. so 15V ~0.5A, and 5V ~1.5A. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. 
     rating: 4
     noise_rating: 3
     ripple_rating: 3
@@ -157,7 +155,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker ASP053a 3.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Not that impressive. The voltage is noticeably noisier than a lot of my other chargers. The frequency spectrum also shows ripple with harmonics at roughly 90KHz intervals. Not awful, but not a charger I'd reach for if I had better options nearby."
+    caption: "Not that impressive. The voltage is noticeably noisier than a lot of the other chargers. The frequency spectrum also shows ripple with harmonics at roughly 90KHz intervals."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -169,7 +167,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
     caption: |
-      Since it is fairly noisy, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts.
+      We gave it 3 bolts to be nice, there's nothing great about using the iPhone 17's USB C port as a charger.
     rating: 3
     noise_rating: 3
     ripple_rating: "N/A"
@@ -181,7 +179,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Shargeek Fun Macintosh Charger.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Shargeek Fun Macintosh Charger3.png"
     bg: "hsl(60, 32%, 93%)"
-    caption: "Disappointed in this one. For being nearly $30, and only pumping out 27W, this charger isn't doing that well. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a lot of noise. I would stay away from using this to charge my devices."
+    caption: "For being nearly $30, and only rated for 27W, this charger isn't doing that well. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a lot of noise."
     rating: 3
     noise_rating: 3
     ripple_rating: 3
@@ -194,7 +192,7 @@ devices:
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Govee 3.png"
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
-    caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's delivering something like an ocean wave of noise. Not good."
+    caption: "As expected, not great. This Govee gets two bolts since it delivered roughly what it advertised in terms of voltage and current, but it looks noisy."
     rating: 2
     noise_rating: 2
     ripple_rating: 2
@@ -210,7 +208,7 @@ devices:
     caption: |
       Dealworthy is a Target brand, and it's designed to be low cost. You can see just how cheaply it's been made by these graphs. Lots of noise, poor regulation, and a lot of switching ripple with harmonics all over the FFT.
     
-      Another thing I want to mention is that they appear to be smearing the switching frequency by doing some kind of frequency dithering. It's operating at 40KHz, but I suspect it is going slightly above and below that frequency to spread out the massive amount of noise it makes.
+      Another interesting thing is that they appear to be smearing the switching frequency by doing some kind of frequency dithering. It's operating at 40KHz, but we suspect it is going slightly above and below that frequency to spread out the massive amount of noise it makes.
     rating: 1
     noise_rating: 2
     ripple_rating: 2
@@ -400,7 +398,14 @@ The decoy board was needed because the USB C PD Spec needs the load device to ch
 
 ### A note about resistance
 
-One of the things we learned during this project was that resistance could be artificially skewing the measurements. We did a couple of things to minimize this [A2], so it shouldn't be a big deal. 
+One of the things we learned during this project was that resistance could be artificially skewing the measurements. We did a couple of things to minimize this, so it shouldn't be a big deal.
+
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    To account for this, we ensured each test was conducted with my voltmeter directly connected to the charger's output terminal. If you're interested, the equivalent resistance of the voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements we have, since we connected directly to the charger output. However, we are honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec.
+  </div>
+</details>
 
 
 ### Rating system for Oscilloscope graphs 
@@ -438,7 +443,7 @@ Scroll through the cards and click any one to expand the full oscilloscope graph
   <div class="note-card-body">
     <ul>
       <li>We learned during testing that all devices showed similar noise profiles at different voltages, so we stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.</li>
-      <li>Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would <em>actually</em> experience during charging, not some hypothetical rating you will never actually see during normal usage.</li>
+      <li>Within each voltage, we cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, we'd take the less severe graph. This is because what you're seeing should approximate the noise your device would <em>actually</em> experience during charging, not some hypothetical rating you will never actually see during normal usage.</li>
     </ul>
   </div>
 </details>
@@ -463,7 +468,14 @@ They look confusing at first glance, but you don't need to be an electrical engi
 - **Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
 - **Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT). It takes all the imperfections from the yellow line and sorts them by frequency. A large spike here would mean there is a significant amount of energy at that specific frequency.
 - **Noise vs. Switching Ripple:** This describes the imperfections on these graphs. It's important to look at them separately:
-  - **Switching Ripple** is the presence of a main, high-frequency spike (and its harmonics) on the FFT. This is caused by the natural charging and discharging cycle of the charger's internal circuit. AC Chargers will switch on and off many times per second to effectively create something that is DC current. For that reason, if I see a significant peak at 90KHz and nowhere else, for instance, I would say the charger has its primary switching ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, that is the switching ripple and its harmonic at 180KHz. *(Note: Ken used the term ripple to mean **Line Ripple**, to describe the lower 120Hz fluctuations caused by the AC wall input; I use Switching Ripple to focus purely on the oscillator!)*
+  - **Switching Ripple** is the presence of a main, high-frequency spike (and its harmonics) on the FFT. This is caused by the natural charging and discharging cycle of the charger's internal circuit. AC Chargers will switch on and off many times per second to effectively create something that is DC current. For that reason, if there's a significant peak at 90KHz and nowhere else, for instance, we'd say the charger has its primary switching ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, that is the switching ripple and its harmonic at 180KHz. 
+
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    Ken used the term ripple to mean <strong>Line Ripple</strong>, to describe the lower 120Hz fluctuations caused by the AC wall input; we use Switching Ripple to focus purely on the oscillator!
+  </div>
+</details>
 
   - **Noise** includes any imperfections on the voltage graph measured in peak-to-peak voltage (Vpp). There are many different kinds of noise, including high-frequency vertical spikes, fuzzy blur, and general jitter. Switching ripple is one component of this.
 
@@ -900,7 +912,7 @@ They look confusing at first glance, but you don't need to be an electrical engi
 
 
 ## Expected/Actual Output
-Before we get into this table, I want to make one caveat: my setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why I tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
+Our setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why we tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
 - 20V, up to 3.25 A (to reach max power of 65W)
 And it *also* supports:
 - 5V, up to 3 A
@@ -908,7 +920,7 @@ And it *also* supports:
 - 12V, up to 3 A
 - 15V, up to 3 A
 
-In this case, I'd do base level testing to see if I can get the charger to output its max power for a second or two. Then, for the oscilloscope traces, I would drop the device down to something like 9V and cycle through all its current levels. This is so that I could avoid overheating my breakout board. As stated earlier, *all* chargers showed similar noise profiles at their different voltages, so I am confident that the results you see below are reproducible, even if your device uses one voltage setting under or above what I did.
+In this case, we'd do base level testing to see if we can get the charger to output its max power for a second or two. Then, for the oscilloscope traces, we'd drop the device down to something like 9V and cycle through all its current levels. This avoids overheating our breakout board. As stated earlier, *all* chargers showed similar noise profiles at their different voltages, so we're confident that the results you see below are reliable.
 
 
 The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
@@ -1627,12 +1639,14 @@ The Actual Voltage column is highlighted <span style="color:#228B22; font-weight
 
 ## Overcurrent Testing
 
-The last piece of Ken Shirriff's testing I wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Like I mentioned earlier, chargers generally have two strategies to deal with this: 
+The last piece of Ken Shirriff's testing we wanted to replicate was overcurrent. Naturally, since devices get to decide how much current they want to pull, it's up to the charger to make sure the device doesn't pull too much current. Chargers generally have two strategies to deal with this: 
 1) shut off completely, or 
 2) reduce the output voltage. 
-Option 1 is preferred in most cases. Option 2 is really just a consequence of not doing option 1. There is a third scenario, where the charger can somehow increase the current at the same voltage, but this would mean operating the device outside of its standard conditions, and would likely lead to it overheating.
+Option 1 is preferred in most cases. Option 2 is really just a consequence of not doing option 1. There is a third scenario, where the charger can somehow increase the current at the same voltage, but this would probably mean overheating it.
 
-During my overcurrent testing, I set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, I lack that recording capability so my results are very simple. When I did conduct the overcurrent test on the oscilloscope, all my voltage graphs were relatively tight during overcurrent testing. I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I would say the values below are the true values of the voltage and current of the device at their shutoff period. 
+During overcurrent testing, we set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, we lack that recording capability. So our results are very simple. 
+
+In case you're intersted, all my voltage graphs were relatively tight during overcurrent testing, and we only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, we would say the values below are the true values of the voltage and current of the device at their shutoff period. 
 
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/load_example.png" alt="Ken current" style="width: 100%;">
@@ -1646,7 +1660,7 @@ During my overcurrent testing, I set the electronic load to keep pulling more an
 
 The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 4 volts, or 7 or 8 volts, because that suggests the charger allowed more current out than it should have.
 
-*I don't have overcurrent results for all chargers in the table below. This will be updated as more test results become available.*
+*We don't have overcurrent results for all chargers in the table below. This will be updated as more test results become available.*
 
 ### Overcurrent Results Table
 <style>
@@ -1719,10 +1733,10 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
 </div>
 
 
-A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. There may have been an issue in testing or these chargers might not be as well-regulated.
+A mixed bag of results from overcurrent. The Kindle is the most disappointing one in my opinion, because it shut off so quickly at just 0.1 A above its rated current, and somehow its voltage still dropped. However, the worst offenders are from the Apple 96W, Spigen PowerArc, Eero, and the counterfeit Chinese wall charger. All had voltage drops that suggest they go below what would be considered USB standards. 
 
-
-A new update: I re-ran the tests one more time with a brand new multimeter to show the results in this table. Upon reviewing, the **Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero** are all starting to break past the +/- 5% voltage threshold for USB certification. I re-tested them under the oscilloscope, and found some interesting results: while most of these chargers offered relatively focused voltage traces, usually ranging by about 0.1V, the counterfeit Samsung was the one outlier. This charger had such a noisy voltage trace that, near shutoff, it oscillated between 3.7 V, 0, and 8.5 V. This dangerous behavior was truly unique and not present in *any* of the other chargers I tested. When your phone or laptop attempts to pull too much current, this charger will start sending massive shockwaves of voltage. 
+*A new update: I re-ran the tests one more time with a brand new multimeter and updated the table. Upon reviewing, the **Spigen, Apple 96W, Counterfeit Chinese wall charger, AOHI GaN 65W, and Amazon Kindle, and Eero** are all starting to break past the +/- 5% voltage threshold for USB certification.*
+*I re-tested them under the oscilloscope, and found some interesting results: while most of these chargers offered relatively focused voltage traces, usually ranging by about 0.1V, the counterfeit Samsung was the one outlier. This charger had such a noisy voltage trace that, near shutoff, it oscillated between 3.7 V, 0, and 8.5 V. This dangerous behavior was truly unique and not present in *any* of the other chargers I tested. When your phone or laptop attempts to pull too much current, this charger will start sending massive shockwaves of voltage.*
 
 
 
@@ -1736,9 +1750,9 @@ A new update: I re-ran the tests one more time with a brand new multimeter to sh
 
 ## Conclusion
 
-Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something that genuinely excited me. What I liked most about this is that you don't need to be an electrical engineer to see the difference between good and bad chargers. The oscilloscope really does make it obvious. Things get confusing when you go past the 'what' and try to start understanding the *why*. *Why* certain peaks appear in the FFT, *why* some scope traces look as bad as they do, or *why* a charger measured fine at 1A but looked terrible at 2.5A. I still don't have great answers to these, but hope to learn more with time.
+Wow, that was a lot. Evaluating chargers seemed quite difficult at first, but this whole project quickly turned into something exciting. What I liked most about this is that you don't need to be an electrical engineer to see the difference between good and bad chargers. The oscilloscope really does make it obvious. Things get confusing when you go past the 'what' and try to start understanding the *why*. *Why* certain peaks appear in the FFT, *why* some scope traces look as bad as they do, or *why* a charger measured fine at 1A but looked terrible at 2.5A. I don't think Spencer or myself have great answers to these.
 
-The practical takeaway, in my opinion, is that most name-brand chargers of today are unlikely to damage your phone battery. Since modern devices filter noise internally, and the majority of these chargers stayed within that USB spec of ±5% voltage tolerance, they're unlikely to be a problem. Just avoid excessively cheap, no-name chargers and you should be fine. And that Anker flagship.. maybe avoid that one too.
+The practical takeaway, in my opinion, is that most name-brand chargers of today are unlikely to damage your phone battery. Since modern devices filter noise internally, and the majority of these chargers stayed within that USB spec of ±5% voltage tolerance, they're unlikely to be a problem. Just avoid excessively cheap, no-name chargers and you should be fine. 
 
 I hope you enjoyed reading. This really was a pleasure to put together. Car chargers are next on my list, and I suspect that may be a story of its own. If you have any suggestions to make, corrections to add, or just want to share something you found interesting, feel free to reach out and let me know. Contact is on the About page.
 
@@ -1746,7 +1760,7 @@ I hope you enjoyed reading. This really was a pleasure to put together. Car char
 
 ### -Sean
 <br>
-Last thing: a huge shout out to both Ken and my good friend Spencer! I could not have done this without either of them.
+Last thing: a huge shout out to both Ken and Spencer! I could not have done this without either of them.
 <figure style="max-width: 600px; text-align: center;">
   <a href= "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/spencerandsean1.jpg"><img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;"></a>
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
@@ -1765,8 +1779,4 @@ A Dozen Chargers in the lab
 
 [A1] *Tip: If you want to do testing of your own, always use the spring ground clip. Using the default alligator ground clip will lead to extremely high noise ratings.*
 
-[A2] 
-  To account for this, We ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
-  
-  If you're interested, the equivalent resistance of the voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements we have, since we connected directly to the charger output. However we am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
