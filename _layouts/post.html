@@ -450,11 +450,57 @@ document.addEventListener("DOMContentLoaded", function() {
     const rect = innerTrack.getBoundingClientRect();
     const clickY = e.clientY - rect.top;
     const docHeight = document.documentElement.scrollHeight;
-    
+
     const boundedY = Math.max(0, Math.min(rect.height, clickY));
     const scrollTarget = (boundedY / rect.height) * docHeight - (window.innerHeight / 2);
     window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
   });
+
+  // ---- Mobile-only reveal sequence (desktop untouched) ----
+  // On mobile the dock is hidden by default. Reveal it 3s after load with a
+  // fade-in, hold it fully interactive for 5s, then dismiss it permanently.
+  // Any tap/interaction within the 5s window resets the 5s timer (keep-alive).
+  if (window.matchMedia('(max-width: 799px)').matches) {
+    let dismissed = false;
+    let dismissTimer = null;
+
+    function dismissMobileToc() {
+      if (dismissed) return;
+      dismissed = true;
+      clearTimeout(dismissTimer);
+      container.style.transition = 'opacity 0.6s ease';
+      container.style.opacity = '0';
+      setTimeout(() => {
+        if (!dismissed) return; // safety
+        container.style.display = 'none';
+        container.classList.remove('is-active-area');
+      }, 650);
+    }
+
+    function scheduleDismiss() {
+      clearTimeout(dismissTimer);
+      dismissTimer = setTimeout(dismissMobileToc, 5000);
+    }
+
+    function keepAlive() {
+      if (dismissed) return;
+      scheduleDismiss(); // reset the 5s countdown
+    }
+
+    // Capture phase so label taps (which call stopPropagation) still register.
+    container.addEventListener('touchstart', keepAlive, { passive: true, capture: true });
+    container.addEventListener('click', keepAlive, true);
+
+    setTimeout(() => {
+      if (dismissed) return;
+      container.style.display = 'block';
+      container.style.opacity = '0';
+      void container.offsetWidth; // force reflow so the fade-in animates
+      container.style.transition = 'opacity 0.8s ease';
+      container.style.opacity = '1';
+      scheduleDismiss(); // start the 5s hold-then-dismiss timer
+    }, 3000);
+  }
 
 });
 </script>
