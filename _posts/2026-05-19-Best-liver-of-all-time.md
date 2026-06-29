@@ -116,13 +116,13 @@ While the supplements helped, blood tests from the month afterward showed only m
 It was about three months of experiemnting with supplementaion before I fully accepted that I was not going to fix my liver while giving it the same thing that caused the problem. I had already been thinking about going sober for a while, so the bloodwork made that decision feel easier to make. It went from "maybe this would be a good reset" to "I don't think my liver will go back to normal if I don't do this".
 
 I made the decision to stop drinking. It was just about ~3.5 months after that first concerning blood test. 
-My liver continued to improve in the months afterward, but those enzymes were still too damn high.
+My liver continued to improve in the months afterward, but the enzymes were still nothing incredible.
 
 
 
 ## The stack
 
-I built a supplement stack around glutathione support and general inflammation. This is what I settled on:
+After three months sober, and 6.5 months into my journey of committing to improve my liver, I created a supplement stack around glutathione support and general inflammation. This is what I settled on:
 
 - S-acetyl-L-glutathione, 200 mg per day
 - NAC, 600 mg per day
@@ -136,29 +136,27 @@ The liver part was mostly SAG plus NAC. NAC is a precursor for glutathione synth
 
 Was this perfectly controlled science? NOPE! But I was going to do it all anyway and see what happened.
 
-I changed a bunch of these things at once: no alcohol, better diet, supplements, more health tracking, and a level of motivation I do not usually have. 
+At this point, I had changed a bunch of these things at once: no alcohol, better diet, supplements, more health tracking, and a level of motivation I do not usually have. 
 
 *To be fair: I started the supplements **seven months** after I stopped drinking, and my data show that my ALT and AST levels dropped to just-above normal levels when I started supplementation. With drinking, it's usually understood that the liver completes its recovery in a few short months. For this reason, I'm inclined to believe that the supplements were the thing pushing me over the edge here, and into B.L.O.A.T. territory.*
 
 After running the stack for about three months, my numbers came back into the normal range. Nice! My ALT and AST were finally 'normal'. They were at the higher end of normal, but still normal.
 
-The problem was that **normal** was only the first goal. B.L.O.A.T. was still out there.
+The problem was that **normal** was only my first goal. B.L.O.A.T. was still out there.
 
 ## Going one step further
 
 Once the oral stack got me back into a safer place, I doubled down on beating my old best test results. 
 
-I started by bringing back injectable glutathione. This time I used 600 mg weekly. It was still painful, and still sucked to do every week, but it was a short-term fix. I was doing this to give my liver a short-term boost to help it regenerate.
+I started by bringing back injectable glutathione. I went back to the exact same men's clinic that I had visited years ago, paid to see a physician, and explained to her everything I've just shown you. While she thought I was a little obsessed over it, she said it couldn't hurt to try. We settled on 600 mg weekly, slightly more than my OG prescription years ago. It was still painful, and still sucked to do every week, but it was just for a few weeks. I was doing this to give my liver a short-term boost to help it regenerate.
 
-This is the part where I should be very clear: I am not telling anyone to inject glutathione. Injections come with sterility risks, dosing risks, and sourcing risks. Like I did, I highly recommend you with with a doctor or Men's/ Women's clinic, to get a real perscription and obtain true Glutathione. But only do it if you're like me, in the weird situation of having subpar test results, and stupid enough to want to be the next Bryan Johnson of livers.
-
-A short few weeks later, May 2026 came around.
+This was the differnetiator. A short few weeks later, May 2026 came around.
 
 ## The rematch
 
-Here is the oldest test against the newest test:
+Here is the oldest test against the newest test, complete with the trends we talked about before:
 
-| Analyte | 2018 report, age 17 | 2026 report, age 25 | My read |
+| Analyte | 2018 report, age 17 | 2026 report, age 25 | My Opinion |
 | --- | ---: | ---: | --- |
 | Total protein | 7.1 g/dL | 7.2 g/dL | Basically identical, with 2026 slightly higher. |
 | Albumin | 4.7 g/dL | 4.7 g/dL | Dead even. I will absolutely take that. |
@@ -170,7 +168,7 @@ Here is the oldest test against the newest test:
 | ALT | 17 U/L | 18 U/L | Functionally tied. Both are excellent. |
 
 
-As soon as i saw it, I started chucking at the new result. I think 2026 wins.
+I started chucking at the new result. 2026 wins.
 
 Now I know that not like *every* single marker is better. Albumin tied, ALT was one point higher, A/G ratio was slightly lower, and bilirubin rose a little. If I were trying to fight against myself, there are places to do it.
 
@@ -180,9 +178,26 @@ But if you look at the liver enzymes, they are ridiculous now. AST dropped from 
 
 ## What I think worked
 
-If I had to rank the interventions, sobriety gets the top spot, but not by a lot.
+If I had to rank the interventions, sobriety and glutathione tie for the top spot.
 
-I don't think any supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. After that, I do think the glutathione and grape seed extract helped. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more for the real deal. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
+Sobriety is important because you can't really expect your liver to heal if you are contiually bombarding it with stress. Cutting alcohol created the perfect space for my liver to regenerate itself, and I'd recommend anyone do the same if they are in a simialr situation. 
+
+However, I do think there is a lot to say about injectable glutathione. Injectable glutathione had the clearest impact on my liver enzymes by far. I want to slightly push back on the notion that sobriety is the #1 thing that is going to help someone's liver get to its best functioning state of all time. While avoiding heavy drinking is an absolute must, my data had shown that it only led to modest improvements. To actually get to best-functioning territory, the injectable glutathione pushed me over the edge. Take a look at the timeline of my biomarkers below. If sobriety _really_ was the main thing driving this, we would have seen remarkable improvement in these enzymes. We didn't. The most dramatic drop was actially not the time when I went sober, but **the time that I started doing intramuscular glutathione**. Keep in mind this was only for about 6 weeks. I think this is as good a testimonial as any, that these interventions do work.
+
+
+  <!-- Row 1: screen1 & screen2 + caption -->
+  <div class="gallery-row layout-2-1">
+    <div class="gallery-images-double">
+      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_ALT.jpg" alt="ALT Levels" class="gallery-img" />
+      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_AST.jpg" alt="AST Levels" class="gallery-img" />
+    </div>
+    <div class="gallery-caption">
+      With ALT especially, it's clear that the most significant drop in enzymes occurred when I was using intramuscular glutathione. The original drop from March 2025 onward was after 3 months of sobriety + 6 months of supplementation.
+    </div>
+  </div>
+
+
+As far as the supplkements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. As far as the And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
 
 
 ## The verdict
