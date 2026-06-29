@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[PROJECT] B.L.O.A.T. How I tried to get the best liver of all time"
+title: "[PROJECT] B.L.O.A.T. How I got the best liver of all time"
 date: 2026-05-19
 tags: [personal, health]
 published: true
@@ -13,11 +13,8 @@ Earlier this year, I got bloodwork back and my liver enzymes were way higher tha
 
 For context, I have been getting blood tests since I was seventeen. That is useful because I have something better than a generic normal range: my own younger-me data. I can look at what my numbers were before I spent a few years making worse decisions.
 
-So the goal was simple.
+So my goal was simple. I wanted the best liver test results I have ever personally recorded. The best liver of all time. BLOAT.
 
-I wanted the best liver of all time.
-
-At least, the best liver test results I have ever personally recorded. BLOAT.
 
 ## The baseline
 
