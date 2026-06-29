@@ -463,10 +463,11 @@ They look confusing at first glance, but you don't need to be an electrical engi
 
 <style>
   .note-card {
-    border: 1px solid #ddd;
+    border: 1px solid #c9b99a;
     border-radius: 8px;
     margin: 1rem 0;
     overflow: hidden;
+    background: #faf6f0;
   }
   .note-card summary {
     display: flex;
@@ -480,7 +481,7 @@ They look confusing at first glance, but you don't need to be an electrical engi
     text-transform: uppercase;
     list-style: none;
     user-select: none;
-    color: #888;
+    color: #8c7355;
   }
   .note-card summary::-webkit-details-marker { display: none; }
   .note-card summary::before {
@@ -492,16 +493,19 @@ They look confusing at first glance, but you don't need to be an electrical engi
   .note-card[open] summary::before { transform: rotate(90deg); }
   .note-card-body {
     padding: 0.6rem 1rem 0.75rem;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #c9b99a;
     font-size: 0.9em;
+    color: #5c4a32;
   }
   .note-card-body ul { margin: 0; padding-left: 1.3em; }
   .note-card-body li { margin: 0.4rem 0; }
-  html[data-theme="dark"] .note-card { border-color: #333; }
-  html[data-theme="dark"] .note-card-body { border-top-color: #333; }
+  html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
+  html[data-theme="dark"] .note-card summary { color: #a08860; }
+  html[data-theme="dark"] .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
   @media (prefers-color-scheme: dark) {
-    .note-card { border-color: #333; }
-    .note-card-body { border-top-color: #333; }
+    .note-card { border-color: #4a3e2e; background: #1e1a14; }
+    .note-card summary { color: #a08860; }
+    .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
   }
   .table-wrapper {
     width: 100%;
