@@ -1644,9 +1644,13 @@ The last piece of Ken Shirriff's testing we wanted to replicate was overcurrent.
 2) reduce the output voltage. 
 Option 1 is preferred in most cases. Option 2 is really just a consequence of not doing option 1. There is a third scenario, where the charger can somehow increase the current at the same voltage, but this would probably mean overheating it.
 
-During overcurrent testing, we set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, we lack that recording capability. So our results are very simple. 
-
-In case you're intersted, all my voltage graphs were relatively tight during overcurrent testing, and we only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, we would say the values below are the true values of the voltage and current of the device at their shutoff period. 
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>During overcurrent testing, we set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, we lack that recording capability. So our results are very simple.</p>
+    <p>In case you're interested, all my voltage graphs were relatively tight during overcurrent testing, and we only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, we would say the values below are the true values of the voltage and current of the device at their shutoff period.</p>
+  </div>
+</details>
 
 <figure style="max-width: 600px; text-align: center;">
   <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/load_example.png" alt="Ken current" style="width: 100%;">
