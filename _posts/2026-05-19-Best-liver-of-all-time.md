@@ -3,7 +3,7 @@ layout: post
 title: "[PROJECT] B.L.O.A.T. How I tried to get the best liver of all time"
 date: 2026-05-19
 tags: [personal, health]
-published: false
+published: true
 accent_color: "#62cf98ff"
 ---
 
