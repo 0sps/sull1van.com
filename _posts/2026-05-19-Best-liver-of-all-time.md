@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[PROJECT] B.L.O.A.T. How I got the best liver of all time"
+title: "[PROJECT] B.L.O.A.T: How I got the best liver of all time"
 date: 2026-05-19
 tags: [personal, health]
 published: true
@@ -176,6 +176,7 @@ Here is the oldest test against the newest test, complete with the trends we tal
   .bloat-table {
     border-collapse: collapse;
     width: auto;
+    margin: 0 auto;
     font-family: sans-serif;
     font-size: calc(1em - 1px);
   }
