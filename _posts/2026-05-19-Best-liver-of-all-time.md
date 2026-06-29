@@ -79,17 +79,18 @@ Then there was twenty-four-year-old me:
     <tr>
       <th>Analyte</th>
       <th>2025 report, age 24</th>
+      <th>Change from 2018</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>Total protein</td><td>6.7 g/dL</td></tr>
-    <tr><td>Albumin</td><td>4.4 g/dL</td></tr>
-    <tr><td>Globulin</td><td>2.3 g/dL</td></tr>
-    <tr><td>A/G ratio</td><td>1.9</td></tr>
-    <tr><td>Total bilirubin</td><td>0.7 mg/dL</td></tr>
-    <tr><td>Alkaline phosphatase</td><td>54 U/L</td></tr>
-    <tr><td>AST</td><td>147 U/L</td></tr>
-    <tr><td>ALT</td><td>71 U/L</td></tr>
+    <tr><td>Total protein</td><td>6.7 g/dL</td><td class="diff-neg">Decrease by 0.4</td></tr>
+    <tr><td>Albumin</td><td>4.4 g/dL</td><td class="diff-neg">Decrease by 0.3</td></tr>
+    <tr><td>Globulin</td><td>2.3 g/dL</td><td class="diff-neg">Decrease by 0.1</td></tr>
+    <tr><td>A/G ratio</td><td>1.9</td><td class="diff-neg">Decrease by 0.1</td></tr>
+    <tr><td>Total bilirubin</td><td>0.7 mg/dL</td><td class="diff-neutral">No change</td></tr>
+    <tr><td>Alkaline phosphatase</td><td>54 U/L</td><td class="diff-pos">Decrease by 36</td></tr>
+    <tr><td>AST</td><td>147 U/L</td><td class="diff-neg">Increase by 119</td></tr>
+    <tr><td>ALT</td><td>71 U/L</td><td class="diff-neg">Increase by 54</td></tr>
   </tbody>
 </table>
 
@@ -192,6 +193,7 @@ Here is the oldest test against the newest test, complete with the trends we tal
   }
   .bloat-table td.diff-pos { color: #228B22; font-weight: 700; }
   .bloat-table td.diff-neg { color: #C41C00; font-weight: 700; }
+  .bloat-table td.diff-neutral { color: #888888; font-weight: 700; }
   @media (prefers-color-scheme: dark) {
     .bloat-table th, .bloat-table td { border-color: #2a2a2a; }
     .bloat-table th { background-color: #181818; }
