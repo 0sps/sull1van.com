@@ -51,31 +51,47 @@ This provides a way to differentiate test results that are close but still consi
 
 Now, here was seventeen-year-old me when he got his CMP:
 
-| Analyte | 2018 report, age 17 |
-| --- | ---: |
-| Total protein | 7.1 g/dL |
-| Albumin | 4.7 g/dL |
-| Globulin | 2.4 g/dL |
-| A/G ratio | 2.0 |
-| Total bilirubin | 0.7 mg/dL |
-| Alkaline phosphatase | 90 U/L |
-| AST | 28 U/L |
-| ALT | 17 U/L |
+<table class="bloat-table">
+  <thead>
+    <tr>
+      <th>Analyte</th>
+      <th>2018 report, age 17</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Total protein</td><td>7.1 g/dL</td></tr>
+    <tr><td>Albumin</td><td>4.7 g/dL</td></tr>
+    <tr><td>Globulin</td><td>2.4 g/dL</td></tr>
+    <tr><td>A/G ratio</td><td>2.0</td></tr>
+    <tr><td>Total bilirubin</td><td>0.7 mg/dL</td></tr>
+    <tr><td>Alkaline phosphatase</td><td>90 U/L</td></tr>
+    <tr><td>AST</td><td>28 U/L</td></tr>
+    <tr><td>ALT</td><td>17 U/L</td></tr>
+  </tbody>
+</table>
 
 Pretty good, honestly.
 
 Then there was twenty-four-year-old me:
 
-| Analyte | 2025 report, age 24 |
-| --- | ---: |
-| Total protein | 6.7 g/dL |
-| Albumin | 4.4 g/dL |
-| Globulin | 2.3 g/dL |
-| A/G ratio | 1.9 |
-| Total bilirubin | 0.7 mg/dL |
-| Alkaline phosphatase | 54 U/L |
-| AST | 147 U/L |
-| ALT | 71 U/L |
+<table class="bloat-table">
+  <thead>
+    <tr>
+      <th>Analyte</th>
+      <th>2025 report, age 24</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Total protein</td><td>6.7 g/dL</td></tr>
+    <tr><td>Albumin</td><td>4.4 g/dL</td></tr>
+    <tr><td>Globulin</td><td>2.3 g/dL</td></tr>
+    <tr><td>A/G ratio</td><td>1.9</td></tr>
+    <tr><td>Total bilirubin</td><td>0.7 mg/dL</td></tr>
+    <tr><td>Alkaline phosphatase</td><td>54 U/L</td></tr>
+    <tr><td>AST</td><td>147 U/L</td></tr>
+    <tr><td>ALT</td><td>71 U/L</td></tr>
+  </tbody>
+</table>
 
 Yikes lol.
 
@@ -159,7 +175,7 @@ Here is the oldest test against the newest test, complete with the trends we tal
 <style>
   .bloat-table {
     border-collapse: collapse;
-    width: 100%;
+    width: auto;
     font-family: sans-serif;
     font-size: calc(1em - 1px);
   }
