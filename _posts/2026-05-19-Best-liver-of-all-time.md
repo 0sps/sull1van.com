@@ -43,3 +43,4 @@ Also, it's important to note that there really isn't such thing as a 'liver pane
 | **ALKALINE PHOSPHATASE** | 90 U/L | 48 - 230 U/L |
 | **AST** | 28 U/L | 12 - 32 U/L |
 | **ALT** | 17 U/L | 8 - 46 U/L |
+
