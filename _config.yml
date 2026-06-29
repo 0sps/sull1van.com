@@ -1,9 +1,9 @@
 # Site settings
-title: Sean's Side Projects
+title: Sean Sullivan
 subtitle: 
 author: Sean Sullivan
 email: sean(at)sullivan(dot)mx
-description: Personal blog on technology, engineering, health
+description: Personal blog on technology, engineering, health projects
 baseurl: "" # Leave empty for root domain
 url: "https://sull1van.com"
 
@@ -24,10 +24,6 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
-  - "Susam Pal.html"
-  - "Susam Pal_files"
-  - "Stack Overwriting Function - Susam Pal.html"
-  - "Stack Overwriting Function - Susam Pal_files"
 
 # Plugins
 plugins:
