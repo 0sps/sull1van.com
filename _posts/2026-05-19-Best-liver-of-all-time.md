@@ -18,7 +18,7 @@ So my goal was simple, I wanted the best liver test results I have ever personal
 
 ## The baseline
 
-The main markers came from a Comprehensive Metabolic Panel. I casually call this a "liver panel," but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
+The main markers came from a Comprehensive Metabolic Panel. I casually call this a liver panel, but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
 
 - Total protein
 - Albumin
@@ -29,7 +29,7 @@ The main markers came from a Comprehensive Metabolic Panel. I casually call this
 - AST
 - ALT
 
-ALT and AST are the big ones for me because they are the classic liver stress enzymes. They don't tell the whole story of overall liver function, but if you have been drinking and those numbers are high, they get your attention pretty quickly.
+ALT and AST are the big ones for me because they are the main liver stress enzymes[<a href="#ref-0" class="cite-link">0</a>]. They don't tell the whole story of overall liver function, but if you have been drinking and those numbers are high, they get your attention pretty quickly.
 
 Albumin, total protein, globulin, and A/G ratio tell more of the surrounding story, helping to explain things like immune activity and whether the body is keeping its basic chemistry in a good place. (I sound like I know what I'm talking about, but most of this is from Google). Bilirubin and alkaline phosphatase are worth watching too, though bilirubin can bounce around for reasons that do not automatically worry me, and alkaline phosphatase is not purely a liver marker.
 
@@ -114,14 +114,14 @@ When I came back to it in 2025, I had one basic question: can I take this orally
 
 The answer, unfortunately, was maybe.
 
-Plain glutathione has a bioavailability problem. One newer paper on glutathione analogues says native oral glutathione has bioavailability below 1% because it gets broken down enzymatically and does not absorb well through the gut. That same paper tested modified versions of glutathione and found that one 'N-methylated' analog had much better half-life and oral bioavailability than native glutathione. Interesting, but also not exactly something that's easy to get.
+Plain glutathione has a bioavailability problem. One newer paper on glutathione analogues says native oral glutathione has bioavailability below 1% because it gets broken down enzymatically and does not absorb well through the gut[<a href="#ref-1" class="cite-link">1</a>]. That same paper tested modified versions of glutathione and found that one 'N-methylated' analog had much better half-life and oral bioavailability than native glutathione. Interesting, but also not exactly something that's easy to get.
 
 The more practical thing I found was S-acetyl L-glutathione, usually shortened to SAG.
 It's basically a modified glutathione molecule, forced onto an acetyl group that _supposedly_ makes it more stable and helps it get into cells. This was probably the best oral composition out there.
 
-The best human data I found was a small 2018 crossover study in eighteen healthy volunteers. It compared a single large oral dose of S-acetyl glutathione against regular glutathione. The study found higher plasma GSH Cmax and AUC after SAG than after the regular glutathione product, although some of the other results were messier and actually favored regular glutathione on some measures. Definitely not a slam dunk, but it was enough to make SAG look more plausible.
+The best human data I found was a small 2018 crossover study in eighteen healthy volunteers. It compared a single large oral dose of S-acetyl glutathione against regular glutathione. The study found higher plasma GSH Cmax and AUC after SAG than after the regular glutathione product, although some of the other results were messier and actually favored regular glutathione on some measures. Definitely not a slam dunk, but it was enough to make SAG look more plausible[<a href="#ref-2" class="cite-link">2</a>].
 
-There was also a 2025 safety assessment in *Food and Chemical Toxicology* that looked at SAG for use in foods and dietary supplements. The summary I found reported no genotoxic signal, an acute oral LD50 above 2000 mg/kg in rats, and a 13-week rat NOAEL of 1500 mg/kg/day. That does not prove anything magical about how it absorbs, but it did make the safety profile look decent.
+There was also a 2025 safety assessment in *Food and Chemical Toxicology* that looked at SAG for use in foods and dietary supplements. The summary I found reported no genotoxic signal, an acute oral LD50 above 2000 mg/kg in rats, and a 13-week rat NOAEL of 1500 mg/kg/day. That does not prove anything magical about how it absorbs, but it did make the safety profile look decent[<a href="#ref-3" class="cite-link">3</a>].
 
 At that point, my conclusion was pretty simple: oral glutathione itself is probably not the move, but S-acetyl glutathione is at least interesting enough to try.
 
@@ -148,7 +148,7 @@ After three months sober, and 6.5 months into my journey of committing to improv
 - Fish oil, specifically Nordic Naturals Complete Omega Xtra
 - Elderberry extract, 500 mg per day
 
-The liver part was mostly SAG plus NAC. NAC is a precursor for glutathione synthesis, and SAG was my attempt to get pure glutathione into my body without injections. TMG was there because I was interested in gains at the gym, and high doses of TMG are known for helping muscle growth (adding a citation in here when I remember to). Fish oil and turmeric were there for inflammation, and elderberry is more of a general-purpose antiviral I take to stay healthy.
+The liver part was mostly SAG plus NAC. NAC is a precursor for glutathione synthesis[<a href="#ref-7" class="cite-link">7</a>], and SAG was my attempt to get pure glutathione into my body without injections. TMG was there because I was interested in gains at the gym, and high doses of TMG are known for helping muscle growth[<a href="#ref-8" class="cite-link">8</a>]. Fish oil and turmeric were there for inflammation, and elderberry is more of a general-purpose antiviral I take to stay healthy.
 
 Was this perfectly controlled science? NOPE! But I was going to do it all anyway and see what happened.
 
@@ -164,7 +164,7 @@ The problem was that **normal** was only my first goal. B.L.O.A.T. was still out
 
 Once the oral stack got me back into a safer place, I doubled down on beating my old best test results. 
 
-I started by bringing back injectable glutathione. I went back to the exact same men's clinic that I had visited years ago, paid to see a physician, and explained to her everything I've just shown you. While she thought I was a little obsessed over it, she said it couldn't hurt to try. We settled on 600 mg weekly, slightly more than my OG prescription years ago. It was still painful, and still sucked to do every week, but it was just for a few weeks. I was doing this to give my liver a short-term boost to help it regenerate.
+I started by bringing back injectable glutathione. I went back to the exact same men's clinic that I had visited years ago, paid to see a physician, and explained to her everything I've just shown you. While she thought I was a little obsessed over it, she said it couldn't hurt to try. We settled on 600 mg weekly, slightly more than my OG prescription years ago. It was still painful, and still sucked to do every week, but it was just for a few weeks. I was doing this to give my liver a short-term boost to help it regenerate[<a href="#ref-6" class="cite-link">6</a>].
 
 This was the differentiator. A short few weeks later, May 2026 came around.
 
@@ -173,6 +173,8 @@ This was the differentiator. A short few weeks later, May 2026 came around.
 Here is the oldest test against the newest test, complete with the trends we talked about before:
 
 <style>
+  .cite-link { color: #0000EE; text-decoration: none; }
+  .cite-link:visited { color: #551A8B; }
   .bloat-table {
     border-collapse: collapse;
     width: auto;
@@ -336,7 +338,7 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
 </div>
 
 
-As far as the supplements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
+As far as the supplements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising[<a href="#ref-4" class="cite-link">4</a>][<a href="#ref-5" class="cite-link">5</a>], and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
 
 
 ## The verdict
@@ -351,10 +353,15 @@ B.L.O.A.T. achieved.
 
 ## Sources I used
 
-- [Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches](https://pubmed.ncbi.nlm.nih.gov/40143049/)
-- [Oral Administration of S-acetyl-glutathione: Impact on the Levels of Glutathione in Plasma and in Erythrocytes of Healthy Volunteers](https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/)
-- [Safety assessment of S-Acetyl Glutathione for use in foods and dietary supplements](https://www.sciencedirect.com/science/article/pii/S0278691525000468)
-
+<p id="ref-0">[0] Liver Function Tests: <a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/">https://www.ncbi.nlm.nih.gov/books/NBK482489/</a></p>
+<p id="ref-1">[1] Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches: <a href="https://pubmed.ncbi.nlm.nih.gov/40143049/">https://pubmed.ncbi.nlm.nih.gov/40143049/</a></p>
+<p id="ref-2">[2] Oral Administration of S-acetyl-glutathione: Impact on the Levels of Glutathione in Plasma and in Erythrocytes of Healthy Volunteers: <a href="https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/">https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/</a></p>
+<p id="ref-3">[3] Safety assessment of S-Acetyl Glutathione for use in foods and dietary supplements: <a href="https://www.sciencedirect.com/science/article/pii/S0278691525000468">https://www.sciencedirect.com/science/article/pii/S0278691525000468</a></p>
+<p id="ref-4">[4] Grape Seed Extract to Improve Liver Function in Patients with Nonalcoholic Fatty Liver Change: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3003214/</a></p>
+<p id="ref-5">[5] Effects of grape seed extract supplementation on cardiovascular risk factors, liver enzymes: <a href="https://link.springer.com/article/10.1186/s12906-024-04477-3">https://link.springer.com/article/10.1186/s12906-024-04477-3</a></p>
+<p id="ref-6">[6] Effect of injectable glutathione for treatment of liver disease: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/">https://pmc.ncbi.nlm.nih.gov/articles/PMC5549431/</a></p>
+<p id="ref-7">[7] How the body synthesises NAC into glutathione: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/">https://pmc.ncbi.nlm.nih.gov/articles/PMC8234027/</a></p>
+<p id="ref-8">[8] Baseline clinical study about TMG which shows it is promising for use in lifting: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/">https://pmc.ncbi.nlm.nih.gov/articles/PMC3844502/</a></p>
 
 <style>
   .img-lightbox-trigger { cursor: zoom-in; }
