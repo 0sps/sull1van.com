@@ -33,6 +33,7 @@ After some Googling, I came across these 'trend' inclinations for what makes som
 
 Also, it's important to note that there really isn't such thing as a 'liver panel', however you can get a Comprehensive Metabolic Panel, which tests basically all of these and more. From my CMP results, I filtered out these values, since they are the most relevant in my opinion.
 
+### Seventeen year-old Sean
 | Analyte | Patient Value |
 | --- | --- |
 | **PROTEIN, TOTAL** | 7.1 g/dL |
@@ -43,3 +44,37 @@ Also, it's important to note that there really isn't such thing as a 'liver pane
 | **ALKALINE PHOSPHATASE** | 90 U/L |
 | **AST** | 28 U/L |
 | **ALT** | 17 U/L |
+
+### Twenty-four year-old Sean
+| Analyte | Patient Value |
+| --- | --- |
+| **TOTAL PROTEIN** | 6.7 g/dL |
+| **ALBUMIN** | 4.4 g/dL |
+| **GLOBULIN, TOTAL** | 2.3 g/dL |
+| **A/G RATIO** | 1.9 |
+| **BILIRUBIN TOTAL** | 0.7 mg/dL |
+| **ALKALINE PHOSPHATASE** | 54 U/L |
+| **AST** | 147 U/L |
+| **ALT** | 71 U/L |
+
+
+Now that we have the values, let's take a look at what can change them!
+
+First and foremost, I stopped all drinking. Then, I started to experiment with both new and old supplements. I started reseraching. Previously, in 2022, I had supplemented with intramuscular Glutathione, after a men's clinic saw that my liver was stressed. 
+
+### Side-by-Side Comparison of my oldest and newest blood test reports
+
+| Analyte | 2018 Report (Age 17) | 2026 Report (Age 25) | Trend Evaluation |
+| --- | --- | --- | --- |
+| **PROTEIN, TOTAL** | 7.1 g/dL | 7.2 g/dL | Completely stable and optimal. |
+| **ALBUMIN** | 4.7 g/dL | 4.7 g/dL | Identical; elite-level liver production and nutrition. |
+| **GLOBULIN** | 2.4 g/dL | 2.5 g/dL | Stable; indicates low systemic immune activation. |
+| **A/G RATIO** | 2.0 | 1.9 | Stays perfectly in that ideal higher-normal tier. |
+| **BILIRUBIN, TOTAL** | 0.7 mg/dL | 1.0 mg/dL | Slightly higher but makes zero clinical difference. |
+| **ALKALINE PHOSPHATASE** | 90 U/L | 79 U/L | **Better in 2026.** Dropped further into the lower-middle optimal range. |
+| **AST** | 28 U/L | 25 U/L | **Better in 2026.** Shifted lower into the ideal zone. |
+| **ALT** | 17 U/L | 18 U/L | Virtually identical and perfectly low. |
+
+---
+
+### The Verdict: The Clear Overall Winner is **2026**
