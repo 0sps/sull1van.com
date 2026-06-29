@@ -455,7 +455,9 @@ Scroll through the cards and click any one to expand the full oscilloscope graph
         var details = summary.closest('details');
         var y = window.scrollY;
         details.open = !details.open;
-        requestAnimationFrame(function () { window.scrollTo(0, y); });
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { window.scrollTo(0, y); });
+        });
       });
     });
   })();
