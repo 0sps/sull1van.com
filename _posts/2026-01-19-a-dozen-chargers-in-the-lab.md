@@ -327,16 +327,16 @@ devices:
 
 Have you ever wondered if there are 'good' and 'bad' chargers? Is there really a difference between a $5 brick you get at an airport and a $30 one you order direct from a name brand? As it turns out, cheaply made chargers can operate far differently from name-brand ones, and can sometimes be dangerous to use.
 
-I'd thought about this topic for years ever since I read a [blog post by one Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html). It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, many years ago. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to not only degrade battery life but cause other strange issues like touchscreen glitches.
+This work was done first [by one Google engineer Ken Shirriff](https://www.righto.com/2012/10/a-dozen-usb-chargers-in-lab-apple-is.html) many years ago. It was at the top of [Hacker News](https://news.ycombinator.com/) at the time, and has been reposted a couple of times. Ken made the case that there is absolutely a difference between the best and worst chargers, and that poorly built chargers have the ability to not only degrade battery life but cause other strange issues like touchscreen glitches.
 
-Most of his work went over my head at the time, but I kept thinking about whether anyone would recreate this for modern USB-C chargers. Fast forward six years, and I still have yet to find anything. There may very well be an article just like this, and if there is I'd love to find it! But since I haven't seen anything like that yet, I decided to figure out exactly what Ken did and try to recreate it. I reached out to a mechanical engineer friend, and we started bouncing ideas back and forth until this project eventually came to life. He helped me complete some of the work below - thank you, Spencer!
+Fast forward six years and it still looks like there is no real authoritative source that tests big batches of chargers like this. My friend Spencer joined along, being a mechanical engineer, and we started bouncing ideas back and forth until this project eventually came to life. He helped complete a lot of the work below - thank you, Spencer!
 
 
-Here's the short version of what I found: 
-- **GaN chargers are among the best you can buy today, and the marketing around them IS real.**
+Here's the synopsis of everything below: 
+- **GaN chargers are among the best you can buy today, and the marketing around them is real.**
 - **Cheap chargers can also perform well, so the price you pay for a charger doesn't always correlate to its performance.**
-- **Common brands like Apple generally do test favorably, but some smaller brands edge them out.**
-- **There is an extreme amount of variation even within each brand. Some produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.**
+- **Common brands like Apple generally do test favorably, but some smaller brands actually do better.**
+- **There is an extreme amount of variation even within the third party brands. Some third-party produce both high-quality and extremely low-quality chargers, and you'd have no way of knowing without testing them.**
 
 <br>
 
@@ -349,7 +349,7 @@ Here's the short version of what I found:
 
 ## What I tested
 
-To get as much out of this project as possible, I tested a lot of chargers. Here's the full list:
+To get as much out of this project as possible, we tested a lot of chargers. Here's the full list:
 - Anker ASPD053a USB C 
 - Anker 637 Magnetic Charging Station (USB A port and USB C port)
 - AOHI GaN 65W AOC-C019 
@@ -370,9 +370,9 @@ To get as much out of this project as possible, I tested a lot of chargers. Here
 - Counterfeit Chinese Wall Adapter 10.5W WP2UWR
 - Counterfeit Samsung 10W EP-TA20JBE
 
-I also tested a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery for fun. These aren't chargers, so I'll keep them out of the list above, but they are included in the various results below.
+There was also a Macbook Pro M1, an iPhone 17 Pro, and an Anker 621 MAG GO 5000mAh Battery thrown into the mix. These aren't chargers, so I'll keep them out of the list above, but they are included in the various results below.
 
-For each charger, I tested it on several dimensions: **Advertised power versus actual power, power quality, and overcurrent.**
+Each charger was tested on several dimensions: **Advertised power versus actual power, power quality, and overcurrent.**
 - **Advertised power versus actual power** tells you how well the charger can maintain its intended voltage while putting out maximum current. 
 - **Power quality** means the amount of noise that appears when viewing the charger with an oscilloscope. This noise comes in many forms, but the general idea is that the flatter, the less noise. 
 - **Overcurrent** shows how a charger behaves when a device tries to pull too much current. This is achieved by connecting a charger to an electronic load and having that load request more and more current until the device shuts off. It helps show how well-regulated a charger is, and if it is capable of protecting itself during load. 
@@ -383,37 +383,34 @@ For each charger, I tested it on several dimensions: **Advertised power versus a
 ## Testing Setup
 
 
-As it turns out, testing USB C cables is a little complex. Modern chargers rely on the USB C Power Delivery (PD) standard, which generally specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are modern variants of this that complicate things even more, such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS), but I won't get into those. For this project, I just tested chargers according to the USB C PD spec. USB C PD also specifies that devices should be within +/- 5% of their advertised voltage in order to achieve certification (this is oversimplifying, but the general rule).
+Testing USB C chargers is a little complex. Modern chargers rely on the USB C Power Delivery (PD) standard, which generally specifies five voltages they can choose from: 5V, 9V, 12V, 15V, 20V. There are modern variants of this that complicate things even more, such as Programmable Power Supply (PPS) and Adjustable Voltage Supply (AVS), but I won't get into those. For this project, we only looked at chargers according to the USB C PD spec. USB C PD also specifies that devices should be within +/- 5% of their advertised voltage in order to achieve certification (this is oversimplifying, but the general rule), so we followed that rule when rating them.
 
-With this in mind, my setup consisted of a few different pieces:
+With this in mind, our setup consisted of a few different pieces:
 1. An oscilloscope, specifically the Rigol DS1054Z
 2. An electronic load
 3. A USB C Power Delivery decoy board
 4. A voltmeter
 5. Plenty of electrical wires and extra USB cables
 
-I would plug the charger into the wall, and connect it to a USB C Decoy Board which had an electronic load at the other end. The last part was accomplished using stray wires, however I ensured they were thick enough that their resistance would be low.
+The process involved would connecting the charger into a power source, and connecting the other end to a USB C Decoy Board, and connecting that decoy board to an electronic load. The oscilloscope probes tapped in right at the decoy board [A1].
 
-I didn't even realize I would need a decoy board at first. Spencer and I just thought we could connect a charger to a load and see what happened. After multiple attempts where the chargers would produce no output, we learned that USB C chargers require negotiation before they will send power. *I do not think Ken needed this piece since his chargers were constant voltage, but mine unfortunately do require it.* 
+The decoy board was needed because the USB C PD Spec needs the load device to choose a voltage. Otherwise the charger won't send anything. In the chargers Ken tested, most often they'd just send 5V regardless, so this setup was a little more complicated.
 
-As for the scope, my Rigol DS1054Z was set up with its probe touching the positive and negative terminals on the decoy board. I used the spring-based ground clip instead of the alligator ground clip that came with the probe so that my noise readings would be lower.
-*Tip: If you want to do testing of your own, always use the spring ground clip. I learned well into this project that using the default alligator ground clip will lead to extremely high noise ratings. Avoid my mistake and save yourself the rework of testing every charger again by making sure you do this.*
+
 
 ### A note about resistance
 
-One of the things I learned during this project was that resistance could be artificially skewing my measurements. To account for this, I ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
-
-If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements I have below, since I connected directly to the charger output. However I am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+One of the things we learned during this project was that resistance could be artificially skewing the measurements. We did a couple of things to minimize this [A2], so it shouldn't be a big deal. 
 
 
 ### Rating system for Oscilloscope graphs 
 **Noise and Switching Ripple**
 
-After conducting the oscilloscope tests, I rated each charger from 1 to 5, using lightning bolts as a fun visual guide. These ratings consider two separate factors: overall high-frequency noise (Vpp/spikes) and switching ripple. 
-- **Noise** includes the more chaotic high-frequency artifacts, large vertical spikes, and overall 'fuzziness' in the output. By measuring the overall peak-to-peak (Vpp) voltage, I can effectively rank the true Noise.
-- **Switching Ripple** refers to the high-frequency peaks (e.g., 50KHz, 100KHz) caused by the charger's internal oscillator continually charging and discharging. This differs from Ken's methodology, as he used the word **Ripple** specifically to mean the 120Hz line-frequency fluctuations caused by your household AC power. 
+After conducting the oscilloscope tests, we rated each charger from 1 to 5, using lightning bolts as a visual. These ratings consider two separate factors: overall high-frequency noise (Vpp/spikes) and switching ripple. 
+- **Noise** includes the more chaotic high-frequency artifacts, large vertical spikes, and overall 'fuzziness' in the output. By measuring the overall peak-to-peak (Vpp) voltage, you can rank the true noise.
+- **Switching Ripple** refers to the high-frequency peaks (e.g., 50KHz, 100KHz) caused by the charger's internal oscillator continually charging and discharging. This differs from Ken's methodology, as he used the word **Ripple** specifically to mean the 120Hz line-frequency fluctuations caused by household AC power. 
 
-- Most of my chargers look incredibly dense and 'thick' compared to the ones Ken examined. I believe this is because my scope has a memory depth of 24 million points, while the most I saw on Ken's graphs were around ~50,000 equivalent points of memory depth. I believe the inclusion of this raw high-frequency data at every zoom level is the most honest way to display these chargers. 
+- *Most of the chargers look incredibly dense and 'thick' compared to the ones Ken examined. I believe this is because my scope has a memory depth of 24 million points, while the most I saw on Ken's graphs were around ~50,000 equivalent points of memory depth. I believe the inclusion of this raw high-frequency data at every zoom level is the most honest way to display these chargers.*
 
 For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise on the oscilloscope:
 
@@ -423,7 +420,7 @@ For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise o
 - 4 bolts: under ~100mV
 - 5 bolts: under ~80mV
 
-These are just general guidelines. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
+These are just general guidelines. I used my judgment for each charger based on everything we could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
 <figure style="max-width: 300px;">
   <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
@@ -435,18 +432,24 @@ These are just general guidelines. I used my judgment for each charger based on 
 
 ## The Results
 
-Scroll through the cards and click any one to expand the full oscilloscope graphs. Each card shows the worst graph I could reproduce for that charger, assuming typical power usage. 
-- I learned during testing that all devices showed similar noise profiles at different voltages, so I stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.
-- Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would *actually* experience during  charging, not some hypothetical rating you will never actually see during normal usage.
+Scroll through the cards and click any one to expand the full oscilloscope graphs. Each card shows the worst graph that we could reproduce for that charger, assuming typical power usage. 
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <ul>
+      <li>We learned during testing that all devices showed similar noise profiles at different voltages, so we stuck with lower voltages for these screenshots. Most screenshots below were taken when the charger was giving 9V.</li>
+      <li>Within each voltage, I cycled through each charger's range of allowable current, and usually selected the worst graph. If the charger showed noise at the extreme low or high end of current, but no issues for the vast majority of measurements, I would take the less severe graph. This is because I want what you're seeing to approximate the noise your device would <em>actually</em> experience during charging, not some hypothetical rating you will never actually see during normal usage.</li>
+    </ul>
+  </div>
+</details>
 
 
 ### A few more details on noise and ripple
 
-They look confusing at first glance, but you don't need to be an electrical engineer to understand these next graphs. Here is a quick primer on what you're looking at:
-
+They look confusing at first glance, but you don't need to be an electrical engineer to understand these next graphs. 
 - **Yellow Line (Voltage Trace):** This represents the actual voltage being delivered to your device. The horizontal axis represents time, and the vertical axis represents voltage. In a perfect world, this would be a single, razor-thin, perfectly flat horizontal line. Any deviation from this is an imperfection.
 - **Purple Line (FFT Spectrum):** You'll see this purple mountain range near the bottom of many graphs. This is a Fast Fourier Transform (FFT). It takes all the imperfections from the yellow line and sorts them by frequency. A large spike here would mean there is a significant amount of energy at that specific frequency.
-- **Noise vs. Switching Ripple:** You'll see me use these terms often to describe the imperfections on these graphs. My definitions distinguish the two so I can rank them separately.
+- **Noise vs. Switching Ripple:** This describes the imperfections on these graphs. It's important to look at them separately:
   - **Switching Ripple** is the presence of a main, high-frequency spike (and its harmonics) on the FFT. This is caused by the natural charging and discharging cycle of the charger's internal circuit. AC Chargers will switch on and off many times per second to effectively create something that is DC current. For that reason, if I see a significant peak at 90KHz and nowhere else, for instance, I would say the charger has its primary switching ripple at 90KHz. If the charger has peaks at 90KHz and 180KHz, that is the switching ripple and its harmonic at 180KHz. *(Note: Ken used the term ripple to mean **Line Ripple**, to describe the lower 120Hz fluctuations caused by the AC wall input; I use Switching Ripple to focus purely on the oscillator!)*
 
   - **Noise** includes any imperfections on the voltage graph measured in peak-to-peak voltage (Vpp). There are many different kinds of noise, including high-frequency vertical spikes, fuzzy blur, and general jitter. Switching ripple is one component of this.
@@ -459,6 +462,47 @@ They look confusing at first glance, but you don't need to be an electrical engi
 ## Oscilloscope Graphs
 
 <style>
+  .note-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .note-card summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    list-style: none;
+    user-select: none;
+    color: #888;
+  }
+  .note-card summary::-webkit-details-marker { display: none; }
+  .note-card summary::before {
+    content: '▸';
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  .note-card[open] summary::before { transform: rotate(90deg); }
+  .note-card-body {
+    padding: 0.6rem 1rem 0.75rem;
+    border-top: 1px solid #ddd;
+    font-size: 0.9em;
+  }
+  .note-card-body ul { margin: 0; padding-left: 1.3em; }
+  .note-card-body li { margin: 0.4rem 0; }
+  html[data-theme="dark"] .note-card { border-color: #333; }
+  html[data-theme="dark"] .note-card-body { border-top-color: #333; }
+  @media (prefers-color-scheme: dark) {
+    .note-card { border-color: #333; }
+    .note-card-body { border-top-color: #333; }
+  }
   .table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -1696,3 +1740,16 @@ Last thing: a huge shout out to both Ken and my good friend Spencer! I could not
 
 -Sean Sullivan
 A Dozen Chargers in the lab
+
+
+
+
+### Appendix
+
+[A1] *Tip: If you want to do testing of your own, always use the spring ground clip. Using the default alligator ground clip will lead to extremely high noise ratings.*
+
+[A2] 
+  To account for this, We ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
+  
+  If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements I have below, since I connected directly to the charger output. However I am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+
