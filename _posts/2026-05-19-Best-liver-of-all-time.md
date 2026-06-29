@@ -260,3 +260,117 @@ B.L.O.A.T. achieved.
 - [Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches](https://pubmed.ncbi.nlm.nih.gov/40143049/)
 - [Oral Administration of S-acetyl-glutathione: Impact on the Levels of Glutathione in Plasma and in Erythrocytes of Healthy Volunteers](https://www.graphyonline.com/archives/IJCND/2018/IJCND-134/)
 - [Safety assessment of S-Acetyl Glutathione for use in foods and dietary supplements](https://www.sciencedirect.com/science/article/pii/S0278691525000468)
+
+
+<style>
+  .img-lightbox-trigger { cursor: zoom-in; }
+  #img-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition: background 0.35s ease, backdrop-filter 0.35s ease;
+    cursor: zoom-out;
+  }
+  #img-lightbox.is-open {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+  }
+  #img-lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.85);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+  #img-lightbox.is-open img {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .img-lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 2em;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: sans-serif;
+    user-select: none;
+  }
+  .img-lightbox-hint {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.55);
+    font-family: sans-serif;
+    font-size: 0.82em;
+    letter-spacing: 1.5px;
+    user-select: none;
+    pointer-events: none;
+  }
+</style>
+
+<div id="img-lightbox">
+  <button class="img-lightbox-close" aria-label="Close">&#x2715;</button>
+  <img src="" alt="">
+  <span class="img-lightbox-hint">click anywhere to dismiss</span>
+</div>
+
+<script>
+  (function () {
+    var lightbox = document.getElementById('img-lightbox');
+    if (!lightbox) return;
+    var lightboxImg = lightbox.querySelector('img');
+    var main = document.querySelector('main') || document.body;
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          lightbox.classList.add('is-open');
+        });
+      });
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      setTimeout(function () {
+        lightbox.style.display = 'none';
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }, 350);
+    }
+
+    Array.prototype.forEach.call(main.querySelectorAll('img'), function (img) {
+      if (img.closest('#img-lightbox')) return;
+      img.classList.add('img-lightbox-trigger');
+      img.addEventListener('click', function (e) {
+        var anchor = img.closest('a');
+        if (anchor) e.preventDefault();
+        e.stopPropagation();
+        openLightbox(img.currentSrc || img.src, img.alt);
+      });
+    });
+
+    lightbox.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
+</script>
