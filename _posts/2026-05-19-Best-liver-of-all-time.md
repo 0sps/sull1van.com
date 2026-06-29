@@ -9,7 +9,7 @@ accent_color: "#62cf98ff"
 
 I'm pretty excited to write this one.
 
-Earlier this year, I got bloodwork back and my liver enzymes were way higher than they should be. Not necessarily high enough that I should panic, but high enough that I should take notice. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that should probably change.
+Earlier this year, I got bloodwork back and my liver enzymes were way higher than they should be. Not necessarily high enough that I should panic, but high enough that I should take notice. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that it should probably change.
 
 One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
@@ -43,7 +43,7 @@ Holding all else equal, if we are within the normal range, here's what you want 
 - Globulin: Dead middle is better
 - ALT: Lower is better
 - AST: Lower is better
-- Alkaline Phosphatease: Lower is better
+- Alkaline Phosphatase: Lower is better
 - Bilirubin: Makes no difference
 
 This provides a way to differentiate test results that are close but still considered 'within the normal range'. So if I'm comparing two test results that are within the normal range, clinically they may both be considered the same, but biologically one of them might be just slightly better.
@@ -79,7 +79,7 @@ Then there was twenty-four-year-old me:
 
 Yikes lol.
 
-While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. For nearly the entire calendar year, from Summer 2023 to Fall 2024, I was out at a bar. It was interesting since I had drank little in 2025, at the time this test was done, but I stopped *becasue* the hangovers were getting too bad, so I knew any bad results were a sign of latent liver injury.
+While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. For nearly the entire calendar year, from Summer 2023 to Fall 2024, I was out at a bar. It was interesting since I had drank little in 2025, at the time this test was done, but I stopped *because* the hangovers were getting too bad, so I knew any bad results were a sign of latent liver injury.
 
 Needless to say, after getting this test, I was motivated to finally take charge of my liver health.
 
@@ -111,11 +111,11 @@ At that point, my conclusion was pretty simple: oral glutathione itself is proba
 
 
 ## Step two: stop drinking
-While the supplements helped, blood tests from the month afterward showed only moderate improvement. My liver enzymes were still elevated. The samrt move was easy to understand but just hard to do. I needed to stop drinking.
+While the supplements helped, blood tests from the month afterward showed only moderate improvement. My liver enzymes were still elevated. The smart move was easy to understand but hard to do. I needed to stop drinking.
 
-It was about three months of experiemnting with supplementaion before I fully accepted that I was not going to fix my liver while giving it the same thing that caused the problem. I had already been thinking about going sober for a while, so the bloodwork made that decision feel easier to make. It went from "maybe this would be a good reset" to "I don't think my liver will go back to normal if I don't do this".
+It was about three months of experimenting with supplementation before I fully accepted that I was not going to fix my liver while giving it the same thing that caused the problem. I had already been thinking about going sober for a while, so the bloodwork made that decision feel easier to make. It went from "maybe this would be a good reset" to "I don't think my liver will go back to normal if I don't do this".
 
-I made the decision to stop drinking. It was just about ~3.5 months after that first concerning blood test. 
+I made the decision to stop drinking. It was about 3.5 months after that first concerning blood test. 
 My liver continued to improve in the months afterward, but the enzymes were still nothing incredible.
 
 
@@ -150,7 +150,7 @@ Once the oral stack got me back into a safer place, I doubled down on beating my
 
 I started by bringing back injectable glutathione. I went back to the exact same men's clinic that I had visited years ago, paid to see a physician, and explained to her everything I've just shown you. While she thought I was a little obsessed over it, she said it couldn't hurt to try. We settled on 600 mg weekly, slightly more than my OG prescription years ago. It was still painful, and still sucked to do every week, but it was just for a few weeks. I was doing this to give my liver a short-term boost to help it regenerate.
 
-This was the differnetiator. A short few weeks later, May 2026 came around.
+This was the differentiator. A short few weeks later, May 2026 came around.
 
 ## The rematch
 
@@ -168,7 +168,7 @@ Here is the oldest test against the newest test, complete with the trends we tal
 | ALT | 17 U/L | 18 U/L | Functionally tied. Both are excellent. |
 
 
-I started chucking at the new result. 2026 wins.
+I started chuckling at the new result. 2026 wins.
 
 Now I know that not like *every* single marker is better. Albumin tied, ALT was one point higher, A/G ratio was slightly lower, and bilirubin rose a little. If I were trying to fight against myself, there are places to do it.
 
@@ -180,9 +180,9 @@ But if you look at the liver enzymes, they are ridiculous now. AST dropped from 
 
 If I had to rank the interventions, sobriety and glutathione tie for the top spot.
 
-Sobriety is important because you can't really expect your liver to heal if you are contiually bombarding it with stress. Cutting alcohol created the perfect space for my liver to regenerate itself, and I'd recommend anyone do the same if they are in a simialr situation. 
+Sobriety is important because you can't really expect your liver to heal if you are continually bombarding it with stress. Cutting alcohol created the perfect space for my liver to regenerate itself, and I'd recommend anyone do the same if they are in a similar situation. 
 
-However, I do think there is a lot to say about injectable glutathione. Injectable glutathione had the clearest impact on my liver enzymes by far. I want to slightly push back on the notion that sobriety is the #1 thing that is going to help someone's liver get to its best functioning state of all time. While avoiding heavy drinking is an absolute must, my data had shown that it only led to modest improvements. To actually get to best-functioning territory, the injectable glutathione pushed me over the edge. Take a look at the timeline of my biomarkers below. If sobriety _really_ was the main thing driving this, we would have seen remarkable improvement in these enzymes. We didn't. The most dramatic drop was actially not the time when I went sober, but **the time that I started doing intramuscular glutathione**. Keep in mind this was only for about 6 weeks. I think this is as good a testimonial as any, that these interventions do work.
+However, I do think there is a lot to say about injectable glutathione. Injectable glutathione had the clearest impact on my liver enzymes by far. I want to slightly push back on the notion that sobriety is the #1 thing that is going to help someone's liver get to its best functioning state of all time. While avoiding heavy drinking is an absolute must, my data showed that it only led to modest improvements. To actually get to best-functioning territory, the injectable glutathione pushed me over the edge. Take a look at the timeline of my biomarkers below. If sobriety _really_ was the main thing driving this, we would have seen remarkable improvement in these enzymes. We didn't. The most dramatic drop was actually not the time when I went sober, but **the time that I started doing intramuscular glutathione**. Keep in mind this was only for about 6 weeks. I think this is as good a testimonial as any, that these interventions do work.
 
 
   <!-- Row 1: screen1 & screen2 + caption -->
@@ -197,14 +197,14 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
   </div>
 
 
-As far as the supplkements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. As far as the And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
+As far as the supplements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
 
 
 ## The verdict
 
 I started with a simple goal: get my liver back into range.
 
-Then, because I was mad at myself for letting it get out of a range, I turned it into a competition against my own teenage bloodwork. And take that, teenage me! Twenty-five year old me is just as good, if not better.
+Then, because I was mad at myself for letting it fall out of range, I turned it into a competition against my own teenage bloodwork. And take that, teenage me! Twenty-five year old me is just as good, if not better.
 
 As of May 2026, I have the best liver test results of my life. Maybe not every single marker, if you want to pick at it. But taken as a full picture, especially with AST and ALT, this is the best my liver has ever looked on paper.
 
