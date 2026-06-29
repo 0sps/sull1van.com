@@ -473,7 +473,7 @@ They look confusing at first glance, but you don't need to be an electrical engi
 <details class="note-card">
   <summary>Note</summary>
   <div class="note-card-body">
-    Ken used the term ripple to mean <strong>Line Ripple</strong>, to describe the lower 120Hz fluctuations caused by the AC wall input; we use Switching Ripple to focus purely on the oscillator!
+    Ken used the term ripple to mean <strong>Line Ripple</strong>, to describe the lower 120Hz fluctuations caused by the AC wall input; we use Switching Ripple to focus purely on the oscillator.
   </div>
 </details>
 
@@ -912,15 +912,23 @@ They look confusing at first glance, but you don't need to be an electrical engi
 
 
 ## Expected/Actual Output
-Our setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why we tested each charger at *one* of its max current/ voltage configurations. Say Charger A Is called a "65W" charger on the box. Charger A supports:
-- 20V, up to 3.25 A (to reach max power of 65W)
-And it *also* supports:
-- 5V, up to 3 A
-- 9V, up to 3 A
-- 12V, up to 3 A
-- 15V, up to 3 A
-
-In this case, we'd do base level testing to see if we can get the charger to output its max power for a second or two. Then, for the oscilloscope traces, we'd drop the device down to something like 9V and cycle through all its current levels. This avoids overheating our breakout board. As stated earlier, *all* chargers showed similar noise profiles at their different voltages, so we're confident that the results you see below are reliable.
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>Our setup was not robust enough to handle testing at the full 65W or 100W that certain chargers are rated for. That is why we tested each charger at <em>one</em> of its max current/voltage configurations. Say Charger A is called a "65W" charger on the box. Charger A supports:</p>
+    <ul>
+      <li>20V, up to 3.25 A (to reach max power of 65W)</li>
+    </ul>
+    <p>And it <em>also</em> supports:</p>
+    <ul>
+      <li>5V, up to 3 A</li>
+      <li>9V, up to 3 A</li>
+      <li>12V, up to 3 A</li>
+      <li>15V, up to 3 A</li>
+    </ul>
+    <p>In this case, we'd do base level testing to see if we can get the charger to output its max power for a second or two. Then, for the oscilloscope traces, we'd drop the device down to something like 9V and cycle through all its current levels. This avoids overheating our breakout board. As stated earlier, <em>all</em> chargers showed similar noise profiles at their different voltages, so we're confident that the results you see below are reliable.</p>
+  </div>
+</details>
 
 
 The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
