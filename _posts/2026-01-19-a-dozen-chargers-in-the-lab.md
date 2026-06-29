@@ -6,8 +6,8 @@ tags: [technology]
 accent_color: "#f5d033"
 devices:
   - name: "Macbook Pro M1"
-    img1: "/assets/images/macbook pro 1.png"
-    img2: "/assets/images/macbook pro 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/macbook pro 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/macbook pro 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       The MacBook Pro had some of the cleanest power of the devices I tested. This is pretty unsurprising since it's just pulling DC current from its internal battery, and it doesn't have to chop up AC power like the chargers do.
@@ -20,8 +20,8 @@ devices:
     noise_mv: 24
 
   - name: "AOHI GaN 65W Charger"
-    img1: "/assets/images/AOHIGaN65W 3.png"
-    img2: "/assets/images/AOHIGaN65W 1.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN65W 3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN65W 1.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       Without a doubt the best AC power adapter. Very low noise, very low ripple. The only noticeable peak in the FFT is the 125KHz switching frequency. I believe this charger has a new technology in them that allows it to use different switching frequencies depending on how much power is requested, so the switching frequency may change with time. But all in all, the best power supply I have seen.
@@ -34,8 +34,8 @@ devices:
 
 
   - name: "Anker 621 MAG GO 5000mAh Battery"
-    img1: "/assets/images/Anker a1654 Maggo power bank.png"
-    img2: "/assets/images/Anker a1654 Maggo power bank 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker a1654 Maggo power bank.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker a1654 Maggo power bank 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       No switching noise or ripple seen here. The one small issue in my testing was that it measured 4.74V, just barely under the 4.75V USB limit. That's a tiny miss and doesn't affect real-world usability, but it was enough to mark it red in my table. The power quality itself is excellent so I'll keep it at a high rating.
@@ -46,8 +46,8 @@ devices:
     noise_mv: 36
 
   - name: "Spigen PowerArc ArcStation Pro"
-    img1: "/assets/images/Spigen PowerArc 1.png"
-    img2: "/assets/images/Spigen PowerArc 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Spigen PowerArc 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Spigen PowerArc 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       I was originally skeptical of this one, due to my first few tests being pretty bad. Turns out it was an issue on my side, and all subsequent tests have been great. 
@@ -59,8 +59,8 @@ devices:
     overall_rating: 5
     noise_mv: 56
   - name: "Eero 15W Charger"
-    img1: "/assets/images/eero.png"
-    img2: "/assets/images/eero2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/eero.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/eero2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This one confused me. For such a random charger, one that you can't even purchase yourself, it is of pretty high quality. It comes included with Eero devices, and looks to be custom-built just for them. I'm not sure if Amazon/Eero bought this one off the shelf and rebranded it or it's their own circuit design.
@@ -72,8 +72,8 @@ devices:
     overall_rating: 4
     noise_mv: 60
   - name: "AOHI GaN 100W Charger"
-    img1: "/assets/images/AOHIGaN100w 1.png"
-    img2: "/assets/images/AOHIGaN100w 3.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN100w 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/AOHIGaN100w 3.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This one performed very well. From my research, this is a GaN charger that uses some components that are so new they have never been used in consumer chargers before. This charger should really be considered a flagship for how much effort they put into it. For that reason, I'm a little disappointed the power signature isn't better. It IS good, but for how bleeding-edge this charger is supposed to be, it performs comparably to chargers half its size and price.
@@ -87,8 +87,8 @@ devices:
     overall_rating: 5
     noise_mv: 72
   - name: "Anker 637 Magnetic Charging Station 2 - USB C Port"
-    img1: "/assets/images/Anker 637 magnetic charging station USB C.png"
-    img2: "/assets/images/Anker 637 magnetic charging station USB C 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker 637 magnetic charging station USB C.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker 637 magnetic charging station USB C 2.png"
     bg: "hsl(120, 32%, 93%)"
     caption: |
       This is a ball-shaped charging station that offers USB A, USB C, and wireless charging outputs. While about 4 years old, it delivers quite clean power. The voltage trace is fairly tight with only minor noise, so nothing alarming.
@@ -113,8 +113,8 @@ devices:
 
 
   - name: "Counterfeit Chinese Wall Charger (USB A Only)"
-    img1: "/assets/images/Counterfeit chinese outlet 1.png"
-    img2: "/assets/images/Counterfeit chinese outlet 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit chinese outlet 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit chinese outlet 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: "This was another charger that surprised me simply because of how well it tested under the oscilloscope. It cost less than $10 and has very low high-frequency noise and ripple. There is a bit of high-frequency noise in the 50us graph, which I would be more concerned about if the voltage itself wasn't stable. In all, this charger would seem to be great. The only issue is that it was 0.5V below the 5V threshold during testing, which puts it out of spec for a USB Charger. I give it 1 bolt because of this."
     rating: 1
@@ -125,8 +125,8 @@ devices:
 
 
   - name: "Apple 96W Macbook Charger"
-    img1: "/assets/images/apple96W3.png"
-    img2: "/assets/images/apple96W2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple96W3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple96W2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: "Good, but I would expect a little bit better for how expensive this charger is. I don't believe this is a GaN charger, but it is Apple, so it should be high quality. The total noise is low at 92mV, but there is some noise visible within those intermittent peaks when you go into the lower timeframe. There's also high-frequency ripple with plenty of harmonics. Lastly, it also delivered less voltage than advertised, going down to 8.63V when I would try to pull 9V and 3A. Overall rating is a 3 because of that high-frequency noise and the voltage sag. Again, not bad, but we should expect better for the price."
     rating: 3
@@ -137,8 +137,8 @@ devices:
 
 
   - name: "Apple 30W Retail Charger"
-    img1: "/assets/images/apple retail.png"
-    img2: "/assets/images/apple retail 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple retail.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
       Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. I imagine this happened because nobody at Apple expected customers to use this charger for 5 W of power, being USB C, and designed it accordingly. 
@@ -154,8 +154,8 @@ devices:
 
 
   - name: "Anker ASPD053a"
-    img1: "/assets/images/Anker ASP053a 3.png"
-    img2: "/assets/images/Anker ASP053a 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker ASP053a 3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker ASP053a 2.png"
     bg: "hsl(60, 32%, 93%)"
     caption: "Not that impressive. The voltage is noticeably noisier than a lot of my other chargers. The frequency spectrum also shows ripple with harmonics at roughly 90KHz intervals. Not awful, but not a charger I'd reach for if I had better options nearby."
     rating: 3
@@ -166,7 +166,7 @@ devices:
 
 
   - name: "iPhone 17 pro"
-    img1: "/assets/images/iphone 17 pro.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/iphone 17 pro.png"
     bg: "hsl(60, 32%, 93%)"
     caption: |
       Since it is fairly noisy, I wouldn't advertise the iPhone as a viable charging device. To be nice I ended up giving it 3 bolts.
@@ -178,8 +178,8 @@ devices:
 
 
   - name: "Shargeek Macintosh Charger"
-    img1: "/assets/images/Shargeek Fun Macintosh Charger.png"
-    img2: "/assets/images/Shargeek Fun Macintosh Charger3.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Shargeek Fun Macintosh Charger.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Shargeek Fun Macintosh Charger3.png"
     bg: "hsl(60, 32%, 93%)"
     caption: "Disappointed in this one. For being nearly $30, and only pumping out 27W, this charger isn't doing that well. It looks well-regulated in the sense that the waveform is repeatable and standard, but the peaks are so jagged that it is delivering a lot of noise. I would stay away from using this to charge my devices."
     rating: 3
@@ -191,8 +191,8 @@ devices:
 
 
   - name: "Govee Power Supply"
-    img1: "/assets/images/Govee 3.png"
-    img2: "/assets/images/Govee 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Govee 3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Govee 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: "As expected, not great. This Govee gets two bolts since it delivered *roughly* what it advertised in terms of voltage and current, but it looks noisy. The voltage keeps going up and down, delivering a nonuniform power signature. It's delivering something like an ocean wave of noise. Not good."
     rating: 2
@@ -204,8 +204,8 @@ devices:
 
     
   - name: "Dealworthy Charger"
-    img1: "/assets/images/Dealworthy 1.png"
-    img2: "/assets/images/Dealworthy 3.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Dealworthy 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Dealworthy 3.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       Dealworthy is a Target brand, and it's designed to be low cost. You can see just how cheaply it's been made by these graphs. Lots of noise, poor regulation, and a lot of switching ripple with harmonics all over the FFT.
@@ -220,8 +220,8 @@ devices:
 
 
   - name: "Counterfeit AT&T"
-    img1: "/assets/images/Counterfeit ATnT 1.png"
-    img2: "/assets/images/Counterfeit ATnT 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit ATnT 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit ATnT 2.png"
     bg: "hsl(30, 32%, 93%)"
     caption: Bad. A quick glance on the 5ms timeframe and the voltage almost looks normal, but zooming in reveals a waveform dense with high-frequency noise and severe peaks. There is also meaningful ripple in the lower timeframe. The voltage also measured 5.38V, so it is technically out of the acceptable range for a USB charger. I will give it 1 lightning bolt.
     rating: 1
@@ -231,8 +231,8 @@ devices:
     noise_mv: 260
 
   - name: "Anker A121B 100W Charger"
-    img1: "/assets/images/Anker A121B 100w 1.png"
-    img2: "/assets/images/Anker A121B 100w 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker A121B 100w 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker A121B 100w 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       This is a "GaN" flagship charger released by anker sometime in late 2025. They hype it up so much on their website that I was looking to be impressed. And after testing it, I can say I am definitely surprised! But not impressed.
@@ -246,8 +246,8 @@ devices:
 
 
   - name: "Amazon Kindle Charger"
-    img1: "/assets/images/Amazon 1.png"
-    img2: "/assets/images/Amazon kindle 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Amazon 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Amazon kindle 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: "Another awful charger. Considering this comes as the standard Kindle charger, it is a poor showing from Amazon. The voltage is wide and noisy, with a chaotic high-frequency spectrum. It also measured 5.30V when I tested the output voltage, well above the 5.25V USB ceiling and therefore out of spec for a USB charger. If the graphs weren't bad enough, the bad voltage would give it 1 bolt."
     rating: 1
@@ -256,8 +256,8 @@ devices:
     overall_rating: 1
     noise_mv: 288
   - name: "Apple HomePod Mini Charger"
-    img1: "/assets/images/Apple Homepod Mini.png"
-    img2: "/assets/images/Apple Homepod Mini 2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Apple Homepod Mini.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Apple Homepod Mini 2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       Disappointing, especially given that this ships directly from Apple. The voltage is thick and irregular, and shows signs of both low-frequency and high-frequency ripple at a glance. On the bottom of the screen, the frequency spectrum shows elevated noise across the board. Its noise is at 308mV peak-to-peak and it ranks among the worst chargers in this entire test. 
@@ -271,8 +271,8 @@ devices:
 
 
   - name: "Vebner GaN 65W Charger"
-    img1: "/assets/images/VEBNERgan.png"
-    img2: "/assets/images/VEBNERgaqn2.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgan.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgaqn2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       Being marketed as a GaN charger, this is another disappointment. The voltage has a lot of noise, 332mV to be exact, and the frequency spectrum is elevated across the board, showing no serious attempt at filtering. The voltage looks a little more concentrated than it does on the Apple HomePod Mini chart, suggesting to me that this charger might actually be a little better. But in terms of absolute noise, this is worse. 
@@ -285,8 +285,8 @@ devices:
     noise_mv: 332
 
   - name: "Anker A121D 45W iPhone 17 charger"
-    img1: "/assets/images/Anker A121D 45w iPhone 17 charger 1.png"
-    img2: "/assets/images/Anker A121D 45w iPhone 17 charger 3.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker A121D 45w iPhone 17 charger 1.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Anker A121D 45w iPhone 17 charger 3.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       Is this even GaN???
@@ -303,8 +303,8 @@ devices:
     noise_mv: 244
 
   - name: "Counterfeit Samsung"
-    img1: "/assets/images/Counerfeit Samsung 3.png"
-    img2: "/assets/images/Counerfeit Samsung 1.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counerfeit Samsung 3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counerfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger, so it's not surprising. The original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, but I wanted to evaluate all my chargers on the same scale so you can see how bad some of these really are. Looking at the image, it's tough to figure out what this charger is even trying to do. Is it trying to send any specific voltage, or just throw some power around? Even when I took the net voltage, it still failed other tests. It provided 4.4V when 5V was requested, so it doesn't even pass USB spec.
@@ -320,7 +320,7 @@ devices:
 ## A Dozen+ Chargers in the Lab: Apple is Okay, but Not the Best
 
 <figure>
-  <img src="/assets/images/allchargers.jpg" alt="all chargers">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/allchargers.jpg" alt="all chargers">
 </figure>
 
 
@@ -340,7 +340,7 @@ Here's the short version of what I found:
 <br>
 
 <figure>
-  <img src="/assets/images/ken_ss.png" alt="Ken Shirriff's original charger teardown">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/ken_ss.png" alt="Ken Shirriff's original charger teardown">
   <figcaption>Ken Shirriff's original charger teardown article from 2012</figcaption>
 </figure>
 
@@ -425,7 +425,7 @@ For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise o
 These are just general guidelines. I used my judgment for each charger based on everything I could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
 <figure style="max-width: 300px;">
-  <img src="/assets/images/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
   <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
 </figure>
 
@@ -1607,11 +1607,11 @@ Option 1 is preferred in most cases. Option 2 is really just a consequence of no
 During my overcurrent testing, I set the electronic load to keep pulling more and more current until the charger shut off. While Ken was able to display the relationship between voltage and overcurrent on beautiful time-based graphs, I lack that recording capability so my results are very simple. When I did conduct the overcurrent test on the oscilloscope, all my voltage graphs were relatively tight during overcurrent testing. I only had one charger (Counterfeit Samsung) that completely blew the test. The others did a great job of keeping their voltage within a reasonable range, even during overcurrent. For that reason, I would say the values below are the true values of the voltage and current of the device at their shutoff period. 
 
 <figure style="max-width: 600px; text-align: center;">
-  <img src="/assets/images/load_example.png" alt="Ken current" style="width: 100%;">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/load_example.png" alt="Ken current" style="width: 100%;">
   <figcaption>A good example of Ken's overcurrent graphs. I wasn't able to recreate his setup like this.</figcaption>
 </figure>
 <figure style="max-width: 600px; text-align: center;">
-  <img src="/assets/images/ken_bad.png" alt="Ken current 2" style="width: 100%;">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/ken_bad.png" alt="Ken current 2" style="width: 100%;">
   <figcaption>An example of a bad charger Ken tested. While I wasn't able to capture graphs like this and save them, what I can say is that my graphs all looked like the earlier one, not this one (with the exception of counterfeit samsung)</figcaption>
 </figure>
 
@@ -1720,7 +1720,7 @@ I hope you enjoyed reading. This really was a pleasure to put together. Car char
 <br>
 Last thing: a huge shout out to both Ken and my good friend Spencer! I could not have done this without either of them.
 <figure style="max-width: 600px; text-align: center;">
-  <a href= "/assets/images/spencerandsean1.jpg"><img src="/assets/images/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;"></a>
+  <a href= "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/spencerandsean1.jpg"><img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/spencerandsean1.jpg" alt="Spencer and Sean" style="width: 100%;"></a>
   <figcaption>Me and Spencer. Best friends make good electrical testing partners!</figcaption>
 </figure>
 

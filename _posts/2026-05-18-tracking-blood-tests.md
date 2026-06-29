@@ -263,7 +263,7 @@ Over one year ago, I made the decision to start focusing on my bloodwork. I had 
 I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodtest/bloodTest.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
+    <img src="/assets/images/2026-05-18-tracking-blood-tests/bloodTest.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
 </div>
 
 
@@ -287,7 +287,7 @@ The process was honestly easier than I expected. Claude and Codex both did a gre
 
 
 <div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/bloodtest/bloodTestExcel.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
+    <img src="/assets/images/2026-05-18-tracking-blood-tests/bloodTestExcel.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
 </div>
 
 
@@ -355,8 +355,8 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <!-- Row 1: screen1 & screen2 + caption -->
   <div class="gallery-row layout-2-1">
     <div class="gallery-images-double">
-      <img src="/assets/images/bloodtest/screen1.jpg" alt="Prototype Card View" class="gallery-img" />
-      <img src="/assets/images/bloodtest/screen2.jpg" alt="Prototype List View" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen1.jpg" alt="Prototype Card View" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen2.jpg" alt="Prototype List View" class="gallery-img" />
     </div>
     <div class="gallery-caption">
       Card versus list UI view
@@ -366,7 +366,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <!-- Row 2: screen3 + caption -->
   <div class="gallery-row layout-1-1">
     <div>
-      <img src="/assets/images/bloodtest/screen3.jpg" alt="Midnight Mode" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen3.jpg" alt="Midnight Mode" class="gallery-img" />
     </div>
     <div class="gallery-caption">
       The UI comes with many different modes, meant to highlight different points throughout the day. I wanted to simulate the UI of the Apple Weather app, because that is my ideal design for something that shows health data. It actually took a long time to achieve this UI, so I'm proud of the result.
@@ -376,8 +376,8 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <!-- Row 3: screen4 & screen5 + caption -->
   <div class="gallery-row layout-2-1">
     <div class="gallery-images-double">
-      <img src="/assets/images/bloodtest/screen4.jpg" alt="Detail View" class="gallery-img" />
-      <img src="/assets/images/bloodtest/screen5.jpg" alt="History and Context Menus" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen4.jpg" alt="Detail View" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen5.jpg" alt="History and Context Menus" class="gallery-img" />
     </div>
     <div class="gallery-caption">
       **Left**: detail view showing most recent test, normal range, and units. **Right**: view when you scroll down. Shows all test history, and offers context menus which present additional options
@@ -387,7 +387,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <!-- Row 4: screen6 -->
   <div class="gallery-row">
     <div style="max-width: 100%; margin: 0 auto; width: 100%;">
-      <img src="/assets/images/bloodtest/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
     </div>
         <div class="gallery-caption">
       The card view with daytime mode enabled. It was extremely hard to get the UI to this state, so honestly I'm blown away it all works.
@@ -397,7 +397,7 @@ Claude iterated on my design requests a few times, and the early prototypes were
   <!-- Row 5: screen7 + caption -->
   <div class="gallery-row layout-1-1">
     <div>
-      <img src="/assets/images/bloodtest/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
     </div>
     <div class="gallery-caption">
       Screenshot of Cmd+K. I don't have a better name for it, but it's triggered by Cmd+K on desktop, so 

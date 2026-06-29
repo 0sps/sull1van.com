@@ -9,16 +9,16 @@ accent_color: "#62cf98ff"
 
 I'm pretty excited to write this one.
 
-Earlier this year, I got bloodwork back and my liver enzymes were way higher than I wanted. It was not an emergency room situation. It was not "you need to panic" territory. Still, it was high enough that I could not keep treating my liver like some abstract health thing I would deal with later.
+Earlier this year, I got bloodwork back and my liver enzymes were way higher than they should be. Not necessarily high enough that I should panic, but high enough that I should take notice. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that should probably change.
 
-For context, I have been getting blood tests since I was seventeen. That is useful because I have something better than a generic normal range: my own younger-me data. I can look at what my numbers were before I spent a few years making worse decisions.
+One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
-So my goal was simple. I wanted the best liver test results I have ever personally recorded. The best liver of all time. BLOAT.
+So my goal was simple, I wanted the best liver test results I have ever personally recorded. The best liver of all time. BLOAT.
 
 
 ## The baseline
 
-The main markers came from a Comprehensive Metabolic Panel. People casually call this a "liver panel," but that isn't quite right. A CMP covers more than the liver, so I filtered it down to the values I cared about:
+The main markers came from a Comprehensive Metabolic Panel. I casually call this a "liver panel," but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
 
 - Total protein
 - Albumin
@@ -29,13 +29,14 @@ The main markers came from a Comprehensive Metabolic Panel. People casually call
 - AST
 - ALT
 
-ALT and AST were the big ones for me because they are the classic liver stress enzymes. They are imperfect, and they don't tell you everything. But if you have been drinking and those numbers are high, they get your attention pretty quickly.
+ALT and AST are the big ones for me because they are the classic liver stress enzymes. They don't tell the whole story of overall liver function, but if you have been drinking and those numbers are high, they get your attention pretty quickly.
 
-Albumin, total protein, globulin, and A/G ratio tell more of the surrounding story: protein status, immune activity, and whether the body is keeping its basic chemistry in a good place. (I sound like I know what I'm talking about, but most of this is from Google). Bilirubin and alkaline phosphatase are worth watching too, though bilirubin can bounce around for reasons that do not automatically worry me, and alkaline phosphatase is not purely a liver marker.
+Albumin, total protein, globulin, and A/G ratio tell more of the surrounding story, helping to explain things like immune activity and whether the body is keeping its basic chemistry in a good place. (I sound like I know what I'm talking about, but most of this is from Google). Bilirubin and alkaline phosphatase are worth watching too, though bilirubin can bounce around for reasons that do not automatically worry me, and alkaline phosphatase is not purely a liver marker.
 
-So this was never going to be a single-number game. The whole picture had to look good.
+So while ALT and AST are my focus, the whole picture has to look good.
 
-After some Googling, I came across these 'trend' inclinations for what makes something more optimal, even if it's the normal range. Holding all else equal, if we are within the normal range, here's what you want for each marker in a liver panel:
+Now even inside of a normal range, the individual value is still important. After some research, I came across these generalized 'trends' for what makes something more optimal, even if it's the normal range. 
+Holding all else equal, if we are within the normal range, here's what you want for each marker in a liver panel:
 - Albumin: Higher is better
 - A/G Ratio: Higher is better
 - Total Protein: Higher is better
@@ -45,7 +46,7 @@ After some Googling, I came across these 'trend' inclinations for what makes som
 - Alkaline Phosphatease: Lower is better
 - Bilirubin: Makes no difference
 
-With the trend ideas in mind, we can come up with some way to differentiate test results that are close but still considered 'within the normal range'. 
+This provides a way to differentiate test results that are close but still considered 'within the normal range'. So if I'm comparing two test results that are within the normal range, clinically they may both be considered the same, but biologically one of them might be just slightly better.
 
 
 Now, here was seventeen-year-old me when he got his CMP:
@@ -78,21 +79,14 @@ Then there was twenty-four-year-old me:
 
 Yikes lol.
 
-While my liver was still functioning generally well, the enzymes were extremely worrisome. At the time I had just come off the heels of my last year of college. For probably that entire calendar year I was out at a bar. Alcohol was the obvious first suspect.
+While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. For nearly the entire calendar year, from Summer 2023 to Fall 2024, I was out at a bar. It was interesting since I had drank little in 2025, at the time this test was done, but I stopped *becasue* the hangovers were getting too bad, so I knew any bad results were a sign of latent liver injury.
 
-## Step one: stop drinking
+Needless to say, after getting this test, I was motivated to finally take charge of my liver health.
 
-The first move was easy to understand and hard to do: stop drinking.
 
-I was not going to fix my liver while feeding it the same thing that was probably causing the problem. I had already been thinking about going sober for a while. The bloodwork made the decision feel less theoretical. It went from "maybe this would be a good reset" to "okay, your body is now sending you spreadsheet feedback."
 
-So I stopped.
-
-I thought the numbers might snap back right away. They improved, just not as fast as I wanted. That was when this stopped being a simple sobriety project and became a broader health project.
-
-I started reading about liver recovery, mostly around oxidative stress and glutathione.
-
-## The glutathione rabbit hole
+## Step one: research
+#### The glutathione rabbit hole
 
 I had dealt with glutathione before. Back in 2022, a men's clinic told me my liver looked stressed and put me on intramuscular glutathione. I think it was 400 mg weekly.
 
@@ -114,6 +108,17 @@ The best human data I found was a small 2018 crossover study in eighteen healthy
 There was also a 2025 safety assessment in *Food and Chemical Toxicology* that looked at SAG for use in foods and dietary supplements. The summary I found reported no genotoxic signal, an acute oral LD50 above 2000 mg/kg in rats, and a 13-week rat NOAEL of 1500 mg/kg/day. That does not prove anything magical about how it absorbs, but it did make the safety profile look decent.
 
 At that point, my conclusion was pretty simple: oral glutathione itself is probably not the move, but S-acetyl glutathione is at least interesting enough to try.
+
+
+## Step two: stop drinking
+While the supplements helped, blood tests from the month afterward showed only moderate improvement. My liver enzymes were still elevated. The samrt move was easy to understand but just hard to do. I needed to stop drinking.
+
+It was about three months of experiemnting with supplementaion before I fully accepted that I was not going to fix my liver while giving it the same thing that caused the problem. I had already been thinking about going sober for a while, so the bloodwork made that decision feel easier to make. It went from "maybe this would be a good reset" to "I don't think my liver will go back to normal if I don't do this".
+
+I made the decision to stop drinking. It was just about ~3.5 months after that first concerning blood test. 
+My liver continued to improve in the months afterward, but those enzymes were still too damn high.
+
+
 
 ## The stack
 
