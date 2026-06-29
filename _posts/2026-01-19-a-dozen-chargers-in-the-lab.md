@@ -442,6 +442,19 @@ Scroll through the cards and click any one to expand the full oscilloscope graph
     </ul>
   </div>
 </details>
+<script>
+  (function () {
+    document.querySelectorAll('.note-card summary').forEach(function (summary) {
+      summary.addEventListener('click', function (e) {
+        e.preventDefault();
+        var details = summary.closest('details');
+        var y = window.scrollY;
+        details.open = !details.open;
+        requestAnimationFrame(function () { window.scrollTo(0, y); });
+      });
+    });
+  })();
+</script>
 
 
 ### A few more details on noise and ripple
@@ -1755,5 +1768,5 @@ A Dozen Chargers in the lab
 [A2] 
   To account for this, We ensured each test was conducted with my voltmeter directly connected to the charger's output terminal.
   
-  If you're interested, the equivalent resistance of my voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements I have below, since I connected directly to the charger output. However I am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
+  If you're interested, the equivalent resistance of the voltmeter during testing was 6.67 mΩ, and the entire system (cable + breakout board + voltmeter) was 170 mΩ. Again, this resistance doesn't apply to any of the numerical measurements we have, since we connected directly to the charger output. However we am honestly proud how minor this resistance is for a testing setup, considering USB C cables themselves are allowed to carry a resistance of up to 166 mΩ per the USB C PD spec. 
 
