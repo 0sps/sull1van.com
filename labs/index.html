@@ -4383,13 +4383,21 @@
             if (t.type === 'qualitative') {
                 const last = t.points[t.points.length - 1];
                 const status = qualStatus(last.rawResult);
+                // Recognised STD-style result (clear / reactive) keeps badge semantics.
+                // Any other non-numeric value (e.g. a censored lab result like "<8.4")
+                // shows the raw value and its own reference range instead of the STD
+                // "Nonreactive" placeholder, so the real result is never hidden.
+                const isStd = status === 'clear' || status === 'reactive';
+                const qRangeStr = last.rawRange || t.range;
+                const qRefText = (qRangeStr && typeof qRangeStr === 'string' && isNaN(Number(qRangeStr)))
+                    ? qRangeStr : '—';
                 return {
                     type: 'qualitative',
-                    latestLabel: qualLabel(status),
-                    latestColorClass: qualColorClass(status),
+                    latestLabel: isStd ? qualLabel(status) : (last.rawResult ?? '?'),
+                    latestColorClass: isStd ? qualColorClass(status) : 'c-text',
                     latestDate: fmtDate(last.date),
                     latestUnitHtml: getLatestUnitSublineHtml(t),
-                    rangeText: 'Nonreactive',
+                    rangeText: isStd ? 'Nonreactive' : qRefText,
                     totalCount: t.points.length,
                     // trend fields unused for qualitative but kept for consistency
                     trendVal: null,
@@ -5091,14 +5099,40 @@
         }
 
         function renderHistoryTable(t, container) {
-            const pts = t.type === 'qualitative' ? [] : t.numericPts;
-            if (pts.length === 0) return;
+            // Show every reading (newest first), numeric AND non-numeric. Numeric
+            // points get range colouring + delta vs the previous numeric reading;
+            // non-numeric points (e.g. "<8.4", "Negative") show their raw value with
+            // no delta, so a censored/qualitative result is never silently dropped
+            // from a mixed test's history.
+            const allPts = [...(t.points || [])].sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
+            if (allPts.length === 0) return;
+            const isNum = (p) => p && p.isNumeric && p.numVal !== null && p.numVal !== undefined;
 
-            const rows = [...pts].reverse().map((p, i, arr) => {
-                const prev = arr[i + 1]; // reversed, so prev is next in array
+            const rows = [...allPts].reverse().map((p) => {
+                const unitHtml = getDisplayUnitText(t)
+                    ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>`
+                    : '';
+
+                // Non-numeric reading: show the raw value, no status colour, no delta.
+                if (!isNum(p)) {
+                    return `
+        <div class="history-row">
+          <div class="hist-date">${fmtDate(p.date)}</div>
+          <div class="hist-val c-text">${escStr(p.rawResult ?? '—')}${unitHtml}</div>
+          ${sourceMoreButtonHtml(getPointSourceFile(p))}
+        </div>`;
+                }
+
                 const rangeStr = p.rawRange || t.range;
                 const parsed = parseRange(rangeStr);
                 const status = parsed ? isInRange(p.numVal, parsed) : null;
+
+                // Delta is measured against the most recent earlier NUMERIC reading.
+                let prev = null;
+                const idx = allPts.indexOf(p);
+                for (let j = idx - 1; j >= 0; j--) {
+                    if (isNum(allPts[j])) { prev = allPts[j]; break; }
+                }
 
                 let deltaHtml = '';
                 if (prev) {
@@ -5121,7 +5155,7 @@
                 return `
         <div class="history-row">
           <div class="hist-date">${fmtDate(p.date)}</div>
-          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${getDisplayUnitText(t) ? `<span style="font-size:0.72em;color:var(--text-secondary);margin-left:6px;">${escStr(getDisplayUnitText(t))}</span>` : ''}</div>
+          <div class="hist-val ${valColor}">${formatVal(p.numVal)}${unitHtml}</div>
           ${deltaHtml}
           ${sourceMoreButtonHtml(getPointSourceFile(p))}
         </div>`;
