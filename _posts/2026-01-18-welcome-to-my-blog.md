@@ -7,7 +7,7 @@ tags: [meta, blogging]
 
 ## Introduction
 
-For years, I had this website as an email domain, using it with iCloud so I could email people from @sull1van.com. I realized that I made a lot of personal content which should be published somewhere, so I turned this in to a real site. I'm an industrial engineer currently living in the United States, with passions for engineering and health. Most of the things I publish will be related to those two things. 
+For years, I had this website as an email domain, using it with iCloud so I could email people from @sull1van.com. I realized that I made a lot of personal content which should be published somewhere, so I turned this into a real site. I'm an industrial engineer currently living in the United States, with passions for engineering and health. Most of the things I publish will be related to those two things. 
 
 
 

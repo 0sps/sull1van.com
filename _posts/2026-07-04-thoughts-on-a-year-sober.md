@@ -10,7 +10,7 @@ Today officially marks one year since I went sober.
 
 ## Background
 
-I had toyed with the idea of going sober basically ever since graduating college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. I felt like getting anything more than a light buzz should only ever be apart of my yougner years. I drank plenty in high school and college, so when I graduated, it felt like time to move on. But as the months went by, I kept having night after night where I got more drunk than inteneded, and I hated it. Yes, I could always control whether I drank -  I did plenty of months where I was entirely sober in college - but *when* I drank, I was never the kind of person who would have one or two drinks and stop. (those em dashes were ME btw, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much-needed reset.
+I had toyed with the idea of going sober basically ever since graduating college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. I felt like getting anything more than a light buzz should only ever be apart of my younger years. I drank plenty in high school and college, so when I graduated, it felt like time to move on. But as the months went by, I kept having night after night where I got more drunk than intended, and I hated it. Yes, I could always control whether I drank -  I did plenty of months where I was entirely sober in college - but *when* I drank, I was never the kind of person who would have one or two drinks and stop. (those em dashes were ME btw, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much-needed reset.
 
 What really kicked it off, though, was some concerning blood tests I got in early 2025. They made me take my health much more seriously. I started doing things like [creating a web dashboard](https://sull1van.com/fixing-blood-test-results) to track my blood test results, so I could watch them closely as they hopefully improved. 
 
@@ -44,7 +44,7 @@ While my sobriety was threefold, it was only alcohol that made me afraid of rela
 
 Cravings are like that. At first, they seem impossible to get rid of, but they quickly fall off and don't really come back. As I neared the halfway mark of those two months, the daily panic about when I would drink next started to fade, and things started to feel more normal. Around that time, I caught up with a friend who offered what might be the single greatest piece of advice I heard throughout this entire journey.
 
-We got into chatting, and I explained the sobriety, my two-month goal. He had been sober his entire life, so this probably didn't seem to difficuly for him. He asked why I settled on two months.
+We got into chatting, and I explained the sobriety, my two-month goal. He had been sober his entire life, so this probably didn't seem too difficult for him. He asked why I settled on two months.
 
 I don't know, I told him. It was the best I thought I could do.
 
@@ -69,7 +69,7 @@ The changes in my body showed up fast, within ~3 months of going sober. I notice
 
 This was a really big accomplishment for me. The people close to me know my liver enzymes were elevated, indicative of alcohol-induced "liver stress". It was never bad enough to be liver disease, but it was getting close. I'm happy to say that, as of 2026, I've never had a better-functioning liver in my life. And that's saying a lot, since I have been getting these tests since I was seventeen!
 
-Around the same time my liver began to improve and my eyes whitened, the cravings evaporated. By month three I no longer had any big urge to drink. I settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, onthing else.
+Around the same time my liver began to improve and my eyes whitened, the cravings evaporated. By month three I no longer had any big urge to drink. I settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
 And on that note: NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol.
 
