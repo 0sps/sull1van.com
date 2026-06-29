@@ -158,21 +158,19 @@ Here is the oldest test against the newest test, complete with the trends we tal
 
 | Analyte | 2018 report, age 17 | 2026 report, age 25 | My Opinion |
 | --- | ---: | ---: | --- |
-| Total protein | 7.1 g/dL | 7.2 g/dL | Basically identical, with 2026 slightly higher. |
-| Albumin | 4.7 g/dL | 4.7 g/dL | Dead even. I will absolutely take that. |
-| Globulin | 2.4 g/dL | 2.5 g/dL | Stable. Not better, not worse in any meaningful way. |
-| A/G ratio | 2.0 | 1.9 | Slightly lower, but still good. |
-| Total bilirubin | 0.7 mg/dL | 1.0 mg/dL | Higher, but not something I care much about in isolation. |
+| Total protein | 7.1 g/dL | 7.2 g/dL | Slightly better in 2026 |
+| Albumin | 4.7 g/dL | 4.7 g/dL | Dead even |
+| Globulin | 2.4 g/dL | 2.5 g/dL | Better, since 2.7 is technical best |
+| A/G ratio | 2.0 | 1.9 | Slightly worse, barely |
+| Total bilirubin | 0.7 mg/dL | 1.0 mg/dL | Doesn't matter |
 | Alkaline phosphatase | 90 U/L | 79 U/L | Better in 2026. |
 | AST | 28 U/L | 25 U/L | Better in 2026. |
-| ALT | 17 U/L | 18 U/L | Functionally tied. Both are excellent. |
+| ALT | 17 U/L | 17 U/L | Equal |
 
 
 I started chuckling at the new result. 2026 wins.
 
-Now I know that not like *every* single marker is better. Albumin tied, ALT was one point higher, A/G ratio was slightly lower, and bilirubin rose a little. If I were trying to fight against myself, there are places to do it.
-
-But if you look at the liver enzymes, they are ridiculous now. AST dropped from 147 to 25. ALT dropped from 71 to 18. Even compared with my seventeen-year-old baseline, AST is better and ALT is basically the same. That is insane to me.
+I know that not *every* single marker was better in 2026, but most were. A/G ratio was slightly worse, bilirubin rose a little, so if I were trying to fight against myself, there are places to do it. But if you look at the liver enzymes, they are ridiculous now. AST dropped from 147 to 25. ALT dropped from 71 to 17. Even compared with my seventeen-year-old baseline, AST is better and ALT is the same. That is insane to me.
 
 
 
