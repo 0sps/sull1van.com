@@ -857,7 +857,8 @@ They look confusing at first glance, but you don't need to be an electrical engi
 <br>
 
 ### Oscilloscope Graphs - Results Table
-<span style="color: #888; font-style: italic;">(The DC items in here, like the Macbook Pro, are colored in grey to avoid conflating them with the AC chargers. They're just included here for reference.)</span>
+
+The DC items in here, like the Macbook Pro, are colored in grey to avoid conflating them with the AC chargers. They're just included here for reference.
 
 <div class="table-wrapper">
 <table>
@@ -934,8 +935,12 @@ They look confusing at first glance, but you don't need to be an electrical engi
 
 The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
 
-<span style="color: #888; font-style: italic;">(The DC items in here, like the Macbook Pro, are colored in grey to avoid conflating them with the AC chargers. They're just included here for reference.)</span>
+
+
 ### Expected/Actual Output Table
+
+The DC items in here, like the Macbook Pro, are colored in grey to avoid conflating them with the AC chargers. They're just included here for reference.
+
 <div class="table-wrapper">
 <table class="stats-table">
   <thead>
