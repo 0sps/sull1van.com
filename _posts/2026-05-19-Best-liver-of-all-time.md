@@ -185,6 +185,53 @@ Sobriety is important because you can't really expect your liver to heal if you 
 However, I do think there is a lot to say about injectable glutathione. Injectable glutathione had the clearest impact on my liver enzymes by far. I want to slightly push back on the notion that sobriety is the #1 thing that is going to help someone's liver get to its best functioning state of all time. While avoiding heavy drinking is an absolute must, my data showed that it only led to modest improvements. To actually get to best-functioning territory, the injectable glutathione pushed me over the edge. Take a look at the timeline of my biomarkers below. If sobriety _really_ was the main thing driving this, we would have seen remarkable improvement in these enzymes. We didn't. The most dramatic drop was actually not the time when I went sober, but **the time that I started doing intramuscular glutathione**. Keep in mind this was only for about 6 weeks. I think this is as good a testimonial as any, that these interventions do work.
 
 
+<style>
+  .gallery-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 2rem auto;
+  }
+  .gallery-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .gallery-images-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .gallery-caption {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: #666;
+  }
+  html[data-theme="dark"] .gallery-caption {
+    color: #aaa;
+  }
+  .gallery-img {
+    width: min(100%, 253px);
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    border: 4px solid #bbb;
+    border-radius: 27px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+  }
+  @media (min-width: 550px) {
+    .gallery-row.layout-2-1 {
+      grid-template-columns: 2.2fr 1fr;
+    }
+    .gallery-row.layout-1-1 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<div class="gallery-section">
   <!-- Row 1: screen1 & screen2 + caption -->
   <div class="gallery-row layout-2-1">
     <div class="gallery-images-double">
@@ -195,6 +242,7 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
       With ALT especially, it's clear that the most significant drop in enzymes occurred when I was using intramuscular glutathione. The original drop from March 2025 onward was after 3 months of sobriety + 6 months of supplementation.
     </div>
   </div>
+</div>
 
 
 As far as the supplements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising, and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
