@@ -141,9 +141,9 @@ devices:
     img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/apple retail 2.png"
     bg: "hsl(90, 32%, 93%)"
     caption: |
-      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. That probably happens becasue nobody at appel Apple expected people to use this charger for 5 W of power, being USB C. 
+      Another decent Apple charger. At 5 W (5V, 1A), it has a pretty messy power signature with a lot of noise, but the voltage graph flattens out to this nice, smooth line at 7.5 W and above. That probably happens because nobody at Apple expected people to use this charger for 5 W of power, being USB C. 
       
-      We also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, it needed to achieve a grand total of 7.5W before the nosie graph smoothed out. so 15V ~0.5A, and 5V ~1.5A. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. 
+      We also tested this 7.5 W in different forms: 5V 1.5A, and also 15V 0.5A. In both 15V and 5V modes, it needed to achieve a grand total of 7.5W before the noise graph smoothed out. so 15V ~0.5A, and 5V ~1.5A. I displayed the 7.5 W+ graph because in normal usage you will almost never encounter that noise, since Apple devices almost always pull more than that during normal charging. 
     rating: 4
     noise_rating: 3
     ripple_rating: 3
@@ -270,7 +270,7 @@ devices:
 
   - name: "Vebner GaN 65W Charger"
     img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgan.png"
-    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgaqn2.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/VEBNERgan2.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       Being marketed as a GaN charger, this is another disappointment. The voltage has a lot of noise, 332mV of it, and the frequency spectrum is elevated across the board. The voltage looks a little more concentrated than it does on the Apple HomePod Mini chart, suggesting to me that this charger might actually be a little better. But in terms of absolute noise, it's worse. 
@@ -300,8 +300,8 @@ devices:
     noise_mv: 244
 
   - name: "Counterfeit Samsung"
-    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counerfeit Samsung 3.png"
-    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counerfeit Samsung 1.png"
+    img1: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit Samsung 3.png"
+    img2: "/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/Counterfeit Samsung 1.png"
     bg: "hsl(0, 32%, 93%)"
     caption: |
       The worst one of the bunch, but that would be expected with a counterfeit charger. The original researcher (Ken Shirriff) doubled his scale to show the graph of his worst charger, but we wanted to evaluate all the chargers on the same scale, so you can see how bad some of these really are. On this image, it's tough to figure out what this charger is even trying to do. It provided 4.4V when 5V was requested, so it doesn't even pass USB spec.
@@ -427,7 +427,7 @@ For noise, the bolt ratings loosely map to measured peak-to-peak voltage noise o
 These are just general guidelines. I used my judgment for each charger based on everything we could see, including the shape of the waveform and the FFT spectrum, not just the raw mV reading.
 
 <figure style="max-width: 300px;">
-  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/oscillsocope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
+  <img src="/assets/images/2026-01-19-a-dozen-chargers-in-the-lab/oscilloscope_pic.jpg" alt="Old setup with oscilloscope" style="width: 100%;">
   <figcaption>My original setup with the oscilloscope (before I started using USB C Decoy boards)</figcaption>
 </figure>
 
