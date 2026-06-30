@@ -335,7 +335,7 @@ My plan was pretty simple, just:
 4. Run a separate set of agents to check the first agents' work, and report any inaccuracies they find.
 5. Create a central dashboard to read and manage all my blood test results
 
-Scope creep is lowkey a problem when AI gives you infinite resources, lol. But since I knew I would only be verifying the work, not actually doing it, this all seemed possible.
+It's a lot. But since AI resources are virtually infinite, I was confident that it could be built.
 
 ## How it went
 
