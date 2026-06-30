@@ -345,15 +345,6 @@ accent_color: "#93c5fd"
 
 Over one year ago, I made the decision to start focusing on my bloodwork. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" role="button" tabindex="0" aria-expanded="false">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span><span class="biomarker-source">Source: LabCorp, March 2025</span></span></span></span> were extremely high, in such an embarrassing way that it basically screamed *this person drinks too much alcohol* [1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
-
-I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
-
-<div style="text-align: center; margin: 2rem auto;">
-    <img src="/assets/images/2026-05-18-tracking-blood-tests/bloodTest.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
-</div>
-
-
-
 <div class="mobile-toc">
   <div class="mobile-toc-title">Table of Contents</div>
   <ul>
@@ -367,6 +358,16 @@ I started by looking at the data. Luckily for me, I've always had some sort of a
     <li class="nested"><a href="#references">References</a></li>
   </ul>
 </div>
+
+
+I started by looking at the data. Luckily for me, I've always had some sort of a focus on health, and I already had some two-dozen PDFs of blood test results dating back to 2018 in a folder on my computer. Every time I would get one, I'd save the results from the doctor as a PDF and drop it into that folder. While it was great to have, it was a mess to actually go through. I really wanted to make some comprehensive Excel spreadsheet with all of it, but assumed it would be too much work for one person to do.
+
+<div style="text-align: center; margin: 2rem auto;">
+    <img src="/assets/images/2026-05-18-tracking-blood-tests/bloodTest.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
+</div>
+
+
+
 
 ## My Plan
 
