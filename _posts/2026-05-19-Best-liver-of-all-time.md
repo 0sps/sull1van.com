@@ -337,6 +337,8 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
     </div>
     <div class="gallery-caption">
       With ALT especially, it's clear that the most significant drop in enzymes occurred when I was using intramuscular glutathione. The original drop from March 2025 onward was after 3 months of sobriety + 6 months of supplementation.
+
+      Also - this is my new blood test tracking app, developed as yet another side project. You can read about it [here](https://sull1van.com/tracking-blood-tests) if interested.
     </div>
   </div>
 </div>
