@@ -189,6 +189,48 @@ accent_color: "#93c5fd"
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
   }
+  .note-card {
+    border: 1px solid #c9b99a;
+    border-radius: 8px;
+    margin: 2rem 0;
+    overflow: hidden;
+    background: #faf6f0;
+  }
+  .note-card summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    list-style: none;
+    user-select: none;
+    color: #8c7355;
+  }
+  .note-card summary::-webkit-details-marker { display: none; }
+  .note-card summary::before {
+    content: '▸';
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  .note-card[open] summary::before { transform: rotate(90deg); }
+  .note-card-body {
+    padding: 0.6rem 1rem 0.75rem;
+    border-top: 1px solid #c9b99a;
+    font-size: 0.9em;
+    color: #5c4a32;
+  }
+  .note-card-body p {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+  html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
+  html[data-theme="dark"] .note-card summary { color: #a08860; }
+  html[data-theme="dark"] .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
 </style>
 
 <script>
@@ -340,8 +382,7 @@ It's a lot. But since AI resources are virtually infinite, I was confident that 
 ## How it went
 
 ### Steps 1-4: Data conversion
-The process was honestly easier than I expected. Claude and Codex both did a great job dispatching agents and converting the blood test results to an excel sheet. What's also really cool is the verification bots didn't find any errors, they just found instances in which the wrong units were used. For example, an ALT test from 2018 used ng/dL, while the ALT from 2020 used ug/L. I did a manual spot check throughout the entire dataset and it looked great.
-
+This was honestly easier than I expected. Claude and Codex both did a great job dispatching agents and converting the blood test results into an Excel sheet. The cool part is the verification bots didn’t find any actual errors, they just flagged places where the wrong units were used, like an ALT test from 2018 in ng/dL while the 2020 ALT was in ug/L. I did a manual spot check across the whole dataset and it looked great.
 
 <div style="text-align: center; margin: 2rem auto;">
     <img src="/assets/images/2026-05-18-tracking-blood-tests/bloodTestExcel.png" alt="List of PDFs" style="max-width: 100%; height: auto;" />
@@ -350,17 +391,20 @@ The process was honestly easier than I expected. Claude and Codex both did a gre
 
 ### Step 5: The Dashboard
 
-With the data in *some* kind of usable format, this was the part where I had some fun. I started by asking Claude and Codex to both design some rudimentary visual for the labs. My thought process was pretty straightforward: let's make a dual layout, card-based and list-based. User selects between these two views, and it's either one card or one list item per blood test. They will always show the *most recent* result, followed by the relevant unit. They will be color coded green or red, based on whether they fall outside the normal range for that test.
+With the data in *some* kind of usable format, this was the part where I had some fun. I started by asking Claude and Codex to both design a rudimentary visual for the labs. My idea was pretty simple. It would have a dual layout, card-based and list-based, where you pick between the two views and get either one card or one list item per blood test. They always show the most recent result and its unit, and they’re color coded green or red depending on whether the result falls outside the normal range.
 
-But what constitutes a 'normal range'? **Depends who you ask!**
-  My blood test results frequently showed different reference ranges for the same blood test across the years. I attribute this mainly to the slight differences between how the two behemoths in the space, LabCorp and Quest Diagnostics, calculate their normal range. I did not find significant variability from within the same company, however. 
-
-  Either way, I ended up making a system for that: each blood test record in my backend database, and in my spreadsheet, *includes* the reference range that the lab gave me for that test at the time of taking. Then, the web UI parses it and shows the *most recent* normal range given. Sometimes they don't give a normal range for a test, so the website will keep crawling older and older records, until it finds a record with a reference range. That will be the reference range you see on the display.
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>But what counts as a ‘normal range’? Depends who you ask! My results often showed different reference ranges for the same test across the years, which I mostly chalk up to the slight differences in how LabCorp and Quest Diagnostics calculate their normal ranges. Within a single company I didn’t see much variation.</p>
+    <p>Either way, I built a system to handle it. Each blood test record, both in my backend database and in my spreadsheet, includes the reference range the lab gave me at the time of the test. The web UI parses this and shows the most recent range. These tests don't always come with a range, so the site keeps crawling older and older records until it finds one, and that’s the reference  you see on the display.</p>
+  </div>
+</details>
 
 
 ### The Frontend
 
-Claude iterated on my design requests a few times, and the early prototypes were ugly. Being inspired by the latest slop iOS update, and wanting something a little better than flat, I pushed the AI to develop a glassmorphic UI. The result is something I'm really proud of:
+Claude iterated on my design a few times, and the early prototypes were ugly. Inspired by the latest iOS update and wanting something a bit better than flat, I pushed the AI toward a glassmorphic UI. I’m really proud of how it turned out.
 
 <style>
   .gallery-section {
@@ -462,29 +506,20 @@ Claude iterated on my design requests a few times, and the early prototypes were
   </div>
 </div>
 
-After I finished, I pulled up some more claude subagents and dispatched them to do bug catching. While in the middle of that, one of them offered up a new feature suggestion that I really liked. That's what you're seeing in the last screenshot: it's a power menu, triggered by tapping the little flask on mobile or hitting Cmd+K on desktop.
-
-When you open it, you can instantly pull up test results, create an export PDF, or even add a new lab. It's really powerful and designed to be my place to drop in when I need to locate a result as fast as possible.
+Once I finished, I spun up some more Claude subagents to do bug catching, and in the middle of that one of them suggested a new feature I really liked. That's what you're seeing in the last screenshot, actually. It's a power menu that's triggered by tapping the little flask on mobile or hitting Cmd+K on desktop. When you open it, you can instantly pull up test results, create an export PDF, or even add a new lab. It's really powerful and designed to be my place to drop in when I need to locate a result as fast as possible.
 
 ---
 
-That's pretty much the entirety of the UI. I really loved designing it, especially the glass background. I was going for an imitation of Apple Weather, and think that we (me/Claude) knocked it out of the park.
+That's pretty much the entirety of the UI. I really loved designing it, especially the glass background. I was going for an imitation of Apple Weather, and I think we (me/Claude) nailed it.
 
 
 ### The Backend
 
-For backend data storage, I decided to use Google Firebase. Why? Well, the only real alternative people seem to be using nowadays is Supabase, and that has an awful free tier. Google's seemed to be better for long-term use, so I went with them. The data model I made was quite funny, honestly.
+For backend storage I went with Google Firebase. The only real alternative people seem to be using nowadays is Supabase, and that has an awful free tier. Google’s looked better for the long haul. But since Google prices based on # reads, the data model I ended up with is honestly pretty funny.
 
-Google Firebase offers you 50K Reads/writes a day, totally free. After that it's some insanely low rate, like $0.03 / 100K reads (don't quote me on that). The other great thing about Firebase is that it has a data record limit of 1MB.
+Firebase gives you 50K reads/writes a day for free. After that it’s some absurdly low rate, like $0.03 / 100K reads (i think). The other great thing is the 1MB data record limit. 1 megabyte! 😂 That’s about 1 million characters. For reference, the Great Gatsby comes in around 240,000. My blood test results are never going to be as long as the Great Gatsby, so therefore I decided to store **my entire database in one Firebase entry**.
 
-**1 Megabyte! 😂**
-
-So 1 megabyte is about 1 million characters. For reference, the Great Gatsby is estimated to be about 240,000.
-
-That's a lot of characters! My blood test results will never be as long as the Great Gatsby. And so for that reason, **we are storing the entire set of blood test results in one Firestore entry!** 
-
-
-So it's safe to say that this setup will never cost me a dime. The only remaining question is what the data will look like when we send it to Firebase. I iterated with Claude, and we settled on the following schema for the master dataset:
+It's safe to say that this setup will never cost me a dime. The only remaining question is what the data will look like when we send it to Firebase. I iterated with Claude, and we settled on the following schema for a master format:
 ```json
   {
     "schemaVersion": 1,
@@ -514,23 +549,20 @@ So it's safe to say that this setup will never cost me a dime. The only remainin
 ```
 
 
-This schema looked pretty good. I sent it to firebase, but then realized this was private health data getting stored in plaintext. There should ideally be some encryption protecting it. 
-
-I thought about different ways to encrypt it. We could encrypt the values themselves, but thought that was stupid. The metadata (test name, test date) is equally as important. For that reason, I settled on this: make it a *Base64 AES-GCM ciphertext of JSON.stringify(vaultData).* Turn the entire thing into a string and then encrypt it all. 
+This schema looked pretty good. I sent it to firebase, but then realized I just stored private health data in plaintext, which is stupid. It definitely needed to be obfuscated. I thought about just encrypting the values themselves, and leaving the json keys themselves plaintext. But that is also pointless since the metadata (test name, test date) matters just as much. So I settled on a Base64 AES-GCM ciphertext of JSON.stringify(vaultData), which turns the whole thing into a string and encrypts all of it.
 
 ---
 
-And with that, it finally looked good. I wired up the Firebase integration, and ran a one-time script to push all my data. It worked on the first try. And since then, I've been using this site to track my test results. 
+With that, it finally looked good. I wired up the Firebase integration and ran a one-time script to push all my data, and it worked on the first try. I've been using this site ever since then to track my test results. 
 
-The firestore database has essentially become my new source of truth. I do make regular exports so that we have the Firestore database and Excel sheet running in parallel, giving me dual sources of truth. It's a little extra effort, but I want to be protected in case something gets mangled in the database and my data becomes unusable. 
+The firestore database has essentially become my new source of truth. I still make regular exports so there's the Firestore database and a Excel sheet running in parallel, giving me dual sources of truth. It's a little extra effort, but I want to be protected in case something gets mangled in the database and my data becomes unusable. 
 
 
 ## Closing thoughts
 
-This project was genuinely a lot of fun. I've been using the web app regularly whenever I need to source blood test values. It's also cool because as I stumble upon new issues or feature ideas in the UI, I can implement them easily. I've added a ton of cool functionality to the site over time, and it's become a very robust landing place for my data. It also makes it very easy to share the results with others.
+This project was genuinely a lot of fun. I reach for the web app whenever I need to look up a blood test value, and whenever I bump into a new bug or feature idea I can just build it. Over time I’ve added a ton of functionality, and it’s become a really solid home for my data. It's also easy to share it, making conversations with doctors and family much easier. I might publish this web app to Github if there is interest, but for right now it's just a happy webapp that sits on my phone.
 
-It also helps fuel my obsession for optimizing these blood test results, and my biomarkers have continued to get better and better ever since I built this dashboard. I've changed my diet and experimented with a bunch of supplements over the last year, looking to figure out what moves the needle. That could honestly be another blog post itself. (Update: it IS another post now! [see here](https://sull1van.com/best-liver-of-all-time)) But for now, I'll stick to sharing the way I track all this stuff. If there's enough interest then I may definitely start to explain how I used it to actually track and drive improvement.
-
+*It also helps feed my obsession of actually trying to optimize these numbers. Since creating this dashboard, I actually did a whole project where I used it to help dial in my supplement routine and help out my liver. If you're interested, feel free to take a look at that [here](https://sull1van.com/best-liver-of-all-time).*
 
 
 ### References
@@ -647,6 +679,18 @@ It also helps fuel my obsession for optimizing these blood test results, and my 
     lightbox.addEventListener('click', closeLightbox);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+
+    document.querySelectorAll('.note-card summary').forEach(function (summary) {
+      summary.addEventListener('click', function (e) {
+        e.preventDefault();
+        var details = summary.closest('details');
+        var y = window.scrollY;
+        details.open = !details.open;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { window.scrollTo(0, y); });
+        });
+      });
     });
   })();
 </script>
