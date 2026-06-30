@@ -13,8 +13,22 @@ Earlier in 2025, I did bloodwork for the first time in a while, and had some hig
 
 One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
-So my goal was simple, I wanted the best liver test results I have ever personally recorded. The best liver of all time. BLOAT.
 
+<div class="mobile-toc">
+  <div class="mobile-toc-title">Table of Contents</div>
+  <ul>
+    <li><a href="#the-baseline">The baseline</a></li>
+    <li><a href="#step-one-research">Step one: research</a></li>
+    <li class="nested"><a href="#the-glutathione-rabbit-hole">The glutathione rabbit hole</a></li>
+    <li><a href="#step-two-stop-drinking">Step two: stop drinking</a></li>
+    <li><a href="#the-stack">The stack</a></li>
+    <li><a href="#going-one-step-further">Going one step further</a></li>
+    <li><a href="#the-rematch">The rematch</a></li>
+    <li><a href="#what-i-think-worked">What I think worked</a></li>
+    <li><a href="#the-verdict">The verdict</a></li>
+    <li><a href="#sources-i-used">Sources I used</a></li>
+  </ul>
+</div>
 
 ## The baseline
 
@@ -178,6 +192,46 @@ Here is the oldest test against the newest test, complete with the trends we tal
   .cite-link:visited { color: #551A8B !important; }
   .ref-marker { color: #0000EE !important; text-decoration: underline !important; }
   .ref-marker:visited { color: #551A8B !important; }
+  .mobile-toc {
+    display: none;
+    margin: 2rem 0;
+    padding: 1.2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+  }
+  .mobile-toc-title {
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    font-size: 1.1em;
+  }
+  .mobile-toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .mobile-toc li {
+    margin: 0.5rem 0;
+  }
+  .mobile-toc li.nested {
+    padding-left: 1.2rem;
+  }
+  .mobile-toc a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .mobile-toc a:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 767px) {
+    .mobile-toc {
+      display: block;
+    }
+  }
+  html[data-theme="dark"] .mobile-toc {
+    background-color: #151515;
+    border-color: #2a2a2a;
+  }
   .bloat-table {
     border-collapse: collapse;
     width: auto;
