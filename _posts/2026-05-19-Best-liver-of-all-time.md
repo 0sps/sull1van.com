@@ -9,9 +9,8 @@ accent_color: "#62cf98ff"
 
 
 
-Earlier in 2025, I did bloodwork for the first time in a while, and had some high liver enzymes. I'd come off the heels of five years of college, and having spent the last ~year and a half drinking like my liver was bulletproof. This blood test made me realize that it should probably change.
+Earlier in 2025, I did bloodwork for the first time in a while, and found I had some insanely high liver enzymes. I'd come off the heels of five years of college, having spent the last ~year and a half drinking like my liver was bulletproof. I realized that something needed to change, and spent the next year of my life committed to achieving the healthiest liver possible. Turns out, if you take care of your liver, it most definitely will take care of you too.
 
-One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
 
 <div class="mobile-toc">
@@ -30,9 +29,13 @@ One really cool piece of context to this is that I've been getting blood tests s
   </ul>
 </div>
 
+
+
+
+
 ## The baseline
 
-The main markers came from a Comprehensive Metabolic Panel. I used to call this a liver panel, but that isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
+I mentioned at the beginning that this all started because of some bad blood test results. But whcih ones specifically? The main markers came from a Comprehensive Metabolic Panel, something that I used to call this a liver panel, but realized isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
 
 - Total protein
 - Albumin
@@ -62,6 +65,7 @@ Holding all else equal, if we are within the normal range, here's what you want 
 
 This provides a way to differentiate test results that are close but still considered 'within the normal range'. So if I'm comparing two test results that are within the normal range, clinically they may both be considered the same, but biologically one of them might be just slightly better.
 
+One really cool piece of context to this is that I've been getting blood tests since I was seventeen. That is useful because I have my own younger-me data, which is more useful than a generic 'normal range' for these test results. I can look at what my numbers were before I spent a few years making worse decisions.
 
 Now, here was seventeen-year-old me when he got his CMP:
 
@@ -110,16 +114,16 @@ Then there was twenty-four-year-old me:
 
 Yikes lol.
 
-While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. For nearly the entire calendar year, from Summer 2023 to Fall 2024, I was out at a bar. It was interesting since I had drank little in 2025, at the time this test was done, but I stopped *because* the hangovers were getting too bad, so I knew any bad results were a sign of latent liver injury.
+While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. I spent nearly the entire calednar year at a bar, from Summer 2023 to Fall 2024. It was interesting since I had drank little in 2025 (at the time this test was done), but I stopped *because* the hangovers were getting too bad. So I knew any bad results this many months later were a sign of latent liver injury. And keep in mind, I was still drinking, just less frequently due to those hangovers.
 
-Needless to say, after getting this test, I was motivated to finally take charge of my liver health.
+**Needless to say, after getting this test, I was motivated to finally take charge of my liver health.**
 
 
 
 ## Step one: research
 #### The glutathione rabbit hole
 
-I started to research more about glutathione, a supplement that is known for liver support. I had actually dealt with it before. Back in 2022, I went to a men's clinic after my friend convinced me to get my blood tested like him. To optimize as many biomarkers as possible. Their main finding was that my liver was stressed with slightly elevated enzymes, and that I could inject glutathione if I wanted to. They put me on 400mg weekly.
+I started to research more about glutathione, a supplement that could potentially help regenerate my liver. Funyn enough, I had actually dealt with it before. Back in 2022, I went to a men's clinic after my friend convinced me to get my blood tested like him. To optimize as many biomarkers as possible. Their main finding was that my liver was stressed with slightly elevated enzymes, and that I could inject glutathione if I wanted to. They put me on 400mg weekly.
 
 The injections were really painful. It has to go straight into muscle, and it's slightly acidic, so it stings while it goes in. I don't have any hard data on whether those few injections did anything, but my liver was mostly normal at the time anyway. I ended up stopping it and forgetting about glutathione.
 
