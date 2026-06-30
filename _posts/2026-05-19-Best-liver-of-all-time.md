@@ -119,17 +119,13 @@ Needless to say, after getting this test, I was motivated to finally take charge
 ## Step one: research
 #### The glutathione rabbit hole
 
-I had dealt with glutathione before. Back in 2022, a men's clinic told me my liver looked stressed and put me on intramuscular glutathione. I think it was 400 mg weekly.
+I started to research more about glutathione, a supplement that is known for liver support. I had actually dealt with it before. Back in 2022, I went to a men's clinic after my friend convinced me to get my blood tested like him. To optimize as many biomarkers as possible. Their main finding was that my liver was stressed with slightly elevated enzymes, and that I could inject glutathione if I wanted to. They put me on 400mg weekly.
 
-The problem was simple: the injections hurt like hell.
-
-My liver was mostly normal at the time, so I stopped. It did not feel worth it, and then I mostly forgot about glutathione for a few years.
+The injections were really painful. It has to go straight into muscle, and it's slightly acidic, so it stings while it goes in. I don't have any hard data on whether those few injections did anything, but my liver was mostly normal at the time anyway. I ended up stopping it and forgetting about glutathione.
 
 When I came back to it in 2025, I had one basic question: can I take this orally and avoid stabbing myself?
 
-The answer, unfortunately, was maybe.
-
-Plain glutathione has a bioavailability problem. One newer paper on glutathione analogues says native oral glutathione has bioavailability below 1% because it gets broken down enzymatically and does not absorb well through the gut [<a href="#ref-1" class="cite-link">1</a>]. That same paper tested modified versions of glutathione and found that one 'N-methylated' analog had much better half-life and oral bioavailability than native glutathione. Interesting, but also not exactly something that's easy to get.
+As I learned, plain glutathione has a bioavailability problem. One newer paper on glutathione analogues says native oral glutathione has bioavailability of <1% because it gets broken down enzymatically and does not absorb well through the gut [<a href="#ref-1" class="cite-link">1</a>]. That same paper tested modified versions of glutathione and found that one 'N-methylated' analog had much better half-life and oral bioavailability than native glutathione. Sounds promising, but I have no idea where someone would go to buy that.
 
 The more practical thing I found was S-acetyl L-glutathione, usually shortened to SAG.
 It's basically a modified glutathione molecule, forced onto an acetyl group that _supposedly_ makes it more stable and helps it get into cells. This was probably the best oral composition out there.
