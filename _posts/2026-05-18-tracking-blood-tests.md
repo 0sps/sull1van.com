@@ -51,6 +51,7 @@ accent_color: "#93c5fd"
   }
 
   .tooltip-card-container.is-measured {
+    position: fixed;
     bottom: auto;
     left: var(--tooltip-left);
     top: var(--tooltip-top);
@@ -259,12 +260,15 @@ accent_color: "#93c5fd"
       var neededWidth = cardRect.width + connectorWidth + marginGap;
       var rightSpace = window.innerWidth - mainRect.right - marginGap - viewportPadding;
       var leftSpace = mainRect.left - marginGap - viewportPadding;
-      var cardTop = triggerRect.height / 2;
+      var cardTop = Math.min(
+        window.innerHeight - viewportPadding - cardRect.height / 2,
+        Math.max(viewportPadding + cardRect.height / 2, triggerRect.top + triggerRect.height / 2)
+      );
 
       if (rightSpace >= neededWidth) {
         var connectorWidthPx = Math.min(56, Math.max(24, rightSpace - cardRect.width));
         cardContainer.classList.add('is-measured', 'is-margin');
-        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap - triggerRect.left) + 'px');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap) + 'px');
         cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
         cardContainer.style.setProperty('--tooltip-connector-width', connectorWidthPx + 'px');
         return;
@@ -273,10 +277,26 @@ accent_color: "#93c5fd"
       if (leftSpace >= neededWidth) {
         var leftConnector = Math.min(56, Math.max(24, leftSpace - cardRect.width));
         cardContainer.classList.add('is-measured', 'is-margin', 'is-left');
-        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width - triggerRect.left) + 'px');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width) + 'px');
         cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
         cardContainer.style.setProperty('--tooltip-connector-width', leftConnector + 'px');
+        return;
       }
+
+      var centeredLeft = Math.min(
+        window.innerWidth - viewportPadding - cardRect.width / 2,
+        Math.max(viewportPadding + cardRect.width / 2, triggerRect.left + triggerRect.width / 2)
+      );
+      var aboveTop = triggerRect.top - marginGap - cardRect.height;
+      var belowTop = triggerRect.bottom + marginGap;
+      var stackedTop = aboveTop >= viewportPadding ? aboveTop : belowTop;
+
+      cardContainer.classList.add('is-measured');
+      cardContainer.style.setProperty('--tooltip-left', centeredLeft + 'px');
+      cardContainer.style.setProperty('--tooltip-top', Math.min(
+        window.innerHeight - viewportPadding - cardRect.height,
+        Math.max(viewportPadding, stackedTop)
+      ) + 'px');
     }
 
     function refreshOpenTooltips() {
