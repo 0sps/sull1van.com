@@ -433,7 +433,7 @@ As of May 2026, I have the best liver test results of my life. Maybe not every s
 
 B.L.O.A.T. achieved.
 
-## Sources I used
+## Refreences
 
 <p id="ref-0"><a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/" class="ref-marker">[0]</a> Liver Function Tests: <a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/">https://www.ncbi.nlm.nih.gov/books/NBK482489/</a></p>
 <p id="ref-1"><a href="https://pubmed.ncbi.nlm.nih.gov/40143049/" class="ref-marker">[1]</a> Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches: <a href="https://pubmed.ncbi.nlm.nih.gov/40143049/">https://pubmed.ncbi.nlm.nih.gov/40143049/</a></p>
