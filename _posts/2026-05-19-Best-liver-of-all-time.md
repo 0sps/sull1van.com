@@ -194,11 +194,28 @@ Here is the oldest test against the newest test, complete with the trends we tal
   .ref-marker:visited { color: #551A8B !important; }
   .mobile-toc {
     display: none;
+    position: relative;
     margin: 2rem 0;
     padding: 1.2rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    background-color: #f8f9fa;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+  }
+  /* Bright sheen across the top edge, like light catching glass */
+  .mobile-toc::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+    pointer-events: none;
   }
   .mobile-toc-title {
     font-weight: 700;
@@ -229,8 +246,13 @@ Here is the oldest test against the newest test, complete with the trends we tal
     }
   }
   html[data-theme="dark"] .mobile-toc {
-    background-color: #151515;
-    border-color: #2a2a2a;
+    background: rgba(40, 40, 40, 0.22);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  }
+  html[data-theme="dark"] .mobile-toc::before {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0));
   }
   .bloat-table {
     border-collapse: collapse;

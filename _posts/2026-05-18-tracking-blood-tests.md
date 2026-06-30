@@ -149,9 +149,12 @@ accent_color: "#93c5fd"
     display: none;
     margin: 2rem 0;
     padding: 1.2rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    background-color: #f8f9fa;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
   }
   .mobile-toc-title {
     font-weight: 700;
@@ -182,8 +185,9 @@ accent_color: "#93c5fd"
     }
   }
   html[data-theme="dark"] .mobile-toc {
-    background-color: #151515;
-    border-color: #2a2a2a;
+    background: rgba(20, 20, 20, 0.45);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
   }
 </style>
 
