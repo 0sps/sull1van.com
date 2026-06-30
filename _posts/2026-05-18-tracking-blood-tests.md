@@ -145,6 +145,46 @@ accent_color: "#93c5fd"
     opacity: 0.65;
     text-align: right;
   }
+  .mobile-toc {
+    display: none;
+    margin: 2rem 0;
+    padding: 1.2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+  }
+  .mobile-toc-title {
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    font-size: 1.1em;
+  }
+  .mobile-toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .mobile-toc li {
+    margin: 0.5rem 0;
+  }
+  .mobile-toc li.nested {
+    padding-left: 1.2rem;
+  }
+  .mobile-toc a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .mobile-toc a:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 767px) {
+    .mobile-toc {
+      display: block;
+    }
+  }
+  html[data-theme="dark"] .mobile-toc {
+    background-color: #151515;
+    border-color: #2a2a2a;
+  }
 </style>
 
 <script>
@@ -267,7 +307,20 @@ I started by looking at the data. Luckily for me, I've always had some sort of a
 </div>
 
 
-Enter AI. Now that we have tools like Claude Cowork and OpenAI Codex, I could just delegate some agents to do the heavy lifting for me. 
+
+<div class="mobile-toc">
+  <div class="mobile-toc-title">Table of Contents</div>
+  <ul>
+    <li><a href="#my-plan">My Plan</a></li>
+    <li><a href="#how-it-went">How it went</a></li>
+    <li class="nested"><a href="#steps-1-4-data-conversion">Steps 1-4: Data conversion</a></li>
+    <li class="nested"><a href="#step-5-the-dashboard">Step 5: The Dashboard</a></li>
+    <li class="nested"><a href="#the-frontend">The Frontend</a></li>
+    <li class="nested"><a href="#the-backend">The Backend</a></li>
+    <li><a href="#closing-thoughts">Closing thoughts</a></li>
+    <li class="nested"><a href="#references">References</a></li>
+  </ul>
+</div>
 
 ## My Plan
 
