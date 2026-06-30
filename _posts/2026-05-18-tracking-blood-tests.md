@@ -234,128 +234,113 @@ accent_color: "#93c5fd"
 </style>
 
 <script>
-  (function () {
-    function init() {
-      var triggers = Array.prototype.slice.call(document.querySelectorAll('.liver-enzymes-tooltip'));
-      if (triggers.length === 0) return;
-      var marginGap = 18;
-      var viewportPadding = 16;
+  document.addEventListener('DOMContentLoaded', function () {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.liver-enzymes-tooltip'));
+    var marginGap = 18;
+    var viewportPadding = 16;
 
-      function positionTooltip(trigger) {
-        var cardContainer = trigger.querySelector('.tooltip-card-container');
-        var card = trigger.querySelector('.tooltip-card');
-        var connector = trigger.querySelector('.tooltip-connector-line');
-        var main = trigger.closest('main') || document.querySelector('main');
+    function positionTooltip(trigger) {
+      var cardContainer = trigger.querySelector('.tooltip-card-container');
+      var card = trigger.querySelector('.tooltip-card');
+      var connector = trigger.querySelector('.tooltip-connector-line');
+      var main = trigger.closest('main') || document.querySelector('main');
 
-        if (!cardContainer || !card || !main) return;
+      if (!cardContainer || !card || !main) return;
 
-        cardContainer.classList.remove('is-measured', 'is-margin', 'is-left');
-        cardContainer.style.removeProperty('--tooltip-left');
-        cardContainer.style.removeProperty('--tooltip-top');
-        cardContainer.style.removeProperty('--tooltip-connector-width');
+      cardContainer.classList.remove('is-measured', 'is-margin', 'is-left');
+      cardContainer.style.removeProperty('--tooltip-left');
+      cardContainer.style.removeProperty('--tooltip-top');
+      cardContainer.style.removeProperty('--tooltip-connector-width');
 
-        var mainRect = main.getBoundingClientRect();
-        var triggerRect = trigger.getBoundingClientRect();
-        var cardRect = card.getBoundingClientRect();
-        var connectorWidth = connector ? connector.getBoundingClientRect().width : 40;
-        var neededWidth = cardRect.width + connectorWidth + marginGap;
-        var rightSpace = window.innerWidth - mainRect.right - marginGap - viewportPadding;
-        var leftSpace = mainRect.left - marginGap - viewportPadding;
-        var cardTop = triggerRect.height / 2;
+      var mainRect = main.getBoundingClientRect();
+      var triggerRect = trigger.getBoundingClientRect();
+      var cardRect = card.getBoundingClientRect();
+      var connectorWidth = connector ? connector.getBoundingClientRect().width : 40;
+      var neededWidth = cardRect.width + connectorWidth + marginGap;
+      var rightSpace = window.innerWidth - mainRect.right - marginGap - viewportPadding;
+      var leftSpace = mainRect.left - marginGap - viewportPadding;
+      var cardTop = triggerRect.height / 2;
 
-        if (rightSpace >= neededWidth) {
-          var connectorWidthPx = Math.min(56, Math.max(24, rightSpace - cardRect.width));
-          cardContainer.classList.add('is-measured', 'is-margin');
-          cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap - triggerRect.left) + 'px');
-          cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
-          cardContainer.style.setProperty('--tooltip-connector-width', connectorWidthPx + 'px');
+      if (rightSpace >= neededWidth) {
+        var connectorWidthPx = Math.min(56, Math.max(24, rightSpace - cardRect.width));
+        cardContainer.classList.add('is-measured', 'is-margin');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.right + marginGap - triggerRect.left) + 'px');
+        cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
+        cardContainer.style.setProperty('--tooltip-connector-width', connectorWidthPx + 'px');
+        return;
+      }
+
+      if (leftSpace >= neededWidth) {
+        var leftConnector = Math.min(56, Math.max(24, leftSpace - cardRect.width));
+        cardContainer.classList.add('is-measured', 'is-margin', 'is-left');
+        cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width - triggerRect.left) + 'px');
+        cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
+        cardContainer.style.setProperty('--tooltip-connector-width', leftConnector + 'px');
+      }
+    }
+
+    function refreshOpenTooltips() {
+      triggers.forEach(function (trigger) {
+        if ((trigger.matches(':hover') && !trigger.classList.contains('is-hover-suppressed')) || trigger.matches(':focus-visible') || trigger.classList.contains('is-pinned')) {
+          positionTooltip(trigger);
+        }
+      });
+    }
+
+    triggers.forEach(function (trigger) {
+      var cardContainer = trigger.querySelector('.tooltip-card-container');
+
+      if (cardContainer) {
+        cardContainer.addEventListener('click', function (event) {
+          event.stopPropagation();
+        });
+      }
+
+      trigger.addEventListener('mouseenter', function () {
+        positionTooltip(trigger);
+      });
+      trigger.addEventListener('mouseleave', function () {
+        trigger.classList.remove('is-hover-suppressed');
+      });
+      trigger.addEventListener('focus', function () {
+        positionTooltip(trigger);
+      });
+      trigger.addEventListener('click', function (event) {
+        event.stopPropagation();
+        var wasPinned = trigger.classList.contains('is-pinned');
+
+        if (wasPinned) {
+          trigger.classList.remove('is-pinned');
+          trigger.classList.add('is-hover-suppressed');
+          trigger.setAttribute('aria-expanded', 'false');
           return;
         }
 
-        if (leftSpace >= neededWidth) {
-          var leftConnector = Math.min(56, Math.max(24, leftSpace - cardRect.width));
-          cardContainer.classList.add('is-measured', 'is-margin', 'is-left');
-          cardContainer.style.setProperty('--tooltip-left', (mainRect.left - leftConnector - cardRect.width - triggerRect.left) + 'px');
-          cardContainer.style.setProperty('--tooltip-top', cardTop + 'px');
-          cardContainer.style.setProperty('--tooltip-connector-width', leftConnector + 'px');
-        }
-      }
-
-      function refreshOpenTooltips() {
-        triggers.forEach(function (trigger) {
-          var isHovered = false;
-          try { isHovered = trigger.matches(':hover'); } catch (e) {}
-          var isFocused = false;
-          try { isFocused = trigger.matches(':focus-visible') || trigger.matches(':focus'); } catch (e) {}
-          var isPinned = trigger.classList.contains('is-pinned');
-
-          if ((isHovered && !trigger.classList.contains('is-hover-suppressed')) || isFocused || isPinned) {
-            positionTooltip(trigger);
-          }
-        });
-      }
-
-      triggers.forEach(function (trigger) {
-        var cardContainer = trigger.querySelector('.tooltip-card-container');
-
-        if (cardContainer) {
-          cardContainer.addEventListener('click', function (event) {
-            event.stopPropagation();
-          });
-        }
-
-        trigger.addEventListener('mouseenter', function () {
-          positionTooltip(trigger);
-        });
-        trigger.addEventListener('mouseleave', function () {
-          trigger.classList.remove('is-hover-suppressed');
-        });
-        trigger.addEventListener('focus', function () {
-          positionTooltip(trigger);
-        });
-        trigger.addEventListener('click', function (event) {
-          event.stopPropagation();
-          var wasPinned = trigger.classList.contains('is-pinned');
-
-          if (wasPinned) {
-            trigger.classList.remove('is-pinned');
-            trigger.classList.add('is-hover-suppressed');
-            trigger.setAttribute('aria-expanded', 'false');
-            return;
-          }
-
-          trigger.classList.remove('is-hover-suppressed');
-          trigger.classList.add('is-pinned');
-          trigger.setAttribute('aria-expanded', 'true');
-          positionTooltip(trigger);
-        });
-        trigger.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            trigger.click();
-          }
-          if (event.key === 'Escape') {
-            trigger.classList.remove('is-pinned');
-            trigger.setAttribute('aria-expanded', 'false');
-          }
-        });
+        trigger.classList.remove('is-hover-suppressed');
+        trigger.classList.add('is-pinned');
+        trigger.setAttribute('aria-expanded', 'true');
+        positionTooltip(trigger);
       });
-
-      document.addEventListener('click', function () {
-        triggers.forEach(function (trigger) {
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          trigger.click();
+        }
+        if (event.key === 'Escape') {
           trigger.classList.remove('is-pinned');
           trigger.setAttribute('aria-expanded', 'false');
-        });
+        }
       });
-      window.addEventListener('resize', refreshOpenTooltips);
-    }
+    });
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
-  })();
+    document.addEventListener('click', function () {
+      triggers.forEach(function (trigger) {
+        trigger.classList.remove('is-pinned');
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    window.addEventListener('resize', refreshOpenTooltips);
+  });
 </script>
 
 Over one year ago, I made the decision to start focusing on my bloodwork. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" role="button" tabindex="0" aria-expanded="false">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span><span class="biomarker-source">Source: LabCorp, March 2025</span></span></span></span> were extremely high, in such an embarrassing way that it basically screamed *this person drinks too much alcohol* [1]. I realized that a bigger effort was needed if I was going to take charge of my health.
