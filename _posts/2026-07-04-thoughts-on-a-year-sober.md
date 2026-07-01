@@ -5,23 +5,13 @@ date: 2026-06-04
 tags: [meta, blogging]
 ---
 
+
+
 Today marks one full year since I went sober. Sheesh.
 
-<div class="mobile-toc">
-  <div class="mobile-toc-title">Table of Contents</div>
-  <ul>
-    <li><a href="#background">Background</a></li>
-    <li><a href="#rules-of-my-sobriety">Rules of my sobriety</a></li>
-    <li><a href="#just-go-longer">Just go longer</a></li>
-    <li><a href="#how-my-body-changed">How my body changed</a></li>
-    <li><a href="#what-i-miss">What I miss</a></li>
-    <li class="nested"><a href="#would-i-recommend-others-do-this">Would I recommend others do this?</a></li>
-    <li><a href="#what-i-learned-about-people-while-sober">What I learned about people while sober</a></li>
-    <li><a href="#will-i-stay-sober-past-one-year">Will I stay sober past one year?</a></li>
-  </ul>
-</div>
 
-## Background
+
+### Background
 
 I had toyed with the idea of going sober ever since the middle of college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. As I got older and graduated, it felt like time to move on, and let anything more than a light buzz stay back in college. But month after month, I kept having nights where I got more drunk than intended, and I hated it. I could always control whether I drank — I had plenty of totally sober stretches in college — but when I drank, I was never the guy who could have one or two and stop (The em dashes were me, not ai). That's what I hope would have changed by now. I also just hated how I acted when I was drunk.
 
@@ -30,7 +20,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 These things did help, and they pushed me to really *want* moderation and to drink less. But weekend after weekend, I could never just have one drink and call it a night. I wouldn't even blame peer pressure, just that I never set a good boundary for myself. So one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
 
 
-## Rules of my sobriety
+### Rules of my sobriety
 
 Sobriety felt pretty scary at first. For the first few days I was terrified I'd give in, constantly thinking, *"What if I drink again? What if I mess up?"* I couldn't even picture a long-term goal, only that I had to make it for two months.
 
@@ -50,7 +40,7 @@ Another point of my sobriety was that it actually became threefold. I wanted it 
 Plenty of people don't do any of these things, so I don't think I'm special in any way. I just wanted to make it a little more challenging and remove the chance I'd replace one substance with another.
 
 
-## Just go longer
+### Just go longer
 
 While my sobriety was threefold, it was only alcohol that made me afraid of relapse. Like I said, I told myself I was sober *for now*, not forever. I told my parents and friends I was doing it for two months, just to see where things went. I didn't commit to going longer until I knew I could.
 
@@ -69,7 +59,7 @@ But yeah, I could. Just go longer. So that's exactly what I did. At the end of t
 
 
 
-## How my body changed
+### What changed
 
 The changes in my body showed up fast, within ~3 months. I noticed increased energy during the day and whiter eyes, which is a great combo. I love how white my eyes are now. I also worked on my general health and refined that supplement stack I mentioned. Between the six-month to one-year period, these biomarkers trended to the best levels I've ever tested for:
 - ALT
@@ -93,7 +83,7 @@ Around the same time as all this, my cravings evaporated too. By month three I n
 
 
 
-## What I miss
+### Something I miss
 
 Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz after one, maybe two drinks. But thinking back to college times and how often I went out and got drunk for real, no, I don't miss it. It used to be a lot of fun, but I know what's waiting at the bottom of any bottle of something strong now, and it's a nasty hangover.
 
@@ -126,7 +116,7 @@ So that's the background for my actual recommendation. I think sobriety is aweso
 
 
 
-## What I learned about people while sober
+### Some things I learned about people 
 
 People ask a lot of questions, and most of them are supportive. I love to share my story when people are curious, so I do love the questions and having those conversations. What I also get, sometimes, is a look of judgement from other people who almost express guilt that I'm not joining them. Like if you went out for a friend's birthday and you brought your own food because you're on a meal plan. It breaks social norms and confuses people. For people on a meal plan, I assume they would rather go to the event and still show face, lest they have to stay home and avoid the whole thing. That's the attitude I took toward social events that involved heavy drinking.
 
@@ -136,7 +126,7 @@ I also have to add that there were _countless_ people who were incredibly suppor
 
 
 
-## Will I stay sober past one year?
+### Will I stay sober past one year?
 
 Probably not. For me, it was about getting healthier and getting rid of my craving to drink. A year later, I've achieved pretty much everything I was looking for. I want to keep this same relationship with alcohol going forward, but *with* the ability to have a drink if I want one.
 
