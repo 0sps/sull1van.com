@@ -7,6 +7,19 @@ tags: [meta, blogging]
 
 Today marks one full year since I went sober. Sheesh.
 
+<div class="mobile-toc">
+  <div class="mobile-toc-title">Table of Contents</div>
+  <ul>
+    <li><a href="#background">Background</a></li>
+    <li><a href="#rules-of-my-sobriety">Rules of my sobriety</a></li>
+    <li><a href="#just-go-longer">Just go longer</a></li>
+    <li><a href="#how-my-body-changed">How my body changed</a></li>
+    <li><a href="#what-i-miss">What I miss</a></li>
+    <li class="nested"><a href="#would-i-recommend-others-do-this">Would I recommend others do this?</a></li>
+    <li><a href="#what-i-learned-about-people-while-sober">What I learned about people while sober</a></li>
+    <li><a href="#will-i-stay-sober-past-one-year">Will I stay sober past one year?</a></li>
+  </ul>
+</div>
 
 ## Background
 
@@ -178,6 +191,68 @@ I plan to return to drinking casually one day. Maybe not just yet, but one day. 
     .note-card { border-color: #4a3e2e; background: #1e1a14; }
     .note-card summary { color: #a08860; }
     .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
+  }
+
+  .mobile-toc {
+    display: none;
+    position: relative;
+    margin: 2rem 0;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+  }
+  .mobile-toc::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+  .mobile-toc-title {
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    font-size: 1.1em;
+  }
+  .mobile-toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .mobile-toc li {
+    margin: 0.5rem 0;
+  }
+  .mobile-toc li.nested {
+    padding-left: 1.2rem;
+  }
+  .mobile-toc a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .mobile-toc a:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 767px) {
+    .mobile-toc {
+      display: block;
+    }
+  }
+  html[data-theme="dark"] .mobile-toc {
+    background: rgba(40, 40, 40, 0.22);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  }
+  html[data-theme="dark"] .mobile-toc::before {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0));
   }
 </style>
 
