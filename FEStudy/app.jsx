@@ -138,6 +138,12 @@ function getRecommendationReason(metrics, questionCount) {
   return "Good place to build confidence with available question depth.";
 }
 
+const KNOWN_QUIZ_MODES = ["diagnostic", "topic-test", "review"];
+
+function normalizeQuizMode(mode) {
+  return KNOWN_QUIZ_MODES.includes(mode) ? mode : "topic-test";
+}
+
 function isTestMode(mode) {
   return mode === "diagnostic" || mode === "topic-test" || mode === "review";
 }
@@ -524,7 +530,7 @@ function normalizeQuizSession(rawSession, questionsById) {
 
   return {
     id: rawSession.id || `${Date.now()}-${slugify(`${rawSession.mode || "quiz"}-${rawSession.title || "session"}`)}`,
-    mode: rawSession.mode || "topic-test",
+    mode: normalizeQuizMode(rawSession.mode),
     title: rawSession.title || "Saved quiz",
     subtitle: rawSession.subtitle || "",
     sectionId: rawSession.sectionId || null,
@@ -790,10 +796,15 @@ function getLeaveDialogDescription(activeQuiz) {
   return "You can keep this quiz exactly as it is and resume later, or discard every result from this attempt and leave.";
 }
 
-function renderMath() {
-  if (window.MathJax?.typesetPromise) {
-    window.MathJax.typesetPromise().catch(() => { });
+function renderMath(target) {
+  if (!window.MathJax?.typesetPromise) return;
+  // Scope typesetting to the changed node when we have one; fall back to the
+  // whole document only when no target is supplied.
+  const nodes = target ? [target] : undefined;
+  if (window.MathJax.typesetClear && nodes) {
+    window.MathJax.typesetClear(nodes);
   }
+  window.MathJax.typesetPromise(nodes).catch(() => { });
 }
 
 function isValidQuizData(data) {
@@ -882,17 +893,38 @@ function QuizApp({ data }) {
   const keepProgressButtonRef = useRef(null);
   const resetEverythingButtonRef = useRef(null);
 
+  // Debounce localStorage writes: progress and the active quiz change on nearly
+  // every interaction (each grade, navigation, and lastUpdated bump), and a
+  // synchronous JSON.stringify + setItem on each one blocks the main thread.
+  const latestProgressRef = useRef(progress);
+  const latestActiveQuizRef = useRef(activeQuiz);
+  latestProgressRef.current = progress;
+  latestActiveQuizRef.current = activeQuiz;
+
   useEffect(() => {
-    persistProgress(progress);
+    const timer = setTimeout(() => persistProgress(progress), 400);
+    return () => clearTimeout(timer);
   }, [progress]);
 
   useEffect(() => {
-    persistActiveQuiz(activeQuiz);
+    const timer = setTimeout(() => persistActiveQuiz(activeQuiz), 400);
+    return () => clearTimeout(timer);
   }, [activeQuiz]);
 
+  // Flush any pending debounced writes if the page is being hidden or closed so
+  // the last interaction is never lost inside the debounce window.
   useEffect(() => {
-    renderMath();
-  });
+    function flush() {
+      persistProgress(latestProgressRef.current);
+      persistActiveQuiz(latestActiveQuizRef.current);
+    }
+    window.addEventListener("pagehide", flush);
+    window.addEventListener("visibilitychange", flush);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      window.removeEventListener("visibilitychange", flush);
+    };
+  }, []);
 
   const overall = useMemo(() => {
     const topicStates = data.sections.map((section) => getSectionMetrics(section, progress)).filter((state) => state.answered > 0);
@@ -1308,10 +1340,6 @@ function QuizApp({ data }) {
     setProgress((current) => setProgressForQuestionResult(current, question, baselineWasCorrect));
   }
 
-  function finishPracticeSession() {
-    setView({ name: "dashboard" });
-  }
-
   function handleImportClick() {
     fileInputRef.current?.click();
   }
@@ -1549,7 +1577,7 @@ function QuizApp({ data }) {
                 </div>
                 <div className="stat-card dashboard-stat-card">
                   <div className="mini-label">Topics assessed</div>
-                  <div className="stat-value">{overall.topicsAssessed}/13</div>
+                  <div className="stat-value">{overall.topicsAssessed}/{data.sections.length}</div>
                 </div>
               </div>
             </div>
@@ -1568,16 +1596,6 @@ function QuizApp({ data }) {
               onStartDiagnostic={startDiagnostic}
               onOpenTopic={openTopicModal}
               onStartPractice={startTopicPractice}
-            />
-          ) : null}
-
-          {view.name === "session" && !isTestMode(activeQuiz?.mode) ? (
-            <SessionView
-              view={view}
-              isResetDialogOpen={isResetDialogOpen}
-              onBack={() => setView({ name: "dashboard" })}
-              onFinish={finishPracticeSession}
-              onRecord={(question, wasCorrect) => setProgress((current) => updateProgressForQuestion(current, question, wasCorrect))}
             />
           ) : null}
 
@@ -2213,212 +2231,6 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
               );
             })}
           </div>
-        </article>
-      </main>
-    </div>
-  );
-}
-
-function SessionView({ view, isResetDialogOpen, onBack, onFinish, onRecord }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedChoice, setSelectedChoice] = useState(null);
-  const [revealed, setRevealed] = useState(false);
-
-  const question = view.questions[currentIndex];
-
-  useEffect(() => {
-    setCurrentIndex(0);
-    setSelectedChoice(null);
-    setRevealed(false);
-  }, [view.title, view.mode]);
-
-  useEffect(() => {
-    setSelectedChoice(null);
-    setRevealed(false);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    renderMath();
-  }, [question, revealed]);
-
-  useEffect(() => {
-    function handleKeydown(event) {
-      if (isResetDialogOpen) {
-        return;
-      }
-
-      const targetTag = event.target?.tagName;
-      if (targetTag === "INPUT" || targetTag === "TEXTAREA" || event.target?.isContentEditable) {
-        return;
-      }
-
-      if (!question) {
-        return;
-      }
-
-      const key = event.key.toUpperCase();
-      const availableChoices = question.type === "mcq" ? Object.keys(question.choices || {}) : [];
-
-      if (question.type === "mcq" && !revealed && availableChoices.includes(key)) {
-        event.preventDefault();
-        submitChoice(key);
-        return;
-      }
-
-      if (revealed && event.key === "Enter") {
-        event.preventDefault();
-        recordAndAdvance(true);
-        return;
-      }
-
-      if (revealed && event.code === "Space") {
-        event.preventDefault();
-        recordAndAdvance(false);
-      }
-    }
-
-    window.addEventListener("keydown", handleKeydown);
-    return () => window.removeEventListener("keydown", handleKeydown);
-  }, [question, revealed, currentIndex, view.questions.length, isResetDialogOpen]);
-
-  if (!view.questions.length) {
-    return (
-      <div className="content-grid">
-        <aside className="stack">
-          <div className="panel">
-            <button className="button-ghost" onClick={onBack}>
-              Back
-            </button>
-          </div>
-        </aside>
-        <main className="stack">
-          <div className="empty-state">
-            No mapped questions are available for this selection yet. That usually means the current bank has a coverage
-            gap for this section or subtopic.
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  const percent = Math.round(((currentIndex + 1) / view.questions.length) * 100);
-
-  function recordAndAdvance(wasCorrect) {
-    if (!question) return;
-    onRecord(question, wasCorrect);
-    if (currentIndex >= view.questions.length - 1) {
-      onFinish();
-      return;
-    }
-    setCurrentIndex((current) => current + 1);
-  }
-
-  function submitChoice(choiceKey) {
-    setSelectedChoice(choiceKey);
-    setRevealed(true);
-  }
-
-  function clearAnswer() {
-    setSelectedChoice(null);
-    setRevealed(false);
-  }
-
-  const canClearAnswer = selectedChoice != null || revealed;
-
-  return (
-    <div className="content-grid">
-      <aside className="stack">
-        <div className="panel">
-          <button className="button-ghost" onClick={onBack}>
-            Leave session
-          </button>
-          <div style={{ marginTop: 14 }} className="mini-label">
-            Practice mode
-          </div>
-          <h2 className="section-title">{view.title}</h2>
-          <p className="sidebar-note">{view.subtitle}</p>
-          <div className="progress-track" style={{ marginTop: 18 }}>
-            <div className="progress-fill" style={{ width: `${percent}%` }} />
-          </div>
-          <p className="muted" style={{ marginBottom: 0 }}>
-            Question {currentIndex + 1} of {view.questions.length}
-          </p>
-        </div>
-      </aside>
-
-      <main className="stack">
-        <article className="question-card">
-          <div className="quiz-card-top">
-            <div className="top-row">
-              <span className="pill quiz-topic-pill">{question.officialSubtopic}</span>
-            </div>
-            <div className="quiz-card-top-actions">
-              <ClearAnswerStamp onClick={clearAnswer} disabled={!canClearAnswer} />
-            </div>
-          </div>
-          <h2>{formatQuestionHeading(question, currentIndex)}</h2>
-          <SafeHtml className="question-stem" html={question.stem} />
-
-          {question.type === "mcq" ? (
-            <div className="choice-grid">
-              {Object.entries(question.choices).map(([key, value]) => {
-                const isCorrect = revealed && key === question.answer;
-                const isIncorrect = revealed && selectedChoice === key && key !== question.answer;
-                return (
-                  <button
-                    key={key}
-                    className={`choice-button ${isCorrect ? "correct" : ""} ${isIncorrect ? "incorrect" : ""}`}
-                    onClick={() => submitChoice(key)}
-                    disabled={revealed}
-                  >
-                    <div className="choice-row">
-                      <strong>{key}</strong>
-                      <SafeHtml as="span" html={value} />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          ) : null}
-
-          {question.type === "open" && !revealed ? (
-            <div className="answer-panel">
-              <strong>Self-grade this one.</strong>
-              <p className="muted">Work it out first, then mark whether you got it right before moving on.</p>
-            </div>
-          ) : null}
-
-          {question.type === "open" ? (
-            <div
-              className={`answer-panel ${revealed ? "" : "is-clickable"}`}
-              onClick={!revealed ? () => setRevealed(true) : undefined}
-            >
-              <div className="mini-label">Answer</div>
-              <div className={`answer-reveal-shell ${revealed ? "is-revealed" : ""}`}>
-                <SafeHtml className="answer-reveal-content" html={question.answer} />
-                {!revealed ? (
-                  <div className="answer-reveal-button">Click to show answer</div>
-                ) : null}
-              </div>
-              {revealed ? (
-                <div className="toolbar" style={{ marginTop: 14 }}>
-                  {question.url ? (
-                    <a className="button-ghost" href={question.url} target="_blank" rel="noreferrer">
-                      Open source explanation
-                    </a>
-                  ) : null}
-                  <button className="button result-button result-button-primary" onClick={() => recordAndAdvance(true)}>
-                    <span>{currentIndex >= view.questions.length - 1 ? "Finish session" : "I got it"}</span>
-                    <span className="shortcut-badge">ENTER</span>
-                  </button>
-                  <button className="button-ghost result-button result-button-ghost" onClick={() => recordAndAdvance(false)}>
-                    <span>I missed it</span>
-                    <span className="shortcut-badge">SPACE</span>
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
         </article>
       </main>
     </div>
