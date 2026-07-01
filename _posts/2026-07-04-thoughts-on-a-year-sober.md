@@ -121,17 +121,6 @@ I think sobriety is awesome, but I don't think everyone needs to do it. I think 
 
 
 
-<details class="note-card">
-  <summary>Note</summary>
-  <div class="note-card-body">
-    <p>I know it's rich to read "limit yourself to 1-2 drinks" when I just told you at the beginning of the article that I couldn't do it. But if you are like me and had trouble limiting yourself, then sure, consider sobriety.</p>
-  </div>
-</details>
-
-
-
-
-
 
 
 
