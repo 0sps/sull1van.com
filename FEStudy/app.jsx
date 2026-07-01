@@ -70,6 +70,64 @@ function SafeHtml({ as: Tag = "div", className, html }) {
   return <Tag className={className} dangerouslySetInnerHTML={{ __html: safeHtml }} />;
 }
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+// Wraps a dialog so that focus moves into it on open, Tab/Shift+Tab cycle stays
+// within it, and focus returns to the triggering element when it closes.
+function FocusTrap({ children, autoFocus = true, ...rest }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+    const previouslyFocused = document.activeElement;
+
+    const getFocusable = () =>
+      Array.from(node.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
+        (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+      );
+
+    if (autoFocus) {
+      const first = getFocusable()[0];
+      (first || node).focus();
+    }
+
+    function handleKeyDown(event) {
+      if (event.key !== "Tab") return;
+      const items = getFocusable();
+      if (!items.length) {
+        event.preventDefault();
+        node.focus();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    node.addEventListener("keydown", handleKeyDown);
+    return () => {
+      node.removeEventListener("keydown", handleKeyDown);
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      }
+    };
+  }, [autoFocus]);
+
+  return (
+    <div ref={ref} tabIndex={-1} {...rest}>
+      {children}
+    </div>
+  );
+}
+
 function scoreToColor(score) {
   if (score == null) return "#a08d78";
   if (score < 50) return "#d13f34";
@@ -1519,6 +1577,7 @@ function QuizApp({ data }) {
 
   return (
     <div className={`app-shell ${view.name === "session" && isTestMode(activeQuiz?.mode) ? "app-shell-session" : ""}`}>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       {!(view.name === "session" && isTestMode(activeQuiz?.mode)) ? (
         <>
           <header className="hero dashboard-hero">
@@ -1624,7 +1683,7 @@ function QuizApp({ data }) {
 
       {topicModalSectionId && view.name !== "session" ? (
         <div className="topic-modal-backdrop" onClick={closeTopicModal}>
-          <div
+          <FocusTrap
             className="topic-modal-shell"
             role="dialog"
             aria-modal="true"
@@ -1643,13 +1702,14 @@ function QuizApp({ data }) {
               }
               onReviewTopic={(sectionId) => openTopicReview(sectionId, { type: "topic-modal", sectionId })}
             />
-          </div>
+          </FocusTrap>
         </div>
       ) : null}
 
       {isResetDialogOpen ? (
         <div className="dialog-backdrop" onClick={() => setIsResetDialogOpen(false)}>
-          <div
+          <FocusTrap
+            autoFocus={false}
             className="dialog-card"
             role="dialog"
             aria-modal="true"
@@ -1685,13 +1745,13 @@ function QuizApp({ data }) {
                 Reset everything
               </button>
             </div>
-          </div>
+          </FocusTrap>
         </div>
       ) : null}
 
       {quizActionDialog && activeQuiz ? (
         <div className="dialog-backdrop" onClick={closeQuizActionDialog}>
-          <div
+          <FocusTrap
             className="dialog-card"
             role="dialog"
             aria-modal="true"
@@ -1752,13 +1812,13 @@ function QuizApp({ data }) {
                 </>
               )}
             </div>
-          </div>
+          </FocusTrap>
         </div>
       ) : null}
 
       {testSetupDialog ? (
         <div className="dialog-backdrop" onClick={closeTestSetupDialog}>
-          <div
+          <FocusTrap
             className="dialog-card test-setup-dialog"
             role="dialog"
             aria-modal="true"
@@ -1807,13 +1867,13 @@ function QuizApp({ data }) {
                 Start test
               </button>
             </div>
-          </div>
+          </FocusTrap>
         </div>
       ) : null}
 
       {diagnosticSetupDialog ? (
         <div className="dialog-backdrop" onClick={closeDiagnosticSetupDialog}>
-          <div
+          <FocusTrap
             className="dialog-card test-setup-dialog diagnostic-setup-dialog"
             role="dialog"
             aria-modal="true"
@@ -1865,7 +1925,7 @@ function QuizApp({ data }) {
                 Start diagnostic
               </button>
             </div>
-          </div>
+          </FocusTrap>
         </div>
       ) : null}
     </div>
@@ -2030,7 +2090,7 @@ function Dashboard({
         </div>
       </aside>
 
-      <main className="stack dashboard-main">
+      <main id="main-content" className="stack dashboard-main">
         {data.sections.map((section) => {
           const metrics = getSectionMetrics(section, progress);
           const questionCount = questionsBySection[section.id]?.length || 0;
@@ -2184,7 +2244,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
         </div>
       </aside>
 
-      <main className="stack">
+      <div className="stack">
         <article className="topic-card">
           <div className="topic-actions topic-actions-surface">
             <div>
@@ -2232,7 +2292,7 @@ function TopicDetail({ section, progress, questionCount, activeQuiz, onResumeQui
             })}
           </div>
         </article>
-      </main>
+      </div>
     </div>
   );
 }
@@ -2249,10 +2309,15 @@ function QuizSessionView({
   onGrade,
   onClearQuestion
 }) {
-  const questions = activeQuiz?.questionIds.map((questionId) => questionsById[questionId]).filter(Boolean) || [];
+  const questions = useMemo(
+    () => (activeQuiz?.questionIds || []).map((questionId) => questionsById[questionId]).filter(Boolean),
+    [activeQuiz?.questionIds, questionsById]
+  );
   const currentIndex = clamp(activeQuiz?.currentIndex || 0, 0, questions.length);
   const isSubmitLanding = currentIndex >= questions.length;
   const [navKeyActive, setNavKeyActive] = useState(null);
+  const questionScrollRef = useRef(null);
+  const liveRegionId = useId();
   const question = questions[currentIndex];
   const response = question ? getSessionQuestionState(activeQuiz, question.id) : null;
   const isReviewMode = activeQuiz?.mode === "review";
@@ -2260,15 +2325,47 @@ function QuizSessionView({
     activeQuiz?.showPriorResults && question && typeof activeQuiz?.baselineResults?.[question.id]?.wasCorrect === "boolean"
       ? activeQuiz.baselineResults[question.id].wasCorrect
       : null;
-  const gradedCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null).length;
+  // Single pass over the questions for the three graded/unanswered tallies,
+  // recomputed only when the quiz state actually changes.
+  const { gradedCount, unansweredCount, firstUnansweredIndex } = useMemo(() => {
+    let graded = 0;
+    let unanswered = 0;
+    let firstUnanswered = -1;
+    questions.forEach((entry, index) => {
+      const isGraded = getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect != null;
+      if (isGraded) {
+        graded += 1;
+      } else {
+        unanswered += 1;
+        if (firstUnanswered === -1) firstUnanswered = index;
+      }
+    });
+    return { gradedCount: graded, unansweredCount: unanswered, firstUnansweredIndex: firstUnanswered };
+  }, [activeQuiz, questions]);
   const progressPercent = questions.length ? Math.round((gradedCount / questions.length) * 100) : 0;
   const canRevealAnswer = !!response?.revealed;
-  const unansweredCount = questions.filter((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null).length;
-  const firstUnansweredIndex = questions.findIndex((entry) => getSessionQuestionState(activeQuiz, entry.id)?.wasCorrect == null);
   const canClearAnswer = !!(response && (response.selectedChoice != null || response.revealed || response.wasCorrect != null));
 
+  // Text announced to screen readers as the question or its grading state changes.
+  const liveAnnouncement = isSubmitLanding
+    ? isReviewMode
+      ? "Review wrap-up. All questions reviewed."
+      : `Submission check. ${unansweredCount === 0 ? "All questions graded." : `${unansweredCount} question${unansweredCount === 1 ? "" : "s"} still need a mark.`}`
+    : question
+      ? `Question ${currentIndex + 1} of ${questions.length}. ${
+          response?.wasCorrect === true
+            ? "Marked correct."
+            : response?.wasCorrect === false
+              ? "Marked incorrect."
+              : response?.revealed
+                ? "Answer revealed, ready to grade."
+                : "Awaiting your answer."
+        }`
+      : "";
+
+  // Typeset only the current question's container rather than the whole document.
   useEffect(() => {
-    renderMath();
+    renderMath(questionScrollRef.current);
   }, [question, response?.revealed, response?.selectedChoice, response?.wasCorrect]);
 
   function handleGradeAndAdvance(wasCorrect) {
@@ -2422,10 +2519,13 @@ function QuizSessionView({
 
   return (
     <div className="quiz-shell">
+      <div id={liveRegionId} className="sr-only" role="status" aria-live="polite">
+        {liveAnnouncement}
+      </div>
       <header className="quiz-header">
         <div className="quiz-header-meta">
           <div className="mini-label">{getQuizModeLabel(activeQuiz.mode)}</div>
-          <h2 className="quiz-title">{activeQuiz.title}</h2>
+          <h1 className="quiz-title">{activeQuiz.title}</h1>
           <p className="quiz-subtitle">{activeQuiz.subtitle}</p>
         </div>
         <div className="quiz-header-actions">
@@ -2458,7 +2558,7 @@ function QuizSessionView({
             <div className="progress-track" style={{ marginBottom: 16 }}>
               <div className="progress-fill" style={{ width: `${progressPercent}%` }} />
             </div>
-            <div className="question-chip-grid">
+            <nav className="question-chip-grid" aria-label="Question map">
               {questions.map((entry, index) => {
                 const state = getSessionQuestionState(activeQuiz, entry.id);
                 const statusClass =
@@ -2469,24 +2569,34 @@ function QuizSessionView({
                     : state.wasCorrect
                       ? "correct"
                       : "incorrect";
+                const statusLabel =
+                  statusClass === "correct"
+                    ? "marked correct"
+                    : statusClass === "incorrect"
+                      ? "marked incorrect"
+                      : statusClass === "review"
+                        ? "answered, not yet graded"
+                        : "not answered";
                 return (
                   <button
                     key={entry.id}
                     className={`question-chip ${currentIndex === index ? "is-current" : ""} ${statusClass}`}
                     onClick={() => onSetIndex(index)}
+                    aria-label={`Question ${index + 1}, ${statusLabel}`}
+                    aria-current={currentIndex === index ? "true" : undefined}
                   >
-                    {index + 1}
+                    <span aria-hidden="true">{index + 1}</span>
                   </button>
                 );
               })}
-            </div>
+            </nav>
             <div className="quiz-sidebar-note">
               <div className="pill subtle">Arrow keys move between questions</div>
             </div>
           </div>
         </aside>
 
-        <main className="quiz-stage">
+        <main id="main-content" className="quiz-stage">
           <article className="question-card quiz-card">
             {isSubmitLanding ? (
               <>
@@ -2549,7 +2659,7 @@ function QuizSessionView({
                   <h2>{formatQuestionHeading(question, currentIndex)}</h2>
                 </div>
 
-                <div className={`quiz-card-body ${question.type === "open" ? "has-answer-dock" : ""} ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
+                <div ref={questionScrollRef} className={`quiz-card-body ${question.type === "open" ? "has-answer-dock" : ""} ${canRevealAnswer ? "" : "is-awaiting-answer"}`}>
                   <div className="quiz-question-scroll">
                     <SafeHtml className="question-stem" html={question.stem} />
 
@@ -2560,17 +2670,33 @@ function QuizSessionView({
                           const isCorrectChoice = isRevealed && key === question.answer;
                           const isSelectedIncorrect = isRevealed && response?.selectedChoice === key && key !== question.answer;
                           const isSelected = response?.selectedChoice === key;
+                          // Convey correct/incorrect with an icon and text, not color alone.
+                          const statusLabel = isCorrectChoice
+                            ? "Correct answer"
+                            : isSelectedIncorrect
+                              ? "Your answer, incorrect"
+                              : isSelected
+                                ? "Your answer"
+                                : "";
+                          const statusIcon = isCorrectChoice ? "✓" : isSelectedIncorrect ? "✗" : "";
                           return (
                             <button
                               key={key}
                               className={`choice-button ${isCorrectChoice ? "correct" : ""} ${isSelectedIncorrect ? "incorrect" : ""} ${isSelected ? "selected" : ""}`}
                               onClick={() => handleSelectChoice(key)}
                               disabled={isReviewMode}
+                              aria-pressed={isSelected}
                             >
                               <div className="choice-row">
                                 <strong>{key}</strong>
                                 <SafeHtml as="span" html={value} />
+                                {statusIcon ? (
+                                  <span className={`choice-status-icon ${isCorrectChoice ? "is-correct" : "is-incorrect"}`} aria-hidden="true">
+                                    {statusIcon}
+                                  </span>
+                                ) : null}
                               </div>
+                              {statusLabel ? <span className="sr-only">{statusLabel}</span> : null}
                             </button>
                           );
                         })}
@@ -2585,10 +2711,7 @@ function QuizSessionView({
                   </div>
 
                     {question.type === "open" ? (
-                      <div
-                        className={`quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`}
-                        onClick={!canRevealAnswer ? () => onUpdateResponse(question.id, { revealed: true }) : undefined}
-                      >
+                      <div className={`quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`}>
                         <div className="card-row">
                           <div>
                             <div className="mini-label" style={{ color: answerLabelColor }}>
@@ -2609,12 +2732,19 @@ function QuizSessionView({
                         <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
                           <SafeHtml className="quiz-answer-content answer-reveal-content" html={question.answer} />
                           {!canRevealAnswer ? (
-                            <div className="answer-reveal-button">Click to show answer</div>
+                            <button
+                              type="button"
+                              className="answer-reveal-button"
+                              onClick={() => onUpdateResponse(question.id, { revealed: true })}
+                            >
+                              Show answer
+                            </button>
                           ) : null}
                         </div>
                         {canRevealAnswer && question.url ? (
                           <a className="button-ghost quiz-source-link" href={question.url} target="_blank" rel="noreferrer">
                             Open source explanation
+                            <span className="sr-only"> (opens in new tab)</span>
                           </a>
                         ) : null}
                         {renderMobileGradeActions()}
@@ -2628,7 +2758,7 @@ function QuizSessionView({
       </div>
 
       <div className="quiz-footer-layout">
-        <footer className="quiz-footer quiz-footer-sidebar">
+        <div className="quiz-footer quiz-footer-sidebar" role="toolbar" aria-label="Question navigation">
           <div className="quiz-footer-nav">
             <button
               className={`button-ghost quiz-nav-button ${navKeyActive === "left" ? "is-key-active" : ""}`}
@@ -2647,8 +2777,8 @@ function QuizSessionView({
               <span className="shortcut-badge shortcut-badge-nav">→</span>
             </button>
           </div>
-        </footer>
-        <footer className="quiz-footer quiz-footer-stage">
+        </div>
+        <div className="quiz-footer quiz-footer-stage" role="toolbar" aria-label="Grade this question">
           <div className="quiz-footer-center">
             <span className="muted">
               {isSubmitLanding ? (isReviewMode ? "Review wrap-up" : "Submission check") : `Question ${currentIndex + 1} of ${questions.length}`}
@@ -2676,7 +2806,7 @@ function QuizSessionView({
               </>
             )}
           </div>
-        </footer>
+        </div>
       </div>
     </div>
   );
