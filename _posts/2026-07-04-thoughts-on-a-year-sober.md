@@ -192,6 +192,9 @@ I plan to return to drinking casually one day. Maybe not just yet, but one day. 
     .note-card summary { color: #a08860; }
     .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
   }
+  html[data-theme="light"] .note-card { border-color: #c9b99a; background: #faf6f0; }
+  html[data-theme="light"] .note-card summary { color: #8c7355; }
+  html[data-theme="light"] .note-card-body { border-top-color: #c9b99a; color: #5c4a32; }
 
   .mobile-toc {
     display: none;
