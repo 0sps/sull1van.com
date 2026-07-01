@@ -297,19 +297,19 @@ Here is the oldest test against the newest test, complete with the trends we tal
       <td>Total protein</td>
       <td>7.1 g/dL</td>
       <td class="diff-pos">7.2 g/dL</td>
-      <td>Better</td>
+      <td class="diff-pos">Better</td>
     </tr>
     <tr>
       <td>Albumin</td>
       <td>4.7 g/dL</td>
-      <td>4.7 g/dL</td>
-      <td>Equal</td>
+      <td class="diff-pos">4.7 g/dL</td>
+      <td class="diff-pos">Equal</td>
     </tr>
     <tr>
       <td>Globulin</td>
       <td>2.4 g/dL</td>
       <td class="diff-pos">2.5 g/dL</td>
-      <td>Better (2.7 is technical best)</td>
+      <td class="diff-pos">Better (2.7 is technical best)</td>
     </tr>
     <tr>
       <td>A/G ratio</td>
@@ -327,19 +327,19 @@ Here is the oldest test against the newest test, complete with the trends we tal
       <td>Alkaline phosphatase</td>
       <td>90 U/L</td>
       <td class="diff-pos">79 U/L</td>
-      <td>Better</td>
+      <td class="diff-pos">Better</td>
     </tr>
     <tr>
       <td>AST</td>
       <td>28 U/L</td>
       <td class="diff-pos">25 U/L</td>
-      <td>Better.</td>
+      <td class="diff-pos">Better.</td>
     </tr>
     <tr>
       <td>ALT</td>
       <td>17 U/L</td>
-      <td>17 U/L</td>
-      <td>Equal</td>
+      <td class="diff-pos">17 U/L</td>
+      <td class="diff-pos">Equal</td>
     </tr>
   </tbody>
 </table>
