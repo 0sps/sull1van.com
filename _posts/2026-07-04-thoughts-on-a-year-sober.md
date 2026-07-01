@@ -15,7 +15,15 @@ Today marks one full year since I went sober. One year!
 
 I had toyed with the idea of going sober ever since the middle of college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. As I got older and graduated, it felt like time to move on, and let anything more than a light buzz stay back in college. But month after month, I kept having nights where I got more drunk than intended, and I hated it. I could always control whether I drank — I had plenty of totally sober stretches in college — but when I drank, I was never the guy who could have one or two and stop (The em dashes were me, not ai). That's what I hope would have changed by now. I also just hated how I acted when I was drunk.
 
-My path to sobriety didn't really take off until I got some concerning blood tests back in early 2025. The tests showed significant elevation in my ALT and AST, key liver enzymes used to detect liver stress and damage. My doctor mentioned that I should probably slow down on drinking if that's what I had been up to, but that he didn't think I had any kind of liver disease. But after seeing the results, and being more embarrassed than anything, I realized it was obvious what needed to change. I started to take my health much more seriously. I built [a web dashboard](https://sull1van.com/fixing-blood-test-results) to track my blood test results so I could watch them more closely, and then I created [my own supplement stack](https://sull1van.com/best-liver-of-all-time) to help out my liver.
+My path to sobriety didn't really take off until I got some concerning blood tests back in early 2025. The tests showed significant elevation in my ALT and AST, key liver enzymes used to detect liver stress and damage. My doctor mentioned that I should probably slow down on drinking if that's what I had been up to, but that he didn't think I had any kind of liver disease. But after seeing the results, and being more embarrassed than anything, I realized it was obvious what needed to change. I started to take my health much more seriously. I started to supplement with various things to help out my liver. I created [my own supplement stack](https://sull1van.com/best-liver-of-all-time) to help out my liver.
+
+
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>Later on, into sobriety, I also built <a href="https://sull1van.com/fixing-blood-test-results">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
+  </div>
+</details>
 
 These things did help, and they pushed me to really *want* to use moderation and to drink less. But weekend after weekend, I could never just have one drink and call it a night. I wouldn't even blame peer pressure, it was just that I never set a good boundary for myself. So one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
 
@@ -32,36 +40,45 @@ At first I was really strict about all this, but after a while, I realized that 
 1. If it's labeled "NA" (0.5% alcohol or less), I could drink it.
 2. If something was classified as alcoholic, so >0.5%, it counted as breaking sobriety if I swallowed it.
 
-That meant the trace alcohol from an NA beer was fine, and any kind of mouthwash or other alcohol was also fine if I rinsed out afterward. You might say these are permissive rules, and that's fair, they worked for me. I was never in the territory of life-or-death alcoholism, so I didn't feel like my sobriety needed to be that strict. And I stuck to these rules for the ENTIRE year, so it was really important that they at least be manageable ones. (It feels both weird and pretty cool to say that I did that)
+That meant the trace alcohol from an NA beer was fine, and any kind of mouthwash or other alcohol was also fine if I rinsed out afterward. You might say these are permissive rules, and that's fair, they worked for me. I was never in the territory of life-or-death alcoholism, so I didn't feel like my sobriety needed to be that strict. I stuck to these rules for the entire year, so it was really important that they at least be manageable ones (Also, it feels both weird and pretty cool to say that I did that).
 
 ---
 
 Another point of my sobriety was that it actually became threefold. I wanted it to feel like a real personal reset, so I brought in **smoking and vaping too, not just drinking**. 
-Plenty of people don't do any of these things, so I don't think I'm special in any way. I just wanted to make it a little more challenging and remove the chance I'd replace one substance with another.
+Plenty of people don't do these things to begin with, so I don't think I'm "special" in any way, I just wanted to make it a little more challenging and remove the chance I'd replace one substance with another.
 
 
 ### Just go longer
 
-While my sobriety was threefold, it was only alcohol that made me afraid of relapse. Like I said, I told myself I was sober *for now*, not forever. I told my parents and friends I was doing it for two months, just to see where things went. I didn't commit to going longer until I knew I could.
+While my sobriety was threefold, it was only alcohol that made me afraid of relapse. Like I said, I told myself I was sober *for now*, not forever. I told everyone that I was doing it for two months, just to see where things went. I didn't commit to going longer until I knew I could.
 
-Cravings are like that. At first, they seem impossible to get rid of, but they fall off fast and don't really come back. As I neared the halfway point of those two months, the daily panic about when I'd drink next started to fade and things felt more normal. Around that time, I caught up with a friend who gave me what might be the single best piece of advice I'd heard this entire year.
+Cravings are like that. At first, they seem impossible to get rid of, but they fall off fast and don't really come back. As I neared the halfway point of those two months, the daily panic about when I would drink next faded away, replaced by thoughts that felt more normal. It was around that time that I caught up with an old friend, who gave me what turned out being the single most important piece of advice I'd heard all year.
 
-We got into chatting, and I explained the sobriety, my two-month goal. He had been sober his entire life, so this probably didn't seem too difficult for him. He asked why I settled on two months.
+We got into chatting, and I explained my sobriety to him as well as the two-month goal. He had been sober for a pretty long time, so I imagine this didn't sound like anything crazy. He asked why I settled on two months.
 
-I don't know, I told him. It was the best I thought I could do.
+I don't know, I told him. I just assumed that I'd be giving in at two months and wouldn't be able to keep this going. I didn't really want it to end in two months, I told him, but that I assumed it would.
 
 *"Why don't you just go longer?"*
 
-I stared at him for a second. It never even occurred to me that I could go longer than two months.
+I stared at him for a second. It never even occurred to me that I could just plan for longer.
 
-But yeah, I could. Just go longer. So that's exactly what I did. At the end of the two months I decided to keep going. Two months turned into six, then at six months I said twelve.  Now here we are, twelve months later. It's crazy.
+But yeah, I could. Just go longer. So that's exactly what I did. At the end of the two months I decided to keep going. Two months turned into six, and then at six months I said twelve. Now here we are, twelve months later. It's crazy.
 
 
 
 
 ### What changed
 
-The changes in my body showed up fast, within ~3 months. I noticed increased energy during the day and whiter eyes, which is a great combo. I love how white my eyes are now. I also worked on my general health and refined that supplement stack I mentioned. Between the six-month to one-year period, these biomarkers trended to the best levels I've ever tested for:
+The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprising great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as his, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
+
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
+  </div>
+</details>
+
+Between the six-month to one-year period, the changes were more gradual, but these biomarkers trended to the best levels I've ever tested for:
 - ALT
 - AST
 - HDL Cholesterol
@@ -69,16 +86,9 @@ The changes in my body showed up fast, within ~3 months. I noticed increased ene
 - Fasted Glucose
 - Hemoglobin A1c
 
-This was a really big accomplishment for me. The people close to me know my liver enzymes were elevated, not bad enough to be liver disease, but getting close. I'm happy to say that, as of 2026, I've never had a better-functioning liver in my life, and that's saying a lot since I have been getting these tests since I was **seventeen**!
+This was a really big accomplishment for me, since some of these were pretty high to begin with. I'm happy to say that, as of 2026, I have never had a better-functioning liver in my life, and that's saying a lot since I have been getting these tests since I was **seventeen**!
 
-Around the same time as all this, my cravings evaporated too. By month three I no longer had any big urge to drink. I settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
-<details class="note-card">
-  <summary>Note</summary>
-  <div class="note-card-body">
-    <p>And on that note: NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol.</p>
-  </div>
-</details>
 
 
 
