@@ -95,22 +95,27 @@ This was a really big accomplishment for me, since some of these were pretty hig
 
 ### Something I miss
 
-Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz after one, maybe two drinks. But thinking back to college times and how often I went out and got drunk for real, no, I don't miss it. It used to be a lot of fun, but I know what's waiting at the bottom of any bottle of something strong now, and it's a nasty hangover.
+I don't miss being drunk. I actually saw that coming before I quit, as I could feel the hangovers kicking in before I would even get back home from a night out. Heavy drinking had already lost its appeal, which is why I had been slowly cutting the number of nights I drank per month. I don't really miss that.
 
-I actually saw that coming before I quit. In the weeks right before I went sober, I could feel the hangovers kicking in while I was still drunk. Heavy drinking had already lost its appeal, which is why I'd been slowly cutting the number of nights a month I drank. I don't ever want to go back to that, those nights where you need an entire Sunday to recover. Good riddance to those.
+But something I *do* miss is that nice buzz you get after one, maybe two drinks. The state where you have a slightly eleavated mood, and things seem a little more fun and playful. And that's still where my head is today. The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. Without it, social stuff takes on a slightly different feeling. Not worse, but just a little different. Not drinking is fine, I'll live, but I would like to experience alcohol again in moderation. 
 
-But that nice state where you have the tiniest buzz from a single drink? THAT is the state I miss. And that's really where my head is today. Not drinking is fine, I'll live, but I would like to experience it again in moderation. Without alcohol, social stuff takes on a slightly different feeling. Not worse, but just a little different.
-
-The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. It's also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times that is how we bond. Alcohol is ingrained into how people connect out here, and going 100% sober made that pretty obvious.
+Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
 
 ### Would I recommend others do this?
-People have asked me this, and honestly I probably wouldn't recommend it. There's something to be said for having the option to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone like a birthday. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while at work if that's what you want. For people who can participate responsibly, take advantage where you can.
+People have asked me this, and honestly, I don't think every single person stands to benefit a lot from going fully sober. There's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
 
-In an ideal world, that's how it would work. You use what you want in moderation to feel a specific way, and stop if you have noticed you are doing too much. But the last part takes a lot of introspection and honest self-assessment, and I don't think it actually plays out that way in real life. So I would say to monitor your drinking, and if you're interested, start researching what tools, supplements, and treatments are out there if you want to drink less but don't know where to start.
+In an ideal world, that's how it would work. You'd use what you want in moderation, to feel a specific way, and you would stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it plays out that way in real life. For that reason, if you do have issues with moderating your drinking, there are tons of things you can try, from therapies to supplements and medications.
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>For a moment, I want to touch on addiction, and treatment for addiction, since that's really where the "just use less" idea falls apart. I don't think most people get how common addiction actually is, and how many people fight it daily. I wouldn't classify my situation as alcoholism, but I <em>would</em> say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can sometimes judge someone for how they deal with their addiction, and end up shaming them for the thing that's helping get them out of it. For example, I tried naltrexone for a while. It's usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug that alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP-1 to kill their cravings. Their goal is simply to feel normal, instead of feeling like they're stuck constantly shoving calories into their body every day.</p>
+    <p>Being on both sides of addiction, with more than just alcohol in the past, I've seen that the quickest people to judge the interventions can also be the ones who hadn't been through any of it. So one thing I do hope is that regardless of what intervention anyone tries, we all become a little more respectful of people's situations. 
+    So that's the background for my recommendation. 
+  </div>
+</details>
 
-I also want to touch on addiction, and treatment for addiction, since that's really what the "just use less when you're using too much" idea is talking about. I don't think most people get how common it is. I wouldn't classify my situation as alcoholism, but I *would* say it was an addiction of some kind. And the problem with people not realizing how normal that is, is they end up shaming the exact people who are trying to climb out of it. I tried naltrexone for a while. It's usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine to try it on some college weekends. And still, if we talked when we were out one day and a casual friend found out I was taking a drug alcoholics use, without knowing my underlying story, they'd probably judge me for it. It's the same thing when someone with a food addiction takes a GLP-1 to kill their cravings so they can feel normal instead of putting 5,000 calories down their throat every day. People might be shaming the one thing that saved their life without realizing it. Being on both sides of addiction, with more than just alcohol in the past, I've seen that the quickest people to judge those interventions are most often the ones who hadn't been through any of it. So one thing I do hope is that regardless of what intervention anyone tries, we all become a little more respectful of people's situations.
 
-So that's the background for my actual recommendation. I think sobriety is awesome, but I don't think everyone needs to do it. I think moderation is better. But if, for any reason, you aren’t someone who is blessed with the ability to consume alcohol in moderation, and you want to go permanently sober for *you*, then yes, go for it! I'll be here cheering you on. And if you want resources for different things you can try, or different things I've tried, I'm here for you. But if you don't have a problem and you're just asking whether you *need* to go sober, I'd say you'd probably get more satisfaction out of holding yourself to one or two drinks a night, if you can. 
+I think sobriety is awesome, but I don't think everyone needs to do it. I think moderation is better. But for whatever reason, if you aren’t someone who is blessed with the ability to consume alcohol in moderation, and you want to go permanently sober for *you*, then yes, go for it! I'll be here cheering you on. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. But if you don't have a problem and you're just asking whether you *need* to go sober, I'd say you'd probably get more satisfaction out of holding yourself to one or two drinks a night.
 
 
 
@@ -126,13 +131,6 @@ So that's the background for my actual recommendation. I think sobriety is aweso
 
 
 
-### Some things I learned about people 
-
-People ask a lot of questions, and most of them are supportive. I love to share my story when people are curious, so I do love the questions and having those conversations. What I also get, sometimes, is a look of judgement from other people who almost express guilt that I'm not joining them. Like if you went out for a friend's birthday and you brought your own food because you're on a meal plan. It breaks social norms and confuses people. For people on a meal plan, I assume they would rather go to the event and still show face, lest they have to stay home and avoid the whole thing. That's the attitude I took toward social events that involved heavy drinking.
-
-I don't really care about the looks from other people, but there is something I had to watch out for: people who *encouraged* me to drink back when I was trying to cut down. Those alcohol cravings were very real at the start. And back when I was less determined, I'd explained the goal to people when it was just to drink less, not go full-on sober. It's really hard to avoid the cravings, because people will egg you on. You just have to be vigilant and remember what your goals are, and why you're pursuing them. And then stick to them, no matter what other people say.
-
-I also have to add that there were _countless_ people who were incredibly supportive. People who'd start buying me an NA beer whenever I did go out. People who were just perfectly comfortable in those situations with me even if I wasn't drinking. People who asked how it was going, how many months I made it. I love those people to death!! And I feel bad because I don't think I've ever expressed the same level of concern for all of them. So if you're one of those people, take this apology and know that I really really appreciate you being supportive, and I care about you!
 
 
 
@@ -142,7 +140,16 @@ Probably not. For me, it was about getting healthier and getting rid of my cravi
 
 It's also been incredible to see how much I got done with all the weekends I wasn't going out. I refined my [self-driving car project](https://sull1van.com/7500-miles-self-driving-car). I honed my health and got the [best blood test results](https://sull1van.com/best-liver-of-all-time) of my entire life. I worked on a passion project that [graded two dozen phone chargers](https://sull1van.com/a-dozen-chargers-in-the-lab), continuing a Google engineer's work. I created a half-dozen AI-assisted vibe coding projects, replacing stuff like my Spotify and my workout app with custom-coded alternatives that are 100% free to operate (article coming soon). A lot of stuff.
 
-I plan to return to drinking casually one day. Maybe not just yet, but one day. And if I still can't do the 1-2 drinks a night thing, I've got a year's worth of sobriety showing me I can always do it again if I need to.
+
+I plan to return to drinking casually one day. Maybe not just yet, but one day. And if I still can't do the 1-2 drinks a night thing, I've got a year's worth of sobriety showing me I can always do it again.
+
+---
+
+
+*I also have to add that there were _countless_ people who were incredibly supportive. People who'd start buying me an NA whenever I did go out. Or people who were just perfectly comfortable in those situations with me even if I wasn't drinking. People who asked how it was going, how many months I made it. I love those people to death! And I feel bad because I don't think I've ever expressed the same level of concern for all of them. So if you're one of those people, take this apology and know that I really do appreciate you being supportive, and I care about you!*
+
+
+
 
 <style>
   .note-card {
