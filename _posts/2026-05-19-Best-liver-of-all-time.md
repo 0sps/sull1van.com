@@ -35,7 +35,7 @@ Earlier in 2025, I did bloodwork for the first time in a while, and found I had 
 
 ## The baseline
 
-I mentioned at the beginning that this all started because of some bad blood test results. But whcih ones specifically? The main markers came from a Comprehensive Metabolic Panel, something that I used to call this a liver panel, but realized isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
+I mentioned at the beginning that this all started because of some bad blood test results. But which ones specifically? The main markers came from a Comprehensive Metabolic Panel, something that I used to call this a liver panel, but realized isn't quite right. A CMP covers more than the liver, so I filter it down to the values I care about:
 
 - Total protein
 - Albumin
@@ -114,7 +114,7 @@ Then there was twenty-four-year-old me:
 
 Yikes lol.
 
-While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. I spent nearly the entire calednar year at a bar, from Summer 2023 to Fall 2024. It was interesting since I had drank little in 2025 (at the time this test was done), but I stopped *because* the hangovers were getting too bad. So I knew any bad results this many months later were a sign of latent liver injury. And keep in mind, I was still drinking, just less frequently due to those hangovers.
+While my liver was still functioning generally well at the time of this test, the enzymes were extremely worrisome. As I mentioned before, this was taken after I graduated college. I spent nearly the entire calendar year at a bar, from Summer 2023 to Fall 2024. It was interesting since I had drank little in 2025 (at the time this test was done), but I stopped *because* the hangovers were getting too bad. So I knew any bad results this many months later were a sign of latent liver injury. And keep in mind, I was still drinking, just less frequently due to those hangovers.
 
 **Needless to say, after getting this test, I was motivated to finally take charge of my liver health.**
 
@@ -123,7 +123,7 @@ While my liver was still functioning generally well at the time of this test, th
 ## Step one: research
 #### The glutathione rabbit hole
 
-I started to research more about glutathione, a supplement that could potentially help regenerate my liver. Funyn enough, I had actually dealt with it before. Back in 2022, I went to a men's clinic after my friend convinced me to get my blood tested like him. To optimize as many biomarkers as possible. Their main finding was that my liver was stressed with slightly elevated enzymes, and that I could inject glutathione if I wanted to. They put me on 400mg weekly.
+I started to research more about glutathione, a supplement that could potentially help regenerate my liver. Funny enough, I had actually dealt with it before. Back in 2022, I went to a men's clinic after my friend convinced me to get my blood tested like him. To optimize as many biomarkers as possible. Their main finding was that my liver was stressed with slightly elevated enzymes, and that I could inject glutathione if I wanted to. They put me on 400mg weekly.
 
 The injections were really painful. It has to go straight into muscle, and it's slightly acidic, so it stings while it goes in. I don't have any hard data on whether those few injections did anything, but my liver was mostly normal at the time anyway. I ended up stopping it and forgetting about glutathione.
 
@@ -433,7 +433,7 @@ As of May 2026, I have the best liver test results of my life. Maybe not every s
 
 B.L.O.A.T. achieved.
 
-## Refreences
+## References
 
 <p id="ref-0"><a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/" class="ref-marker">[0]</a> Liver Function Tests: <a href="https://www.ncbi.nlm.nih.gov/books/NBK482489/">https://www.ncbi.nlm.nih.gov/books/NBK482489/</a></p>
 <p id="ref-1"><a href="https://pubmed.ncbi.nlm.nih.gov/40143049/" class="ref-marker">[1]</a> Enhancing the Oral Bioavailability of Glutathione Using Innovative Analogue Approaches: <a href="https://pubmed.ncbi.nlm.nih.gov/40143049/">https://pubmed.ncbi.nlm.nih.gov/40143049/</a></p>

@@ -389,7 +389,7 @@ With this in mind, our setup consisted of a few different pieces:
 4. A voltmeter
 5. Plenty of electrical wires and extra USB cables
 
-The process involved would connecting the charger into a power source, and connecting the other end to a USB C Decoy Board, and connecting that decoy board to an electronic load. The oscilloscope probes tapped in right at the decoy board [A1].
+The process involved connecting the charger into a power source, and connecting the other end to a USB C Decoy Board, and connecting that decoy board to an electronic load. The oscilloscope probes tapped in right at the decoy board [A1].
 
 The decoy board was needed because the USB C PD Spec needs the load device to choose a voltage. Otherwise the charger won't send anything. In the chargers Ken tested, most often they'd just send 5V regardless, so this setup was a little more complicated.
 
@@ -1796,5 +1796,4 @@ A Dozen Chargers in the lab
 ### Appendix
 
 [A1] *Tip: If you want to do testing of your own, always use the spring ground clip. Using the default alligator ground clip will lead to extremely high noise ratings.*
-
 

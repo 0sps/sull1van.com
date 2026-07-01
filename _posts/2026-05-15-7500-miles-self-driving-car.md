@@ -160,7 +160,7 @@ This is where it gets fun..
 You'll need to look up the Comma setup video specific to your car. I found that all HKG cars have similar installation instructions, so it was pretty easy to get mine put in. 5 minutes of looking through YouTube and you should be on your way.
 
 
-<img src="/assets/images/2026-05-15-7500-miles-self-driving-car/commaInstallation_hyaundai.png" alt="Comma 3X installation" style="max-width: 100%; height: auto;" />
+<img src="/assets/images/2026-05-15-7500-miles-self-driving-car/commaInstallation_hyundai.png" alt="Comma 3X installation" style="max-width: 100%; height: auto;" />
 
 The interesting thing about the Comma 3X is that it sits between your car and the camera. It intercepts the feed coming straight from the camera, decodes it, and uses it for autonomous control. It also has a genius passthrough mechanism where it will pass the camera footage straight through to the car if the Comma loses power. When driving, this would save me in the rare instances in which the Comma was annoying me and I pulled its power plug. Once you do that, the car defaults to its own controls without any issue. It's a highly resilient setup.
 
