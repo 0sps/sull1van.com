@@ -31,13 +31,12 @@ Like I said, at first I was really strict with it. But after some time, I realiz
 1. If it's labeled "NA" (0.5% alcohol or less), I could drink it.
 2. If something was classified as alcoholic, so >0.5%, I counted it as breaking sobriety if I swallowed it. 
 
-That meant the trace alcohol from an NA beer was fine, and dipping my tongue to taste a friend's espresso martini was also fine (provided I didn't actually drink it).
-
-You might say these are permissive rules, and that's fair. They worked for me. I was never in the territory of life-or-death alcoholism, so I didn't feel like my sobriety needed to be that strict. I'm also happy to say that, since I'm writing this article, I abided by those rules for the ENTIRE year. I never once swallowed anything from an alcoholic beverage, was never once drunk or buzzed in any way, and only ever drank NA beers, coffee, water, and soda. It feels both weird and pretty cool to say that.
+That meant the trace alcohol from an NA beer was fine, and dipping my tongue to taste a friend's espresso martini was also fine (provided I didn't actually drink it). You might say these are permissive rules, and that's fair. They worked for me. I was never in the territory of life-or-death alcoholism, so I didn't feel like my sobriety needed to be that strict as time went on. I'm also happy to say that, since I'm writing this article, I abided by those rules for the ENTIRE year. I never once swallowed anything from an alcoholic beverage, was never once drunk or buzzed in any way, and only ever drank NA beers, coffee, water, and soda. It feels both weird and pretty cool to say that.
 
 ---
 
-Another point of my sobriety was that it was actually threefold. It included **smoking and vaping, not just drinking**. I know plenty of people who don't do any of these things, so I don't think that makes me special in any way, but I just wanted to make it a little more challenging. Also, I've never been huge on weed or nicotine, so I thought they were good to add in. 
+Another point of my sobriety was that it actually became threefold. Realizing I wanted to make it more encompassing, and feel more like a true personal reset, I included **smoking and vaping as well, not just drinking**. 
+I know plenty of people who don't do any of these things, so I don't think that makes me special in any way. I just wanted to make it a little more challenging and remove the idea that I might replace one substance with another.
 
 
 ## Just go longer
@@ -88,8 +87,23 @@ But that nice state where you have the tiniest buzz from a single drink, THAT is
 
 The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, a birthday dinner, and one drink would be perfect to soften the mood. It's also just a part of culture here in the Midwest, we don't have as much of the great outdoors as other regions of the country, and we have some pretty bad winters. Alcohol is pretty ingrained into how people connect out here, and going 100% sober made that very obvious.
 
-#### My recommendation for you
-And that's why I wouldn't recommend going fully sober to most people. There's something to be said about having the option to use alcohol as a tool. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it like caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want. For those who have the opportunity to participate in that responsibly, I would want you to take advantage where possible. A lot of people have asked me this question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for *you*, then yes, go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to one or two drinks a night, if you can. That's my take at least.
+### Would I recommend others do this?
+Honestly, I probably wouldn't recommend this for most people. There's something to be said about having the option to use alcohol on occasion. To treat a drink the same way you might want a sweet treat to celebrate a milestone or a birthday. Or maybe even to treat it like caffeine: you should have the ability to have a three-coffee day once in a while at work, if that's what you want, and same with alcohol. For those who have the opportunity to participate in that responsibly, I would want you to take advantage where possible. In an ideal world, everyone could have access to these substances, and could take whatever they want in moderation to feel the way they want to feel. But if someone realized they were doing it too much, and it was harmful for them, they would stop. This takes a lot of introspection and careful self-assessment, so I don't think it happens that way. But it would be nice if this was the ideal.
+
+I think this perspective is important because it acknowledges that people could develop addiction to anything. There's more than just alcoholism. One that many people might not think of is food additction, where people feel like they can't stop eating. For those people, they can't really stop eating, so they can't follow the advice above. If you go to an alcoholic who is in recovery and you tell them, "you have to drink 2 drinks a day, every single day for the rest of your life. no more, no less." He would probably go insane. But that's food addiction. That's why I'm supportive of GLP1 drugs to suppress their mental noise and subconscious cravings for food. I see a lot of shame and scoffing around people who use these drugs for any reason other than diabetes, and I feel like those people are the ones who have never dealt with an addiction of any kind. It's easy to call out someone for how they manage their addiction when you haven't felt that addiction yourself.
+
+A lot of people have asked me this question, and while I think sobriety is awesome, I don't think everyone needs to do it. If you want to go permanently sober for *you*, then yes, go for it! I'll be here to support you. But if you don't have a problem, and you're asking me if you need to go sober, I would say you might get more satisfaction out of limiting yourself to one or two drinks a night, if you can. That's my take at least.
+
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>I know it's rich to read "limit yourself to 1-2 drinks" when I just told you at the beginning of the article that I couldn't do it. The difference between me and you is that I knew I needed to go sober. I don't know much about you, but if you drink a few drinks a month tops, then yeah, you probably wouldn't gain much by going the extreme route that I did. You could probably get all the health benefits + still enjoy yourself by limiting your consumption. If you are like me and would have trouble limiting yourself, then maybe consider sobriety.</p>
+  </div>
+</details>
+
+On another note, sobriety has also given me a chance to think about how a lot of people are abstaining from many aspects of society. If you are diabetic, you probably won't be trying to eat loads of added sugar. But for most people, having mutiple slices of cake on birthdays would be fine for them. If you feel like there are substacnes, alcohol included, that you'd elike to consume less of, I'd honestly recommend you do some research on what could help you. For instance, when I wanted to drink less alcohol, I experimented with naltrexone, as it takes the high out of being drunk. It was nice to use at the time, but I don't like taking stuff if I don't have to, do I don't have the prescription anymore.
+
+
 
 
 
@@ -97,7 +111,6 @@ And that's why I wouldn't recommend going fully sober to most people. There's so
 ## What I learned about people while sober
 
 People ask constant questions, and most of them are supportive. I've had tons of questions about my sobriety and never once been shamed for it. What I do get, sometimes, is a quiet guilt. I'll see other people drinking and they almost seem upset that I'm not. Like if you went out for a friend's birthday and you brought your own food because you're on a meal plan. It breaks social norms and confuses people. The alternative is to stay home and skip social events, which is a terrible alternative.
-
 
 The thing to actually watch out for is the opposite: people who *encouraged* me to drink back when I was trying to cut down. I'd explained the goal to most of the people around me when I wanted to drink less, and while the vast majority were supportive, some would still ask me to get extremely drunk together. And look, I am NOT mad about that — that's what I was known for up until 2025. But it is a weird feeling to push yourself in one direction after being known for the opposite and find the people around you aren't used to it or taking it seriously. You just have to be vigilant and remember what your goals are, and why you're pursuing them. And then stick to them, no matter what other people say.
 
@@ -112,3 +125,70 @@ Probably not. For me, it was about getting healthier and getting rid of my cravi
 It's also been incredible to see how much I could accomplish in the in-between, having repurposed all the weekends I wasn't going out. I refined my self-driving car project. I honed my health and got the best blood test results of my entire life. I worked on a passion project that graded two dozen phone chargers, continuing a Google engineer's work. I created a half-dozen AI-assisted vibe coding projects, replacing stuff like my Spotify and my workout app with custom-coded alternatives that are 100% free to operate (article coming soon). A lot of stuff.
 
 I plan to return to drinking casually one day. Maybe not just yet, but one day. And if I still can't do the 1-2 drinks a night thing, I've got a year's worth of sobriety showing me I can always go 100% again if I need to.
+
+<style>
+  .note-card {
+    border: 1px solid #c9b99a;
+    border-radius: 8px;
+    margin: 2rem 0;
+    overflow: hidden;
+    background: #faf6f0;
+  }
+  .note-card summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    list-style: none;
+    user-select: none;
+    color: #8c7355;
+  }
+  .note-card summary::-webkit-details-marker { display: none; }
+  .note-card summary::before {
+    content: '▸';
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  .note-card[open] summary::before { transform: rotate(90deg); }
+  .note-card-body {
+    padding: 0.6rem 1rem 0.75rem;
+    border-top: 1px solid #c9b99a;
+    font-size: 0.9em;
+    color: #5c4a32;
+  }
+  .note-card-body p {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+  html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
+  html[data-theme="dark"] .note-card summary { color: #a08860; }
+  html[data-theme="dark"] .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
+  @media (prefers-color-scheme: dark) {
+    .note-card { border-color: #4a3e2e; background: #1e1a14; }
+    .note-card summary { color: #a08860; }
+    .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('.note-card summary').forEach(function (summary) {
+      summary.addEventListener('click', function (e) {
+        e.preventDefault();
+        var details = summary.closest('details');
+        var y = window.scrollY;
+        details.open = !details.open;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { window.scrollTo(0, y); });
+        });
+      });
+    });
+  })();
+</script>
+
