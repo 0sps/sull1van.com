@@ -423,13 +423,13 @@ However, I do think there is a lot to say about injectable glutathione. Injectab
 As far as the supplements go, I don't think any oral supplement is going to outsmart alcohol if heavy alcohol consumption is the main thing stressing your liver. But I do think oral supplements help, such as the SAG and grape seed extract. The research is promising [<a href="#ref-4" class="cite-link">4</a>][<a href="#ref-5" class="cite-link">5</a>], and my test results add more fuel to that fire. S-Acetyl-L-Glutathione is the only one I'd take orally. And after injecting pure glutathione, I learned that it costs only a little more than the supplement anyway. So for anyone who is considering one of the two, I'd say do whatever you are most comfortable with, but know that both will probably help you out in some capacity.
 
 
-## The verdict
+## My liver today
 
 I started with a simple goal: get my liver back into range.
 
 Then, because I was mad at myself for letting it fall out of range, I turned it into a competition against my own teenage bloodwork. And take that, teenage me! Twenty-five year old me is just as good, if not better.
 
-As of May 2026, I have the best liver test results of my life. Maybe not every single marker, if you want to pick at it. But taken as a full picture, especially with AST and ALT, this is the best my liver has ever looked on paper.
+As of May 2026, I have the best liver test results of my life. Maybe not every single marker, if you want to pick at it. But taken as a full picture, especially with AST and ALT, this is the best my liver has ever looked on paper. 
 
 B.L.O.A.T. achieved.
 
