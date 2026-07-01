@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Thoughts on a Year Sober"
-date: 2026-07-04
+date: 2026-06-04
 tags: [meta, blogging]
 ---
 
