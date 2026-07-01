@@ -21,7 +21,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 <details class="note-card">
   <summary>Note</summary>
   <div class="note-card-body">
-    <p>Later on, into sobriety, I also built <a href="https://sull1van.com/fixing-blood-test-results">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
+    <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
   </div>
 </details>
 
