@@ -7,7 +7,7 @@ tags: [meta, blogging]
 
 
 
-Today marks one full year since I went sober. Sheesh.
+Today marks one full year since I went sober. One year!
 
 
 
