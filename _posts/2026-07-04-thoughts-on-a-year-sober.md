@@ -5,23 +5,21 @@ date: 2026-07-04
 tags: [meta, blogging]
 ---
 
-Sheesh, one full year. 
-Today officially marks one year since I went sober.
+Today marks one full year since I went sober. Sheesh.
+
 
 ## Background
 
-I had toyed with the idea of going sober ever since the middle of college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. As I got older and graduated, I felt like getting anything more than a light buzz should only ever be a part of my younger years. It felt like time to move on. But month after month, I kept having nights where I got more drunk than intended, and I hated it. Yes, I could always control whether I drank -  I did plenty of periods where I was entirely sober in college - but *when* I drank, I was never the kind of person who would have one or two and stop. (the em dashes were me by the way, not ai) That was the thing I was trying to get past, and why I felt like going sober for a while could be a much needed reset. I also just didn't like how I acted when I was drunk. I never did, to be honest.
+I had toyed with the idea of going sober ever since the middle of college. Everyone has different relationships with substances, and mine with alcohol always felt like it should be temporary. As I got older and graduated, it felt like time to move on, and let anything more than a light buzz stay back in college. But month after month, I kept having nights where I got more drunk than intended, and I hated it. I could always control whether I drank — I had plenty of totally sober stretches in college — but when I drank, I was never the guy who could have one or two and stop (The em dashes were me, not ai). That's what I hope would chave changed by now. I also just hated how I acted when I was drunk.
 
-What really kicked it off was some concerning blood tests I got in early 2025. The test showed significant elevation in my ALT and AST, key liver enzymes used to detect liver stress and damage. The doctors mentioned that I should probably slow down on drinking if that's what I had been up to lately, since my liver was a little stressed. But reading the results, and seeing just how high the levels were made me take my health much more seriously. I started doing things like [creating a web dashboard](https://sull1van.com/fixing-blood-test-results) to track my blood test results, so I could watch them closely. I then worked on [my own supplement stack](https://sull1van.com/best-liver-of-all-time) to help my liver.
+My path to sobriety didn't really take off until I got some concerning blood tests back in early 2025. The tests showed significant elevation in my ALT and AST, key liver enzymes used to detect liver stress and damage. My doctor mentioned that I should probably slow down on drinking if that's what I had been up to, but that he didn't think I had any kind of liver disease. But after seeing the results, and being more embarrassed than anything, I realized it was obvious what needed to change. It made me take my health much more seriously. I built [a web dashboard](https://sull1van.com/fixing-blood-test-results) to track my blood test results, so I could watch them closely, and then created [my own supplement stack](https://sull1van.com/best-liver-of-all-time) to help my liver.
 
-At this point, I still did *want* to drink less, but weekend after weekend, it never happened the way I had hoped. I could never just have one drink and call it a night. There were many times where I had way more than I was expecting. I won't even say it was due to peer pressure, it was just me not knowing where my boundary sat. So one day in the summer, I woke up and decided to cut it off entirely. Time to go sober.
+These things did help, and they pushed me to really *want* moderation and to drink less. But weekend after weekend, I could never just have one drink and call it a night. I wouldn't even blame peer pressure, just that I never set a good boundary for myself. So one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
 
 
 ## Rules of my sobriety
 
-Sobriety felt pretty scary at first. I was more anxious than anything, constantly thinking stuff like, *"What if I drink again? What if I mess up?"* 
-
-For the first few days, I was terrified about giving in. I couldn't even imagine a long-term goal at this point, only that I had to make it two months sober. No idea what would happen after that. Just took it one day at a time.
+Sobriety felt pretty scary at first. For the first few days I was terrified I'd give in, constantly thinking, *"What if I drink again? What if I mess up?"* I couldn't even picture a long-term goal, only that I had to make it for two months.
 
 As the weeks went by, I started to get less scared. And with each day in those two months, I started to collect evidence that I could absolutely live my life and not drink. 
 
