@@ -66,27 +66,32 @@ The changes in my body showed up fast, within ~3 months. I noticed increased ene
 - Fasted Glucose
 - Hemoglobin A1c
 
-This was a really big accomplishment for me. The people close to me know my liver enzymes were elevated, indicative of alcohol-induced "liver stress". It was never bad enough to be liver disease, but it was getting close. I'm happy to say that, as of 2026, I've never had a better-functioning liver in my life. And that's saying a lot, since I have been getting these tests since I was seventeen!
+This was a really big accomplishment for me. The people close to me know my liver enzymes were elevated, not bad enough to be liver disease, but getting close. I'm happy to say that, as of 2026, I've never had a better-functioning liver in my life, and that's saying a lot since I have been getting these tests since I was **seventeen**!
 
-Around the same time my liver began to improve and my eyes whitened, the cravings evaporated. By month three I no longer had any big urge to drink. I settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
+Around the same time as all this, my cravings evaporated too. By month three I no longer had any big urge to drink. I settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
-And on that note: NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol.
+<details class="note-card">
+  <summary>Note</summary>
+  <div class="note-card-body">
+    <p>And on that note: NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol.</p>
+  </div>
+</details>
 
 
 
 
 ## What I miss
 
-Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz that comes after one, maybe two drinks. But being drunk? Thinking back to college and how often I would go out, I don't miss it. While it used to be a lot of fun, I know what's waiting for me now at the bottom of any bottle of something strong, and it's a nasty hangover.
+Something I already knew but see much more clearly now is that I don't miss being drunk. I do miss that nice buzz after one, maybe two drinks. But thinking back to college times and how often I went out and got drunk for real, no, I don't miss it. It used to be a lot of fun, but I know what's waiting at the bottom of any bottle of something strong now, and it's a nasty hangover.
 
-I actually saw that coming before I quit. In the weeks right before I went sober, I could feel the hangovers kick in while I was still drunk. Drinking heavily had already started to lose its appeal, which is why I'd been slowly reducing the number of nights a month I drank. I don't ever want to go back to that state of getting seriously drunk, no matter how infrequent, the four-plus-drink kind of nights, the ones where you need an entire Sunday to recover. Good riddance to those.
+I actually saw that coming before I quit. In the weeks right before I went sober, I could feel the hangovers kicking in while I was still drunk. Heavy drinking had already lost its appeal, which is why I'd been slowly cutting the number of nights a month I drank. I don't ever want to go back to that, those nights where you need an entire Sunday to recover. Good riddance to those.
 
-But that nice state where you have the tiniest buzz from a single drink, THAT is the state I miss. And that's really where my head is today. Not having alcohol is fine, I'll live, but I would very much like to experience it again in moderation. Without alcohol, social commitments take on a slightly flatter feeling. Not significantly worse or anything, just a little less excitement. 
+But that nice state where you have the tiniest buzz from a single drink? THAT is the state I miss. And that's really where my head is today. Not drinking is fine, I'll live, but I would like to experience it again in moderation. Without alcohol, social stuff takes on a slightly different feeling. Not worse, but just a little different.
 
-The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, a birthday dinner, and one drink would be perfect to soften the mood. It's also just a part of culture here in the Midwest, we don't have as much of the great outdoors as other regions of the country, and we have some pretty bad winters. Alcohol is pretty ingrained into how people connect out here, and going 100% sober made that very obvious.
+The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. It's also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times that is how we bond. Alcohol is ingrained into how people connect out here, and going 100% sober made that pretty obvious.
 
 ### Would I recommend others do this?
-People have asked me this, and to them I probably wouldn't recommend it There's something to be said for having the option to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone like a birthday. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while at work if that's what you want. I feel the same way about alcohol. For those who can participate responsibly, I'd want them to take advantage where possible.
+People have asked me this, and honestly I probably wouldn't recommend it There's something to be said for having the option to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone like a birthday. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while at work if that's what you want. I feel the same way about alcohol. For those who can participate responsibly, I'd want them to take advantage where possible.
 
 In an ideal world, that's how it would work. You have access to these substances, take whatever you want in moderation to feel a specific way, and stop the moment you realized you’re doing it too much. But the last part takes a lot of introspection and honest self-assessment, so I don't think it actually plays out that way in real life. It'd be nice if it did.
 
