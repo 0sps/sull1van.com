@@ -203,7 +203,7 @@ I plan to return to drinking casually one day. Maybe not just yet, but one day. 
     -webkit-backdrop-filter: blur(18px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.55);
     border-radius: 16px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18),
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15),
                 inset 0 1px 1px rgba(255, 255, 255, 0.6);
     overflow: hidden;
   }
