@@ -224,7 +224,7 @@ layout: default
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const headings = Array.from(document.querySelectorAll("main h1, main h2")).filter(h => h.innerText.trim() !== "");
+  const headings = Array.from(document.querySelectorAll("main h1, main h2, main h3")).filter(h => h.innerText.trim() !== "");
   if (headings.length < 2) return;
 
   const container = document.getElementById("mini-toc-scrollbar");
