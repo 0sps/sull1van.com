@@ -32,6 +32,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 These things did help, and they pushed me to really *want* to use moderation and to drink less. But weekend after weekend, I just couldn't have one drink and call it a night. I wouldn't even blame peer pressure, it was just that I never set a good boundary for myself. So, one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
 <br>
 
+<br>
 
 ### Rules of my sobriety
 
