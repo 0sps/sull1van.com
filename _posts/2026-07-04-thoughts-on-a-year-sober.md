@@ -21,7 +21,9 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 <details class="note-card">
   <summary>Footnote</summary>
   <div class="note-card-body">
-    <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
+    <div class="note-card-body-inner">
+      <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
+    </div>
   </div>
 </details>
 
@@ -80,7 +82,9 @@ The changes in my body showed up fast, within 3 months. I noticed increased ener
 <details class="note-card">
   <summary>Footnote</summary>
   <div class="note-card-body">
-    <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
+    <div class="note-card-body-inner">
+      <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
+    </div>
   </div>
 </details>
 
@@ -150,7 +154,6 @@ I love those people to death! And I feel bad because I don't think I've ever out
     border: 1px solid #c9b99a;
     border-radius: 8px;
     margin: 2rem 0;
-    overflow: hidden;
     background: #faf6f0;
   }
   .note-card summary {
@@ -171,31 +174,56 @@ I love those people to death! And I feel bad because I don't think I've ever out
   .note-card summary::before {
     content: '▸';
     font-size: 0.9em;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease;
     display: inline-block;
   }
   .note-card[open] summary::before { transform: rotate(90deg); }
+  /* Animated expand/collapse via CSS grid 0fr → 1fr */
   .note-card-body {
-    padding: 0.6rem 1rem 0.75rem;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  .note-card[open] .note-card-body {
+    grid-template-rows: 1fr;
+  }
+  .note-card.is-closing .note-card-body {
+    grid-template-rows: 0fr;
+  }
+  .note-card.is-closing .note-card-body-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .note-card-body-inner {
+    overflow: hidden;
+    padding: 0 1rem;
     border-top: 1px solid #c9b99a;
     font-size: 0.9em;
     color: #5c4a32;
+    /* Animate padding so it doesn't pop */
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: padding 0.3s ease;
   }
-  .note-card-body p {
+  .note-card[open] .note-card-body-inner {
+    padding-top: 0.6rem;
+    padding-bottom: 0.75rem;
+  }
+  .note-card-body-inner p {
     margin: 0.5rem 0;
     line-height: 1.5;
   }
   html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
   html[data-theme="dark"] .note-card summary { color: #a08860; }
-  html[data-theme="dark"] .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
+  html[data-theme="dark"] .note-card-body-inner { border-top-color: #4a3e2e; color: #c0a878; }
   @media (prefers-color-scheme: dark) {
     .note-card { border-color: #4a3e2e; background: #1e1a14; }
     .note-card summary { color: #a08860; }
-    .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
+    .note-card-body-inner { border-top-color: #4a3e2e; color: #c0a878; }
   }
   html[data-theme="light"] .note-card { border-color: #c9b99a; background: #faf6f0; }
   html[data-theme="light"] .note-card summary { color: #8c7355; }
-  html[data-theme="light"] .note-card-body { border-top-color: #c9b99a; color: #5c4a32; }
+  html[data-theme="light"] .note-card-body-inner { border-top-color: #c9b99a; color: #5c4a32; }
 
   .mobile-toc {
     display: none;
@@ -267,10 +295,23 @@ I love those people to death! And I feel bad because I don't think I've ever out
         e.preventDefault();
         var details = summary.closest('details');
         var y = window.scrollY;
-        details.open = !details.open;
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () { window.scrollTo(0, y); });
-        });
+
+        if (details.open) {
+          // Closing: let the 0.3s grid animation play, then remove [open]
+          details.classList.add('is-closing');
+          setTimeout(function () {
+            details.open = false;
+            details.classList.remove('is-closing');
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () { window.scrollTo(0, y); });
+            });
+          }, 300);
+        } else {
+          details.open = true;
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { window.scrollTo(0, y); });
+          });
+        }
       });
     });
   })();
