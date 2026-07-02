@@ -150,81 +150,6 @@ I love those people to death! And I feel bad because I don't think I've ever out
 
 
 <style>
-  .note-card {
-    border: 1px solid #c9b99a;
-    border-radius: 8px;
-    margin: 2rem 0;
-    background: #faf6f0;
-  }
-  .note-card summary {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.85rem;
-    cursor: pointer;
-    font-size: 0.78em;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    list-style: none;
-    user-select: none;
-    color: #8c7355;
-  }
-  .note-card summary::-webkit-details-marker { display: none; }
-  .note-card summary::before {
-    content: '▸';
-    font-size: 0.9em;
-    transition: transform 0.25s ease;
-    display: inline-block;
-  }
-  .note-card[open] summary::before { transform: rotate(90deg); }
-  /* Animated expand/collapse via CSS grid 0fr → 1fr */
-  .note-card-body {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s ease;
-  }
-  .note-card[open] .note-card-body {
-    grid-template-rows: 1fr;
-  }
-  .note-card.is-closing .note-card-body {
-    grid-template-rows: 0fr;
-  }
-  .note-card.is-closing .note-card-body-inner {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .note-card-body-inner {
-    overflow: hidden;
-    padding: 0 1rem;
-    border-top: 1px solid #c9b99a;
-    font-size: 0.9em;
-    color: #5c4a32;
-    /* Animate padding so it doesn't pop */
-    padding-top: 0;
-    padding-bottom: 0;
-    transition: padding 0.3s ease;
-  }
-  .note-card[open] .note-card-body-inner {
-    padding-top: 0.6rem;
-    padding-bottom: 0.75rem;
-  }
-  .note-card-body-inner p {
-    margin: 0.5rem 0;
-    line-height: 1.5;
-  }
-  html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
-  html[data-theme="dark"] .note-card summary { color: #a08860; }
-  html[data-theme="dark"] .note-card-body-inner { border-top-color: #4a3e2e; color: #c0a878; }
-  @media (prefers-color-scheme: dark) {
-    .note-card { border-color: #4a3e2e; background: #1e1a14; }
-    .note-card summary { color: #a08860; }
-    .note-card-body-inner { border-top-color: #4a3e2e; color: #c0a878; }
-  }
-  html[data-theme="light"] .note-card { border-color: #c9b99a; background: #faf6f0; }
-  html[data-theme="light"] .note-card summary { color: #8c7355; }
-  html[data-theme="light"] .note-card-body-inner { border-top-color: #c9b99a; color: #5c4a32; }
-
   .mobile-toc {
     display: none;
     position: relative;
@@ -288,32 +213,4 @@ I love those people to death! And I feel bad because I don't think I've ever out
   }
 </style>
 
-<script>
-  (function () {
-    document.querySelectorAll('.note-card summary').forEach(function (summary) {
-      summary.addEventListener('click', function (e) {
-        e.preventDefault();
-        var details = summary.closest('details');
-        var y = window.scrollY;
-
-        if (details.open) {
-          // Closing: let the 0.3s grid animation play, then remove [open]
-          details.classList.add('is-closing');
-          setTimeout(function () {
-            details.open = false;
-            details.classList.remove('is-closing');
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () { window.scrollTo(0, y); });
-            });
-          }, 300);
-        } else {
-          details.open = true;
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () { window.scrollTo(0, y); });
-          });
-        }
-      });
-    });
-  })();
-</script>
 

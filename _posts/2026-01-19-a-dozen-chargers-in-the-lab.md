@@ -446,21 +446,6 @@ Scroll through the cards and click any one to expand the full oscilloscope graph
     </ul>
   </div>
 </details>
-<script>
-  (function () {
-    document.querySelectorAll('.note-card summary').forEach(function (summary) {
-      summary.addEventListener('click', function (e) {
-        e.preventDefault();
-        var details = summary.closest('details');
-        var y = window.scrollY;
-        details.open = !details.open;
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () { window.scrollTo(0, y); });
-        });
-      });
-    });
-  })();
-</script>
 
 
 ### A few more details on noise and ripple
@@ -488,51 +473,8 @@ They look confusing at first glance, but you don't need to be an electrical engi
 ## Oscilloscope Graphs
 
 <style>
-  .note-card {
-    border: 1px solid #c9b99a;
-    border-radius: 8px;
-    margin: 1rem 0;
-    overflow: hidden;
-    background: #faf6f0;
-  }
-  .note-card summary {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.85rem;
-    cursor: pointer;
-    font-size: 0.78em;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    list-style: none;
-    user-select: none;
-    color: #8c7355;
-  }
-  .note-card summary::-webkit-details-marker { display: none; }
-  .note-card summary::before {
-    content: '▸';
-    font-size: 0.9em;
-    transition: transform 0.2s ease;
-    display: inline-block;
-  }
-  .note-card[open] summary::before { transform: rotate(90deg); }
-  .note-card-body {
-    padding: 0.6rem 1rem 0.75rem;
-    border-top: 1px solid #c9b99a;
-    font-size: 0.9em;
-    color: #5c4a32;
-  }
-  .note-card-body ul { margin: 0; padding-left: 1.3em; }
-  .note-card-body li { margin: 0.4rem 0; }
-  html[data-theme="dark"] .note-card { border-color: #4a3e2e; background: #1e1a14; }
-  html[data-theme="dark"] .note-card summary { color: #a08860; }
-  html[data-theme="dark"] .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
-  @media (prefers-color-scheme: dark) {
-    .note-card { border-color: #4a3e2e; background: #1e1a14; }
-    .note-card summary { color: #a08860; }
-    .note-card-body { border-top-color: #4a3e2e; color: #c0a878; }
-  }
+  /* Note cards styled globally in the post layout; keep this post's tighter spacing */
+  .note-card { margin: 1rem 0; }
   .table-wrapper {
     width: 100%;
     overflow-x: auto;
