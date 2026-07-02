@@ -114,24 +114,15 @@ People have asked me this, and honestly, I don't think every single person stand
 
 In an ideal world, that's how it would work. You'd use what you want in moderation, to feel a specific way, and you would stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it plays out that way in real life. For that reason, if you do have issues with moderating your drinking, there are tons of things you can try, from therapies to supplements and medications.
 
-
-<details class="note-card">
-  <summary>Footnote</summary>
-  <div class="note-card-body">
-    <p>For a moment, I want to touch on addiction, and treatment for addiction, since that's really where the "just use less" idea falls apart. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I <em>would</em> say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone for how they deal with their addiction, ending up shaming them for the thing that's getting them out of it. Some people replace alcohol with sugary soda, and I think that's fine. Some people replace it with nicontine.</p>
-    <p>For me, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug that alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. </p>
-    <p>It's the same thing when someone with food addiction takes a GLP-1 to kill their cravings. Their goal is simply to feel normal, instead of feeling like they're stuck constantly shoving calories into their body every day. And I hear a lot of scoffing at people who use these and any kind of substance as a replacement for an addiction. My hope here is that regardless of what intervention someone is trying, we all become a little more respectful of people's situations.</p>
-    <p>So that's the background for my recommendation. And why I'd respect you trying <em>anything</em> if you want to drink less.</p>
-  </div>
-</details>
-
-<br>
-
 I think sobriety is awesome, but I don't think everyone needs to do it. I think moderation is better. But for whatever reason, if you aren’t someone who is blessed with the ability to consume alcohol in moderation, and you want to go permanently sober for *you*, then yes, go for it! I'll be here cheering you on. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. But if you don't have a problem and you're just asking whether you *need* to go sober, I'd say you'd probably get more satisfaction out of holding yourself to one or two drinks a night.
 
 
 
-
+### What I learned about people
+People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. What I also get, sometimes (very rarely though), is a look of guilt. I'll see other people drinking and they almost seem upset that I'm not. I guess it would be similar to going out for a friend's birthday and bringing your own food because you're on a meal plan. It breaks social norms and confuses people. The alternative is to stay home and skip social events, which is a terrible alternative.
+And while not necessarily specific to me, I have noticed a lot of judgement over people who are trying to better themselves by all sorts of means, not just by going fully sober. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I *would* say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone without knowing what's going on, shaming them for the thing that's getting them out of their addiction. 
+For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. 
+And I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction. My hope here is that regardless of what intervention someone is trying, people become a little more respectful of others' situations.
 
 
 
