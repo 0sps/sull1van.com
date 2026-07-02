@@ -76,10 +76,10 @@ But yeah, I could. Just go longer. So that's exactly what I did. At the end of t
 <br>
 ### Changes I noticed
 
-The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprising great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as his, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
+The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprisingly great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as this, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
 <details class="note-card">
-  <summary>FOOTNOTE ON NA BEERS</summary>
+  <summary>FOOTNOTE ON N.A. BEERS</summary>
   <div class="note-card-body">
     <div class="note-card-body-inner">
       <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
@@ -104,9 +104,9 @@ This was a really big accomplishment for me, since some of these were pretty hig
 ### What I still miss
 I don't miss being drunk. I actually saw that coming before I quit, as I could feel the hangovers kicking in before I would even get back home from a night out. Heavy drinking had already lost its appeal, which is why I had been slowly cutting the number of nights I drank per month. I don't really miss that.
 
-But something I *do* miss is that nice buzz you get after one, maybe two drinks. The state where you have a slightly eleavated mood, and things seem a little more fun and playful. And that's still where my head is today. The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. Without it, social stuff takes on a slightly different feeling. Not worse, but just a little different. Not drinking is fine, I'll live, but I would like to experience alcohol again in moderation. 
+But something I *do* miss is that nice buzz you get after one, maybe two drinks. The state where you have a slightly elevated mood, and things seem a little more fun and playful. And that's still where my head is today. The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. Without it, social stuff takes on a slightly different feeling. Not worse, but just a little different. Not drinking is fine, I'll live, but I would like to experience alcohol again in moderation. 
 
-Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
+Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that alcohol is ingrained into how people connect out here. 
 
 <br>
 <br>
@@ -120,7 +120,7 @@ In an ideal world, that's how it would work. You'd use what you want in moderati
   <summary>FOOTNOTE ON WHAT I LEARNED ABOUT PEOPLE</summary>
   <div class="note-card-body">
     <div class="note-card-body-inner">
-      <p>People have been really supportive of me the most part. I've had tons of questions about my sobriety, and it's most often a nice conversation. </p>
+      <p>People have been really supportive of me for the most part. I've had tons of questions about my sobriety, and it's most often a nice conversation. </p>
       <p>But what I also get sometimes (very rarely though) is a look of guilt. Sometimes, other people almost seemed upset that I wasn't drinking when they were. Or maybe just judgement that someone is going against what most people do. I get it, though. It would be like going out for a friend's birthday and bringing your own food because you're on a meal plan. It just breaks social norms and confuses people, since it's the opposite of what the vast majority do. The alternative for us, who are doing these things, would be to stay home and skip social events, which is a terrible alternative.</p><br>
       <p>And while not necessarily specific to me, I have also noticed a lot of judgement over people who are trying to better themselves by using uncommon means (anything that the majority isn't doing), not just by going fully sober. I don't think most people get how common addiction actually is, alcohol or otherwise, and how many people are fighting it daily. The problem with not realizing how common this is, is that people will judge someone without knowing what's going on, often times shaming them for the thing that's getting them out of the addiction. </p>
       <p>For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction, and people who just act different from the majority in general. </p><p>So my hope is that over time, people can become a little more respectful of others situations.</p>
