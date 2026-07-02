@@ -87,6 +87,7 @@ The changes in my body showed up fast, within 3 months. I noticed increased ener
     </div>
   </div>
 </details>
+<br>
 
 Between the six-month to one-year period, the changes were more gradual, but these biomarkers trended to the best levels I've ever tested for:
 - ALT
@@ -99,6 +100,7 @@ Between the six-month to one-year period, the changes were more gradual, but the
 This was a really big accomplishment for me, since some of these were pretty high to begin with. I'm happy to say that, as of 2026, I have never had a better-functioning liver in my life, and that's saying a lot since I have been getting these tests since I was **seventeen**!
 <br>
 <br>
+<br>
 
 ### What I still miss
 I don't miss being drunk. I actually saw that coming before I quit, as I could feel the hangovers kicking in before I would even get back home from a night out. Heavy drinking had already lost its appeal, which is why I had been slowly cutting the number of nights I drank per month. I don't really miss that.
@@ -108,6 +110,14 @@ But something I *do* miss is that nice buzz you get after one, maybe two drinks.
 Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
 
 <br>
+
+<br>
+
+### Would I recommend you do this?
+People have asked me this, and honestly I don't think it's for everyone. Sobriety is awesome, but there's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
+
+In an ideal world, that's how it would work. You'd use what you want in moderation, feel a specific way, and stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it always plays out that way in real life. So for that reason, if you have issues with moderating your drinking, and you want to do *something*, there are tons of things you can try, from therapies to supplements and medications. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. And if you want something more drastic, and you *want* to go sober full-stop, then yes, go for it! But if you don't have a problem and you're just asking whether you should go sober, I'd say you might get more satisfaction out of holding yourself to one or two drinks a night.
+
 <br>
 
 <details class="note-card">
@@ -121,14 +131,6 @@ Drinking is also just part of culture here in the Midwest. We don't have as much
     </div>
   </div>
 </details>
-
-<br>
-<br>
-### Would I recommend you do this?
-People have asked me this, and honestly I don't think it's for everyone. Sobriety is awesome, but there's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
-
-In an ideal world, that's how it would work. You'd use what you want in moderation, feel a specific way, and stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it always plays out that way in real life. So for that reason, if you have issues with moderating your drinking, and you want to do *something*, there are tons of things you can try, from therapies to supplements and medications. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. And if you want something more drastic, and you *want* to go sober full-stop, then yes, go for it! But if you don't have a problem and you're just asking whether you should go sober, I'd say you might get more satisfaction out of holding yourself to one or two drinks a night.
-
 
 
 
