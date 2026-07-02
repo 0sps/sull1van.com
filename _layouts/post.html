@@ -643,27 +643,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Hide on scroll-down, reveal on scroll-up (>10px).
     let widgetLastScrollY = window.scrollY;
-    let widgetScrollUpAccum = 0;
+    let widgetScrollAccum = 0; // positive = up, negative = down
     let widgetHiddenByScroll = false;
 
     window.addEventListener('scroll', () => {
-      if (!widgetVisible || !dismissed) return; // only when widget is the active UI
+      if (!widgetVisible || !dismissed) return;
       const y = window.scrollY;
       const dy = y - widgetLastScrollY;
       widgetLastScrollY = y;
 
       if (dy > 0) {
-        // scrolling down — fade out
-        widgetScrollUpAccum = 0;
-        if (!widgetHiddenByScroll) {
+        // scrolling down
+        if (widgetScrollAccum > 0) widgetScrollAccum = 0; // reset opposite direction
+        widgetScrollAccum -= dy;
+        if (!widgetHiddenByScroll && widgetScrollAccum < -15) {
           widgetHiddenByScroll = true;
           widget.style.transition = 'opacity 0.3s ease';
           widget.style.opacity = '0';
         }
       } else {
-        // scrolling up — accumulate
-        widgetScrollUpAccum += Math.abs(dy);
-        if (widgetHiddenByScroll && widgetScrollUpAccum > 10) {
+        // scrolling up
+        if (widgetScrollAccum < 0) widgetScrollAccum = 0;
+        widgetScrollAccum += Math.abs(dy);
+        if (widgetHiddenByScroll && widgetScrollAccum > 15) {
           widgetHiddenByScroll = false;
           widget.style.transition = 'opacity 0.3s ease';
           widget.style.opacity = '1';
