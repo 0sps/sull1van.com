@@ -19,7 +19,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 
 
 <details class="note-card">
-  <summary>FOOTNOTE: Other Projects</summary>
+  <summary>FOOTNOTE ON Other Projects</summary>
   <div class="note-card-body">
     <div class="note-card-body-inner">
       <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
@@ -80,7 +80,7 @@ But yeah, I could. Just go longer. So that's exactly what I did. At the end of t
 The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprising great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as his, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
 <details class="note-card">
-  <summary>Footnote</summary>
+  <summary>FOOTNOTE ON NA BEERS</summary>
   <div class="note-card-body">
     <div class="note-card-body-inner">
       <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
@@ -110,16 +110,20 @@ Drinking is also just part of culture here in the Midwest. We don't have as much
 <br>
 <br>
 
-### What I learned about people
-People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. 
+<details class="note-card">
+  <summary>FOOTNOTE ON WHAT I LEARNED ABOUT PEOPLE</summary>
+  <div class="note-card-body">
+    <div class="note-card-body-inner">
+      <p>People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. </p>
+      <p>What I also get sometimes (very rarely though) is a look of guilt. Sometimes, other people almost seemed upset that I wasn't drinking when they were. I get it, though. It would be like going out for a friend's birthday and bringing your own food because you're on a meal plan. It just breaks social norms and confuses peopl, since it's the opposite of what the vast majority of people do. The alternative for us, who are doing those things, would be to stay home and skip social events, which is a terrible alternative.</p><br>
+      <p>And while not necessarily specific to me, I have also noticed a lot of judgement over people who are trying to better themselves by using uncommon means (anything that the majority isn't doing), not just by going fully sober. I don't think most people get how common addiction actually is, alcohol or otherwise, and how many people are fighting it daily. The problem with not realizing how common this is, is that people will judge someone without knowing what's going on, often times shaming them for the thing that's getting them out of the addiction. </p>
+      <p>For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction, and people who just act different from the majority in general. So my hope is that people become a little more respectful of others situations.</p>
+    </div>
+  </div>
+</details>
 
-What I also get sometimes (very rarely though) is a look of guilt. Sometimes, other people almost seemed upset that I wasn't drinking when they were. I get it, though. It would be like going out for a friend's birthday and bringing your own food because you're on a meal plan. It just breaks social norms and confuses peopl, since it's the opposite of what the vast majority of people do. The alternative for us, who are doing those things, would be to stay home and skip social events, which is a terrible alternative.<br>
-And while not necessarily specific to me, I have also noticed a lot of judgement over people who are trying to better themselves by using uncommon means (anything that the majority isn't doing), not just by going fully sober. I don't think most people get how common addiction actually is, alcohol or otherwise, and how many people are fighting it daily. The problem with not realizing how common this is, is that people will judge someone without knowing what's going on, often times shaming them for the thing that's getting them out of the addiction. 
-For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction, and people who just act different from the majority in general. So my hope is that people become a little more respectful of others situations.
 <br>
 <br>
-
-
 ### Would I recommend you do this?
 People have asked me this, and honestly I don't think it's for everyone. Sobriety is awesome, but there's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
 
