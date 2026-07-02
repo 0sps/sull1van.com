@@ -656,7 +656,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // scrolling down
         if (widgetScrollAccum > 0) widgetScrollAccum = 0; // reset opposite direction
         widgetScrollAccum -= dy;
-        if (!widgetHiddenByScroll && widgetScrollAccum < -15) {
+        if (!widgetHiddenByScroll && widgetScrollAccum < -30) {
           widgetHiddenByScroll = true;
           widget.style.transition = 'opacity 0.3s ease';
           widget.style.opacity = '0';
