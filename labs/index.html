@@ -1578,7 +1578,9 @@
         /* ultra-wide */
         @media (min-width: 1280px) {
             .desktop-sidebar { width: 380px; }
-            .kpi-row { grid-template-columns: repeat(4,1fr); }
+            /* .kpi-row has exactly 3 boxes — a repeat(4,1fr) here left an empty
+               4th column so the stat cards never spanned the full panel width. */
+            .kpi-row { grid-template-columns: repeat(3,1fr); }
         }
 
         .chart-inner { position: relative; height: 220px; }
@@ -2650,7 +2652,24 @@
 
         window.setLayoutView = function(isGrid) {
             const layout = document.querySelector('.layout');
+            const wasGrid = layout.classList.contains('is-grid-view');
             layout.classList.toggle('is-grid-view', isGrid);
+
+            // Clean up per-view card state so cards don't carry stale classes
+            // across views (list's .active-card highlight leaking into grid
+            // tiles, or grid's .expanded detail leaking back into the list).
+            if (wasGrid !== isGrid) {
+                document.querySelectorAll('.test-card').forEach(el => {
+                    if (isGrid) {
+                        el.classList.remove('active-card');
+                    } else if (el.classList.contains('expanded') || el.hasAttribute('data-grid-open')) {
+                        el.classList.remove('expanded');
+                        el.removeAttribute('data-grid-open');
+                        if (el._removeTimer) { clearTimeout(el._removeTimer); el._removeTimer = null; }
+                        el.querySelector('.grid-detail-container')?.remove();
+                    }
+                });
+            }
             document.getElementById('grid-icon')?.style.setProperty('display', isGrid ? 'none' : 'block');
             document.getElementById('list-icon')?.style.setProperty('display', isGrid ? 'block' : 'none');
 
@@ -4511,7 +4530,10 @@
                             el.classList.remove('expanded');
                             el.removeAttribute('data-grid-open');
                             const container = el.querySelector('.grid-detail-container');
-                            if (container) setTimeout(() => container.remove(), 370);
+                            // Track the timer on the element so a re-expand can cancel it
+                            // (an untracked timer could delete a freshly rebuilt container).
+                            if (el._removeTimer) { clearTimeout(el._removeTimer); }
+                            if (container) el._removeTimer = setTimeout(() => { container.remove(); el._removeTimer = null; }, 370);
                         }
                     });
 
@@ -4530,7 +4552,6 @@
                         }
 
                         currentTestName = name;
-                        cardEl.setAttribute('data-grid-open', 'true');
                         if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
                         if (cardEl._removeTimer) {
@@ -4540,38 +4561,59 @@
                         const existingContainer = cardEl.querySelector('.grid-detail-container');
                         if (existingContainer) existingContainer.remove();
 
-                        // Build expanded content wrapper
+                        // Build expanded content wrapper. Everything below is wrapped so a
+                        // failure in any section renderer can't strand the card in a
+                        // half-expanded state (expanded styling with no detail content).
                         const gridDetail = document.createElement('div');
                         gridDetail.className = 'grid-detail-container';
                         const inner = document.createElement('div');
                         inner.className = 'grid-detail-inner';
 
-                        // Close button + KPI row (pure HTML — no canvas yet)
-                        inner.innerHTML = `
-                            <div class="grid-expand-header">
-                                <button class="detail-nav-btn" style="width:28px;height:28px;" data-testname="${escStr(t.name)}" onclick="event.stopPropagation();openTest(this.dataset.testname)" aria-label="Close detail">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                                </button>
-                            </div>
-                            ${getKPIHtml(t)}
-                        `;
+                        try {
+                            // Close button + KPI row (pure HTML — no canvas yet)
+                            inner.innerHTML = `
+                                <div class="grid-expand-header">
+                                    <button class="detail-nav-btn" style="width:28px;height:28px;" data-testname="${escStr(t.name)}" onclick="event.stopPropagation();openTest(this.dataset.testname)" aria-label="Close detail">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                                ${getKPIHtml(t)}
+                            `;
 
-                        gridDetail.appendChild(inner);
-                        // Append to DOM BEFORE animating so content has layout
-                        cardEl.appendChild(gridDetail);
+                            gridDetail.appendChild(inner);
+                            // Append to DOM BEFORE animating so content has layout
+                            cardEl.appendChild(gridDetail);
 
-                        // Force reflow, then trigger the 0fr → 1fr animation
-                        void gridDetail.offsetWidth;
-                        cardEl.classList.add('expanded');
+                            // Mark open only once the detail DOM actually exists, so the
+                            // toggle branch above can't get stuck on a stale attribute.
+                            cardEl.setAttribute('data-grid-open', 'true');
 
-                        // Render pure-HTML sections immediately (no canvas needed)
-                        if (t.type === 'qualitative') {
-                            renderSTDTimeline(t, inner);
-                        } else {
-                            if (t.numericPts.length > 0) {
-                                renderGauge(t, inner);
+                            // Force reflow, then trigger the 0fr → 1fr animation
+                            void gridDetail.offsetWidth;
+                            cardEl.classList.add('expanded');
+                        } catch (err) {
+                            console.error('[grid] failed to expand card', name, err);
+                            gridDetail.remove();
+                            cardEl.classList.remove('expanded');
+                            cardEl.removeAttribute('data-grid-open');
+                            currentTestName = null;
+                            return;
+                        }
+
+                        // Render pure-HTML sections immediately (no canvas needed).
+                        // Each section is isolated: if one throws, the card still opens
+                        // with the KPI row and the remaining sections.
+                        try {
+                            if (t.type === 'qualitative') {
+                                renderSTDTimeline(t, inner);
+                            } else {
+                                if (t.numericPts.length > 0) {
+                                    try { renderGauge(t, inner); } catch (err) { console.error('[grid] gauge render failed', name, err); }
+                                }
+                                renderHistoryTable(t, inner);
                             }
-                            renderHistoryTable(t, inner);
+                        } catch (err) {
+                            console.error('[grid] detail section render failed', name, err);
                         }
 
                         // Render Chart.js trend after animation ends so canvas has real dimensions.
@@ -4580,8 +4622,12 @@
                         const _expandedName = name;
                         setTimeout(() => {
                             if (currentTestName !== _expandedName || !inner.isConnected) return;
-                            if (t.type !== 'qualitative' && t.numericPts.length > 1) {
-                                renderTrendChart(t, inner);
+                            try {
+                                if (t.type !== 'qualitative' && t.numericPts.length > 1) {
+                                    renderTrendChart(t, inner);
+                                }
+                            } catch (err) {
+                                console.error('[grid] trend chart render failed', name, err);
                             }
                             cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                         }, 380);
