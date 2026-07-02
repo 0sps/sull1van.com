@@ -139,7 +139,8 @@ It's also been incredible to see how much I got done with all the weekends I was
 
 I plan to return to drinking casually one day. Maybe not just yet, but one day. And if I still can't do the 1-2 drinks a night thing, I've got a year's worth of sobriety showing me I can always do it again.
 
----
+<br>
+<br>
 
 
 
