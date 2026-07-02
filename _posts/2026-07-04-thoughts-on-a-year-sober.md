@@ -110,14 +110,13 @@ But something I *do* miss is that nice buzz you get after one, maybe two drinks.
 Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
 
 <br>
-
 <br>
 
 ### Would I recommend you do this?
 People have asked me this, and honestly I don't think it's for everyone. Sobriety is awesome, but there's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
 
 In an ideal world, that's how it would work. You'd use what you want in moderation, feel a specific way, and stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it always plays out that way in real life. So for that reason, if you have issues with moderating your drinking, and you want to do *something*, there are tons of things you can try, from therapies to supplements and medications. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. And if you want something more drastic, and you *want* to go sober full-stop, then yes, go for it! But if you don't have a problem and you're just asking whether you should go sober, I'd say you might get more satisfaction out of holding yourself to one or two drinks a night.
-<br>
+
 <details class="note-card">
   <summary>FOOTNOTE ON WHAT I LEARNED ABOUT PEOPLE</summary>
   <div class="note-card-body">
