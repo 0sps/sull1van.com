@@ -6,11 +6,12 @@ tags: [meta, blogging]
 ---
 
 
+<br>
 
-Today marks one full year since I went sober. <br><br>
+Today marks one full year since I went sober. <br>
 One year!
 
-
+<br>
 
 ### Background
 
@@ -26,7 +27,10 @@ My path to sobriety didn't really take off until I got some concerning blood tes
   </div>
 </details>
 
+<br>
+
 These things did help, and they pushed me to really *want* to use moderation and to drink less. But weekend after weekend, I just couldn't have one drink and call it a night. I wouldn't even blame peer pressure, it was just that I never set a good boundary for myself. So, one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
+<br>
 
 
 ### Rules of my sobriety
@@ -49,6 +53,7 @@ Another point of my sobriety was that it actually became threefold. I wanted it 
 Plenty of people don't do these things to begin with, so I don't think I'm "special" in any way, I just wanted to make it a little more challenging and remove the chance I'd replace one substance with another.
 
 
+<br>
 ### Just go longer
 
 While my sobriety was threefold, it was only alcohol that made me afraid of relapse. Like I said, I told myself I was sober *for now*, not forever. I told everyone that I was doing it for two months, just to see where things went. I didn't commit to going longer until I knew I could.
@@ -67,8 +72,9 @@ But yeah, I could. Just go longer. So that's exactly what I did. At the end of t
 
 
 
-
-### What changed
+<br>
+<br>
+### Changes I noticed
 
 The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprising great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as his, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
@@ -93,8 +99,9 @@ This was a really big accomplishment for me, since some of these were pretty hig
 
 
 
-
-### Something I miss
+<br>
+<br>
+### What I still miss
 
 I don't miss being drunk. I actually saw that coming before I quit, as I could feel the hangovers kicking in before I would even get back home from a night out. Heavy drinking had already lost its appeal, which is why I had been slowly cutting the number of nights I drank per month. I don't really miss that.
 
@@ -102,7 +109,8 @@ But something I *do* miss is that nice buzz you get after one, maybe two drinks.
 
 Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
 
-### Would I recommend others do this?
+<br>
+### Would I recommend you do this?
 People have asked me this, and honestly, I don't think every single person stands to benefit a lot from going fully sober. There's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
 
 In an ideal world, that's how it would work. You'd use what you want in moderation, to feel a specific way, and you would stop if you notice negative effects. But the last part takes a lot of introspection and honest self-assessment, and I don't think it plays out that way in real life. For that reason, if you do have issues with moderating your drinking, there are tons of things you can try, from therapies to supplements and medications.
@@ -118,6 +126,7 @@ In an ideal world, that's how it would work. You'd use what you want in moderati
   </div>
 </details>
 
+<br>
 
 I think sobriety is awesome, but I don't think everyone needs to do it. I think moderation is better. But for whatever reason, if you aren’t someone who is blessed with the ability to consume alcohol in moderation, and you want to go permanently sober for *you*, then yes, go for it! I'll be here cheering you on. And if you want resources for different things you can try, or different things that I've tried, I'm here for you. But if you don't have a problem and you're just asking whether you *need* to go sober, I'd say you'd probably get more satisfaction out of holding yourself to one or two drinks a night.
 
@@ -127,6 +136,7 @@ I think sobriety is awesome, but I don't think everyone needs to do it. I think 
 
 
 
+<br>
 ### Will I stay sober past one year?
 
 Probably not. For me, it was about getting healthier and getting rid of my craving to drink. A year later, I've achieved pretty much everything I was looking for. I want to keep this same relationship with alcohol going forward, but *with* the ability to have a drink if I want one.
@@ -139,7 +149,8 @@ I plan to return to drinking casually one day. Maybe not just yet, but one day. 
 ---
 
 
-*I also have to add that there were _countless_ people who were incredibly supportive. People who'd start buying me an NA whenever I did go out. Or people who were just perfectly comfortable in those situations with me even if I wasn't drinking. People who asked how it was going, how many months I made it. I love those people to death! And I feel bad because I don't think I've ever expressed the same level of concern for all of them. So if you're one of those people, take this apology and know that I really do appreciate you being supportive, and I care about you!*
+*I also have to add that there were _countless_ people who were incredibly supportive throughout this year. People who'd buy me an NA whenever I did go out. Or people who were just perfectly comfortable in those situations with me even if I wasn't drinking. Or the people who asked how it was going, how many months I made it. 
+I love those people to death! And I feel bad because I don't think I've ever outwardly expressed the same level of concern for all of them. So if you're one of those people who's asked about it at all over the last year, know that I really do appreciate you being supportive, and I care about you!*
 
 
 
