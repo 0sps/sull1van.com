@@ -7,7 +7,7 @@ tags: [meta, blogging]
 
 
 
-Today marks one full year since I went sober. One year!
+Today marks one full year since I went sober. <br>One year!
 
 
 
@@ -25,12 +25,12 @@ My path to sobriety didn't really take off until I got some concerning blood tes
   </div>
 </details>
 
-These things did help, and they pushed me to really *want* to use moderation and to drink less. But weekend after weekend, I just couldn't have one drink and call it a night. I wouldn't even blame peer pressure, it was just that I never set a good boundary for myself. So one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
+These things did help, and they pushed me to really *want* to use moderation and to drink less. But weekend after weekend, I just couldn't have one drink and call it a night. I wouldn't even blame peer pressure, it was just that I never set a good boundary for myself. So, one morning that summer, I woke up and decided to cut it off entirely. Time to go sober.
 
 
 ### Rules of my sobriety
 
-Sobriety felt pretty scary at first. For the first few days I was terrified I'd give in, constantly thinking, *"What if I drink again? What if I mess up?"* I couldn't even picture a long-term goal, only that I had to make it for two months.
+Sobriety felt pretty scary at first. For the first few days I was terrified I'd give in, constantly thinking, *"What if I drink again? What if I mess up?"*  I couldn't even picture a long-term goal, only that I had to make it for two months.
 
 But as the weeks went by, I started to get less scared. With each day in those first two months, I started to collect evidence that I could live my life and not drink. It started to feel more good than scary. 
 
