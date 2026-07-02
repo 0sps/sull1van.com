@@ -1580,88 +1580,118 @@ function QuizApp({ data }) {
       <a className="skip-link" href="#main-content">Skip to main content</a>
       {!(view.name === "session" && isTestMode(activeQuiz?.mode)) ? (
         <>
-          <header className="hero dashboard-hero">
-            <div className="hero-grid dashboard-hero-grid">
-              <div className="dashboard-hero-copy">
-                <div className="eyebrow">{data.exam}</div>
-                <h1>Build your readiness for the FE exam.</h1>
-                <p>
-                  This dashboard is built
-                  to help you diagnose weak areas and drill down into focused practice.
-                </p>
-                <div className="hero-controls dashboard-hero-controls">
-                  <div className="hero-primary-actions">
-                    <button className="button" onClick={startDiagnostic}>
-                      {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
-                    </button>
-                  </div>
-                  <div className="hero-utility-actions">
-                    <button className="button-ghost" onClick={handleExportProgress}>
-                      Export progress JSON
-                    </button>
-                    <button className="button-ghost" onClick={handleImportClick}>
-                      Import progress JSON
-                    </button>
-                    <button className="button-ghost" onClick={openResetDialog}>
-                      Reset progress
-                    </button>
-                    <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
-                  </div>
-                  {activeQuiz ? (
-                    <button
-                      className={`session-banner dashboard-session-banner ${showResumeButton || showReviewButton ? "is-clickable" : ""} ${activeQuiz.status === "in-progress" ? "is-active" : ""} ${showReviewButton ? "is-complete" : ""}`}
-                      onClick={showResumeButton ? resumeQuiz : showReviewButton ? reviewCompletedQuiz : undefined}
-                      disabled={!showResumeButton && !showReviewButton}
-                    >
-                      <span className={`pill ${activeQuiz.status === "in-progress" ? "" : "subtle"}`}>
-                        Saved quiz: {activeQuiz.status === "in-progress" ? "In progress" : "Review complete quiz"}
-                      </span>
-                      <span className="muted">
-                        {activeQuiz.title} • {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
-                      </span>
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-              <div className="stats-grid dashboard-stats-grid">
-                <div className="stat-card dashboard-stat-card">
-                  <div className="mini-label">Estimated overall</div>
-                  <div className="stat-value" style={{ color: scoreToColor(overall.score) }}>
-                    {overall.score == null ? "—" : `${overall.score}%`}
-                  </div>
-                </div>
-                <div className="stat-card dashboard-stat-card">
-                  <div className="mini-label">Questions answered</div>
-                  <div className="stat-value">{overall.answered}</div>
-                </div>
-                <div className="stat-card dashboard-stat-card">
-                  <div className="mini-label">Topics assessed</div>
-                  <div className="stat-value">{overall.topicsAssessed}/{data.sections.length}</div>
-                </div>
-              </div>
+          <header className="app-topbar">
+            <div className="app-topbar-brand">
+              <div className="brand-mark">FE</div>
+              <span className="brand-name">FEStudy</span>
+              <span className="brand-tag">{data.exam}</span>
+            </div>
+            <div className="app-topbar-actions">
+              <button className="topbar-link" onClick={handleExportProgress}>Export progress</button>
+              <button className="topbar-link" onClick={handleImportClick}>Import</button>
+              <button className="topbar-link is-reset" onClick={openResetDialog}>Reset</button>
+              <input className="file-input" type="file" accept="application/json" ref={fileInputRef} onChange={handleImportProgress} />
+              <div className="topbar-divider" />
+              <div className="topbar-avatar">FE</div>
             </div>
           </header>
 
-          {view.name === "dashboard" ? (
-            <Dashboard
-              data={data}
-              progress={progress}
-              diagnosticHistory={diagnosticHistory}
-              questionsBySection={questionsBySection}
-              recommendations={recommendations}
-              activeQuiz={activeQuiz}
-              onResumeQuiz={resumeQuiz}
-              onReviewCompletedQuiz={reviewCompletedQuiz}
-              onStartDiagnostic={startDiagnostic}
-              onOpenTopic={openTopicModal}
-              onStartPractice={startTopicPractice}
-            />
-          ) : null}
+          <div className="app-main">
+            <div className="fe-hero">
+              <div className="fe-hero-copy">
+                <div className="fe-hero-head">
+                  <h1>Build your readiness for the FE exam.</h1>
+                  <p>Diagnose weak areas, drill focused practice, and watch your coverage climb — all from this one page.</p>
+                </div>
+                <div className="fe-hero-actions">
+                  <button className="button button-lg" onClick={startDiagnostic}>
+                    {hasCompletedDiagnostic ? "Retake diagnostic" : "Take diagnostic"}
+                  </button>
+                  {activeQuiz ? (
+                    <div className="resume-chip">
+                      <span className="resume-dot" />
+                      <span className="resume-text">
+                        {activeQuiz.status === "in-progress" ? "Saved quiz" : "Completed quiz"} — {activeQuiz.title} · {activeQuizSummary?.answeredCount || 0}/{activeQuizSummary?.questionCount || 0} graded
+                      </span>
+                      {(showResumeButton || showReviewButton) ? (
+                        <button
+                          className="resume-btn"
+                          onClick={showResumeButton ? resumeQuiz : reviewCompletedQuiz}
+                        >
+                          {showReviewButton ? "Review" : "Resume"}
+                        </button>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="fe-score-card">
+                <div className="fe-score-top">
+                  <span className="fe-score-label">Estimated overall</span>
+                  <div className="fe-score-value-row">
+                    <span className="fe-score-value">{overall.score == null ? "—" : `${overall.score}%`}</span>
+                    <span className="fe-score-sub">early estimate</span>
+                  </div>
+                  <div className="fe-score-track">
+                    <div className="fe-score-fill" style={{ width: `${overall.score || 0}%` }} />
+                  </div>
+                </div>
+                <div className="fe-score-stats">
+                  <div className="fe-score-stat">
+                    <span className="fe-score-num">{overall.answered}</span>
+                    <span className="fe-score-cap">questions answered</span>
+                  </div>
+                  <div className="fe-score-stat">
+                    <span className="fe-score-num">
+                      {overall.topicsAssessed}<span className="fe-score-num-sub">/{data.sections.length}</span>
+                    </span>
+                    <span className="fe-score-cap">topics assessed</span>
+                  </div>
+                </div>
+                <p className="fe-score-note">Answer 10+ questions in a topic to unlock its real score.</p>
+              </div>
+            </div>
 
-          <div className="footer-note dashboard-footer-note">
-            Mapped questions: {data.coverageReport.mappedQuestionCount}. Unmatched source questions:{" "}
-            {data.coverageReport.unmatchedQuestionCount}. Topics with low coverage can still track progress, but they may
-            need more source material later.
+            {recommendations.length ? (
+              <div className="focus-strip">
+                <div className="focus-strip-head">
+                  <span className="focus-strip-eyebrow">Study next</span>
+                  <span className="focus-strip-title">Recommended focus: {recommendations[0].section.title}</span>
+                </div>
+                <span className="focus-strip-body">
+                  {getRecommendationReason(recommendations[0].metrics, recommendations[0].questionCount)}
+                </span>
+                <button
+                  className="button dark-button"
+                  onClick={() => startTopicPractice(recommendations[0].section.id)}
+                  disabled={recommendations[0].questionCount === 0}
+                >
+                  Start 10-question check
+                </button>
+              </div>
+            ) : null}
+
+            {view.name === "dashboard" ? (
+              <Dashboard
+                data={data}
+                progress={progress}
+                diagnosticHistory={diagnosticHistory}
+                questionsBySection={questionsBySection}
+                recommendations={recommendations}
+                activeQuiz={activeQuiz}
+                onResumeQuiz={resumeQuiz}
+                onReviewCompletedQuiz={reviewCompletedQuiz}
+                onStartDiagnostic={startDiagnostic}
+                onOpenTopic={openTopicModal}
+                onStartPractice={startTopicPractice}
+              />
+            ) : null}
+
+            <div className="footer-note dashboard-footer-note">
+              Mapped questions: {data.coverageReport.mappedQuestionCount}. Unmatched source questions:{" "}
+              {data.coverageReport.unmatchedQuestionCount}. Topics with low coverage can still track progress, but they may
+              need more source material later.
+            </div>
           </div>
         </>
       ) : null}
@@ -1992,214 +2022,121 @@ function Dashboard({
   }
 
   return (
-    <div className="content-grid dashboard-grid">
-      <aside className="stack dashboard-sidebar">
-        {activeQuiz?.status === "in-progress" ? (
-          <div className="panel dashboard-panel dashboard-panel-resume">
-            <div className="mini-label">Resume where you left off</div>
-            <h2 className="section-title">{activeQuiz.title}</h2>
-            <p className="sidebar-note">
-              {getQuizModeLabel(activeQuiz.mode)} • {getActiveQuizSummary(activeQuiz)?.answeredCount || 0}/
-              {getActiveQuizSummary(activeQuiz)?.questionCount || 0} graded
-            </p>
-            <button className="button" onClick={onResumeQuiz}>
-              Resume quiz
-            </button>
-          </div>
-        ) : null}
+    <div className="knowledge">
+      <div className="knowledge-head">
+        <h2 className="knowledge-title">Knowledge areas</h2>
+        <span className="knowledge-sub">{data.sections.length} topics · ordered by blueprint weight · click to expand</span>
+      </div>
 
-        {activeQuiz?.status === "complete" ? (
-          <div className="panel dashboard-panel dashboard-panel-resume dashboard-panel-complete">
-            <div className="mini-label">Completed quiz</div>
-            <h2 className="section-title">{activeQuiz.title}</h2>
-            <p className="sidebar-note">
-              {getQuizModeLabel(activeQuiz.mode)} • {getActiveQuizSummary(activeQuiz)?.answeredCount || 0}/
-              {getActiveQuizSummary(activeQuiz)?.questionCount || 0} graded
-            </p>
-            <button className="button-ghost" onClick={onReviewCompletedQuiz}>
-              Review saved answers
-            </button>
-          </div>
-        ) : null}
-
-        <div className="panel dashboard-panel dashboard-panel-study">
-          <div className="mini-label">Study next</div>
-          <h2 className="section-title">Recommended focus</h2>
-          <div className="stack">
-            {recommendations.map(({ section, metrics, questionCount }) => (
-              <div key={section.id} className="results-card dashboard-mini-card">
-                <div className="card-row">
-                  <strong>{section.title}</strong>
-                  <span className="pill">{metrics.score == null ? "Unassessed" : `${metrics.score}%`}</span>
-                </div>
-                <p className="muted" style={{ marginBottom: 10 }}>
-                  {questionCount} mapped questions available
-                </p>
-                <p className="reason-text">{getRecommendationReason(metrics, questionCount)}</p>
-                <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
-                  Open topic
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="panel dashboard-panel">
-          <div className="mini-label">How scoring works</div>
-          <p className="sidebar-note">
-            Topic bars unlock after you answer 10 questions in that topic. Subtopic bars unlock after your first answered
-            question there, and all percentages are shown as raw percent correct.
-          </p>
-        </div>
-
-        <div className="panel dashboard-panel dashboard-panel-diagnostic">
-          <div className="mini-label">Diagnostic</div>
-          <p className="sidebar-note">
-            Build a balanced diagnostic across the mapped FE Industrial topics. You choose how many questions to pull per
-            topic, and the app prefers unanswered questions before recycling older ones.
-          </p>
-          <button className="button" onClick={onStartDiagnostic}>
-            Start diagnostic
-          </button>
-        </div>
-
-        <div className="panel dashboard-panel">
-          <div className="mini-label">Diagnostic history</div>
-          {diagnosticHistory.length ? (
-            <div className="stack diagnostic-history-list">
-              {diagnosticHistory.map((attempt) => (
-                <div key={attempt.id} className="results-card diagnostic-history-card dashboard-mini-card">
-                  <div className="card-row">
-                    <strong>{formatDiagnosticAttemptDate(attempt.completedAt)}</strong>
-                    <span className="pill subtle">{attempt.score == null ? "Ungraded" : `${attempt.score}% correct`}</span>
-                  </div>
-                  <p className="muted" style={{ marginBottom: 8 }}>
-                    {attempt.questionsPerTopic} per topic • {attempt.answered} graded
-                  </p>
-                  <p className="reason-text" style={{ margin: 0 }}>
-                    {attempt.correct} correct out of {attempt.answered || 0} graded questions.
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="sidebar-note" style={{ marginBottom: 0 }}>
-              No diagnostic attempts saved yet. Your completed diagnostics will show up here as separate entries.
-            </p>
-          )}
-        </div>
-      </aside>
-
-      <main id="main-content" className="stack dashboard-main">
+      <div className="ka-list">
         {data.sections.map((section) => {
           const metrics = getSectionMetrics(section, progress);
           const questionCount = questionsBySection[section.id]?.length || 0;
-          const isThinCoverage = questionCount < 5;
           const isExpanded = !!expandedSections[section.id];
-          const coverageLabel = getCoverageLabel(questionCount);
+          const answered = metrics.answered || 0;
+          const inProgress = answered > 0 && !metrics.isScoreVisible;
+          const statusText = metrics.isScoreVisible ? `${metrics.score}% correct` : inProgress ? "In progress" : "Unassessed";
+          const statusColor = metrics.isScoreVisible ? "#4c7a3f" : inProgress ? "#9a6a1e" : "#8a8468";
+          const barColor = inProgress ? "var(--orange)" : "var(--accent)";
+          const barWidth = metrics.isScoreVisible
+            ? `${metrics.score || 0}%`
+            : inProgress
+            ? `${clamp((answered / 10) * 34, 6, 34)}%`
+            : "0%";
           const canResumeSectionQuiz = activeQuiz?.status === "in-progress" && activeQuiz.sectionId === section.id;
           return (
-            <article key={section.id} className={`topic-card dashboard-topic-card ${isThinCoverage ? "is-thin" : ""}`}>
-              <div className="topic-summary-panel dashboard-topic-summary-panel">
-                <div className="topic-header">
-                  <div>
-                    <div className="mini-label">
-                      Blueprint range {section.questionRange} questions
-                    </div>
-                    <h3>{section.title}</h3>
-                  </div>
-                  <div className="toolbar">
-                    <span className={`pill ${isThinCoverage ? "warn" : ""}`}>
-                      {metrics.isScoreVisible ? `${metrics.score}% correct` : "Progress locked"}
-                    </span>
-                    <span className={`pill ${isThinCoverage ? "warn" : "subtle"}`}>{coverageLabel}</span>
-                  </div>
+            <article key={section.id} className={`ka-card ${isExpanded ? "is-open" : ""}`}>
+              <div className="ka-row" onClick={() => toggleSection(section.id)}>
+                <div className="ka-titlecol">
+                  <span className="ka-name">{section.title}</span>
+                  <span className="ka-blueprint">Blueprint {section.questionRange} questions</span>
                 </div>
-
-                <div className={`score-bar ${metrics.isScoreVisible ? "" : "is-disabled has-message"}`}>
-                  {metrics.isScoreVisible ? (
-                    <div className="score-mask" style={{ width: `${100 - (metrics.score || 0)}%` }} />
-                  ) : (
-                    <span className="score-bar-message">ANSWER AT LEAST 10 QUESTIONS TO SEE</span>
-                  )}
-                </div>
-
-                <div className="topic-actions">
-                  <div className="topic-progress-copy">
-                    <span className="muted">{questionCount} mapped questions.</span>
-                    <span className="muted">{renderAnsweredBreakdown(metrics.answered, metrics.correct)}</span>
+                <div className="ka-barwrap">
+                  <div className="ka-bar">
+                    <div className="ka-bar-fill" style={{ width: barWidth, background: barColor }} />
                   </div>
-                  <div className="toolbar">
-                    <button className="button-ghost topic-card-action-open" onClick={() => onOpenTopic(section.id)}>
-                      Open topic
+                  <span className="ka-status" style={{ color: statusColor }}>{statusText}</span>
+                </div>
+                <span className="ka-mapped">{questionCount} mapped · {answered} answered</span>
+                <span className="ka-chevron">{isExpanded ? "−" : "+"}</span>
+              </div>
+
+              {isExpanded ? (
+                <div className="ka-expand">
+                  <div className="ka-expand-actions">
+                    <button className="button" onClick={() => onStartPractice(section.id)} disabled={questionCount === 0}>
+                      Generate quiz — whole topic
                     </button>
-                    <button
-                      className="button-ghost topic-card-action-generate"
-                      onClick={() => onStartPractice(section.id)}
-                      disabled={questionCount === 0}
-                    >
-                      Generate quiz with topic
+                    <button className="button-ghost" onClick={() => onOpenTopic(section.id)}>
+                      Browse questions
                     </button>
                     {canResumeSectionQuiz ? (
                       <button className="button-ghost" onClick={onResumeQuiz}>
                         Resume quiz
                       </button>
                     ) : null}
-                    <button className="nav-chip subtopic-toggle" onClick={() => toggleSection(section.id)}>
-                      {isExpanded ? "Hide subtopics" : "Show more"}
-                    </button>
                   </div>
-                </div>
-
-                {isThinCoverage ? (
-                  <div className="coverage-note">
-                    This section has limited mapped source material right now, so its score is less representative than the
-                    stronger-covered sections.
-                  </div>
-                ) : null}
-              </div>
-
-              {isExpanded ? (
-                <div className="subtopic-section-header">
-                  <span className="mini-label">By subtopic</span>
-                </div>
-              ) : null}
-
-              <div className={`subtopic-list compact ${isExpanded ? "" : "mobile-collapsed"}`}>
-                {section.subtopicCoverage.map((subtopic) => {
-                  const subMetrics = getSubtopicMetrics(progress, section.id, subtopic.name);
-                  return (
-                    <div key={subtopic.name} className="subtopic-row">
-                      <div className="subtopic-meta">
-                        <strong>{subtopic.name}</strong>
-                        <div className="subtopic-summary">
-                          <span className="muted">{subtopic.count} mapped questions.</span>
-                          <span className="muted">{renderAnsweredBreakdown(subMetrics.answered, subMetrics.correct)}</span>
-                        </div>
-                      </div>
-                      <div className="subtopic-metrics">
-                        <div className="card-row" style={{ marginBottom: 6 }}>
-                          <span className="muted">
-                            {subMetrics.isScoreVisible ? `${subMetrics.score}% correct` : "Progress locked"}
-                          </span>
-                          <button className="nav-chip" onClick={() => onStartPractice(section.id, subtopic.name)} disabled={subtopic.count === 0}>
-                            Generate quiz with subtopic
+                  <div className="ka-subgrid">
+                    {section.subtopicCoverage.map((subtopic) => {
+                      const subMetrics = getSubtopicMetrics(progress, section.id, subtopic.name);
+                      return (
+                        <div key={subtopic.name} className="ka-sub">
+                          <div className="ka-sub-meta">
+                            <span className="ka-sub-name">{subtopic.name}</span>
+                            <span className="ka-sub-count">
+                              {subtopic.count} mapped questions{subMetrics.isScoreVisible ? ` · ${subMetrics.score}% correct` : ""}
+                            </span>
+                          </div>
+                          <button
+                            className="ka-sub-btn"
+                            onClick={() => onStartPractice(section.id, subtopic.name)}
+                            disabled={subtopic.count === 0}
+                          >
+                            Quiz this
                           </button>
                         </div>
-                        <div className={`score-bar ${subMetrics.isScoreVisible ? "" : "is-disabled"}`}>
-                          {subMetrics.isScoreVisible ? (
-                            <div className="score-mask" style={{ width: `${100 - (subMetrics.score || 0)}%` }} />
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
             </article>
           );
         })}
-      </main>
+      </div>
+
+      <div className="ka-extras">
+        <div className="extra-card">
+          <div className="mini-label">How scoring works</div>
+          <p className="sidebar-note">
+            Topic bars unlock after you answer 10 questions in that topic. Subtopic scores appear after your first
+            answered question there, and every percentage is shown as raw percent correct.
+          </p>
+        </div>
+        <div className="extra-card">
+          <div className="mini-label">Diagnostic history</div>
+          {diagnosticHistory.length ? (
+            <div className="stack diagnostic-history-list">
+              {diagnosticHistory.map((attempt) => (
+                <div key={attempt.id} className="extra-history-row">
+                  <div className="card-row">
+                    <strong>{formatDiagnosticAttemptDate(attempt.completedAt)}</strong>
+                    <span className="pill subtle">{attempt.score == null ? "Ungraded" : `${attempt.score}% correct`}</span>
+                  </div>
+                  <p className="muted" style={{ margin: "4px 0 0" }}>
+                    {attempt.questionsPerTopic} per topic · {attempt.correct} correct of {attempt.answered || 0} graded
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="sidebar-note" style={{ marginBottom: 0 }}>
+              No diagnostic attempts saved yet. Run a diagnostic from the top of the page and your completed attempts will
+              show up here.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
