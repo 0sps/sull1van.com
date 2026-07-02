@@ -19,7 +19,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 
 
 <details class="note-card">
-  <summary>Footnote</summary>
+  <summary>FOOTNOTE: Other Projects</summary>
   <div class="note-card-body">
     <div class="note-card-body-inner">
       <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
@@ -114,7 +114,7 @@ Drinking is also just part of culture here in the Midwest. We don't have as much
 People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. 
 
 What I also get sometimes (very rarely though) is a look of guilt. Sometimes, other people almost seemed upset that I wasn't drinking when they were. I get it, though. It would be like going out for a friend's birthday and bringing your own food because you're on a meal plan. It just breaks social norms and confuses peopl, since it's the opposite of what the vast majority of people do. The alternative for us, who are doing those things, would be to stay home and skip social events, which is a terrible alternative.<br>
-And while not necessarily specific to me, I have also noticed a lot of judgement over people who are trying to better themselves by using uncommon means (anything that the majority isn't doing), not just by going fully sober. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I *would* say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone without knowing what's going on, often times shaming them for the thing that's getting them out of the addiction. 
+And while not necessarily specific to me, I have also noticed a lot of judgement over people who are trying to better themselves by using uncommon means (anything that the majority isn't doing), not just by going fully sober. I don't think most people get how common addiction actually is, alcohol or otherwise, and how many people are fighting it daily. The problem with not realizing how common this is, is that people will judge someone without knowing what's going on, often times shaming them for the thing that's getting them out of the addiction. 
 For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction, and people who just act different from the majority in general. So my hope is that people become a little more respectful of others situations.
 <br>
 <br>
@@ -139,11 +139,6 @@ It's also been incredible to see how much I got done with all the weekends I was
 I plan to return to drinking casually one day. Maybe not just yet, but one day. And if I still can't do the 1-2 drinks a night thing, I've got a year's worth of sobriety showing me I can always do it again.
 
 ---
-
-
-*I also have to add that there were _countless_ people who were incredibly supportive throughout this year. People who'd buy me an NA whenever I did go out. Or people who were just perfectly comfortable in those situations with me even if I wasn't drinking. Or the people who asked how it was going, how many months I made it. 
-I love those people to death! And I feel bad because I don't think I've ever outwardly expressed the same level of concern for all of them. So if you're one of those people who's asked about it at all over the last year, know that I really do appreciate you being supportive, and I care about you!*
-
 
 
 
