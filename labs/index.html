@@ -2302,7 +2302,7 @@
     <div class="action-sheet" id="actionSheet">
         <div class="sheet-handle"></div>
         <div class="sheet-title">More Actions</div>
-        <div class="sheet-action" onclick="toggleActionSheet(false); openPdfReportPrompt();">
+        <div class="sheet-action" onclick="toggleActionSheet(false); if(typeof openPdfReportPrompt==='function'){openPdfReportPrompt();}else{showSuccessToast('PDF export is still loading…');}">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16h16V8l-6-6z" /><polyline points="14 2 14 8 20 8" />
                 <line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
@@ -2326,7 +2326,7 @@
             </svg>
             Import units from XLSX
         </div>
-        <div class="sheet-action" onclick="toggleActionSheet(false); alert('Goal Setting coming soon!');">
+        <div class="sheet-action" onclick="toggleActionSheet(false); showSuccessToast('Custom baselines coming soon!');">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" />
                 <line x1="21.17" y1="8" x2="12" y2="8" /><line x1="3.95" y1="6.06" x2="8.54" y2="14" />
@@ -2642,6 +2642,14 @@
         </svg>
     </button>
 
+    <!-- Stubs for pdf-export.js — safe fallback if the external script fails to load -->
+    <script>
+        function openPdfReportPrompt()      { if (typeof showSuccessToast === 'function') showSuccessToast('PDF export is still loading…'); }
+        function closePdfReportPrompt()     { document.getElementById('reportOverlay')?.classList.remove('visible'); }
+        function onPdfReportSearchInput()   {}
+        function handlePdfReportSearchKey() {}
+        function generateSelectedPdfReport(){ if (typeof showSuccessToast === 'function') showSuccessToast('PDF export is still loading…'); }
+    </script>
     <script src="/labs/pdf-export.js" defer></script>
     <script>
         window.toggleLayout = function() {
@@ -3320,8 +3328,9 @@
             window._labsBoot.error = errStr;
             const logEl = document.getElementById('loadingState') || document.getElementById('panelList');
             if (logEl) {
+                const _esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
                 logEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;font-size:11px;opacity:0.8;text-align:center;">
-                    ⚠ Fatal Error: ${msg}<br><span style="font-size:9px;opacity:0.6">${url}:${line}</span>
+                    ⚠ Fatal Error: ${_esc(msg)}<br><span style="font-size:9px;opacity:0.6">${_esc(url)}:${_esc(line)}</span>
                 </div>`;
             }
         };
@@ -3995,6 +4004,7 @@
             focusCommandInput();
             requestAnimationFrame(focusCommandInput);
             setTimeout(focusCommandInput, 60);
+            history.pushState({ labsView: 'command' }, '');
         }
 
         function closeCommandPalette() {
@@ -4666,6 +4676,8 @@
                 const dc = document.getElementById('detailContent');
                 dc.style.display = 'flex';
                 dc.style.flexDirection = 'column';
+
+                history.pushState({ labsView: 'detail' }, '');
             }
 
             // Header
@@ -5236,6 +5248,33 @@
             currentTestName = null;
         }
 
+        // ── RESIZE RECONCILIATION ────────────────────────────────────
+        // If the user was in mobile detail view and crosses the 900px
+        // breakpoint (rotate tablet, resize window), restore the hidden
+        // top-bar/search/pusher so the desktop split-pane layout works.
+        let _prevIsDesktop = isDesktop();
+        window.addEventListener('resize', () => {
+            const nowDesktop = isDesktop();
+            if (nowDesktop === _prevIsDesktop) return;
+            _prevIsDesktop = nowDesktop;
+
+            const layout = document.querySelector('.layout');
+            if (nowDesktop && layout?.classList.contains('in-detail')) {
+                // Was stuck in mobile detail — restore desktop layout
+                layout.classList.remove('in-detail');
+                document.getElementById('panelList')?.classList.add('visible');
+                document.getElementById('globalTopBar').style.display = '';
+                document.getElementById('globalSearchArea').style.display = '';
+                document.getElementById('globalPusher').style.display = '';
+
+                // Re-open the same test in desktop split-pane if possible
+                if (currentTestName) {
+                    const t = allTests.find(x => x.name === currentTestName);
+                    if (t) openTest(t.name);
+                }
+            }
+        });
+
         // ── UTILS ─────────────────────────────────────────────────────
         function safeId(name) { return String(name).replace(/[^a-zA-Z0-9]/g, '_'); }
         function getTestDomId(name) {
@@ -5435,7 +5474,8 @@
 
             // Reset the form
             const dateInput = document.getElementById('addResultDate');
-            dateInput.value = new Date().toISOString().split('T')[0];
+            const _now = new Date();
+            dateInput.value = `${_now.getFullYear()}-${String(_now.getMonth()+1).padStart(2,'0')}-${String(_now.getDate()).padStart(2,'0')}`;
             const sourceInput = document.getElementById('addSourceFile');
             if (sourceInput) sourceInput.value = '';
             populateSourceFileSuggestions();
@@ -5743,6 +5783,33 @@
                 detailPanel.addEventListener('scroll', updateDetailHeaderScrim, { passive: true });
                 updateDetailHeaderScrim();
             }
+
+            // ── BROWSER BACK BUTTON ──────────────────────────────────
+            window.addEventListener('popstate', () => {
+                // Close overlays first, then detail view
+                if (commandPaletteOpen) {
+                    closeCommandPalette();
+                    return;
+                }
+                const actionSheet = document.getElementById('actionSheet');
+                if (actionSheet?.classList.contains('visible')) {
+                    toggleActionSheet(false);
+                    return;
+                }
+                const layout = document.querySelector('.layout');
+                if (!isDesktop() && layout?.classList.contains('in-detail')) {
+                    // Re-use goBack logic without the isDesktop guard
+                    layout.classList.remove('in-detail');
+                    layout.scrollTop = 0;
+                    document.getElementById('panelDetail').classList.remove('visible');
+                    document.getElementById('panelList').classList.add('visible');
+                    document.getElementById('globalTopBar').style.display = '';
+                    document.getElementById('globalSearchArea').style.display = '';
+                    document.getElementById('globalPusher').style.display = '';
+                    if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
+                    currentTestName = null;
+                }
+            });
         });
         // Re-triggered after Google sign-in (dispatched by the Firebase module below)
         document.addEventListener('labs:reload', loadData);
@@ -6135,12 +6202,16 @@
                             updateBoot('vault_error', { msg: err.message });
                             console.error('[MODULE] Key acquisition failed:', err);
                             const errEl = document.getElementById('panelList');
-                            if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${err.message}</div>`;
+                            if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${_escapeHtml(err.message)}</div>`;
                         }
                     } else {
                         console.warn(`[MODULE] Unauthorized user email: ${user.email}. Restricting access...`);
                         updateBoot('auth_unauthorized');
-                        alert('Unauthorized: Access restricted to sspsful@gmail.com');
+                        _renderGoogleAuthRequired({
+                            message: 'Access restricted',
+                            detail: 'This vault is restricted to the owner\'s account. You\'ve been signed out.',
+                            showButton: true,
+                        });
                         signOut(auth);
                     }
                 } else {
