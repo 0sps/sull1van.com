@@ -215,7 +215,7 @@ layout: default
   /* Mobile summon widget: re-opens the dock after it has dismissed itself */
   #mini-toc-widget {
     position: fixed;
-    top: 25%; /* ~75% of the way up the screen */
+    top: 20%;
     right: 15px;
     width: 32px;
     height: 44px;
@@ -627,16 +627,49 @@ document.addEventListener("DOMContentLoaded", function() {
       '<line x1="7" y1="17" x2="12" y2="17"/></svg>';
     document.body.appendChild(widget);
 
+    let widgetVisible = false; // tracks whether the widget is logically "shown"
+
     function showWidget() {
+      widgetVisible = true;
       widget.style.display = 'flex';
       widget.style.transition = 'none';
       widget.style.opacity = '0';
       widget.style.transform = 'scale(0.6)';
-      void widget.offsetWidth; // reflow so the pop-in animates
+      void widget.offsetWidth;
       widget.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
       widget.style.opacity = '1';
       widget.style.transform = 'scale(1)';
     }
+
+    // Hide on scroll-down, reveal on scroll-up (>10px).
+    let widgetLastScrollY = window.scrollY;
+    let widgetScrollUpAccum = 0;
+    let widgetHiddenByScroll = false;
+
+    window.addEventListener('scroll', () => {
+      if (!widgetVisible || !dismissed) return; // only when widget is the active UI
+      const y = window.scrollY;
+      const dy = y - widgetLastScrollY;
+      widgetLastScrollY = y;
+
+      if (dy > 0) {
+        // scrolling down — fade out
+        widgetScrollUpAccum = 0;
+        if (!widgetHiddenByScroll) {
+          widgetHiddenByScroll = true;
+          widget.style.transition = 'opacity 0.3s ease';
+          widget.style.opacity = '0';
+        }
+      } else {
+        // scrolling up — accumulate
+        widgetScrollUpAccum += Math.abs(dy);
+        if (widgetHiddenByScroll && widgetScrollUpAccum > 10) {
+          widgetHiddenByScroll = false;
+          widget.style.transition = 'opacity 0.3s ease';
+          widget.style.opacity = '1';
+        }
+      }
+    }, { passive: true });
 
     // Re-show the dock immediately: no 3s load delay, straight to the
     // 5s hold-then-dismiss countdown (keep-alive taps still reset it).
