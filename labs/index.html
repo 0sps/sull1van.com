@@ -484,7 +484,7 @@
             border: 1px solid rgba(255,255,255,0.12);
             color: var(--text-primary);
             cursor: pointer; outline: none;
-            transition: all 0.2s var(--spring);
+            transition: background 0.2s var(--spring), border-color 0.2s var(--spring), color 0.2s var(--spring), transform 0.2s var(--spring), box-shadow 0.2s var(--spring);
         }
 
         .theme-toggle:active { background: rgba(255,255,255,0.18); transform: scale(0.9); }
@@ -708,7 +708,7 @@
             width: 32px; height: 32px;
             display: none; align-items: center; justify-content: center;
             color: rgba(255,255,255,0.9); cursor: pointer;
-            border-radius: 50%; transition: all 0.2s;
+            border-radius: 50%; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s;
             background: rgba(255,255,255,0.05);
             z-index: 1;
         }
@@ -1108,7 +1108,7 @@
             border-radius: 50%; width: 38px; height: 38px;
             display: flex; align-items: center; justify-content: center;
             color: var(--text-primary); cursor: pointer; flex-shrink: 0;
-            transition: all 0.2s var(--spring);
+            transition: background 0.2s var(--spring), border-color 0.2s var(--spring), color 0.2s var(--spring), transform 0.2s var(--spring), box-shadow 0.2s var(--spring);
         }
 
         .detail-nav-btn:active { background: rgba(255,255,255,0.16); transform: scale(0.92); }
@@ -1750,7 +1750,7 @@
             border: 1px solid rgba(255,69,58,0.3); background: rgba(255,69,58,0.1);
             color: var(--ios-red); cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; transition: all 0.2s; font-size: 1.1rem; font-weight: 700;
+            flex-shrink: 0; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s; font-size: 1.1rem; font-weight: 700;
         }
         .add-row-remove:active { background: rgba(255,69,58,0.22); }
 
@@ -1847,7 +1847,7 @@
         .confirm-title { font-family: var(--font-heading); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
         .confirm-body  { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; white-space: pre-line; }
         .confirm-actions { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 13px 16px; border-radius: 14px; font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+        .confirm-btn { flex: 1; padding: 13px 16px; border-radius: 14px; font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s; }
         .confirm-btn:active { transform: scale(0.96); }
         .confirm-btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.12); }
         .confirm-btn-primary   { background: var(--ios-blue); color: #fff; box-shadow: 0 4px 16px rgba(10,132,255,0.32); }
@@ -2250,7 +2250,7 @@
         .vault-btn {
             width: 100%; padding: 14px; border-radius: 14px; border: none;
             font-family: var(--font-body); font-size: 15px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
+            cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s;
         }
         .vault-btn:active { transform: scale(0.97); }
         .vault-btn-primary {
@@ -2364,6 +2364,65 @@
         }
         .bottom-nav:active { transform: scale(0.94); background: rgba(255,255,255,0.16); }
         .bottom-nav svg { width: 34px; height: 34px; filter: drop-shadow(0 4px 12px rgba(10,132,255,0.24)); }
+
+        /* ── DESKTOP PERFORMANCE (fine pointer = mouse/trackpad) ──
+           The ambient layers animate transforms on blurred/blended full-screen
+           surfaces, which forces the GPU to recomposite every backdrop-filter
+           element above them on every frame — even when the page is idle.
+           Desktops get a frozen (mid-drift) atmosphere instead. */
+        @media (pointer: fine) {
+            .nebula {
+                animation: none;
+                transform: scale(1.04) translate(7px, 4px);
+            }
+            .sun-rays, :root.time-day .sun-rays {
+                animation: none;
+                transform: translate(-50%, -50%) rotate(24deg);
+                mix-blend-mode: normal;
+                opacity: 0.55;
+            }
+            .grain {
+                mix-blend-mode: normal;
+                opacity: 0.02;
+            }
+            /* Lower blur radii — visually near-identical, far cheaper to
+               recompute when content scrolls/changes behind the glass */
+            .top-bar {
+                backdrop-filter: blur(20px) saturate(140%) brightness(0.85);
+                -webkit-backdrop-filter: blur(20px) saturate(140%) brightness(0.85);
+            }
+            :root.time-day .top-bar {
+                backdrop-filter: blur(20px) saturate(170%) brightness(0.95);
+                -webkit-backdrop-filter: blur(20px) saturate(170%) brightness(0.95);
+            }
+            .command-palette {
+                backdrop-filter: blur(22px) saturate(160%) brightness(0.88);
+                -webkit-backdrop-filter: blur(22px) saturate(160%) brightness(0.88);
+            }
+            .grid-popover {
+                backdrop-filter: blur(22px) saturate(160%) brightness(1.1);
+                -webkit-backdrop-filter: blur(22px) saturate(160%) brightness(1.1);
+            }
+            .confirm-dialog, .report-dialog {
+                backdrop-filter: blur(22px) saturate(150%) brightness(0.75);
+                -webkit-backdrop-filter: blur(22px) saturate(150%) brightness(0.75);
+            }
+        }
+
+        /* Pause all CSS animation work while the tab is hidden
+           (class toggled by a visibilitychange listener) */
+        html.page-hidden *, html.page-hidden *::before, html.page-hidden *::after {
+            animation-play-state: paused !important;
+        }
+
+        /* ── REDUCED MOTION ── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -2741,6 +2800,12 @@
 
     <!-- Stubs for pdf-export.js — safe fallback if the external script fails to load -->
     <script>
+        // Pause all CSS animations while the tab is hidden (keeps the GPU idle
+        // in background tabs — pairs with the html.page-hidden CSS rule)
+        document.addEventListener('visibilitychange', () => {
+            document.documentElement.classList.toggle('page-hidden', document.hidden);
+        });
+
         function openPdfReportPrompt()      { if (typeof showSuccessToast === 'function') showSuccessToast('PDF export is still loading…'); }
         function closePdfReportPrompt()     { document.getElementById('reportOverlay')?.classList.remove('visible'); }
         function onPdfReportSearchInput()   {}
