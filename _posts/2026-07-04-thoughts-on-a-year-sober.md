@@ -97,15 +97,10 @@ Between the six-month to one-year period, the changes were more gradual, but the
 - Hemoglobin A1c
 
 This was a really big accomplishment for me, since some of these were pretty high to begin with. I'm happy to say that, as of 2026, I have never had a better-functioning liver in my life, and that's saying a lot since I have been getting these tests since I was **seventeen**!
-
-
-
-
-
 <br>
 <br>
+
 ### What I still miss
-
 I don't miss being drunk. I actually saw that coming before I quit, as I could feel the hangovers kicking in before I would even get back home from a night out. Heavy drinking had already lost its appeal, which is why I had been slowly cutting the number of nights I drank per month. I don't really miss that.
 
 But something I *do* miss is that nice buzz you get after one, maybe two drinks. The state where you have a slightly eleavated mood, and things seem a little more fun and playful. And that's still where my head is today. The moments of drinking that I miss are pretty specific and infrequent. You're at someone's house, out on a date, at a birthday dinner, and one drink would be perfect to soften the mood. Without it, social stuff takes on a slightly different feeling. Not worse, but just a little different. Not drinking is fine, I'll live, but I would like to experience alcohol again in moderation. 
@@ -113,6 +108,14 @@ But something I *do* miss is that nice buzz you get after one, maybe two drinks.
 Drinking is also just part of culture here in the Midwest. We don't have as much of the great outdoors as other regions, and we get some pretty bad winters, so a lot of times this is how we bond. Going sober made it pretty obvious to me that Alcohol is ingrained into how people connect out here. 
 
 <br>
+
+### What I learned about people
+People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. What I also get, sometimes (very rarely though), is a look of guilt. I'll see other people drinking and they almost seem upset that I'm not. I guess it would be similar to going out for a friend's birthday and bringing your own food because you're on a meal plan. It breaks social norms and confuses people. The alternative is to stay home and skip social events, which is a terrible alternative.
+And while not necessarily specific to me, I have noticed a lot of judgement over people who are trying to better themselves by all sorts of means, not just by going fully sober. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I *would* say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone without knowing what's going on, shaming them for the thing that's getting them out of their addiction. 
+For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. 
+And I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction. My hope here is that regardless of what intervention someone is trying, people become a little more respectful of others' situations.
+<br>
+
 ### Would I recommend you do this?
 People have asked me this, and honestly, I don't think every single person stands to benefit a lot from going fully sober. There's something to be said for having the ability to use alcohol on occasion, to treat a drink the way you might have a sweet treat to celebrate a milestone. Or even to treat it like caffeine: you should be able to have a three-coffee day once in a while if that's what you want. For people who can participate in this kind of thing responsibly, I would say to take advantage where you can.
 
@@ -122,17 +125,12 @@ I think sobriety is awesome, but I don't think everyone needs to do it. I think 
 
 
 
-### What I learned about people
-People have been really supportive for the most part. I've had tons of questions about my sobriety and it's most often a nice conversation. What I also get, sometimes (very rarely though), is a look of guilt. I'll see other people drinking and they almost seem upset that I'm not. I guess it would be similar to going out for a friend's birthday and bringing your own food because you're on a meal plan. It breaks social norms and confuses people. The alternative is to stay home and skip social events, which is a terrible alternative.
-And while not necessarily specific to me, I have noticed a lot of judgement over people who are trying to better themselves by all sorts of means, not just by going fully sober. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I *would* say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone without knowing what's going on, shaming them for the thing that's getting them out of their addiction. 
-For instance, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. It's the same thing when someone with food addiction takes a GLP to kill their cravings. Their goal is simply stop the urge to constantly shove calories into their body. 
-And I hear a lot of scoffing at people who use these and any kind of substance as a way to get past their addiction. My hope here is that regardless of what intervention someone is trying, people become a little more respectful of others' situations.
 
 
 
 <br>
-### Will I stay sober past one year?
 
+### Will I stay sober past one year?
 Probably not. For me, it was about getting healthier and getting rid of my craving to drink. A year later, I've achieved pretty much everything I was looking for. I want to keep this same relationship with alcohol going forward, but *with* the ability to have a drink if I want one.
 
 It's also been incredible to see how much I got done with all the weekends I wasn't going out. I refined my [self-driving car project](https://sull1van.com/7500-miles-self-driving-car). I honed my health and got the [best blood test results](https://sull1van.com/best-liver-of-all-time) of my entire life. I worked on a passion project that [graded two dozen phone chargers](https://sull1van.com/a-dozen-chargers-in-the-lab), continuing a Google engineer's work. I created a half-dozen AI-assisted vibe coding projects, replacing stuff like my Spotify and my workout app with custom-coded alternatives that are 100% free to operate (article coming soon). A lot of stuff.
