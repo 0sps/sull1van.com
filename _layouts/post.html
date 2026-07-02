@@ -212,42 +212,6 @@ layout: default
     border-color: transparent transparent transparent rgba(40, 40, 40, 0.92);
   }
 
-  /* Mobile summon widget: re-opens the dock after it has dismissed itself */
-  #mini-toc-widget {
-    position: fixed;
-    top: 20%;
-    right: 15px;
-    width: 32px;
-    height: 44px;
-    z-index: 9997;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(195, 195, 195, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 16px;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    cursor: pointer;
-    opacity: 0;
-    transform: scale(0.6);
-  }
-
-  #mini-toc-widget svg {
-    width: 22px;
-    height: 22px;
-    stroke: #666;
-  }
-
-  html[data-theme="dark"] #mini-toc-widget {
-    background: rgba(60, 60, 60, 0.45);
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-
-  html[data-theme="dark"] #mini-toc-widget svg {
-    stroke: #aaa;
-  }
 </style>
 
 <div id="mini-toc-scrollbar" title="Table of Contents">
@@ -556,10 +520,9 @@ document.addEventListener("DOMContentLoaded", function() {
       container.style.transition = 'opacity 0.6s ease';
       container.style.opacity = '0';
       setTimeout(() => {
-        if (!dismissed) return; // safety
+        if (!dismissed) return;
         container.style.display = 'none';
         container.classList.remove('is-active-area');
-        showWidget(); // hand off to the summon widget
       }, 650);
     }
 
@@ -614,67 +577,10 @@ document.addEventListener("DOMContentLoaded", function() {
       scrubbing = false;
     }, { passive: true });
 
-    // --- Summon widget: a little square that brings the dock back. ---
-    // Only ever on screen while the dock is NOT (mutually exclusive).
-    const widget = document.createElement('div');
-    widget.id = 'mini-toc-widget';
-    widget.setAttribute('role', 'button');
-    widget.setAttribute('aria-label', 'Show scroll navigator');
-    widget.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">' +
-      '<line x1="17" y1="4" x2="17" y2="20"/>' +
-      '<line x1="7" y1="7" x2="12" y2="7"/>' +
-      '<line x1="7" y1="12" x2="12" y2="12"/>' +
-      '<line x1="7" y1="17" x2="12" y2="17"/></svg>';
-    document.body.appendChild(widget);
+    // --- Scroll-up re-summon: bring the dock back when user scrolls up >15px ---
+    let summonLastScrollY = window.scrollY;
+    let summonScrollUpAccum = 0;
 
-    let widgetVisible = false; // tracks whether the widget is logically "shown"
-
-    function showWidget() {
-      widgetVisible = true;
-      widget.style.display = 'flex';
-      widget.style.transition = 'none';
-      widget.style.opacity = '0';
-      widget.style.transform = 'scale(0.6)';
-      void widget.offsetWidth;
-      widget.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-      widget.style.opacity = '1';
-      widget.style.transform = 'scale(1)';
-    }
-
-    // Hide on scroll-down, reveal on scroll-up (>10px).
-    let widgetLastScrollY = window.scrollY;
-    let widgetScrollAccum = 0; // positive = up, negative = down
-    let widgetHiddenByScroll = false;
-
-    window.addEventListener('scroll', () => {
-      if (!widgetVisible || !dismissed) return;
-      const y = window.scrollY;
-      const dy = y - widgetLastScrollY;
-      widgetLastScrollY = y;
-
-      if (dy > 0) {
-        // scrolling down
-        if (widgetScrollAccum > 0) widgetScrollAccum = 0; // reset opposite direction
-        widgetScrollAccum -= dy;
-        if (!widgetHiddenByScroll && widgetScrollAccum < -30) {
-          widgetHiddenByScroll = true;
-          widget.style.transition = 'opacity 0.3s ease';
-          widget.style.opacity = '0';
-        }
-      } else {
-        // scrolling up
-        if (widgetScrollAccum < 0) widgetScrollAccum = 0;
-        widgetScrollAccum += Math.abs(dy);
-        if (widgetHiddenByScroll && widgetScrollAccum > 15) {
-          widgetHiddenByScroll = false;
-          widget.style.transition = 'opacity 0.3s ease';
-          widget.style.opacity = '1';
-        }
-      }
-    }, { passive: true });
-
-    // Re-show the dock immediately: no 3s load delay, straight to the
-    // 5s hold-then-dismiss countdown (keep-alive taps still reset it).
     function summonDock() {
       dismissed = false;
       container.style.display = 'block';
@@ -683,23 +589,27 @@ document.addEventListener("DOMContentLoaded", function() {
       container.style.transition = 'opacity 0.5s ease';
       container.style.opacity = '1';
       update();
-      scheduleDismiss();
+      scheduleDismiss(); // 5s timer, keep-alive taps still reset it
     }
 
-    widget.addEventListener('click', () => {
-      if (!dismissed) return; // dock already on screen; never overlap
-      // Morph: stretch the square up/into the dock's position, then swap.
-      const wRect = widget.getBoundingClientRect();
-      const dockCenterY = 70 + 225 / 2; // dock is fixed at top:70px, height:225px
-      const dy = dockCenterY - (wRect.top + wRect.height / 2);
-      widget.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease';
-      widget.style.transform = 'translateY(' + dy + 'px) scaleY(' + (225 / wRect.height) + ') scaleX(0.72)';
-      widget.style.opacity = '0';
-      setTimeout(() => {
-        widget.style.display = 'none';
-        summonDock();
-      }, 350); // dock fades in as the widget finishes morphing
-    });
+    window.addEventListener('scroll', () => {
+      if (!dismissed) { summonLastScrollY = window.scrollY; return; }
+      const y = window.scrollY;
+      const dy = y - summonLastScrollY;
+      summonLastScrollY = y;
+
+      if (dy >= 0) {
+        // scrolling down or idle — reset accumulator
+        summonScrollUpAccum = 0;
+      } else {
+        // scrolling up
+        summonScrollUpAccum += Math.abs(dy);
+        if (summonScrollUpAccum > 15) {
+          summonScrollUpAccum = 0;
+          summonDock();
+        }
+      }
+    }, { passive: true });
 
     setTimeout(() => {
       if (dismissed) return;

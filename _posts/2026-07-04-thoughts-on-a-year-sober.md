@@ -19,7 +19,7 @@ My path to sobriety didn't really take off until I got some concerning blood tes
 
 
 <details class="note-card">
-  <summary>Note</summary>
+  <summary>Footnote</summary>
   <div class="note-card-body">
     <p>Later on, into sobriety, I also built <a href="https://sull1van.com/tracking-blood-tests">a web dashboard</a> to track my blood test results so I could watch them more closely. But at the start of my sobriety, I hadn't even thought about this yet.</p>
   </div>
@@ -78,7 +78,7 @@ But yeah, I could. Just go longer. So that's exactly what I did. At the end of t
 The changes in my body showed up fast, within 3 months. I noticed increased energy during the day and whiter eyes, which was a surprising great combo. I also worked on my general health and refined that supplement stack I mentioned. Around the same time as his, my cravings evaporated. By month three I no longer had any big urge to drink. I'd settled into the reality that I would just go to the bar with friends, sit my ass down, and order a soda or an NA beer. The lack of alcohol didn't really manifest as a craving anymore, more like it was just a routine I had to follow. Get the NA option, nothing else.
 
 <details class="note-card">
-  <summary>Note</summary>
+  <summary>Footnote</summary>
   <div class="note-card-body">
     <p>And on that note, NA beers are awesome. They're not for everyone, but a ton of stores and bars have started stocking them in this last year. It definitely beats a soda if you're doing something social and want a drink in your hand. Also, if you aren't a beer person, NA beers might make you one after you go sober, lol</p>
   </div>
@@ -116,7 +116,7 @@ In an ideal world, that's how it would work. You'd use what you want in moderati
 
 
 <details class="note-card">
-  <summary>Note</summary>
+  <summary>Footnote</summary>
   <div class="note-card-body">
     <p>For a moment, I want to touch on addiction, and treatment for addiction, since that's really where the "just use less" idea falls apart. I don't think most people get how common addiction actually is, and how many people are fighting it daily. I wouldn't classify my situation as alcoholism, but I <em>would</em> say it was an addiction of some kind. The problem with people not realizing how common this is, is that they can judge someone for how they deal with their addiction, ending up shaming them for the thing that's getting them out of it. Some people replace alcohol with sugary soda, and I think that's fine. Some people replace it with nicontine.</p>
     <p>For me, I tried naltrexone for a while. It's a drug usually reserved for people with a diagnosed alcohol use disorder, but my doctor said it was totally fine for me to try on weekends. But if it got casually brought up to an acquaintance that I was taking a drug that alcoholics use, and they didn't know everything I just told you here, they'd probably judge me for it. </p>
