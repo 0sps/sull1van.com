@@ -3,6 +3,7 @@ layout: post
 title: "Thoughts on a Year Sober"
 date: 2026-06-04
 tags: [meta, blogging]
+accent_color: "#d5bca0"
 ---
 
 
