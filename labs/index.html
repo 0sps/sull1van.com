@@ -879,7 +879,7 @@
             box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset, 0 4px 20px rgba(10,132,255,0.12);
         }
 
-        /* Grid expand container */
+        /* Grid expand container (legacy inline — kept for non-desktop) */
         .grid-detail-container {
             width: 100%; display: grid;
             grid-template-rows: 0fr;
@@ -898,6 +898,90 @@
         .test-card.expanded:hover {
             background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
         }
+
+        /* ── GRID POPOVER ── */
+        .grid-popover-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            z-index: 1100;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.18s ease;
+        }
+        .grid-popover-overlay.visible { opacity: 1; pointer-events: auto; }
+
+        .grid-popover {
+            position: fixed;
+            width: min(480px, calc(100vw - 32px));
+            max-height: min(600px, calc(100dvh - 32px));
+            overflow-y: auto;
+            background: linear-gradient(180deg, rgba(20,24,38,0.82), rgba(8,11,22,0.78));
+            backdrop-filter: blur(40px) saturate(160%) brightness(0.88);
+            -webkit-backdrop-filter: blur(40px) saturate(160%) brightness(0.88);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-top: 1.5px solid rgba(255,255,255,0.25);
+            border-radius: 22px;
+            padding: 18px;
+            z-index: 1101;
+            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.8), 0 2px 12px rgba(0,0,0,0.3);
+            transform: translateY(-8px) scale(0.97);
+            opacity: 0; pointer-events: none;
+            transition: transform 0.22s var(--spring), opacity 0.18s ease;
+            scrollbar-width: none;
+        }
+        .grid-popover::-webkit-scrollbar { display: none; }
+        .grid-popover.visible { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+
+        :root.time-day .grid-popover-overlay { background: rgba(40,130,210,0.22); }
+        :root.time-day .grid-popover {
+            background: linear-gradient(160deg, rgba(0,0,0,0.28), rgba(0,0,0,0.2));
+            border-color: rgba(255,255,255,0.28);
+            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.4);
+        }
+
+        .grid-popover-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .grid-popover-title {
+            font-family: var(--font-heading); font-size: 18px; font-weight: 750;
+            color: var(--text-primary); letter-spacing: -0.3px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            flex: 1; min-width: 0;
+        }
+        .grid-popover-unit {
+            font-family: var(--font-body); font-size: 11px; font-weight: 600;
+            color: var(--text-secondary); margin-top: 2px;
+        }
+        .grid-popover-close {
+            width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+            border: 0.5px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.07);
+            color: var(--text-primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: background 0.15s;
+        }
+        .grid-popover-close:hover { background: rgba(255,255,255,0.14); }
+
+        .grid-popover .kpi-row { grid-template-columns: repeat(3,1fr); padding: 10px 0 8px; gap: 6px; }
+        .grid-popover .kpi-box { padding: 10px 8px; border-radius: 12px; }
+        .grid-popover .kpi-label { font-size: 9px; }
+        .grid-popover .kpi-val { font-size: 17px; }
+        .grid-popover .kpi-sub { font-size: 10px; }
+        .grid-popover .range-bar-section,
+        .grid-popover .std-timeline,
+        .grid-popover .history-section,
+        .grid-popover .chart-section,
+        .grid-popover .detail-divider { padding-left: 0; padding-right: 0; }
+        .grid-popover .range-bar-card,
+        .grid-popover .std-timeline-card,
+        .grid-popover .chart-card { padding: 12px 14px; }
+        .grid-popover .chart-inner { height: 200px !important; }
+        .grid-popover .history-section { padding-bottom: 6px; }
+        .grid-popover .history-header span:nth-child(1),
+        .grid-popover .hist-date { width: 68px; }
+        .grid-popover .hist-val { font-size: 15px; }
+        .grid-popover .hist-delta { font-size: 10px; }
 
         /* Card content */
         .test-card-inner {
@@ -2336,6 +2420,21 @@
         <div class="sheet-action" style="color:var(--ios-red);" onclick="toggleActionSheet(false)">Cancel</div>
     </div>
 
+    <!-- Grid Popover (floating detail for grid view) -->
+    <div class="grid-popover-overlay" id="gridPopoverOverlay" onclick="closeGridPopover()"></div>
+    <div class="grid-popover" id="gridPopover">
+        <div class="grid-popover-header">
+            <div>
+                <div class="grid-popover-title" id="gridPopoverTitle"></div>
+                <div class="grid-popover-unit" id="gridPopoverUnit"></div>
+            </div>
+            <button class="grid-popover-close" onclick="closeGridPopover()" aria-label="Close">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div id="gridPopoverContent"></div>
+    </div>
+
     <!-- Custom Confirm Dialog -->
     <div class="confirm-overlay" id="confirmOverlay">
         <div class="confirm-dialog">
@@ -2667,6 +2766,9 @@
             // across views (list's .active-card highlight leaking into grid
             // tiles, or grid's .expanded detail leaking back into the list).
             if (wasGrid !== isGrid) {
+                // Close any open grid popover when switching views
+                if (wasGrid && typeof closeGridPopover === 'function') closeGridPopover();
+
                 document.querySelectorAll('.test-card').forEach(el => {
                     if (isGrid) {
                         el.classList.remove('active-card');
@@ -4074,6 +4176,12 @@
                 return;
             }
 
+            if (event.key === 'Escape' && document.getElementById('gridPopover')?.classList.contains('visible')) {
+                event.preventDefault();
+                closeGridPopover();
+                return;
+            }
+
             if (event.key === 'Escape' && document.getElementById('sourcePlatterOverlay')?.classList.contains('visible')) {
                 event.preventDefault();
                 closeSourcePlatter();
@@ -4534,117 +4642,16 @@
             if (isDesktop()) {
                 const layout = document.querySelector('.layout');
                 if (layout.classList.contains('is-grid-view')) {
-                    // Collapse any other open card first
-                    document.querySelectorAll('.test-card.expanded').forEach(el => {
-                        if (el.id !== `test-btn-${getTestDomId(name)}`) {
-                            el.classList.remove('expanded');
-                            el.removeAttribute('data-grid-open');
-                            const container = el.querySelector('.grid-detail-container');
-                            // Track the timer on the element so a re-expand can cancel it
-                            // (an untracked timer could delete a freshly rebuilt container).
-                            if (el._removeTimer) { clearTimeout(el._removeTimer); }
-                            if (container) el._removeTimer = setTimeout(() => { container.remove(); el._removeTimer = null; }, 370);
-                        }
-                    });
-
                     const cardId = `test-btn-${getTestDomId(name)}`;
                     const cardEl = document.getElementById(cardId);
-                    if (cardEl) {
-                        // Toggle: clicking an open card collapses it
-                        if (cardEl.hasAttribute('data-grid-open')) {
-                            cardEl.classList.remove('expanded');
-                            cardEl.removeAttribute('data-grid-open');
-                            const container = cardEl.querySelector('.grid-detail-container');
-                            if (container) cardEl._removeTimer = setTimeout(() => { container.remove(); cardEl._removeTimer = null; }, 370);
-                            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
-                            currentTestName = null;
-                            return;
-                        }
 
-                        currentTestName = name;
-                        if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
-
-                        if (cardEl._removeTimer) {
-                            clearTimeout(cardEl._removeTimer);
-                            cardEl._removeTimer = null;
-                        }
-                        const existingContainer = cardEl.querySelector('.grid-detail-container');
-                        if (existingContainer) existingContainer.remove();
-
-                        // Build expanded content wrapper. Everything below is wrapped so a
-                        // failure in any section renderer can't strand the card in a
-                        // half-expanded state (expanded styling with no detail content).
-                        const gridDetail = document.createElement('div');
-                        gridDetail.className = 'grid-detail-container';
-                        const inner = document.createElement('div');
-                        inner.className = 'grid-detail-inner';
-
-                        try {
-                            // Close button + KPI row (pure HTML — no canvas yet)
-                            inner.innerHTML = `
-                                <div class="grid-expand-header">
-                                    <button class="detail-nav-btn" style="width:28px;height:28px;" data-testname="${escStr(t.name)}" onclick="event.stopPropagation();openTest(this.dataset.testname)" aria-label="Close detail">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                                    </button>
-                                </div>
-                                ${getKPIHtml(t)}
-                            `;
-
-                            gridDetail.appendChild(inner);
-                            // Append to DOM BEFORE animating so content has layout
-                            cardEl.appendChild(gridDetail);
-
-                            // Mark open only once the detail DOM actually exists, so the
-                            // toggle branch above can't get stuck on a stale attribute.
-                            cardEl.setAttribute('data-grid-open', 'true');
-
-                            // Force reflow, then trigger the 0fr → 1fr animation
-                            void gridDetail.offsetWidth;
-                            cardEl.classList.add('expanded');
-                        } catch (err) {
-                            console.error('[grid] failed to expand card', name, err);
-                            gridDetail.remove();
-                            cardEl.classList.remove('expanded');
-                            cardEl.removeAttribute('data-grid-open');
-                            currentTestName = null;
-                            return;
-                        }
-
-                        // Render pure-HTML sections immediately (no canvas needed).
-                        // Each section is isolated: if one throws, the card still opens
-                        // with the KPI row and the remaining sections.
-                        try {
-                            if (t.type === 'qualitative') {
-                                renderSTDTimeline(t, inner);
-                            } else {
-                                if (t.numericPts.length > 0) {
-                                    try { renderGauge(t, inner); } catch (err) { console.error('[grid] gauge render failed', name, err); }
-                                }
-                                renderHistoryTable(t, inner);
-                            }
-                        } catch (err) {
-                            console.error('[grid] detail section render failed', name, err);
-                        }
-
-                        // Render Chart.js trend after animation ends so canvas has real dimensions.
-                        // Capture the test name now; if the card is collapsed before the timer
-                        // fires, bail — otherwise we'd inject a chart into a detached DOM node.
-                        const _expandedName = name;
-                        setTimeout(() => {
-                            if (currentTestName !== _expandedName || !inner.isConnected) return;
-                            try {
-                                if (t.type !== 'qualitative' && t.numericPts.length > 1) {
-                                    renderTrendChart(t, inner);
-                                }
-                            } catch (err) {
-                                console.error('[grid] trend chart render failed', name, err);
-                            }
-                            cardEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                        }, 380);
-
+                    // Toggle: clicking same card closes popover
+                    if (currentTestName === name && document.getElementById('gridPopover')?.classList.contains('visible')) {
+                        closeGridPopover();
                         return;
                     }
-                    // Card element not found (e.g. filtered out): don't fall through to sidebar code.
+
+                    openGridPopover(t, cardEl);
                     return;
                 }
 
@@ -5232,6 +5239,105 @@
     `);
         }
 
+        // ── GRID POPOVER ─────────────────────────────────────────────
+        function openGridPopover(t, anchorEl) {
+            // Clean up previous chart
+            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+
+            currentTestName = t.name;
+
+            // Highlight the source card
+            document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
+            if (anchorEl) anchorEl.classList.add('active-card');
+
+            const overlay = document.getElementById('gridPopoverOverlay');
+            const popover = document.getElementById('gridPopover');
+            const title = document.getElementById('gridPopoverTitle');
+            const unit = document.getElementById('gridPopoverUnit');
+            const content = document.getElementById('gridPopoverContent');
+
+            title.textContent = t.name;
+            unit.textContent = getDisplayUnitText(t) || '';
+            content.innerHTML = '';
+
+            // KPIs
+            content.insertAdjacentHTML('beforeend', getKPIHtml(t));
+
+            // Sections
+            try {
+                if (t.type === 'qualitative') {
+                    renderSTDTimeline(t, content);
+                } else {
+                    if (t.numericPts.length > 0) {
+                        try { renderGauge(t, content); } catch (err) { console.error('[popover] gauge failed', err); }
+                    }
+                    renderHistoryTable(t, content);
+                }
+            } catch (err) { console.error('[popover] section render failed', err); }
+
+            // Position near the anchor card
+            if (anchorEl) {
+                const rect = anchorEl.getBoundingClientRect();
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const popW = Math.min(480, vw - 32);
+                const popMaxH = Math.min(600, vh - 32);
+                const margin = 12;
+
+                // Prefer placing to the right of the card; fall back to left, then center
+                let left, top;
+
+                if (rect.right + margin + popW <= vw - margin) {
+                    // Right of card
+                    left = rect.right + margin;
+                } else if (rect.left - margin - popW >= margin) {
+                    // Left of card
+                    left = rect.left - margin - popW;
+                } else {
+                    // Center horizontally
+                    left = Math.max(margin, (vw - popW) / 2);
+                }
+
+                // Vertically align with card top, clamped to viewport
+                top = Math.max(margin, Math.min(rect.top, vh - popMaxH - margin));
+
+                popover.style.left = `${left}px`;
+                popover.style.top = `${top}px`;
+                popover.style.right = 'auto';
+            } else {
+                // Fallback: center
+                const popW = Math.min(480, window.innerWidth - 32);
+                popover.style.left = `${(window.innerWidth - popW) / 2}px`;
+                popover.style.top = '16px';
+                popover.style.right = 'auto';
+            }
+
+            // Show
+            overlay.classList.add('visible');
+            requestAnimationFrame(() => { popover.classList.add('visible'); });
+
+            // Render chart after the popover is visible so canvas has dimensions
+            const _name = t.name;
+            setTimeout(() => {
+                if (currentTestName !== _name) return;
+                try {
+                    if (t.type !== 'qualitative' && t.numericPts.length > 1) {
+                        renderTrendChart(t, content);
+                    }
+                } catch (err) { console.error('[popover] chart render failed', err); }
+            }, 280);
+        }
+
+        function closeGridPopover() {
+            const overlay = document.getElementById('gridPopoverOverlay');
+            const popover = document.getElementById('gridPopover');
+            if (popover) popover.classList.remove('visible');
+            if (overlay) overlay.classList.remove('visible');
+            if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
+            document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
+            currentTestName = null;
+        }
+
         // ── NAVIGATION ───────────────────────────────────────────────
         function goBack() {
             if (isDesktop()) return; // no back on desktop
@@ -5787,6 +5893,10 @@
             // ── BROWSER BACK BUTTON ──────────────────────────────────
             window.addEventListener('popstate', () => {
                 // Close overlays first, then detail view
+                if (document.getElementById('gridPopover')?.classList.contains('visible')) {
+                    closeGridPopover();
+                    return;
+                }
                 if (commandPaletteOpen) {
                     closeCommandPalette();
                     return;
