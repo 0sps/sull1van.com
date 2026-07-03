@@ -49,7 +49,7 @@ At first I was really strict about all this, but after a while, I realized that 
 
 That meant the trace alcohol from an NA beer was fine, and any kind of mouthwash or other alcohol was also fine if I rinsed out afterward. You might say these are permissive rules, and that's fair, they worked for me. I was never in the territory of life-or-death alcoholism, so I didn't feel like my sobriety needed to be that strict. I stuck to these rules for the entire year, so it was really important that they at least be manageable ones (Also, it feels both weird and pretty cool to say that I did that).
 
-Another point of my sobriety was that it actually became threefold. I wanted it to feel like a real personal reset, so I brought in **smoking and vaping too, not just drinking**. 
+Another point of my sobriety was that it actually became threefold. I wanted it to feel like a real personal reset, so I brought in **smoking (weed) and vaping too, not just drinking**. 
 Plenty of people don't do these things to begin with, so I don't think I'm "special" in any way, I just wanted to make it a little more challenging and remove the chance I'd replace one substance with another.
 
 
