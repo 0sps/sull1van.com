@@ -694,8 +694,8 @@ document.addEventListener("DOMContentLoaded", function() {
       scrubbing = false;
     }, { passive: true });
 
-    // --- Scroll-up re-summon: bring the dock back when user scrolls up >100px ---
-    const summonScrollUpThreshold = 100;
+    // --- Scroll-up re-summon: bring the dock back when user scrolls up >350px ---
+    const summonScrollUpThreshold = 350;
     let summonLastScrollY = window.scrollY;
     let summonScrollUpAccum = 0;
 
