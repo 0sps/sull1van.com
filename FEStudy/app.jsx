@@ -2333,14 +2333,14 @@ function QuizSessionView({
           onClick={() => handleGradeAndAdvance(false)}
         >
           <span>Mark wrong</span>
-          <span className="shortcut-badge">SPACE</span>
+          <kbd className="shortcut-badge" aria-hidden="true">Space</kbd>
         </button>
         <button
           className="button result-button result-button-primary"
           onClick={() => handleGradeAndAdvance(true)}
         >
           <span>Mark right</span>
-          <span className="shortcut-badge">ENTER</span>
+          <kbd className="shortcut-badge" aria-hidden="true">Enter</kbd>
         </button>
       </div>
     );
@@ -2707,7 +2707,7 @@ function QuizSessionView({
               disabled={currentIndex === 0}
             >
               <span>Previous</span>
-              <span className="shortcut-badge shortcut-badge-nav">Left key</span>
+              <kbd className="shortcut-badge shortcut-badge-nav" aria-hidden="true">Left</kbd>
             </button>
             <button
               className={`button-ghost quiz-nav-button ${navKeyActive === "right" ? "is-key-active" : ""}`}
@@ -2715,7 +2715,7 @@ function QuizSessionView({
               disabled={currentIndex >= questions.length}
             >
               <span>Next</span>
-              <span className="shortcut-badge shortcut-badge-nav">Right key</span>
+              <kbd className="shortcut-badge shortcut-badge-nav" aria-hidden="true">Right</kbd>
             </button>
           </div>
         </div>
@@ -2734,7 +2734,7 @@ function QuizSessionView({
                   disabled={!response?.revealed}
                 >
                   <span>Mark wrong</span>
-                  <span className="shortcut-badge">SPACE</span>
+                  <kbd className="shortcut-badge" aria-hidden="true">Space</kbd>
                 </button>
                 <button
                   className="button result-button result-button-primary"
@@ -2742,7 +2742,7 @@ function QuizSessionView({
                   disabled={!response?.revealed}
                 >
                   <span>Mark right</span>
-                  <span className="shortcut-badge">ENTER</span>
+                  <kbd className="shortcut-badge" aria-hidden="true">Enter</kbd>
                 </button>
               </>
             )}

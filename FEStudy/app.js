@@ -1711,7 +1711,7 @@ var FEStudyApp = (() => {
           onClick: () => handleGradeAndAdvance(false)
         },
         /* @__PURE__ */ React.createElement("span", null, "Mark wrong"),
-        /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "SPACE")
+        /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge", "aria-hidden": "true" }, "Space")
       ), /* @__PURE__ */ React.createElement(
         "button",
         {
@@ -1719,7 +1719,7 @@ var FEStudyApp = (() => {
           onClick: () => handleGradeAndAdvance(true)
         },
         /* @__PURE__ */ React.createElement("span", null, "Mark right"),
-        /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "ENTER")
+        /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge", "aria-hidden": "true" }, "Enter")
       ));
     }
     useEffect(() => {
@@ -1846,7 +1846,7 @@ var FEStudyApp = (() => {
         disabled: currentIndex === 0
       },
       /* @__PURE__ */ React.createElement("span", null, "Previous"),
-      /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge shortcut-badge-nav" }, "Left key")
+      /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge shortcut-badge-nav", "aria-hidden": "true" }, "Left")
     ), /* @__PURE__ */ React.createElement(
       "button",
       {
@@ -1855,7 +1855,7 @@ var FEStudyApp = (() => {
         disabled: currentIndex >= questions.length
       },
       /* @__PURE__ */ React.createElement("span", null, "Next"),
-      /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge shortcut-badge-nav" }, "Right key")
+      /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge shortcut-badge-nav", "aria-hidden": "true" }, "Right")
     ))), /* @__PURE__ */ React.createElement("div", { className: "quiz-footer quiz-footer-stage", role: "toolbar", "aria-label": "Grade this question" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-center" }, /* @__PURE__ */ React.createElement("span", { className: "muted" }, isSubmitLanding ? isReviewMode ? "Review wrap-up" : "Submission check" : `Question ${currentIndex + 1} of ${questions.length}`)), /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-actions" }, isSubmitLanding ? null : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
       "button",
       {
@@ -1864,7 +1864,7 @@ var FEStudyApp = (() => {
         disabled: !response?.revealed
       },
       /* @__PURE__ */ React.createElement("span", null, "Mark wrong"),
-      /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "SPACE")
+      /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge", "aria-hidden": "true" }, "Space")
     ), /* @__PURE__ */ React.createElement(
       "button",
       {
@@ -1873,7 +1873,7 @@ var FEStudyApp = (() => {
         disabled: !response?.revealed
       },
       /* @__PURE__ */ React.createElement("span", null, "Mark right"),
-      /* @__PURE__ */ React.createElement("span", { className: "shortcut-badge" }, "ENTER")
+      /* @__PURE__ */ React.createElement("kbd", { className: "shortcut-badge", "aria-hidden": "true" }, "Enter")
     ))))));
   }
   function pickRandom(items, count) {
