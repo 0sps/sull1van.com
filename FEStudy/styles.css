@@ -11,6 +11,9 @@
   --dark-line: #3d4c37;
   --dark-muted: #a9b79e;
   --gold: #d8b45a;
+  /* Keyboard focus indicator — gold reads clearly on both the light paper
+     surfaces and the dark green panels, unlike the old bright-blue ring. */
+  --focus-ring: var(--gold);
   --strip: #efe7ce;
   --strip-label: #8a7a45;
   --strip-text: #6b6345;
@@ -555,7 +558,7 @@ select {
 }
 
 .clear-answer-stamp:focus-visible {
-  outline: 3px solid #1f6feb;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: 50%;
   color: var(--clear-stamp-text-strong);
@@ -2310,7 +2313,7 @@ select {
   z-index: 100;
   padding: 10px 16px;
   border-radius: 12px;
-  background: #1f2937;
+  background: var(--dark);
   color: #fff;
   font-weight: 700;
   text-decoration: none;
@@ -2357,7 +2360,7 @@ select {
 
 /* Consistent, visible keyboard focus indicator across all controls. */
 :focus-visible {
-  outline: 3px solid #1f6feb;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
