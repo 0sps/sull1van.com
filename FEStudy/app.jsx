@@ -2528,7 +2528,11 @@ function QuizSessionView({
               })}
             </nav>
             <div className="quiz-sidebar-note">
-              <div className="pill subtle">Arrow keys move between questions</div>
+              <div className="shortcut-help" aria-label="Keyboard shortcut: use Left and Right arrow keys to move between questions">
+                <span>Keyboard nav</span>
+                <kbd>Left</kbd>
+                <kbd>Right</kbd>
+              </div>
             </div>
           </div>
         </aside>
@@ -2703,7 +2707,7 @@ function QuizSessionView({
               disabled={currentIndex === 0}
             >
               <span>Previous</span>
-              <span className="shortcut-badge shortcut-badge-nav">←</span>
+              <span className="shortcut-badge shortcut-badge-nav">Left key</span>
             </button>
             <button
               className={`button-ghost quiz-nav-button ${navKeyActive === "right" ? "is-key-active" : ""}`}
@@ -2711,7 +2715,7 @@ function QuizSessionView({
               disabled={currentIndex >= questions.length}
             >
               <span>Next</span>
-              <span className="shortcut-badge shortcut-badge-nav">→</span>
+              <span className="shortcut-badge shortcut-badge-nav">Right key</span>
             </button>
           </div>
         </div>

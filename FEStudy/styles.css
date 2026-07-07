@@ -802,12 +802,43 @@ select {
 }
 
 .shortcut-badge-nav {
-  bottom: 6px;
-  font-size: 0.9rem;
-  padding: 0;
-  border: 0;
-  opacity: 0.75;
+  position: static;
+  transform: none;
+  font-size: 0.66rem;
+  padding: 4px 8px;
+  border: 1px solid rgba(138, 132, 104, 0.35);
+  background: rgba(239, 231, 206, 0.72);
+  color: var(--pill-text);
+  opacity: 1;
   line-height: 1;
+}
+
+.shortcut-help {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  color: var(--pill-text);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.shortcut-help span {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shortcut-help kbd {
+  min-width: 42px;
+  padding: 5px 9px;
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.74);
+  color: var(--strip-text);
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: center;
+  box-shadow: none;
 }
 
 .progress-track {
@@ -1908,29 +1939,26 @@ select {
 }
 
 .quiz-nav-button {
-  min-width: 120px;
-  min-height: 64px;
-  padding: 12px 18px 24px;
+  min-width: 108px;
+  min-height: 48px;
+  padding: 10px 14px;
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   justify-content: center;
   font-weight: 700;
-  background: linear-gradient(180deg, rgba(248, 245, 240, 0.98), rgba(238, 229, 216, 0.92));
-  border: 1px solid rgba(185, 170, 145, 0.34);
-  color: rgba(72, 57, 38, 0.9);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.84),
-    inset 0 -6px 10px rgba(145, 121, 89, 0.08);
+  background: transparent;
+  border: 1.5px solid #d5ccaf;
+  color: #4a4c3e;
+  box-shadow: none;
 }
 
 .quiz-nav-button:is(.is-key-active, :hover:not(:disabled), :active:not(:disabled)) {
-  border-color: rgba(92, 138, 95, 0.42);
-  color: #2F5233;
-  background: linear-gradient(180deg, rgba(244, 249, 246, 0.99), rgba(228, 239, 232, 0.95));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.84),
-    inset 0 -6px 10px rgba(92, 138, 95, 0.1);
+  border-color: rgba(47, 82, 51, 0.42);
+  color: var(--accent);
+  background: #f1ecd8;
+  box-shadow: none;
 }
 
 .quiz-footer-center {
