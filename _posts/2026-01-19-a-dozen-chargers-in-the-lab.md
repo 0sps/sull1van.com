@@ -496,8 +496,6 @@ They look confusing at first glance, but you don't need to be an electrical engi
   .stats-table th {
     background-color: #f2f2f2;
   }
-  .stats-table td.diff-pos { color: #228B22; font-weight: 700; }
-  .stats-table td.diff-neg { color: #C41C00; font-weight: 700; }
   .usba-badge {
     display: inline-block;
     margin-left: 7px;
@@ -875,7 +873,7 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
 </details>
 
 
-The Actual Voltage column is highlighted <span style="color:#228B22; font-weight:700;">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span style="color:#C41C00; font-weight:700;">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
+The Actual Voltage column is highlighted <span class="diff-pos">green</span> if the measured voltage is within ±5% of the nominal output voltage (the USB-C PD spec limit) and <span class="diff-neg">red</span> if it falls outside that window in either direction. For example, a 5V output must stay between 4.75V and 5.25V.
 
 
 
@@ -1642,8 +1640,6 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
   .overcurrent-table td:nth-child(1) {
     background-color: rgba(0, 0, 0, 0.03);
   }
-  .overcurrent-table td.oc-pos { color: #228B22; font-weight: 700; }
-  .overcurrent-table td.oc-neg { color: #C41C00; font-weight: 700; }
   @media (prefers-color-scheme: dark) {
     .overcurrent-table th, .overcurrent-table td {
       border-color: #2a2a2a;
@@ -1674,20 +1670,20 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>Vebner GaN</strong></td><td class="oc-pos">0.42</td><td class="oc-pos">0.13</td><td class="oc-pos">2.5</td></tr>
-    <tr><td><strong>AOHI GaN 100W</strong></td><td class="oc-pos">0.6</td><td class="oc-pos">0.13</td><td class="oc-pos">3.5</td></tr>
-    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="oc-pos">0.35</td><td class="oc-pos">0.12</td><td class="oc-pos">2.2</td></tr>
-    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="oc-pos">0.44</td><td class="oc-neg">-0.09</td><td class="oc-pos">1.9</td></tr>
-    <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td class="oc-pos">0.7</td><td class="oc-neg">-0.22</td><td class="oc-pos">7.6</td></tr>
-    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="oc-pos">0.42</td><td class="oc-neg">-0.11</td><td class="oc-pos">1.7</td></tr>
-    <tr><td><strong>Apple 30W Retail</strong></td><td class="oc-pos">0.17</td><td class="oc-neg">-0.14</td><td class="oc-pos">0.4</td></tr>
-    <tr><td><strong>Apple 96W</strong></td><td class="oc-pos">0.46</td><td class="oc-neg">-0.37</td><td class="oc-pos">1.1</td></tr>
-    <tr><td><strong>Amazon Kindle</strong></td><td class="oc-pos">0.1</td><td class="oc-neg">-0.4</td><td class="oc-neg">-0.2</td></tr>
-    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="oc-pos">0.22</td><td class="oc-neg">-0.27</td><td class="oc-pos">0.2</td></tr>
-    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="oc-pos">0.33</td><td class="oc-neg">-0.3</td><td class="oc-pos">0.7</td></tr>
-    <tr><td><strong>Eero 15W Charger</strong></td><td class="oc-pos">0.36</td><td class="oc-neg">-0.31</td><td class="oc-pos">0.8</td></tr>
-    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="oc-pos">0.23</td><td class="oc-neg">-0.57</td><td class="oc-neg">-0.2</td></tr>
-    <tr><td><strong>Counterfeit Samsung</strong></td><td class="oc-pos">0.81</td><td class="oc-neg">-1.2</td><td class="oc-pos">0.64</td></tr>
+    <tr><td><strong>Vebner GaN</strong></td><td class="diff-pos">0.42</td><td class="diff-pos">0.13</td><td class="diff-pos">2.5</td></tr>
+    <tr><td><strong>AOHI GaN 100W</strong></td><td class="diff-pos">0.6</td><td class="diff-pos">0.13</td><td class="diff-pos">3.5</td></tr>
+    <tr><td><strong>Anker A121B 100W GaN Charger</strong></td><td class="diff-pos">0.35</td><td class="diff-pos">0.12</td><td class="diff-pos">2.2</td></tr>
+    <tr><td><strong>Anker A121D 45W iPhone 17 Charger</strong></td><td class="diff-pos">0.44</td><td class="diff-neg">-0.09</td><td class="diff-pos">1.9</td></tr>
+    <tr><td><strong>Anker 637 Magnetic Charging Station 2 - USB C port</strong></td><td class="diff-pos">0.7</td><td class="diff-neg">-0.22</td><td class="diff-pos">7.6</td></tr>
+    <tr><td><strong>Apple HomePod Mini (20W)</strong></td><td class="diff-pos">0.42</td><td class="diff-neg">-0.11</td><td class="diff-pos">1.7</td></tr>
+    <tr><td><strong>Apple 30W Retail</strong></td><td class="diff-pos">0.17</td><td class="diff-neg">-0.14</td><td class="diff-pos">0.4</td></tr>
+    <tr><td><strong>Apple 96W</strong></td><td class="diff-pos">0.46</td><td class="diff-neg">-0.37</td><td class="diff-pos">1.1</td></tr>
+    <tr><td><strong>Amazon Kindle</strong></td><td class="diff-pos">0.1</td><td class="diff-neg">-0.4</td><td class="diff-neg">-0.2</td></tr>
+    <tr><td><strong>Spigen PowerArc ArcStation</strong></td><td class="diff-pos">0.22</td><td class="diff-neg">-0.27</td><td class="diff-pos">0.2</td></tr>
+    <tr><td><strong>AOHI GaN 65W Charger</strong></td><td class="diff-pos">0.33</td><td class="diff-neg">-0.3</td><td class="diff-pos">0.7</td></tr>
+    <tr><td><strong>Eero 15W Charger</strong></td><td class="diff-pos">0.36</td><td class="diff-neg">-0.31</td><td class="diff-pos">0.8</td></tr>
+    <tr><td><strong>Counterfeit Chinese Wall Charger</strong></td><td class="diff-pos">0.23</td><td class="diff-neg">-0.57</td><td class="diff-neg">-0.2</td></tr>
+    <tr><td><strong>Counterfeit Samsung</strong></td><td class="diff-pos">0.81</td><td class="diff-neg">-1.2</td><td class="diff-pos">0.64</td></tr>
   </tbody>
 </table>
 </div>

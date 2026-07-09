@@ -269,9 +269,6 @@ Here is the oldest test against the newest test, complete with the trends we tal
   .bloat-table th {
     background-color: #f2f2f2;
   }
-  .bloat-table td.diff-pos { color: #228B22; font-weight: 700; }
-  .bloat-table td.diff-neg { color: #C41C00; font-weight: 700; }
-  .bloat-table td.diff-neutral { color: #888888; font-weight: 700; }
   @media (prefers-color-scheme: dark) {
     .bloat-table th, .bloat-table td { border-color: #2a2a2a; }
     .bloat-table th { background-color: #181818; }

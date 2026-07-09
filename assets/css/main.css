@@ -33,6 +33,9 @@
   --mini-toc-tick: #bbb;
   --mini-toc-active-tick: #777;
   --mini-toc-label-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 1);
+  --diff-pos: #228B22;
+  --diff-neg: #C41C00;
+  --diff-neutral: #888888;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -63,6 +66,9 @@
     --note-card-bg: #1e1a14;
     --note-card-summary: #a08860;
     --note-card-body: #c0a878;
+    --diff-pos: #3fb950;
+    --diff-neg: #f85149;
+    --diff-neutral: #aaaaaa;
   }
 }
 
@@ -101,6 +107,9 @@
   --mini-toc-tick: #666;
   --mini-toc-active-tick: #aaa;
   --mini-toc-label-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 1);
+  --diff-pos: #3fb950;
+  --diff-neg: #f85149;
+  --diff-neutral: #aaaaaa;
 }
 
 body {
@@ -440,3 +449,8 @@ noscript div {
   margin-top: 1.5em;
   font-weight: bold;
 }
+
+/* Good/bad/neutral highlight text (tables and prose) */
+.diff-pos { color: var(--diff-pos); font-weight: 700; }
+.diff-neg { color: var(--diff-neg); font-weight: 700; }
+.diff-neutral { color: var(--diff-neutral); font-weight: 700; }
