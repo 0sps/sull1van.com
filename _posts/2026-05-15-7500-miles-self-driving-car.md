@@ -110,11 +110,11 @@ tags: [personal, tech]
     color: #eef;
   }
   html[data-theme="dark"] {
-    background: #111;
+    background: var(--bg);
   }
   @media (prefers-color-scheme: dark) {
     html {
-      background: #111;
+      background: var(--bg);
     }
     html[data-theme="light"] {
       background: #fff;

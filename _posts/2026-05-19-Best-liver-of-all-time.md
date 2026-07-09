@@ -262,21 +262,13 @@ Here is the oldest test against the newest test, complete with the trends we tal
     font-size: calc(1em - 1px);
   }
   .bloat-table th, .bloat-table td {
-    border: 1px solid #dddddd;
+    border: 1px solid var(--table-cell-border);
     text-align: left;
     padding: 6px 10px;
   }
   .bloat-table th {
-    background-color: #f2f2f2;
+    background-color: var(--table-head-bg);
   }
-  @media (prefers-color-scheme: dark) {
-    .bloat-table th, .bloat-table td { border-color: #2a2a2a; }
-    .bloat-table th { background-color: #181818; }
-  }
-  html[data-theme="dark"] .bloat-table th, html[data-theme="dark"] .bloat-table td { border-color: #2a2a2a; }
-  html[data-theme="dark"] .bloat-table th { background-color: #181818; }
-  html[data-theme="light"] .bloat-table th, html[data-theme="light"] .bloat-table td { border-color: #dddddd; }
-  html[data-theme="light"] .bloat-table th { background-color: #f2f2f2; }
 </style>
 
 <div class="table-wrapper">

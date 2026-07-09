@@ -97,7 +97,7 @@ accent_color: "#93c5fd"
     flex-shrink: 0;
   }
   html[data-theme="dark"] .tooltip-card {
-    background: #1b1b1b;
+    background: #2e2e2e;
     border-color: #555;
     box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.45);
   }

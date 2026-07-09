@@ -489,12 +489,12 @@ They look confusing at first glance, but you don't need to be an electrical engi
     font-size: calc(1em - 1px);
   }
   .stats-table th, .stats-table td {
-    border: 1px solid #dddddd;
+    border: 1px solid var(--table-cell-border);
     text-align: left;
     padding: 6px 10px;
   }
   .stats-table th {
-    background-color: #f2f2f2;
+    background-color: var(--table-head-bg);
   }
   .usba-badge {
     display: inline-block;
@@ -515,12 +515,6 @@ They look confusing at first glance, but you don't need to be an electrical engi
     background-color: rgba(0, 0, 0, 0.03);
   }
   @media (prefers-color-scheme: dark) {
-    .stats-table th, .stats-table td {
-      border-color: #2a2a2a;
-    }
-    .stats-table th {
-      background-color: #181818;
-    }
     .stats-table td:nth-child(1),
     .stats-table td:nth-child(2) {
       background-color: rgba(255, 255, 255, 0.04);
@@ -530,13 +524,9 @@ They look confusing at first glance, but you don't need to be an electrical engi
       border-color: #444;
     }
   }
-  html[data-theme="dark"] .stats-table th, html[data-theme="dark"] .stats-table td { border-color: #2a2a2a; }
-  html[data-theme="dark"] .stats-table th { background-color: #181818; }
   html[data-theme="dark"] .stats-table td:nth-child(1),
   html[data-theme="dark"] .stats-table td:nth-child(2) { background-color: rgba(255, 255, 255, 0.04); }
   html[data-theme="dark"] .usba-badge { color: #888; border-color: #444; }
-  html[data-theme="light"] .stats-table th, html[data-theme="light"] .stats-table td { border-color: #dddddd; }
-  html[data-theme="light"] .stats-table th { background-color: #f2f2f2; }
   html[data-theme="light"] .stats-table td:nth-child(1),
   html[data-theme="light"] .stats-table td:nth-child(2) { background-color: rgba(0, 0, 0, 0.03); }
   html[data-theme="light"] .usba-badge { color: #555; border-color: #aaa; }
@@ -933,12 +923,12 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
     font-size: calc(1em - 1px);
   }
   th, td {
-    border: 1px solid #dddddd;
+    border: 1px solid var(--table-cell-border);
     text-align: left;
     padding: 6px 8px;
   }
   th {
-    background-color: #f2f2f2;
+    background-color: var(--table-head-bg);
   }
   /* Bolt colors: evenly-spaced red→orange→amber→lime→green gradient */
   .bolt-5 { color: #15933f; font-weight: 900; -webkit-text-stroke: 1px #15933f; }
@@ -947,12 +937,6 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
   .bolt-2 { color: #f08b42; font-weight: 900; -webkit-text-stroke: 1px #f08b42; }
   .bolt-1 { color: #e02929; font-weight: 900; -webkit-text-stroke: 1px #e02929; }
   @media (prefers-color-scheme: dark) {
-    th, td {
-      border-color: #2a2a2a;
-    }
-    th {
-      background-color: #181818;
-    }
     /* Bright gradient for dark table backgrounds */
     table .bolt-5 { color: #42d773; -webkit-text-stroke: 1px #42d773; }
     table .bolt-4 { color: #8cd742; -webkit-text-stroke: 1px #8cd742; }
@@ -960,15 +944,11 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
     table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
     table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
   }
-  html[data-theme="dark"] th, html[data-theme="dark"] td { border-color: #2a2a2a; }
-  html[data-theme="dark"] th { background-color: #181818; }
   html[data-theme="dark"] table .bolt-5 { color: #42d773; -webkit-text-stroke: 1px #42d773; }
   html[data-theme="dark"] table .bolt-4 { color: #8cd742; -webkit-text-stroke: 1px #8cd742; }
   html[data-theme="dark"] table .bolt-3 { color: #eebd2b; -webkit-text-stroke: 1px #eebd2b; }
   html[data-theme="dark"] table .bolt-2 { color: #f08b42; -webkit-text-stroke: 1px #f08b42; }
   html[data-theme="dark"] table .bolt-1 { color: #e96363; -webkit-text-stroke: 1px #e96363; }
-  html[data-theme="light"] th, html[data-theme="light"] td { border-color: #dddddd; }
-  html[data-theme="light"] th { background-color: #f2f2f2; }
   html[data-theme="light"] table .bolt-5 { color: #15933f; -webkit-text-stroke: 1px #15933f; }
   html[data-theme="light"] table .bolt-4 { color: #7ad025; -webkit-text-stroke: 1px #7ad025; }
   html[data-theme="light"] table .bolt-3 { color: #f2c336; -webkit-text-stroke: 1px #f2c336; }
@@ -1630,32 +1610,22 @@ The ideal value here is having a voltage equal to 5V or 9V. You don't want 3 or 
     font-size: calc(1em - 1px);
   }
   .overcurrent-table th, .overcurrent-table td {
-    border: 1px solid #dddddd;
+    border: 1px solid var(--table-cell-border);
     text-align: left;
     padding: 6px 10px;
   }
   .overcurrent-table th {
-    background-color: #f2f2f2;
+    background-color: var(--table-head-bg);
   }
   .overcurrent-table td:nth-child(1) {
     background-color: rgba(0, 0, 0, 0.03);
   }
   @media (prefers-color-scheme: dark) {
-    .overcurrent-table th, .overcurrent-table td {
-      border-color: #2a2a2a;
-    }
-    .overcurrent-table th {
-      background-color: #181818;
-    }
     .overcurrent-table td:nth-child(1) {
       background-color: rgba(255, 255, 255, 0.04);
     }
   }
-  html[data-theme="dark"] .overcurrent-table th, html[data-theme="dark"] .overcurrent-table td { border-color: #2a2a2a; }
-  html[data-theme="dark"] .overcurrent-table th { background-color: #181818; }
   html[data-theme="dark"] .overcurrent-table td:nth-child(1) { background-color: rgba(255, 255, 255, 0.04); }
-  html[data-theme="light"] .overcurrent-table th, html[data-theme="light"] .overcurrent-table td { border-color: #dddddd; }
-  html[data-theme="light"] .overcurrent-table th { background-color: #f2f2f2; }
   html[data-theme="light"] .overcurrent-table td:nth-child(1) { background-color: rgba(0, 0, 0, 0.03); }
 </style>
 
