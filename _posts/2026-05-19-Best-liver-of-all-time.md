@@ -4,7 +4,7 @@ title: "[PROJECT] B.L.O.A.T: Getting the best liver of all time"
 date: 2026-05-19
 tags: [personal, health]
 published: true
-accent_color: "#62cf98ff"
+accent_color: "#62cf98"
 ---
 
 
