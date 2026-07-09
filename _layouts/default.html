@@ -19,8 +19,8 @@
 
     /* ----- Force DARK when data-theme="dark" ----- */
     html[data-theme="dark"] body {
-      background: #111;
-      color: #bbb;
+      background: #151515;
+      color: #e6e6e6;
     }
     html[data-theme="dark"] a:link { color: #9bf; }
     html[data-theme="dark"] a:visited { color: #a9f; }
@@ -101,6 +101,7 @@
   <style>
     :root {
       --accent-color: {{ page.accent_color }};
+      --dark-page-bg: #151515;
     }
     body {
       background-image: linear-gradient(
@@ -109,6 +110,40 @@
         color-mix(in srgb, var(--accent-color) 0%, transparent) min(50%, 1000px)
       ) !important;
       background-repeat: no-repeat !important;
+    }
+    html[data-theme="dark"] body {
+      background-color: var(--dark-page-bg) !important;
+      background-image: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--accent-color) 50%, var(--dark-page-bg)) 0%,
+        var(--dark-page-bg) min(50%, 1000px)
+      ) !important;
+    }
+    html[data-theme="light"] body {
+      background-color: #fff !important;
+      background-image: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--accent-color) 50%, #fff) 0%,
+        #fff min(50%, 1000px)
+      ) !important;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: var(--dark-page-bg) !important;
+        background-image: linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--accent-color) 50%, var(--dark-page-bg)) 0%,
+          var(--dark-page-bg) min(50%, 1000px)
+        ) !important;
+      }
+      html[data-theme="light"] body {
+        background-color: #fff !important;
+        background-image: linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--accent-color) 50%, #fff) 0%,
+          #fff min(50%, 1000px)
+        ) !important;
+      }
     }
   </style>
   {% endif %}

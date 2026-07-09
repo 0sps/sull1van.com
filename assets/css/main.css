@@ -159,8 +159,8 @@ footer nav a:last-child {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: #111;
-    color: #bbb;
+    background: #151515;
+    color: #e6e6e6;
   }
 
   a:link {
