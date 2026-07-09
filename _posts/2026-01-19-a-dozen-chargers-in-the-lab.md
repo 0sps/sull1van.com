@@ -520,13 +520,13 @@ They look confusing at first glance, but you don't need to be an electrical engi
       background-color: rgba(255, 255, 255, 0.04);
     }
     .usba-badge {
-      color: #888;
-      border-color: #444;
+      color: var(--muted-fg);
+      border-color: #4a4238;
     }
   }
   html[data-theme="dark"] .stats-table td:nth-child(1),
   html[data-theme="dark"] .stats-table td:nth-child(2) { background-color: rgba(255, 255, 255, 0.04); }
-  html[data-theme="dark"] .usba-badge { color: #888; border-color: #444; }
+  html[data-theme="dark"] .usba-badge { color: var(--muted-fg); border-color: #4a4238; }
   html[data-theme="light"] .stats-table td:nth-child(1),
   html[data-theme="light"] .stats-table td:nth-child(2) { background-color: rgba(0, 0, 0, 0.03); }
   html[data-theme="light"] .usba-badge { color: #555; border-color: #aaa; }
@@ -1036,7 +1036,7 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #888;
+    color: var(--muted-fg);
     user-select: none;
     pointer-events: none;
     margin-top: 2px;
@@ -1062,10 +1062,10 @@ The DC items in here, like the Macbook Pro, are colored in grey to avoid conflat
   }
   @media (prefers-color-scheme: dark) {
     .card-title-above {
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.55);
     }
   }
-  html[data-theme="dark"] .card-title-above { color: rgba(255, 255, 255, 0.25); }
+  html[data-theme="dark"] .card-title-above { color: rgba(255, 255, 255, 0.55); }
   html[data-theme="light"] .card-title-above { color: rgba(0, 0, 0, 0.65); }
   .device-card {
     height: 565px;
