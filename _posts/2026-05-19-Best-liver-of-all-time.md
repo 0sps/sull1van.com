@@ -13,8 +13,8 @@ Earlier in 2025, I did bloodwork for the first time in a while, and found I had 
 
 
 
-<div class="mobile-toc">
-  <div class="mobile-toc-title">Table of Contents</div>
+<div class="post-toc post-toc--glass">
+  <div class="post-toc-title">Table of Contents</div>
   <ul>
     <li><a href="#the-baseline">The baseline</a></li>
     <li><a href="#step-one-research">Step one: research</a></li>
@@ -192,68 +192,6 @@ Here is the oldest test against the newest test, complete with the trends we tal
   .cite-link:visited { color: #551A8B !important; }
   .ref-marker { color: #0000EE !important; text-decoration: underline !important; }
   .ref-marker:visited { color: #551A8B !important; }
-  .mobile-toc {
-    display: none;
-    position: relative;
-    margin: 2rem 0;
-    padding: 1.2rem;
-    background: rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(18px) saturate(180%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6);
-    overflow: hidden;
-  }
-  /* Bright sheen across the top edge, like light catching glass */
-  .mobile-toc::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 45%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-    pointer-events: none;
-  }
-  .mobile-toc-title {
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    font-size: 1.1em;
-  }
-  .mobile-toc ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-  .mobile-toc li {
-    margin: 0.5rem 0;
-  }
-  .mobile-toc li.nested {
-    padding-left: 1.2rem;
-  }
-  .mobile-toc a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .mobile-toc a:hover {
-    text-decoration: underline;
-  }
-  @media (max-width: 767px) {
-    .mobile-toc {
-      display: block;
-    }
-  }
-  html[data-theme="dark"] .mobile-toc {
-    background: rgba(40, 40, 40, 0.22);
-    border-color: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45),
-                inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  }
-  html[data-theme="dark"] .mobile-toc::before {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0));
-  }
   .bloat-table {
     border-collapse: collapse;
     width: auto;
@@ -350,57 +288,14 @@ Sobriety is important because you can't really expect your liver to heal if you 
 However, I do think there is a lot to say about injectable glutathione. Injectable glutathione had the clearest impact on my liver enzymes by far. I want to slightly push back on the notion that sobriety is the #1 thing that is going to help someone's liver get to its best functioning state of all time. While avoiding heavy drinking is an absolute must, my data showed that it only led to modest improvements. To actually get to best-functioning territory, the injectable glutathione pushed me over the edge. Take a look at the timeline of my biomarkers below. If sobriety _really_ was the main thing driving this, we would have seen remarkable improvement in these enzymes. We didn't. The most dramatic drop was actually not the time when I went sober, but **the time that I started doing intramuscular glutathione**. Keep in mind this was only for about 6 weeks. I think this is as good a testimonial as any, that these interventions do work.
 
 
-<style>
-  .gallery-section {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    margin: 2rem auto;
-  }
-  .gallery-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  .gallery-images-double {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .gallery-caption {
-    font-size: 0.9em;
-    line-height: 1.5;
-    color: #666;
-  }
-  html[data-theme="dark"] .gallery-caption {
-    color: #aaa;
-  }
-  .gallery-img {
-    width: min(100%, 253px);
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-    border: 4px solid #bbb;
-    border-radius: 27px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-  }
-  @media (min-width: 550px) {
-    .gallery-row.layout-2-1 {
-      grid-template-columns: 2.2fr 1fr;
-    }
-  }
-</style>
-
-<div class="gallery-section">
+<div class="post-gallery">
   <!-- Row 1: screen1 & screen2 + caption -->
-  <div class="gallery-row layout-2-1">
-    <div class="gallery-images-double">
-      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_ALT.jpg" alt="ALT Levels" class="gallery-img" />
-      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_AST.jpg" alt="AST Levels" class="gallery-img" />
+  <div class="post-gallery-row post-gallery-row--2-1">
+    <div class="post-gallery-images">
+      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_ALT.jpg" alt="ALT Levels" class="post-gallery-img" />
+      <img src="/assets/images/2026-05-19-Best-liver-of-all-time/BLOAT_AST.jpg" alt="AST Levels" class="post-gallery-img" />
     </div>
-    <div class="gallery-caption">
+    <div class="post-gallery-caption">
       With ALT especially, it's clear that the most significant drop in enzymes occurred when I was using intramuscular glutathione. The original drop from March 2025 onward was after 3 months of sobriety + 6 months of supplementation.
 
       Also - this is my new blood test tracking app, developed as yet another side project. You can read about it [here](https://sull1van.com/tracking-blood-tests) if interested.

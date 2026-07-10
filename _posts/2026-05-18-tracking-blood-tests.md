@@ -10,21 +10,15 @@ accent_color: "#93c5fd"
 
 <style>
   .liver-enzymes-tooltip {
-    border-bottom: 3px solid #777;
+    border-bottom: 3px solid var(--tooltip-accent);
     cursor: pointer;
     position: relative;
     display: inline;
     outline-offset: 0.2em;
   }
-  html[data-theme="dark"] .liver-enzymes-tooltip {
-    border-bottom-color: #aaa;
-  }
   .liver-enzymes-tooltip:focus-visible {
-    outline: 2px solid #777;
+    outline: 2px solid var(--tooltip-accent);
     border-radius: 0.15em;
-  }
-  html[data-theme="dark"] .liver-enzymes-tooltip:focus-visible {
-    outline-color: #aaa;
   }
   /* Default: render on top of the text when screenspace is limited or JS is unavailable */
   .tooltip-card-container {
@@ -73,11 +67,8 @@ accent_color: "#93c5fd"
     display: block;
     width: var(--tooltip-connector-width, 40px);
     height: 3px;
-    background: #777;
+    background: var(--tooltip-accent);
     flex-shrink: 0;
-  }
-  html[data-theme="dark"] .tooltip-card-container.is-margin .tooltip-connector-line {
-    background: #aaa;
   }
   .tooltip-card-container.is-margin .tooltip-card {
     position: relative;
@@ -85,21 +76,16 @@ accent_color: "#93c5fd"
 
   .tooltip-card {
     width: 153px;
-    background: #eee;
-    border: 1px solid #999;
+    background: var(--tooltip-card-bg);
+    border: 1px solid var(--tooltip-card-border);
     border-radius: 0;
     padding: 0.935rem 1.02rem;
-    box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.12);
+    box-shadow: var(--tooltip-card-shadow);
     font-family: inherit;
     color: inherit;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-  }
-  html[data-theme="dark"] .tooltip-card {
-    background: #2b2620;
-    border-color: #555;
-    box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.45);
   }
   .biomarker-item {
     text-align: center;
@@ -108,21 +94,15 @@ accent_color: "#93c5fd"
   .biomarker-item:first-child {
     margin-bottom: 0.85rem;
     padding-bottom: 0.85rem;
-    border-bottom: 1px solid #bbb;
-  }
-  html[data-theme="dark"] .biomarker-item:first-child {
-    border-bottom-color: #444;
+    border-bottom: 1px solid var(--tooltip-divider);
   }
   .biomarker-value {
     font-size: 1.77rem;
     font-weight: 800;
-    color: #555;
+    color: var(--tooltip-value);
     line-height: 1;
     letter-spacing: 0;
     display: block;
-  }
-  html[data-theme="dark"] .biomarker-value {
-    color: #ddd;
   }
   .biomarker-name {
     font-size: 0.85rem;
@@ -145,50 +125,6 @@ accent_color: "#93c5fd"
     margin-top: 0.8rem;
     opacity: 0.65;
     text-align: right;
-  }
-  .mobile-toc {
-    display: none;
-    margin: 2rem 0;
-    padding: 1.2rem;
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
-  }
-  .mobile-toc-title {
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    font-size: 1.1em;
-  }
-  .mobile-toc ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-  .mobile-toc li {
-    margin: 0.5rem 0;
-  }
-  .mobile-toc li.nested {
-    padding-left: 1.2rem;
-  }
-  .mobile-toc a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .mobile-toc a:hover {
-    text-decoration: underline;
-  }
-  @media (max-width: 767px) {
-    .mobile-toc {
-      display: block;
-    }
-  }
-  html[data-theme="dark"] .mobile-toc {
-    background: rgba(20, 20, 20, 0.45);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
   }
   /* Note cards styled globally in the post layout */
 </style>
@@ -324,8 +260,8 @@ accent_color: "#93c5fd"
 
 Over one year ago, I made the decision to start focusing on my bloodwork. I had just gotten the first comprehensive metabolic panel in years, and the results weren't great. <span class="liver-enzymes-tooltip" role="button" tabindex="0" aria-expanded="false">My liver enzymes ALT and AST<span class="tooltip-card-container"><span class="tooltip-connector-line"></span><span class="tooltip-card"><span class="biomarker-item"><span class="biomarker-value">147</span><span class="biomarker-name">AST</span><span class="biomarker-range">Normal: 10–40 U/L</span></span><span class="biomarker-item"><span class="biomarker-value">71</span><span class="biomarker-name">ALT</span><span class="biomarker-range">Normal: 9–46 U/L</span></span><span class="biomarker-source">Source: LabCorp, March 2025</span></span></span></span> were extremely high, in such an embarrassing way that it basically screamed *this person drinks too much alcohol* [1]. I realized that a bigger effort was needed if I was going to take charge of my health.
 
-<div class="mobile-toc">
-  <div class="mobile-toc-title">Table of Contents</div>
+<div class="post-toc post-toc--soft">
+  <div class="post-toc-title">Table of Contents</div>
   <ul>
     <li><a href="#my-plan">My Plan</a></li>
     <li><a href="#how-it-went">How it went</a></li>
@@ -386,101 +322,55 @@ With the data in *some* kind of usable format, this was the part where I had som
 
 Claude iterated on my design a few times, and the early prototypes were ugly. Inspired by the latest iOS update and wanting something a bit better than flat, I pushed the AI toward a glassmorphic UI. I’m really proud of how it turned out.
 
-<style>
-  .gallery-section {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    margin: 2rem auto;
-  }
-  .gallery-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  .gallery-images-double {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .gallery-caption {
-    font-size: 0.9em;
-    line-height: 1.5;
-    color: #666;
-  }
-  html[data-theme="dark"] .gallery-caption {
-    color: #aaa;
-  }
-  .gallery-img {
-    width: min(100%, 253px);
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-    border: 4px solid #bbb;
-    border-radius: 27px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-  }
-  @media (min-width: 550px) {
-    .gallery-row.layout-2-1 {
-      grid-template-columns: 2.2fr 1fr;
-    }
-    .gallery-row.layout-1-1 {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-</style>
-
-<div class="gallery-section">
+<div class="post-gallery">
   <!-- Row 1: screen1 & screen2 + caption -->
-  <div class="gallery-row layout-2-1">
-    <div class="gallery-images-double">
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen1.jpg" alt="Prototype Card View" class="gallery-img" />
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen2.jpg" alt="Prototype List View" class="gallery-img" />
+  <div class="post-gallery-row post-gallery-row--2-1">
+    <div class="post-gallery-images">
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen1.jpg" alt="Prototype Card View" class="post-gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen2.jpg" alt="Prototype List View" class="post-gallery-img" />
     </div>
-    <div class="gallery-caption">
+    <div class="post-gallery-caption">
       Card versus list UI view
     </div>
   </div>
 
   <!-- Row 2: screen3 + caption -->
-  <div class="gallery-row layout-1-1">
+  <div class="post-gallery-row post-gallery-row--1-1">
     <div>
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen3.jpg" alt="Midnight Mode" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen3.jpg" alt="Midnight Mode" class="post-gallery-img" />
     </div>
-    <div class="gallery-caption">
+    <div class="post-gallery-caption">
       The UI comes with many different modes, meant to highlight different points throughout the day. I wanted to simulate the UI of the Apple Weather app, because that is my ideal design for something that shows health data. It actually took a long time to achieve this UI, so I'm proud of the result.
     </div>
   </div>
 
   <!-- Row 3: screen4 & screen5 + caption -->
-  <div class="gallery-row layout-2-1">
-    <div class="gallery-images-double">
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen4.jpg" alt="Detail View" class="gallery-img" />
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen5.jpg" alt="History and Context Menus" class="gallery-img" />
+  <div class="post-gallery-row post-gallery-row--2-1">
+    <div class="post-gallery-images">
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen4.jpg" alt="Detail View" class="post-gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen5.jpg" alt="History and Context Menus" class="post-gallery-img" />
     </div>
-    <div class="gallery-caption">
+    <div class="post-gallery-caption">
       **Left**: detail view showing most recent test, normal range, and units. **Right**: view when you scroll down. Shows all test history, and offers context menus which present additional options
     </div>
   </div>
 
   <!-- Row 4: screen6 -->
-  <div class="gallery-row">
+  <div class="post-gallery-row">
     <div style="max-width: 100%; margin: 0 auto; width: 100%;">
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen6.jpg" alt="Prototype Screen 6" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen6.jpg" alt="Prototype Screen 6" class="post-gallery-img" />
     </div>
-        <div class="gallery-caption">
+        <div class="post-gallery-caption">
       The card view with daytime mode enabled. It was extremely hard to get the UI to this state, so honestly I'm blown away it all works.
     </div>
   </div>
 
   <!-- Row 5: screen7 + caption -->
-  <div class="gallery-row layout-1-1">
+  <div class="post-gallery-row post-gallery-row--1-1">
     <div>
-      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen7.jpg" alt="Prototype Screen 7" class="gallery-img" />
+      <img src="/assets/images/2026-05-18-tracking-blood-tests/screen7.jpg" alt="Prototype Screen 7" class="post-gallery-img" />
     </div>
-    <div class="gallery-caption">
+    <div class="post-gallery-caption">
       Screenshot of Cmd+K. I don't have a better name for it, but it's triggered by Cmd+K on desktop, so 
     </div>
   </div>
