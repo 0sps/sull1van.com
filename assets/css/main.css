@@ -57,7 +57,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #211e1a;
+    --bg: #111;
     --fg: #e6e6e6;
     --link: #9bf;
     --link-visited: #a9f;
@@ -115,7 +115,7 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #211e1a;
+  --bg: #111;
   --fg: #e6e6e6;
   --link: #9bf;
   --link-visited: #a9f;
