@@ -233,13 +233,23 @@
       return "#3aa76d";
     }
 
+    function scaledPercent(value, config) {
+      const stops = [0, ...config.thresholds, config.max];
+      const capped = Math.min(config.max, Math.max(0, value));
+      const segment = Math.min(3, stops.findIndex((stop, index) => index > 0 && capped < stop) - 1);
+      const safeSegment = segment < 0 ? 3 : segment;
+      const start = stops[safeSegment];
+      const end = stops[safeSegment + 1];
+      return (safeSegment + (capped - start) / (end - start)) * 25;
+    }
+
     function renderPollutants(pollutants = []) {
       const byCode = Object.fromEntries(pollutants.map((item) => [item.code, item]));
       Object.entries(pollutantConfig).forEach(([code, config]) => {
         const concentration = byCode[code]?.concentration;
         if (!concentration || typeof concentration.value !== "number") return;
         const value = concentration.value;
-        const percent = Math.min(100, value / config.max * 100);
+        const percent = scaledPercent(value, config);
         const meter = $(config.meter);
         $(config.value).textContent = value >= 100 ? Math.round(value).toLocaleString() : value.toFixed(1);
         $(config.units).textContent = concentration.units === "MICROGRAMS_PER_CUBIC_METER" ? "µg/m³" : concentration.units === "PARTS_PER_BILLION" ? "ppb" : concentration.units.toLowerCase();
@@ -250,7 +260,7 @@
             const marker = document.createElement("i");
             marker.className = "threshold-marker";
             marker.dataset.label = label;
-            marker.style.left = config.thresholds[index] / config.max * 100 + "%";
+            marker.style.left = (index + 1) * 25 + "%";
             marker.setAttribute("aria-hidden", "true");
             meter.parentElement.appendChild(marker);
           });
