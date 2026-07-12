@@ -75,11 +75,16 @@
 
     .pollutant-card { padding: 20px 22px; }
     .label { margin-bottom: 14px; color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
-    .pollutants { display: flex; flex-direction: column; gap: 13px; }
+    .threshold-key { display: flex; flex-wrap: wrap; gap: 5px 10px; margin: -7px 0 22px 64px; color: var(--muted); font-size: 8px; line-height: 1.3; }
+    .threshold-key span { white-space: nowrap; }
+    .threshold-key b { color: var(--ink); font-weight: 700; }
+    .pollutants { display: flex; flex-direction: column; gap: 22px; }
     .pollutant { display: grid; grid-template-columns: 52px minmax(40px, 1fr) 90px; align-items: center; gap: 12px; }
     .chemical { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500; }
-    .bar { height: 6px; overflow: hidden; border-radius: 999px; background: var(--ground); }
+    .bar { position: relative; height: 7px; border-radius: 999px; background: var(--ground); }
     .bar span { display: block; width: 0; height: 100%; border-radius: inherit; background: #3aa76d; transition: width .8s ease; }
+    .threshold-marker { position: absolute; top: -4px; width: 1px; height: 15px; background: rgba(27, 36, 48, .48); transform: translateX(-50%); }
+    .threshold-marker::after { content: attr(data-label); position: absolute; top: -11px; left: 50%; color: #4c5562; font-family: "IBM Plex Mono", monospace; font-size: 7px; font-weight: 500; line-height: 1; transform: translateX(-50%); }
     .reading { white-space: nowrap; text-align: right; font-size: 13px; font-weight: 600; }
     .reading small { color: var(--muted); font-size: 9px; font-weight: 400; }
 
@@ -117,6 +122,7 @@
       .category { max-width: 145px; }
       .category strong { font-size: 17px; }
       .pollutant-card { padding: 17px 18px; }
+      .threshold-key { margin-left: 0; }
       .health-card { padding: 16px 18px; }
       .spacer, .source { display: none; }
       .legend { right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); left: 10px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px 10px; max-width: none; overflow: hidden; border-radius: 14px; }
@@ -133,7 +139,8 @@
       .category strong { font-size: 15px; }
       .category span { font-size: 10px; }
       .pollutant-card { padding: 14px 16px; }
-      .pollutants { gap: 10px; }
+      .threshold-key { margin-bottom: 19px; font-size: 7px; }
+      .pollutants { gap: 19px; }
       .pollutant { grid-template-columns: 45px minmax(28px, 1fr) 82px; gap: 9px; }
       .health-card { padding: 13px 16px; }
       .health-card p { font-size: 12px; line-height: 1.45; }
@@ -165,6 +172,7 @@
 
       <section class="card pollutant-card">
         <div class="label">Pollutants</div>
+        <div class="threshold-key" aria-label="Pollutant scale markers"><span><b>M</b> Moderate</span><span><b>USG</b> Sensitive groups</span><span><b>U</b> Unhealthy</span></div>
         <div class="pollutants">
           <div class="pollutant"><span class="chemical">PM2.5</span><div class="bar"><span id="p25Meter"></span></div><span class="reading"><span id="p25Value">—</span> <small id="p25Units">µg/m³</small></span></div>
           <div class="pollutant"><span class="chemical">PM10</span><div class="bar"><span id="pm10Meter"></span></div><span class="reading"><span id="pm10Value">—</span> <small id="pm10Units">µg/m³</small></span></div>
@@ -203,10 +211,10 @@
     let mapsReady = false;
 
     const pollutantConfig = {
-      pm25: { max: 35, value: "p25Value", units: "p25Units", meter: "p25Meter" },
-      pm10: { max: 150, value: "pm10Value", units: "pm10Units", meter: "pm10Meter" },
-      o3: { max: 70, value: "o3Value", units: "o3Units", meter: "o3Meter" },
-      co: { max: 9000, value: "coValue", units: "coUnits", meter: "coMeter" }
+      pm25: { max: 125.4, thresholds: [9.1, 35.5, 55.5], value: "p25Value", units: "p25Units", meter: "p25Meter" },
+      pm10: { max: 354, thresholds: [55, 155, 255], value: "pm10Value", units: "pm10Units", meter: "pm10Meter" },
+      o3: { max: 105, thresholds: [55, 71, 86], value: "o3Value", units: "o3Units", meter: "o3Meter" },
+      co: { max: 15400, thresholds: [4500, 9500, 12500], value: "coValue", units: "coUnits", meter: "coMeter" }
     };
 
     function categoryFor(aqi) {
@@ -218,9 +226,10 @@
       return { label: "Hazardous", color: "#7e3a4e", tip: "Emergency conditions. Stay indoors, seal windows, and wear a certified respirator if you must go outside." };
     }
 
-    function barColor(percent) {
-      if (percent > 66) return "#d25454";
-      if (percent > 40) return "#d9a62e";
+    function barColor(value, thresholds) {
+      if (value >= thresholds[2]) return "#d25454";
+      if (value >= thresholds[1]) return "#df7f3e";
+      if (value >= thresholds[0]) return "#d9a62e";
       return "#3aa76d";
     }
 
@@ -231,10 +240,21 @@
         if (!concentration || typeof concentration.value !== "number") return;
         const value = concentration.value;
         const percent = Math.min(100, value / config.max * 100);
+        const meter = $(config.meter);
         $(config.value).textContent = value >= 100 ? Math.round(value).toLocaleString() : value.toFixed(1);
         $(config.units).textContent = concentration.units === "MICROGRAMS_PER_CUBIC_METER" ? "µg/m³" : concentration.units === "PARTS_PER_BILLION" ? "ppb" : concentration.units.toLowerCase();
-        $(config.meter).style.width = percent + "%";
-        $(config.meter).style.background = barColor(percent);
+        meter.style.width = percent + "%";
+        meter.style.background = barColor(value, config.thresholds);
+        if (!meter.parentElement.querySelector(".threshold-marker")) {
+          ["M", "USG", "U"].forEach((label, index) => {
+            const marker = document.createElement("i");
+            marker.className = "threshold-marker";
+            marker.dataset.label = label;
+            marker.style.left = config.thresholds[index] / config.max * 100 + "%";
+            marker.setAttribute("aria-hidden", "true");
+            meter.parentElement.appendChild(marker);
+          });
+        }
       });
     }
 
@@ -304,7 +324,7 @@
           const x = ((coord.x % count) + count) % count;
           return `https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/${zoom}/${x}/${coord.y}?key=${API_KEY}`;
         },
-        tileSize: new google.maps.Size(256, 256), maxZoom: 16, minZoom: 0, name: "US AQI", opacity: .55
+        tileSize: new google.maps.Size(256, 256), maxZoom: 16, minZoom: 0, name: "US AQI", opacity: .78
       });
       map.overlayMapTypes.insertAt(0, heatmap);
       updateMap(currentLocation);
