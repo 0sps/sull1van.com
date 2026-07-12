@@ -49,9 +49,16 @@
     .brand { display: flex; align-items: center; gap: 10px; }
     .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: var(--accent); color: #fff; font-family: "Bricolage Grotesque", sans-serif; font-size: 15px; font-weight: 800; transition: background-color .4s; }
     .brand-name { font-family: "Bricolage Grotesque", sans-serif; font-size: 18px; font-weight: 700; }
-    .refresh { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); cursor: pointer; transition: background-color .2s, opacity .2s; }
-    .refresh:hover { background: var(--ground); }
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .icon-button { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); cursor: pointer; transition: background-color .2s, opacity .2s; }
+    .icon-button:hover { background: var(--ground); }
+    .icon-button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .refresh:disabled { cursor: wait; opacity: .55; }
+
+    .sidebar > :not(.topbar), .legend { transition: opacity .2s ease, visibility .2s ease; }
+    .app.map-view .sidebar { width: auto; right: auto; bottom: auto; overflow: visible; }
+    .app.map-view .sidebar > :not(.topbar), .app.map-view .legend { opacity: 0; visibility: hidden; pointer-events: none; }
+    .app.map-view .topbar { width: max-content; }
 
     .aqi-card { padding: 22px; color: #fff; background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
     .place { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; opacity: .92; }
@@ -112,6 +119,7 @@
       .spacer, .source { display: none; }
       .legend { right: 10px; bottom: 10px; left: 10px; max-width: none; justify-content: space-between; overflow-x: auto; border-radius: 14px; }
       .legend-item { font-size: 8px; }
+      .app.map-view .sidebar { right: auto; }
     }
 
     @media (max-width: 390px) {
@@ -136,7 +144,12 @@
     <aside class="sidebar" aria-label="Local air quality">
       <header class="card topbar">
         <div class="brand"><span class="brand-mark">A</span><span class="brand-name">Aire</span></div>
-        <button class="refresh" id="refreshButton" type="button" title="Refresh location and air quality" aria-label="Refresh location and air quality">⟳</button>
+        <div class="topbar-actions">
+          <button class="icon-button map-toggle" id="mapToggle" type="button" title="Maximize map" aria-label="Maximize map" aria-expanded="true">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+          </button>
+          <button class="icon-button refresh" id="refreshButton" type="button" title="Refresh location and air quality" aria-label="Refresh location and air quality">⟳</button>
+        </div>
       </header>
 
       <section class="card aqi-card" aria-label="Current air quality">
@@ -321,6 +334,21 @@
       );
     }
 
+    const mapToggle = $("mapToggle");
+    const app = document.querySelector(".app");
+
+    function setMapView(maximized) {
+      app.classList.toggle("map-view", maximized);
+      mapToggle.setAttribute("aria-expanded", String(!maximized));
+      mapToggle.setAttribute("aria-label", maximized ? "Show air quality details" : "Maximize map");
+      mapToggle.title = maximized ? "Show air quality details" : "Maximize map";
+      mapToggle.innerHTML = maximized
+        ? '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 8h5V3M21 8h-5V3M3 16h5v5M21 16h-5v5"/></svg>'
+        : '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>';
+      if (map) window.setTimeout(() => google.maps.event.trigger(map, "resize"), 220);
+    }
+
+    mapToggle.addEventListener("click", () => setMapView(!app.classList.contains("map-view")));
     $("refreshButton").addEventListener("click", requestLocation);
     requestLocation();
   </script>
