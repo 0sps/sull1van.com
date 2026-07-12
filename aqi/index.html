@@ -3,411 +3,245 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f3f0e7">
-  <title>Airwise — Local air quality</title>
+  <meta name="theme-color" content="#edeae3">
+  <title>Aire — Local air quality</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #17221b;
-      --muted: #697269;
-      --paper: #f3f0e7;
-      --card: rgba(255,255,255,.72);
-      --line: rgba(23,34,27,.14);
-      --yellow: #f2cd4f;
-      --yellow-soft: #f7e79c;
-      --green: #316a4c;
-      --rust: #9b4c31;
-      --shadow: 0 18px 50px rgba(42, 48, 39, .09);
+      --ink: #1b2430;
+      --muted: #68707c;
+      --paper: #fcfbf8;
+      --ground: #edeae3;
+      --line: #e3e0d8;
+      --accent: #d9a62e;
+      --accent-glow: rgba(217, 166, 46, .34);
+      --panel: rgba(252, 251, 248, .94);
+      --shadow: 0 6px 24px rgba(27, 36, 48, .10);
     }
 
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 75% -10%, rgba(242,205,79,.28), transparent 32rem),
-        linear-gradient(135deg, rgba(255,255,255,.38), transparent 50%),
-        var(--paper);
-      font-family: "Manrope", sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .25;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
-      z-index: 5;
-    }
-
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body { overflow: hidden; background: var(--ground); color: var(--ink); font-family: "Albert Sans", sans-serif; -webkit-font-smoothing: antialiased; }
     button { font: inherit; }
 
-    .shell {
-      width: min(1440px, 100%);
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 26px clamp(20px, 4vw, 64px) 48px;
-      position: relative;
-      overflow: hidden;
-    }
+    .app { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    #map { position: absolute; inset: 0; z-index: 1; background: #e8e6df; }
 
-    header {
+    .sidebar {
+      position: absolute;
+      z-index: 10;
+      inset: 16px auto 16px 16px;
+      width: 372px;
+      max-width: calc(100vw - 32px);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 25px;
-      border-bottom: 1px solid var(--line);
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      pointer-events: none;
     }
+    .sidebar::-webkit-scrollbar { display: none; }
 
-    .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: -.03em; }
-    .brand-mark { width: 29px; height: 29px; }
-    .brand-mark path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+    .card { flex: 0 0 auto; pointer-events: auto; border-radius: 22px; background: var(--panel); backdrop-filter: blur(14px); box-shadow: var(--shadow); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-radius: 18px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: var(--accent); color: #fff; font-family: "Bricolage Grotesque", sans-serif; font-size: 15px; font-weight: 800; transition: background-color .4s; }
+    .brand-name { font-family: "Bricolage Grotesque", sans-serif; font-size: 18px; font-weight: 700; }
+    .refresh { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); cursor: pointer; transition: background-color .2s, opacity .2s; }
+    .refresh:hover { background: var(--ground); }
+    .refresh:disabled { cursor: wait; opacity: .55; }
 
-    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .aqi-card { padding: 22px; color: #fff; background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
+    .place { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; opacity: .92; }
+    .place-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #fff; }
+    .place-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .aqi-content { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 10px; }
+    .score { font-family: "Bricolage Grotesque", sans-serif; font-size: 76px; font-weight: 800; line-height: .9; letter-spacing: -.055em; }
+    .score-meta { margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 9px; line-height: 1.4; letter-spacing: .1em; text-transform: uppercase; opacity: .82; }
+    .category { max-width: 155px; text-align: right; }
+    .category strong { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 19px; font-weight: 650; line-height: 1.12; text-wrap: balance; }
+    .category span { display: block; margin-top: 5px; font-size: 12px; opacity: .84; }
 
-    .location-pill, .icon-button {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.42);
-      color: var(--ink);
-      height: 42px;
-      transition: background-color .2s, border-color .2s;
-    }
+    .pollutant-card { padding: 20px 22px; }
+    .label { margin-bottom: 14px; color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .pollutants { display: flex; flex-direction: column; gap: 13px; }
+    .pollutant { display: grid; grid-template-columns: 52px minmax(40px, 1fr) 90px; align-items: center; gap: 12px; }
+    .chemical { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500; }
+    .bar { height: 6px; overflow: hidden; border-radius: 999px; background: var(--ground); }
+    .bar span { display: block; width: 0; height: 100%; border-radius: inherit; background: #3aa76d; transition: width .8s ease; }
+    .reading { white-space: nowrap; text-align: right; font-size: 13px; font-weight: 600; }
+    .reading small { color: var(--muted); font-size: 9px; font-weight: 400; }
 
-    .location-pill:hover, .icon-button:hover { background: rgba(255,255,255,.82); border-color: rgba(23,34,27,.28); }
-    .location-pill { border-radius: 999px; padding: 0 16px; display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; }
-    .location-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 4px rgba(49,106,76,.12); }
-    .location-dot.loading { background: var(--yellow); animation: pulse 1.2s ease-in-out infinite; }
-    .location-dot.error { background: var(--rust); box-shadow: 0 0 0 4px rgba(155,76,49,.12); }
-    .icon-button { width: 42px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
+    .health-card { padding: 18px 22px; }
+    .health-card .label { margin-bottom: 8px; }
+    .health-card p { margin: 0; color: #3a4454; font-size: 13.5px; line-height: 1.55; text-wrap: pretty; }
+    .spacer { flex: 1 1 auto; min-height: 0; }
+    .source { padding: 10px 14px; border-radius: 14px; color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 10px; line-height: 1.5; }
 
-    main { padding-top: clamp(44px, 7vw, 92px); position: relative; z-index: 1; }
-    .eyebrow { font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); }
+    .legend { position: absolute; z-index: 10; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 9px; max-width: calc(100vw - 420px); padding: 9px 14px; border-radius: 999px; background: var(--panel); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+    .legend-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; color: #3a4454; font-size: 10px; font-weight: 500; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
 
-    .intro {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
-      gap: 40px;
-      align-items: end;
-      margin-bottom: 34px;
-    }
-
-    .intro > *, .dashboard > *, .aqi-panel > *, .map-heading > * { min-width: 0; }
-
-    h1 { font-family: "Newsreader", serif; font-weight: 500; font-size: clamp(48px, 7.5vw, 112px); line-height: .82; letter-spacing: -.065em; margin: 15px 0 0; max-width: 860px; }
-    h1 em { font-weight: 500; color: var(--green); }
-    .intro-copy { max-width: 370px; justify-self: end; }
-    .intro-copy p { color: var(--muted); line-height: 1.65; font-size: 14px; margin: 0 0 18px; }
-    .updated { display: flex; gap: 9px; align-items: center; font-family: "DM Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
-    .updated::before { content: ""; width: 24px; border-top: 1px solid var(--ink); }
-
-    .dashboard { display: grid; grid-template-columns: minmax(440px, 1.42fr) minmax(340px, .92fr); gap: 16px; }
-    .panel { background: var(--card); border: 1px solid rgba(255,255,255,.65); box-shadow: var(--shadow); border-radius: 28px; overflow: hidden; backdrop-filter: blur(10px); }
-
-    .aqi-panel { min-height: 480px; position: relative; padding: clamp(26px, 4vw, 52px); display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
-    .aqi-panel::before, .aqi-panel::after { content: ""; position: absolute; border: 1px solid rgba(23,34,27,.08); border-radius: 44% 56% 51% 49%; pointer-events: none; }
-    .aqi-panel::before { width: 570px; height: 320px; right: -190px; top: -115px; transform: rotate(-12deg); }
-    .aqi-panel::after { width: 680px; height: 390px; right: -210px; top: -140px; transform: rotate(6deg); }
-
-    .score-wrap { position: relative; z-index: 1; }
-    .score-label { font-family: "DM Mono", monospace; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
-    .score { font-family: "Newsreader", serif; font-size: clamp(118px, 15vw, 210px); line-height: .73; letter-spacing: -.08em; margin: 28px 0 22px; }
-    .status { display: inline-flex; align-items: center; gap: 9px; padding: 10px 14px; border-radius: 100px; background: var(--yellow-soft); font-size: 12px; font-weight: 700; }
-    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #88700d; }
-
-    .gauge-wrap { min-height: 330px; display: grid; place-items: center; position: relative; z-index: 1; }
-    .gauge { width: min(100%, 310px); aspect-ratio: 1; position: relative; display: grid; place-items: center; }
-    .gauge svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-    .gauge .track { fill: none; stroke: rgba(23,34,27,.08); stroke-width: 13; }
-    .gauge .value { fill: none; stroke: var(--yellow); stroke-width: 13; stroke-linecap: round; stroke-dasharray: 660; stroke-dashoffset: 548; }
-    .gauge-center { text-align: center; max-width: 150px; }
-    .gauge-center strong { display: block; font-family: "Newsreader", serif; font-size: 31px; font-weight: 600; line-height: 1.05; letter-spacing: -.04em; }
-    .gauge-center span { display: block; color: var(--muted); font-size: 12px; line-height: 1.5; margin-top: 10px; }
-    .scale { position: absolute; inset: 14px; font-family: "DM Mono", monospace; font-size: 9px; color: var(--muted); }
-    .scale span { position: absolute; }
-    .scale span:nth-child(1) { left: 3px; top: 50%; }
-    .scale span:nth-child(2) { top: 1px; left: 50%; }
-    .scale span:nth-child(3) { right: -2px; top: 50%; }
-
-    .detail-panel { padding: 30px; display: flex; flex-direction: column; }
-    .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
-    .panel-heading h2 { font-family: "Newsreader", serif; font-size: 27px; letter-spacing: -.035em; font-weight: 600; margin: 0; }
-    .info { width: 25px; height: 25px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-family: serif; font-size: 13px; }
-
-    .pollutants { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); flex: 1; }
-    .pollutant { padding: 23px 19px 19px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 158px; display: flex; flex-direction: column; }
-    .pollutant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .chemical { font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .08em; }
-    .tiny-status { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--green); font-weight: 700; }
-    .reading { margin-top: auto; font-family: "Newsreader", serif; font-size: 35px; letter-spacing: -.04em; }
-    .reading small { font-family: "DM Mono", monospace; font-size: 9px; color: var(--muted); letter-spacing: 0; }
-    .meter { height: 3px; background: rgba(23,34,27,.08); border-radius: 9px; margin-top: 12px; overflow: hidden; }
-    .meter span { display: block; height: 100%; border-radius: inherit; background: var(--green); }
-    .pollutant:nth-child(2) .meter span { background: var(--yellow); }
-
-    .advice { margin-top: 16px; padding: 18px 21px; border-radius: 18px; background: var(--ink); color: #fff; display: flex; align-items: center; gap: 15px; }
-    .advice-icon { width: 34px; height: 34px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center; background: var(--yellow); color: var(--ink); }
-    .advice strong { display: block; font-family: "Newsreader", serif; font-size: 17px; letter-spacing: -.01em; }
-    .advice p { margin: 2px 0 0; opacity: .64; font-size: 10px; line-height: 1.45; }
-
-    .map-panel { margin-top: 16px; padding: 30px; }
-    .map-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
-    .map-heading h2 { font-family: "Newsreader", serif; font-size: clamp(30px, 4vw, 48px); letter-spacing: -.045em; font-weight: 600; margin: 7px 0 0; }
-    .map-heading p { color: var(--muted); font-size: 12px; line-height: 1.55; max-width: 360px; margin: 0; }
-    .map-frame { height: min(58vw, 560px); min-height: 370px; border-radius: 20px; overflow: hidden; position: relative; background: #d9ddd4; }
-    #map { width: 100%; height: 100%; }
-    .map-loading { position: absolute; inset: 0; display: grid; place-items: center; background: #dde0d7; color: var(--muted); font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; z-index: 1; }
-    .map-legend { position: absolute; z-index: 2; left: 18px; bottom: 18px; width: min(330px, calc(100% - 36px)); border-radius: 13px; background: rgba(250,248,241,.92); padding: 12px 14px; box-shadow: 0 8px 28px rgba(23,34,27,.14); backdrop-filter: blur(12px); }
-    .legend-labels { display: flex; justify-content: space-between; margin-bottom: 7px; font-family: "DM Mono", monospace; font-size: 8px; text-transform: uppercase; letter-spacing: .07em; }
-    .legend-bar { height: 7px; border-radius: 8px; background: linear-gradient(90deg, #56b35f, #e8dc46 27%, #ed983d 48%, #d75043 68%, #8f4b8e 84%, #762c2c); }
-    .map-error { padding: 30px; display: grid; place-items: center; text-align: center; color: var(--muted); }
-
-    footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
-
-    @media (max-width: 980px) {
-      .dashboard { grid-template-columns: 1fr; }
-      .intro { grid-template-columns: 1fr; }
-      .intro-copy { justify-self: start; }
-      .detail-panel { min-height: 470px; }
-      .map-heading { align-items: start; flex-direction: column; gap: 8px; }
-    }
-
-    @media (max-width: 640px) {
-      .shell { padding: 18px 14px 30px; }
-      header { gap: 12px; }
-      .brand { flex: 0 0 auto; }
-      .header-actions { min-width: 0; margin-left: auto; gap: 8px; }
-      .location-pill { min-width: 0; max-width: 145px; padding: 0 12px; gap: 8px; }
-      .location-pill #locationState { display: none; }
-      .location-pill #locationName { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .icon-button { width: 38px; height: 38px; flex: 0 0 38px; }
-      main { padding-top: 42px; }
-      h1 { max-width: 100%; font-size: clamp(49px, 16.5vw, 68px); line-height: .88; overflow-wrap: normal; }
-      .intro { gap: 26px; width: 100%; }
-      .intro-copy { width: 100%; max-width: none; }
-      .intro-copy p { overflow-wrap: anywhere; }
-      .eyebrow { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .dashboard { width: 100%; min-width: 0; }
-      .aqi-panel { width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr); padding: 30px 24px; }
-      .score { font-size: clamp(104px, 34vw, 128px); margin: 22px 0 16px; }
-      .gauge-wrap { width: 100%; min-width: 0; min-height: 260px; margin-top: 6px; }
-      .gauge { width: min(100%, 240px); }
-      .gauge-center { max-width: 130px; }
-      .gauge-center strong { font-size: 27px; }
-      .detail-panel { padding: 24px 18px; }
-      .map-panel { padding: 20px 14px 14px; }
-      .map-frame { min-height: 420px; }
-      .pollutant { padding: 18px 14px; min-height: 145px; }
-      .reading { font-size: 28px; }
-      footer { flex-direction: column; }
-    }
-
-    @media (max-width: 370px) {
-      .shell { padding-inline: 10px; }
-      .brand { gap: 8px; }
-      .brand-mark { width: 25px; height: 25px; }
-      .location-pill { max-width: 116px; }
-      h1 { font-size: 52px; }
-      .pollutant { padding-inline: 11px; }
-      .reading { font-size: 25px; }
-      .advice { padding-inline: 15px; }
-    }
+    .map-message { position: absolute; z-index: 4; inset: 0; display: grid; place-items: center; padding: 30px; text-align: center; color: var(--muted); font-size: 13px; }
+    .loading .score { animation: pulse 1.5s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: no-preference) {
-      header, .intro, .panel, footer { animation: reveal .7s both; }
-      .intro { animation-delay: .08s; }
-      .aqi-panel { animation-delay: .16s; }
-      .detail-panel { animation-delay: .24s; }
-      footer { animation-delay: .32s; }
-      @keyframes reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      .card, .legend { animation: card-in .5s both; }
+      .aqi-card { animation-delay: .05s; }
+      .pollutant-card { animation-delay: .1s; }
+      .health-card { animation-delay: .15s; }
+      .source, .legend { animation-delay: .2s; }
+      @keyframes card-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes pulse { 50% { opacity: .35; } }
+    }
+
+    @media (max-width: 720px) {
+      .sidebar { inset: 10px 10px auto; width: auto; max-width: none; max-height: calc(100dvh - 20px); }
+      .topbar { padding: 11px 14px; }
+      .brand-mark { width: 28px; height: 28px; }
+      .aqi-card { padding: 18px; }
+      .aqi-content { margin-top: 8px; }
+      .score { font-size: 66px; }
+      .score-meta { font-size: 8px; }
+      .category { max-width: 145px; }
+      .category strong { font-size: 17px; }
+      .pollutant-card { padding: 17px 18px; }
+      .health-card { padding: 16px 18px; }
+      .spacer, .source { display: none; }
+      .legend { right: 10px; bottom: 10px; left: 10px; max-width: none; justify-content: space-between; overflow-x: auto; border-radius: 14px; }
+      .legend-item { font-size: 8px; }
+    }
+
+    @media (max-width: 390px) {
+      .sidebar { gap: 8px; }
+      .topbar { padding-block: 9px; }
+      .aqi-card { padding: 15px 16px; }
+      .score { font-size: 58px; }
+      .category strong { font-size: 15px; }
+      .category span { font-size: 10px; }
+      .pollutant-card { padding: 14px 16px; }
+      .pollutants { gap: 10px; }
+      .pollutant { grid-template-columns: 45px minmax(28px, 1fr) 82px; gap: 9px; }
+      .health-card { padding: 13px 16px; }
+      .health-card p { font-size: 12px; line-height: 1.45; }
     }
   </style>
 </head>
-<body>
-  <div class="shell">
-    <header>
-      <div class="brand">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 18c4-8 8 8 12 0s8 8 12 0M4 11c4-8 8 8 12 0s8 8 12 0"/></svg>
-        <span>airwise</span>
-      </div>
-      <div class="header-actions">
-        <button class="location-pill" id="locationButton" type="button" aria-label="Find my location">
-          <span class="location-dot loading" id="locationDot"></span><span id="locationState">Finding you</span><span id="locationName">Allow location access</span>
-        </button>
-        <button class="icon-button" type="button" aria-label="More information">?</button>
-      </div>
-    </header>
+<body class="loading">
+  <main class="app">
+    <div id="map"><div class="map-message">Preparing the air quality map…</div></div>
 
-    <main>
-      <section class="intro">
-        <div>
-          <div class="eyebrow" id="coordinates">Waiting for your location</div>
-          <h1>The air feels <em id="airWord">near.</em></h1>
-        </div>
-        <div class="intro-copy">
-          <p id="summary">We’ll use your location to read the air nearby. Your coordinates stay in this browser and are sent only to Google’s Air Quality API.</p>
-          <div class="updated" id="updated">Requesting location</div>
-        </div>
-      </section>
+    <aside class="sidebar" aria-label="Local air quality">
+      <header class="card topbar">
+        <div class="brand"><span class="brand-mark">A</span><span class="brand-name">Aire</span></div>
+        <button class="refresh" id="refreshButton" type="button" title="Refresh location and air quality" aria-label="Refresh location and air quality">⟳</button>
+      </header>
 
-      <section class="dashboard" aria-label="Local air quality dashboard">
-        <article class="panel aqi-panel">
-          <div class="score-wrap">
-            <div class="score-label">Air quality index</div>
+      <section class="card aqi-card" aria-label="Current air quality">
+        <div class="place"><span class="place-dot"></span><span class="place-name" id="locationName">Finding your location…</span></div>
+        <div class="aqi-content">
+          <div>
             <div class="score" id="aqiScore">··</div>
-            <div class="status" id="aqiStatus">Locating</div>
+            <div class="score-meta">US EPA AQI · <span id="updated">requesting location</span></div>
           </div>
-          <div class="gauge-wrap">
-            <div class="gauge" aria-label="AQI 62, moderate">
-              <svg viewBox="0 0 240 240" aria-hidden="true">
-                <circle class="track" cx="120" cy="120" r="105"/>
-                <circle class="value" id="gaugeValue" cx="120" cy="120" r="105"/>
-              </svg>
-              <div class="scale" aria-hidden="true"><span>0</span><span>150</span><span>300+</span></div>
-              <div class="gauge-center"><strong id="adviceTitle">Reading your<br>local air.</strong><span id="adviceDetail">This usually takes only a moment.</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="panel detail-panel">
-          <div class="panel-heading"><h2>What’s in the air</h2><span class="info" aria-hidden="true">i</span></div>
-          <div class="pollutants">
-            <div class="pollutant">
-              <div class="pollutant-top"><span class="chemical">PM₂.₅</span><span class="tiny-status" id="p25Status">Waiting</span></div>
-              <div class="reading"><span id="p25Value">··</span> <small id="p25Units">µg/m³</small></div><div class="meter"><span id="p25Meter" style="width:0"></span></div>
-            </div>
-            <div class="pollutant">
-              <div class="pollutant-top"><span class="chemical">O₃</span><span class="tiny-status" id="o3Status">Waiting</span></div>
-              <div class="reading"><span id="o3Value">··</span> <small id="o3Units">ppb</small></div><div class="meter"><span id="o3Meter" style="width:0"></span></div>
-            </div>
-            <div class="pollutant">
-              <div class="pollutant-top"><span class="chemical">PM₁₀</span><span class="tiny-status" id="pm10Status">Waiting</span></div>
-              <div class="reading"><span id="pm10Value">··</span> <small id="pm10Units">µg/m³</small></div><div class="meter"><span id="pm10Meter" style="width:0"></span></div>
-            </div>
-            <div class="pollutant">
-              <div class="pollutant-top"><span class="chemical">CO</span><span class="tiny-status" id="coStatus">Waiting</span></div>
-              <div class="reading"><span id="coValue">··</span> <small id="coUnits">ppb</small></div><div class="meter"><span id="coMeter" style="width:0"></span></div>
-            </div>
-          </div>
-          <div class="advice">
-            <div class="advice-icon" aria-hidden="true">↗</div>
-            <div><strong id="healthTitle">Checking conditions</strong><p id="healthText">Personal guidance will appear when the reading is ready.</p></div>
-          </div>
-        </article>
-      </section>
-
-      <section class="panel map-panel" aria-label="Air quality heatmap">
-        <div class="map-heading">
-          <div><div class="eyebrow">Live regional view</div><h2>Air quality around you</h2></div>
-          <p>The color layer shows the current U.S. Air Quality Index. Drag or zoom the map to explore conditions nearby.</p>
-        </div>
-        <div class="map-frame">
-          <div id="map"><div class="map-loading">Preparing heatmap</div></div>
-          <div class="map-legend" aria-label="US AQI color scale">
-            <div class="legend-labels"><span>Good</span><span>Moderate</span><span>Unhealthy</span><span>Hazardous</span></div>
-            <div class="legend-bar"></div>
-          </div>
+          <div class="category"><strong id="aqiStatus">Locating</strong><span>Main: <span id="dominantPollutant">—</span></span></div>
         </div>
       </section>
-    </main>
 
-    <footer><span>Live data · Google Air Quality API</span><span>US AQI standard · 2026</span></footer>
-  </div>
+      <section class="card pollutant-card">
+        <div class="label">Pollutants</div>
+        <div class="pollutants">
+          <div class="pollutant"><span class="chemical">PM2.5</span><div class="bar"><span id="p25Meter"></span></div><span class="reading"><span id="p25Value">—</span> <small id="p25Units">µg/m³</small></span></div>
+          <div class="pollutant"><span class="chemical">PM10</span><div class="bar"><span id="pm10Meter"></span></div><span class="reading"><span id="pm10Value">—</span> <small id="pm10Units">µg/m³</small></span></div>
+          <div class="pollutant"><span class="chemical">O₃</span><div class="bar"><span id="o3Meter"></span></div><span class="reading"><span id="o3Value">—</span> <small id="o3Units">ppb</small></span></div>
+          <div class="pollutant"><span class="chemical">CO</span><div class="bar"><span id="coMeter"></span></div><span class="reading"><span id="coValue">—</span> <small id="coUnits">ppb</small></span></div>
+        </div>
+      </section>
+
+      <section class="card health-card"><div class="label">Health tip</div><p id="healthText">We’ll show local guidance as soon as your reading is ready.</p></section>
+      <div class="spacer"></div>
+      <footer class="card source" id="sourceNote">Live data · Google Maps Air Quality API</footer>
+    </aside>
+
+    <div class="legend" aria-label="US AQI legend">
+      <span class="legend-item"><i class="legend-dot" style="background:#3aa76d"></i>Good</span>
+      <span class="legend-item"><i class="legend-dot" style="background:#d9a62e"></i>Moderate</span>
+      <span class="legend-item"><i class="legend-dot" style="background:#df7f3e"></i>Sensitive</span>
+      <span class="legend-item"><i class="legend-dot" style="background:#d25454"></i>Unhealthy</span>
+      <span class="legend-item"><i class="legend-dot" style="background:#9256b8"></i>Very unhealthy</span>
+      <span class="legend-item"><i class="legend-dot" style="background:#7e3a4e"></i>Hazardous</span>
+    </div>
+  </main>
+
   <script>
     const API_KEY = "AIzaSyDNtbWgaAZRFCGo1ZzVNYiZofqvhlgRekk";
     const AIR_QUALITY_URL = "https://airquality.googleapis.com/v1/currentConditions:lookup?key=" + API_KEY;
     const FALLBACK_LOCATION = { latitude: 40.6782, longitude: -73.9442 };
+    const $ = (id) => document.getElementById(id);
     let currentLocation = FALLBACK_LOCATION;
     let map;
+    let marker;
     let mapsReady = false;
 
-    const $ = (id) => document.getElementById(id);
     const pollutantConfig = {
-      pm25: { max: 55, value: "p25Value", units: "p25Units", status: "p25Status", meter: "p25Meter" },
-      o3: { max: 125, value: "o3Value", units: "o3Units", status: "o3Status", meter: "o3Meter" },
-      pm10: { max: 255, value: "pm10Value", units: "pm10Units", status: "pm10Status", meter: "pm10Meter" },
-      co: { max: 12400, value: "coValue", units: "coUnits", status: "coStatus", meter: "coMeter" }
+      pm25: { max: 35, value: "p25Value", units: "p25Units", meter: "p25Meter" },
+      pm10: { max: 150, value: "pm10Value", units: "pm10Units", meter: "pm10Meter" },
+      o3: { max: 70, value: "o3Value", units: "o3Units", meter: "o3Meter" },
+      co: { max: 9000, value: "coValue", units: "coUnits", meter: "coMeter" }
     };
 
-    const copyForAqi = (aqi) => {
-      if (aqi <= 50) return { word: "clear.", summary: "The air around you is in good shape. It’s a comfortable time for outdoor plans.", title: "Head outside.", detail: "Air quality is considered satisfactory for nearly everyone.", health: "Open a window", healthText: "Outdoor air is a good choice for ventilation right now.", color: "#56a85f", soft: "#d9edda" };
-      if (aqi <= 100) return { word: "fair.", summary: "Air quality around you is acceptable. Unusually sensitive people may want to ease up on long outdoor activities.", title: "Good enough for a walk.", detail: "Sensitive people may notice mild irritation during long activity.", health: "Enjoy the day", healthText: "Most people can continue normal outdoor activities.", color: "#d1aa20", soft: "#f7e79c" };
-      if (aqi <= 150) return { word: "hazy.", summary: "The air may bother sensitive groups today. Consider reducing long or intense outdoor activity.", title: "Take it a little easier.", detail: "Children, older adults, and sensitive groups should limit exertion.", health: "Shorten outdoor time", healthText: "Choose lighter activities and take more breaks.", color: "#d7782f", soft: "#f7d6b3" };
-      if (aqi <= 200) return { word: "heavy.", summary: "Air quality is unhealthy. Reduce outdoor activity and keep windows closed if possible.", title: "Stay in if you can.", detail: "Everyone may begin to experience health effects.", health: "Close the windows", healthText: "Run an air purifier and limit prolonged outdoor exertion.", color: "#c94c42", soft: "#f2c5c0" };
-      return { word: "rough.", summary: "Air quality is very unhealthy. Avoid outdoor exertion and reduce your exposure.", title: "Keep exposure low.", detail: "Health effects are more likely for everyone at this level.", health: "Stay indoors", healthText: "Keep indoor air filtered and avoid unnecessary trips outside.", color: "#7b3d6f", soft: "#dfc8da" };
-    };
-
-    function setLocationState(state, name, type = "loading") {
-      $("locationState").textContent = state;
-      $("locationName").textContent = name;
-      $("locationDot").className = "location-dot " + type;
-      $("locationButton").setAttribute("aria-label", state + ": " + name + ". Click to retry.");
+    function categoryFor(aqi) {
+      if (aqi <= 50) return { label: "Good", color: "#3aa76d", tip: "The air is clear and clean. A great moment to open the windows, go for a run, or simply breathe deeply." };
+      if (aqi <= 100) return { label: "Moderate", color: "#d9a62e", tip: "Air quality is acceptable. Unusually sensitive people should consider reducing prolonged outdoor exertion." };
+      if (aqi <= 150) return { label: "Unhealthy for Sensitive Groups", color: "#df7f3e", tip: "People with respiratory or heart conditions, children, and older adults should limit prolonged outdoor exertion." };
+      if (aqi <= 200) return { label: "Unhealthy", color: "#d25454", tip: "Everyone may begin to experience health effects. Consider moving activities indoors and keeping windows closed." };
+      if (aqi <= 300) return { label: "Very Unhealthy", color: "#9256b8", tip: "Health alert: everyone may experience serious effects. Avoid outdoor activity and run an air purifier if you have one." };
+      return { label: "Hazardous", color: "#7e3a4e", tip: "Emergency conditions. Stay indoors, seal windows, and wear a certified respirator if you must go outside." };
     }
 
-    function pollutantLabel(value, max) {
-      const ratio = value / max;
-      if (ratio < .35) return "Low";
-      if (ratio < .7) return "Moderate";
-      return "Elevated";
+    function barColor(percent) {
+      if (percent > 66) return "#d25454";
+      if (percent > 40) return "#d9a62e";
+      return "#3aa76d";
     }
 
     function renderPollutants(pollutants = []) {
       const byCode = Object.fromEntries(pollutants.map((item) => [item.code, item]));
       Object.entries(pollutantConfig).forEach(([code, config]) => {
-        const pollutant = byCode[code];
-        const concentration = pollutant && pollutant.concentration;
-        if (!concentration || typeof concentration.value !== "number") {
-          $(config.value).textContent = "N/A";
-          $(config.status).textContent = "Unavailable";
-          return;
-        }
+        const concentration = byCode[code]?.concentration;
+        if (!concentration || typeof concentration.value !== "number") return;
         const value = concentration.value;
+        const percent = Math.min(100, value / config.max * 100);
         $(config.value).textContent = value >= 100 ? Math.round(value).toLocaleString() : value.toFixed(1);
         $(config.units).textContent = concentration.units === "MICROGRAMS_PER_CUBIC_METER" ? "µg/m³" : concentration.units === "PARTS_PER_BILLION" ? "ppb" : concentration.units.toLowerCase();
-        $(config.status).textContent = pollutantLabel(value, config.max);
-        $(config.meter).style.width = Math.min(100, value / config.max * 100) + "%";
+        $(config.meter).style.width = percent + "%";
+        $(config.meter).style.background = barColor(percent);
       });
     }
 
     function renderAirQuality(data) {
       const index = data.indexes?.find((item) => item.code === "usa_epa") || data.indexes?.find((item) => item.code === "uaqi") || data.indexes?.[0];
       if (!index) throw new Error("No AQI index was returned for this location.");
-      const aqi = index.aqi;
-      const copy = copyForAqi(aqi);
-      $("aqiScore").textContent = aqi;
-      $("aqiStatus").textContent = index.category.replace(/ air quality/i, "");
-      $("aqiStatus").style.background = copy.soft;
-      $("aqiStatus").style.setProperty("--status-color", copy.color);
-      $("airWord").textContent = copy.word;
-      $("airWord").style.color = copy.color;
-      $("summary").textContent = copy.summary;
-      $("adviceTitle").textContent = copy.title;
-      $("adviceDetail").textContent = copy.detail;
-      $("healthTitle").textContent = copy.health;
-      $("healthText").textContent = data.healthRecommendations?.generalPopulation || copy.healthText;
-      $("gaugeValue").style.stroke = copy.color;
-      $("gaugeValue").style.strokeDashoffset = 660 - Math.min(aqi, 300) / 300 * 660;
-      $("updated").textContent = "Updated " + new Date(data.dateTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      const category = categoryFor(index.aqi);
+      document.documentElement.style.setProperty("--accent", category.color);
+      document.documentElement.style.setProperty("--accent-glow", category.color + "55");
+      $("aqiScore").textContent = index.aqi;
+      $("aqiStatus").textContent = index.category?.replace(/ air quality/i, "") || category.label;
+      $("dominantPollutant").textContent = ({ pm25: "PM2.5", pm10: "PM10", o3: "Ozone", co: "CO", no2: "NO₂" })[index.dominantPollutant] || index.dominantPollutant || "—";
+      $("updated").textContent = new Date(data.dateTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      $("healthText").textContent = data.healthRecommendations?.generalPopulation || category.tip;
       renderPollutants(data.pollutants);
+      document.body.classList.remove("loading");
+      $("refreshButton").disabled = false;
     }
 
     async function fetchAirQuality(location) {
-      $("updated").textContent = "Reading local air";
       const response = await fetch(AIR_QUALITY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          location,
-          extraComputations: ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"],
-          universalAqi: false,
-          languageCode: "en"
-        })
+        body: JSON.stringify({ location, extraComputations: ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"], universalAqi: false, languageCode: "en" })
       });
       if (!response.ok) {
         const details = await response.json().catch(() => ({}));
@@ -416,95 +250,80 @@
       renderAirQuality(await response.json());
     }
 
-    function formatCoordinates({ latitude, longitude }) {
-      const lat = Math.abs(latitude).toFixed(4) + "° " + (latitude >= 0 ? "N" : "S");
-      const lng = Math.abs(longitude).toFixed(4) + "° " + (longitude >= 0 ? "E" : "W");
-      return lat + " · " + lng;
-    }
-
     function updateMap(location) {
       if (!mapsReady || !map) return;
       const center = { lat: location.latitude, lng: location.longitude };
       map.setCenter(center);
-      new google.maps.Marker({ position: center, map, title: "Your location" });
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ location: center }, (results, status) => {
-        if (status !== "OK" || !results?.length) {
-          setLocationState("Location found", "Current position", "");
-          return;
-        }
-        const components = results[0].address_components || [];
-        const city = components.find((part) => part.types.includes("locality"))?.long_name || components.find((part) => part.types.includes("sublocality"))?.long_name;
-        const region = components.find((part) => part.types.includes("administrative_area_level_1"))?.short_name;
-        setLocationState("Location found", [city, region].filter(Boolean).join(", ") || "Current position", "");
+      if (marker) marker.setMap(null);
+      marker = new google.maps.Marker({ position: center, map, title: "Your location" });
+      new google.maps.Geocoder().geocode({ location: center }, (results, status) => {
+        if (status !== "OK" || !results?.length) return;
+        const parts = results[0].address_components || [];
+        const city = parts.find((part) => part.types.includes("locality"))?.long_name || parts.find((part) => part.types.includes("sublocality"))?.long_name;
+        const region = parts.find((part) => part.types.includes("administrative_area_level_1"))?.short_name;
+        $("locationName").textContent = [city, region].filter(Boolean).join(", ") || "Current position";
       });
     }
 
     window.gm_authFailure = function () {
       mapsReady = false;
       map = null;
-      $("map").innerHTML = '<div class="map-error"><div><strong>Map unavailable</strong><br><br>Enable Maps JavaScript API for this key in Google Cloud, then reload the page.</div></div>';
+      $("map").innerHTML = '<div class="map-message">The map could not authenticate. Check the Maps JavaScript API configuration for this key.</div>';
     };
 
     window.initMap = function () {
       mapsReady = true;
       map = new google.maps.Map($("map"), {
         center: { lat: currentLocation.latitude, lng: currentLocation.longitude },
-        zoom: 10,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false,
-        styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }]
+        zoom: 11,
+        disableDefaultUI: true,
+        zoomControl: true,
+        styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }, { featureType: "transit", stylers: [{ visibility: "off" }] }]
       });
       const heatmap = new google.maps.ImageMapType({
         getTileUrl: (coord, zoom) => {
-          const tileCount = 2 ** zoom;
-          if (coord.y < 0 || coord.y >= tileCount) return null;
-          const x = ((coord.x % tileCount) + tileCount) % tileCount;
+          const count = 2 ** zoom;
+          if (coord.y < 0 || coord.y >= count) return null;
+          const x = ((coord.x % count) + count) % count;
           return `https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/${zoom}/${x}/${coord.y}?key=${API_KEY}`;
         },
-        tileSize: new google.maps.Size(256, 256),
-        maxZoom: 16,
-        minZoom: 0,
-        name: "US AQI",
-        opacity: .68
+        tileSize: new google.maps.Size(256, 256), maxZoom: 16, minZoom: 0, name: "US AQI", opacity: .55
       });
       map.overlayMapTypes.insertAt(0, heatmap);
       updateMap(currentLocation);
     };
 
-    async function useLocation(location, isFallback = false) {
+    async function useLocation(location, fallback = false) {
       currentLocation = location;
-      $("coordinates").textContent = formatCoordinates(location);
-      if (isFallback) setLocationState("Location unavailable", "Showing Brooklyn, NY", "error");
-      else setLocationState("Location found", "Resolving place", "");
+      $("locationName").textContent = fallback ? "Brooklyn, NY (default)" : "Resolving location…";
       updateMap(location);
       try {
         await fetchAirQuality(location);
       } catch (error) {
-        $("updated").textContent = "Data unavailable";
-        $("summary").textContent = error.message + " Check that Air Quality API is enabled and the key allows this site.";
-        $("airWord").textContent = "offline.";
+        $("aqiStatus").textContent = "Data unavailable";
+        $("healthText").textContent = error.message + " Check the API key restrictions and enabled services.";
+        $("updated").textContent = "error";
+        $("refreshButton").disabled = false;
+        document.body.classList.remove("loading");
       }
     }
 
     function requestLocation() {
-      setLocationState("Finding you", "Allow location access", "loading");
-      $("updated").textContent = "Requesting location";
-      if (!navigator.geolocation) {
-        useLocation(FALLBACK_LOCATION, true);
-        return;
-      }
+      document.body.classList.add("loading");
+      $("refreshButton").disabled = true;
+      $("locationName").textContent = "Finding your location…";
+      $("updated").textContent = "requesting location";
+      if (!navigator.geolocation) return useLocation(FALLBACK_LOCATION, true);
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => useLocation({ latitude: coords.latitude, longitude: coords.longitude }),
         () => useLocation(FALLBACK_LOCATION, true),
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+        { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
       );
     }
 
-    $("locationButton").addEventListener("click", requestLocation);
+    $("refreshButton").addEventListener("click", requestLocation);
     requestLocation();
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNtbWgaAZRFCGo1ZzVNYiZofqvhlgRekk&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNtbWgaAZRFCGo1ZzVNYiZofqvhlgRekk&callback=initMap&loading=async"></script>
 </body>
 </html>
