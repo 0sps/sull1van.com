@@ -403,13 +403,23 @@
       map.setCenter(center);
       new google.maps.Marker({ position: center, map, title: "Your location" });
       const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ location: center }).then(({ results }) => {
-        const components = results[0]?.address_components || [];
+      geocoder.geocode({ location: center }, (results, status) => {
+        if (status !== "OK" || !results?.length) {
+          setLocationState("Location found", "Current position", "");
+          return;
+        }
+        const components = results[0].address_components || [];
         const city = components.find((part) => part.types.includes("locality"))?.long_name || components.find((part) => part.types.includes("sublocality"))?.long_name;
         const region = components.find((part) => part.types.includes("administrative_area_level_1"))?.short_name;
         setLocationState("Location found", [city, region].filter(Boolean).join(", ") || "Current position", "");
-      }).catch(() => setLocationState("Location found", "Current position", ""));
+      });
     }
+
+    window.gm_authFailure = function () {
+      mapsReady = false;
+      map = null;
+      $("map").innerHTML = '<div class="map-error"><div><strong>Map unavailable</strong><br><br>Enable Maps JavaScript API for this key in Google Cloud, then reload the page.</div></div>';
+    };
 
     window.initMap = function () {
       mapsReady = true;
