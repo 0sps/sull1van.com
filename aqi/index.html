@@ -54,19 +54,33 @@
     .refresh:disabled svg { animation: spin 1.1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ---- Sheet / sidebar scroller ---- */
-    .scroller { position: absolute; z-index: 10; inset: 0; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y proximity; scrollbar-width: none; pointer-events: none; -webkit-overflow-scrolling: touch; }
-    .scroller::-webkit-scrollbar { display: none; }
-    .sheet-spacer { height: max(140px, calc(100dvh - 292px - env(safe-area-inset-bottom))); pointer-events: none; }
-    .sheet { position: relative; min-height: calc(100dvh - env(safe-area-inset-top) - 54px); padding: 6px 14px calc(24px + env(safe-area-inset-bottom)); pointer-events: auto; scroll-snap-align: start; border-radius: 24px 24px 0 0; background: var(--paper); box-shadow: 0 -8px 30px rgba(27, 36, 48, .16); }
-    .grabber { width: 40px; height: 5px; margin: 8px auto 10px; border-radius: 999px; background: var(--line); }
+    /* ---- Bottom sheet (mobile) ---- */
+    .sheet {
+      position: absolute;
+      z-index: 10;
+      left: 0; right: 0;
+      top: calc(env(safe-area-inset-top) + 58px);
+      height: calc(100% - env(safe-area-inset-top) - 58px);
+      display: flex;
+      flex-direction: column;
+      border-radius: 24px 24px 0 0;
+      background: var(--paper);
+      box-shadow: 0 -8px 30px rgba(27, 36, 48, .16);
+      transform: translateY(60%);
+      will-change: transform;
+    }
+    .grabber-zone { flex: 0 0 auto; padding: 8px 0 6px; cursor: grab; touch-action: none; }
+    .grabber { width: 40px; height: 5px; margin: 0 auto; border-radius: 999px; background: var(--line); }
+    .sheet-content { flex: 1 1 auto; min-height: 0; padding: 0 14px calc(24px + env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .sheet-content::-webkit-scrollbar { display: none; }
 
     .section { padding: 16px 8px; }
     .section + .section { border-top: 1px solid var(--line); }
     .label { margin-bottom: 12px; color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 
     /* ---- Hero ---- */
-    .aqi-card { padding: 18px 18px 20px; border: 0; border-radius: 20px; color: #fff; background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
+    .hero-section { padding-top: 4px; }
+    .aqi-card { padding: 18px 18px 20px; border-radius: 20px; color: #fff; background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
     .place-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .place { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 13px; font-weight: 600; }
     .place-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
@@ -112,7 +126,7 @@
     .loading .score { animation: pulse 1.5s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: no-preference) {
-      .sheet, .topbar { animation: rise-in .5s both; }
+      .topbar { animation: rise-in .5s both; }
       @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes pulse { 50% { opacity: .35; } }
     }
@@ -127,10 +141,9 @@
       .icon-button { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: none; backdrop-filter: none; }
       .icon-button:hover { background: var(--ground); }
 
-      .scroller { inset: 78px auto 16px 16px; width: 372px; max-width: calc(100vw - 32px); scroll-snap-type: none; }
-      .sheet-spacer { display: none; }
-      .sheet { min-height: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; }
-      .grabber { display: none; }
+      .sheet { inset: 78px auto 16px 16px; top: 78px; left: 16px; right: auto; height: auto; width: 372px; max-width: calc(100vw - 32px); transform: none !important; background: none; box-shadow: none; border-radius: 0; }
+      .grabber-zone { display: none; }
+      .sheet-content { padding: 0; overflow-y: auto; }
       .section { margin-bottom: 12px; padding: 18px 20px; border-radius: 20px; background: var(--panel); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
       .section + .section { border-top: 0; }
       .hero-section { padding: 0; background: none; box-shadow: none; backdrop-filter: none; }
@@ -141,8 +154,8 @@
       .legend { display: flex; }
       .map-toggle { display: grid; }
 
-      .scroller, .legend { transition: opacity .2s ease, visibility .2s ease; }
-      .app.map-view .scroller, .app.map-view .legend { opacity: 0; visibility: hidden; pointer-events: none; }
+      .sheet, .legend { transition: opacity .2s ease, visibility .2s ease; }
+      .app.map-view .sheet, .app.map-view .legend { opacity: 0; visibility: hidden; pointer-events: none; }
     }
 
     @media (max-width: 390px) {
@@ -165,11 +178,9 @@
       </button>
     </header>
 
-    <div class="scroller">
-      <div class="sheet-spacer" aria-hidden="true"></div>
-      <div class="sheet" role="region" aria-label="Local air quality">
-        <div class="grabber" aria-hidden="true"></div>
-
+    <div class="sheet" id="sheet" role="region" aria-label="Local air quality">
+      <div class="grabber-zone" id="grabberZone" role="button" tabindex="0" aria-label="Expand or collapse air quality details"><div class="grabber"></div></div>
+      <div class="sheet-content" id="sheetContent">
         <section class="section hero-section">
           <div class="aqi-card" aria-label="Current air quality">
             <div class="place-row">
@@ -344,6 +355,7 @@
       if (!mapsReady || !map) return;
       const center = { lat: location.latitude, lng: location.longitude };
       map.setCenter(center);
+      if (isMobileLayout()) map.panBy(0, Math.round(window.innerHeight * 0.16));
       if (marker) marker.setMap(null);
       marker = new google.maps.Marker({ position: center, map, title: "Your location" });
       new google.maps.Geocoder().geocode({ location: center }, (results, status) => {
@@ -364,20 +376,14 @@
     window.initMap = function () {
       mapsReady = true;
       const finePointer = window.matchMedia("(pointer: fine)").matches;
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
       map = new google.maps.Map($("map"), {
         center: { lat: currentLocation.latitude, lng: currentLocation.longitude },
         zoom: 11,
         disableDefaultUI: true,
         zoomControl: finePointer,
         gestureHandling: "greedy",
-        // Keep the reading centered in the visible strip of map above the sheet.
         styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }, { featureType: "transit", stylers: [{ visibility: "off" }] }]
       });
-      if (isMobile) {
-        // Shift the map focus up so the marker isn't hidden behind the peeking sheet.
-        map.panBy(0, Math.round(window.innerHeight * 0.14));
-      }
       const heatmap = new google.maps.ImageMapType({
         getTileUrl: (coord, zoom) => {
           const count = 2 ** zoom;
@@ -419,6 +425,111 @@
       );
     }
 
+    /* =========================================================
+       Bottom sheet controller (mobile)
+       ========================================================= */
+    const mobileQuery = window.matchMedia("(max-width: 720px)");
+    const isMobileLayout = () => mobileQuery.matches;
+    const sheet = $("sheet");
+    const sheetContent = $("sheetContent");
+    const grabberZone = $("grabberZone");
+
+    const sheetController = (() => {
+      const PEEK_VISIBLE = 288; // px of sheet shown in the collapsed state
+      let expandedY = 0;
+      let peekY = 0;
+      let currentY = 0;
+      let startTouchY = 0;
+      let startSheetY = 0;
+      let dragging = false;
+      let lastY = 0;
+      let lastTime = 0;
+      let velocity = 0;
+
+      function measure() {
+        const sheetTop = sheet.offsetTop;
+        peekY = Math.max(0, window.innerHeight - sheetTop - PEEK_VISIBLE);
+      }
+
+      function apply(y, animate) {
+        currentY = y;
+        sheet.style.transition = animate ? "transform .34s cubic-bezier(.22,.9,.3,1)" : "none";
+        sheet.style.transform = "translateY(" + y + "px)";
+        const expanded = y <= expandedY + 1;
+        grabberZone.setAttribute("aria-expanded", String(expanded));
+        // Lock inner scrolling while collapsed so a swipe always moves the sheet.
+        sheetContent.style.overflowY = expanded ? "auto" : "hidden";
+      }
+
+      function snap() {
+        const goUp = velocity < -0.35 ? true : velocity > 0.35 ? false : currentY < (expandedY + peekY) / 2;
+        apply(goUp ? expandedY : peekY, true);
+      }
+
+      function onTouchStart(event) {
+        if (!isMobileLayout()) return;
+        startTouchY = lastY = event.touches[0].clientY;
+        startSheetY = currentY;
+        lastTime = event.timeStamp;
+        velocity = 0;
+        dragging = false;
+      }
+
+      function onTouchMove(event) {
+        if (!isMobileLayout()) return;
+        const touchY = event.touches[0].clientY;
+        const delta = touchY - startTouchY;
+        const expanded = startSheetY <= expandedY + 1;
+        if (!dragging) {
+          // While expanded, let the inner content scroll unless pulling down from the very top.
+          if (expanded && !(delta > 0 && sheetContent.scrollTop <= 0)) return;
+          if (Math.abs(delta) < 4) return;
+          dragging = true;
+        }
+        event.preventDefault();
+        const elapsed = event.timeStamp - lastTime;
+        if (elapsed > 0) velocity = (touchY - lastY) / elapsed;
+        lastY = touchY;
+        lastTime = event.timeStamp;
+        const next = Math.min(peekY + 40, Math.max(expandedY, startSheetY + delta));
+        apply(next, false);
+      }
+
+      function onTouchEnd() {
+        if (!isMobileLayout() || !dragging) return;
+        dragging = false;
+        snap();
+      }
+
+      function toggle() {
+        apply(currentY <= expandedY + 1 ? peekY : expandedY, true);
+      }
+
+      function init() {
+        if (!isMobileLayout()) { sheet.style.transform = ""; return; }
+        measure();
+        apply(peekY, false);
+      }
+
+      sheet.addEventListener("touchstart", onTouchStart, { passive: true });
+      sheet.addEventListener("touchmove", onTouchMove, { passive: false });
+      sheet.addEventListener("touchend", onTouchEnd);
+      sheet.addEventListener("touchcancel", onTouchEnd);
+      grabberZone.addEventListener("click", toggle);
+      grabberZone.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggle(); }
+      });
+      window.addEventListener("resize", () => {
+        if (!isMobileLayout()) { sheet.style.transform = ""; sheetContent.style.overflowY = ""; return; }
+        const wasExpanded = currentY <= expandedY + 1;
+        measure();
+        apply(wasExpanded ? expandedY : peekY, false);
+      });
+      mobileQuery.addEventListener("change", init);
+
+      return { init };
+    })();
+
     const mapToggle = $("mapToggle");
     const app = document.querySelector(".app");
 
@@ -435,6 +546,7 @@
 
     mapToggle.addEventListener("click", () => setMapView(!app.classList.contains("map-view")));
     $("refreshButton").addEventListener("click", requestLocation);
+    sheetController.init();
     requestLocation();
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNtbWgaAZRFCGo1ZzVNYiZofqvhlgRekk&callback=initMap&loading=async"></script>
