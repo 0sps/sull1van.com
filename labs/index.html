@@ -2216,6 +2216,10 @@
             border: 1px solid rgba(255,255,255,0.08);
             background: rgba(255,255,255,0.045);
         }
+        .source-record.selected {
+            border-color: rgba(10,132,255,0.5);
+            background: rgba(10,132,255,0.1);
+        }
         .source-record-main {
             min-width: 0;
             display: flex;
@@ -2247,6 +2251,48 @@
             font-weight: 700;
             color: var(--text-secondary);
         }
+        .source-record-id-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
+        .source-record-id-label {
+            flex-shrink: 0;
+            font-family: var(--font-body);
+            font-size: 8.5px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+        .source-record-id {
+            min-width: 0;
+            overflow-wrap: anywhere;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 9px;
+            line-height: 1.35;
+            color: var(--text-secondary);
+        }
+        .source-record-copy {
+            flex-shrink: 0;
+            border: 0;
+            border-radius: 7px;
+            padding: 3px 6px;
+            background: rgba(255,255,255,0.08);
+            color: var(--ios-blue);
+            font-family: var(--font-body);
+            font-size: 8.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.16s, opacity 0.16s;
+        }
+        .source-record-copy:hover,
+        .source-record-copy:focus-visible {
+            background: rgba(255,255,255,0.14);
+            outline: none;
+        }
+        .source-record-copy:active { opacity: 0.72; }
 
         /* ── VAULT PASSWORD MODAL ─────────────────────────────────── */
         .vault-overlay {
@@ -5536,6 +5582,7 @@
           <div class="std-bar ${barClass}">
             <div class="std-dot"></div>${escStr(label)}
           </div>
+          ${sourceMoreButtonHtml(p)}
         </div>`;
             }).join('');
 
@@ -5549,10 +5596,12 @@
     `);
         }
 
-        function sourceMoreButtonHtml(sourceFile) {
-            if (!sourceFile) return '<span class="source-more-placeholder" aria-hidden="true"></span>';
+        function sourceMoreButtonHtml(point) {
+            const sourceFile = getPointSourceFile(point);
+            const testResultId = importText(point?.testResultId);
+            if (!sourceFile && !testResultId) return '<span class="source-more-placeholder" aria-hidden="true"></span>';
             return `
-          <button class="source-more-btn" type="button" data-source-file="${escStr(sourceFile)}" onclick="event.stopPropagation(); openSourcePlatter(this.dataset.sourceFile, this)" aria-label="Show all records from ${escStr(sourceFile)}">
+          <button class="source-more-btn" type="button" data-source-file="${escStr(sourceFile)}" data-test-result-id="${escStr(testResultId)}" onclick="event.stopPropagation(); openSourcePlatter(this.dataset.sourceFile, this, this.dataset.testResultId)" aria-label="Show record details${sourceFile ? ` from ${escStr(sourceFile)}` : ''}">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <circle cx="5" cy="12" r="2.1"></circle>
               <circle cx="12" cy="12" r="2.1"></circle>
@@ -5561,12 +5610,13 @@
           </button>`;
         }
 
-        function getRecordsForSourceFile(sourceFile) {
-            if (!sourceFile) return [];
+        function getRecordsForSourceFile(sourceFile, selectedTestResultId = '') {
             return allTests.flatMap(test => {
                 const points = Array.isArray(test.points) ? test.points : [];
                 return points
-                    .filter(point => getPointSourceFile(point) === sourceFile)
+                    .filter(point => sourceFile
+                        ? getPointSourceFile(point) === sourceFile
+                        : selectedTestResultId && importText(point.testResultId) === selectedTestResultId)
                     .map(point => ({ test, point }));
             }).sort((a, b) => {
                 const dateDiff = parseISODate(a.point.date) - parseISODate(b.point.date);
@@ -5583,13 +5633,20 @@
             return `${dates[0]} to ${dates[dates.length - 1]}`;
         }
 
-        function renderSourceRecord({ test, point }) {
+        function renderSourceRecord({ test, point }, selectedTestResultId = '') {
             const unitText = normalizeUnitString(point.unit) || getDisplayUnitText(test) || normalizeUnitString(test.unitFallback);
             const valueText = point.rawResult ?? (point.numVal !== null && point.numVal !== undefined ? formatVal(point.numVal) : '—');
+            const testResultId = importText(point.testResultId);
+            const isSelected = testResultId && testResultId === selectedTestResultId;
             return `
-        <div class="source-record">
+        <div class="source-record ${isSelected ? 'selected' : ''}">
           <div class="source-record-main">
             <div class="source-record-name">${escStr(test.name)}</div>
+            ${testResultId ? `<div class="source-record-id-row">
+              <span class="source-record-id-label">Test ID (UUID)</span>
+              <code class="source-record-id" title="${escStr(testResultId)}">${escStr(testResultId)}</code>
+              <button class="source-record-copy" type="button" data-test-result-id="${escStr(testResultId)}" onclick="copyTestResultId(this.dataset.testResultId, this)" aria-label="Copy Test ID ${escStr(testResultId)}">Copy</button>
+            </div>` : `<div class="source-record-id-row"><span class="source-record-id-label">Legacy record · No Test ID</span></div>`}
           </div>
           <div class="source-record-value">
             <span>${escStr(valueText)}</span>
@@ -5627,18 +5684,39 @@
             platter.style.transformOrigin = `${originX} center`;
         }
 
-        function openSourcePlatter(sourceFile, anchorEl = null) {
+        async function copyTestResultId(testResultId, buttonEl = null) {
+            if (!testResultId) return;
+            try {
+                await navigator.clipboard.writeText(testResultId);
+            } catch (_) {
+                const textarea = document.createElement('textarea');
+                textarea.value = testResultId;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                textarea.remove();
+            }
+            if (buttonEl) {
+                buttonEl.textContent = 'Copied';
+                window.setTimeout(() => { buttonEl.textContent = 'Copy'; }, 1600);
+            }
+        }
+
+        function openSourcePlatter(sourceFile, anchorEl = null, selectedTestResultId = '') {
             const overlay = document.getElementById('sourcePlatterOverlay');
             const title = document.getElementById('sourcePlatterTitle');
             const subtitle = document.getElementById('sourcePlatterSubtitle');
             const recordsEl = document.getElementById('sourcePlatterRecords');
             if (!overlay || !title || !subtitle || !recordsEl) return;
 
-            const records = getRecordsForSourceFile(sourceFile);
-            title.textContent = sourceFile || 'Unknown source';
+            const records = getRecordsForSourceFile(sourceFile, selectedTestResultId);
+            title.textContent = sourceFile || 'Record details';
             subtitle.textContent = `${getSourceDateText(records)} · ${records.length} ${records.length === 1 ? 'record' : 'records'}`;
             recordsEl.innerHTML = records.length
-                ? records.map(renderSourceRecord).join('')
+                ? records.map(record => renderSourceRecord(record, selectedTestResultId)).join('')
                 : '<div class="report-empty">No cached records found for this source.</div>';
             overlay.classList.add('visible');
             requestAnimationFrame(() => positionSourcePlatter(anchorEl));
@@ -5669,7 +5747,7 @@
         <div class="history-row">
           <div class="hist-date">${fmtDate(p.date)}</div>
           <div class="hist-val c-text">${escStr(p.rawResult ?? '—')}${unitHtml}</div>
-          ${sourceMoreButtonHtml(getPointSourceFile(p))}
+          ${sourceMoreButtonHtml(p)}
         </div>`;
                 }
 
@@ -5707,7 +5785,7 @@
           <div class="hist-date">${fmtDate(p.date)}</div>
           <div class="hist-val ${valColor}">${formatVal(p.numVal)}${unitHtml}</div>
           ${deltaHtml}
-          ${sourceMoreButtonHtml(getPointSourceFile(p))}
+          ${sourceMoreButtonHtml(p)}
         </div>`;
             }).join('');
 
