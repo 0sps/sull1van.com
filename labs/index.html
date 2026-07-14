@@ -2051,6 +2051,66 @@
             box-shadow: 0 4px 16px rgba(10,132,255,0.32);
         }
 
+        /* ── WORKBOOK IMPORT MODAL ────────────────────────────────── */
+        .import-overlay {
+            position: fixed; inset: 0; z-index: 1750;
+            display: flex; align-items: center; justify-content: center;
+            padding: 18px; background: rgba(0,0,0,0.64);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+        }
+        .import-overlay.visible { opacity: 1; pointer-events: auto; }
+        .import-dialog {
+            width: min(760px, 100%); max-height: min(850px, calc(100dvh - 36px));
+            display: flex; flex-direction: column; overflow: hidden;
+            border-radius: 24px; border: 1px solid rgba(255,255,255,0.13);
+            border-top: 1.5px solid rgba(255,255,255,0.24);
+            background: linear-gradient(160deg, rgba(28,32,46,0.96), rgba(10,14,24,0.96));
+            backdrop-filter: blur(48px) saturate(150%); -webkit-backdrop-filter: blur(48px) saturate(150%);
+            box-shadow: 0 32px 80px -8px rgba(0,0,0,0.78);
+        }
+        .import-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; padding: 22px 22px 16px; border-bottom: 1px solid rgba(255,255,255,0.09); }
+        .import-title { font-family: var(--font-heading); font-size: 21px; font-weight: 760; color: var(--text-primary); }
+        .import-subtitle { margin-top: 5px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
+        .import-close { width: 34px; height: 34px; flex: 0 0 34px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.12); border-radius: 50%; background: rgba(255,255,255,0.07); color: var(--text-primary); cursor: pointer; transition: background 0.16s, opacity 0.16s; }
+        .import-close:hover { background: rgba(255,255,255,0.13); }
+        .import-body { overflow-y: auto; padding: 18px 22px 22px; }
+        .import-file-name { color: var(--text-primary); font-size: 13px; font-weight: 720; overflow-wrap: anywhere; }
+        .import-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; margin: 14px 0 16px; }
+        .import-stat { padding: 12px 11px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.045); }
+        .import-stat-value { display: block; font-family: var(--font-heading); font-size: 20px; font-weight: 780; color: var(--text-primary); }
+        .import-stat-label { display: block; margin-top: 3px; font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .import-modes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; margin-bottom: 16px; }
+        .import-mode { min-height: 92px; padding: 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.045); color: var(--text-primary); text-align: left; cursor: pointer; transition: background 0.16s, border-color 0.16s, opacity 0.16s; }
+        .import-mode:hover { background: rgba(255,255,255,0.075); }
+        .import-mode.selected { border-color: rgba(10,132,255,0.65); background: rgba(10,132,255,0.14); }
+        .import-mode.danger.selected { border-color: rgba(255,69,58,0.7); background: rgba(255,69,58,0.13); }
+        .import-mode-name { display: block; font-family: var(--font-heading); font-size: 13px; font-weight: 780; }
+        .import-mode-copy { display: block; margin-top: 5px; color: var(--text-secondary); font-family: var(--font-body); font-size: 10.5px; line-height: 1.4; }
+        .import-section { margin-top: 14px; }
+        .import-section-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 7px; }
+        .import-section-title { font-family: var(--font-heading); font-size: 13px; font-weight: 760; color: var(--text-primary); }
+        .import-select-action { border: none; background: transparent; color: var(--ios-blue); font-size: 11px; font-weight: 750; cursor: pointer; padding: 3px; }
+        .import-list { display: grid; gap: 6px; max-height: 190px; overflow-y: auto; }
+        .import-row { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 10px; align-items: start; padding: 10px 11px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.035); }
+        .import-row input { margin-top: 2px; accent-color: var(--ios-blue); }
+        .import-row-name { font-family: var(--font-heading); font-size: 12px; font-weight: 730; color: var(--text-primary); }
+        .import-row-meta { display: block; margin-top: 3px; font-size: 10px; color: var(--text-secondary); overflow-wrap: anywhere; }
+        .import-warning { margin-top: 14px; padding: 12px 13px; border-radius: 13px; border: 1px solid rgba(255,159,10,0.22); background: rgba(255,159,10,0.08); color: var(--ios-amber); font-size: 11.5px; line-height: 1.5; }
+        .import-replace-confirm { margin-top: 12px; padding: 13px; border: 1px solid rgba(255,69,58,0.25); border-radius: 13px; background: rgba(255,69,58,0.07); }
+        .import-replace-confirm strong { display: block; margin-bottom: 10px; color: var(--text-primary); font-size: 12px; line-height: 1.45; }
+        .import-replace-confirm label { display: block; margin-bottom: 6px; color: var(--text-secondary); font-size: 11px; }
+        .import-replace-input { width: 100%; border: 1px solid rgba(255,69,58,0.35); border-radius: 13px; background: rgba(255,255,255,0.06); color: var(--text-primary); padding: 11px 12px; font-family: var(--font-body); font-size: 14px; outline: none; }
+        .import-actions { display: flex; gap: 9px; margin-top: 18px; }
+        .import-error { color: var(--ios-red); font-size: 12px; line-height: 1.5; white-space: pre-line; }
+        @media (max-width: 620px) {
+            .import-summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+            .import-modes { grid-template-columns: 1fr; }
+            .import-mode { min-height: 0; }
+            .import-head { padding: 18px 16px 13px; }
+            .import-body { padding: 15px 16px 18px; }
+        }
+
         /* ── SOURCE PLATTER ───────────────────────────────────────── */
         .source-platter-overlay {
             position: fixed;
@@ -2459,13 +2519,13 @@
             </svg>
             Export all health data to file
         </div>
-        <div class="sheet-action" onclick="toggleActionSheet(false); promptUnitImportFile();">
+        <div class="sheet-action" onclick="toggleActionSheet(false); promptWorkbookImportFile();">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
                 <line x1="12" y1="3" x2="12" y2="15" />
             </svg>
-            Import units from XLSX
+            Import or sync from XLSX
         </div>
         <div class="sheet-action" onclick="toggleActionSheet(false); showSuccessToast('Custom baselines coming soon!');">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2519,6 +2579,18 @@
             </div>
         </div>
     </div>
+    <div class="import-overlay" id="workbookImportOverlay" aria-hidden="true" onclick="if(event.target === this) closeWorkbookImportPreview();">
+        <div class="import-dialog" role="dialog" aria-modal="true" aria-labelledby="workbookImportTitle">
+            <div class="import-head">
+                <div>
+                    <div class="import-title" id="workbookImportTitle">Review workbook import</div>
+                    <div class="import-subtitle">Matched by Test ID. Nothing is written until you confirm.</div>
+                </div>
+                <button class="import-close" type="button" onclick="closeWorkbookImportPreview()" aria-label="Close import preview">×</button>
+            </div>
+            <div class="import-body" id="workbookImportBody"></div>
+        </div>
+    </div>
     <div class="source-platter-overlay" id="sourcePlatterOverlay" onclick="if(event.target === this) closeSourcePlatter();">
         <div class="source-platter" role="dialog" aria-modal="true" aria-labelledby="sourcePlatterTitle">
             <div class="source-platter-handle"></div>
@@ -2535,7 +2607,7 @@
             <div class="source-records" id="sourcePlatterRecords"></div>
         </div>
     </div>
-    <input type="file" id="unitImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;">
+    <input type="file" id="workbookImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;">
 
     <!-- Vault Password Modal -->
     <div class="vault-overlay" id="vaultOverlay">
@@ -2930,7 +3002,8 @@
         let _loadingInProgress = false;
         let _vaultDataCache = null;
         let _exportInProgress = false;
-        let _unitImportInProgress = false;
+        let _workbookImportInProgress = false;
+        let _workbookImportState = null;
         let _unitHydrationToken = 0;
         let _queuedForceRefresh = false;
 
@@ -3140,31 +3213,113 @@
             warning: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
         };
 
-        function promptUnitImportFile() {
-            if (_unitImportInProgress) return;
-            const input = document.getElementById('unitImportFileInput');
+        const HEALTH_WORKBOOK_HEADERS = [
+            'Date', 'TestName', 'IsNumeric?', 'Result', 'NormalRange', 'Units', 'SourceFilename', 'Test ID'
+        ];
+        const UUID_V4_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        const IMPORT_COMPARE_FIELDS = [
+            ['date', 'Date'],
+            ['testName', 'TestName'],
+            ['isNumeric', 'IsNumeric?'],
+            ['rawResult', 'Result'],
+            ['rawRange', 'NormalRange'],
+            ['unit', 'Units'],
+            ['sourceFile', 'SourceFilename'],
+        ];
+
+        function promptWorkbookImportFile() {
+            if (_workbookImportInProgress) return;
+            const input = document.getElementById('workbookImportFileInput');
             if (!input) return;
             input.value = '';
             input.click();
         }
 
-        function resetUnitImportInput() {
-            const input = document.getElementById('unitImportFileInput');
+        function resetWorkbookImportInput() {
+            const input = document.getElementById('workbookImportFileInput');
             if (input) input.value = '';
         }
 
-        function parseUnitWorkbook(file) {
+        function normalizeImportDate(value) {
+            const text = String(value ?? '').trim();
+            const match = text.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
+            if (!match) return '';
+            const year = Number(match[1]);
+            const month = Number(match[2]);
+            const day = Number(match[3]);
+            const date = new Date(Date.UTC(year, month - 1, day));
+            if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return '';
+            return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        }
+
+        function parseImportBoolean(value) {
+            if (typeof value === 'boolean') return value;
+            const text = String(value ?? '').trim().toLowerCase();
+            if (['1', 'true', 'yes', 'y'].includes(text)) return true;
+            if (['0', 'false', 'no', 'n'].includes(text)) return false;
+            return null;
+        }
+
+        function importText(value) {
+            return value == null ? '' : String(value).trim();
+        }
+
+        function parseHealthWorkbook(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = event => {
                     try {
                         const workbook = XLSX.read(event.target.result, { type: 'array' });
                         const sheet = workbook.Sheets['Blood Tests'];
-                        if (!sheet) throw new Error('Workbook is missing the "Blood Tests" sheet.');
-                        const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-                        if (!rows.length) throw new Error('The "Blood Tests" sheet is empty.');
-                        if (!('TestName' in rows[0]) || !('Units' in rows[0])) {
-                            throw new Error('Expected "TestName" and "Units" columns in the workbook.');
+                        if (!sheet) throw new Error('Workbook is missing the required “Blood Tests” sheet.');
+                        const matrix = XLSX.utils.sheet_to_json(sheet, {
+                            header: 1,
+                            defval: '',
+                            raw: false,
+                            blankrows: false,
+                        });
+                        if (!matrix.length) throw new Error('The “Blood Tests” sheet is empty.');
+
+                        const headers = matrix[0].map(importText);
+                        if (headers.length !== HEALTH_WORKBOOK_HEADERS.length ||
+                            HEALTH_WORKBOOK_HEADERS.some((header, index) => headers[index] !== header)) {
+                            throw new Error(`The sheet must contain exactly these columns in order: ${HEALTH_WORKBOOK_HEADERS.join(', ')}.`);
+                        }
+
+                        const errors = [];
+                        const seenIds = new Map();
+                        const rows = [];
+                        matrix.slice(1).forEach((cells, rowIndex) => {
+                            if (!cells.some(cell => importText(cell) !== '')) return;
+                            const excelRow = rowIndex + 2;
+                            const date = normalizeImportDate(cells[0]);
+                            const testName = importText(cells[1]);
+                            const isNumeric = parseImportBoolean(cells[2]);
+                            const rawResult = importText(cells[3]);
+                            const rawRange = importText(cells[4]);
+                            const unit = importText(cells[5]);
+                            const sourceFile = importText(cells[6]);
+                            const testResultId = importText(cells[7]).toLowerCase();
+
+                            if (!date) errors.push(`Row ${excelRow}: Date must be a valid YYYY/MM/DD or YYYY-MM-DD date.`);
+                            if (!testName) errors.push(`Row ${excelRow}: TestName is blank.`);
+                            if (isNumeric === null) errors.push(`Row ${excelRow}: IsNumeric? must be 1/0, true/false, or yes/no.`);
+                            if (!rawResult) errors.push(`Row ${excelRow}: Result is blank.`);
+                            if (!UUID_V4_PATTERN.test(testResultId)) errors.push(`Row ${excelRow}: Test ID is not a valid UUID v4.`);
+                            if (seenIds.has(testResultId)) {
+                                errors.push(`Row ${excelRow}: Test ID duplicates row ${seenIds.get(testResultId)}.`);
+                            } else if (testResultId) {
+                                seenIds.set(testResultId, excelRow);
+                            }
+
+                            rows.push({ date, testName, isNumeric, rawResult, rawRange, unit, sourceFile, testResultId, excelRow });
+                        });
+
+                        if (!rows.length) errors.push('The workbook contains no data rows.');
+                        if (errors.length) {
+                            const visible = errors.slice(0, 10).join('\n');
+                            const remainder = errors.length > 10 ? `\n…and ${errors.length - 10} more issue${errors.length - 10 === 1 ? '' : 's'}.` : '';
+                            throw new Error(`The workbook was not imported because validation failed:\n${visible}${remainder}`);
                         }
                         resolve(rows);
                     } catch (error) {
@@ -3176,148 +3331,411 @@
             });
         }
 
-        function buildUnitImportPreview(vaultData, workbookRows) {
-            const unitMap = new Map();
-            const workbookNameMap = new Map();
-            let blankRows = 0;
-
-            workbookRows.forEach(row => {
-                const testName = typeof row.TestName === 'string' ? row.TestName.trim() : '';
-                const unitText = normalizeUnitString(row.Units);
-                if (!testName) return;
-                if (!unitText) {
-                    blankRows += 1;
-                    return;
-                }
-                const normalizedName = normalizeTestName(testName);
-                unitMap.set(normalizedName, unitText);
-                workbookNameMap.set(normalizedName, testName);
-            });
-
-            const tests = Array.isArray(vaultData?.tests) ? vaultData.tests : [];
-            const matchedWorkbookNames = new Set();
-            const updates = [];
-
-            tests.forEach((test, testIndex) => {
-                const testName = typeof test?.name === 'string' ? test.name : '';
-                const normalizedName = normalizeTestName(testName);
-                if (!unitMap.has(normalizedName)) return;
-                const unitText = unitMap.get(normalizedName);
-                const points = Array.isArray(test?.points) ? test.points : [];
-                if (!points.length) return;
-
-                matchedWorkbookNames.add(normalizedName);
-                points.forEach((point, pointIndex) => {
-                    if (normalizeUnitString(point?.unit) === unitText) return;
-                    updates.push({ testIndex, pointIndex, unitText });
+        function flattenVaultEntries(vaultData) {
+            const entries = [];
+            (Array.isArray(vaultData?.tests) ? vaultData.tests : []).forEach(test => {
+                const meta = { ...test };
+                delete meta.points;
+                (Array.isArray(test?.points) ? test.points : []).forEach(point => {
+                    entries.push({
+                        testName: importText(test?.name),
+                        point: { ...point },
+                        testMeta: meta,
+                        fromWorkbook: false,
+                    });
                 });
             });
+            return entries;
+        }
 
-            const unmatchedWorkbookNames = [...unitMap.keys()]
-                .filter(name => !matchedWorkbookNames.has(name))
-                .map(name => workbookNameMap.get(name) || name);
-
+        function vaultEntryAsWorkbookRow(entry) {
+            const point = entry.point || {};
+            const inferredNumeric = typeof point.isNumeric === 'boolean'
+                ? point.isNumeric
+                : entry.testMeta?.type === 'numeric' || cleanNumber(point.rawResult) !== null;
             return {
-                unitMap,
-                updates,
-                matchedWorkbookNameCount: matchedWorkbookNames.size,
-                pointUpdateCount: updates.length,
-                blankRows,
-                unmatchedWorkbookNames,
+                date: normalizeImportDate(point.date),
+                testName: importText(entry.testName),
+                isNumeric: inferredNumeric,
+                rawResult: importText(point.rawResult !== undefined ? point.rawResult : point.value),
+                rawRange: importText(point.rawRange !== undefined ? point.rawRange : point.range),
+                unit: importText(point.unit),
+                sourceFile: importText(getPointSourceFile(point)),
+                testResultId: importText(point.testResultId).toLowerCase(),
             };
         }
 
-        async function applyUnitImport(preview) {
-            const vaultData = _vaultDataCache || await loadVaultData();
-            const tests = JSON.parse(JSON.stringify(vaultData?.tests || []));
+        function workbookRowAsPoint(row, existingPoint = {}) {
+            return {
+                ...existingPoint,
+                date: row.date,
+                rawResult: row.rawResult,
+                rawRange: row.rawRange || null,
+                unit: row.unit || null,
+                sourceFile: row.sourceFile || null,
+                isNumeric: row.isNumeric,
+                testResultId: row.testResultId,
+            };
+        }
 
-            preview.updates.forEach(({ testIndex, pointIndex, unitText }) => {
-                const test = tests[testIndex];
-                if (!test || !Array.isArray(test.points) || !test.points[pointIndex]) return;
-                test.points[pointIndex] = {
-                    ...test.points[pointIndex],
-                    unit: unitText,
-                };
+        function compareImportRows(excelRow, cloudRow) {
+            return IMPORT_COMPARE_FIELDS.reduce((diffs, [key, label]) => {
+                if (excelRow[key] !== cloudRow[key]) {
+                    diffs.push({ label, excel: excelRow[key], cloud: cloudRow[key] });
+                }
+                return diffs;
+            }, []);
+        }
+
+        function buildWorkbookReconciliation(vaultData, workbookRows) {
+            const entries = flattenVaultEntries(vaultData);
+            const cloudById = new Map();
+            const duplicateCloudIds = new Set();
+            let cloudRowsWithoutIds = 0;
+
+            entries.forEach(entry => {
+                const id = importText(entry.point?.testResultId).toLowerCase();
+                if (!id) {
+                    cloudRowsWithoutIds += 1;
+                    return;
+                }
+                if (cloudById.has(id)) duplicateCloudIds.add(id);
+                else cloudById.set(id, entry);
             });
 
-            const nextVaultData = {
-                ...vaultData,
-                schemaVersion: 1,
-                tests,
-            };
+            const exact = [];
+            const changed = [];
+            const added = [];
+            const workbookIds = new Set(workbookRows.map(row => row.testResultId));
 
-            await persistVaultData(nextVaultData);
-            _dataLoaded = false;
-            await loadData(true);
+            workbookRows.forEach(row => {
+                const entry = cloudById.get(row.testResultId);
+                if (!entry) {
+                    added.push(row);
+                    return;
+                }
+                const cloudRow = vaultEntryAsWorkbookRow(entry);
+                const diffs = compareImportRows(row, cloudRow);
+                if (diffs.length) changed.push({ row, cloudRow, diffs });
+                else exact.push(row);
+            });
+
+            const cloudOnly = [];
+            entries.forEach(entry => {
+                const id = importText(entry.point?.testResultId).toLowerCase();
+                if (!id || !workbookIds.has(id)) cloudOnly.push(entry);
+            });
+
+            return { entries, exact, changed, added, cloudOnly, duplicateCloudIds, cloudRowsWithoutIds };
         }
 
-        async function handleUnitImportFileChange(event) {
-            const file = event?.target?.files?.[0];
-            if (!file || _unitImportInProgress) {
-                resetUnitImportInput();
-                return;
+        function latestNonBlank(points, key) {
+            for (let index = points.length - 1; index >= 0; index -= 1) {
+                const value = importText(points[index]?.[key]);
+                if (value) return value;
+            }
+            return null;
+        }
+
+        function buildVaultFromEntries(entries, baseVault = {}) {
+            const groups = new Map();
+            entries.forEach(entry => {
+                const normalizedName = normalizeTestName(entry.testName);
+                if (!normalizedName) return;
+                if (!groups.has(normalizedName)) {
+                    groups.set(normalizedName, {
+                        name: entry.testName,
+                        meta: { ...(entry.testMeta || {}) },
+                        points: [],
+                    });
+                }
+                const group = groups.get(normalizedName);
+                if (entry.fromWorkbook) group.name = entry.testName;
+                group.points.push({ ...entry.point });
+            });
+
+            const tests = [...groups.values()].map(group => {
+                const points = group.points.sort((a, b) => {
+                    const dateOrder = importText(a.date).localeCompare(importText(b.date));
+                    return dateOrder || importText(a.testResultId).localeCompare(importText(b.testResultId));
+                });
+                const numericCount = points.filter(point => point.isNumeric === true).length;
+                const qualitativeCount = points.filter(point => point.isNumeric === false).length;
+                const type = numericCount && qualitativeCount ? 'mixed' : numericCount ? 'numeric' : 'qualitative';
+                return {
+                    ...group.meta,
+                    name: group.name,
+                    type,
+                    unit: latestNonBlank(points, 'unit'),
+                    range: latestNonBlank(points, 'rawRange'),
+                    points,
+                };
+            }).sort((a, b) => a.name.localeCompare(b.name));
+
+            return { ...baseVault, schemaVersion: 2, tests };
+        }
+
+        function applyWorkbookRowsToVault(vaultData, rows, replaceEverything) {
+            if (replaceEverything) {
+                const entries = rows.map(row => ({
+                    testName: row.testName,
+                    point: workbookRowAsPoint(row),
+                    testMeta: {},
+                    fromWorkbook: true,
+                }));
+                return buildVaultFromEntries(entries, vaultData);
             }
 
-            _unitImportInProgress = true;
-            try {
-                if (!window._labsUser) throw new Error('You must be signed in to import units.');
-                if (!window._labsKey) throw new Error('Unlock your vault before importing units.');
-                if (typeof XLSX === 'undefined') throw new Error('The spreadsheet import library did not load.');
-
-                const workbookRows = await parseUnitWorkbook(file);
-                const vaultData = _vaultDataCache || await loadVaultData();
-                const preview = buildUnitImportPreview(vaultData, workbookRows);
-
-                const summaryLines = [
-                    `${preview.matchedWorkbookNameCount} workbook name${preview.matchedWorkbookNameCount === 1 ? '' : 's'} matched tests in the vault.`,
-                    `${preview.pointUpdateCount} historical point${preview.pointUpdateCount === 1 ? '' : 's'} will be updated.`,
-                    `${preview.blankRows} workbook row${preview.blankRows === 1 ? '' : 's'} were skipped because Units was blank.`,
-                ];
-                if (preview.unmatchedWorkbookNames.length) {
-                    const sample = preview.unmatchedWorkbookNames.slice(0, 8).join(', ');
-                    summaryLines.push(`Unmatched workbook names: ${sample}${preview.unmatchedWorkbookNames.length > 8 ? '…' : ''}`);
-                }
-
-                if (preview.pointUpdateCount === 0) {
-                    showConfirm({
-                        icon: CONFIRM_ICONS.check,
-                        iconColor: 'var(--green)',
-                        title: 'No unit changes needed',
-                        body: summaryLines.join('\n\n'),
-                        primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
+            const entries = flattenVaultEntries(vaultData);
+            const byId = new Map();
+            entries.forEach((entry, index) => {
+                const id = importText(entry.point?.testResultId).toLowerCase();
+                if (id) byId.set(id, index);
+            });
+            rows.forEach(row => {
+                const existingIndex = byId.get(row.testResultId);
+                if (existingIndex == null) {
+                    byId.set(row.testResultId, entries.length);
+                    entries.push({
+                        testName: row.testName,
+                        point: workbookRowAsPoint(row),
+                        testMeta: {},
+                        fromWorkbook: true,
                     });
                     return;
                 }
+                const existing = entries[existingIndex];
+                entries[existingIndex] = {
+                    ...existing,
+                    testName: row.testName,
+                    point: workbookRowAsPoint(row, existing.point),
+                    fromWorkbook: true,
+                };
+            });
+            return buildVaultFromEntries(entries, vaultData);
+        }
 
-                showConfirm({
-                    icon: CONFIRM_ICONS.save,
-                    iconColor: 'var(--accent)',
-                    title: 'Import units from workbook?',
-                    body: summaryLines.join('\n\n'),
-                    secondary: { label: 'Cancel', className: 'confirm-btn-secondary', action: dismissConfirm },
-                    primary: {
-                        label: 'Import',
-                        className: 'confirm-btn-primary',
-                        action: async () => {
-                            dismissConfirm();
-                            try {
-                                await applyUnitImport(preview);
-                                showSuccessToast('Imported units');
-                            } catch (error) {
-                                console.error('Unit import save failed:', error);
-                                showConfirm({
-                                    icon: CONFIRM_ICONS.error,
-                                    iconColor: 'var(--red)',
-                                    title: 'Import failed',
-                                    body: error.message || 'Something went wrong while saving imported units.',
-                                    primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
-                                });
-                            }
-                        }
-                    },
-                });
+        function importValueLabel(value) {
+            if (typeof value === 'boolean') return value ? '1' : '0';
+            return importText(value) || 'blank';
+        }
+
+        function renderImportRow(row, kind, details = '') {
+            const checked = kind === 'new'
+                ? _workbookImportState.selectedNewIds.has(row.testResultId)
+                : _workbookImportState.selectedChangedIds.has(row.testResultId);
+            return `<label class="import-row">
+                <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleWorkbookImportItem('${kind}', '${escStr(row.testResultId)}', this.checked)">
+                <span><strong class="import-row-name">${escStr(row.testName)}</strong><small class="import-row-meta">${escStr(row.date)} · ${escStr(importValueLabel(row.rawResult))} · ${escStr(row.testResultId)}${details}</small></span>
+            </label>`;
+        }
+
+        function selectWorkbookImportMode(mode) {
+            if (!_workbookImportState || !['add', 'sync', 'replace'].includes(mode)) return;
+            _workbookImportState.mode = mode;
+            renderWorkbookImportPreview();
+        }
+
+        function toggleWorkbookImportItem(kind, id, checked) {
+            if (!_workbookImportState) return;
+            const target = kind === 'new' ? _workbookImportState.selectedNewIds : _workbookImportState.selectedChangedIds;
+            if (checked) target.add(id);
+            else target.delete(id);
+            updateWorkbookImportApplyState();
+        }
+
+        function toggleAllWorkbookImportItems(kind, checked) {
+            if (!_workbookImportState) return;
+            const source = kind === 'new'
+                ? _workbookImportState.reconciliation.added.map(row => row.testResultId)
+                : _workbookImportState.reconciliation.changed.map(item => item.row.testResultId);
+            const target = kind === 'new' ? _workbookImportState.selectedNewIds : _workbookImportState.selectedChangedIds;
+            target.clear();
+            if (checked) source.forEach(id => target.add(id));
+            renderWorkbookImportPreview();
+        }
+
+        function setWorkbookImportError(message = '') {
+            const error = document.getElementById('workbookImportError');
+            if (!error) return;
+            error.textContent = message;
+            error.style.display = message ? 'block' : 'none';
+        }
+
+        function updateWorkbookImportApplyState() {
+            const state = _workbookImportState;
+            const button = document.getElementById('workbookImportApply');
+            if (!state || !button) return;
+            let count = state.workbookRows.length;
+            if (state.mode === 'add') count = state.selectedNewIds.size;
+            if (state.mode === 'sync') count = state.selectedNewIds.size + state.selectedChangedIds.size;
+            const replacementConfirmed = state.mode !== 'replace' || document.getElementById('workbookReplaceConfirm')?.value === 'REPLACE';
+            const mergeBlocked = state.mode !== 'replace' && state.reconciliation.duplicateCloudIds.size > 0;
+            button.disabled = _workbookImportInProgress || !count || !replacementConfirmed || mergeBlocked;
+            button.textContent = state.mode === 'replace'
+                ? `Replace with ${count} Excel records`
+                : state.mode === 'add'
+                    ? `Add ${count} new record${count === 1 ? '' : 's'}`
+                    : `Apply ${count} change${count === 1 ? '' : 's'}`;
+        }
+
+        function renderWorkbookImportPreview() {
+            const state = _workbookImportState;
+            const body = document.getElementById('workbookImportBody');
+            if (!state || !body) return;
+            const r = state.reconciliation;
+            const mode = state.mode;
+            const duplicateWarning = r.duplicateCloudIds.size
+                ? `<div class="import-warning">The cloud contains ${r.duplicateCloudIds.size} duplicate Test ID${r.duplicateCloudIds.size === 1 ? '' : 's'}. Add and sync are disabled because the match would be ambiguous. Full replacement remains available.</div>`
+                : '';
+            const legacyWarning = r.cloudRowsWithoutIds
+                ? `<div class="import-warning">${r.cloudRowsWithoutIds} cloud record${r.cloudRowsWithoutIds === 1 ? '' : 's'} have no Test ID. Add and sync preserve them; full replacement removes them.</div>`
+                : '';
+            const changedRows = r.changed.map(item => {
+                const details = item.diffs.map(diff => ` · ${escStr(diff.label)}: “${escStr(importValueLabel(diff.cloud))}” → “${escStr(importValueLabel(diff.excel))}”`).join('');
+                return renderImportRow(item.row, 'changed', details);
+            }).join('');
+            const newRows = r.added.map(row => renderImportRow(row, 'new')).join('');
+            const selectionSections = mode === 'replace' ? '' : `
+                ${mode === 'sync' && r.changed.length ? `<section class="import-section"><div class="import-section-head"><strong>Changed matches (${r.changed.length})</strong><span><button type="button" onclick="toggleAllWorkbookImportItems('changed', true)">All</button> · <button type="button" onclick="toggleAllWorkbookImportItems('changed', false)">None</button></span></div><div class="import-list">${changedRows}</div></section>` : ''}
+                ${r.added.length ? `<section class="import-section"><div class="import-section-head"><strong>New records (${r.added.length})</strong><span><button type="button" onclick="toggleAllWorkbookImportItems('new', true)">All</button> · <button type="button" onclick="toggleAllWorkbookImportItems('new', false)">None</button></span></div><div class="import-list">${newRows}</div></section>` : ''}`;
+            const replaceConfirmation = mode === 'replace' ? `
+                <div class="import-replace-confirm">
+                    <strong>This removes every cloud record and replaces the vault with all ${state.workbookRows.length} Excel records.</strong>
+                    <label for="workbookReplaceConfirm">Type <b>REPLACE</b> to confirm</label>
+                    <input class="import-replace-input" id="workbookReplaceConfirm" autocomplete="off" oninput="updateWorkbookImportApplyState()">
+                </div>` : '';
+
+            body.innerHTML = `
+                <div class="import-file-name">${escStr(state.fileName)}</div>
+                <div class="import-summary-grid">
+                    <div class="import-stat"><span class="import-stat-value">${state.workbookRows.length}</span><span class="import-stat-label">Excel records</span></div>
+                    <div class="import-stat"><span class="import-stat-value">${r.exact.length}</span><span class="import-stat-label">Exact matches</span></div>
+                    <div class="import-stat"><span class="import-stat-value">${r.changed.length}</span><span class="import-stat-label">Changed matches</span></div>
+                    <div class="import-stat"><span class="import-stat-value">${r.added.length}</span><span class="import-stat-label">New records</span></div>
+                </div>
+                <p>${r.cloudOnly.length} cloud record${r.cloudOnly.length === 1 ? '' : 's'} are not represented in this workbook.</p>
+                ${duplicateWarning}${legacyWarning}
+                <div class="import-modes">
+                    <button type="button" class="import-mode ${mode === 'add' ? 'selected' : ''}" onclick="selectWorkbookImportMode('add')"><span class="import-mode-name">Add new only</span><span class="import-mode-copy">Add selected new Test IDs. Existing records are untouched.</span></button>
+                    <button type="button" class="import-mode ${mode === 'sync' ? 'selected' : ''}" onclick="selectWorkbookImportMode('sync')"><span class="import-mode-name">Sync selected</span><span class="import-mode-copy">Excel overwrites selected changed matches and adds selected new records.</span></button>
+                    <button type="button" class="import-mode danger ${mode === 'replace' ? 'selected' : ''}" onclick="selectWorkbookImportMode('replace')"><span class="import-mode-name">Replace everything</span><span class="import-mode-copy">One encrypted overwrite. Cloud-only records are removed.</span></button>
+                </div>
+                ${selectionSections}${replaceConfirmation}
+                <div class="import-error" id="workbookImportError" style="display:none"></div>
+                <div class="import-actions">
+                    <button type="button" class="report-btn report-btn-secondary" onclick="exportHealthData()">Download cloud backup</button>
+                    <button type="button" class="report-btn report-btn-primary" id="workbookImportApply" onclick="applyWorkbookImport()"></button>
+                </div>`;
+            updateWorkbookImportApplyState();
+        }
+
+        function openWorkbookImportPreview() {
+            const overlay = document.getElementById('workbookImportOverlay');
+            if (!overlay) return;
+            overlay.classList.add('visible');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWorkbookImportPreview() {
+            if (_workbookImportInProgress) return;
+            const overlay = document.getElementById('workbookImportOverlay');
+            if (overlay) {
+                overlay.classList.remove('visible');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+            document.body.style.overflow = '';
+            _workbookImportState = null;
+            resetWorkbookImportInput();
+        }
+
+        function selectedWorkbookRows() {
+            const state = _workbookImportState;
+            if (!state) return [];
+            if (state.mode === 'replace') return state.workbookRows;
+            const ids = new Set(state.selectedNewIds);
+            if (state.mode === 'sync') state.selectedChangedIds.forEach(id => ids.add(id));
+            return state.workbookRows.filter(row => ids.has(row.testResultId));
+        }
+
+        function verifyImportedRows(vaultData, expectedRows, replaceEverything) {
+            const entries = flattenVaultEntries(vaultData);
+            const byId = new Map(entries.map(entry => [importText(entry.point?.testResultId).toLowerCase(), entry]));
+            for (const row of expectedRows) {
+                const entry = byId.get(row.testResultId);
+                if (!entry || compareImportRows(row, vaultEntryAsWorkbookRow(entry)).length) {
+                    throw new Error(`Save verification failed for ${row.testName} (${row.testResultId}).`);
+                }
+            }
+            if (replaceEverything && (entries.length !== expectedRows.length || byId.size !== expectedRows.length)) {
+                throw new Error('Save verification found records in the cloud that were not in the replacement workbook.');
+            }
+        }
+
+        async function applyWorkbookImport() {
+            const state = _workbookImportState;
+            if (!state || _workbookImportInProgress) return;
+            const rows = selectedWorkbookRows();
+            if (!rows.length) return;
+            if (state.mode === 'replace' && document.getElementById('workbookReplaceConfirm')?.value !== 'REPLACE') return;
+            if (state.mode !== 'replace' && state.reconciliation.duplicateCloudIds.size) return;
+
+            _workbookImportInProgress = true;
+            setWorkbookImportError('');
+            updateWorkbookImportApplyState();
+            try {
+                const latestVault = await loadVaultData();
+                if (JSON.stringify(latestVault) !== state.cloudSnapshotJson) {
+                    throw new Error('The cloud vault changed after this preview was created. Close this window and import the workbook again.');
+                }
+                const replaceEverything = state.mode === 'replace';
+                const nextVault = applyWorkbookRowsToVault(latestVault, rows, replaceEverything);
+                await persistVaultData(nextVault);
+                const verifiedVault = await loadVaultData();
+                verifyImportedRows(verifiedVault, rows, replaceEverything);
+                _dataLoaded = false;
+                _workbookImportInProgress = false;
+                closeWorkbookImportPreview();
+                await loadData(true);
+                showSuccessToast(replaceEverything ? `Replaced vault with ${rows.length} Excel records` : `Imported ${rows.length} Excel record${rows.length === 1 ? '' : 's'}`);
             } catch (error) {
-                console.error('Unit import failed:', error);
+                console.error('Workbook import failed:', error);
+                setWorkbookImportError(error.message || 'The workbook could not be saved.');
+            } finally {
+                _workbookImportInProgress = false;
+                updateWorkbookImportApplyState();
+            }
+        }
+
+        async function handleWorkbookImportFileChange(event) {
+            const file = event?.target?.files?.[0];
+            if (!file || _workbookImportInProgress) {
+                resetWorkbookImportInput();
+                return;
+            }
+
+            _workbookImportInProgress = true;
+            try {
+                if (!window._labsUser) throw new Error('You must be signed in to import a workbook.');
+                if (!window._labsKey) throw new Error('Unlock your vault before importing a workbook.');
+                if (typeof XLSX === 'undefined') throw new Error('The spreadsheet import library did not load.');
+                const workbookRows = await parseHealthWorkbook(file);
+                const vaultData = await loadVaultData();
+                const reconciliation = buildWorkbookReconciliation(vaultData, workbookRows);
+                _workbookImportState = {
+                    fileName: file.name,
+                    workbookRows,
+                    reconciliation,
+                    mode: 'sync',
+                    selectedNewIds: new Set(reconciliation.added.map(row => row.testResultId)),
+                    selectedChangedIds: new Set(reconciliation.changed.map(item => item.row.testResultId)),
+                    cloudSnapshotJson: JSON.stringify(vaultData),
+                };
+                renderWorkbookImportPreview();
+                openWorkbookImportPreview();
+            } catch (error) {
+                console.error('Workbook import failed:', error);
                 showConfirm({
                     icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
@@ -3326,8 +3744,8 @@
                     primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                 });
             } finally {
-                _unitImportInProgress = false;
-                resetUnitImportInput();
+                _workbookImportInProgress = false;
+                resetWorkbookImportInput();
             }
         }
 
@@ -3543,7 +3961,9 @@
                 const points = rawPoints.map(p => {
                     const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
                     const numVal    = cleanNumber(rawResult);
-                    const isNumeric = rawTest.type === 'numeric' || (rawTest.type !== 'qualitative' && numVal !== null);
+                    const isNumeric = typeof p.isNumeric === 'boolean'
+                        ? p.isNumeric
+                        : rawTest.type === 'numeric' || (rawTest.type !== 'qualitative' && numVal !== null);
                     return {
                         date: p.date,
                         rawResult,
@@ -3563,8 +3983,10 @@
                 if (points.length === 0) return null;
                 const seen = new Set();
                 const sortedPoints = points.filter(p => {
-                    // Deduplicate only strictly identical records (same date, value, lab, and source)
-                    const key = `${p.date}_${p.rawResult}_${p.lab}_${p.sourceFile}`;
+                    // UUIDs are authoritative, allowing same-test, same-day records to coexist.
+                    const key = p.testResultId
+                        ? `id:${p.testResultId}`
+                        : `legacy:${p.date}_${p.rawResult}_${p.lab}_${p.sourceFile}`;
                     if (seen.has(key)) return false;
                     seen.add(key);
                     return true;
@@ -3610,7 +4032,7 @@
             const vaultRef = getVaultDocRef();
             const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, vaultData);
             await setDoc(vaultRef, {
-                schemaVersion: 1,
+                schemaVersion: Number(vaultData?.schemaVersion) || 2,
                 encryptedPayload,
                 iv,
                 updatedAt: new Date().toISOString(),
@@ -3639,7 +4061,7 @@
                     _vaultDataCache = vaultData;
                     return vaultData;
                 }
-                const fallback = { schemaVersion: 1, tests: Array.isArray(data.tests) ? data.tests : [] };
+                const fallback = { schemaVersion: Number(data.schemaVersion) || 1, tests: Array.isArray(data.tests) ? data.tests : [] };
                 _vaultDataCache = fallback;
                 return fallback;
             }
@@ -5846,9 +6268,12 @@
                     const newPoint = {
                         date: dateVal,
                         rawResult: entry.value,
+                        rawRange: null,
+                        unit: null,
+                        isNumeric: cleanNumber(entry.value) !== null,
                         lab: 'manual_entry',
                         sourceFile,
-                        testResultId: `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                        testResultId: crypto.randomUUID(),
                     };
 
                     const existingIndex = tests.findIndex(test => test && normalizeTestName(test.name) === entry.name);
@@ -5856,13 +6281,7 @@
                     if (existingIndex >= 0) {
                         const existing = tests[existingIndex];
                         const currentPts = Array.isArray(existing.points) ? [...existing.points] : [];
-                        const duplicatePoint = currentPts.some(point =>
-                            point &&
-                            point.date === dateVal &&
-                            String(point.rawResult !== undefined ? point.rawResult : point.value) === entry.value &&
-                            getPointSourceFile(point) === sourceFile
-                        );
-                        if (!duplicatePoint) currentPts.push(newPoint);
+                        currentPts.push(newPoint);
                         tests[existingIndex] = {
                             ...existing,
                             name: entry.name,
@@ -5882,7 +6301,7 @@
 
                 const nextVaultData = {
                     ...vaultData,
-                    schemaVersion: 1,
+                    schemaVersion: 2,
                     tests,
                 };
                 await persistVaultData(nextVaultData);
@@ -5942,9 +6361,9 @@
             renderLoadingSkeletons();
             loadData();
 
-            const unitImportInput = document.getElementById('unitImportFileInput');
-            if (unitImportInput) {
-                unitImportInput.addEventListener('change', handleUnitImportFileChange);
+            const workbookImportInput = document.getElementById('workbookImportFileInput');
+            if (workbookImportInput) {
+                workbookImportInput.addEventListener('change', handleWorkbookImportFileChange);
             }
 
             const detailPanel = document.getElementById('panelDetail');
@@ -5956,6 +6375,10 @@
             // ── BROWSER BACK BUTTON ──────────────────────────────────
             window.addEventListener('popstate', () => {
                 // Close overlays first, then detail view
+                if (document.getElementById('workbookImportOverlay')?.classList.contains('visible')) {
+                    closeWorkbookImportPreview();
+                    return;
+                }
                 if (document.getElementById('gridPopover')?.classList.contains('visible')) {
                     closeGridPopover();
                     return;
