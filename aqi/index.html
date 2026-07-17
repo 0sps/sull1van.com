@@ -337,6 +337,9 @@
     const FALLBACK_LOCATION = { latitude: 40.6782, longitude: -73.9442 };
     const PIN_STORAGE_KEY = "aire-pinned-places-v1";
     const $ = (id) => document.getElementById(id);
+
+    // The selected location drives the main card and marker. Pinned locations are a
+    // separate watchlist so changing the active place never discards saved places.
     let currentLocation = FALLBACK_LOCATION;
     let currentAirQualityData = null;
     let map;
@@ -367,6 +370,8 @@
     }
 
     function aqiSummary(data) {
+      // Prefer the familiar US EPA index, then gracefully fall back to whatever
+      // index Google returned. Keeping this choice here gives every UI the same AQI.
       const index = data?.indexes?.find((item) => item.code === "usa_epa") || data?.indexes?.find((item) => item.code === "uaqi") || data?.indexes?.[0];
       if (!index) throw new Error("No AQI index was returned for this location.");
       const category = categoryFor(index.aqi);
@@ -374,9 +379,14 @@
     }
 
     function locationId(location) {
+      // Four decimal places groups points within roughly 11 meters. That prevents
+      // duplicate pins caused by tiny coordinate differences from clicks or search.
       return Number(location.latitude).toFixed(4) + "," + Number(location.longitude).toFixed(4);
     }
 
+    /* =========================================================
+       Pinned place persistence and rendering
+       ========================================================= */
     function loadPinnedPlaces() {
       try {
         const stored = JSON.parse(localStorage.getItem(PIN_STORAGE_KEY) || "[]");
@@ -388,6 +398,8 @@
     }
 
     function savePinnedPlaces() {
+      // Pins are intentionally local to this browser. A storage failure should not
+      // interrupt the live map, so private browsing and quota errors are ignored.
       try { localStorage.setItem(PIN_STORAGE_KEY, JSON.stringify(pinnedPlaces)); } catch (_) {}
     }
 
@@ -468,6 +480,9 @@
       $("scaleMarker").style.left = aqiScalePercent(index.aqi) + "%";
       $("healthText").textContent = data.healthRecommendations?.generalPopulation || category.tip;
       renderPollutants(data.pollutants);
+
+      // If the selected place is pinned, its watchlist badge and map marker should
+      // receive the same fresh reading as the main card without another API call.
       const pinned = pinnedPlaces.find((place) => place.id === locationId(currentLocation));
       if (pinned) {
         Object.assign(pinned, { aqi: index.aqi, status: index.category?.replace(/ air quality/i, "") || category.label, color: category.color, dateTime: data.dateTime, checkedAt: Date.now() });
@@ -481,6 +496,8 @@
     }
 
     async function fetchAirQuality(location, details = true) {
+      // Watchlist refreshes only need an index. The main card requests the heavier
+      // pollutant and health payload because it renders those additional sections.
       const response = await fetch(AIR_QUALITY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -503,6 +520,8 @@
     }
 
     function renderPinnedMarkers() {
+      // Rebuilding this small marker set keeps it exactly in sync after add, remove,
+      // or refresh operations and avoids maintaining two competing marker states.
       pinnedMarkers.forEach((pinMarker) => pinMarker.setMap(null));
       pinnedMarkers.clear();
       if (!mapsReady || !map) return;
@@ -524,6 +543,8 @@
     }
 
     function renderPinnedPlaces() {
+      // This is the single render boundary for the badge, watchlist, pin button, and
+      // map markers. Any saved-place mutation ends here to keep those views aligned.
       const list = $("pinnedList");
       list.innerHTML = "";
       $("pinCount").textContent = pinnedPlaces.length ? String(pinnedPlaces.length) : "";
@@ -608,6 +629,8 @@
 
     async function refreshPinnedPlaces(force = true) {
       if (!pinnedPlaces.length) return;
+      // Automatic refreshes honor a ten-minute client cache. Manual refreshes bypass
+      // the cache so the user can always request a current reading.
       const targets = force ? pinnedPlaces : pinnedPlaces.filter((place) => !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
       if (!targets.length) return;
       const button = $("refreshPins");
@@ -654,6 +677,8 @@
       if (!mapsReady) return;
       const center = { lat: location.latitude, lng: location.longitude };
       new google.maps.Geocoder().geocode({ location: center }, (results, status) => {
+        // A user can choose another point before geocoding finishes. Ignore a late
+        // address so it cannot rename the newer selection.
         if (requestId !== selectionId) return;
         const name = status === "OK" && results?.length ? locationLabel(results[0]) : "Selected location";
         $("locationName").textContent = name;
@@ -678,6 +703,8 @@
     }
 
     function setSearchOpen(open) {
+      // Search and pins share the same top-bar space, so opening one always closes
+      // the other. Focus returns to the trigger when a keyboard user closes a panel.
       const panel = $("searchPanel");
       const returnFocus = !open && panel.contains(document.activeElement);
       if (open) setPinnedOpen(false);
@@ -724,6 +751,8 @@
             if (!place.location) throw new Error("That result does not have a mappable location.");
             const location = { latitude: place.location.lat(), longitude: place.location.lng() };
             const label = place.formattedAddress || place.displayName || "Selected location";
+            // Place search and map clicks intentionally converge on useLocation so
+            // marker placement, loading states, and AQI fetching behave identically.
             if (place.viewport) map.fitBounds(place.viewport);
             else map.setZoom(14);
             setSearchOpen(false);
@@ -763,6 +792,8 @@
       });
       const heatmap = new google.maps.ImageMapType({
         getTileUrl: (coord, zoom) => {
+          // Google tiles wrap horizontally but not vertically. Normalizing X keeps
+          // the heatmap continuous when the map crosses the international date line.
           const count = 2 ** zoom;
           if (coord.y < 0 || coord.y >= count) return null;
           const x = ((coord.x % count) + count) % count;
@@ -782,6 +813,8 @@
     };
 
     async function useLocation(location, fallback = false, preferredLabel = "") {
+      // Each selection gets a monotonically increasing token. Only the latest token
+      // may update the UI, preventing slow network responses from winning a race.
       const requestId = ++selectionId;
       currentLocation = location;
       $("locationName").textContent = fallback ? "Brooklyn, NY (default)" : preferredLabel || "Resolving location…";
@@ -945,7 +978,7 @@
     $("searchButton").addEventListener("click", () => setSearchOpen(!$("searchPanel").classList.contains("open")));
     $("pinsButton").addEventListener("click", () => setPinnedOpen(!$("pinsPanel").classList.contains("open")));
     $("pinCurrent").addEventListener("click", toggleCurrentPin);
-    $("refreshPins").addEventListener("click", refreshPinnedPlaces);
+    $("refreshPins").addEventListener("click", () => refreshPinnedPlaces(true));
     $("showAllPins").addEventListener("click", showAllPinnedPlaces);
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
