@@ -50,6 +50,74 @@
     .icon-button { width: 44px; height: 44px; display: grid; place-items: center; pointer-events: auto; border: 0; border-radius: 50%; background: var(--panel); color: var(--ink); box-shadow: var(--shadow); backdrop-filter: blur(14px); cursor: pointer; transition: opacity .2s; }
     .icon-button:active { background: var(--ground); }
     .icon-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .search-button[aria-expanded="true"], .pins-button[aria-expanded="true"] { color: #fff; border-color: var(--accent); background: var(--accent); }
+    .pins-button { position: relative; }
+    .pin-count { position: absolute; top: -4px; right: -4px; min-width: 17px; height: 17px; padding: 0 4px; display: grid; place-items: center; border: 2px solid var(--paper); border-radius: 999px; background: var(--accent); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 8px; font-weight: 500; line-height: 1; }
+    .pin-count:empty { display: none; }
+    .top-panel {
+      position: absolute;
+      z-index: 13;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(430px, calc(100vw - 32px));
+      padding: 7px;
+      pointer-events: auto;
+      border: 1px solid rgba(227, 224, 216, .88);
+      border-radius: 17px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-5px);
+      transition: opacity .18s ease, visibility .18s ease, transform .18s ease;
+    }
+    .top-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .place-search {
+      display: block;
+      width: 100%;
+      color-scheme: light;
+      --gmpx-color-surface: var(--paper);
+      --gmpx-color-on-surface: var(--ink);
+      --gmpx-color-on-surface-variant: var(--muted);
+      --gmpx-color-primary: var(--accent);
+      --gmpx-font-family-base: "Albert Sans", sans-serif;
+      background-color: transparent;
+      border: 0;
+      border-radius: 12px;
+      color: var(--ink);
+      font-family: "Albert Sans", sans-serif;
+      font-size: 15px;
+    }
+    .search-message { display: none; padding: 8px 10px 5px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .search-message.visible { display: block; }
+    .pins-panel { max-height: min(560px, calc(100vh - 92px)); padding: 0; overflow: hidden; }
+    .pins-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 16px 11px; }
+    .pins-panel-title { font-family: "Bricolage Grotesque", sans-serif; font-size: 17px; font-weight: 700; }
+    .pins-panel-subtitle { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .pins-panel-actions { display: flex; align-items: center; gap: 5px; }
+    .panel-action { min-height: 30px; padding: 0 9px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); cursor: pointer; font-size: 10px; font-weight: 600; }
+    .panel-action:hover { background: var(--ground); }
+    .panel-action:disabled { cursor: wait; opacity: .55; }
+    .pinned-list { max-height: min(430px, calc(100vh - 180px)); padding: 0 7px 7px; overflow-y: auto; overscroll-behavior: contain; }
+    .pinned-place { display: grid; grid-template-columns: minmax(0, 1fr) 32px; gap: 4px; padding: 5px; border-top: 1px solid var(--line); }
+    .pinned-place-select { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 6px; border: 0; border-radius: 11px; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
+    .pinned-place-select:hover { background: var(--ground); }
+    .pinned-place-copy { min-width: 0; }
+    .pinned-place-name { display: block; overflow: hidden; font-size: 13px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .pinned-place-meta { display: block; margin-top: 4px; color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .04em; text-transform: uppercase; }
+    .pinned-aqi { min-width: 48px; padding: 7px 8px; border-radius: 10px; color: #fff; text-align: center; }
+    .pinned-aqi strong { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 18px; line-height: .9; }
+    .pinned-aqi small { display: block; margin-top: 4px; font-size: 8px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+    .remove-pin { width: 32px; height: 32px; align-self: center; display: grid; place-items: center; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; }
+    .remove-pin:hover { color: var(--ink); background: var(--ground); }
+    .remove-pin svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+    .pins-empty { padding: 26px 22px 28px; border-top: 1px solid var(--line); text-align: center; }
+    .pins-empty-mark { width: 42px; height: 42px; margin: 0 auto 12px; display: grid; place-items: center; border-radius: 50%; background: var(--ground); color: var(--muted); }
+    .pins-empty-mark svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .pins-empty strong { display: block; font-size: 13px; }
+    .pins-empty span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.45; }
     .refresh:disabled { cursor: wait; opacity: .6; }
     .refresh:disabled svg { animation: spin 1.1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -85,7 +153,13 @@
     .place { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 13px; font-weight: 600; }
     .place-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
     .place-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .place-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
     .updated { flex: 0 0 auto; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+    .pin-current { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .28); border-radius: 9px; background: rgba(255, 255, 255, .13); color: #fff; cursor: pointer; }
+    .pin-current:hover { background: rgba(255, 255, 255, .23); }
+    .pin-current:disabled { cursor: wait; opacity: .48; }
+    .pin-current svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .pin-current.pinned svg { fill: currentColor; }
     .aqi-main { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
     .score { font-family: "Bricolage Grotesque", sans-serif; font-size: 64px; font-weight: 800; line-height: .92; letter-spacing: -.05em; }
     .aqi-text { min-width: 0; }
@@ -140,6 +214,8 @@
       .brand { padding: 0; background: none; box-shadow: none; backdrop-filter: none; }
       .icon-button { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: none; backdrop-filter: none; }
       .icon-button:hover { background: var(--ground); }
+      .search-button[aria-expanded="true"]:hover, .pins-button[aria-expanded="true"]:hover { background: var(--accent); filter: brightness(.94); }
+      .top-panel { left: 0; right: auto; width: 372px; }
 
       .sheet { inset: 78px auto 16px 16px; top: 78px; left: 16px; right: auto; height: auto; width: 372px; max-width: calc(100vw - 32px); transform: none !important; background: none; box-shadow: none; border-radius: 0; }
       .grabber-zone { display: none; }
@@ -173,9 +249,32 @@
 
     <header class="topbar">
       <div class="brand"><span class="brand-mark">A</span><span class="brand-name">Aire</span></div>
-      <button class="icon-button refresh" id="refreshButton" type="button" title="Refresh location and air quality" aria-label="Refresh location and air quality">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
-      </button>
+      <div class="topbar-actions">
+        <button class="icon-button search-button" id="searchButton" type="button" title="Search for a location" aria-label="Search for a location" aria-expanded="false" aria-controls="searchPanel">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+        <button class="icon-button pins-button" id="pinsButton" type="button" title="View pinned places" aria-label="View pinned places" aria-expanded="false" aria-controls="pinsPanel">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.8L6 21z"/></svg>
+          <span class="pin-count" id="pinCount" aria-hidden="true"></span>
+        </button>
+        <button class="icon-button refresh" id="refreshButton" type="button" title="Use my current location" aria-label="Use my current location">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
+        </button>
+      </div>
+      <div class="top-panel search-panel" id="searchPanel" aria-hidden="true">
+        <div id="placeSearchHost"></div>
+        <div class="search-message" id="searchMessage" role="status"></div>
+      </div>
+      <section class="top-panel pins-panel" id="pinsPanel" aria-hidden="true" aria-label="Pinned places">
+        <div class="pins-panel-head">
+          <div><div class="pins-panel-title">Pinned places</div><div class="pins-panel-subtitle" id="pinsSubtitle">Your saved air quality watchlist</div></div>
+          <div class="pins-panel-actions">
+            <button class="panel-action" id="showAllPins" type="button">Show all</button>
+            <button class="panel-action" id="refreshPins" type="button">Refresh</button>
+          </div>
+        </div>
+        <div class="pinned-list" id="pinnedList"></div>
+      </section>
     </header>
 
     <div class="sheet" id="sheet" role="region" aria-label="Local air quality">
@@ -185,7 +284,12 @@
           <div class="aqi-card" aria-label="Current air quality">
             <div class="place-row">
               <div class="place"><span class="place-dot"></span><span class="place-name" id="locationName">Finding your location…</span></div>
-              <span class="updated" id="updated">locating</span>
+              <div class="place-actions">
+                <span class="updated" id="updated">locating</span>
+                <button class="pin-current" id="pinCurrent" type="button" title="Pin this location" aria-label="Pin this location" aria-pressed="false" disabled>
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.8L6 21z"/></svg>
+                </button>
+              </div>
             </div>
             <div class="aqi-main">
               <div class="score" id="aqiScore">··</div>
@@ -231,11 +335,17 @@
     const API_KEY = "AIzaSyDNtbWgaAZRFCGo1ZzVNYiZofqvhlgRekk";
     const AIR_QUALITY_URL = "https://airquality.googleapis.com/v1/currentConditions:lookup?key=" + API_KEY;
     const FALLBACK_LOCATION = { latitude: 40.6782, longitude: -73.9442 };
+    const PIN_STORAGE_KEY = "aire-pinned-places-v1";
     const $ = (id) => document.getElementById(id);
     let currentLocation = FALLBACK_LOCATION;
+    let currentAirQualityData = null;
     let map;
     let marker;
     let mapsReady = false;
+    let placeSearch;
+    let selectionId = 0;
+    let pinnedPlaces = loadPinnedPlaces();
+    const pinnedMarkers = new Map();
 
     // US EPA breakpoints (Moderate / USG / Unhealthy) per pollutant, plus a scale cap.
     const POLLUTANTS = [
@@ -254,6 +364,31 @@
       if (aqi <= 200) return { label: "Unhealthy", color: "#d25454", tip: "Everyone may begin to experience health effects. Consider moving activities indoors and keeping windows closed." };
       if (aqi <= 300) return { label: "Very Unhealthy", color: "#9256b8", tip: "Health alert: everyone may experience serious effects. Avoid outdoor activity and run an air purifier if you have one." };
       return { label: "Hazardous", color: "#7e3a4e", tip: "Emergency conditions. Stay indoors, seal windows, and wear a certified respirator if you must go outside." };
+    }
+
+    function aqiSummary(data) {
+      const index = data?.indexes?.find((item) => item.code === "usa_epa") || data?.indexes?.find((item) => item.code === "uaqi") || data?.indexes?.[0];
+      if (!index) throw new Error("No AQI index was returned for this location.");
+      const category = categoryFor(index.aqi);
+      return { aqi: index.aqi, label: index.category?.replace(/ air quality/i, "") || category.label, color: category.color, index, category };
+    }
+
+    function locationId(location) {
+      return Number(location.latitude).toFixed(4) + "," + Number(location.longitude).toFixed(4);
+    }
+
+    function loadPinnedPlaces() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(PIN_STORAGE_KEY) || "[]");
+        if (!Array.isArray(stored)) return [];
+        return stored.filter((place) => Number.isFinite(place.latitude) && Number.isFinite(place.longitude)).slice(0, 20);
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function savePinnedPlaces() {
+      try { localStorage.setItem(PIN_STORAGE_KEY, JSON.stringify(pinnedPlaces)); } catch (_) {}
     }
 
     function zoneColor(value, thresholds) {
@@ -322,9 +457,8 @@
     }
 
     function renderAirQuality(data) {
-      const index = data.indexes?.find((item) => item.code === "usa_epa") || data.indexes?.find((item) => item.code === "uaqi") || data.indexes?.[0];
-      if (!index) throw new Error("No AQI index was returned for this location.");
-      const category = categoryFor(index.aqi);
+      const { index, category } = aqiSummary(data);
+      currentAirQualityData = data;
       document.documentElement.style.setProperty("--accent", category.color);
       document.documentElement.style.setProperty("--accent-glow", category.color + "55");
       $("aqiScore").textContent = index.aqi;
@@ -334,37 +468,278 @@
       $("scaleMarker").style.left = aqiScalePercent(index.aqi) + "%";
       $("healthText").textContent = data.healthRecommendations?.generalPopulation || category.tip;
       renderPollutants(data.pollutants);
+      const pinned = pinnedPlaces.find((place) => place.id === locationId(currentLocation));
+      if (pinned) {
+        Object.assign(pinned, { aqi: index.aqi, status: index.category?.replace(/ air quality/i, "") || category.label, color: category.color, dateTime: data.dateTime, checkedAt: Date.now() });
+        savePinnedPlaces();
+        renderPinnedPlaces();
+      }
+      updatePinCurrentButton();
       document.body.classList.remove("loading");
       $("refreshButton").disabled = false;
+      $("pinCurrent").disabled = false;
     }
 
-    async function fetchAirQuality(location) {
+    async function fetchAirQuality(location, details = true) {
       const response = await fetch(AIR_QUALITY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ location, extraComputations: ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"], universalAqi: false, languageCode: "en" })
+        body: JSON.stringify({ location, extraComputations: details ? ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"] : ["LOCAL_AQI"], universalAqi: false, languageCode: "en" })
       });
       if (!response.ok) {
         const details = await response.json().catch(() => ({}));
         throw new Error(details.error?.message || "Air quality request failed.");
       }
-      renderAirQuality(await response.json());
+      return response.json();
     }
 
-    function updateMap(location) {
+    function updatePinCurrentButton() {
+      const pinned = pinnedPlaces.some((place) => place.id === locationId(currentLocation));
+      const button = $("pinCurrent");
+      button.classList.toggle("pinned", pinned);
+      button.setAttribute("aria-pressed", String(pinned));
+      button.setAttribute("aria-label", pinned ? "Unpin this location" : "Pin this location");
+      button.title = pinned ? "Unpin this location" : "Pin this location";
+    }
+
+    function renderPinnedMarkers() {
+      pinnedMarkers.forEach((pinMarker) => pinMarker.setMap(null));
+      pinnedMarkers.clear();
+      if (!mapsReady || !map) return;
+      pinnedPlaces.forEach((place) => {
+        const pinMarker = new google.maps.Marker({
+          position: { lat: place.latitude, lng: place.longitude },
+          map,
+          title: place.name + (Number.isFinite(place.aqi) ? " · AQI " + place.aqi : ""),
+          zIndex: 40,
+          icon: { path: google.maps.SymbolPath.CIRCLE, scale: 19, fillColor: place.color || "#68707c", fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 3 },
+          label: { text: Number.isFinite(place.aqi) ? String(place.aqi) : "•", color: "#ffffff", fontFamily: "Albert Sans, sans-serif", fontSize: "11px", fontWeight: "700" }
+        });
+        pinMarker.addListener("click", () => {
+          setPinnedOpen(false);
+          useLocation({ latitude: place.latitude, longitude: place.longitude }, false, place.name);
+        });
+        pinnedMarkers.set(place.id, pinMarker);
+      });
+    }
+
+    function renderPinnedPlaces() {
+      const list = $("pinnedList");
+      list.innerHTML = "";
+      $("pinCount").textContent = pinnedPlaces.length ? String(pinnedPlaces.length) : "";
+      $("pinsSubtitle").textContent = pinnedPlaces.length ? pinnedPlaces.length + (pinnedPlaces.length === 1 ? " place on your watchlist" : " places on your watchlist") : "Your saved air quality watchlist";
+      $("showAllPins").disabled = pinnedPlaces.length === 0;
+      $("refreshPins").disabled = pinnedPlaces.length === 0;
+
+      if (!pinnedPlaces.length) {
+        list.innerHTML = '<div class="pins-empty"><div class="pins-empty-mark"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.8L6 21z"/></svg></div><strong>No pinned places yet</strong><span>Choose a point on the map, then bookmark it from the AQI card.</span></div>';
+      } else {
+        pinnedPlaces.forEach((place) => {
+          const row = document.createElement("div");
+          row.className = "pinned-place";
+          const select = document.createElement("button");
+          select.className = "pinned-place-select";
+          select.type = "button";
+          select.setAttribute("aria-label", "View " + place.name);
+          const copy = document.createElement("span");
+          copy.className = "pinned-place-copy";
+          const name = document.createElement("span");
+          name.className = "pinned-place-name";
+          name.textContent = place.name;
+          const meta = document.createElement("span");
+          meta.className = "pinned-place-meta";
+          const time = place.dateTime ? new Date(place.dateTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
+          meta.textContent = [place.status, time].filter(Boolean).join(" · ") || "Waiting for AQI";
+          copy.append(name, meta);
+          const badge = document.createElement("span");
+          badge.className = "pinned-aqi";
+          badge.style.background = place.color || "#68707c";
+          badge.innerHTML = '<strong></strong><small>AQI</small>';
+          badge.querySelector("strong").textContent = Number.isFinite(place.aqi) ? place.aqi : "··";
+          select.append(copy, badge);
+          select.addEventListener("click", () => {
+            setPinnedOpen(false);
+            useLocation({ latitude: place.latitude, longitude: place.longitude }, false, place.name);
+          });
+          const remove = document.createElement("button");
+          remove.className = "remove-pin";
+          remove.type = "button";
+          remove.setAttribute("aria-label", "Unpin " + place.name);
+          remove.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+          remove.addEventListener("click", () => removePinnedPlace(place.id));
+          row.append(select, remove);
+          list.appendChild(row);
+        });
+      }
+      updatePinCurrentButton();
+      renderPinnedMarkers();
+    }
+
+    function toggleCurrentPin() {
+      const id = locationId(currentLocation);
+      const existing = pinnedPlaces.findIndex((place) => place.id === id);
+      if (existing >= 0) {
+        pinnedPlaces.splice(existing, 1);
+      } else {
+        let summary = null;
+        try { summary = currentAirQualityData ? aqiSummary(currentAirQualityData) : null; } catch (_) {}
+        const visibleName = $("locationName").textContent.trim();
+        pinnedPlaces.unshift({
+          id,
+          name: visibleName && !/resolving|finding/i.test(visibleName) ? visibleName : "Pinned location",
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+          aqi: summary?.aqi,
+          status: summary?.label,
+          color: summary?.color,
+          dateTime: currentAirQualityData?.dateTime,
+          checkedAt: currentAirQualityData ? Date.now() : null
+        });
+      }
+      savePinnedPlaces();
+      renderPinnedPlaces();
+    }
+
+    function removePinnedPlace(id) {
+      pinnedPlaces = pinnedPlaces.filter((place) => place.id !== id);
+      savePinnedPlaces();
+      renderPinnedPlaces();
+    }
+
+    async function refreshPinnedPlaces(force = true) {
+      if (!pinnedPlaces.length) return;
+      const targets = force ? pinnedPlaces : pinnedPlaces.filter((place) => !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
+      if (!targets.length) return;
+      const button = $("refreshPins");
+      button.disabled = true;
+      button.textContent = "Updating";
+      await Promise.allSettled(targets.map(async (place) => {
+        const data = await fetchAirQuality({ latitude: place.latitude, longitude: place.longitude }, false);
+        const summary = aqiSummary(data);
+        const current = pinnedPlaces.find((item) => item.id === place.id);
+        if (current) Object.assign(current, { aqi: summary.aqi, status: summary.label, color: summary.color, dateTime: data.dateTime, checkedAt: Date.now() });
+      }));
+      savePinnedPlaces();
+      renderPinnedPlaces();
+      button.textContent = "Refresh";
+      button.disabled = pinnedPlaces.length === 0;
+    }
+
+    function showAllPinnedPlaces() {
+      if (!map || !pinnedPlaces.length) return;
+      setPinnedOpen(false);
+      if (pinnedPlaces.length === 1) {
+        map.setCenter({ lat: pinnedPlaces[0].latitude, lng: pinnedPlaces[0].longitude });
+        map.setZoom(10);
+        return;
+      }
+      const bounds = new google.maps.LatLngBounds();
+      pinnedPlaces.forEach((place) => bounds.extend({ lat: place.latitude, lng: place.longitude }));
+      map.fitBounds(bounds, 70);
+    }
+
+    function locationLabel(result) {
+      const parts = result?.address_components || [];
+      const get = (type, short = false) => {
+        const part = parts.find((item) => item.types.includes(type));
+        return part?.[short ? "short_name" : "long_name"];
+      };
+      const street = [get("street_number"), get("route")].filter(Boolean).join(" ");
+      const city = get("locality") || get("postal_town") || get("sublocality") || get("administrative_area_level_2");
+      const region = get("administrative_area_level_1", true);
+      return [street, city, region].filter(Boolean).join(", ") || result?.formatted_address || "Selected location";
+    }
+
+    function reverseGeocode(location, requestId) {
+      if (!mapsReady) return;
+      const center = { lat: location.latitude, lng: location.longitude };
+      new google.maps.Geocoder().geocode({ location: center }, (results, status) => {
+        if (requestId !== selectionId) return;
+        const name = status === "OK" && results?.length ? locationLabel(results[0]) : "Selected location";
+        $("locationName").textContent = name;
+        const pinned = pinnedPlaces.find((place) => place.id === locationId(location));
+        if (pinned && pinned.name === "Pinned location") {
+          pinned.name = name;
+          savePinnedPlaces();
+          renderPinnedPlaces();
+        }
+      });
+    }
+
+    function updateMap(location, requestId, preferredLabel = "") {
       if (!mapsReady || !map) return;
       const center = { lat: location.latitude, lng: location.longitude };
       map.setCenter(center);
       if (isMobileLayout()) map.panBy(0, Math.round(window.innerHeight * 0.16));
       if (marker) marker.setMap(null);
-      marker = new google.maps.Marker({ position: center, map, title: "Your location" });
-      new google.maps.Geocoder().geocode({ location: center }, (results, status) => {
-        if (status !== "OK" || !results?.length) return;
-        const parts = results[0].address_components || [];
-        const city = parts.find((part) => part.types.includes("locality"))?.long_name || parts.find((part) => part.types.includes("sublocality"))?.long_name;
-        const region = parts.find((part) => part.types.includes("administrative_area_level_1"))?.short_name;
-        $("locationName").textContent = [city, region].filter(Boolean).join(", ") || "Current position";
-      });
+      marker = new google.maps.Marker({ position: center, map, title: preferredLabel || "Selected location", zIndex: 20 });
+      if (preferredLabel) $("locationName").textContent = preferredLabel;
+      else reverseGeocode(location, requestId);
+    }
+
+    function setSearchOpen(open) {
+      const panel = $("searchPanel");
+      const returnFocus = !open && panel.contains(document.activeElement);
+      if (open) setPinnedOpen(false);
+      panel.classList.toggle("open", open);
+      panel.setAttribute("aria-hidden", String(!open));
+      $("searchButton").setAttribute("aria-expanded", String(open));
+      $("searchButton").setAttribute("aria-label", open ? "Close location search" : "Search for a location");
+      $("searchButton").title = open ? "Close location search" : "Search for a location";
+      if (open && placeSearch) window.setTimeout(() => placeSearch.focus(), 80);
+      if (returnFocus) $("searchButton").focus();
+    }
+
+    function setPinnedOpen(open) {
+      const panel = $("pinsPanel");
+      const returnFocus = !open && panel.contains(document.activeElement);
+      if (open) setSearchOpen(false);
+      panel.classList.toggle("open", open);
+      panel.setAttribute("aria-hidden", String(!open));
+      $("pinsButton").setAttribute("aria-expanded", String(open));
+      $("pinsButton").setAttribute("aria-label", open ? "Close pinned places" : "View pinned places");
+      $("pinsButton").title = open ? "Close pinned places" : "View pinned places";
+      if (returnFocus) $("pinsButton").focus();
+    }
+
+    function showSearchMessage(message) {
+      const element = $("searchMessage");
+      element.textContent = message;
+      element.classList.toggle("visible", Boolean(message));
+    }
+
+    async function initPlaceSearch() {
+      try {
+        const { PlaceAutocompleteElement } = await google.maps.importLibrary("places");
+        placeSearch = new PlaceAutocompleteElement();
+        placeSearch.className = "place-search";
+        placeSearch.placeholder = "Search an address or place";
+        placeSearch.description = "Search Google Maps for an address or place";
+        $("placeSearchHost").appendChild(placeSearch);
+        placeSearch.addEventListener("gmp-select", async (event) => {
+          showSearchMessage("");
+          const place = event.placePrediction.toPlace();
+          try {
+            await place.fetchFields({ fields: ["displayName", "formattedAddress", "location", "viewport"] });
+            if (!place.location) throw new Error("That result does not have a mappable location.");
+            const location = { latitude: place.location.lat(), longitude: place.location.lng() };
+            const label = place.formattedAddress || place.displayName || "Selected location";
+            if (place.viewport) map.fitBounds(place.viewport);
+            else map.setZoom(14);
+            setSearchOpen(false);
+            await useLocation(location, false, label);
+          } catch (error) {
+            showSearchMessage(error.message || "We could not load that location.");
+          }
+        });
+        placeSearch.addEventListener("gmp-error", () => showSearchMessage("Google Maps search is unavailable. Confirm that Places API (New) is enabled for this key."));
+        map.addListener("bounds_changed", () => {
+          const bounds = map.getBounds();
+          if (bounds && placeSearch) placeSearch.locationBias = bounds;
+        });
+      } catch (error) {
+        showSearchMessage("Google Maps search is unavailable. Confirm that Places API (New) is enabled for this key.");
+      }
     }
 
     window.gm_authFailure = function () {
@@ -382,6 +757,8 @@
         disableDefaultUI: true,
         zoomControl: finePointer,
         gestureHandling: "greedy",
+        draggableCursor: "crosshair",
+        draggingCursor: "grabbing",
         styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }, { featureType: "transit", stylers: [{ visibility: "off" }] }]
       });
       const heatmap = new google.maps.ImageMapType({
@@ -394,20 +771,38 @@
         tileSize: new google.maps.Size(256, 256), maxZoom: 16, minZoom: 0, name: "US AQI", opacity: .78
       });
       map.overlayMapTypes.insertAt(0, heatmap);
-      updateMap(currentLocation);
+      map.addListener("click", (event) => {
+        if (!event.latLng) return;
+        useLocation({ latitude: event.latLng.lat(), longitude: event.latLng.lng() });
+      });
+      updateMap(currentLocation, selectionId);
+      initPlaceSearch();
+      renderPinnedPlaces();
+      refreshPinnedPlaces(false);
     };
 
-    async function useLocation(location, fallback = false) {
+    async function useLocation(location, fallback = false, preferredLabel = "") {
+      const requestId = ++selectionId;
       currentLocation = location;
-      $("locationName").textContent = fallback ? "Brooklyn, NY (default)" : "Resolving location…";
-      updateMap(location);
+      $("locationName").textContent = fallback ? "Brooklyn, NY (default)" : preferredLabel || "Resolving location…";
+      $("updated").textContent = "loading";
+      document.body.classList.add("loading");
+      $("refreshButton").disabled = true;
+      $("pinCurrent").disabled = true;
+      currentAirQualityData = null;
+      updatePinCurrentButton();
+      updateMap(location, requestId, preferredLabel);
       try {
-        await fetchAirQuality(location);
+        const data = await fetchAirQuality(location);
+        if (requestId !== selectionId) return;
+        renderAirQuality(data);
       } catch (error) {
+        if (requestId !== selectionId) return;
         $("aqiStatus").textContent = "Data unavailable";
         $("healthText").textContent = error.message + " Check the API key restrictions and enabled services.";
         $("updated").textContent = "error";
         $("refreshButton").disabled = false;
+        $("pinCurrent").disabled = false;
         document.body.classList.remove("loading");
       }
     }
@@ -415,6 +810,8 @@
     function requestLocation() {
       document.body.classList.add("loading");
       $("refreshButton").disabled = true;
+      $("pinCurrent").disabled = true;
+      currentAirQualityData = null;
       $("locationName").textContent = "Finding your location…";
       $("updated").textContent = "locating";
       if (!navigator.geolocation) return useLocation(FALLBACK_LOCATION, true);
@@ -545,7 +942,23 @@
     }
 
     mapToggle.addEventListener("click", () => setMapView(!app.classList.contains("map-view")));
+    $("searchButton").addEventListener("click", () => setSearchOpen(!$("searchPanel").classList.contains("open")));
+    $("pinsButton").addEventListener("click", () => setPinnedOpen(!$("pinsPanel").classList.contains("open")));
+    $("pinCurrent").addEventListener("click", toggleCurrentPin);
+    $("refreshPins").addEventListener("click", refreshPinnedPlaces);
+    $("showAllPins").addEventListener("click", showAllPinnedPlaces);
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      setSearchOpen(false);
+      setPinnedOpen(false);
+    });
+    document.addEventListener("pointerdown", (event) => {
+      if (event.target.closest(".topbar")) return;
+      if ($("searchPanel").classList.contains("open")) setSearchOpen(false);
+      if ($("pinsPanel").classList.contains("open")) setPinnedOpen(false);
+    });
     $("refreshButton").addEventListener("click", requestLocation);
+    renderPinnedPlaces();
     sheetController.init();
     requestLocation();
   </script>
