@@ -1025,10 +1025,11 @@
 
     <div id="toast" class="toast"></div>
 
+    <script src="js/config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, writeBatch, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, writeBatch, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         // CONFIGURATION
         const firebaseConfig = {
@@ -1052,7 +1053,6 @@
         let activeLogId = null;
         let exerciseLibrary = {};
         let currentUser = null;
-        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Refresh Firebase config weekly.
         const ADMIN_EMAIL = 'sspsful@gmail.com';
 
         function getUserEmailKey(user) {
@@ -1078,154 +1078,12 @@
             return doc(db, 'users', getUserEmailKey(currentUser), 'workouts', logId.toString());
         }
 
-        // Data/export only needs the exercise library, but it uses the same per-user
-        // config doc/cache path as the main workout app.
-        function getUserConfigDocRef(configId) {
-            return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
-        }
-
-        function getUserConfigCacheKey(configId) {
-            return `seans-log:user-config:${getUserEmailKey(currentUser)}:${configId}:v1`;
-        }
-
-        function readCachedUserConfig(configId) {
-            try {
-                const raw = localStorage.getItem(getUserConfigCacheKey(configId));
-                if (!raw) return null;
-                const cached = JSON.parse(raw);
-                if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
-                return {
-                    data: cached.data,
-                    isFresh: Date.now() - cached.cachedAt < CONFIG_CACHE_TTL
-                };
-            } catch (error) {
-                console.warn(`Ignoring invalid cached config for ${configId}:`, error);
-                return null;
-            }
-        }
-
-        function writeCachedUserConfig(configId, data) {
-            try {
-                localStorage.setItem(getUserConfigCacheKey(configId), JSON.stringify({
-                    cachedAt: Date.now(),
-                    data
-                }));
-            } catch (error) {
-                console.warn(`Could not cache config for ${configId}:`, error);
-            }
-        }
-
-        async function fetchSeedConfig(jsonPath) {
-            const response = await fetch(jsonPath);
-            if (!response.ok) throw new Error(`Failed to load ${jsonPath}: HTTP ${response.status}`);
-            return response.json();
-        }
-
-        function parseConfigUpdatedDate(data) {
-            const value = data?.lastUpdatedDate;
-            if (typeof value !== 'string' || !value.trim()) return null;
-            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
-                ? `${value.trim()}T00:00:00Z`
-                : value.trim();
-            const time = Date.parse(normalized);
-            return Number.isFinite(time) ? time : null;
-        }
-
-        function isExercisesConfig(configId, jsonPath) {
-            return configId === 'exercises' && jsonPath === 'exercises.json';
-        }
-
-        async function loadExercisesConfig(jsonPath) {
-            const localData = await fetchSeedConfig(jsonPath);
-            const localUpdatedAt = parseConfigUpdatedDate(localData);
-            if (localUpdatedAt === null) {
-                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
-            }
-
-            const cached = readCachedUserConfig('exercises');
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
-            if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                return cached.data;
-            }
-
-            try {
-                const docRef = getUserConfigDocRef('exercises');
-                const snapshot = await getDoc(docRef);
-
-                if (snapshot.exists()) {
-                    const firebaseData = snapshot.data();
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
-
-                    if (firebaseUpdatedAt === null) {
-                        console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
-                        await setDoc(docRef, localData);
-                        writeCachedUserConfig('exercises', localData);
-                        return localData;
-                    }
-
-                    if (firebaseUpdatedAt >= localUpdatedAt) {
-                        writeCachedUserConfig('exercises', firebaseData);
-                        return firebaseData;
-                    }
-                }
-
-                await setDoc(docRef, localData);
-                writeCachedUserConfig('exercises', localData);
-                return localData;
-            } catch (error) {
-                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                    console.warn('Using cached exercises config because Firebase refresh failed:', error);
-                    return cached.data;
-                }
-                console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
-                return localData;
-            }
-        }
-
-        async function loadUserConfig(configId, jsonPath) {
-            if (isExercisesConfig(configId, jsonPath)) {
-                return loadExercisesConfig(jsonPath);
-            }
-
-            const cached = readCachedUserConfig(configId);
-            if (cached?.isFresh) return cached.data;
-
-            try {
-                const docRef = getUserConfigDocRef(configId);
-                const snapshot = await getDoc(docRef);
-
-                // Existing Firestore config wins over bundled JSON. That preserves user
-                // edits and avoids silently overwriting with repo-side JSON changes.
-                if (snapshot.exists()) {
-                    const data = snapshot.data();
-                    writeCachedUserConfig(configId, data);
-                    return data;
-                }
-
-                // Seed only when the user's config doc does not exist yet.
-                const data = await fetchSeedConfig(jsonPath);
-                await setDoc(docRef, data);
-                writeCachedUserConfig(configId, data);
-                return data;
-            } catch (error) {
-                // Keep export/validation usable offline with stale config if it exists.
-                if (cached) {
-                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
-                    return cached.data;
-                }
-                // Emergency no-cache fallback. This is not persisted as fresh config because
-                // the user's Firestore source of truth could not be read.
-                console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
-                return fetchSeedConfig(jsonPath);
-            }
-        }
-
         // Load Exercise Library for validation
         async function loadExerciseLibrary() {
             try {
-                exerciseLibrary = await loadUserConfig('exercises', 'exercises.json');
+                exerciseLibrary = await window.WorkoutConfig.loadExercises('exercises.json');
             } catch (err) {
-                console.error("Failed to load exercises config for validation:", err);
+                console.error("Failed to load exercises.json for validation:", err);
             }
         }
 

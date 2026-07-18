@@ -77,7 +77,66 @@
             };
         }
 
-        return { evaluateExercise, getSeasonLogs };
+        function getPRTimeline() {
+            const maxWeightByExercise = new Map();
+            const maxRepsByExerciseWeight = new Map();
+            const events = [];
+            const logs = getSeasonLogs().slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            logs.forEach(log => {
+                (log.exercises || []).forEach(exercise => {
+                    const sets = getWorkingSets(exercise.sets);
+                    if (sets.length === 0) return;
+
+                    const previousMaxWeight = maxWeightByExercise.get(exercise.id);
+                    const currentMaxWeight = Math.max(...sets.map(set => set.weight));
+                    const weightPR = previousMaxWeight === undefined || currentMaxWeight > previousMaxWeight + WEIGHT_EPSILON_KG;
+                    const repPRSets = [];
+
+                    sets.forEach(set => {
+                        const key = `${exercise.id}:${set.weight.toFixed(4)}`;
+                        const previousMaxReps = maxRepsByExerciseWeight.get(key);
+                        if (previousMaxReps === undefined || set.reps > previousMaxReps) repPRSets.push(set);
+                        maxRepsByExerciseWeight.set(key, Math.max(previousMaxReps || 0, set.reps));
+                    });
+
+                    maxWeightByExercise.set(exercise.id, Math.max(previousMaxWeight ?? -Infinity, currentMaxWeight));
+                    if (!weightPR && repPRSets.length === 0) return;
+
+                    const records = [];
+                    if (weightPR) records.push({ type: 'weight', weightKg: currentMaxWeight });
+                    if (repPRSets.length > 0) {
+                        const bestRepSet = repPRSets.reduce((best, set) => set.reps > best.reps ? set : best);
+                        records.push({ type: 'reps', weightKg: bestRepSet.weight, reps: bestRepSet.reps });
+                    }
+
+                    events.push({
+                        logId: log.id,
+                        date: log.date,
+                        workoutName: log.workoutName,
+                        exerciseId: exercise.id,
+                        exerciseName: exercise.name || exercise.id,
+                        weightPR,
+                        repPR: repPRSets.length > 0,
+                        records
+                    });
+                });
+            });
+
+            return events.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+
+        function getRecentPRs(limitCount = 5) {
+            return getPRTimeline().slice(0, Math.max(0, limitCount));
+        }
+
+        function getPRCountSince(date) {
+            const cutoff = parseDate(date);
+            if (!cutoff) return 0;
+            return getPRTimeline().filter(event => parseDate(event.date) >= cutoff).length;
+        }
+
+        return { evaluateExercise, getSeasonLogs, getPRTimeline, getRecentPRs, getPRCountSince };
     }
 
     window.WorkoutRecords = { create: createRecordTracker };

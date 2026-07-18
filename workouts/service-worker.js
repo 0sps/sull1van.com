@@ -1,7 +1,6 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v6';
-// Keep the service worker focused on the app shell. exercises/trainingPlan/
-// progressionPlan are user config data now, cached by page code after Firebase reads.
+const CACHE_NAME = 'seans-log-v9';
+// Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',
     './app.html',
@@ -9,6 +8,8 @@ const ASSETS_TO_CACHE = [
     './progression.html',
     './body.html',
     './data.html',
+    './js/config.js',
+    './js/strength.js',
     './js/coach.js',
     './js/records.js',
     './exercises.json',
@@ -32,6 +33,10 @@ const APP_SHELL_PATHS = new Set([
     '/progression.html',
     '/body.html',
     '/data.html'
+]);
+const NETWORK_FIRST_STATIC_PATHS = new Set([
+    '/workouts/exercises.json',
+    '/exercises.json'
 ]);
 
 // Install Event - Cache Core Assets
@@ -70,13 +75,14 @@ self.addEventListener('message', (event) => {
     }
 });
 
-// Fetch Event - Network First for app shell, Cache First for static assets.
-// Do not special-case bundled JSON here; it is only a seed/emergency fallback.
+// Fetch Event - Network First for the app shell and canonical exercise catalog,
+// Cache First for the remaining static assets.
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Strategy: Network First for the app shell. User config data is cached by the app after Firebase reads.
-    if (APP_SHELL_PATHS.has(url.pathname)) {
+    // exercises.json is the catalog source of truth. Always try the deployed copy
+    // first, then fall back to the last service-worker-cached version when offline.
+    if (APP_SHELL_PATHS.has(url.pathname) || NETWORK_FIRST_STATIC_PATHS.has(url.pathname)) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {

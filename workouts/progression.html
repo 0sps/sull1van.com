@@ -1331,6 +1331,7 @@
                             <tbody id="liftTableBody"></tbody>
                         </table>
                     </div>
+                    <p class="mini-note" id="strengthFormulaFootnote" hidden>** Not lift-validated. Uses the general Epley estimate until exercises.json provides a formula for that lift.</p>
                 </div>
             </section>
 
@@ -1370,7 +1371,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1407,13 +1408,14 @@
         window.firebaseGetDocs = getDocs;
         window.firebaseSetDoc = setDoc;
         window.firebaseQuery = query;
+        window.firebaseWhere = where;
         window.firebaseOrderBy = orderBy;
         window.firebaseSignOut = signOut;
         window.getWorkoutCollectionRef = function () {
             return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
         };
-        // Shared config docs used by the main app and editor:
-        // users/{email}/config/exercises, trainingPlan, and progressionPlan.
+        // Shared user config docs used by the main app and editor. The exercise
+        // catalog is application-owned and loaded directly from exercises.json.
         window.getUserConfigDocRef = function (configId) {
             return doc(db, 'users', getUserEmailKey(window.currentUser), 'config', configId);
         };
@@ -1438,16 +1440,27 @@
         };
     </script>
 
+    <script src="js/config.js"></script>
+    <script src="js/strength.js"></script>
+    <script src="js/records.js"></script>
     <script>
         let exercisesData = {};
         let trainingPlanData = null;
         let progressionPlanData = null;
+        let activeSeason = null;
         let workoutLogs = [];
         let liftRows = [];
         let selectedExerciseId = null;
         let chartMetric = 'strength';
         let initStarted = false;
         const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Refresh Firebase config weekly.
+
+        const recordTracker = window.WorkoutRecords?.create
+            ? window.WorkoutRecords.create({
+                getWorkoutLogs: () => workoutLogs,
+                getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null
+            })
+            : null;
 
         const DateFormats = {
             SHORT: { month: 'short', day: 'numeric' },
@@ -1552,7 +1565,8 @@
         }, 12000);
 
         function getProgressionStartDate() {
-            return new Date(`${progressionPlanData.progressionPlan_startDate}T00:00:00`);
+            const dateString = activeSeason?.startDate || progressionPlanData.progressionPlan_startDate;
+            return new Date(`${dateString}T00:00:00`);
         }
 
         function getPlanEndDate() {
@@ -1587,7 +1601,21 @@
             };
         }
 
-        function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley') {
+        function getEstimatedMaxDetails(exerciseId, weightKg, reps, formula = 'epley') {
+            if (exerciseId && window.WorkoutStrength) {
+                return window.WorkoutStrength.estimateOneRepMax(exercisesData[exerciseId], weightKg, reps);
+            }
+            const estimatedMaxKg = window.WorkoutStrength
+                ? window.WorkoutStrength.estimateNamed(weightKg, reps, formula)
+                : null;
+            return Number.isFinite(estimatedMaxKg)
+                ? { estimatedMaxKg, validated: false, usedFallback: true, formula }
+                : null;
+        }
+
+        function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley', exerciseId = null) {
+            const sharedEstimate = getEstimatedMaxDetails(exerciseId, weightKg, reps, formula);
+            if (sharedEstimate) return sharedEstimate.estimatedMaxKg;
             const weight = Number(weightKg);
             const repCount = Number(reps);
             if (!Number.isFinite(weight) || !Number.isFinite(repCount) || weight < 0 || repCount <= 0) return null;
@@ -1621,7 +1649,7 @@
             }
         }
 
-        function getBestEstimatedMaxSignal(sessions, coachConfig) {
+        function getBestEstimatedMaxSignal(sessions, coachConfig, exerciseId = null) {
             if (!sessions || sessions.length === 0 || coachConfig.method !== 'estimatedMax') return null;
             const minReps = Number(coachConfig.validRepMin) || 1;
             const maxReps = Number(coachConfig.validRepMax) || 12;
@@ -1633,10 +1661,11 @@
                     const weightKg = Number.isFinite(parseFloat(set.weight)) ? parseFloat(set.weight) : 0;
                     if (reps < minReps || reps > maxReps || weightKg < 0) continue;
                     if (!coachConfig.allowZeroWeight && weightKg === 0) continue;
-                    const estimatedMaxKg = calculateEstimatedMaxKg(weightKg, reps, coachConfig.formula);
+                    const estimate = getEstimatedMaxDetails(exerciseId, weightKg, reps, coachConfig.formula);
+                    const estimatedMaxKg = estimate?.estimatedMaxKg;
                     if (!Number.isFinite(estimatedMaxKg)) continue;
                     if (!best || estimatedMaxKg > best.estimatedMaxKg) {
-                        best = { estimatedMaxKg, weightKg, reps, date: session.date };
+                        best = { ...estimate, estimatedMaxKg, weightKg, reps, date: session.date };
                     }
                 }
             }
@@ -1703,6 +1732,8 @@
         }
 
         function getGoalIncreaseKg(planExercise) {
+            const relativeGoal = Number(planExercise.goalIncreaseKg);
+            if (Number.isFinite(relativeGoal)) return Math.max(relativeGoal, 0);
             const baseline = Number(planExercise.baselineWeightKg);
             const target = Number(planExercise.targetWeightKg);
             return Number.isFinite(baseline) && Number.isFinite(target) ? Math.max(target - baseline, 0) : 0;
@@ -1713,16 +1744,38 @@
             return getGoalIncreaseKg(planExercise) / durationWeeks;
         }
 
-        function getPlannedWeightKg(planExercise, date = new Date()) {
-            const baseline = Number(planExercise.baselineWeightKg);
-            const target = Number(planExercise.targetWeightKg);
-            if (!Number.isFinite(baseline) || !Number.isFinite(target)) return null;
+        function getSeasonBaseline(exerciseId, repRange, planExercise) {
+            const allowZeroWeight = planExercise?.targetMode === 'bodyweight';
+            const logs = workoutLogs.slice().reverse();
+            for (const log of logs) {
+                const exerciseLogs = (log.exercises || []).filter(exercise => exercise.id === exerciseId);
+                const workingSets = exerciseLogs.flatMap(exercise => getWorkingSets(exercise.sets)).map(set => ({
+                    weight: Number(set.weight),
+                    reps: parseInt(set.reps, 10)
+                })).filter(set => Number.isFinite(set.weight) && (allowZeroWeight ? set.weight >= 0 : set.weight > 0) && Number.isFinite(set.reps) && set.reps > 0);
+                if (workingSets.length === 0) continue;
+                const eligible = workingSets.filter(set => set.reps >= (repRange?.min || 1));
+                const source = eligible.length ? eligible : workingSets;
+                return {
+                    date: log.date,
+                    weightKg: Math.min(...source.map(set => set.weight)),
+                    workingSets: source
+                };
+            }
+            return null;
+        }
+
+        function getPlannedWeightKg(planExercise, date = new Date(), exerciseId = null, repRange = null) {
+            const baselineSession = exerciseId ? getSeasonBaseline(exerciseId, repRange, planExercise) : null;
+            const baseline = baselineSession?.weightKg;
+            const goalIncrease = getGoalIncreaseKg(planExercise);
+            if (!Number.isFinite(baseline)) return null;
 
             const start = getProgressionStartDate();
             const end = getPlanEndDate();
             const clampedDate = new Date(Math.min(Math.max(new Date(date).getTime(), start.getTime()), end.getTime()));
             const progress = (clampedDate.getTime() - start.getTime()) / Math.max(1, end.getTime() - start.getTime());
-            return baseline + (target - baseline) * progress;
+            return baseline + goalIncrease * progress;
         }
 
         function evaluateProgressionSets(workingSets, target) {
@@ -1748,6 +1801,9 @@
 
         function getPlanStatus(row) {
             const thresholdKg = Math.max(0.25, getWeeklyTargetIncreaseKg(row.planExercise) * 0.5);
+            if (!Number.isFinite(row.baselineKg) || !Number.isFinite(row.targetTodayKg)) {
+                return { label: 'Set Baseline', className: 'warn', deltaKg: null, mode: 'load' };
+            }
             if (row.latest?.workingSets?.length && Number.isFinite(row.targetTodayKg)) {
                 const evaluation = evaluateProgressionSets(row.latest.workingSets, {
                     repRange: row.repRange,
@@ -1854,7 +1910,7 @@
                         row.weightTotal += weight;
                         row.repTotal += reps;
                         row.setCount += 1;
-                        const estimatedMaxKg = calculateEstimatedMaxKg(weight, reps, coachConfig.formula);
+                        const estimatedMaxKg = calculateEstimatedMaxKg(weight, reps, coachConfig.formula, exerciseId);
                         if (Number.isFinite(estimatedMaxKg)) {
                             row.estimatedMaxTotal = (row.estimatedMaxTotal || 0) + estimatedMaxKg;
                             row.estimatedMaxCount = (row.estimatedMaxCount || 0) + 1;
@@ -1877,25 +1933,27 @@
 
         function buildLiftRows() {
             liftRows = getTrainingPlanEntries().map(entry => {
-                const targetTodayKg = getPlannedWeightKg(entry.planExercise, new Date()) ?? 0;
+                const baselineSession = getSeasonBaseline(entry.id, entry.repRange, entry.planExercise);
+                const baselineKg = baselineSession?.weightKg ?? null;
+                const goalKg = Number.isFinite(baselineKg) ? baselineKg + getGoalIncreaseKg(entry.planExercise) : null;
+                const targetTodayKg = getPlannedWeightKg(entry.planExercise, new Date(), entry.id, entry.repRange);
                 const latest = getMostRecentLift(entry.id);
-                const goalKg = Number(entry.planExercise.targetWeightKg);
-                const baselineKg = Number(entry.planExercise.baselineWeightKg);
                 const coachConfig = getCoachConfig(entry.planExercise);
                 const signalSessions = getRecentLiftSessions(entry.id, 14);
                 const windowedSignalSessions = signalSessions.slice(0, coachConfig.lookbackSessions || 2);
-                const bestSignal = getBestEstimatedMaxSignal(windowedSignalSessions, coachConfig);
+                const bestSignal = getBestEstimatedMaxSignal(windowedSignalSessions, coachConfig, entry.id);
                 const targetSignalKg = coachConfig.method === 'estimatedMax'
-                    ? calculateEstimatedMaxKg(targetTodayKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    ? calculateEstimatedMaxKg(targetTodayKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
                     : null;
                 const goalSignalKg = coachConfig.method === 'estimatedMax'
-                    ? calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    ? calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
                     : null;
                 const baselineSignalKg = coachConfig.method === 'estimatedMax'
-                    ? calculateEstimatedMaxKg(baselineKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula)
+                    ? calculateEstimatedMaxKg(baselineKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
                     : null;
                 const row = {
                     ...entry,
+                    baselineSession,
                     baselineKg,
                     baselineSignalKg,
                     goalKg,
@@ -1916,6 +1974,7 @@
 
         function formatLiftWeight(kg, planExercise = null) {
             if (planExercise?.targetMode === 'bodyweight') return 'Bodyweight';
+            if (!Number.isFinite(kg)) return 'No baseline';
             return `${displayWeight(kg)} lbs`;
         }
 
@@ -1930,14 +1989,17 @@
             const elapsedMs = now.getTime() - start.getTime();
             const totalMs = end.getTime() - start.getTime();
             const percent = Math.max(0, Math.min(100, Math.round((elapsedMs / totalMs) * 100)));
-            const week = Math.max(1, Math.min(progressionPlanData.durationWeeks, Math.ceil((elapsedMs / (7 * 24 * 60 * 60 * 1000)) || 1)));
+            const week = Math.max(1, Math.min(
+                progressionPlanData.durationWeeks,
+                Math.floor(elapsedMs / (7 * 24 * 60 * 60 * 1000)) + 1
+            ));
             const daysLeft = Math.max(0, Math.ceil((end.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)));
             const trackedTrainingDays = getTrackedTrainingDayKeys();
             const remainingStart = now < start ? start : now;
             const remainingTrainingDays = getTrainingDayKeysBetween(remainingStart, end)
                 .filter(dayKey => !trackedTrainingDays.has(dayKey));
 
-            document.getElementById('planName').textContent = progressionPlanData.progressionPlanName || 'Progression Plan';
+            document.getElementById('planName').textContent = `${activeSeason?.name || 'Current Season'} · ${progressionPlanData.progressionPlanName || 'Progression Plan'}`;
             document.getElementById('startDateValue').textContent = formatRangeDate(start);
             document.getElementById('endDateValue').textContent = formatRangeDate(end);
             document.getElementById('trackedLiftCount').textContent = trackedTrainingDays.size;
@@ -1958,6 +2020,7 @@
             const lowConfidence = liftRows.filter(row => row.confidence.className === 'warn').length;
             const onAhead = onTrack + ahead;
             const total = Math.max(1, liftRows.length);
+            const seasonRecords = recordTracker?.getPRTimeline() || [];
             const health = document.getElementById('planHealth');
             const goodShare = Math.max(onAhead, 0.35);
             const badShare = Math.max(behind, 0.35);
@@ -1995,7 +2058,7 @@
                     <div class="mini-label">Low Confidence</div>
                 </div>`;
             document.getElementById('coachMessage').textContent = coachMessage;
-            document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${onAhead} on/ahead · ${behind} behind · ${lowConfidence} low confidence`;
+            document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${seasonRecords.reduce((sum, event) => sum + event.records.length, 0)} season PRs · ${onAhead} on/ahead · ${behind} behind`;
             document.getElementById('liftProgressPreview').textContent = noData === total
                 ? 'Charts will light up after recent strength signals exist'
                 : 'Pick any lift to compare strength signal or load against the plan line';
@@ -2101,7 +2164,7 @@
                 const status = `<span class="status-pill ${escapeHtml(row.status.className)}">${escapeHtml(row.status.label)}</span>`;
                 const confidence = `<span class="status-pill ${escapeHtml(row.confidence.className)}">${escapeHtml(row.confidence.label)}</span><div class="lift-meta">${escapeHtml(row.signalSessions.length)} recent signal${row.signalSessions.length === 1 ? '' : 's'}</div>`;
                 const strengthMeta = row.bestSignal
-                    ? `<div class="lift-meta">Signal ${escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise))} est. max</div>`
+                    ? `<div class="lift-meta">Signal ${escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise))}${row.bestSignal.usedFallback ? '**' : ''} est. max</div>`
                     : '';
 
                 return `
@@ -2109,7 +2172,7 @@
                         <td data-label="Lift">
                             <div class="lift-name">${escapeHtml(row.exercise?.name || row.planExercise.name || row.id)}</div>
                             <div class="lift-meta">${escapeHtml(row.dayName)} · ${escapeHtml(row.sets)} sets · ${escapeHtml(row.reps)} reps</div>
-                            <div class="lift-meta">${escapeHtml(row.planExercise.baselineNote || '')}</div>
+                            <div class="lift-meta">${row.baselineSession ? `Season baseline · ${escapeHtml(formatDate(row.baselineSession.date, DateFormats.SHORT))}` : 'First clean season session sets the baseline'}</div>
                         </td>
                         <td data-label="Baseline"><span class="num-strong">${escapeHtml(formatLiftWeight(row.baselineKg, row.planExercise))}</span></td>
                         <td data-label="Most Recent">${latest}${strengthMeta}</td>
@@ -2119,6 +2182,7 @@
                         <td data-label="Status">${status}<div class="lift-meta">${row.status.deltaKg === null ? '' : escapeHtml(`${Math.abs(displayWeight(row.status.deltaKg))} lbs ${row.status.deltaKg >= 0 ? 'over' : 'under'} ${row.status.mode === 'strength' ? 'signal' : 'load'}`)}</div></td>
                     </tr>`;
             }).join('');
+            document.getElementById('strengthFormulaFootnote').hidden = !liftRows.some(row => row.bestSignal?.usedFallback);
         }
 
         function renderLiftSelect() {
@@ -2159,9 +2223,10 @@
                 </div>
                 <div class="side-stat">
                     <div class="mini-label">Strength Signal</div>
-                    <div class="num-strong">${row.bestSignal ? escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise)) : 'No signal'}</div>
+                    <div class="num-strong">${row.bestSignal ? `${escapeHtml(formatLiftWeight(row.bestSignal.estimatedMaxKg, row.planExercise))}${row.bestSignal.usedFallback ? '**' : ''}` : 'No signal'}</div>
                     <div class="mini-note">${row.bestSignal ? escapeHtml(`${row.bestSignal.reps} reps signal · ${row.confidence.label} confidence`) : escapeHtml(row.confidence.detail)}</div>
                 </div>
+                ${row.bestSignal?.usedFallback ? '<div class="mini-note">** Not lift-validated. General Epley estimate.</div>' : ''}
                 <div class="side-stat">
                     <div class="mini-label">Latest Max Set</div>
                     <div class="num-strong">${latest ? escapeHtml(`${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}`) : 'No data'}</div>
@@ -2198,8 +2263,9 @@
             const end = getPlanEndDate();
             const repForSignal = row.repRange.max || row.repRange.min || 1;
             const plannedValueForDate = date => {
-                const plannedLoadKg = getPlannedWeightKg(row.planExercise, date);
-                if (chartMetric === 'strength') return calculateEstimatedMaxKg(plannedLoadKg, repForSignal, row.coachConfig.formula);
+                const plannedLoadKg = getPlannedWeightKg(row.planExercise, date, row.id, row.repRange);
+                if (!Number.isFinite(plannedLoadKg)) return null;
+                if (chartMetric === 'strength') return calculateEstimatedMaxKg(plannedLoadKg, repForSignal, row.coachConfig.formula, row.id);
                 return plannedLoadKg;
             };
             const baselineValueKg = chartMetric === 'strength' ? row.baselineSignalKg : row.baselineKg;
@@ -2309,16 +2375,12 @@
             return Number.isFinite(time) ? time : null;
         }
 
-        function isExercisesConfig(configId, jsonPath) {
-            return configId === 'exercises' && jsonPath === 'exercises.json';
-        }
-
         function isProgressionPlanConfig(configId, jsonPath) {
             return configId === 'progressionPlan' && jsonPath === 'progression-plan.json';
         }
 
         function isVersionedSeedConfig(configId, jsonPath) {
-            return isExercisesConfig(configId, jsonPath) || isProgressionPlanConfig(configId, jsonPath);
+            return isProgressionPlanConfig(configId, jsonPath);
         }
 
         async function loadVersionedSeedConfig(configId, jsonPath) {
@@ -2418,10 +2480,36 @@
             }
         }
 
+        function normalizeActiveSeason(data) {
+            const startDate = typeof data?.startDate === 'string' ? data.startDate : '';
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(startDate)) return null;
+            return { ...data, id: data.id || `season-${startDate}`, name: data.name || 'Current Season', startDate };
+        }
+
+        async function loadActiveSeason() {
+            const cached = readCachedUserConfig('activeSeason');
+            const cachedSeason = normalizeActiveSeason(cached?.data);
+            if (cached?.isFresh && cachedSeason) return cachedSeason;
+
+            try {
+                const snapshot = await window.firebaseGetDoc(window.getUserConfigDocRef('activeSeason'));
+                if (!snapshot.exists()) throw new Error('Choose a season start date in the workout app first.');
+                const season = normalizeActiveSeason(snapshot.data());
+                if (!season) throw new Error('The saved active season is invalid.');
+                writeCachedUserConfig('activeSeason', season);
+                return season;
+            } catch (error) {
+                if (cachedSeason) return cachedSeason;
+                throw error;
+            }
+        }
+
         async function loadWorkoutLogs() {
             setSyncStatus('syncing');
+            const seasonStartIso = new Date(`${activeSeason.startDate}T00:00:00`).toISOString();
             const q = window.firebaseQuery(
                 window.getWorkoutCollectionRef(),
+                window.firebaseWhere('date', '>=', seasonStartIso),
                 window.firebaseOrderBy('date', 'desc')
             );
             const snapshot = await window.firebaseGetDocs(q);
@@ -2442,10 +2530,11 @@
         async function init() {
             initStarted = true;
             try {
-                [exercisesData, trainingPlanData, progressionPlanData] = await Promise.all([
-                    loadUserConfig('exercises', 'exercises.json'),
+                [exercisesData, trainingPlanData, progressionPlanData, activeSeason] = await Promise.all([
+                    window.WorkoutConfig.loadExercises('exercises.json'),
                     loadUserConfig('trainingPlan', 'training-plan.json'),
-                    loadUserConfig('progressionPlan', 'progression-plan.json')
+                    loadUserConfig('progressionPlan', 'progression-plan.json'),
+                    loadActiveSeason()
                 ]);
                 await loadWorkoutLogs();
                 renderAll();

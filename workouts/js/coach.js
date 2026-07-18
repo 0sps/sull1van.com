@@ -22,6 +22,8 @@
     function createCoach(options = {}) {
         const getProgressionPlan = options.getProgressionPlan || (() => null);
         const getWorkoutLogs = options.getWorkoutLogs || (() => []);
+        const getExerciseData = options.getExerciseData || (() => null);
+        const getSeasonStartDate = options.getSeasonStartDate || (() => null);
         const coachLogLookback = options.coachLogLookback || DEFAULT_CONFIG.coachLogLookback;
         const lbsToKg = options.lbsToKg;
         const kgToLbs = options.kgToLbs;
@@ -55,7 +57,22 @@
             };
         }
 
-        function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley') {
+        function getEstimatedMaxDetails(weightKg, reps, formula = 'epley', exerciseId = null) {
+            if (exerciseId && window.WorkoutStrength) {
+                return window.WorkoutStrength.estimateOneRepMax(getExerciseData(exerciseId), weightKg, reps);
+            }
+            const estimatedMaxKg = window.WorkoutStrength
+                ? window.WorkoutStrength.estimateNamed(weightKg, reps, formula)
+                : null;
+            if (Number.isFinite(estimatedMaxKg)) {
+                return { estimatedMaxKg, validated: false, usedFallback: true, formula };
+            }
+            return null;
+        }
+
+        function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley', exerciseId = null) {
+            const sharedEstimate = getEstimatedMaxDetails(weightKg, reps, formula, exerciseId);
+            if (sharedEstimate) return sharedEstimate.estimatedMaxKg;
             if (!Number.isFinite(weightKg) || weightKg <= 0 || !Number.isFinite(reps) || reps <= 0) return null;
 
             if (formula === 'brzycki') {
@@ -70,7 +87,10 @@
             return weightKg * (1 + reps / 30);
         }
 
-        function calculateWeightForRepsKg(estimatedMaxKg, reps, formula = 'epley') {
+        function calculateWeightForRepsKg(estimatedMaxKg, reps, formula = 'epley', exerciseId = null) {
+            if (exerciseId && window.WorkoutStrength) {
+                return window.WorkoutStrength.calculateWeightForEstimatedMax(getExerciseData(exerciseId), estimatedMaxKg, reps);
+            }
             if (!Number.isFinite(estimatedMaxKg) || estimatedMaxKg <= 0 || !Number.isFinite(reps) || reps <= 0) return null;
 
             if (formula === 'brzycki') {
@@ -86,6 +106,8 @@
         }
 
         function getProgressionStartDate() {
+            const seasonDate = parseValidDate(getSeasonStartDate());
+            if (seasonDate) return seasonDate;
             const dateStr = getPlan()?.progressionPlan_startDate;
             return dateStr ? new Date(`${dateStr}T00:00:00`) : null;
         }
@@ -129,20 +151,18 @@
             return toFiniteNumber(parseFloat(planExercise?.baselineWeightKg));
         }
 
-        function getPlanTargetWeightKg(planExercise) {
-            const targetWeightKg = toFiniteNumber(parseFloat(planExercise?.targetWeightKg));
-            if (targetWeightKg !== null) return targetWeightKg;
-
-            const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
-            const goalIncreaseKg = toFiniteNumber(parseFloat(planExercise?.goalIncreaseKg));
-            return baselineWeightKg !== null && goalIncreaseKg !== null
-                ? baselineWeightKg + goalIncreaseKg
-                : null;
+        function getPlanTargetWeightKg(planExercise, seasonBaselineWeightKg = null) {
+            if (seasonBaselineWeightKg === null || seasonBaselineWeightKg === undefined || seasonBaselineWeightKg === '') return null;
+            const baselineWeightKg = toFiniteNumber(seasonBaselineWeightKg);
+            if (baselineWeightKg === null) return null;
+            return baselineWeightKg + getPlanGoalIncreaseKg(planExercise);
         }
 
         function getPlanGoalIncreaseKg(planExercise) {
+            const configuredIncreaseKg = toFiniteNumber(parseFloat(planExercise?.goalIncreaseKg));
+            if (configuredIncreaseKg !== null) return Math.max(configuredIncreaseKg, 0);
             const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
-            const targetWeightKg = getPlanTargetWeightKg(planExercise);
+            const targetWeightKg = toFiniteNumber(parseFloat(planExercise?.targetWeightKg));
             if (baselineWeightKg !== null && targetWeightKg !== null) {
                 return Math.max(targetWeightKg - baselineWeightKg, 0);
             }
@@ -203,7 +223,7 @@
             };
         }
 
-        function getBestEstimatedMaxSignal(sessions, coachConfig) {
+        function getBestEstimatedMaxSignal(sessions, coachConfig, exerciseId = null) {
             if (!sessions || sessions.length === 0 || coachConfig.method !== 'estimatedMax') return null;
 
             const minReps = Number(coachConfig.validRepMin) || 1;
@@ -217,11 +237,12 @@
                     if (!Number.isFinite(weightKg) || weightKg <= 0) return;
                     if (!Number.isFinite(reps) || reps < minReps || reps > maxReps) return;
 
-                    const estimatedMaxKg = calculateEstimatedMaxKg(weightKg, reps, coachConfig.formula);
+                    const estimate = getEstimatedMaxDetails(weightKg, reps, coachConfig.formula, exerciseId);
+                    const estimatedMaxKg = estimate?.estimatedMaxKg;
                     if (!Number.isFinite(estimatedMaxKg)) return;
 
                     if (!bestSignal || estimatedMaxKg > bestSignal.estimatedMaxKg) {
-                        bestSignal = { estimatedMaxKg, weightKg, reps, session };
+                        bestSignal = { ...estimate, estimatedMaxKg, weightKg, reps, session };
                     }
                 });
             });
@@ -256,9 +277,9 @@
             });
             const coachConfig = target.coachConfig || getCoachConfig(target.planExercise);
             const sessionLike = { workingSets };
-            const bestSignal = getBestEstimatedMaxSignal([sessionLike], coachConfig);
+            const bestSignal = getBestEstimatedMaxSignal([sessionLike], coachConfig, target.exerciseId);
             const topRangeEstimatedMaxKg = coachConfig.method === 'estimatedMax'
-                ? calculateEstimatedMaxKg(target.targetWeightKg, target.repRange.max, coachConfig.formula)
+                ? calculateEstimatedMaxKg(target.targetWeightKg, target.repRange.max, coachConfig.formula, target.exerciseId)
                 : null;
             const strengthProgressEarned = !!bestSignal && Number.isFinite(topRangeEstimatedMaxKg) &&
                 bestSignal.estimatedMaxKg >= topRangeEstimatedMaxKg;
@@ -333,12 +354,13 @@
 
             const coachConfig = getCoachConfig(planExercise);
             const repRange = parseRepRange(coachConfig.repRange || workoutExercise.reps);
-            const baselineWeightKg = getPlanBaselineWeightKg(planExercise);
+            const baselineSession = getBaselineProgressionSession(exerciseId, repRange);
+            const baselineWeightKg = baselineSession?.representativeWeightKg ?? null;
             const allowZeroWeight = baselineWeightKg === 0 || planExercise.targetMode === 'bodyweight';
             const lookbackSessions = Math.max(1, parseInt(coachConfig.lookbackSessions, 10) || 2);
             const recentSessions = getExerciseProgressionSessions(exerciseId, lookbackSessions, repRange, allowZeroWeight, coachLogLookback);
             const blockSession = getMostRecentProgressionSession(exerciseId, repRange, allowZeroWeight);
-            const bestSignal = getBestEstimatedMaxSignal(recentSessions, coachConfig);
+            const bestSignal = getBestEstimatedMaxSignal(recentSessions, coachConfig, exerciseId);
             const confidence = getCoachConfidence(recentSessions.length, lookbackSessions);
 
             if (!blockSession && !bestSignal && baselineWeightKg === null && coachConfig.method !== 'estimatedMax') return null;
@@ -350,7 +372,7 @@
                 : null;
             const progressionStepKg = parseFloat(planExercise.progressionStepKg) || 0;
             const estimatedTargetForBottomKg = bestSignal && repRange.min
-                ? calculateWeightForRepsKg(bestSignal.estimatedMaxKg, repRange.min, coachConfig.formula)
+                ? calculateWeightForRepsKg(bestSignal.estimatedMaxKg, repRange.min, coachConfig.formula, exerciseId)
                 : null;
             const roundedEstimatedTargetKg = estimatedTargetForBottomKg !== null
                 ? lbsToKg(roundWeightLbs(kgToLbs(estimatedTargetForBottomKg), coachConfig.incrementLbs, coachConfig.roundingMode))
@@ -397,47 +419,30 @@
         }
 
         function getBaselineProgressionSession(exerciseId, repRange) {
-            const progressionPlan = getPlan();
-            const planExercise = progressionPlan?.exercises?.[exerciseId];
-            const configuredBaselineWeightKg = getPlanBaselineWeightKg(planExercise);
-            if (configuredBaselineWeightKg !== null) {
-                return {
-                    log: {
-                        date: `${progressionPlan?.progressionPlan_startDate || ''}T00:00:00`,
-                        configuredBaseline: true
-                    },
-                    exerciseLog: {
-                        id: exerciseId,
-                        name: planExercise?.name || exerciseId,
-                        sets: []
-                    },
-                    workingSets: [],
-                    representativeWeightKg: configuredBaselineWeightKg,
-                    configuredBaseline: true
-                };
-            }
-
             const startDate = getProgressionStartDate();
-            const workoutLogs = getLogs();
+            const workoutLogs = getLogs().slice().sort((first, second) => {
+                const firstTime = parseValidDate(first?.date)?.getTime() ?? 0;
+                const secondTime = parseValidDate(second?.date)?.getTime() ?? 0;
+                return firstTime - secondTime;
+            });
             if (!startDate || workoutLogs.length === 0) return null;
 
-            let baseline = null;
             for (const log of workoutLogs) {
                 const logDate = parseValidDate(log.date);
                 if (!logDate) continue;
-                if (logDate < startDate) break;
+                if (logDate < startDate) continue;
 
                 const exerciseLog = getLogExercises(log).find(ex => ex.id === exerciseId);
                 if (!exerciseLog) continue;
 
                 const workingSets = getWorkingSets(exerciseLog.sets);
                 const representativeWeightKg = getRepresentativeWeightKg(workingSets, repRange);
-                if (!representativeWeightKg) continue;
+                if (representativeWeightKg === null) continue;
 
-                baseline = { log, exerciseLog, workingSets, representativeWeightKg };
+                return { log, exerciseLog, workingSets, representativeWeightKg };
             }
 
-            return baseline;
+            return null;
         }
 
         function getRecentProgressionSessions(exerciseId, repRange, lookbackDays = 14, allowZeroWeight = false) {

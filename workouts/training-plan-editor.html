@@ -828,6 +828,7 @@
 
     <div id="toast" class="toast"></div>
 
+    <script src="js/config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -900,8 +901,8 @@
             return (user?.email || '').trim().toLowerCase();
         }
 
-        // The editor reads exercises and writes trainingPlan at:
-        // users/{email}/config/{configId}.
+        // The editor writes the user-owned trainingPlan at this config path.
+        // The exercise catalog is loaded directly from exercises.json.
         function getUserConfigDocRef(configId) {
             return doc(db, 'users', getUserEmailKey(currentUser), 'config', configId);
         }
@@ -943,72 +944,7 @@
             return response.json();
         }
 
-        function parseConfigUpdatedDate(data) {
-            const value = data?.lastUpdatedDate;
-            if (typeof value !== 'string' || !value.trim()) return null;
-            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
-                ? `${value.trim()}T00:00:00Z`
-                : value.trim();
-            const time = Date.parse(normalized);
-            return Number.isFinite(time) ? time : null;
-        }
-
-        function isExercisesConfig(configId, jsonPath) {
-            return configId === 'exercises' && jsonPath === 'exercises.json';
-        }
-
-        async function loadExercisesConfig(jsonPath) {
-            const localData = await fetchSeedConfig(jsonPath);
-            const localUpdatedAt = parseConfigUpdatedDate(localData);
-            if (localUpdatedAt === null) {
-                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
-            }
-
-            const cached = readCachedUserConfig('exercises');
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
-            if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                return cached.data;
-            }
-
-            try {
-                const docRef = getUserConfigDocRef('exercises');
-                const snapshot = await getDoc(docRef);
-
-                if (snapshot.exists()) {
-                    const firebaseData = snapshot.data();
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
-
-                    if (firebaseUpdatedAt === null) {
-                        console.warn('Ignoring Firebase exercises config because it has no valid lastUpdatedDate. Syncing bundled exercises.json.');
-                        await setDoc(docRef, localData);
-                        writeCachedUserConfig('exercises', localData);
-                        return localData;
-                    }
-
-                    if (firebaseUpdatedAt >= localUpdatedAt) {
-                        writeCachedUserConfig('exercises', firebaseData);
-                        return firebaseData;
-                    }
-                }
-
-                await setDoc(docRef, localData);
-                writeCachedUserConfig('exercises', localData);
-                return localData;
-            } catch (error) {
-                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                    console.warn('Using cached exercises config because Firebase refresh failed:', error);
-                    return cached.data;
-                }
-                console.warn('Using bundled exercises.json because Firebase refresh failed:', error);
-                return localData;
-            }
-        }
-
         async function loadUserConfig(configId, jsonPath) {
-            if (isExercisesConfig(configId, jsonPath)) {
-                return loadExercisesConfig(jsonPath);
-            }
-
             const cached = readCachedUserConfig(configId);
             if (cached?.isFresh) return cached.data;
 
@@ -1287,22 +1223,18 @@
             renderValidation();
         }
 
-        async function loadFirebaseExercisesForValidation() {
-            const snapshot = await getDoc(getUserConfigDocRef('exercises'));
-            if (!snapshot.exists()) {
-                throw new Error('The server exercise list is not ready yet. Refresh the page so the editor can sync it, then validate again.');
-            }
-
-            const firebaseExercises = snapshot.data();
-            const exerciseCount = Object.entries(firebaseExercises || {})
+        async function loadExercisesForValidation() {
+            const catalog = await window.WorkoutConfig.loadExercises('exercises.json');
+            const exerciseCount = Object.entries(catalog || {})
                 .filter(([id, exercise]) => isExerciseEntry(id, exercise))
                 .length;
 
             if (!exerciseCount) {
-                throw new Error('The server exercise list does not contain any valid exercise IDs.');
+                throw new Error('exercises.json does not contain any valid exercise IDs.');
             }
 
-            return firebaseExercises;
+            exercisesData = catalog;
+            return catalog;
         }
 
         async function validateForSubmit() {
@@ -1321,12 +1253,12 @@
             setSubmitReady(false);
 
             try {
-                const firebaseExercises = await loadFirebaseExercisesForValidation();
-                latestValidation = validatePlan(planResult.plan, firebaseExercises);
+                const catalog = await loadExercisesForValidation();
+                latestValidation = validatePlan(planResult.plan, catalog);
             } catch (error) {
                 latestValidation = {
                     valid: false,
-                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                    errors: [error.message || 'Could not validate exercise IDs against exercises.json.']
                 };
             } finally {
                 hasValidationResult = true;
@@ -1468,7 +1400,7 @@
                     const reps = String(exercise?.reps || '').trim();
 
                     if (!id) errors.push(`${label} needs an exercise id.`);
-                    if (id && !isExerciseCatalogEntry(id, exerciseCatalog)) errors.push(`${label} uses exercise id "${id}", which does not exist in the server exercise list.`);
+                    if (id && !isExerciseCatalogEntry(id, exerciseCatalog)) errors.push(`${label} uses exercise id "${id}", which does not exist in exercises.json.`);
                     if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
                     if (Number.isInteger(sets) && sets > 99) errors.push(`${label} sets is too high (max 99).`);
                     if (!reps) errors.push(`${label} needs a reps value.`);
@@ -1589,12 +1521,12 @@
             el.submitBtn.disabled = true;
             el.submitBtn.textContent = 'Checking...';
             try {
-                const firebaseExercises = await loadFirebaseExercisesForValidation();
-                latestValidation = validatePlan(pendingPlan, firebaseExercises);
+                const catalog = await loadExercisesForValidation();
+                latestValidation = validatePlan(pendingPlan, catalog);
             } catch (error) {
                 latestValidation = {
                     valid: false,
-                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                    errors: [error.message || 'Could not validate exercise IDs against exercises.json.']
                 };
             } finally {
                 el.submitBtn.textContent = 'Submit Training Plan';
@@ -1624,12 +1556,12 @@
 
             let validation;
             try {
-                const firebaseExercises = await loadFirebaseExercisesForValidation();
-                validation = validatePlan(pendingPlan, firebaseExercises);
+                const catalog = await loadExercisesForValidation();
+                validation = validatePlan(pendingPlan, catalog);
             } catch (error) {
                 validation = {
                     valid: false,
-                    errors: [error.message || 'Could not validate exercise IDs against the server exercise list.']
+                    errors: [error.message || 'Could not validate exercise IDs against exercises.json.']
                 };
             }
 
@@ -1772,7 +1704,7 @@
 
             try {
                 const [loadedExercises, loadedTrainingPlan] = await Promise.all([
-                    loadUserConfig('exercises', 'exercises.json'),
+                    window.WorkoutConfig.loadExercises('exercises.json'),
                     loadUserConfig('trainingPlan', 'training-plan.json')
                 ]);
 

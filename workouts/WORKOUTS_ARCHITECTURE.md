@@ -28,7 +28,7 @@ flowchart LR
     end
 
     subgraph Browser["Browser runtime"]
-        SW["Service Worker<br/>cache seans-log-v3"]
+        SW["Service Worker<br/>cache seans-log-v9"]
         LS["localStorage<br/>config cache + in-progress workout"]
         Charts["Chart.js<br/>body metrics charts"]
     end
@@ -68,13 +68,13 @@ flowchart LR
 | File | Role | Main data touched |
 | --- | --- | --- |
 | `index.html` | Login screen and redirect gate. Uses Google sign-in and only redirects to approved local pages. | Firebase Auth only |
-| `app.html` | Main daily workout experience: today's plan, workout logging, recent logs, stats, plan view, exercise library, progression coach UI. | `users/{email}`, `users/{email}/workouts`, `users/{email}/config/*`, `localStorage.workoutProgress` |
-| `progression.html` | Progression dashboard over plan targets and logged workout history. | `users/{email}/workouts`, `users/{email}/config/exercises`, `trainingPlan`, `progressionPlan`, local config cache |
-| `data.html` | Data explorer/editor/export tool for workout logs. Can edit/delete logs and validate against exercise config. | `users/{email}/workouts`, `users/{email}/config/exercises`, local config cache |
-| `training-plan-editor.html` | UI for editing the user's training plan config. Saves only `trainingPlan`; does not touch workout logs or in-progress workout state. | `users/{email}/config/trainingPlan`, `users/{email}/config/exercises`, local config cache |
+| `app.html` | Main daily workout experience: today's plan, workout logging, recent logs, stats, plan view, exercise library, progression coach UI. | `exercises.json`, `users/{email}`, `users/{email}/workouts`, `users/{email}/config/*`, `localStorage.workoutProgress` |
+| `progression.html` | Progression dashboard over plan targets and logged workout history. | `exercises.json`, `users/{email}/workouts`, `trainingPlan`, `progressionPlan`, local config cache |
+| `data.html` | Data explorer/editor/export tool for workout logs. Can edit/delete logs and validate against exercise config. | `exercises.json`, `users/{email}/workouts` |
+| `training-plan-editor.html` | UI for editing the user's training plan config. Saves only `trainingPlan`; does not touch workout logs or in-progress workout state. | `exercises.json`, `users/{email}/config/trainingPlan`, local config cache |
 | `body.html` | Body measurements dashboard, Chart.js visualization, and USAF/PFRA-style scoring tools. | Top-level `bodyMeasurements` collection filtered by `userId` |
 | `migrate-workouts-to-user.html` | One-off migration utility from legacy top-level `workouts` collection to per-user `users/{email}/workouts`. | top-level `workouts`, `users/{email}/workouts`, `users/{email}` |
-| `service-worker.js` | PWA shell cache. Network-first for app/editor shell, cache-first for other static assets. | Cache Storage `seans-log-v3` |
+| `service-worker.js` | PWA shell cache. Network-first for app/editor shell and `exercises.json`, cache-first for other static assets. | Cache Storage `seans-log-v9` |
 | `js/coach.js` | Shared browser module for progression/recommendation calculations and SVG chart snippets. | Inputs supplied by `app.html`; no direct Firestore calls |
 
 ## Firestore Shape
@@ -104,7 +104,7 @@ erDiagram
     }
 
     USER_CONFIG {
-        string configId "exercises | trainingPlan | progressionPlan"
+        string configId "trainingPlan | progressionPlan | activeSeason"
         object payload
         string lastUpdatedDate
     }
@@ -131,9 +131,9 @@ Primary per-user paths used by most pages:
 ```text
 users/{email}
 users/{email}/workouts/{logId}
-users/{email}/config/exercises
 users/{email}/config/trainingPlan
 users/{email}/config/progressionPlan
+users/{email}/config/activeSeason
 ```
 
 Additional collections:
@@ -147,43 +147,50 @@ bodyMeasurements/{timestampId}
 
 ## Config Loading Flow
 
-The app treats bundled JSON files as seed/fallback data, while Firestore user config is the durable source once created.
+`exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first and falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.
+
+User-owned configuration, such as `trainingPlan`, remains in Firestore with a local cache and bundled seed fallback.
 
 ```mermaid
 sequenceDiagram
     participant Page as app/progression/data/editor page
     participant LS as localStorage
-    participant JSON as bundled JSON file
+    participant JSON as bundled config JSON
     participant FS as Firestore user config
 
-    Page->>LS: read seans-log:user-config:{email}:{configId}:v1
-    alt fresh local cache exists
-        LS-->>Page: cached config
-    else no fresh cache
-        Page->>FS: get users/{email}/config/{configId}
-        alt Firestore config exists
-            FS-->>Page: user config
-            Page->>LS: cache config with cachedAt
-        else first load for this user/config
-            Page->>JSON: fetch seed JSON
-            JSON-->>Page: seed config
-            Page->>FS: set users/{email}/config/{configId}
-            Page->>LS: cache seed as user config
-        else Firestore unavailable
-            alt stale local cache exists
-                LS-->>Page: stale config fallback
-            else
-                Page->>JSON: emergency bundled fallback
+    alt exercises requested
+        Page->>JSON: load exercises.json through js/config.js
+        JSON-->>Page: canonical exercise catalog
+    else user config requested
+        Page->>LS: read seans-log:user-config:{email}:{configId}:v1
+        alt fresh user-config cache exists
+            LS-->>Page: cached config
+        else no fresh cache
+            Page->>FS: get users/{email}/config/{configId}
+            alt Firestore config exists
+                FS-->>Page: user config
+                Page->>LS: cache config with cachedAt
+            else first load for this user/config
+                Page->>JSON: fetch seed JSON
+                JSON-->>Page: seed config
+                Page->>FS: set users/{email}/config/{configId}
+                Page->>LS: cache seed as user config
+            else Firestore unavailable
+                alt stale local cache exists
+                    LS-->>Page: stale config fallback
+                else
+                    Page->>JSON: emergency bundled fallback
+                end
             end
         end
     end
 ```
 
-Seed files:
+Configuration files:
 
 | File | Purpose |
 | --- | --- |
-| `exercises.json` | Exercise catalog keyed by exercise ids like `ex001`. Includes `lastUpdatedDate`. |
+| `exercises.json` | Canonical exercise catalog keyed by exercise ids like `ex001`. Optional `1repmaxformula` expressions use `w` for weight and `r` for reps. Includes `lastUpdatedDate`; never synced to Firestore. |
 | `training-plan.json` | Seven-day schedule and workout definitions. The `schedule` array maps Sunday through Saturday. |
 | `progression-plan.json` | Progression block metadata, target weights, baseline policy, and recommendation defaults. |
 
@@ -214,14 +221,14 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v3"]
+    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v9"]
     Activate["service-worker activate"] --> Cleanup["Delete old caches"]
-    Fetch["fetch event"] --> Shell{"app.html or<br/>training-plan-editor.html?"}
+    Fetch["fetch event"] --> Shell{"app shell or<br/>exercises.json?"}
     Shell -->|yes| NetworkFirst["Network first; update cache; fallback to cache"]
     Shell -->|no| CacheFirst["Cache first; fallback to network"]
 ```
 
-`service-worker.js` intentionally does not special-case bundled JSON. The pages manage user config caching themselves after Firebase reads.
+`service-worker.js` special-cases `exercises.json` as network-first because it is the canonical catalog. Other bundled JSON files remain cache-first and are used as seeds or fallbacks for user-owned configuration.
 
 ## Security Model
 
@@ -255,8 +262,11 @@ workouts/
 ├── training-plan-editor.html        # training plan editor
 ├── migrate-workouts-to-user.html    # legacy migration helper
 ├── js/
-│   └── coach.js                     # progression recommendation engine
-├── exercises.json                   # seed exercise catalog
+│   ├── config.js                    # shared static exercise loader
+│   ├── strength.js                  # safe lift-specific estimated-1RM formulas
+│   ├── coach.js                     # progression recommendation engine
+│   └── records.js                   # shared active-season PR calculations
+├── exercises.json                   # canonical exercise catalog
 ├── training-plan.json               # seed weekly plan
 ├── progression-plan.json            # seed progression targets
 ├── service-worker.js                # PWA cache logic

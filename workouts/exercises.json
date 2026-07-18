@@ -3631,7 +3631,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Romanian Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex351": {
     "name": "High Knee",
