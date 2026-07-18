@@ -296,7 +296,7 @@
               <div class="aqi-text">
                 <strong id="aqiStatus">Locating</strong>
                 <div class="aqi-chips">
-                  <span class="chip">US EPA AQI</span>
+                  <span class="chip" id="aqiMethod">Live AQI · est.</span>
                   <span class="chip">Main · <b id="dominantPollutant">—</b></span>
                 </div>
               </div>
@@ -336,6 +336,7 @@
     const AIR_QUALITY_URL = "https://airquality.googleapis.com/v1/currentConditions:lookup?key=" + API_KEY;
     const FALLBACK_LOCATION = { latitude: 40.6782, longitude: -73.9442 };
     const PIN_STORAGE_KEY = "aire-pinned-places-v1";
+    const AQI_CALC_VERSION = 2;
     const $ = (id) => document.getElementById(id);
 
     // The selected location drives the main card and marker. Pinned locations are a
@@ -360,6 +361,18 @@
       { code: "co", label: "CO", thresholds: [4500, 9500, 12500], max: 15400 }
     ];
 
+    // Current US EPA breakpoints. Google occasionally returns a local AQI that
+    // still reflects an earlier pollution spike, so Aire derives a live estimate
+    // from the pollutant concentrations included in the same hourly response.
+    const EPA_AQI_BREAKPOINTS = {
+      pm25: { decimals: 1, ranges: [[0, 9, 0, 50], [9.1, 35.4, 51, 100], [35.5, 55.4, 101, 150], [55.5, 125.4, 151, 200], [125.5, 225.4, 201, 300], [225.5, 325.4, 301, 500]] },
+      pm10: { decimals: 0, ranges: [[0, 54, 0, 50], [55, 154, 51, 100], [155, 254, 101, 150], [255, 354, 151, 200], [355, 424, 201, 300], [425, 604, 301, 500]] },
+      o3: { decimals: 0, ranges: [[0, 54, 0, 50], [55, 70, 51, 100], [71, 85, 101, 150], [86, 105, 151, 200], [106, 200, 201, 300]], alternateRanges: [[125, 164, 101, 150], [165, 204, 151, 200], [205, 404, 201, 300], [405, 504, 301, 400], [505, 604, 401, 500]] },
+      co: { decimals: 1, convert: (value, units) => units === "PARTS_PER_BILLION" ? value / 1000 : value, ranges: [[0, 4.4, 0, 50], [4.5, 9.4, 51, 100], [9.5, 12.4, 101, 150], [12.5, 15.4, 151, 200], [15.5, 30.4, 201, 300], [30.5, 50.4, 301, 500]] },
+      no2: { decimals: 0, ranges: [[0, 53, 0, 50], [54, 100, 51, 100], [101, 360, 101, 150], [361, 649, 151, 200], [650, 1249, 201, 300], [1250, 2049, 301, 500]] },
+      so2: { decimals: 0, ranges: [[0, 35, 0, 50], [36, 75, 51, 100], [76, 185, 101, 150], [186, 304, 151, 200], [305, 604, 201, 300], [605, 1004, 301, 500]] }
+    };
+
     function categoryFor(aqi) {
       if (aqi <= 50) return { label: "Good", color: "#3aa76d", tip: "The air is clear and clean. A great moment to open the windows, go for a run, or simply breathe deeply." };
       if (aqi <= 100) return { label: "Moderate", color: "#d9a62e", tip: "Air quality is acceptable. Unusually sensitive people should consider reducing prolonged outdoor exertion." };
@@ -369,13 +382,43 @@
       return { label: "Hazardous", color: "#7e3a4e", tip: "Emergency conditions. Stay indoors, seal windows, and wear a certified respirator if you must go outside." };
     }
 
+    function interpolateAqi(value, ranges) {
+      const matches = ranges.flatMap(([low, high, indexLow, indexHigh]) => {
+        if (value < low || value > high) return [];
+        return [Math.round(((indexHigh - indexLow) / (high - low)) * (value - low) + indexLow)];
+      });
+      if (matches.length) return Math.max(...matches);
+      return value > ranges[ranges.length - 1][1] ? 500 : null;
+    }
+
+    function liveUsAqi(pollutants = []) {
+      const subIndexes = pollutants.flatMap((pollutant) => {
+        const config = EPA_AQI_BREAKPOINTS[pollutant.code];
+        const concentration = pollutant.concentration;
+        if (!config || !concentration || !Number.isFinite(concentration.value)) return [];
+        const converted = config.convert ? config.convert(concentration.value, concentration.units) : concentration.value;
+        const factor = 10 ** config.decimals;
+        const truncated = Math.floor(Math.max(0, converted) * factor) / factor;
+        const candidates = [interpolateAqi(truncated, config.ranges)];
+        if (config.alternateRanges) candidates.push(interpolateAqi(truncated, config.alternateRanges));
+        const aqi = Math.max(...candidates.filter(Number.isFinite));
+        return Number.isFinite(aqi) ? [{ code: pollutant.code, aqi }] : [];
+      });
+      if (!subIndexes.length) return null;
+      return subIndexes.reduce((highest, item) => item.aqi > highest.aqi ? item : highest);
+    }
+
     function aqiSummary(data) {
-      // Prefer the familiar US EPA index, then gracefully fall back to whatever
-      // index Google returned. Keeping this choice here gives every UI the same AQI.
-      const index = data?.indexes?.find((item) => item.code === "usa_epa") || data?.indexes?.find((item) => item.code === "uaqi") || data?.indexes?.[0];
-      if (!index) throw new Error("No AQI index was returned for this location.");
-      const category = categoryFor(index.aqi);
-      return { aqi: index.aqi, label: index.category?.replace(/ air quality/i, "") || category.label, color: category.color, index, category };
+      // Within the US, prefer an estimate based on the live pollutant fields. The
+      // Google-provided index remains a fallback for incomplete responses and for
+      // countries whose local AQI rules are different from the EPA calculation.
+      const googleIndex = data?.indexes?.find((item) => item.code === "usa_epa") || data?.indexes?.find((item) => item.code === "uaqi") || data?.indexes?.[0];
+      const live = data?.regionCode === "us" ? liveUsAqi(data.pollutants) : null;
+      if (!live && !googleIndex) throw new Error("No AQI data was returned for this location.");
+      const aqi = live?.aqi ?? googleIndex.aqi;
+      const category = categoryFor(aqi);
+      const index = live ? { ...googleIndex, aqi, category: category.label + " air quality", dominantPollutant: live.code, estimated: true } : googleIndex;
+      return { aqi, label: category.label, color: category.color, index, category, estimated: Boolean(live) };
     }
 
     function locationId(location) {
@@ -469,23 +512,26 @@
     }
 
     function renderAirQuality(data) {
-      const { index, category } = aqiSummary(data);
+      const { index, category, estimated } = aqiSummary(data);
       currentAirQualityData = data;
       document.documentElement.style.setProperty("--accent", category.color);
       document.documentElement.style.setProperty("--accent-glow", category.color + "55");
       $("aqiScore").textContent = index.aqi;
-      $("aqiStatus").textContent = index.category?.replace(/ air quality/i, "") || category.label;
+      $("aqiStatus").textContent = category.label;
+      $("aqiMethod").textContent = estimated ? "Live AQI · est." : index.displayName || "AQI";
       $("dominantPollutant").textContent = ({ pm25: "PM2.5", pm10: "PM10", o3: "Ozone", co: "CO", no2: "NO₂", so2: "SO₂" })[index.dominantPollutant] || index.dominantPollutant || "—";
       $("updated").textContent = new Date(data.dateTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
       $("scaleMarker").style.left = aqiScalePercent(index.aqi) + "%";
-      $("healthText").textContent = data.healthRecommendations?.generalPopulation || category.tip;
+      $("healthText").textContent = estimated ? category.tip : data.healthRecommendations?.generalPopulation || category.tip;
+      $("sourceNote").textContent = estimated ? "Live estimate · Google data + EPA breakpoints" : "Live data · Google Maps Air Quality API";
+      $("sourceNote").title = estimated ? "Calculated from Google Maps Air Quality pollutant data using current US EPA breakpoints" : "";
       renderPollutants(data.pollutants);
 
       // If the selected place is pinned, its watchlist badge and map marker should
       // receive the same fresh reading as the main card without another API call.
       const pinned = pinnedPlaces.find((place) => place.id === locationId(currentLocation));
       if (pinned) {
-        Object.assign(pinned, { aqi: index.aqi, status: index.category?.replace(/ air quality/i, "") || category.label, color: category.color, dateTime: data.dateTime, checkedAt: Date.now() });
+        Object.assign(pinned, { aqi: index.aqi, status: category.label, color: category.color, dateTime: data.dateTime, checkedAt: Date.now(), aqiVersion: AQI_CALC_VERSION });
         savePinnedPlaces();
         renderPinnedPlaces();
       }
@@ -496,12 +542,12 @@
     }
 
     async function fetchAirQuality(location, details = true) {
-      // Watchlist refreshes only need an index. The main card requests the heavier
-      // pollutant and health payload because it renders those additional sections.
+      // Watchlist refreshes need pollutant concentrations for the live estimate.
+      // The main card also requests health guidance because it renders that section.
       const response = await fetch(AIR_QUALITY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ location, extraComputations: details ? ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"] : ["LOCAL_AQI"], universalAqi: false, languageCode: "en" })
+        body: JSON.stringify({ location, extraComputations: details ? ["LOCAL_AQI", "POLLUTANT_CONCENTRATION", "HEALTH_RECOMMENDATIONS"] : ["LOCAL_AQI", "POLLUTANT_CONCENTRATION"], universalAqi: false, languageCode: "en" })
       });
       if (!response.ok) {
         const details = await response.json().catch(() => ({}));
@@ -614,7 +660,8 @@
           status: summary?.label,
           color: summary?.color,
           dateTime: currentAirQualityData?.dateTime,
-          checkedAt: currentAirQualityData ? Date.now() : null
+          checkedAt: currentAirQualityData ? Date.now() : null,
+          aqiVersion: AQI_CALC_VERSION
         });
       }
       savePinnedPlaces();
@@ -631,7 +678,7 @@
       if (!pinnedPlaces.length) return;
       // Automatic refreshes honor a ten-minute client cache. Manual refreshes bypass
       // the cache so the user can always request a current reading.
-      const targets = force ? pinnedPlaces : pinnedPlaces.filter((place) => !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
+      const targets = force ? pinnedPlaces : pinnedPlaces.filter((place) => place.aqiVersion !== AQI_CALC_VERSION || !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
       if (!targets.length) return;
       const button = $("refreshPins");
       button.disabled = true;
@@ -640,7 +687,7 @@
         const data = await fetchAirQuality({ latitude: place.latitude, longitude: place.longitude }, false);
         const summary = aqiSummary(data);
         const current = pinnedPlaces.find((item) => item.id === place.id);
-        if (current) Object.assign(current, { aqi: summary.aqi, status: summary.label, color: summary.color, dateTime: data.dateTime, checkedAt: Date.now() });
+        if (current) Object.assign(current, { aqi: summary.aqi, status: summary.label, color: summary.color, dateTime: data.dateTime, checkedAt: Date.now(), aqiVersion: AQI_CALC_VERSION });
       }));
       savePinnedPlaces();
       renderPinnedPlaces();
