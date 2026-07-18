@@ -320,25 +320,29 @@
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
+            opacity: 0.8;
             pointer-events: none;
         }
 
-        .exercise-item.exercise-pr.pr-celebrating::after {
-            content: '';
-            position: absolute;
-            inset: -10px;
-            z-index: -2;
-            background: conic-gradient(from 0deg, rgba(255, 194, 221, 0.8), rgba(202, 194, 255, 0.75), rgba(166, 236, 255, 0.75), rgba(185, 255, 213, 0.75), rgba(255, 234, 172, 0.75), rgba(255, 194, 221, 0.8));
-            filter: blur(14px);
-            opacity: 0;
-            animation: prHaloSpin 1.35s ease-out forwards;
-            pointer-events: none;
+        .exercise-item.exercise-pr.pr-celebrating {
+            animation: prShadowPulse 1.35s ease-in-out forwards;
         }
 
-        @keyframes prHaloSpin {
-            0% { opacity: 0; transform: rotate(0deg); }
-            18% { opacity: 0.9; }
-            100% { opacity: 0; transform: rotate(360deg); }
+        @keyframes prShadowPulse {
+            0%, 100% {
+                box-shadow:
+                    -3px -2px 8px rgba(255, 194, 221, 0),
+                    3px -2px 8px rgba(202, 194, 255, 0),
+                    3px 3px 8px rgba(166, 236, 255, 0),
+                    -3px 3px 8px rgba(185, 255, 213, 0);
+            }
+            50% {
+                box-shadow:
+                    -3px -2px 8px rgba(255, 194, 221, 1),
+                    3px -2px 8px rgba(202, 194, 255, 1),
+                    3px 3px 8px rgba(166, 236, 255, 1),
+                    -3px 3px 8px rgba(185, 255, 213, 1);
+            }
         }
 
         .exercise-header {
@@ -794,8 +798,10 @@
             padding: 14px 34px;
             border: 2px solid transparent;
             background:
-                linear-gradient(#111113, #111113) padding-box,
-                linear-gradient(110deg, #ffd5e5, #d9d1ff, #bdefff, #c8ffd9, #fff2b8) border-box;
+                linear-gradient(rgba(17, 17, 19, 0.62), rgba(17, 17, 19, 0.48)) padding-box,
+                linear-gradient(110deg, rgba(255, 213, 229, 0.82), rgba(217, 209, 255, 0.82), rgba(189, 239, 255, 0.82), rgba(200, 255, 217, 0.82), rgba(255, 242, 184, 0.82)) border-box;
+            -webkit-backdrop-filter: blur(16px) saturate(145%);
+            backdrop-filter: blur(16px) saturate(145%);
             color: #fff;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2rem;
@@ -803,7 +809,9 @@
             text-align: center;
             opacity: 0;
             visibility: hidden;
-            box-shadow: 0 12px 42px rgba(190, 223, 255, 0.26);
+            box-shadow:
+                0 10px 28px rgba(0, 0, 0, 0.24),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
             transition: transform 0.28s ease, opacity 0.28s ease, visibility 0.28s;
         }
 
@@ -814,7 +822,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .exercise-item.exercise-pr.pr-celebrating::after { animation: none; }
+            .exercise-item.exercise-pr.pr-celebrating { animation: none; }
             .pr-toast { transition: opacity 0.2s ease, visibility 0.2s; }
         }
 
@@ -2998,7 +3006,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, orderBy, limit, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, where, orderBy, limit, startAfter, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
             authDomain: window.location.hostname === 'sull1van.com' ? 'sull1van.com' : 'workout-c7be0.firebaseapp.com',
@@ -3040,8 +3048,10 @@
         window.firebaseDeleteDoc = deleteDoc;
         window.firebaseRunTransaction = runTransaction;
         window.firebaseQuery = query;
+        window.firebaseWhere = where;
         window.firebaseOrderBy = orderBy;
         window.firebaseLimit = limit;
+        window.firebaseStartAfter = startAfter;
         window.getWorkoutCollectionRef = function () {
             return collection(db, 'users', getUserEmailKey(window.currentUser), 'workouts');
         };
@@ -3110,6 +3120,7 @@
         let progressionPlanData = null;  // Missing Firestore docs are seeded once from bundled JSON.
         let workoutLogs = [];
         let recordHistoryLogs = [];
+        let oldestLoadedWorkoutSnapshot = null;
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
         let currentSetCounts = {}; // Track number of sets per exercise !
@@ -3122,6 +3133,7 @@
         let pendingWorkoutData = null;
         let manualLogData = {}; // Store data for manual log inputs
         let activeSeason = null;
+        let activeSeasonStatus = 'pending';
         let recordHistoryReady = false;
         let completedExerciseState = {};
         let exercisePrResults = {};
@@ -3330,10 +3342,12 @@
             dateFormats: DateFormats
         });
 
-        const recordTracker = window.WorkoutRecords.create({
-            getWorkoutLogs: () => recordHistoryLogs,
-            getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null
-        });
+        const recordTracker = window.WorkoutRecords?.create
+            ? window.WorkoutRecords.create({
+                getWorkoutLogs: () => recordHistoryLogs,
+                getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null
+            })
+            : null;
 
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
             const numSets = setCount ?? currentSetCounts[exerciseKey] ?? 0;
@@ -4022,14 +4036,51 @@
             }
         }
 
+        function normalizeActiveSeason(data) {
+            const startDate = typeof data?.startDate === 'string' ? data.startDate : '';
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(startDate)) return null;
+            const parsedStart = new Date(`${startDate}T00:00:00`);
+            if (!Number.isFinite(parsedStart.getTime())) return null;
+            return {
+                ...data,
+                schemaVersion: Number(data.schemaVersion) || 1,
+                id: data.id || `season-${startDate}`,
+                name: data.name || 'Current Season',
+                startDate
+            };
+        }
+
         async function loadActiveSeason() {
+            const cached = readCachedUserConfig('activeSeason');
+            const cachedSeason = normalizeActiveSeason(cached?.data);
+            if (cached?.isFresh && cachedSeason) {
+                activeSeason = cachedSeason;
+                activeSeasonStatus = 'loaded';
+                return true;
+            }
+
             try {
                 const snapshot = await window.firebaseGetDoc(window.getUserConfigDocRef('activeSeason'));
-                activeSeason = snapshot.exists() ? snapshot.data() : null;
+                if (!snapshot.exists()) {
+                    activeSeason = null;
+                    activeSeasonStatus = 'missing';
+                    return true;
+                }
+                activeSeason = normalizeActiveSeason(snapshot.data());
+                activeSeasonStatus = activeSeason ? 'loaded' : 'invalid';
+                if (activeSeason) writeCachedUserConfig('activeSeason', activeSeason);
+                else console.error('Active season config is invalid and was not used.');
                 return true;
             } catch (error) {
                 console.error('Failed to load active season:', error);
+                if (cachedSeason) {
+                    activeSeason = cachedSeason;
+                    activeSeasonStatus = 'loaded';
+                    console.warn('Using stale cached active season because Firebase is unavailable.');
+                    return true;
+                }
                 activeSeason = null;
+                activeSeasonStatus = 'error';
                 return false;
             }
         }
@@ -4058,14 +4109,16 @@
             button.disabled = true;
             button.textContent = 'SAVING...';
             const nextSeason = {
+                schemaVersion: 1,
                 id: `season-${startDate}`,
                 name: 'Current Season',
                 startDate,
+                createdAt: activeSeason?.createdAt || new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
 
             const success = await withFirebaseErrorHandling(async () => {
-                await window.firebaseSetDoc(window.getUserConfigDocRef('activeSeason'), nextSeason);
+                await window.firebaseSetDoc(window.getUserConfigDocRef('activeSeason'), nextSeason, { merge: true });
             }, 'save season');
 
             button.disabled = false;
@@ -4076,11 +4129,17 @@
             }
 
             activeSeason = nextSeason;
+            activeSeasonStatus = 'loaded';
+            writeCachedUserConfig('activeSeason', nextSeason);
             completedExerciseState = {};
             exercisePrResults = {};
+            const historyLoaded = await loadRecordHistoryFromFirebase();
             saveWorkoutProgress();
             renderExercises();
             closeModal('seasonModal');
+            if (!historyLoaded) {
+                showNotification('SEASON SAVED', 'The season was saved, but its workout history could not be loaded yet.');
+            }
         }
 
         function getWorkoutData(dayIndex) {
@@ -4181,22 +4240,63 @@
                 const snapshot = await window.firebaseGetDocs(q);
                 workoutLogs = [];
                 snapshot.forEach(doc => workoutLogs.push({ id: doc.id, ...doc.data() }));
+                oldestLoadedWorkoutSnapshot = snapshot.docs.length
+                    ? snapshot.docs[snapshot.docs.length - 1]
+                    : null;
                 isFullHistoryLoaded = (limitCount === 0);
                 invalidateStatsCache();
             }, 'load');
         }
 
         async function loadRecordHistoryFromFirebase() {
-            return withFirebaseErrorHandling(async () => {
+            recordHistoryLogs = [];
+            recordHistoryReady = false;
+
+            if (activeSeasonStatus === 'missing') {
+                recordHistoryReady = true;
+                return true;
+            }
+            if (activeSeasonStatus !== 'loaded' || !activeSeason?.startDate) return false;
+
+            const seasonStart = new Date(`${activeSeason.startDate}T00:00:00`);
+            if (!Number.isFinite(seasonStart.getTime())) return false;
+            const seasonStartIso = seasonStart.toISOString();
+
+            // Reuse the recent workout documents the home screen already paid to read.
+            // In the normal case the whole season fits inside those 60 documents, so PR
+            // history costs zero additional reads.
+            recordHistoryLogs = workoutLogs.filter(log => log.date >= seasonStartIso);
+            if (workoutLogs.length < CONFIG.FIREBASE_INIT_LIMIT) {
+                recordHistoryReady = true;
+                return true;
+            }
+
+            const oldestLoadedLog = workoutLogs[workoutLogs.length - 1];
+            if (!oldestLoadedLog?.date || oldestLoadedLog.date <= seasonStartIso) {
+                recordHistoryReady = true;
+                return true;
+            }
+            if (!oldestLoadedWorkoutSnapshot) return false;
+
+            const success = await withFirebaseErrorHandling(async () => {
+                // The season extends beyond the recent window. Continue from the oldest
+                // document already loaded, and stop at the season boundary. This avoids
+                // rereading the recent documents and never returns pre-season workouts.
                 const q = window.firebaseQuery(
                     window.getWorkoutCollectionRef(),
-                    window.firebaseOrderBy('date', 'desc')
+                    window.firebaseWhere('date', '>=', seasonStartIso),
+                    window.firebaseOrderBy('date', 'desc'),
+                    window.firebaseStartAfter(oldestLoadedWorkoutSnapshot)
                 );
                 const snapshot = await window.firebaseGetDocs(q);
-                recordHistoryLogs = [];
                 snapshot.forEach(doc => recordHistoryLogs.push({ id: doc.id, ...doc.data() }));
                 recordHistoryReady = true;
             }, 'load season records');
+            if (!success) {
+                recordHistoryLogs = [];
+                recordHistoryReady = false;
+            }
+            return success;
         }
 
         // Guards against rapid double-taps creating duplicate saves.
@@ -4691,31 +4791,49 @@
 
         async function init() {
             if (!window.firebaseReady) { window.onFirebaseReady = init; return; }
-            // Load exercise and training plan data from per-user config cache/Firebase
-            const exercisesLoaded = await loadExerciseData();
-            const planLoaded = await loadTrainingPlan();
-            const progressionLoaded = await loadProgressionPlan();
-            await loadActiveSeason();
-            if (!exercisesLoaded || !planLoaded || !progressionLoaded) {
-                console.error('Failed to load data files');
-                document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data files. Please refresh.</div>';
-                return;
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            try {
+                // Independent config reads can run together. Cached configs usually avoid
+                // Firestore entirely; activeSeason is one small document read.
+                const [exercisesLoaded, planLoaded, progressionLoaded] = await Promise.all([
+                    loadExerciseData(),
+                    loadTrainingPlan(),
+                    loadProgressionPlan(),
+                    loadActiveSeason()
+                ]);
+                if (!exercisesLoaded || !planLoaded || !progressionLoaded) {
+                    throw new Error('Failed to load required workout configuration.');
+                }
+
+                // Load the existing recent window first, then reuse those same documents
+                // for PR history. An additional query happens only if the season extends
+                // beyond that window, and it starts after the oldest document already read.
+                await loadFromFirebase();
+                await loadRecordHistoryFromFirebase();
+
+                loadingOverlay.style.display = 'none';
+                updateCurrentDate();
+                setTodaysWorkout();
+                loadWorkoutProgress();
+                renderExercises();
+                renderRecentLogs();
+                renderPlanView();
+                renderLibrary();
+                updateStats();
+                setupTabs();
+                setupEventHandlers();
+
+                if (activeSeasonStatus === 'missing') {
+                    openSeasonModal();
+                } else if (activeSeasonStatus === 'invalid') {
+                    showNotification('SEASON CONFIG ERROR', 'The saved season configuration is invalid. Open Season and choose its start date again.');
+                } else if (activeSeasonStatus === 'error') {
+                    showNotification('SEASON UNAVAILABLE', 'The season configuration could not be loaded. PR checks are disabled until the app reconnects.');
+                }
+            } catch (error) {
+                console.error('App initialization failed:', error);
+                loadingOverlay.innerHTML = '<div class="loading-text">Could not load workouts. Refresh to try again.</div>';
             }
-            await loadFromFirebase();
-            await loadRecordHistoryFromFirebase();
-            document.getElementById('loadingOverlay').style.display = 'none';
-            updateCurrentDate();
-            setTodaysWorkout();
-            // Load saved progress from localStorage
-            loadWorkoutProgress();
-            renderExercises();
-            renderRecentLogs();
-            renderPlanView();
-            renderLibrary();
-            updateStats();
-            setupTabs();
-            setupEventHandlers(); // Setup event delegation
-            if (!activeSeason) openSeasonModal();
         }
         function updateCurrentDate() {
             const now = new Date();
@@ -4934,6 +5052,10 @@
 
             if (!recordHistoryReady) {
                 showNotification('PR DATA UNAVAILABLE', 'Workout history could not be loaded, so this lift cannot be checked safely yet.');
+                return;
+            }
+            if (!recordTracker) {
+                showNotification('PR CHECK UNAVAILABLE', 'The PR calculator did not load. Refresh the app before finishing this lift.');
                 return;
             }
 
