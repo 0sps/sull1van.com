@@ -8,7 +8,8 @@
     "instructions": "Set the bench to a low incline (30 degrees). Lie back and pinch your shoulder blades together so your chest sticks out. When you lower the weights, tuck your elbows in at a 45-degree angle (like an arrow), don't flare them out wide (like a T). Lower the weights until they touch your outer chest, then press up. Stop just before your elbows lock out to keep the tension on your chest.",
     "notes": "",
     "exportName": "Dumbbell Incline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex002": {
     "name": "Leg Extension",
@@ -20,7 +21,8 @@
     "instructions": "Sit in the machine and adjust the pad so it sits right on your ankles/shins. Hold the handles tight to keep your butt in the seat. Kick your legs up until they are straight and squeeze your quads hard at the top. Lower the weight slowly—don't let the stack slam down.",
     "notes": "Isolates quads for hypertrophy",
     "exportName": "Leg Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex003": {
     "name": "Pull Up",
@@ -33,7 +35,8 @@
     "instructions": "Grab the bar slightly wider than shoulder-width. initiate the movement by driving your elbows down toward your ribs, not by pulling with your biceps. pulling your chest all the way to the bar.",
     "notes": "Best back width builder (or Lat Pulldown)",
     "exportName": "Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex004": {
     "name": "Cable Lateral Raise",
@@ -45,7 +48,8 @@
     "instructions": "Set the cable pulley to the very bottom. Stand sideways to the machine. Grab the handle with the hand furthest away from the machine. Step out so the weight stack is lifted slightly even when your arm is down. Lift your arm out to the side, leading with your elbow, not your hand. Think about pushing your knuckles toward the wall, not the ceiling. Stop when your arm is parallel to the floor.",
     "notes": "CRITICAL: Creates shoulder width and V-taper",
     "exportName": "Cable Lateral Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex005": {
     "name": "Dumbbell Shoulder Press",
@@ -58,7 +62,8 @@
     "instructions": "Sit with the bench almost vertical (about 75 degrees) so you have back support. Kick the weights up to your shoulders. Press straight up overhead until your arms are straight. On the way down, control the weight all the way until the dumbbells actually touch your shoulders. Don't stop at ear level—that’s a half rep. Keep your core tight so you don't arch your lower back too much.",
     "notes": "Builds shoulder mass",
     "exportName": "Seated Dumbbell Press",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex006": {
     "name": "Back Squat",
@@ -71,7 +76,8 @@
     "instructions": "Put the bar on your traps (not your neck). Step back, set your feet shoulder-width apart, toes pointed slightly out. Take a huge breath into your stomach and brace your abs. Break at the hips and knees at the same time. Sit down until the crease of your hip is below the top of your knee. Drive back up through the middle of your foot. Keep your knees pushed out; don't let them cave in.",
     "notes": "THE mass builder - FULL DEPTH",
     "exportName": "Barbell Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex007": {
     "name": "Standing Machine Calf Press",
@@ -83,7 +89,8 @@
     "instructions": "Put the balls of your feet on the edge of the platform. Lower your heels as far down as physically possible—this stretch is the most important part. Pause for a second at the bottom. Then push up onto your big toes. Don't bounce.",
     "notes": "Full stretch at bottom, pause at top",
     "exportName": "Standing Machine Calf Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex008": {
     "name": "Seated Leg Curl",
@@ -95,7 +102,8 @@
     "instructions": "Sit in the machine and clamp the thigh pad down tight so your legs can't move. Kick your legs down and back under you. Squeeze at the bottom. Control the weight on the way up. Don't use momentum to jerk the weight down.",
     "notes": "Squeeze at top, control eccentric",
     "exportName": "Seated Leg Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex009": {
     "name": "Cable Crunch",
@@ -107,7 +115,8 @@
     "instructions": "Use the rope attachment on a high pulley. Kneel down facing the machine. Hold the rope next to your ears. Crunch down by aiming your forehead toward your knees. Visualize curling your spine like a shrimp. Don't just bend at the hips—your back *should* round on this one to contract the abs. Exhale all your air as you crunch down.",
     "notes": "Best weighted ab exercise",
     "exportName": "Cable Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex010": {
     "name": "Dumbbell Bicep Curl",
@@ -117,7 +126,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Bicep Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex011": {
     "name": "Machine Row",
@@ -127,7 +137,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex012": {
     "name": "Lat Pulldown",
@@ -139,7 +150,8 @@
     "instructions": "Sit down, jam your knees under the pad so you don't float up. Lean back just a tiny bit, and pull the bar to your upper chest. Control it on the way up.",
     "notes": "",
     "exportName": "Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex354": {
     "name": "Lat Pulldown - MAG 1",
@@ -151,9 +163,10 @@
     "instructions": "Using MAG grip 1 - SKINNIEST GRIP. Sit down, jam your knees under the pad so you don't float up. Lean back just a tiny bit, and pull the bar to your upper chest. Control it on the way up.",
     "notes": "",
     "exportName": "Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
-    "ex355": {
+  "ex355": {
     "name": "Lat Pulldown - MAG 2",
     "muscles": [
       "Lats"
@@ -163,9 +176,10 @@
     "instructions": "Using MAG grip 2 - MEDIUM TO NEUTRAL GRIP. Sit down, jam your knees under the pad so you don't float up. Lean back just a tiny bit, and pull the bar to your upper chest. Control it on the way up.",
     "notes": "",
     "exportName": "Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
-    "ex356": {
+  "ex356": {
     "name": "Lat Pulldown - MAG 3",
     "muscles": [
       "Lats"
@@ -175,7 +189,8 @@
     "instructions": "Using MAG grip 3 - WIDEST GRIP. Sit down, jam your knees under the pad so you don't float up. Lean back just a tiny bit, and pull the bar to your upper chest. Control it on the way up.",
     "notes": "",
     "exportName": "Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex013": {
     "name": "Leg Press",
@@ -188,7 +203,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Leg Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex014": {
     "name": "Incline Dumbbell Curl",
@@ -200,7 +216,8 @@
     "instructions": "Set the bench to a high incline (45-60 degrees). Sit back and let your arms hang straight down behind your torso. This stretches the bicep head. Curl the weights up while keeping your elbows pointed at the floor. Don't swing your elbows forward.",
     "notes": "Maximum stretch for bicep development",
     "exportName": "Incline Dumbbell Curl",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex015": {
     "name": "Dumbbell Preacher Curls",
@@ -210,7 +227,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Preacher Curls",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex016": {
     "name": "Incline Back Extension",
@@ -220,7 +238,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline Back Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex017": {
     "name": "Dumbbell Bench Press",
@@ -233,7 +252,8 @@
     "instructions": "Same mechanics as the incline press, just on a flat bench. Pinch your shoulder blades back. Tuck elbows at 45 degrees. Lower until the dumbbells touch near your armpits/outer chest. Press back up.",
     "notes": "",
     "exportName": "Dumbbell Bench Press",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex018": {
     "name": "Machine Fly",
@@ -245,7 +265,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex019": {
     "name": "Cable Tricep Pushdown",
@@ -257,7 +278,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Tricep Pushdown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex020": {
     "name": "Life Fitness Seated Row",
@@ -270,7 +292,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Life Fitness Seated Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex021": {
     "name": "Cable Rope Overhead Triceps Extension",
@@ -282,7 +305,8 @@
     "instructions": "Set the cable pulley to about waist height (or lower). Grab the rope, turn away from the machine, and press the rope overhead. Your elbows should stay pointing at the ceiling the whole time. Only your forearms move. Lower the rope behind your head until you feel a deep stretch in your triceps, then extend your arms straight up. Flare your hands out at the top.",
     "notes": "Direct tricep mass builder",
     "exportName": "Cable Rope Overhead Triceps Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex022": {
     "name": "Dumbbell Back Fly",
@@ -292,7 +316,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Back Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex023": {
     "name": "Hammer Curls",
@@ -305,7 +330,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hammer Curls",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex024": {
     "name": "Cable Rope Tricep Extension",
@@ -315,7 +341,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Rope Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex025": {
     "name": "Romanian Deadlift",
@@ -328,7 +355,8 @@
     "instructions": "Hold a barbell or dumbbells standing tall. Keep your legs slightly bent (soft knees), but lock them in that position—your knees shouldn't bend any more than that. Push your hips backward like you are trying to close a car door with your butt. Keep the weight sliding down your thighs. Go down until you feel a massive stretch in your hamstrings (usually mid-shin). Squeeze your glutes to stand back up. Keep your back flat the entire time.",
     "notes": "Best hamstring builder",
     "exportName": "Romanian Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex026": {
     "name": "Dumbbell Lateral Raise",
@@ -340,7 +368,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Lateral Raise",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex027": {
     "name": "Step Up",
@@ -350,7 +379,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Step Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex028": {
     "name": "Dumbbell Bulgarian Split Squat",
@@ -360,7 +390,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Bulgarian Split Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex029": {
     "name": "Bicycle Crunch",
@@ -370,7 +401,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bicycle Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex030": {
     "name": "Seated Machine Calf Press",
@@ -382,7 +414,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex031": {
     "name": "Calf Press",
@@ -392,7 +425,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Calf Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex032": {
     "name": "Dumbbell Pause Curl",
@@ -402,7 +436,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Pause Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex033": {
     "name": "Machine Rear Delt Fly",
@@ -415,7 +450,8 @@
     "instructions": "Sit facing the machine. Adjust the handles so they are fully to the rear. Grab the handles with your palms facing each other or down (whatever feels better). Keep a slight bend in your elbows. Push your hands out and back in a wide arc. Squeeze the back of your shoulders. Don't let your shoulders shrug up toward your ears.",
     "notes": "Rear delt and rotator cuff health",
     "exportName": "Machine Rear Delt Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex034": {
     "name": "Hammerstrength Chest Press",
@@ -425,7 +461,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hammerstrength Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex035": {
     "name": "Hammerstrength Iso Row",
@@ -435,7 +472,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hammerstrength Iso Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex036": {
     "name": "Lying Hamstrings Curl",
@@ -447,7 +485,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Lying Leg Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex037": {
     "name": "Dumbbell Front Raise",
@@ -459,7 +498,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Front Raise",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex038": {
     "name": "Seated Cable Row",
@@ -469,7 +509,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Cable Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex039": {
     "name": "booty Builder Seated Hip Thrust",
@@ -479,7 +520,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "booty Builder Seated Hip Thrust",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex040": {
     "name": "Bulgarian Split Squat",
@@ -489,7 +531,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bulgarian Split Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex041": {
     "name": "Wide Grip Lat Pulldown",
@@ -499,7 +542,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Wide Grip Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex042": {
     "name": "Bent Over Barbell Row",
@@ -509,7 +553,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bent Over Barbell Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex043": {
     "name": "Dumbbell Rear Delt Raise",
@@ -519,7 +564,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Rear Delt Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex044": {
     "name": "EZ-Bar Curl",
@@ -529,7 +575,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "EZ-Bar Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex045": {
     "name": "Straight-Arm Pulldown",
@@ -539,7 +586,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Straight-Arm Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex046": {
     "name": "Cable Face Pull",
@@ -552,7 +600,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Face Pull",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex047": {
     "name": "Seated Dumbbell Curl",
@@ -562,7 +611,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Dumbbell Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex048": {
     "name": "Reverse Lunge",
@@ -572,7 +622,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex049": {
     "name": "Cable Underhand Tricep Pushdown",
@@ -582,7 +633,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Underhand Tricep Pushdown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex050": {
     "name": "Hanging Knee Raise",
@@ -592,7 +644,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hanging Knee Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex051": {
     "name": "T-Bar Row",
@@ -602,7 +655,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "T-Bar Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex052": {
     "name": "Dumbbell Shoulder Raise",
@@ -612,7 +666,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Shoulder Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex053": {
     "name": "Close-Grip Bench Press",
@@ -622,7 +677,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Close-Grip Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex054": {
     "name": "Dumbbell Walking Lunge",
@@ -632,7 +688,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Walking Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex055": {
     "name": "Dip",
@@ -645,7 +702,8 @@
     "instructions": "Jump up on the bars. To target your chest, lean your torso forward (look at the ground). Lower yourself until your shoulders are slightly below your elbows. Push back up. Keep your shoulders packed down (away from your ears) the whole time so you don't hurt your neck.",
     "notes": "Lean forward for chest emphasis",
     "exportName": "Dip",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex056": {
     "name": "Barbell Incline Bench Press",
@@ -655,7 +713,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Incline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex057": {
     "name": "Barbell Bench Press",
@@ -665,7 +724,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex058": {
     "name": "Barbell Shoulder Press",
@@ -675,7 +735,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex059": {
     "name": "Single Leg Leg Extension",
@@ -685,7 +746,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Leg Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex060": {
     "name": "Smith Machine Overhead Shoulder Press",
@@ -695,7 +757,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Overhead Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex061": {
     "name": "Dumbbell Bent Over Row",
@@ -705,7 +768,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Bent Over Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex062": {
     "name": "Mts Front Pulldown",
@@ -715,7 +779,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mts Front Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex063": {
     "name": "Lat Pulldown With Skinny Grip",
@@ -725,7 +790,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Lat Pulldown With Skinny Grip",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex064": {
     "name": "Machine Hip Abductor",
@@ -735,7 +801,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Hip Abductor",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex065": {
     "name": "Machine Tricep Extension",
@@ -745,7 +812,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex066": {
     "name": "Machine Shoulder Press",
@@ -755,7 +823,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex067": {
     "name": "Seated Dumbbell Rear Delt Raise",
@@ -765,7 +834,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Dumbbell Rear Delt Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex068": {
     "name": "Good Morning",
@@ -775,7 +845,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Good Morning",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex069": {
     "name": "Barbell Seated Calf Raise",
@@ -785,7 +856,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Seated Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex070": {
     "name": "Glute Kickback Machine",
@@ -795,7 +867,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Glute Kickback Machine",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex071": {
     "name": "Mts Row (pros Gym)",
@@ -805,7 +878,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mts Row (pros Gym)",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex072": {
     "name": "Hammerstrength Incline Chest Press",
@@ -815,7 +889,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hammerstrength Incline Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex073": {
     "name": "Skullcrusher",
@@ -827,7 +902,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Skull Crusher",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex074": {
     "name": "Reverse Barbell Curl",
@@ -837,7 +913,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Barbell Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex075": {
     "name": "Barbell Curl",
@@ -849,7 +926,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex076": {
     "name": "Machine Hip Adductor",
@@ -859,7 +937,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Hip Adductor",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex077": {
     "name": "Dumbbell Bent Over Reverse Fly",
@@ -869,7 +948,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Bent Over Reverse Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex078": {
     "name": "Cable Rope Hammer Curls",
@@ -879,7 +959,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Rope Hammer Curls",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex079": {
     "name": "Seated Barbell Shoulder Press",
@@ -889,7 +970,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Barbell Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex080": {
     "name": "Cable Bicep Curl",
@@ -901,7 +983,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex081": {
     "name": "Mts High Row",
@@ -911,7 +994,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mts High Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex082": {
     "name": "Concentration Curl",
@@ -921,7 +1005,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Concentration Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex083": {
     "name": "Single-arm Dumbbell Row",
@@ -934,7 +1019,8 @@
     "instructions": "Find a flat bench. Put your left knee and left hand on the bench. Your back should be flat like a table. Grab the dumbbell with your right hand. Pull the weight back toward your hip pocket, not straight up to your armpit. Think about dragging your elbow back. Lower it all the way down until you feel a stretch in your lat.",
     "notes": "Explosive power, back thickness",
     "exportName": "Dumbbell Row",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex084": {
     "name": "Barbell Hip Thrust",
@@ -946,7 +1032,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hip Thrust",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex085": {
     "name": "Incline Dumbbell Squeeze Press",
@@ -956,7 +1043,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline Dumbbell Squeeze Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex086": {
     "name": "Barbell Decline Bench Press",
@@ -966,7 +1054,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Decline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex087": {
     "name": "Machine Bench Press",
@@ -976,7 +1065,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex088": {
     "name": "Hack Squat",
@@ -988,7 +1078,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hack Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex089": {
     "name": "Leg Raise",
@@ -998,7 +1089,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Leg Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex090": {
     "name": "Dumbbell Row Bent Over Holding Onto Box",
@@ -1008,7 +1100,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Row Bent Over Holding Onto Box",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex091": {
     "name": "Reverse Grip Pull Down",
@@ -1018,7 +1111,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Grip Pull Down",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex092": {
     "name": "Smith Machine Squat",
@@ -1028,7 +1122,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex093": {
     "name": "Machine Leg Press",
@@ -1038,7 +1133,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Leg Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex094": {
     "name": "Dumbbell Step Up",
@@ -1048,7 +1144,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Step Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex095": {
     "name": "Running",
@@ -1058,7 +1155,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Running",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex096": {
     "name": "0",
@@ -1068,7 +1166,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "0",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex097": {
     "name": "Hanging Leg Raise",
@@ -1080,7 +1179,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hanging Leg Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex098": {
     "name": "Box Jump",
@@ -1090,7 +1190,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Box Jump",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex099": {
     "name": "Mid Cable Crossover Fly",
@@ -1100,7 +1201,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mid Cable Crossover Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex100": {
     "name": "Deadlift",
@@ -1110,7 +1212,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex101": {
     "name": "Landmine Press",
@@ -1120,7 +1223,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Landmine Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex102": {
     "name": "Front Plate Raise",
@@ -1130,7 +1234,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Front Plate Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex103": {
     "name": "Dumbbell Tricep Extension",
@@ -1140,7 +1245,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex104": {
     "name": "Dumbbell Shrug",
@@ -1152,7 +1258,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Shrug",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex105": {
     "name": "Chest Dip",
@@ -1162,7 +1269,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Chest Dip",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex106": {
     "name": "Split Squat",
@@ -1172,7 +1280,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Split Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex107": {
     "name": "Barbell Lunge",
@@ -1182,7 +1291,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex108": {
     "name": "Dumbbell Lunge",
@@ -1195,7 +1305,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Lunges",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex109": {
     "name": "Dumbbell Squat To Shoulder Press",
@@ -1205,7 +1316,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Squat To Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex110": {
     "name": "Reverse Crunch",
@@ -1215,7 +1327,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex111": {
     "name": "Front Squat",
@@ -1227,7 +1340,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Front Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex112": {
     "name": "Dumbbell Fly",
@@ -1237,7 +1351,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex113": {
     "name": "Frog Pump",
@@ -1247,7 +1362,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Frog Pump",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex114": {
     "name": "Landmine Row",
@@ -1257,7 +1373,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Landmine Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex115": {
     "name": "Behind the Back Cable Bicep Curl",
@@ -1267,7 +1384,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Behind the Back Cable Bicep Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex116": {
     "name": "Biceps Curl To Shoulder Press",
@@ -1277,7 +1395,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Biceps Curl To Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex117": {
     "name": "Standing Barbell Calf Raise",
@@ -1287,7 +1406,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Standing Barbell Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex118": {
     "name": "Overhead Dumbbell Lunge",
@@ -1297,7 +1417,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Overhead Dumbbell Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex119": {
     "name": "Dumbbell Sumo Squat",
@@ -1307,7 +1428,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Sumo Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex120": {
     "name": "Single Leg Standing Calf Raise",
@@ -1317,7 +1439,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Standing Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex121": {
     "name": "Air Squats",
@@ -1327,7 +1450,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Air Squats",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex122": {
     "name": "Decline Push Up",
@@ -1337,7 +1461,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Decline Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex123": {
     "name": "Cable Crossover Fly",
@@ -1347,7 +1472,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Crossover Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex124": {
     "name": "Deadlift to Calf Raise",
@@ -1357,7 +1483,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Deadlift to Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex125": {
     "name": "Sumo Deadlift",
@@ -1367,7 +1494,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Sumo Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex126": {
     "name": "Machine Squat",
@@ -1377,7 +1505,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex127": {
     "name": "Dumbbell Romanian Deadlift to Calf Raise",
@@ -1387,7 +1516,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Romanian Deadlift to Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex128": {
     "name": "Calf Raise",
@@ -1397,7 +1527,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex129": {
     "name": "Side Lunge",
@@ -1407,7 +1538,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Side Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex130": {
     "name": "Dumbbell Clean",
@@ -1417,7 +1549,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex131": {
     "name": "Kettlebell Sumo Squat",
@@ -1427,7 +1560,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kettlebell Sumo Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex132": {
     "name": "Elbows Out Bent Over Dumbbell Row",
@@ -1437,7 +1571,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Elbows Out Bent Over Dumbbell Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex133": {
     "name": "Decline Reverse Crunch",
@@ -1447,7 +1582,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Decline Reverse Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex134": {
     "name": "Romanian Deadlift to Bent-Over Row",
@@ -1457,7 +1593,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Romanian Deadlift to Bent-Over Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex135": {
     "name": "Single Leg Romanian Deadlift",
@@ -1467,7 +1604,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Romanian Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex136": {
     "name": "Dumbbell Seated Single Arm Shoulder Press",
@@ -1477,7 +1615,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Seated Single Arm Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex137": {
     "name": "Diamond Push Up",
@@ -1487,7 +1626,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Diamond Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex138": {
     "name": "Chest-Supported Dumbbell Incline Row",
@@ -1497,7 +1637,8 @@
     "instructions": "Set an incline bench to 30 or 45 degrees. Lie face down on it with a dumbbell in each hand. Let your arms hang straight down. Pull the weights up by driving your elbows back and squeezing your shoulder blades together. Since your chest is supported, don't let your body swing or lift off the pad. It's all back.",
     "notes": "",
     "exportName": "Incline Dumbbell Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex139": {
     "name": "Barbell Step Up",
@@ -1507,7 +1648,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Step Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex140": {
     "name": "Barbell Shrug",
@@ -1519,7 +1661,8 @@
     "instructions": "Hold a barbell (or heavy dumbbells) with straight arms. Shrug your shoulders straight up toward your ears. Hold it at the very top for a full second. Lower it slowly. Don't roll your shoulders forward or backward—just go straight up and down.",
     "notes": "Builds \"yoked\" neck look",
     "exportName": "Barbell Shrug",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex141": {
     "name": "Reverse Grip Barbell Bent Over Row",
@@ -1529,7 +1672,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Grip Barbell Bent Over Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex142": {
     "name": "Dumbbell Floor Press",
@@ -1539,7 +1683,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Floor Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex143": {
     "name": "Barbell Front Raise",
@@ -1549,7 +1694,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Front Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex144": {
     "name": "Forward Lunge with Twist",
@@ -1559,7 +1705,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Forward Lunge with Twist",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex145": {
     "name": "Burpee",
@@ -1569,7 +1716,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Burpee",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex146": {
     "name": "Crunches",
@@ -1579,7 +1727,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Crunches",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex147": {
     "name": "Dumbbell Incline Fly",
@@ -1589,7 +1738,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Incline Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex148": {
     "name": "Australian Chin Up",
@@ -1599,7 +1749,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Australian Chin Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex149": {
     "name": "Push Press",
@@ -1609,7 +1760,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Push Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex150": {
     "name": "Decline Overhead Weighted Sit Up",
@@ -1619,7 +1771,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Decline Overhead Weighted Sit Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex151": {
     "name": "Decline Russian Twists",
@@ -1629,7 +1782,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Decline Russian Twists",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex152": {
     "name": "Dumbbell Side Bend",
@@ -1639,7 +1793,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Side Bend",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex153": {
     "name": "Kettlebell Upright Row",
@@ -1649,7 +1804,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kettlebell Upright Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex154": {
     "name": "Alternating Single Arm Kettlebell Swing",
@@ -1659,7 +1815,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Alternating Single Arm Kettlebell Swing",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex155": {
     "name": "Superman",
@@ -1669,7 +1826,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Superman",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex156": {
     "name": "Chin Up",
@@ -1679,7 +1837,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Chin Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex157": {
     "name": "Wide Grip Pull Up",
@@ -1689,7 +1848,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Wide Grip Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex158": {
     "name": "Cable Hip Extension",
@@ -1699,7 +1859,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Hip Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex159": {
     "name": "Cable Crossover Incline Bench Fly",
@@ -1709,7 +1870,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Crossover Incline Bench Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex160": {
     "name": "Arnold Dumbbell Press",
@@ -1722,7 +1884,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Arnold Press",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex161": {
     "name": "Side Bridge",
@@ -1732,7 +1895,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Side Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex162": {
     "name": "Handle Band Crunch",
@@ -1742,7 +1906,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Handle Band Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex163": {
     "name": "Hanging Windshield Wiper",
@@ -1752,7 +1917,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hanging Windshield Wiper",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex164": {
     "name": "Jump Squat",
@@ -1762,7 +1928,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Jump Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex165": {
     "name": "Lunge Jump",
@@ -1772,7 +1939,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Lunge Jump",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex166": {
     "name": "Low Cable Chest Fly",
@@ -1782,7 +1950,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Low Cable Chest Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex167": {
     "name": "Single Arm Low Cable Crossover Fly",
@@ -1792,7 +1961,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Arm Low Cable Crossover Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex168": {
     "name": "Iron Cross",
@@ -1802,7 +1972,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Iron Cross",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex169": {
     "name": "Dumbbell Skullcrusher",
@@ -1812,7 +1983,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Skullcrusher",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex170": {
     "name": "Cross Body Hammer Curls",
@@ -1822,7 +1994,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cross Body Hammer Curls",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex171": {
     "name": "TRX Bridge",
@@ -1832,7 +2005,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex172": {
     "name": "Jump Rope",
@@ -1842,7 +2016,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Jump Rope",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex173": {
     "name": "Landmine Romanian Deadlift",
@@ -1852,7 +2027,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Landmine Romanian Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex174": {
     "name": "Landmine Squat",
@@ -1862,7 +2038,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Landmine Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex175": {
     "name": "Dumbbell Squat",
@@ -1872,7 +2049,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex176": {
     "name": "Preacher Curl",
@@ -1884,7 +2062,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Preacher Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex177": {
     "name": "Dumbbell Decline Bench Press",
@@ -1894,7 +2073,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Decline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex178": {
     "name": "Vertical Leg Raise",
@@ -1904,7 +2084,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Vertical Leg Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex179": {
     "name": "Barbell Ab Rollout",
@@ -1914,7 +2095,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Ab Rollout",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex180": {
     "name": "Ab Crunch Machine",
@@ -1924,7 +2106,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Ab Crunch Machine",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex181": {
     "name": "Lateral Cable Tricep Extension",
@@ -1934,7 +2117,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Lateral Cable Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex182": {
     "name": "Seated Back Extension",
@@ -1944,7 +2128,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Back Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex183": {
     "name": "Tricep Push Up",
@@ -1954,7 +2139,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Tricep Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex184": {
     "name": "Dumbbell Hanging Lateral Raise",
@@ -1964,7 +2150,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Hanging Lateral Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex185": {
     "name": "Scissor Crossover Kick",
@@ -1974,7 +2161,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Scissor Crossover Kick",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex186": {
     "name": "Back Extensions",
@@ -1984,7 +2172,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Back Extensions",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex187": {
     "name": "Push Up",
@@ -1994,7 +2183,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex188": {
     "name": "Archer Pull Up",
@@ -2004,7 +2194,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Archer Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex189": {
     "name": "Plank",
@@ -2014,7 +2205,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Plank",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex190": {
     "name": "Leg Pull-In",
@@ -2024,7 +2216,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Leg Pull-In",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex191": {
     "name": "Neutral Grip Pull Up",
@@ -2034,7 +2227,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Neutral Grip Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex192": {
     "name": "Shotgun Row",
@@ -2044,7 +2238,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Shotgun Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex193": {
     "name": "Smith Machine Incline Bench Press",
@@ -2054,7 +2249,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Incline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex194": {
     "name": "Dumbbell Decline Fly",
@@ -2064,7 +2260,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Decline Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex195": {
     "name": "Russian Twist",
@@ -2074,7 +2271,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Russian Twist",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex196": {
     "name": "Incline EZ-Bar Curl",
@@ -2084,7 +2282,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline EZ-Bar Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex197": {
     "name": "Smith Machine Shrug",
@@ -2094,7 +2293,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Shrug",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex198": {
     "name": "Cable Shoulder Press",
@@ -2104,7 +2304,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Shoulder Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex199": {
     "name": "Walking",
@@ -2114,7 +2315,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Walking",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex200": {
     "name": "V-Bar Pull Up",
@@ -2124,7 +2326,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "V-Bar Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex201": {
     "name": "Stiff-Legged Barbell Good Morning",
@@ -2134,7 +2337,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Stiff-Legged Barbell Good Morning",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex202": {
     "name": "Swimming",
@@ -2144,7 +2348,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Swimming",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex203": {
     "name": "Single Leg Glute Bridge",
@@ -2154,7 +2359,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Glute Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex204": {
     "name": "Cable Wrist Curl",
@@ -2164,7 +2370,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Wrist Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex205": {
     "name": "Hanging Oblique Knee Raise",
@@ -2174,7 +2381,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hanging Oblique Knee Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex206": {
     "name": "Zottman Curl",
@@ -2184,7 +2392,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Zottman Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex207": {
     "name": "Barbell Bicep Drag Curl",
@@ -2194,7 +2403,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Bicep Drag Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex208": {
     "name": "Side Plank Leg Lift",
@@ -2204,7 +2414,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Side Plank Leg Lift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex209": {
     "name": "Reverse Plank on Elbows",
@@ -2214,7 +2425,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Plank on Elbows",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex210": {
     "name": "Bench Dip",
@@ -2224,7 +2436,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bench Dip",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex211": {
     "name": "Hiking",
@@ -2234,7 +2447,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hiking",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex212": {
     "name": "Dumbbell Goblet Squat",
@@ -2247,7 +2461,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Goblet Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex213": {
     "name": "Cycling - Stationary",
@@ -2257,7 +2472,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cycling - Stationary",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex214": {
     "name": "Side Laterals to Front Raise",
@@ -2267,7 +2483,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Side Laterals to Front Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex215": {
     "name": "Rowing",
@@ -2277,7 +2494,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Rowing",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex216": {
     "name": "Smith Machine Calf Raise",
@@ -2287,7 +2505,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex217": {
     "name": "Dumbbell Kickbacks",
@@ -2297,7 +2516,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Kickbacks",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex218": {
     "name": "Cable Shoulder External Rotation",
@@ -2307,7 +2527,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Shoulder External Rotation",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex219": {
     "name": "Behind the Back Cable Lateral Raise",
@@ -2317,7 +2538,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Behind the Back Cable Lateral Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex220": {
     "name": "Incline Push Up",
@@ -2327,7 +2549,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex221": {
     "name": "Inverted Row",
@@ -2337,7 +2560,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Inverted Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex222": {
     "name": "Vertical Knee Raise",
@@ -2347,7 +2571,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Vertical Knee Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex223": {
     "name": "Elliptical",
@@ -2357,7 +2582,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Elliptical",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex224": {
     "name": "Medicine Ball Slam",
@@ -2367,7 +2593,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Medicine Ball Slam",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex225": {
     "name": "Anterior Isometric Neck",
@@ -2377,7 +2604,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Anterior Isometric Neck",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex226": {
     "name": "Upright Row",
@@ -2387,7 +2615,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Upright Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex227": {
     "name": "Stair Stepper",
@@ -2397,7 +2626,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Stair Stepper",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex228": {
     "name": "Assisted Pull Up",
@@ -2407,7 +2637,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Assisted Pull Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex229": {
     "name": "TRX Chest Press",
@@ -2417,7 +2648,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex230": {
     "name": "Superman Hold",
@@ -2427,7 +2659,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Superman Hold",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex231": {
     "name": "Superman with Scaption",
@@ -2437,7 +2670,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Superman with Scaption",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex232": {
     "name": "Dumbbell Upright Row",
@@ -2447,7 +2681,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Upright Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex233": {
     "name": "Cable Shrugs",
@@ -2457,7 +2692,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Shrugs",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex234": {
     "name": "Push Jerk",
@@ -2467,7 +2703,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Push Jerk",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex235": {
     "name": "Cable Crossover Lat Pulldown",
@@ -2477,7 +2714,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Crossover Lat Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex236": {
     "name": "Face Down Plate Neck Resistance",
@@ -2487,7 +2725,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Face Down Plate Neck Resistance",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex237": {
     "name": "Cable Chest Press",
@@ -2497,7 +2736,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex238": {
     "name": "Smith Machine Bent Over Row",
@@ -2507,7 +2747,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Bent Over Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex239": {
     "name": "Dumbbell Hang Power Clean",
@@ -2517,7 +2758,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Hang Power Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex240": {
     "name": "Loop Band Standing Decline Chest Press",
@@ -2527,7 +2769,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Loop Band Standing Decline Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex241": {
     "name": "Clean",
@@ -2537,7 +2780,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex242": {
     "name": "Hang Clean",
@@ -2547,7 +2791,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hang Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex243": {
     "name": "Clean and Jerk",
@@ -2557,7 +2802,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Clean and Jerk",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex244": {
     "name": "Kneeling Squat",
@@ -2567,7 +2813,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kneeling Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex245": {
     "name": "Lateral Box Jump",
@@ -2577,7 +2824,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Lateral Box Jump",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex246": {
     "name": "Mini Loop Band Lateral Walk",
@@ -2587,7 +2835,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Lateral Walk",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex247": {
     "name": "Assisted Chin Up",
@@ -2597,7 +2846,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Assisted Chin Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex248": {
     "name": "Barbell Row",
@@ -2611,7 +2861,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex249": {
     "name": "Machine Bicep Curl",
@@ -2621,7 +2872,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Machine Bicep Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex250": {
     "name": "Power Clean",
@@ -2631,7 +2883,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Power Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex251": {
     "name": "Single Leg Kettlebell Deadlift",
@@ -2641,7 +2894,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Kettlebell Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex252": {
     "name": "Toes to Bar",
@@ -2651,7 +2905,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Toes to Bar",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex253": {
     "name": "Tuck Crunch",
@@ -2661,7 +2916,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Tuck Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex254": {
     "name": "Jackknife Sit-Up",
@@ -2671,7 +2927,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Jackknife Sit-Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex255": {
     "name": "Split Jerk",
@@ -2681,7 +2938,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Split Jerk",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex256": {
     "name": "Seated Tricep Press",
@@ -2691,7 +2949,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Seated Tricep Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex257": {
     "name": "TRX Resisted Rotation 1",
@@ -2701,7 +2960,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Resisted Rotation 1",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex258": {
     "name": "Trap Bar Deadlift",
@@ -2711,7 +2971,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Trap Bar Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex259": {
     "name": "Bent Over Row",
@@ -2721,7 +2982,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bent Over Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex260": {
     "name": "EZ-Bar Skullcrusher",
@@ -2731,7 +2993,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "EZ-Bar Skullcrusher",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex261": {
     "name": "Balance Trainer Cable Crunch With Side Bends",
@@ -2741,7 +3004,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Cable Crunch With Side Bends",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex262": {
     "name": "Scissor Kick",
@@ -2751,7 +3015,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Scissor Kick",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex263": {
     "name": "Palms-Down Barbell Wrist Curl",
@@ -2761,7 +3026,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Palms-Down Barbell Wrist Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex264": {
     "name": "Handle Band Pec Fly",
@@ -2771,7 +3037,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Handle Band Pec Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex265": {
     "name": "Pendlay Row",
@@ -2781,7 +3048,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pendlay Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex266": {
     "name": "Cross Body Mountain Climber",
@@ -2791,7 +3059,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cross Body Mountain Climber",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex267": {
     "name": "Plank Jack",
@@ -2801,7 +3070,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Plank Jack",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex268": {
     "name": "Plank Jack on Elbows",
@@ -2811,7 +3081,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Plank Jack on Elbows",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex269": {
     "name": "Reverse Plank",
@@ -2821,7 +3092,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Reverse Plank",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex270": {
     "name": "Pause Barbell Incline Bench Press",
@@ -2831,7 +3103,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pause Barbell Incline Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex271": {
     "name": "Exercise Ball Crunch",
@@ -2841,7 +3114,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Exercise Ball Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex272": {
     "name": "Dead Hang",
@@ -2851,7 +3125,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dead Hang",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex273": {
     "name": "Incline Barbell Skull Crusher",
@@ -2861,7 +3136,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline Barbell Skull Crusher",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex274": {
     "name": "Hip Thrust",
@@ -2871,7 +3147,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hip Thrust",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex275": {
     "name": "Single Leg Kickback",
@@ -2881,7 +3158,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Leg Kickback",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex276": {
     "name": "Muscle Snatch",
@@ -2891,7 +3169,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Muscle Snatch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex277": {
     "name": "Pause Bench Press",
@@ -2901,7 +3180,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pause Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex278": {
     "name": "Balance Trainer Push Up",
@@ -2911,7 +3191,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex279": {
     "name": "Walking Lunge",
@@ -2921,7 +3202,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Walking Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex280": {
     "name": "V-Bar Pulldown",
@@ -2931,7 +3213,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "V-Bar Pulldown",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex281": {
     "name": "TRX Bicep Curl",
@@ -2941,7 +3224,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Bicep Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex282": {
     "name": "Dead Bug",
@@ -2951,7 +3235,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dead Bug",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex283": {
     "name": "Flutter Kicks",
@@ -2961,7 +3246,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Flutter Kicks",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex284": {
     "name": "Balance Trainer Wide Pushups",
@@ -2971,7 +3257,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Wide Pushups",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex285": {
     "name": "Snatch",
@@ -2981,7 +3268,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Snatch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex286": {
     "name": "TRX Squat",
@@ -2991,7 +3279,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex287": {
     "name": "Alternating Medicine Ball Push Up",
@@ -3001,7 +3290,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Alternating Medicine Ball Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex288": {
     "name": "Kettlebell Overhead Press",
@@ -3011,7 +3301,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kettlebell Overhead Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex289": {
     "name": "Floor Press",
@@ -3021,7 +3312,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Floor Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex290": {
     "name": "Smith Machine Stiff-Legged Deadlift",
@@ -3031,7 +3323,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Stiff-Legged Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex291": {
     "name": "Renegade Row",
@@ -3041,7 +3334,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Renegade Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex292": {
     "name": "Hang Power Clean",
@@ -3051,7 +3345,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hang Power Clean",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex293": {
     "name": "Pause Back Squat",
@@ -3061,7 +3356,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pause Back Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex294": {
     "name": "Smith Machine Bench Press",
@@ -3071,7 +3367,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine Bench Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex295": {
     "name": "Balance Trainer Narrow Push Up",
@@ -3081,7 +3378,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Narrow Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex296": {
     "name": "TRX Glute Bridge",
@@ -3091,7 +3389,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Glute Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex297": {
     "name": "Mini Loop Band Hip Thrust",
@@ -3101,7 +3400,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Hip Thrust",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex298": {
     "name": "Smith Machine One-Arm Upright Row",
@@ -3111,7 +3411,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Smith Machine One-Arm Upright Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex299": {
     "name": "Single Arm Dumbbell Tricep Extension",
@@ -3121,7 +3422,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Arm Dumbbell Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex300": {
     "name": "Single Dumbbell Sumo Squat",
@@ -3131,7 +3433,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Dumbbell Sumo Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex301": {
     "name": "Mini Loop Band Kneeling Bicep Curl",
@@ -3141,7 +3444,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Kneeling Bicep Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex302": {
     "name": "Balance Trainer Spiderman Push Up",
@@ -3151,7 +3455,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Spiderman Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex303": {
     "name": "TRX Chest Fly",
@@ -3161,7 +3466,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Chest Fly",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex304": {
     "name": "Snatch High Pull",
@@ -3171,7 +3477,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Snatch High Pull",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex305": {
     "name": "Single Arm Kettlebell Swing",
@@ -3181,7 +3488,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Arm Kettlebell Swing",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex306": {
     "name": "Single Arm Overhead Dumbbell Lunge",
@@ -3191,7 +3499,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Arm Overhead Dumbbell Lunge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex307": {
     "name": "Box Front Squat",
@@ -3201,7 +3510,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Box Front Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex308": {
     "name": "Balance Trainer Dome Push Ups",
@@ -3211,7 +3521,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Dome Push Ups",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex309": {
     "name": "Opposite Leg Toe Touch",
@@ -3221,7 +3532,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Opposite Leg Toe Touch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex310": {
     "name": "Power Snatch",
@@ -3231,7 +3543,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Power Snatch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex311": {
     "name": "Snatch Deadlift",
@@ -3241,7 +3554,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Snatch Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex312": {
     "name": "TRX Row",
@@ -3251,7 +3565,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex313": {
     "name": "Zottman Preacher Curl",
@@ -3261,7 +3576,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Zottman Preacher Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex314": {
     "name": "TRX Pike",
@@ -3271,7 +3587,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Pike",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex315": {
     "name": "Power Clean Thruster",
@@ -3281,7 +3598,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Power Clean Thruster",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex316": {
     "name": "Tate Press",
@@ -3291,7 +3609,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Tate Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex317": {
     "name": "Box Squat",
@@ -3301,7 +3620,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Box Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex318": {
     "name": "Toe Touchers",
@@ -3311,7 +3631,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Toe Touchers",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex319": {
     "name": "Push Up on Knees",
@@ -3321,7 +3642,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Push Up on Knees",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex320": {
     "name": "Dumbbell Squeeze Press",
@@ -3331,7 +3653,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Squeeze Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex321": {
     "name": "Dumbbell Pullover",
@@ -3341,7 +3664,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell Pullover",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex322": {
     "name": "Mini Loop Band Tricep Press",
@@ -3351,7 +3675,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Tricep Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex323": {
     "name": "Hang Snatch",
@@ -3361,7 +3686,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Hang Snatch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex324": {
     "name": "Kettlebell Row",
@@ -3371,7 +3697,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kettlebell Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex325": {
     "name": "Kettlebell Swing",
@@ -3381,7 +3708,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Kettlebell Swing",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex326": {
     "name": "Stability Ball Hip Bridge",
@@ -3391,7 +3719,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Stability Ball Hip Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex327": {
     "name": "Barbell Glute Bridge",
@@ -3401,7 +3730,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Barbell Glute Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex328": {
     "name": "Mini Loop Band Standing Hip Extension",
@@ -3411,7 +3741,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Standing Hip Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex329": {
     "name": "Single Arm Preacher Curl",
@@ -3421,7 +3752,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Single Arm Preacher Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex330": {
     "name": "Exercise Ball Pull In",
@@ -3431,7 +3763,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Exercise Ball Pull In",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex331": {
     "name": "Mini Loop Band Fire Hydrant",
@@ -3441,7 +3774,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Fire Hydrant",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex332": {
     "name": "Pike Push Up",
@@ -3451,7 +3785,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pike Push Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex333": {
     "name": "Elevated Hip Bridge",
@@ -3461,7 +3796,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Elevated Hip Bridge",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex334": {
     "name": "Weighted Ball Hyperextension",
@@ -3471,7 +3807,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Weighted Ball Hyperextension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex335": {
     "name": "Dumbbell No Money Curls",
@@ -3481,7 +3818,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Dumbbell No Money Curls",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex336": {
     "name": "Oblique Crunch",
@@ -3491,7 +3829,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Oblique Crunch",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex337": {
     "name": "Balance Trainer Plank",
@@ -3501,7 +3840,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Balance Trainer Plank",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex338": {
     "name": "Cycling",
@@ -3511,7 +3851,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cycling",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex339": {
     "name": "Power Clean and Press",
@@ -3521,7 +3862,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Power Clean and Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex340": {
     "name": "Mini Loop Band Plank with Straight Leg Kickback",
@@ -3531,7 +3873,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Mini Loop Band Plank with Straight Leg Kickback",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex341": {
     "name": "TRX Tricep Extension",
@@ -3541,7 +3884,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "TRX Tricep Extension",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex342": {
     "name": "Olympic Squat",
@@ -3551,7 +3895,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Olympic Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex343": {
     "name": "Pause Front Squat",
@@ -3561,7 +3906,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Pause Front Squat",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*36/(37-r)"
   },
   "ex344": {
     "name": "Incline Hammer Curl",
@@ -3571,7 +3917,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Incline Hammer Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex345": {
     "name": "Rack Pulls",
@@ -3581,7 +3928,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Rack Pulls",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex346": {
     "name": "Cat Cow",
@@ -3591,7 +3939,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cat Cow",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex347": {
     "name": "Cable Preacher Curl",
@@ -3601,7 +3950,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Cable Preacher Curl",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex348": {
     "name": "Partner Floor Glute-Ham Raise",
@@ -3611,7 +3961,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Partner Floor Glute-Ham Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex349": {
     "name": "Clean Deadlift",
@@ -3621,7 +3972,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Clean Deadlift",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex350": {
     "name": "Dumbbell Romanian Deadlift",
@@ -3642,7 +3994,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "High Knee",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex352": {
     "name": "Bar Muscle Up",
@@ -3652,7 +4005,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Bar Muscle Up",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex353": {
     "name": "Running - Trueform",
@@ -3662,7 +4016,8 @@
     "instructions": "",
     "notes": "",
     "exportName": "Running - Trueform",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   },
   "ex357": {
     "name": "Single-arm Cable Row",
@@ -3676,7 +4031,8 @@
     "instructions": "sit down on the seated machine (or stand if necessary) and row your elbow back toward your hip, letting your torso rotate slightly into the stretch at the front. Pause and squeeze your lat, then control the handle back out without letting the stack slam.",
     "notes": "Constant-tension lat row with a big stretch",
     "exportName": "Single-arm Cable Row",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex358": {
     "name": "Standing Multi Flight",
@@ -3690,7 +4046,8 @@
     "instructions": "Adjust both arms to match the movement you want: forward for rear delts, open and slightly behind you for chest fly, or lower for lateral raises. Set the chest pad so your torso stays supported and your shoulders line up with the handles. Keep a small bend in your elbows and move in a wide arc instead of turning it into a press or row. Pause for a clean squeeze, then control the handles back without letting the stack slam.",
     "notes": "Multi-use fly machine. Use the arm position to choose chest fly, rear delt fly, or lateral raise.",
     "exportName": "Standing Multi Flight",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex359": {
     "name": "Hammer Strength Lateral Raise",
@@ -3703,7 +4060,8 @@
     "instructions": "Sit facing the machine with your chest against the pad and your upper arms under the roller pads. Keep your shoulders down and your elbows slightly bent. Raise your elbows out to the sides until your upper arms are about parallel with the floor. Lead with the elbows, not the hands, and avoid shrugging. Lower slowly until the stack almost touches.",
     "notes": "Machine lateral raise. Great for controlled side delt work without needing to stabilize dumbbells.",
     "exportName": "Hammer Strength Lateral Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex360": {
     "name": "MegaMass Leverage Chest Press",
@@ -3717,7 +4075,8 @@
     "instructions": "Adjust the seat so the handles start around mid-chest, then sit tall with your back pinned to the pad. Pull your shoulder blades back and down before you start. Press the handles forward in a smooth arc, keeping your elbows a little below shoulder height instead of flared straight out. Stop just short of locking out, squeeze your chest, then lower under control until you feel a stretch across your pecs.",
     "notes": "Plate-loaded leverage chest press with independent arms. Use controlled reps and match loading on both sides.",
     "exportName": "MegaMass Leverage Chest Press",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   },
   "ex361": {
     "name": "Machine Pullover",
@@ -3730,7 +4089,8 @@
     "instructions": "Adjust the seat so your shoulders line up with the machine's pivot point and the pad or handles sit against your upper arms. Keep your chest against the pad and your ribs down. Drive your elbows down and back in an arc until your upper arms are near your sides. Squeeze your lats at the bottom, then let the handles come back up slowly until you feel a stretch without letting the weight stack slam.",
     "notes": "Machine lat isolation. Keep the movement at the shoulders instead of turning it into a triceps pressdown.",
     "exportName": "Machine Pullover",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex362": {
     "name": "Cable Rear Delt Crossover",
@@ -3744,7 +4104,8 @@
     "instructions": "Set both cable pulleys around shoulder height and remove the handles if the cable ends are easier to grip. Grab the left cable with your right hand and the right cable with your left hand so your arms cross in front of you. Step back, keep a soft bend in your elbows, and pull your hands apart until your arms are out to your sides. Squeeze the back of your shoulders, then return slowly without letting the weight pull your shoulders forward.",
     "notes": "Rear delt cable fly variation with constant tension. Use light weight and control the stretch.",
     "exportName": "Cable Rear Delt Crossover",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex363": {
     "name": "Preacher Curl Machine",
@@ -3757,7 +4118,8 @@
     "instructions": "Adjust the seat so your upper arms rest flat on the preacher pad and your armpits are close to the top edge. Grab the handles with your wrists straight. Curl the handles up by bending your elbows, squeeze your biceps at the top, then lower slowly until your arms are almost straight. Keep your chest against the pad and do not lift your elbows off the support.",
     "notes": "Wrist-friendly machine curl that makes cheating hard. Avoid fully relaxing at the bottom.",
     "exportName": "Preacher Curl Machine",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": ""
   },
   "ex364": {
     "name": "Seated Dumbbell Shrug",
@@ -3770,7 +4132,8 @@
     "instructions": "Sit tall on a bench with a dumbbell in each hand and your arms hanging straight at your sides. Keep your chest up and your neck neutral. Shrug your shoulders straight up toward your ears, pause briefly at the top, then lower under control until you feel your traps stretch. Do not roll your shoulders forward or backward.",
     "notes": "Seated version of dumbbell shrugs. Removes leg drive and keeps the movement strict.",
     "exportName": "Seated Dumbbell Shrug",
-    "multiplier": 2
+    "multiplier": 2,
+    "1repmaxformula": ""
   },
   "ex365": {
     "name": "Leg Press Calf Raise",
@@ -3782,6 +4145,7 @@
     "instructions": "Sit in the leg press and place the balls of your feet on the lower edge of the platform with your heels hanging off. Keep a slight bend in your knees and unlock the safety handles. Let your heels drop slowly until you feel a calf stretch, then press through the balls of your feet and raise your heels as high as possible. Pause at the top, then lower under control. Keep the sled stable and do not bounce out of the bottom.",
     "notes": "Calf raise performed on the leg press. Use the safeties and keep the range controlled.",
     "exportName": "Leg Press Calf Raise",
-    "multiplier": 1
+    "multiplier": 1,
+    "1repmaxformula": "w*(1+(r/30))"
   }
 }
