@@ -292,6 +292,55 @@
             background: rgba(0, 255, 136, 0.05);
         }
 
+        .exercise-item.exercise-done {
+            background: rgba(20, 20, 23, 0.78);
+            border-color: #3b3b40;
+        }
+
+        .exercise-item.exercise-done .exercise-header,
+        .exercise-item.exercise-done .sets-grid,
+        .exercise-item.exercise-done .exercise-volume,
+        .exercise-item.exercise-done .button-row {
+            opacity: 0.5;
+        }
+
+        .exercise-item.exercise-pr {
+            border-color: transparent;
+            background: var(--bg-tertiary);
+            isolation: isolate;
+        }
+
+        .exercise-item.exercise-pr::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            z-index: 0;
+            padding: 2px;
+            background: conic-gradient(from 40deg, #ffd5e5, #d9d1ff, #bdefff, #c8ffd9, #fff2b8, #ffd5e5);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .exercise-item.exercise-pr.pr-celebrating::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            z-index: -2;
+            background: conic-gradient(from 0deg, rgba(255, 194, 221, 0.8), rgba(202, 194, 255, 0.75), rgba(166, 236, 255, 0.75), rgba(185, 255, 213, 0.75), rgba(255, 234, 172, 0.75), rgba(255, 194, 221, 0.8));
+            filter: blur(14px);
+            opacity: 0;
+            animation: prHaloSpin 1.35s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes prHaloSpin {
+            0% { opacity: 0; transform: rotate(0deg); }
+            18% { opacity: 0.9; }
+            100% { opacity: 0; transform: rotate(360deg); }
+        }
+
         .exercise-header {
             display: flex;
             justify-content: space-between;
@@ -636,6 +685,31 @@
             max-width: 200px;
         }
 
+        .btn-exercise-done {
+            width: 100%;
+            margin-top: 8px;
+            padding: 16px 24px;
+            background: rgba(0, 255, 136, 0.12);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-exercise-done:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.16);
+        }
+
+        .btn-exercise-done.is-edit {
+            background: rgba(255, 187, 0, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .btn-exercise-done.is-edit:hover {
+            background: rgba(255, 187, 0, 0.18);
+            box-shadow: 0 0 20px rgba(255, 187, 0, 0.14);
+        }
+
         .btn-secondary:hover {
             border-color: var(--accent-primary);
             color: var(--text-primary);
@@ -708,6 +782,40 @@
 
         .success-toast.active .toast-progress {
             animation: toastProgress 3s linear forwards;
+        }
+
+        .pr-toast {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            z-index: 10001;
+            min-width: 180px;
+            padding: 14px 34px;
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#111113, #111113) padding-box,
+                linear-gradient(110deg, #ffd5e5, #d9d1ff, #bdefff, #c8ffd9, #fff2b8) border-box;
+            color: #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 5px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 12px 42px rgba(190, 223, 255, 0.26);
+            transition: transform 0.28s ease, opacity 0.28s ease, visibility 0.28s;
+        }
+
+        .pr-toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .exercise-item.exercise-pr.pr-celebrating::after { animation: none; }
+            .pr-toast { transition: opacity 0.2s ease, visibility 0.2s; }
         }
 
         @keyframes toastProgress {
@@ -2602,6 +2710,7 @@
             <button class="nav-tab" data-tab="library">Exercise Library</button>
             <button class="nav-tab" data-tab="history">Workout History</button>
             <button class="nav-tab" onclick="openManualLogModal()">MANUAL LOG</button>
+            <button class="nav-tab" id="seasonSettingsBtn" onclick="openSeasonModal()">SEASON</button>
             <button class="nav-tab flex-between flex-wrap-gap" id="statsDashboardBtn" onclick="toggleStatsDashboard()">
                 Stats Dashboard
                 <svg class="toggle-icon-dash" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -2839,6 +2948,19 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="seasonModal">
+        <div class="modal modal-sm">
+            <h3 class="modal-title">SEASON START</h3>
+            <p class="text-muted-sm m-b-20" style="line-height: 1.5;">PRs compare only against workouts on or after this date.</p>
+            <label for="seasonStartDate" class="set-label m-b-16">Start date</label>
+            <input type="date" class="library-search" id="seasonStartDate">
+            <div class="modal-actions m-t-32">
+                <button class="btn btn-primary btn-flex-2" id="saveSeasonBtn" onclick="saveActiveSeasonStart()">SAVE SEASON</button>
+                <button class="btn btn-secondary btn-flex-1" id="cancelSeasonBtn" onclick="closeModal('seasonModal')">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="manualLogModal">
         <div class="modal modal-md">
             <h1 class="modal-title">MANUAL WORKOUT LOG</h1>
@@ -2872,6 +2994,7 @@
         WORKOUT SAVED!
         <div class="toast-progress"></div>
     </div>
+    <div id="prToast" class="pr-toast" role="status" aria-live="polite">PR!</div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -2954,6 +3077,7 @@
         }
     </script>
     <script src="js/coach.js"></script>
+    <script src="js/records.js"></script>
     <script>
         // ============================================================================
         // 1. CONFIGURATION & CONSTANTS
@@ -2985,6 +3109,7 @@
         let trainingPlanData = null;  // Firestore/cache replaces the source, not the rest of app logic.
         let progressionPlanData = null;  // Missing Firestore docs are seeded once from bundled JSON.
         let workoutLogs = [];
+        let recordHistoryLogs = [];
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
         let currentSetCounts = {}; // Track number of sets per exercise !
@@ -2996,6 +3121,10 @@
         let isFullHistoryLoaded = false; // Track if we've loaded all history or just recent
         let pendingWorkoutData = null;
         let manualLogData = {}; // Store data for manual log inputs
+        let activeSeason = null;
+        let recordHistoryReady = false;
+        let completedExerciseState = {};
+        let exercisePrResults = {};
         const logCalculationCache = new Map(); // Cache for log calculations (sets/volume)
         const activeProgressionTargets = {}; // Current workout progression targets keyed by exercise card
         let pendingRenders = new Set(); // Batched render queue
@@ -3199,6 +3328,11 @@
             formatWeightLbs,
             formatDate,
             dateFormats: DateFormats
+        });
+
+        const recordTracker = window.WorkoutRecords.create({
+            getWorkoutLogs: () => recordHistoryLogs,
+            getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null
         });
 
         function calculateExerciseVolumeLbs(exerciseKey, setCount = null) {
@@ -3533,7 +3667,7 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
-            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false } = options;
+            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false, isDone = false, isPR = false } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
@@ -3557,8 +3691,11 @@
             const volumeIndicator = isEdit ? '' : `
                 <div class="exercise-volume" id="exercise-volume-${escapeAttr(key)}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
 
+            const doneAction = isEdit ? '' : `
+                <button class="btn btn-exercise-done ${isDone ? 'is-edit' : ''}" data-action="toggle-exercise-done" data-exercise-key="${escapeAttr(key)}" data-exercise-id="${escapeAttr(exercise.id)}">${isDone ? 'EDIT' : 'DONE'}</button>`;
+
             return `
-                <div class="exercise-item" id="${isEdit ? '' : `exercise-${escapeAttr(key)}`}" data-mode="${mode}">
+                <div class="exercise-item ${isDone ? 'exercise-done' : ''} ${isPR ? 'exercise-pr' : ''}" id="${isEdit ? '' : `exercise-${escapeAttr(key)}`}" data-mode="${mode}">
                     <div class="exercise-header">
                         <div class="exercise-info-col">
                             <h4 class="exercise-name ${isEdit ? '' : 'cursor-pointer'}" ${isEdit ? '' : `data-exercise-id="${escapeAttr(exercise.id)}"`}>
@@ -3571,6 +3708,7 @@
                     <div class="sets-grid">${setsHtml}</div>
                     ${volumeIndicator}
                     ${footerActions}
+                    ${doneAction}
                 </div>`;
         }
 
@@ -3884,6 +4022,67 @@
             }
         }
 
+        async function loadActiveSeason() {
+            try {
+                const snapshot = await window.firebaseGetDoc(window.getUserConfigDocRef('activeSeason'));
+                activeSeason = snapshot.exists() ? snapshot.data() : null;
+                return true;
+            } catch (error) {
+                console.error('Failed to load active season:', error);
+                activeSeason = null;
+                return false;
+            }
+        }
+
+        function openSeasonModal() {
+            const input = document.getElementById('seasonStartDate');
+            input.value = activeSeason?.startDate || getLocalDateKey(new Date());
+            document.getElementById('cancelSeasonBtn').disabled = !activeSeason;
+            openModal('seasonModal');
+        }
+
+        async function saveActiveSeasonStart() {
+            const input = document.getElementById('seasonStartDate');
+            const startDate = input.value;
+            const todayKey = getLocalDateKey(new Date());
+            if (!startDate) {
+                showNotification('SEASON DATE REQUIRED', 'Choose the first day of this season.');
+                return;
+            }
+            if (startDate > todayKey) {
+                showNotification('INVALID SEASON DATE', 'The season cannot start in the future.');
+                return;
+            }
+
+            const button = document.getElementById('saveSeasonBtn');
+            button.disabled = true;
+            button.textContent = 'SAVING...';
+            const nextSeason = {
+                id: `season-${startDate}`,
+                name: 'Current Season',
+                startDate,
+                updatedAt: new Date().toISOString()
+            };
+
+            const success = await withFirebaseErrorHandling(async () => {
+                await window.firebaseSetDoc(window.getUserConfigDocRef('activeSeason'), nextSeason);
+            }, 'save season');
+
+            button.disabled = false;
+            button.textContent = 'SAVE SEASON';
+            if (!success) {
+                showNotification('SAVE ERROR', 'The season start date could not be saved.');
+                return;
+            }
+
+            activeSeason = nextSeason;
+            completedExerciseState = {};
+            exercisePrResults = {};
+            saveWorkoutProgress();
+            renderExercises();
+            closeModal('seasonModal');
+        }
+
         function getWorkoutData(dayIndex) {
             if (!trainingPlanData) return null;
             const schedule = trainingPlanData.schedule || [];
@@ -3987,6 +4186,19 @@
             }, 'load');
         }
 
+        async function loadRecordHistoryFromFirebase() {
+            return withFirebaseErrorHandling(async () => {
+                const q = window.firebaseQuery(
+                    window.getWorkoutCollectionRef(),
+                    window.firebaseOrderBy('date', 'desc')
+                );
+                const snapshot = await window.firebaseGetDocs(q);
+                recordHistoryLogs = [];
+                snapshot.forEach(doc => recordHistoryLogs.push({ id: doc.id, ...doc.data() }));
+                recordHistoryReady = true;
+            }, 'load season records');
+        }
+
         // Guards against rapid double-taps creating duplicate saves.
         let isSaving = false;
 
@@ -4045,11 +4257,24 @@
             } else {
                 workoutLogs.unshift(log);
             }
+            upsertRecordHistoryLog(log);
             invalidateStatsCache();
             if (refreshComponents.length > 0) {
                 refreshUI(refreshComponents);
             }
             return true;
+        }
+
+        function upsertRecordHistoryLog(log) {
+            const recordIndex = recordHistoryLogs.findIndex(l => compareLogIds(l.id, log.id));
+            const copy = JSON.parse(JSON.stringify(log));
+            if (recordIndex !== -1) recordHistoryLogs[recordIndex] = copy;
+            else recordHistoryLogs.unshift(copy);
+        }
+
+        function removeRecordHistoryLog(logId) {
+            const recordIndex = recordHistoryLogs.findIndex(l => compareLogIds(l.id, logId));
+            if (recordIndex !== -1) recordHistoryLogs.splice(recordIndex, 1);
         }
 
         async function deleteFromFirebase(logId) {
@@ -4111,6 +4336,8 @@
                     workoutDay: currentWorkoutDay, // kept inside for safety
                     exerciseData: currentExerciseData,
                     setCounts: currentSetCounts,
+                    completedExercises: completedExerciseState,
+                    prResults: exercisePrResults,
                     timestamp: Date.now()
                 };
                 localStorage.setItem(getProgressStorageKey(), JSON.stringify(allProgress));
@@ -4139,6 +4366,8 @@
                     allProgress[legacyData.workoutDay] = {
                         exerciseData: legacyData.exerciseData,
                         setCounts: legacyData.setCounts,
+                        completedExercises: legacyData.completedExercises || {},
+                        prResults: legacyData.prResults || {},
                         timestamp: legacyData.timestamp
                     };
                     localStorage.setItem(getProgressStorageKey(), JSON.stringify(allProgress));
@@ -4167,6 +4396,8 @@
                 if (currentData) {
                     currentExerciseData = currentData.exerciseData || {};
                     currentSetCounts = currentData.setCounts || {};
+                    completedExerciseState = currentData.completedExercises || {};
+                    exercisePrResults = currentData.prResults || {};
                     return true;
                 }
                 return false;
@@ -4259,6 +4490,13 @@
                 if (e.target.classList.contains('modal-overlay')) {
                     const modalId = e.target.id;
                     if (modalId) dispatchCloseModal(modalId);
+                    return;
+                }
+
+                const doneButton = e.target.closest('[data-action="toggle-exercise-done"]');
+                if (doneButton) {
+                    e.preventDefault();
+                    toggleExerciseDone(doneButton.dataset.exerciseKey, doneButton.dataset.exerciseId);
                     return;
                 }
 
@@ -4457,12 +4695,14 @@
             const exercisesLoaded = await loadExerciseData();
             const planLoaded = await loadTrainingPlan();
             const progressionLoaded = await loadProgressionPlan();
+            await loadActiveSeason();
             if (!exercisesLoaded || !planLoaded || !progressionLoaded) {
                 console.error('Failed to load data files');
                 document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text">Error loading data files. Please refresh.</div>';
                 return;
             }
             await loadFromFirebase();
+            await loadRecordHistoryFromFirebase();
             document.getElementById('loadingOverlay').style.display = 'none';
             updateCurrentDate();
             setTodaysWorkout();
@@ -4475,6 +4715,7 @@
             updateStats();
             setupTabs();
             setupEventHandlers(); // Setup event delegation
+            if (!activeSeason) openSeasonModal();
         }
         function updateCurrentDate() {
             const now = new Date();
@@ -4489,6 +4730,8 @@
             if (clearProgress) {
                 currentExerciseData = {};
                 currentSetCounts = {};
+                completedExerciseState = {};
+                exercisePrResults = {};
             }
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
@@ -4547,11 +4790,14 @@
                 return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, {
                     isEdit: false,
                     volumeLbs,
-                    hasProgressionTarget: !!progressionTarget
+                    hasProgressionTarget: !!progressionTarget,
+                    isDone: !!completedExerciseState[exerciseKey],
+                    isPR: !!exercisePrResults[exerciseKey]?.isPR
                 });
             }).join('');
 
             Object.keys(activeProgressionTargets).forEach(checkExerciseCompletion);
+            Object.keys(completedExerciseState).forEach(applyExerciseDoneVisualState);
         }
         function updateExerciseData(input) {
             const mode = input.dataset.mode;
@@ -4624,6 +4870,95 @@
                 renderExercises();
             }
         }
+
+        let prToastTimer = null;
+
+        function showPrToast() {
+            const toast = document.getElementById('prToast');
+            if (!toast) return;
+            if (prToastTimer) window.clearTimeout(prToastTimer);
+            toast.classList.remove('active');
+            void toast.offsetWidth;
+            toast.classList.add('active');
+            prToastTimer = window.setTimeout(() => toast.classList.remove('active'), 3000);
+        }
+
+        function getCurrentWorkingSets(exerciseKey) {
+            const exerciseEl = document.getElementById(`exercise-${exerciseKey}`);
+            if (!exerciseEl) return [];
+            return Array.from(exerciseEl.querySelectorAll('.set-input-group')).map(group => {
+                const reps = parseInt(group.querySelector('.set-input[data-type="reps"]')?.value, 10);
+                const inputWeight = parseFloat(group.querySelector('.set-input[data-type="weight"]')?.value);
+                const weight = Number.isFinite(inputWeight)
+                    ? (weightUnit === 'lbs' ? lbsToKg(inputWeight) : inputWeight)
+                    : 0;
+                return {
+                    reps,
+                    weight,
+                    isWarmup: group.querySelector('.warmup-btn')?.classList.contains('active') || false
+                };
+            }).filter(set => !set.isWarmup && Number.isFinite(set.reps) && set.reps > 0);
+        }
+
+        function applyExerciseDoneVisualState(exerciseKey) {
+            const exerciseEl = document.getElementById(`exercise-${exerciseKey}`);
+            if (!exerciseEl) return;
+            const isDone = !!completedExerciseState[exerciseKey];
+            const isPR = !!exercisePrResults[exerciseKey]?.isPR;
+            exerciseEl.classList.toggle('exercise-done', isDone);
+            exerciseEl.classList.toggle('exercise-pr', isDone && isPR);
+            exerciseEl.querySelectorAll('.set-input, .warmup-btn, .btn-add-set-style, .btn-remove-set-style').forEach(control => {
+                control.disabled = isDone;
+            });
+            const doneButton = exerciseEl.querySelector('[data-action="toggle-exercise-done"]');
+            if (doneButton) {
+                doneButton.textContent = isDone ? 'EDIT' : 'DONE';
+                doneButton.classList.toggle('is-edit', isDone);
+            }
+        }
+
+        function toggleExerciseDone(exerciseKey, exerciseId) {
+            if (completedExerciseState[exerciseKey]) {
+                delete completedExerciseState[exerciseKey];
+                delete exercisePrResults[exerciseKey];
+                applyExerciseDoneVisualState(exerciseKey);
+                saveWorkoutProgress();
+                return;
+            }
+
+            if (!activeSeason?.startDate) {
+                showNotification('START A SEASON', 'Choose a season start date before finishing a lift.');
+                openSeasonModal();
+                return;
+            }
+
+            if (!recordHistoryReady) {
+                showNotification('PR DATA UNAVAILABLE', 'Workout history could not be loaded, so this lift cannot be checked safely yet.');
+                return;
+            }
+
+            const workingSets = getCurrentWorkingSets(exerciseKey);
+            if (workingSets.length === 0) {
+                showNotification('MISSING DATA', 'Enter reps for at least one working set before tapping Done.');
+                return;
+            }
+
+            const result = recordTracker.evaluateExercise(exerciseId, workingSets);
+            completedExerciseState[exerciseKey] = true;
+            exercisePrResults[exerciseKey] = result;
+            applyExerciseDoneVisualState(exerciseKey);
+            saveWorkoutProgress();
+
+            if (result.isPR) {
+                const exerciseEl = document.getElementById(`exercise-${exerciseKey}`);
+                exerciseEl.classList.remove('pr-celebrating');
+                void exerciseEl.offsetWidth;
+                exerciseEl.classList.add('pr-celebrating');
+                window.setTimeout(() => exerciseEl?.classList.remove('pr-celebrating'), 1500);
+                showPrToast();
+            }
+        }
+
         function checkExerciseCompletion(key) {
             const el = document.getElementById(`exercise-${key}`);
             if (!el) return;
@@ -4712,7 +5047,7 @@
             try {
                 const workout = getWorkoutData(currentWorkoutDay);
                 const logId = generateLogId();
-                const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg' };
+                const log = { id: logId, date: new Date().toISOString(), workoutDay: currentWorkoutDay, workoutName: workout.name, exercises, weightUnit: 'kg', seasonId: activeSeason?.id || null };
 
                 const success = await saveWorkoutLog(log, []);
 
@@ -4720,6 +5055,8 @@
                     showButtonSuccess(btn);
                     currentExerciseData = {};
                     currentSetCounts = {};
+                    completedExerciseState = {};
+                    exercisePrResults = {};
                     clearWorkoutProgress();
                     refreshUI(['exercises', 'logs', 'stats']);
                     if (shouldExport) exportSingleWorkout(log);
@@ -4891,6 +5228,7 @@
                     if (index !== -1) {
                         workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
                     }
+                    upsertRecordHistoryLog(editingLogData);
                     invalidateStatsCache();
                     // Refresh UI
                     renderRecentLogs();
@@ -5121,6 +5459,9 @@
                         workoutLogs[workoutIdx] = workout;
                     }
                 }
+                const remainingWorkout = workoutLogs.find(log => compareLogIds(log.id, workoutId));
+                if (remainingWorkout) upsertRecordHistoryLog(remainingWorkout);
+                else removeRecordHistoryLog(workoutId);
                 // Persisted successfully — only now paint the green "Deleted!" confirmation.
                 if (overlay) {
                     overlay.classList.add('deleted-state');
@@ -5563,6 +5904,8 @@
             // Clear in-memory state for the new day
             currentExerciseData = {};
             currentSetCounts = {};
+            completedExerciseState = {};
+            exercisePrResults = {};
             // Update header labels (badge, name, meta)
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
@@ -5850,7 +6193,8 @@
                 workoutDay: -1, // Manual log
                 workoutName: 'MANUAL ENTRY',
                 exercises: exercises,
-                weightUnit: 'kg'
+                weightUnit: 'kg',
+                seasonId: activeSeason?.id || null
             };
 
             isSaving = true;

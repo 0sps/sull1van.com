@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v5';
+const CACHE_NAME = 'seans-log-v6';
 // Keep the service worker focused on the app shell. exercises/trainingPlan/
 // progressionPlan are user config data now, cached by page code after Firebase reads.
 const ASSETS_TO_CACHE = [
@@ -10,6 +10,7 @@ const ASSETS_TO_CACHE = [
     './body.html',
     './data.html',
     './js/coach.js',
+    './js/records.js',
     './exercises.json',
     './training-plan.json',
     './progression-plan.json',
