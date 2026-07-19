@@ -1437,7 +1437,7 @@
 
         .momentum-grid {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
         }
 
@@ -1475,6 +1475,25 @@
             line-height: 1.4;
         }
 
+        .momentum-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 14px;
+        }
+
+        .momentum-drilldown {
+            color: var(--accent-secondary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .momentum-drilldown:hover {
+            color: var(--text-primary);
+        }
+
         @media (max-width: 900px) {
             .momentum-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .momentum-card.opportunity { grid-column: 1 / -1; }
@@ -1485,6 +1504,8 @@
             .momentum-header { align-items: flex-start; }
             .momentum-title { font-size: 1.7rem; }
             .momentum-week { max-width: 130px; }
+            .momentum-grid { grid-template-columns: 1fr; }
+            .momentum-card.opportunity { grid-column: auto; }
         }
 
         /* Stats Dashboard Collapsible Styles */
@@ -3100,19 +3121,9 @@
                 </div>
                 <div class="momentum-grid">
                     <div class="momentum-card pr">
-                        <div class="momentum-label">Recent PRs</div>
-                        <div class="momentum-value" id="latestPrValue">NO PR YET</div>
-                        <div class="momentum-detail" id="latestPrDetail">Finish a lift to start the board.</div>
-                    </div>
-                    <div class="momentum-card pr">
-                        <div class="momentum-label">PRs This Week</div>
+                        <div class="momentum-label">PRs In The Last Two Weeks</div>
                         <div class="momentum-value" id="weeklyPrCount">0</div>
-                        <div class="momentum-detail">Records earned in the last seven days.</div>
-                    </div>
-                    <div class="momentum-card">
-                        <div class="momentum-label">Latest Workout</div>
-                        <div class="momentum-value" id="latestWorkoutValue">NONE YET</div>
-                        <div class="momentum-detail" id="latestWorkoutDetail">No season workouts logged.</div>
+                        <div class="momentum-detail">Best-set estimated 1RM and rep records earned in the last 14 days.</div>
                     </div>
                     <div class="momentum-card" id="weeklyActivityCard">
                         <div class="momentum-label">7-Day Activity</div>
@@ -3124,6 +3135,9 @@
                         <div class="momentum-value" id="prOpportunityValue">SET THE BASELINE</div>
                         <div class="momentum-detail" id="prOpportunityDetail">Your first season performance is a record.</div>
                     </div>
+                </div>
+                <div class="momentum-footer">
+                    <a href="progression.html" class="momentum-drilldown">View Full Progression →</a>
                 </div>
             </div>
         </div>
@@ -3739,6 +3753,7 @@
             getWorkoutLogs: () => getSeasonWorkoutLogs(),
             getExerciseData: exerciseId => getExercise(exerciseId),
             getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
+            getPRTimeline: () => recordTracker?.getPRTimeline() || [],
             coachLogLookback: CONFIG.COACH_LOG_LOOKBACK,
             lbsToKg,
             kgToLbs,
@@ -6588,77 +6603,24 @@
             openModal('historyModal');
         }
         function updateStats() {
-            const seasonLogs = getSeasonWorkoutLogs();
-            const seasonStart = activeSeason?.startDate ? new Date(`${activeSeason.startDate}T00:00:00`) : new Date();
-            const now = new Date();
-            const week = Math.max(1, Math.floor((now - seasonStart) / (7 * 24 * 60 * 60 * 1000)) + 1);
+            const todaysWorkout = getWorkoutData(new Date().getDay());
+            const snapshot = coach.getSeasonSnapshot({
+                plannedExercises: todaysWorkout?.exercises || [],
+                prWindowDays: 14,
+                activityWindowDays: 7
+            });
             document.getElementById('seasonTitle').textContent = activeSeason?.name || 'CURRENT SEASON';
-            document.getElementById('seasonWeek').textContent = `Week ${week} · Started ${formatDate(seasonStart, DateFormats.SHORT)}`;
+            document.getElementById('seasonWeek').textContent = `Week ${snapshot.week} · Started ${formatDate(snapshot.seasonStart, DateFormats.SHORT)}`;
+            document.getElementById('weeklyPrCount').textContent = snapshot.prCount;
 
-            const timeline = recordTracker?.getPRTimeline() || [];
-            const latestPR = timeline[0] || null;
-            if (latestPR) {
-                document.getElementById('latestPrValue').textContent = latestPR.exerciseName;
-                const recentLabels = timeline.slice(0, 3).map(event => {
-                    const record = event.records[0];
-                    const result = record.type === 'maxReps'
-                        ? `${record.reps} reps${record.matched ? ' (matched)' : ''}`
-                        : `${displayWeight(record.estimatedMaxKg)} lb est. 1RM`;
-                    return `${event.exerciseName}: ${result}`;
-                });
-                document.getElementById('latestPrDetail').textContent = recentLabels.join(' · ');
-            } else {
-                document.getElementById('latestPrValue').textContent = 'NO PR YET';
-                document.getElementById('latestPrDetail').textContent = 'Finish a lift to start the board.';
-            }
-
-            const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            const weeklyPRCount = timeline.filter(event => new Date(event.date) >= sevenDaysAgo).length;
-            document.getElementById('weeklyPrCount').textContent = weeklyPRCount;
-
-            const latestWorkout = seasonLogs[0] || null;
-            document.getElementById('latestWorkoutValue').textContent = latestWorkout?.workoutName || 'NONE YET';
-            document.getElementById('latestWorkoutDetail').textContent = latestWorkout
-                ? `${formatDate(new Date(latestWorkout.date), DateFormats.LONG)} · ${calculateTotalSets(latestWorkout)} sets`
-                : 'No season workouts logged.';
-
-            const activeThisWeek = seasonLogs.some(log => new Date(log.date) >= sevenDaysAgo);
             const activityCard = document.getElementById('weeklyActivityCard');
-            activityCard.classList.toggle('active', activeThisWeek);
-            document.getElementById('weeklyActivityValue').textContent = activeThisWeek ? 'ACTIVE' : 'INACTIVE';
-            document.getElementById('weeklyActivityDetail').textContent = activeThisWeek
+            activityCard.classList.toggle('active', snapshot.activeRecently);
+            document.getElementById('weeklyActivityValue').textContent = snapshot.activeRecently ? 'ACTIVE' : 'INACTIVE';
+            document.getElementById('weeklyActivityDetail').textContent = snapshot.activeRecently
                 ? `A workout was logged within the last seven days.`
                 : 'Log any workout to activate the streak.';
 
-            const todaysWorkout = getWorkoutData(currentWorkoutDay);
-            let opportunity = null;
-            for (const plannedExercise of todaysWorkout?.exercises || []) {
-                const exercise = getExerciseForUI(plannedExercise.exerciseId);
-                const historicalSets = seasonLogs.flatMap(log => (log.exercises || [])
-                    .filter(item => item.id === plannedExercise.exerciseId)
-                    .flatMap(item => (item.sets || []).filter(set => !set.isWarmup && Number(set.reps) > 0)));
-                if (historicalSets.length === 0) {
-                    opportunity = { name: exercise.name, detail: 'Log the first working sets to establish a season record.' };
-                    break;
-                }
-                const profile = window.WorkoutStrength?.getExerciseStrengthProfile(exercise);
-                if (profile?.mode === 'repsOnly') {
-                    const maxReps = Math.max(...historicalSets.map(set => Number(set.reps) || 0));
-                    if (!opportunity) {
-                        opportunity = { name: exercise.name, detail: `Match or beat ${maxReps} reps in one working set.` };
-                    }
-                    continue;
-                }
-
-                const previousEstimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exercise, historicalSets);
-                if (!opportunity && previousEstimate) {
-                    const fallbackLabel = previousEstimate.usedFallback ? ' Epley fallback.' : '';
-                    opportunity = {
-                        name: exercise.name,
-                        detail: `Beat the ${formatWeightLbs(previousEstimate.estimatedMaxKg)} estimated 1RM.${fallbackLabel}`
-                    };
-                }
-            }
+            const opportunity = snapshot.prOpportunity;
             document.getElementById('prOpportunityValue').textContent = opportunity?.name || 'RECOVERY DAY';
             document.getElementById('prOpportunityDetail').textContent = opportunity?.detail || 'No lift is scheduled today.';
         }

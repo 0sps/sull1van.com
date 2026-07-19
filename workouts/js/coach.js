@@ -24,6 +24,7 @@
         const getWorkoutLogs = options.getWorkoutLogs || (() => []);
         const getExerciseData = options.getExerciseData || (() => null);
         const getSeasonStartDate = options.getSeasonStartDate || (() => null);
+        const getPRTimeline = options.getPRTimeline || (() => []);
         const coachLogLookback = options.coachLogLookback || DEFAULT_CONFIG.coachLogLookback;
         const lbsToKg = options.lbsToKg;
         const kgToLbs = options.kgToLbs;
@@ -53,7 +54,8 @@
             return {
                 ...DEFAULT_CONFIG.recommendation,
                 ...(defaults || {}),
-                ...(planExercise?.recommendation || {})
+                ...(planExercise?.recommendation || {}),
+                allowZeroWeight: planExercise?.targetMode === 'bodyweight'
             };
         }
 
@@ -234,7 +236,7 @@
             let bestSignal = null;
 
             sessions.forEach(session => {
-                session.workingSets.forEach(set => {
+                (session.workingSets || session.sets || []).forEach(set => {
                     const weightKg = parseFloat(set.weight);
                     const reps = parseInt(set.reps, 10);
                     if (!Number.isFinite(weightKg) || weightKg <= 0) return;
@@ -251,6 +253,117 @@
             });
 
             return bestSignal;
+        }
+
+        function getBestExerciseMark(exerciseId, logs = getLogs()) {
+            const exercise = getExerciseData(exerciseId);
+            const profile = window.WorkoutStrength?.getExerciseStrengthProfile(exercise);
+            const workingSets = logs.flatMap(log => getLogExercises(log)
+                .filter(exerciseLog => exerciseLog.id === exerciseId)
+                .flatMap(exerciseLog => getWorkingSets(exerciseLog.sets)))
+                .map(normalizeSet)
+                .filter(set => Number.isFinite(set.reps) && set.reps > 0 && Number.isFinite(set.weight) && set.weight >= 0);
+
+            if (workingSets.length === 0) return null;
+
+            if (profile?.mode === 'repsOnly') {
+                const bestSet = workingSets.reduce((best, set) => {
+                    if (!best || set.reps > best.reps) return set;
+                    if (set.reps === best.reps && set.weight > best.weight) return set;
+                    return best;
+                }, null);
+                return bestSet ? { mode: 'repsOnly', reps: bestSet.reps, weightKg: bestSet.weight } : null;
+            }
+
+            const estimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exercise, workingSets);
+            return estimate ? { mode: 'estimated1rm', ...estimate } : null;
+        }
+
+        function getTodayPrOpportunity(plannedExercises = []) {
+            const candidates = (plannedExercises || []).map(plannedExercise => {
+                const exerciseId = plannedExercise.exerciseId || plannedExercise.id;
+                if (!exerciseId) return null;
+                return {
+                    exerciseId,
+                    exercise: getExerciseData(exerciseId),
+                    bestMark: getBestExerciseMark(exerciseId)
+                };
+            }).filter(Boolean);
+            const candidate = candidates.find(item => !item.bestMark) || candidates[0];
+            if (!candidate) return null;
+
+            const name = candidate.exercise?.name || candidate.exerciseId;
+            if (!candidate.bestMark) {
+                return {
+                    exerciseId: candidate.exerciseId,
+                    name,
+                    title: `Set ${name} baseline.`,
+                    detail: 'Its first valid working sets establish the season record.'
+                };
+            }
+
+            if (candidate.bestMark.mode === 'repsOnly') {
+                return {
+                    exerciseId: candidate.exerciseId,
+                    name,
+                    title: `Push ${name}.`,
+                    detail: `Beat ${candidate.bestMark.reps} reps in one working set for a season PR.`,
+                    bestMark: candidate.bestMark
+                };
+            }
+
+            const bestEstimateLabel = typeof formatWeightLbs === 'function'
+                ? formatWeightLbs(candidate.bestMark.estimatedMaxKg)
+                : `${Math.round(kgToLbs(candidate.bestMark.estimatedMaxKg))} lbs`;
+            return {
+                exerciseId: candidate.exerciseId,
+                name,
+                title: `Push ${name}.`,
+                detail: `Beat the ${bestEstimateLabel} estimated 1RM for a season PR.`,
+                bestMark: candidate.bestMark
+            };
+        }
+
+        function getSeasonSnapshot({ now = new Date(), plannedExercises = [], prWindowDays = 14, activityWindowDays = 7 } = {}) {
+            const currentDate = parseValidDate(now) || new Date();
+            const seasonStart = getProgressionStartDate() || currentDate;
+            const elapsedMs = Math.max(0, currentDate.getTime() - seasonStart.getTime());
+            const week = Math.floor(elapsedMs / (7 * 24 * 60 * 60 * 1000)) + 1;
+            const logs = getLogs().slice().sort((first, second) => {
+                const firstTime = parseValidDate(first?.date)?.getTime() ?? 0;
+                const secondTime = parseValidDate(second?.date)?.getTime() ?? 0;
+                return secondTime - firstTime;
+            });
+            const timeline = (getPRTimeline() || []).slice().sort((first, second) => {
+                const firstTime = parseValidDate(first?.date)?.getTime() ?? 0;
+                const secondTime = parseValidDate(second?.date)?.getTime() ?? 0;
+                return secondTime - firstTime;
+            });
+            const prCutoff = new Date(currentDate.getTime() - prWindowDays * 24 * 60 * 60 * 1000);
+            const activityCutoff = new Date(currentDate.getTime() - activityWindowDays * 24 * 60 * 60 * 1000);
+            const latestWorkout = logs[0] || null;
+            const latestWorkoutDate = parseValidDate(latestWorkout?.date);
+            const activeRecently = !!latestWorkoutDate && latestWorkoutDate >= activityCutoff;
+            const daysSinceWorkout = latestWorkoutDate
+                ? Math.max(0, Math.floor((currentDate.getTime() - latestWorkoutDate.getTime()) / (24 * 60 * 60 * 1000)))
+                : null;
+
+            return {
+                seasonStart,
+                week,
+                timeline,
+                latestPR: timeline[0] || null,
+                prCount: timeline.filter(event => {
+                    const eventDate = parseValidDate(event?.date);
+                    return eventDate && eventDate >= prCutoff;
+                }).length,
+                prWindowDays,
+                latestWorkout,
+                activeRecently,
+                daysSinceWorkout,
+                activityWindowDays,
+                prOpportunity: getTodayPrOpportunity(plannedExercises)
+            };
         }
 
         function evaluateProgressionSets(workingSets, target) {
@@ -613,6 +726,9 @@
             getExerciseProgressionSessions,
             getCoachConfidence,
             getBestEstimatedMaxSignal,
+            getBestExerciseMark,
+            getTodayPrOpportunity,
+            getSeasonSnapshot,
             evaluateProgressionSets,
             buildCoachRecommendation,
             getProgressionTarget,

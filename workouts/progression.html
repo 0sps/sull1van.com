@@ -1442,6 +1442,7 @@
 
     <script src="js/config.js"></script>
     <script src="js/strength.js"></script>
+    <script src="js/coach.js"></script>
     <script src="js/records.js"></script>
     <script>
         let exercisesData = {};
@@ -1467,6 +1468,22 @@
             SHORT: { month: 'short', day: 'numeric' },
             LONG: { month: 'long', day: 'numeric', year: 'numeric' }
         };
+
+        const coach = window.WorkoutCoach.create({
+            getProgressionPlan: () => progressionPlanData,
+            getWorkoutLogs: () => workoutLogs,
+            getExerciseData: exerciseId => exercisesData[exerciseId] || null,
+            getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
+            getPRTimeline: () => recordTracker?.getPRTimeline() || [],
+            coachLogLookback: 14,
+            lbsToKg,
+            kgToLbs,
+            roundWeightLbs,
+            displayWeight,
+            formatWeightLbs: kg => `${displayWeight(kg)} lbs`,
+            formatDate,
+            dateFormats: DateFormats
+        });
 
         function lbsToKg(lbs) { return lbs * 0.45359237; }
         function kgToLbs(kg) { return kg / 0.45359237; }
@@ -1559,9 +1576,7 @@
         }, 12000);
 
         function getProgressionStartDate() {
-            return activeSeason?.startDate
-                ? new Date(`${activeSeason.startDate}T00:00:00`)
-                : null;
+            return coach.getProgressionStartDate();
         }
 
         function getSeasonGoalDate() {
@@ -1571,104 +1586,24 @@
         }
 
         function parseRepRange(repSpec) {
-            const nums = String(repSpec || '').match(/\d+/g)?.map(Number) || [];
-            if (nums.length === 0) return { min: 0, max: 0, label: String(repSpec || '') };
-            if (nums.length === 1) return { min: nums[0], max: nums[0], label: String(nums[0]) };
-            return { min: nums[0], max: nums[1], label: `${nums[0]}-${nums[1]}` };
+            return coach.parseRepRange(repSpec);
         }
 
         function getWorkingSets(sets) {
-            return (sets || []).filter(set => !set.isWarmup);
+            return coach.getWorkingSets(sets);
         }
 
         function getCoachConfig(planExercise) {
-            return {
-                method: 'estimatedMax',
-                formula: 'epley',
-                validRepMin: 1,
-                validRepMax: 12,
-                lookbackSessions: 2,
-                roundingMode: 'floor',
-                incrementLbs: 5,
-                allowZeroWeight: planExercise?.targetMode === 'bodyweight',
-                ...(progressionPlanData?.recommendationDefaults || {}),
-                ...(planExercise?.recommendation || {})
-            };
-        }
-
-        function getEstimatedMaxDetails(exerciseId, weightKg, reps, formula = 'epley') {
-            if (exerciseId && window.WorkoutStrength) {
-                return window.WorkoutStrength.estimateOneRepMax(exercisesData[exerciseId], weightKg, reps);
-            }
-            const estimatedMaxKg = window.WorkoutStrength
-                ? window.WorkoutStrength.estimateNamed(weightKg, reps, formula)
-                : null;
-            return Number.isFinite(estimatedMaxKg)
-                ? { estimatedMaxKg, validated: false, usedFallback: true, formula }
-                : null;
+            return coach.getCoachConfig(planExercise);
         }
 
         function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley', exerciseId = null) {
-            if (exerciseId && window.WorkoutStrength?.getExerciseStrengthProfile(exercisesData[exerciseId]).mode === 'repsOnly') {
-                return null;
-            }
-            const sharedEstimate = getEstimatedMaxDetails(exerciseId, weightKg, reps, formula);
-            if (sharedEstimate) return sharedEstimate.estimatedMaxKg;
-            const weight = Number(weightKg);
-            const repCount = Math.min(Number(reps), 12);
-            if (!Number.isFinite(weight) || !Number.isFinite(repCount) || weight < 0 || repCount <= 0) return null;
-            if (repCount === 1) return weight;
-
-            switch (String(formula || 'epley').toLowerCase()) {
-                case 'brzycki':
-                    return repCount >= 37 ? null : weight * (36 / (37 - repCount));
-                case 'lombardi':
-                    return weight * Math.pow(repCount, 0.1);
-                case 'epley':
-                default:
-                    return weight * (1 + repCount / 30);
-            }
-        }
-
-        function calculateWeightForRepsKg(estimatedMaxKg, reps, formula = 'epley') {
-            const max = Number(estimatedMaxKg);
-            const repCount = Number(reps);
-            if (!Number.isFinite(max) || !Number.isFinite(repCount) || max < 0 || repCount <= 0) return null;
-            if (repCount === 1) return max;
-
-            switch (String(formula || 'epley').toLowerCase()) {
-                case 'brzycki':
-                    return max * ((37 - repCount) / 36);
-                case 'lombardi':
-                    return max / Math.pow(repCount, 0.1);
-                case 'epley':
-                default:
-                    return max / (1 + repCount / 30);
-            }
+            return coach.calculateEstimatedMaxKg(Number(weightKg), Number(reps), formula, exerciseId);
         }
 
         function getBestEstimatedMaxSignal(sessions, coachConfig, exerciseId = null) {
-            if (!sessions || sessions.length === 0 || coachConfig.method !== 'estimatedMax') return null;
-            const minReps = Number(coachConfig.validRepMin) || 1;
-            const maxReps = Number(coachConfig.validRepMax) || 12;
-            let best = null;
-
-            for (const session of sessions) {
-                for (const set of session.sets || []) {
-                    const reps = parseInt(set.reps, 10) || 0;
-                    const weightKg = Number.isFinite(parseFloat(set.weight)) ? parseFloat(set.weight) : 0;
-                    if (reps < minReps || reps > maxReps || weightKg < 0) continue;
-                    if (!coachConfig.allowZeroWeight && weightKg === 0) continue;
-                    const estimate = getEstimatedMaxDetails(exerciseId, weightKg, reps, coachConfig.formula);
-                    const estimatedMaxKg = estimate?.estimatedMaxKg;
-                    if (!Number.isFinite(estimatedMaxKg)) continue;
-                    if (!best || estimatedMaxKg > best.estimatedMaxKg) {
-                        best = { ...estimate, estimatedMaxKg, weightKg, reps, date: session.date };
-                    }
-                }
-            }
-
-            return best;
+            const best = coach.getBestEstimatedMaxSignal(sessions, coachConfig, exerciseId);
+            return best ? { ...best, date: best.date || best.session?.date || best.session?.log?.date } : null;
         }
 
         function getRecentLiftSessions(exerciseId, logLimit = 14) {
@@ -1683,74 +1618,41 @@
         }
 
         function getCoachConfidence(sessionCount) {
-            if (sessionCount >= 2) return { label: 'High', className: 'good', detail: '2+ recent lift sessions found.' };
-            if (sessionCount === 1) return { label: 'Low', className: 'warn', detail: 'Only 1 recent lift session found.' };
-            return { label: 'Low', className: 'warn', detail: 'No recent lift sessions found.' };
+            const confidence = coach.getCoachConfidence(sessionCount, 2);
+            return { ...confidence, className: confidence.className === 'high' ? 'good' : 'warn' };
         }
 
         function getGoalIncreaseKg(planExercise) {
-            const relativeGoal = Number(planExercise.goalIncreaseKg);
-            return Number.isFinite(relativeGoal) ? Math.max(relativeGoal, 0) : 0;
+            return coach.getPlanGoalIncreaseKg(planExercise);
         }
 
         function getWeeklyTargetIncreaseKg(planExercise) {
-            const durationWeeks = Number(progressionPlanData.durationWeeks) || 12;
-            return getGoalIncreaseKg(planExercise) / durationWeeks;
+            return coach.getPlanWeeklyTargetIncreaseKg(planExercise);
         }
 
         function getSeasonBaseline(exerciseId, repRange, planExercise) {
-            const allowZeroWeight = planExercise?.targetMode === 'bodyweight';
-            const logs = workoutLogs.slice().sort((first, second) => new Date(first.date) - new Date(second.date));
-            for (const log of logs) {
-                const exerciseLogs = (log.exercises || []).filter(exercise => exercise.id === exerciseId);
-                const workingSets = exerciseLogs.flatMap(exercise => getWorkingSets(exercise.sets)).map(set => ({
-                    weight: Number(set.weight),
-                    reps: parseInt(set.reps, 10)
-                })).filter(set => Number.isFinite(set.weight) && (allowZeroWeight ? set.weight >= 0 : set.weight > 0) && Number.isFinite(set.reps) && set.reps > 0);
-                if (workingSets.length === 0) continue;
-                const eligible = workingSets.filter(set => set.reps >= (repRange?.min || 1));
-                const source = eligible.length ? eligible : workingSets;
-                return {
-                    date: log.date,
-                    weightKg: Math.min(...source.map(set => set.weight)),
-                    workingSets
-                };
-            }
-            return null;
+            const baseline = coach.getBaselineProgressionSession(exerciseId, repRange);
+            return baseline ? {
+                date: baseline.log.date,
+                weightKg: baseline.representativeWeightKg,
+                workingSets: baseline.workingSets
+            } : null;
         }
 
         function getSeasonTargetWeightKg(planExercise, date = new Date(), exerciseId = null, repRange = null) {
             const baselineSession = exerciseId ? getSeasonBaseline(exerciseId, repRange, planExercise) : null;
             const baseline = baselineSession?.weightKg;
-            const goalIncrease = getGoalIncreaseKg(planExercise);
             if (!Number.isFinite(baseline)) return null;
-
-            const start = getProgressionStartDate();
-            const end = getSeasonGoalDate();
-            const clampedDate = new Date(Math.min(Math.max(new Date(date).getTime(), start.getTime()), end.getTime()));
-            const progress = (clampedDate.getTime() - start.getTime()) / Math.max(1, end.getTime() - start.getTime());
-            return baseline + goalIncrease * progress;
+            return coach.getPlannedWeightKgForDate(
+                baseline,
+                date,
+                getWeeklyTargetIncreaseKg(planExercise),
+                getGoalIncreaseKg(planExercise)
+            );
         }
 
         function evaluateProgressionSets(workingSets, target) {
-            if (!target || !workingSets || workingSets.length === 0) {
-                return { planComplete: false, progressEarned: false };
-            }
-
-            const planComplete = workingSets.every(set => {
-                const reps = parseInt(set.reps, 10);
-                const weightKg = parseFloat(set.weight);
-                return Number.isFinite(reps) && reps >= target.repRange.min &&
-                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
-            });
-            const progressEarned = workingSets.every(set => {
-                const reps = parseInt(set.reps, 10);
-                const weightKg = parseFloat(set.weight);
-                return Number.isFinite(reps) && reps >= target.repRange.max &&
-                    Number.isFinite(weightKg) && Number.isFinite(target.targetWeightKg) && weightKg >= target.targetWeightKg;
-            });
-
-            return { planComplete, progressEarned };
+            return coach.evaluateProgressionSets(workingSets, target);
         }
 
         function getPlanStatus(row) {
@@ -1944,24 +1846,31 @@
             return row.exercise?.name || row.planExercise.name || row.id;
         }
 
+        function getSharedSeasonSnapshot() {
+            const todayWorkoutKey = trainingPlanData.schedule?.[new Date().getDay()];
+            const todayWorkout = trainingPlanData.workouts?.[todayWorkoutKey];
+            return coach.getSeasonSnapshot({
+                plannedExercises: todayWorkout?.exercises || [],
+                prWindowDays: 14,
+                activityWindowDays: 7
+            });
+        }
+
         function renderHero() {
             const start = getProgressionStartDate();
             const now = new Date();
+            const snapshot = getSharedSeasonSnapshot();
             const dayMs = 24 * 60 * 60 * 1000;
             const elapsedDays = Math.max(0, Math.floor((startOfLocalDay(now) - startOfLocalDay(start)) / dayMs));
             const seasonDay = elapsedDays + 1;
-            const week = Math.floor(elapsedDays / 7) + 1;
+            const week = snapshot.week;
             const dayInWeek = (elapsedDays % 7) + 1;
             const weekPercent = Math.round((dayInWeek / 7) * 100);
             const seasonRecords = recordTracker?.getPRTimeline() || [];
             const seasonRecordCount = seasonRecords.reduce((sum, event) => sum + event.records.length, 0);
-            const sevenDaysAgo = new Date(now.getTime() - 7 * dayMs);
-            const latestWorkout = workoutLogs[0] || null;
-            const latestWorkoutDate = latestWorkout ? new Date(latestWorkout.date) : null;
-            const activeRecently = !!latestWorkoutDate && latestWorkoutDate >= sevenDaysAgo;
-            const daysSinceWorkout = latestWorkoutDate
-                ? Math.max(0, Math.floor((startOfLocalDay(now) - startOfLocalDay(latestWorkoutDate)) / dayMs))
-                : null;
+            const latestWorkout = snapshot.latestWorkout;
+            const activeRecently = snapshot.activeRecently;
+            const daysSinceWorkout = snapshot.daysSinceWorkout;
 
             document.getElementById('planName').textContent = activeSeason?.name || 'Current Season';
             document.getElementById('startDateValue').textContent = formatRangeDate(start);
@@ -1988,15 +1897,11 @@
             const lowConfidence = liftRows.filter(row => row.confidence.className === 'warn').length;
             const onAhead = onTrack + ahead;
             const total = Math.max(1, liftRows.length);
-            const seasonRecords = recordTracker?.getPRTimeline() || [];
-            const now = new Date();
-            const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            const weeklyRecordCount = seasonRecords
-                .filter(event => new Date(event.date) >= sevenDaysAgo)
-                .reduce((sum, event) => sum + event.records.length, 0);
-            const latestRecord = seasonRecords[0] || null;
-            const latestWorkout = workoutLogs[0] || null;
-            const activeRecently = !!latestWorkout && new Date(latestWorkout.date) >= sevenDaysAgo;
+            const snapshot = getSharedSeasonSnapshot();
+            const seasonRecords = snapshot.timeline;
+            const weeklyRecordCount = snapshot.prCount;
+            const latestRecord = snapshot.latestPR;
+            const activeRecently = snapshot.activeRecently;
             const health = document.getElementById('planHealth');
             const goodShare = Math.max(onAhead, 0.35);
             const badShare = Math.max(behind, 0.35);
@@ -2024,7 +1929,7 @@
                 <div class="timeline-stat good">
                     <div class="mini-value">${weeklyRecordCount}</div>
                     <div class="timeline-stat-line"></div>
-                    <div class="mini-label">PRs · Last 7 Days</div>
+                    <div class="mini-label">PRs · Last 14 Days</div>
                 </div>
                 <div class="timeline-stat warn">
                     <div class="mini-value">${latestRecord ? 'PR' : '--'}</div>
@@ -2047,46 +1952,7 @@
         function getTodayPrOpportunity() {
             const todayWorkoutKey = trainingPlanData.schedule?.[new Date().getDay()];
             const todayWorkout = trainingPlanData.workouts?.[todayWorkoutKey];
-            const todayRows = (todayWorkout?.exercises || [])
-                .map(exercise => liftRows.find(row => row.id === exercise.id))
-                .filter(Boolean)
-                .sort((first, second) => {
-                    const firstPriority = !first.latest ? 0 : first.status.label === 'Behind' ? 1 : 2;
-                    const secondPriority = !second.latest ? 0 : second.status.label === 'Behind' ? 1 : 2;
-                    return firstPriority - secondPriority || Math.abs(first.status.deltaKg || 0) - Math.abs(second.status.deltaKg || 0);
-                });
-            const row = todayRows[0];
-            if (!row) return null;
-
-            const historicalSets = workoutLogs.flatMap(log => (log.exercises || [])
-                .filter(exercise => exercise.id === row.id)
-                .flatMap(exercise => getWorkingSets(exercise.sets))
-                .map(set => ({ weight: Number(set.weight), reps: parseInt(set.reps, 10) }))
-                .filter(set => Number.isFinite(set.weight) && set.weight >= 0 && Number.isFinite(set.reps) && set.reps > 0));
-
-            if (historicalSets.length === 0) {
-                return {
-                    title: `Set ${getLiftName(row)} baseline.`,
-                    detail: 'Its first working sets become season records and establish the strength baseline.'
-                };
-            }
-
-            const exerciseData = exercisesData[row.id] || row.exercise;
-            const profile = window.WorkoutStrength?.getExerciseStrengthProfile(exerciseData);
-            if (profile?.mode === 'repsOnly') {
-                const maxReps = Math.max(...historicalSets.map(set => set.reps));
-                return {
-                    title: `Push ${getLiftName(row)}.`,
-                    detail: `Match or beat ${maxReps} reps in one working set for a season PR.`
-                };
-            }
-
-            const previousEstimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exerciseData, historicalSets);
-            if (!previousEstimate) return null;
-            return {
-                title: `Push ${getLiftName(row)}.`,
-                detail: `Beat the ${formatLiftWeight(previousEstimate.estimatedMaxKg, row.planExercise)} estimated 1RM${previousEstimate.usedFallback ? ' (Epley fallback)' : ''} for a season PR.`
-            };
+            return coach.getTodayPrOpportunity(todayWorkout?.exercises || []);
         }
 
         function renderCoachBrief({ behind, noData, onAhead, lowConfidence }) {
@@ -2100,13 +1966,10 @@
                 .slice()
                 .sort((a, b) => Math.abs(a.status.deltaKg || 0) - Math.abs(b.status.deltaKg || 0));
             const focusRow = behindRows[0] || lowConfidenceRows[0] || noDataRows[0] || nearestRows[0] || liftRows[0];
-            const now = new Date();
-            const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            const latestWorkout = workoutLogs[0] || null;
-            const activeRecently = !!latestWorkout && new Date(latestWorkout.date) >= sevenDaysAgo;
-            const weeklyRecordCount = (recordTracker?.getPRTimeline() || [])
-                .filter(event => new Date(event.date) >= sevenDaysAgo)
-                .reduce((sum, event) => sum + event.records.length, 0);
+            const snapshot = getSharedSeasonSnapshot();
+            const latestWorkout = snapshot.latestWorkout;
+            const activeRecently = snapshot.activeRecently;
+            const weeklyRecordCount = snapshot.prCount;
 
             let status = 'Build baseline';
             let readout = 'No strength signal yet.';
@@ -2148,7 +2011,7 @@
                 ? 'Season is active.'
                 : 'Log one workout to reactivate.';
             document.getElementById('coachWeekDetail').textContent = latestWorkout
-                ? `${latestWorkout.workoutName || 'Workout'} logged ${formatDate(latestWorkout.date, DateFormats.SHORT)}. ${weeklyRecordCount} PR${weeklyRecordCount === 1 ? '' : 's'} in the last seven days.`
+                ? `${latestWorkout.workoutName || 'Workout'} logged ${formatDate(latestWorkout.date, DateFormats.SHORT)}. ${weeklyRecordCount} PR${weeklyRecordCount === 1 ? '' : 's'} in the last 14 days.`
                 : `No season workouts yet. ${lowConfidence} lifts still need a confidence signal.`;
         }
 
