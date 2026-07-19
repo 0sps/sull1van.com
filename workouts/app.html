@@ -789,6 +789,7 @@
         }
 
         .pr-toast {
+            --pr-toast-drag-y: 0px;
             position: fixed;
             top: 18px;
             left: 50%;
@@ -810,12 +811,19 @@
                 0 10px 28px rgba(0, 0, 0, 0.24),
                 inset 0 1px 0 rgba(255, 255, 255, 0.12);
             transition: transform 0.28s ease, opacity 0.28s ease, visibility 0.28s;
+            touch-action: pan-x;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .pr-toast.active {
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(var(--pr-toast-drag-y));
             opacity: 1;
             visibility: visible;
+        }
+
+        .pr-toast.dragging {
+            transition: none;
         }
 
         .pr-toast-kicker {
@@ -5363,7 +5371,85 @@
             }
         }
 
+        const PR_TOAST_DURATION_MS = 3000;
+        const PR_TOAST_SWIPE_DISTANCE_PX = 50;
+        const PR_TOAST_SWIPE_VELOCITY_PX_MS = -0.35;
         let prToastTimer = null;
+        let prToastSwipe = null;
+
+        function clearPrToastTimer() {
+            if (!prToastTimer) return;
+            window.clearTimeout(prToastTimer);
+            prToastTimer = null;
+        }
+
+        function dismissPrToast() {
+            const toast = document.getElementById('prToast');
+            clearPrToastTimer();
+            prToastSwipe = null;
+            if (!toast) return;
+            toast.classList.remove('dragging', 'active');
+            toast.style.setProperty('--pr-toast-drag-y', '0px');
+        }
+
+        function schedulePrToastDismiss() {
+            clearPrToastTimer();
+            prToastTimer = window.setTimeout(dismissPrToast, PR_TOAST_DURATION_MS);
+        }
+
+        function setupPrToastSwipe() {
+            const toast = document.getElementById('prToast');
+            if (!toast) return;
+
+            toast.addEventListener('pointerdown', event => {
+                if (!toast.classList.contains('active') || event.button !== 0) return;
+                clearPrToastTimer();
+                prToastSwipe = {
+                    pointerId: event.pointerId,
+                    startY: event.clientY,
+                    startedAt: performance.now()
+                };
+                toast.classList.add('dragging');
+                toast.setPointerCapture(event.pointerId);
+            });
+
+            toast.addEventListener('pointermove', event => {
+                if (!prToastSwipe || event.pointerId !== prToastSwipe.pointerId) return;
+                const dragY = Math.min(0, event.clientY - prToastSwipe.startY);
+                toast.style.setProperty('--pr-toast-drag-y', `${dragY}px`);
+                if (dragY < 0) event.preventDefault();
+            });
+
+            const finishSwipe = (event, wasCancelled = false) => {
+                if (!prToastSwipe || event.pointerId !== prToastSwipe.pointerId) return;
+                const dragY = Math.min(0, event.clientY - prToastSwipe.startY);
+                const elapsedMs = Math.max(1, performance.now() - prToastSwipe.startedAt);
+                const velocity = dragY / elapsedMs;
+                const shouldDismiss = !wasCancelled && (
+                    dragY <= -PR_TOAST_SWIPE_DISTANCE_PX
+                    || (dragY <= -15 && velocity <= PR_TOAST_SWIPE_VELOCITY_PX_MS)
+                );
+
+                if (toast.hasPointerCapture(event.pointerId)) {
+                    toast.releasePointerCapture(event.pointerId);
+                }
+                toast.classList.remove('dragging');
+                prToastSwipe = null;
+
+                if (shouldDismiss) {
+                    dismissPrToast();
+                    return;
+                }
+
+                toast.style.setProperty('--pr-toast-drag-y', '0px');
+                schedulePrToastDismiss();
+            };
+
+            toast.addEventListener('pointerup', event => finishSwipe(event));
+            toast.addEventListener('pointercancel', event => finishSwipe(event, true));
+        }
+
+        setupPrToastSwipe();
 
         function showPrToast(result) {
             const toast = document.getElementById('prToast');
@@ -5411,11 +5497,14 @@
                 note.textContent = `Projected from ${sourceSet}.${capNote}${fallbackNote}`;
             }
 
-            if (prToastTimer) window.clearTimeout(prToastTimer);
+            clearPrToastTimer();
+            prToastSwipe = null;
+            toast.classList.remove('dragging');
+            toast.style.setProperty('--pr-toast-drag-y', '0px');
             toast.classList.remove('active');
             void toast.offsetWidth;
             toast.classList.add('active');
-            prToastTimer = window.setTimeout(() => toast.classList.remove('active'), 3000);
+            schedulePrToastDismiss();
         }
 
         function getCurrentWorkingSets(exerciseKey) {
