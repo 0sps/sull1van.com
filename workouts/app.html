@@ -792,10 +792,10 @@
             position: fixed;
             top: 18px;
             left: 50%;
-            transform: translateX(-50%) translateY(-120px);
+            transform: translateX(-50%) translateY(-220px);
             z-index: 10001;
-            min-width: 180px;
-            padding: 14px 34px;
+            width: min(380px, calc(100vw - 28px));
+            padding: 16px 18px 15px;
             border: 2px solid transparent;
             background:
                 linear-gradient(rgba(17, 17, 19, 0.62), rgba(17, 17, 19, 0.48)) padding-box,
@@ -803,9 +803,6 @@
             -webkit-backdrop-filter: blur(16px) saturate(145%);
             backdrop-filter: blur(16px) saturate(145%);
             color: #fff;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 5px;
             text-align: center;
             opacity: 0;
             visibility: hidden;
@@ -819,6 +816,61 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
             visibility: visible;
+        }
+
+        .pr-toast-kicker {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 5px;
+            line-height: 1;
+        }
+
+        .pr-toast-status {
+            margin-top: 6px;
+            color: #dff9ed;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .pr-toast-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .pr-toast-metric {
+            min-width: 0;
+            padding: 9px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .pr-toast-metric-label {
+            color: rgba(255, 255, 255, 0.54);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.54rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .pr-toast-metric-value {
+            margin-top: 4px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.45rem;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .pr-toast-note {
+            margin-top: 9px;
+            color: rgba(255, 255, 255, 0.62);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            line-height: 1.45;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1656,7 +1708,7 @@
 
         .pr-recap-metrics {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
             margin-top: 18px;
         }
@@ -3253,7 +3305,21 @@
         WORKOUT SAVED!
         <div class="toast-progress"></div>
     </div>
-    <div id="prToast" class="pr-toast" role="status" aria-live="polite">PR!</div>
+    <div id="prToast" class="pr-toast" role="status" aria-live="polite">
+        <div class="pr-toast-kicker" id="prToastKicker">PR!</div>
+        <div class="pr-toast-status" id="prToastStatus"></div>
+        <div class="pr-toast-metrics">
+            <div class="pr-toast-metric">
+                <div class="pr-toast-metric-label" id="prToastCurrentLabel">Current</div>
+                <div class="pr-toast-metric-value" id="prToastCurrentValue">--</div>
+            </div>
+            <div class="pr-toast-metric">
+                <div class="pr-toast-metric-label">Previous Best</div>
+                <div class="pr-toast-metric-value" id="prToastPreviousValue">--</div>
+            </div>
+        </div>
+        <div class="pr-toast-note" id="prToastNote"></div>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
@@ -3608,7 +3674,8 @@
         const recordTracker = window.WorkoutRecords?.create
             ? window.WorkoutRecords.create({
                 getWorkoutLogs: () => recordHistoryLogs,
-                getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null
+                getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
+                getExerciseData: exerciseId => getExercise(exerciseId)
             })
             : null;
 
@@ -5228,9 +5295,52 @@
 
         let prToastTimer = null;
 
-        function showPrToast() {
+        function showPrToast(result) {
             const toast = document.getElementById('prToast');
-            if (!toast) return;
+            if (!toast || !result?.current) return;
+            const kicker = document.getElementById('prToastKicker');
+            const status = document.getElementById('prToastStatus');
+            const currentLabel = document.getElementById('prToastCurrentLabel');
+            const currentValue = document.getElementById('prToastCurrentValue');
+            const previousValue = document.getElementById('prToastPreviousValue');
+            const note = document.getElementById('prToastNote');
+
+            if (result.mode === 'repsOnly') {
+                kicker.textContent = 'PR!';
+                status.textContent = result.matchedPR
+                    ? 'Matched season best'
+                    : result.previousBest
+                        ? 'New season best'
+                        : 'First season record';
+                currentLabel.textContent = 'Max Reps';
+                currentValue.textContent = `${result.current.reps} reps`;
+                previousValue.textContent = result.previousBest
+                    ? `${result.previousBest.reps} reps`
+                    : 'None';
+                note.textContent = result.matchedPR
+                    ? 'Matching the season high counts. Team over-celebration.'
+                    : 'Highest reps completed in one working set.';
+            } else {
+                const current = result.current;
+                kicker.textContent = 'NEW PR!';
+                status.textContent = current.usedFallback
+                    ? 'Estimated · Epley fallback'
+                    : 'Estimated 1 rep max';
+                currentLabel.textContent = 'Est. 1RM';
+                currentValue.textContent = formatWeightLbs(current.estimatedMaxKg);
+                previousValue.textContent = result.previousBest
+                    ? formatWeightLbs(result.previousBest.estimatedMaxKg)
+                    : 'None';
+                const sourceSet = `${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}`;
+                const capNote = current.repsCapped
+                    ? ` Formula calculation capped at ${current.calculationReps} reps.`
+                    : '';
+                const fallbackNote = current.usedFallback
+                    ? ' Epley estimate is not lift-validated.'
+                    : '';
+                note.textContent = `Projected from ${sourceSet}.${capNote}${fallbackNote}`;
+            }
+
             if (prToastTimer) window.clearTimeout(prToastTimer);
             toast.classList.remove('active');
             void toast.offsetWidth;
@@ -5314,7 +5424,7 @@
                 void exerciseEl.offsetWidth;
                 exerciseEl.classList.add('pr-celebrating');
                 window.setTimeout(() => exerciseEl?.classList.remove('pr-celebrating'), 1500);
-                showPrToast();
+                showPrToast(result);
             }
         }
 
@@ -5356,17 +5466,6 @@
             if (coachBtn) coachBtn.classList.toggle('achieved', targetHit);
         }
 
-        function getFirstSeasonEstimatedMax(exerciseId, exerciseData) {
-            const seasonLogs = getSeasonWorkoutLogs().slice().sort((first, second) => new Date(first.date) - new Date(second.date));
-            for (const seasonLog of seasonLogs) {
-                const exerciseLog = (seasonLog.exercises || []).find(exercise => exercise.id === exerciseId);
-                if (!exerciseLog) continue;
-                const estimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exerciseData, exerciseLog.sets);
-                if (estimate) return { ...estimate, date: seasonLog.date };
-            }
-            return null;
-        }
-
         function buildWorkoutPrRecap(log) {
             if (!recordHistoryReady || !recordTracker || !window.WorkoutStrength) return [];
 
@@ -5375,24 +5474,9 @@
                 if (!result.isPR) return null;
 
                 const exerciseData = getExercise(exerciseLog.id) || { name: exerciseLog.name };
-                const currentEstimate = window.WorkoutStrength.getBestEstimatedOneRepMax(exerciseData, exerciseLog.sets);
-                const seasonBaseline = getFirstSeasonEstimatedMax(exerciseLog.id, exerciseData);
-                const baselineEstimate = seasonBaseline || currentEstimate;
-                const strengthDeltaKg = currentEstimate && baselineEstimate
-                    ? currentEstimate.estimatedMaxKg - baselineEstimate.estimatedMaxKg
-                    : null;
-                const strengthPercent = Number.isFinite(strengthDeltaKg) && baselineEstimate?.estimatedMaxKg > 0
-                    ? (strengthDeltaKg / baselineEstimate.estimatedMaxKg) * 100
-                    : null;
-
                 return {
                     exerciseName: exerciseData.name || exerciseLog.name || exerciseLog.id,
-                    result,
-                    currentEstimate,
-                    baselineEstimate,
-                    baselineDate: seasonBaseline?.date || null,
-                    strengthDeltaKg,
-                    strengthPercent
+                    result
                 };
             }).filter(Boolean);
         }
@@ -5403,32 +5487,66 @@
             const content = document.getElementById('prRecapContent');
             const subtitle = document.getElementById('prRecapSubtitle');
             const footnote = document.getElementById('prRecapFootnote');
-            const usesFallback = recapItems.some(item => item.currentEstimate?.usedFallback);
+            const usesFallback = recapItems.some(item => item.result.current?.usedFallback);
 
             subtitle.textContent = `${log.workoutName} produced ${recapItems.length} season PR${recapItems.length === 1 ? '' : 's'}.`;
             content.innerHTML = recapItems.map(item => {
-                const recordLabels = item.result.records.map(record => record.type === 'weight'
-                    ? `WEIGHT PR · ${formatWeightLbs(record.weightKg)}`
-                    : `REP PR · ${record.reps} reps at ${formatWeightLbs(record.weightKg)}`
-                ).join(' &nbsp;·&nbsp; ');
+                const { result } = item;
+                const current = result.current;
+                const previous = result.previousBest;
+                const baseline = result.seasonBaseline;
+                const isRepOnly = result.mode === 'repsOnly';
+                const recordLabels = isRepOnly
+                    ? `${result.matchedPR ? 'MATCHED REP PR' : 'REP PR'} · ${current.reps} reps`
+                    : `ESTIMATED 1RM PR · ${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
 
-                const estimate = item.currentEstimate;
-                const estimateValue = estimate
-                    ? `${formatWeightLbs(estimate.estimatedMaxKg)}${estimate.usedFallback ? '**' : ''}`
-                    : 'NOT AVAILABLE';
-                const estimateDetail = estimate
-                    ? `Projected from ${estimate.reps} rep${estimate.reps === 1 ? '' : 's'} at ${formatWeightLbs(estimate.weightKg)}`
-                    : 'No weighted working set was available.';
-
+                let currentValue;
+                let currentDetail;
+                let previousValue;
+                let previousDetail;
                 let growthValue = 'BASELINE SET';
-                let growthDetail = 'First estimated strength signal of the season.';
+                let growthDetail = isRepOnly
+                    ? 'First max-rep mark of the season.'
+                    : 'First estimated strength signal of the season.';
                 let growthClass = '';
-                if (item.baselineDate && Number.isFinite(item.strengthDeltaKg)) {
-                    const deltaLbs = Math.round(kgToLbs(item.strengthDeltaKg));
-                    const percent = Number.isFinite(item.strengthPercent) ? Math.round(item.strengthPercent * 10) / 10 : 0;
-                    growthValue = `${deltaLbs > 0 ? '+' : ''}${deltaLbs} LB · ${percent > 0 ? '+' : ''}${percent}%`;
-                    growthDetail = `Compared with ${formatWeightLbs(item.baselineEstimate.estimatedMaxKg)} on ${formatDate(item.baselineDate, DateFormats.SHORT)}.`;
-                    if (item.strengthDeltaKg > 0) growthClass = 'positive';
+
+                if (isRepOnly) {
+                    currentValue = `${current.reps} REPS`;
+                    currentDetail = 'Highest reps completed in one working set.';
+                    previousValue = previous ? `${previous.reps} REPS` : 'NONE';
+                    previousDetail = previous
+                        ? result.matchedPR
+                            ? 'Matched the previous season best and still counts as a PR.'
+                            : 'Best mark before this workout.'
+                        : 'First season mark for this exercise.';
+
+                    if (baseline?.date && Number.isFinite(baseline.reps)) {
+                        const deltaReps = current.reps - baseline.reps;
+                        const percent = baseline.reps > 0 ? Math.round((deltaReps / baseline.reps) * 1000) / 10 : 0;
+                        growthValue = `${deltaReps > 0 ? '+' : ''}${deltaReps} REPS · ${percent > 0 ? '+' : ''}${percent}%`;
+                        growthDetail = `Compared with ${baseline.reps} reps on ${formatDate(baseline.date, DateFormats.SHORT)}.`;
+                        if (deltaReps > 0) growthClass = 'positive';
+                    }
+                } else {
+                    currentValue = `${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
+                    currentDetail = `Projected from ${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}${current.repsCapped ? `, calculation capped at ${current.calculationReps} reps` : ''}.`;
+                    previousValue = previous
+                        ? `${formatWeightLbs(previous.estimatedMaxKg)}${previous.usedFallback ? '**' : ''}`
+                        : 'NONE';
+                    previousDetail = previous
+                        ? 'Best estimated 1RM before this workout.'
+                        : 'First season strength estimate for this exercise.';
+
+                    if (baseline?.date && Number.isFinite(baseline.estimatedMaxKg)) {
+                        const deltaKg = current.estimatedMaxKg - baseline.estimatedMaxKg;
+                        const deltaLbs = Math.round(kgToLbs(deltaKg));
+                        const percent = baseline.estimatedMaxKg > 0
+                            ? Math.round((deltaKg / baseline.estimatedMaxKg) * 1000) / 10
+                            : 0;
+                        growthValue = `${deltaLbs > 0 ? '+' : ''}${deltaLbs} LB · ${percent > 0 ? '+' : ''}${percent}%`;
+                        growthDetail = `Compared with ${formatWeightLbs(baseline.estimatedMaxKg)} on ${formatDate(baseline.date, DateFormats.SHORT)}.`;
+                        if (deltaKg > 0) growthClass = 'positive';
+                    }
                 }
 
                 return `
@@ -5442,12 +5560,17 @@
                         </div>
                         <div class="pr-recap-metrics">
                             <div class="pr-recap-metric">
-                                <div class="pr-recap-metric-label">Projected 1 Rep Max</div>
-                                <div class="pr-recap-metric-value">${escapeHtml(estimateValue)}</div>
-                                <div class="pr-recap-metric-detail">${escapeHtml(estimateDetail)}</div>
+                                <div class="pr-recap-metric-label">${isRepOnly ? 'Max Reps' : 'Estimated 1 Rep Max'}</div>
+                                <div class="pr-recap-metric-value">${escapeHtml(currentValue)}</div>
+                                <div class="pr-recap-metric-detail">${escapeHtml(currentDetail)}</div>
                             </div>
                             <div class="pr-recap-metric">
-                                <div class="pr-recap-metric-label">Strength Since Season Start</div>
+                                <div class="pr-recap-metric-label">Previous Best</div>
+                                <div class="pr-recap-metric-value">${escapeHtml(previousValue)}</div>
+                                <div class="pr-recap-metric-detail">${escapeHtml(previousDetail)}</div>
+                            </div>
+                            <div class="pr-recap-metric">
+                                <div class="pr-recap-metric-label">${isRepOnly ? 'Reps Since Season Start' : 'Strength Since Season Start'}</div>
                                 <div class="pr-recap-metric-value ${growthClass}">${escapeHtml(growthValue)}</div>
                                 <div class="pr-recap-metric-detail">${escapeHtml(growthDetail)}</div>
                             </div>
@@ -6251,9 +6374,9 @@
                 document.getElementById('latestPrValue').textContent = latestPR.exerciseName;
                 const recentLabels = timeline.slice(0, 3).map(event => {
                     const record = event.records[0];
-                    const result = record.type === 'weight'
-                        ? `${displayWeight(record.weightKg)} lb`
-                        : `${record.reps} reps at ${displayWeight(record.weightKg)} lb`;
+                    const result = record.type === 'maxReps'
+                        ? `${record.reps} reps${record.matched ? ' (matched)' : ''}`
+                        : `${displayWeight(record.estimatedMaxKg)} lb est. 1RM`;
                     return `${event.exerciseName}: ${result}`;
                 });
                 document.getElementById('latestPrDetail').textContent = recentLabels.join(' · ');
@@ -6263,9 +6386,7 @@
             }
 
             const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            const weeklyPRCount = timeline
-                .filter(event => new Date(event.date) >= sevenDaysAgo)
-                .reduce((total, event) => total + event.records.length, 0);
+            const weeklyPRCount = timeline.filter(event => new Date(event.date) >= sevenDaysAgo).length;
             document.getElementById('weeklyPrCount').textContent = weeklyPRCount;
 
             const latestWorkout = seasonLogs[0] || null;
@@ -6293,9 +6414,23 @@
                     opportunity = { name: exercise.name, detail: 'Log the first working sets to establish a season record.' };
                     break;
                 }
-                const maxWeight = Math.max(...historicalSets.map(set => Number(set.weight) || 0));
-                const repsAtWeight = Math.max(...historicalSets.filter(set => Math.abs(Number(set.weight) - maxWeight) < 0.0005).map(set => Number(set.reps) || 0));
-                if (!opportunity) opportunity = { name: exercise.name, detail: `Beat ${repsAtWeight} reps at ${displayWeight(maxWeight)} lb, or lift heavier.` };
+                const profile = window.WorkoutStrength?.getExerciseStrengthProfile(exercise);
+                if (profile?.mode === 'repsOnly') {
+                    const maxReps = Math.max(...historicalSets.map(set => Number(set.reps) || 0));
+                    if (!opportunity) {
+                        opportunity = { name: exercise.name, detail: `Match or beat ${maxReps} reps in one working set.` };
+                    }
+                    continue;
+                }
+
+                const previousEstimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exercise, historicalSets);
+                if (!opportunity && previousEstimate) {
+                    const fallbackLabel = previousEstimate.usedFallback ? ' Epley fallback.' : '';
+                    opportunity = {
+                        name: exercise.name,
+                        detail: `Beat the ${formatWeightLbs(previousEstimate.estimatedMaxKg)} estimated 1RM.${fallbackLabel}`
+                    };
+                }
             }
             document.getElementById('prOpportunityValue').textContent = opportunity?.name || 'RECOVERY DAY';
             document.getElementById('prOpportunityDetail').textContent = opportunity?.detail || 'No lift is scheduled today.';

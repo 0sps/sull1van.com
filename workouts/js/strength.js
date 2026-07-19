@@ -2,6 +2,7 @@
     'use strict';
 
     const FALLBACK_FORMULA = 'w*(1+(r/30))';
+    const MAX_ESTIMATE_REPS = 12;
     const MAX_FORMULA_LENGTH = 160;
 
     function tokenize(formula) {
@@ -111,15 +112,56 @@
         }
     }
 
+    function getExerciseStrengthProfile(exercise) {
+        const configuredValue = exercise?.['1repmaxformula'] ?? exercise?.oneRepMaxFormula;
+        const configuredFormula = typeof configuredValue === 'string' ? configuredValue.trim() : '';
+
+        if (configuredFormula.toUpperCase() === 'NONE') {
+            return {
+                mode: 'repsOnly',
+                formula: null,
+                formulaSource: 'none',
+                validated: false,
+                usedFallback: false
+            };
+        }
+
+        if (!configuredFormula) {
+            return {
+                mode: 'estimated1rm',
+                formula: FALLBACK_FORMULA,
+                formulaSource: 'epleyFallback',
+                validated: false,
+                usedFallback: true
+            };
+        }
+
+        return {
+            mode: 'estimated1rm',
+            formula: configuredFormula,
+            formulaSource: 'custom',
+            validated: true,
+            usedFallback: false
+        };
+    }
+
     function getExerciseFormula(exercise) {
-        const formula = exercise?.['1repmaxformula'] ?? exercise?.oneRepMaxFormula;
-        return typeof formula === 'string' && formula.trim() ? formula.trim() : null;
+        const profile = getExerciseStrengthProfile(exercise);
+        return profile.mode === 'estimated1rm' && profile.formulaSource === 'custom'
+            ? profile.formula
+            : null;
+    }
+
+    function getCalculationReps(reps) {
+        const repCount = Number(reps);
+        if (!Number.isFinite(repCount) || repCount <= 0) return null;
+        return Math.min(repCount, MAX_ESTIMATE_REPS);
     }
 
     function estimateNamed(weight, reps, method = 'epley') {
         const w = Number(weight);
-        const r = Number(reps);
-        if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(r) || r <= 0) return null;
+        const r = getCalculationReps(reps);
+        if (!Number.isFinite(w) || w <= 0 || r === null) return null;
         if (r === 1) return w;
 
         switch (String(method || 'epley').toLowerCase()) {
@@ -134,25 +176,40 @@
     }
 
     function estimateOneRepMax(exercise, weight, reps) {
-        const configuredFormula = getExerciseFormula(exercise);
-        const configuredValue = configuredFormula ? evaluateFormula(configuredFormula, weight, reps) : null;
+        const profile = getExerciseStrengthProfile(exercise);
+        if (profile.mode === 'repsOnly') return null;
+
+        const actualReps = Number(reps);
+        const calculationReps = getCalculationReps(actualReps);
+        if (calculationReps === null) return null;
+
+        const configuredFormula = profile.formulaSource === 'custom' ? profile.formula : null;
+        const configuredValue = configuredFormula ? evaluateFormula(configuredFormula, weight, calculationReps) : null;
         if (configuredValue !== null) {
             return {
                 estimatedMaxKg: configuredValue,
                 validated: true,
                 usedFallback: false,
-                formula: configuredFormula
+                formula: configuredFormula,
+                formulaSource: 'custom',
+                actualReps,
+                calculationReps,
+                repsCapped: actualReps > calculationReps
             };
         }
 
-        const fallbackValue = evaluateFormula(FALLBACK_FORMULA, weight, reps);
+        const fallbackValue = evaluateFormula(FALLBACK_FORMULA, weight, calculationReps);
         if (fallbackValue === null) return null;
         return {
             estimatedMaxKg: fallbackValue,
             validated: false,
             usedFallback: true,
             formula: FALLBACK_FORMULA,
-            invalidConfiguredFormula: !!configuredFormula
+            formulaSource: 'epleyFallback',
+            invalidConfiguredFormula: !!configuredFormula,
+            actualReps,
+            calculationReps,
+            repsCapped: actualReps > calculationReps
         };
     }
 
@@ -173,10 +230,11 @@
 
     function calculateWeightForEstimatedMax(exercise, estimatedMaxKg, reps) {
         const target = Number(estimatedMaxKg);
-        const repCount = Number(reps);
-        if (!Number.isFinite(target) || target <= 0 || !Number.isFinite(repCount) || repCount <= 0) return null;
+        const repCount = getCalculationReps(reps);
+        const profile = getExerciseStrengthProfile(exercise);
+        if (profile.mode === 'repsOnly' || !Number.isFinite(target) || target <= 0 || repCount === null) return null;
 
-        const formula = getExerciseFormula(exercise) || FALLBACK_FORMULA;
+        const formula = profile.formula;
         let low = 0.0001;
         let high = Math.max(target * 2, 1);
         let highEstimate = evaluateFormula(formula, high, repCount);
@@ -199,7 +257,10 @@
 
     window.WorkoutStrength = Object.freeze({
         FALLBACK_FORMULA,
+        MAX_ESTIMATE_REPS,
         evaluateFormula,
+        getCalculationReps,
+        getExerciseStrengthProfile,
         getExerciseFormula,
         estimateNamed,
         estimateOneRepMax,

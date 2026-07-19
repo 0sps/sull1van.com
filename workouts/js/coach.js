@@ -71,20 +71,23 @@
         }
 
         function calculateEstimatedMaxKg(weightKg, reps, formula = 'epley', exerciseId = null) {
+            if (exerciseId && window.WorkoutStrength?.getExerciseStrengthProfile(getExerciseData(exerciseId)).mode === 'repsOnly') {
+                return null;
+            }
             const sharedEstimate = getEstimatedMaxDetails(weightKg, reps, formula, exerciseId);
             if (sharedEstimate) return sharedEstimate.estimatedMaxKg;
-            if (!Number.isFinite(weightKg) || weightKg <= 0 || !Number.isFinite(reps) || reps <= 0) return null;
+            const calculationReps = Math.min(Number(reps), 12);
+            if (!Number.isFinite(weightKg) || weightKg <= 0 || !Number.isFinite(calculationReps) || calculationReps <= 0) return null;
 
             if (formula === 'brzycki') {
-                if (reps >= 37) return null;
-                return weightKg * (36 / (37 - reps));
+                return weightKg * (36 / (37 - calculationReps));
             }
 
             if (formula === 'lombardi') {
-                return weightKg * Math.pow(reps, 0.10);
+                return weightKg * Math.pow(calculationReps, 0.10);
             }
 
-            return weightKg * (1 + reps / 30);
+            return weightKg * (1 + calculationReps / 30);
         }
 
         function calculateWeightForRepsKg(estimatedMaxKg, reps, formula = 'epley', exerciseId = null) {

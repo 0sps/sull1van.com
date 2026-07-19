@@ -28,7 +28,7 @@ flowchart LR
     end
 
     subgraph Browser["Browser runtime"]
-        SW["Service Worker<br/>cache seans-log-v9"]
+        SW["Service Worker<br/>cache seans-log-v11"]
         LS["localStorage<br/>config cache + in-progress workout"]
         Charts["Chart.js<br/>body metrics charts"]
     end
@@ -69,12 +69,14 @@ flowchart LR
 | --- | --- | --- |
 | `index.html` | Login screen and redirect gate. Uses Google sign-in and only redirects to approved local pages. | Firebase Auth only |
 | `app.html` | Main daily workout experience: today's plan, workout logging, recent logs, stats, plan view, exercise library, progression coach UI. | `exercises.json`, `users/{email}`, `users/{email}/workouts`, `users/{email}/config/*`, `localStorage.workoutProgress` |
-| `progression.html` | Progression dashboard over plan targets and logged workout history. | `exercises.json`, `users/{email}/workouts`, `trainingPlan`, `progressionPlan`, local config cache |
+| `progression.html` | Active-season progression dashboard. Queries only workouts on or after `activeSeason.startDate`, derives each lift's baseline from its first season performance, and shows season PRs, rolling seven-day activity, relative targets, and strength/load charts. | `exercises.json`, `users/{email}/workouts`, `trainingPlan`, `progressionPlan`, `activeSeason`, local config cache |
 | `data.html` | Data explorer/editor/export tool for workout logs. Can edit/delete logs and validate against exercise config. | `exercises.json`, `users/{email}/workouts` |
 | `training-plan-editor.html` | UI for editing the user's training plan config. Saves only `trainingPlan`; does not touch workout logs or in-progress workout state. | `exercises.json`, `users/{email}/config/trainingPlan`, local config cache |
 | `body.html` | Body measurements dashboard, Chart.js visualization, and USAF/PFRA-style scoring tools. | Top-level `bodyMeasurements` collection filtered by `userId` |
 | `migrate-workouts-to-user.html` | One-off migration utility from legacy top-level `workouts` collection to per-user `users/{email}/workouts`. | top-level `workouts`, `users/{email}/workouts`, `users/{email}` |
-| `service-worker.js` | PWA shell cache. Network-first for app/editor shell and `exercises.json`, cache-first for other static assets. | Cache Storage `seans-log-v9` |
+| `service-worker.js` | PWA shell cache. Network-first for app/editor shell and `exercises.json`, cache-first for other static assets. | Cache Storage `seans-log-v11` |
+| `js/strength.js` | Shared formula classifier and estimated 1RM calculator. Treats `NONE` as rep-only, uses Epley for blank formulas, and caps estimate calculations at 12 reps. | Exercise metadata and working sets supplied by page callers; no direct Firestore calls |
+| `js/records.js` | Shared active-season PR evaluator and timeline. Uses estimated 1RM for formula-eligible exercises and max reps for `NONE` exercises. | Exercise metadata, active season start date, and in-memory season logs supplied by page callers; no direct Firestore calls |
 | `js/coach.js` | Shared browser module for progression/recommendation calculations and SVG chart snippets. | Inputs supplied by `app.html`; no direct Firestore calls |
 
 ## Firestore Shape
@@ -221,7 +223,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v9"]
+    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v11"]
     Activate["service-worker activate"] --> Cleanup["Delete old caches"]
     Fetch["fetch event"] --> Shell{"app shell or<br/>exercises.json?"}
     Shell -->|yes| NetworkFirst["Network first; update cache; fallback to cache"]
