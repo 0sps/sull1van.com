@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v11';
+const CACHE_NAME = 'seans-log-v12';
 // Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',

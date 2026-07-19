@@ -1666,15 +1666,6 @@
             background: rgba(255, 255, 255, 0.035);
         }
 
-        .pr-recap-card::before {
-            content: '';
-            position: absolute;
-            inset: 0 auto 0 0;
-            width: 3px;
-            background: linear-gradient(180deg, #ffd7ef, #cdeeff, #e8ffd1);
-            opacity: 0.8;
-        }
-
         .pr-recap-card-head {
             display: flex;
             align-items: flex-start;
@@ -1706,41 +1697,120 @@
             line-height: 1.5;
         }
 
-        .pr-recap-metrics {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
+        .pr-recap-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
             margin-top: 18px;
-        }
-
-        .pr-recap-metric {
-            min-height: 92px;
-            padding: 13px;
+            padding: 15px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(0, 0, 0, 0.18);
         }
 
-        .pr-recap-metric-label {
+        .pr-recap-summary-main {
+            min-width: 0;
+        }
+
+        .pr-recap-summary-label,
+        .pr-recap-chart-title {
             color: var(--text-muted);
             font-size: 0.62rem;
             letter-spacing: 1.2px;
             text-transform: uppercase;
         }
 
-        .pr-recap-metric-value {
+        .pr-recap-summary-value {
             margin-top: 8px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.7rem;
+            font-size: 2rem;
             letter-spacing: 1px;
             line-height: 1;
         }
 
-        .pr-recap-metric-value.positive { color: var(--success); }
-        .pr-recap-metric-detail {
+        .pr-recap-summary-detail {
             margin-top: 6px;
             color: var(--text-muted);
             font-size: 0.62rem;
             line-height: 1.35;
+        }
+
+        .pr-recap-delta {
+            flex: 0 0 auto;
+            padding: 7px 9px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.07);
+            color: var(--success);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .pr-recap-delta.baseline {
+            border-color: rgba(205, 238, 255, 0.22);
+            background: rgba(205, 238, 255, 0.06);
+            color: #cdeeff;
+        }
+
+        .pr-recap-chart-card {
+            margin-top: 10px;
+            padding: 14px 12px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.13);
+        }
+
+        .pr-recap-chart-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 2px 10px;
+        }
+
+        .pr-recap-chart-latest {
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            white-space: nowrap;
+        }
+
+        .pr-recap-chart {
+            display: block;
+            width: 100%;
+            height: auto;
+            overflow: visible;
+        }
+
+        .pr-recap-chart-grid {
+            stroke: rgba(255, 255, 255, 0.07);
+            stroke-width: 1;
+        }
+
+        .pr-recap-chart-line {
+            fill: none;
+            stroke: #cdeeff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 7px rgba(205, 238, 255, 0.3));
+        }
+
+        .pr-recap-chart-area {
+            opacity: 1;
+        }
+
+        .pr-recap-chart-dot {
+            fill: #101719;
+            stroke: #e8ffd1;
+            stroke-width: 3;
+        }
+
+        .pr-recap-chart-label {
+            fill: rgba(255, 255, 255, 0.48);
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
         }
 
         .pr-recap-footnote {
@@ -1755,7 +1825,7 @@
         @media (max-width: 560px) {
             #prRecapModal .modal { padding: 24px 18px; }
             .pr-recap-card { padding: 17px 15px; }
-            .pr-recap-metrics { grid-template-columns: 1fr; }
+            .pr-recap-summary { align-items: flex-start; }
         }
 
         .training-plan-target-title {
@@ -5466,6 +5536,112 @@
             if (coachBtn) coachBtn.classList.toggle('achieved', targetHit);
         }
 
+        function getExerciseSetsFromLog(log, exerciseId) {
+            return (log?.exercises || [])
+                .filter(exercise => exercise.id === exerciseId)
+                .flatMap(exercise => exercise.sets || []);
+        }
+
+        function buildPrRecapSeries(exerciseId, exerciseData, mode, currentLog) {
+            const seasonLogs = getSeasonWorkoutLogs()
+                .filter(log => !compareLogIds(log.id, currentLog.id))
+                .concat(currentLog)
+                .slice()
+                .sort((first, second) => new Date(first.date) - new Date(second.date));
+
+            return seasonLogs.map(log => {
+                const sets = getExerciseSetsFromLog(log, exerciseId);
+                if (mode === 'repsOnly') {
+                    const workingReps = sets
+                        .filter(set => !set.isWarmup)
+                        .map(set => parseInt(set.reps, 10))
+                        .filter(reps => Number.isFinite(reps) && reps > 0);
+                    if (workingReps.length === 0) return null;
+                    return { date: log.date, value: Math.max(...workingReps) };
+                }
+
+                const estimate = window.WorkoutStrength?.getBestEstimatedOneRepMax(exerciseData, sets);
+                return estimate
+                    ? { date: log.date, value: estimate.estimatedMaxKg }
+                    : null;
+            }).filter(Boolean);
+        }
+
+        function buildPrRecapChart(series, isRepOnly, chartId) {
+            if (!Array.isArray(series) || series.length === 0) return '';
+
+            const width = 620;
+            const height = 210;
+            const margin = { top: 18, right: 14, bottom: 32, left: 46 };
+            const plotWidth = width - margin.left - margin.right;
+            const plotHeight = height - margin.top - margin.bottom;
+            const displayPoints = series.map(point => ({
+                ...point,
+                displayValue: isRepOnly ? point.value : kgToLbs(point.value)
+            }));
+            const values = displayPoints.map(point => point.displayValue);
+            const minValue = Math.min(...values);
+            const maxValue = Math.max(...values);
+            const padding = Math.max(isRepOnly ? 1 : 2, (maxValue - minValue) * 0.2, maxValue * 0.025);
+            const yMin = Math.max(0, minValue - padding);
+            const yMax = maxValue + padding;
+            const firstDateMs = new Date(displayPoints[0].date).getTime();
+            const lastDateMs = new Date(displayPoints[displayPoints.length - 1].date).getTime();
+            const dateSpan = Math.max(1, lastDateMs - firstDateMs);
+            const xForPoint = (point, index) => displayPoints.length === 1
+                ? margin.left + plotWidth / 2
+                : margin.left + ((new Date(point.date).getTime() - firstDateMs) / dateSpan) * plotWidth;
+            const yForValue = value => margin.top + (1 - ((value - yMin) / Math.max(1, yMax - yMin))) * plotHeight;
+            const linePath = displayPoints.map((point, index) => {
+                const x = xForPoint(point, index).toFixed(1);
+                const y = yForValue(point.displayValue).toFixed(1);
+                return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
+            }).join(' ');
+            const areaPath = displayPoints.length > 1
+                ? `${linePath} L ${xForPoint(displayPoints[displayPoints.length - 1], displayPoints.length - 1).toFixed(1)} ${(height - margin.bottom).toFixed(1)} L ${xForPoint(displayPoints[0], 0).toFixed(1)} ${(height - margin.bottom).toFixed(1)} Z`
+                : '';
+            const yTicks = [yMin, (yMin + yMax) / 2, yMax];
+            const gridHtml = yTicks.map(tick => {
+                const y = yForValue(tick).toFixed(1);
+                return `
+                    <line class="pr-recap-chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>
+                    <text class="pr-recap-chart-label" x="2" y="${Number(y) + 4}">${Math.round(tick)}${isRepOnly ? '' : ' lb'}</text>`;
+            }).join('');
+            const dotsHtml = displayPoints.map((point, index) => `
+                <circle class="pr-recap-chart-dot" cx="${xForPoint(point, index).toFixed(1)}" cy="${yForValue(point.displayValue).toFixed(1)}" r="5"></circle>
+            `).join('');
+            const dateLabels = displayPoints.length === 1
+                ? `<text class="pr-recap-chart-label" x="${xForPoint(displayPoints[0], 0).toFixed(1)}" y="${height - 8}" text-anchor="middle">${escapeHtml(formatDate(displayPoints[0].date, DateFormats.SHORT))}</text>`
+                : `
+                    <text class="pr-recap-chart-label" x="${margin.left}" y="${height - 8}" text-anchor="start">${escapeHtml(formatDate(displayPoints[0].date, DateFormats.SHORT))}</text>
+                    <text class="pr-recap-chart-label" x="${width - margin.right}" y="${height - 8}" text-anchor="end">${escapeHtml(formatDate(displayPoints[displayPoints.length - 1].date, DateFormats.SHORT))}</text>`;
+            const latestValue = isRepOnly
+                ? `${Math.round(values[values.length - 1])} reps`
+                : `${Math.round(values[values.length - 1])} lbs`;
+            const gradientId = `prRecapAreaGradient-${chartId}`;
+
+            return `
+                <div class="pr-recap-chart-card">
+                    <div class="pr-recap-chart-head">
+                        <div class="pr-recap-chart-title">${isRepOnly ? 'Max Reps Since Season Start' : 'Projected 1RM Since Season Start'}</div>
+                        <div class="pr-recap-chart-latest">LATEST · ${escapeHtml(latestValue)}</div>
+                    </div>
+                    <svg class="pr-recap-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${isRepOnly ? 'Maximum reps' : 'Projected one rep max'} since season start">
+                        <defs>
+                            <linearGradient id="${gradientId}" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#cdeeff" stop-opacity="0.2"></stop>
+                                <stop offset="100%" stop-color="#cdeeff" stop-opacity="0"></stop>
+                            </linearGradient>
+                        </defs>
+                        ${gridHtml}
+                        ${areaPath ? `<path class="pr-recap-chart-area" fill="url(#${gradientId})" d="${areaPath}"></path>` : ''}
+                        <path class="pr-recap-chart-line" d="${linePath}"></path>
+                        ${dotsHtml}
+                        ${dateLabels}
+                    </svg>
+                </div>`;
+        }
+
         function buildWorkoutPrRecap(log) {
             if (!recordHistoryReady || !recordTracker || !window.WorkoutStrength) return [];
 
@@ -5476,7 +5652,8 @@
                 const exerciseData = getExercise(exerciseLog.id) || { name: exerciseLog.name };
                 return {
                     exerciseName: exerciseData.name || exerciseLog.name || exerciseLog.id,
-                    result
+                    result,
+                    series: buildPrRecapSeries(exerciseLog.id, exerciseData, result.mode, log)
                 };
             }).filter(Boolean);
         }
@@ -5490,64 +5667,33 @@
             const usesFallback = recapItems.some(item => item.result.current?.usedFallback);
 
             subtitle.textContent = `${log.workoutName} produced ${recapItems.length} season PR${recapItems.length === 1 ? '' : 's'}.`;
-            content.innerHTML = recapItems.map(item => {
+            content.innerHTML = recapItems.map((item, itemIndex) => {
                 const { result } = item;
                 const current = result.current;
-                const previous = result.previousBest;
-                const baseline = result.seasonBaseline;
                 const isRepOnly = result.mode === 'repsOnly';
                 const recordLabels = isRepOnly
                     ? `${result.matchedPR ? 'MATCHED REP PR' : 'REP PR'} · ${current.reps} reps`
-                    : `ESTIMATED 1RM PR · ${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
+                    : 'ESTIMATED 1RM PR';
 
-                let currentValue;
-                let currentDetail;
-                let previousValue;
-                let previousDetail;
-                let growthValue = 'BASELINE SET';
-                let growthDetail = isRepOnly
-                    ? 'First max-rep mark of the season.'
-                    : 'First estimated strength signal of the season.';
-                let growthClass = '';
+                let summaryValue;
+                let summaryDetail;
 
                 if (isRepOnly) {
-                    currentValue = `${current.reps} REPS`;
-                    currentDetail = 'Highest reps completed in one working set.';
-                    previousValue = previous ? `${previous.reps} REPS` : 'NONE';
-                    previousDetail = previous
-                        ? result.matchedPR
-                            ? 'Matched the previous season best and still counts as a PR.'
-                            : 'Best mark before this workout.'
-                        : 'First season mark for this exercise.';
-
-                    if (baseline?.date && Number.isFinite(baseline.reps)) {
-                        const deltaReps = current.reps - baseline.reps;
-                        const percent = baseline.reps > 0 ? Math.round((deltaReps / baseline.reps) * 1000) / 10 : 0;
-                        growthValue = `${deltaReps > 0 ? '+' : ''}${deltaReps} REPS · ${percent > 0 ? '+' : ''}${percent}%`;
-                        growthDetail = `Compared with ${baseline.reps} reps on ${formatDate(baseline.date, DateFormats.SHORT)}.`;
-                        if (deltaReps > 0) growthClass = 'positive';
-                    }
+                    summaryValue = `${current.reps} REPS`;
+                    summaryDetail = 'Highest reps completed in one working set.';
                 } else {
-                    currentValue = `${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
-                    currentDetail = `Projected from ${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}${current.repsCapped ? `, calculation capped at ${current.calculationReps} reps` : ''}.`;
-                    previousValue = previous
-                        ? `${formatWeightLbs(previous.estimatedMaxKg)}${previous.usedFallback ? '**' : ''}`
-                        : 'NONE';
-                    previousDetail = previous
-                        ? 'Best estimated 1RM before this workout.'
-                        : 'First season strength estimate for this exercise.';
-
-                    if (baseline?.date && Number.isFinite(baseline.estimatedMaxKg)) {
-                        const deltaKg = current.estimatedMaxKg - baseline.estimatedMaxKg;
-                        const deltaLbs = Math.round(kgToLbs(deltaKg));
-                        const percent = baseline.estimatedMaxKg > 0
-                            ? Math.round((deltaKg / baseline.estimatedMaxKg) * 1000) / 10
-                            : 0;
-                        growthValue = `${deltaLbs > 0 ? '+' : ''}${deltaLbs} LB · ${percent > 0 ? '+' : ''}${percent}%`;
-                        growthDetail = `Compared with ${formatWeightLbs(baseline.estimatedMaxKg)} on ${formatDate(baseline.date, DateFormats.SHORT)}.`;
-                        if (deltaKg > 0) growthClass = 'positive';
-                    }
+                    summaryValue = `${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
+                    summaryDetail = `Projected from ${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}${current.repsCapped ? `, calculation capped at ${current.calculationReps} reps` : ''}.`;
                 }
+
+                const priorPoint = item.series.length > 1 ? item.series[item.series.length - 2] : null;
+                const deltaValue = priorPoint
+                    ? isRepOnly
+                        ? `${current.reps - priorPoint.value >= 0 ? '+' : ''}${Math.round(current.reps - priorPoint.value)} reps`
+                        : `${kgToLbs(current.estimatedMaxKg - priorPoint.value) >= 0 ? '+' : ''}${Math.round(kgToLbs(current.estimatedMaxKg - priorPoint.value))} lb`
+                    : 'Baseline';
+                const deltaClass = priorPoint ? '' : ' baseline';
+                const chart = buildPrRecapChart(item.series, isRepOnly, `item-${itemIndex}`);
 
                 return `
                     <article class="pr-recap-card">
@@ -5558,23 +5704,15 @@
                             </div>
                             <div class="pr-recap-badge">PR</div>
                         </div>
-                        <div class="pr-recap-metrics">
-                            <div class="pr-recap-metric">
-                                <div class="pr-recap-metric-label">${isRepOnly ? 'Max Reps' : 'Estimated 1 Rep Max'}</div>
-                                <div class="pr-recap-metric-value">${escapeHtml(currentValue)}</div>
-                                <div class="pr-recap-metric-detail">${escapeHtml(currentDetail)}</div>
+                        <div class="pr-recap-summary">
+                            <div class="pr-recap-summary-main">
+                                <div class="pr-recap-summary-label">${isRepOnly ? 'Max Reps' : 'Estimated 1 Rep Max'}</div>
+                                <div class="pr-recap-summary-value">${escapeHtml(summaryValue)}</div>
+                                <div class="pr-recap-summary-detail">${escapeHtml(summaryDetail)}</div>
                             </div>
-                            <div class="pr-recap-metric">
-                                <div class="pr-recap-metric-label">Previous Best</div>
-                                <div class="pr-recap-metric-value">${escapeHtml(previousValue)}</div>
-                                <div class="pr-recap-metric-detail">${escapeHtml(previousDetail)}</div>
-                            </div>
-                            <div class="pr-recap-metric">
-                                <div class="pr-recap-metric-label">${isRepOnly ? 'Reps Since Season Start' : 'Strength Since Season Start'}</div>
-                                <div class="pr-recap-metric-value ${growthClass}">${escapeHtml(growthValue)}</div>
-                                <div class="pr-recap-metric-detail">${escapeHtml(growthDetail)}</div>
-                            </div>
+                            <div class="pr-recap-delta${deltaClass}">${escapeHtml(deltaValue)}</div>
                         </div>
+                        ${chart}
                     </article>`;
             }).join('');
 
