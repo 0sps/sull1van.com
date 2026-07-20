@@ -16,24 +16,48 @@ function clamp(value, min, max) {
 const TEST_MIX_KEYS = ["correct", "incorrect", "unanswered"];
 const SAFE_HTML_TAGS = new Set([
   "a", "b", "br", "circle", "code", "dd", "defs", "div", "dl", "dt", "em", "g", "i", "li", "line", "marker",
-  "ol", "p", "path", "polygon", "polyline", "pre", "rect", "small", "span", "strong", "sub", "sup", "svg",
+  "ol", "p", "path", "pattern", "polygon", "polyline", "pre", "rect", "small", "span", "strong", "sub", "sup", "svg",
+  "clippath",
   "table", "tbody", "td", "text", "tfoot", "th", "thead", "tr", "tspan", "u", "ul"
 ]);
 const SAFE_HTML_ATTRIBUTES = new Set([
-  "aria-hidden", "baseline-shift", "class", "cx", "cy", "d", "fill", "font-family", "font-size", "font-style",
+  "alignment-baseline", "aria-hidden", "baseline-shift", "clip-path", "cx", "cy", "d", "dy", "fill", "fill-opacity", "font-family", "font-size", "font-style",
   "font-weight", "height", "href", "id", "marker-end", "marker-start", "markerheight", "markerwidth", "opacity",
-  "orient", "points", "r", "refx", "refy", "rel", "role", "scope", "stroke", "stroke-dasharray", "stroke-width",
+  "orient", "patterntransform", "patternunits", "points", "r", "refx", "refy", "rel", "role", "scope", "stroke", "stroke-dasharray", "stroke-linecap", "stroke-linejoin", "stroke-width",
   "style", "target", "text-anchor", "title", "transform", "viewbox", "width", "x", "x1", "x2", "xmlns", "y", "y1", "y2"
 ]);
 const URL_ATTRIBUTES = new Set(["href"]);
+const SVG_REFERENCE_ATTRIBUTES = new Set(["clip-path", "marker-end", "marker-start"]);
+const SVG_PAINT_ATTRIBUTES = new Set(["fill", "stroke"]);
+const SAFE_STYLE_PROPERTIES = new Set(["display", "height", "margin", "max-width", "width"]);
+
+function isSafeInlineStyle(value) {
+  return String(value).split(";").every((declaration) => {
+    const trimmed = declaration.trim();
+    if (!trimmed) return true;
+    const separator = trimmed.indexOf(":");
+    if (separator < 1) return false;
+    const property = trimmed.slice(0, separator).trim().toLowerCase();
+    const propertyValue = trimmed.slice(separator + 1).trim();
+    return SAFE_STYLE_PROPERTIES.has(property) &&
+      /^[a-z0-9.%+\-\s]+$/i.test(propertyValue) &&
+      !/expression\s*\(|url\s*\(|@import|javascript:/i.test(propertyValue);
+  });
+}
 
 function isSafeAttributeValue(name, value) {
   const normalized = String(value).trim().replace(/[\u0000-\u001F\u007F\s]+/g, "").toLowerCase();
   if (URL_ATTRIBUTES.has(name)) {
     return normalized === "" || normalized.startsWith("#") || normalized.startsWith("http://") || normalized.startsWith("https://");
   }
+  if (SVG_REFERENCE_ATTRIBUTES.has(name)) {
+    return normalized === "none" || /^url\(#[a-z0-9_.:-]+\)$/i.test(normalized);
+  }
+  if (SVG_PAINT_ATTRIBUTES.has(name) && normalized.includes("url(")) {
+    return /^url\(#[a-z0-9_.:-]+\)$/i.test(normalized);
+  }
   if (name === "style") {
-    return !/expression\s*\(|url\s*\(|@import|javascript:/i.test(value);
+    return isSafeInlineStyle(value);
   }
   return true;
 }

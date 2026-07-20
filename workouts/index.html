@@ -252,7 +252,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -266,6 +266,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        const OWNER_EMAIL = 'sspsful@gmail.com';
+
+        function isOwner(user) {
+            return (user?.email || '').trim().toLowerCase() === OWNER_EMAIL && user.emailVerified;
+        }
 
         function getRedirectTarget() {
             const redirect = new URLSearchParams(window.location.search).get('redirect');
@@ -274,9 +279,12 @@
         }
 
         // Check if already signed in
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+        onAuthStateChanged(auth, async (user) => {
+            if (isOwner(user)) {
                 window.location.href = getRedirectTarget();
+            } else if (user) {
+                await signOut(auth);
+                showError('Access is restricted to the owner account.');
             }
         });
 
@@ -294,8 +302,11 @@
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-                if (user) {
+                if (isOwner(user)) {
                     window.location.href = getRedirectTarget();
+                } else if (user) {
+                    await signOut(auth);
+                    showError('Access is restricted to the owner account.');
                 }
             } catch (error) {
                 console.error('Auth error:', error);

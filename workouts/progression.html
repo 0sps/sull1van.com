@@ -1385,6 +1385,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const OWNER_EMAIL = 'sspsful@gmail.com';
 
         function getUserEmailKey(user) {
             return (user?.email || '').trim().toLowerCase();
@@ -1422,6 +1423,11 @@
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                if (getUserEmailKey(user) !== OWNER_EMAIL || !user.emailVerified) {
+                    await signOut(auth);
+                    window.location.href = 'index.html?unauthorized=1';
+                    return;
+                }
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;

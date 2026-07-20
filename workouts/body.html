@@ -843,7 +843,7 @@
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            if (user.email === 'sspsful@gmail.com') {
+            if ((user.email || '').toLowerCase() === 'sspsful@gmail.com' && user.emailVerified) {
                 window.currentUser = user;
                 window.firebaseReady = true;
                 document.getElementById('loadingOverlay').style.display = 'none';

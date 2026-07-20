@@ -832,7 +832,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -846,9 +846,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Same weekly config refresh window as app.html.
         const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const TRAINING_PLAN_DEBUG_TIMESTAMP_KEY = 'lastGeneratedAt';
+        const OWNER_EMAIL = 'sspsful@gmail.com';
 
         let currentUser = null;
         let exercisesData = {};
@@ -862,6 +862,26 @@
         let submitReady = false;
         let savedPlanFingerprint = '';
         let planMode = 'build';
+        let planWritable = false;
+        let loadedPlanRevision = null;
+        let loadedPlanUpdatedAt = null;
+
+        class PlanConflictError extends Error {
+            constructor(message = 'This training plan changed on another tab or device. Reload before saving.') {
+                super(message);
+                this.name = 'PlanConflictError';
+            }
+        }
+
+        function getNextPlanRevision(remote) {
+            const remoteRevision = Number.isInteger(remote?.revision) ? remote.revision : null;
+            if (loadedPlanRevision !== null) {
+                if (remoteRevision !== loadedPlanRevision) throw new PlanConflictError();
+            } else if (remoteRevision !== null || (remote?.updatedAt || null) !== loadedPlanUpdatedAt) {
+                throw new PlanConflictError();
+            }
+            return (remoteRevision || 0) + 1;
+        }
 
         const el = {
             loadingOverlay: document.getElementById('loadingOverlay'),
@@ -918,8 +938,7 @@
                 const cached = JSON.parse(raw);
                 if (!cached || typeof cached.cachedAt !== 'number' || cached.data === undefined) return null;
                 return {
-                    data: cached.data,
-                    isFresh: Date.now() - cached.cachedAt < CONFIG_CACHE_TTL
+                    data: cached.data
                 };
             } catch (error) {
                 console.warn(`Ignoring invalid cached config for ${configId}:`, error);
@@ -946,7 +965,6 @@
 
         async function loadUserConfig(configId, jsonPath) {
             const cached = readCachedUserConfig(configId);
-            if (cached?.isFresh) return cached.data;
 
             try {
                 const docRef = getUserConfigDocRef(configId);
@@ -957,25 +975,38 @@
                 if (snapshot.exists()) {
                     const data = snapshot.data();
                     writeCachedUserConfig(configId, data);
-                    return data;
+                    return { data, writable: true, source: 'server' };
                 }
 
-                // First editor load for this user/config: seed Firebase from bundled JSON
-                // and cache that seeded payload for 7 days.
-                const data = await fetchSeedConfig(jsonPath);
-                await setDoc(docRef, data);
+                // A successful read confirmed that no server plan exists. Recheck inside
+                // a transaction so a concurrently created plan is never overwritten.
+                const seed = await fetchSeedConfig(jsonPath);
+                const data = await runTransaction(db, async (transaction) => {
+                    const currentSnapshot = await transaction.get(docRef);
+                    if (currentSnapshot.exists()) return currentSnapshot.data();
+                    const seededPlan = {
+                        ...seed,
+                        revision: 1,
+                        updatedAt: new Date().toISOString()
+                    };
+                    transaction.set(docRef, seededPlan);
+                    return seededPlan;
+                });
                 writeCachedUserConfig(configId, data);
-                return data;
+                return { data, writable: true, source: 'seed' };
             } catch (error) {
-                // Stale cache keeps the editor usable when weekly refresh cannot reach Firebase.
+                // A cache can be viewed during an outage, but it is never writable because
+                // the current server version could not be confirmed.
                 if (cached) {
-                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
-                    return cached.data;
+                    console.warn(`Using read-only cached config for ${configId} because refresh failed:`, error);
+                    return {
+                        data: cached.data,
+                        writable: false,
+                        source: 'cache',
+                        reason: 'Server refresh failed. Cached plan is read-only until you reload online.'
+                    };
                 }
-                // No confirmed Firebase read and no cache: allow boot from bundled JSON, but
-                // do not mark it as cached user config.
-                console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
-                return fetchSeedConfig(jsonPath);
+                throw new Error('Could not confirm the server training plan. Saving is disabled until you reload online.');
             }
         }
 
@@ -1033,6 +1064,8 @@
         function getComparableTrainingPlan(plan) {
             const comparablePlan = clone(plan || {});
             delete comparablePlan[TRAINING_PLAN_DEBUG_TIMESTAMP_KEY];
+            delete comparablePlan.revision;
+            delete comparablePlan.updatedAt;
             return comparablePlan;
         }
 
@@ -1194,8 +1227,19 @@
         }
 
         function setSubmitReady(isReady) {
-            submitReady = !!isReady;
+            submitReady = planWritable && !!isReady;
             el.submitBtn.disabled = !submitReady;
+        }
+
+        function setEditorWritable(isWritable, reason = '') {
+            planWritable = !!isWritable;
+            if (!planWritable) {
+                document.querySelectorAll('main input, main textarea, main button').forEach((control) => {
+                    control.disabled = true;
+                });
+                setSubmitReady(false);
+                setSyncStatus(reason || 'Read-only', 'error');
+            }
         }
 
         function getPlanFingerprint(plan) {
@@ -1238,6 +1282,13 @@
         }
 
         async function validateForSubmit() {
+            if (!planWritable) {
+                latestValidation = { valid: false, errors: ['The cached plan is read-only until the server version can be confirmed.'] };
+                hasValidationResult = true;
+                renderValidation();
+                setSubmitReady(false);
+                return latestValidation;
+            }
             const planResult = getActiveTrainingPlan();
             if (!planResult.valid) {
                 latestValidation = { valid: false, errors: [planResult.error] };
@@ -1289,21 +1340,50 @@
             renderValidation();
         }
 
-        function buildTrainingPlan() {
-            const schedule = editorDays.map((day) => String(day.workoutName || '').trim());
-            const workouts = clone(originalTrainingPlan?.workouts || {});
+        function getEditorWorkoutDefinition(day) {
+            return {
+                subtitle: String(day.subtitle || '').trim(),
+                exercises: day.exercises.map((item) => ({
+                    id: String(item.id || '').trim(),
+                    sets: Number(item.sets),
+                    reps: String(item.reps || '').trim()
+                }))
+            };
+        }
+
+        function getSharedWorkoutDefinitionErrors() {
+            const definitionsByName = new Map();
+            const conflictingNames = new Set();
 
             editorDays.forEach((day) => {
                 const workoutName = String(day.workoutName || '').trim();
                 if (!workoutName) return;
-                workouts[workoutName] = {
-                    subtitle: String(day.subtitle || '').trim(),
-                    exercises: day.exercises.map((item) => ({
-                        id: String(item.id || '').trim(),
-                        sets: Number(item.sets),
-                        reps: String(item.reps || '').trim()
-                    }))
-                };
+
+                const definition = getEditorWorkoutDefinition(day);
+                const existing = definitionsByName.get(workoutName);
+                if (!existing) {
+                    definitionsByName.set(workoutName, definition);
+                    return;
+                }
+
+                if (JSON.stringify(existing) !== JSON.stringify(definition)) {
+                    conflictingNames.add(workoutName);
+                }
+            });
+
+            return [...conflictingNames].map((workoutName) =>
+                `Workout "${workoutName}" is scheduled on multiple days with conflicting subtitles or exercises.`
+            );
+        }
+
+        function buildTrainingPlan() {
+            const schedule = editorDays.map((day) => String(day.workoutName || '').trim());
+            const workouts = {};
+
+            editorDays.forEach((day) => {
+                const workoutName = String(day.workoutName || '').trim();
+                if (!workoutName || workouts[workoutName]) return;
+                workouts[workoutName] = getEditorWorkoutDefinition(day);
             });
 
             return {
@@ -1354,6 +1434,10 @@
             if (!plan.workouts || typeof plan.workouts !== 'object' || Array.isArray(plan.workouts)) {
                 errors.push('Workouts must be an object keyed by workout name.');
                 return { valid: false, errors };
+            }
+
+            if (planMode === 'build') {
+                errors.push(...getSharedWorkoutDefinitionErrors());
             }
 
             const workouts = plan.workouts;
@@ -1506,7 +1590,7 @@
         }
 
         async function openConfirmModal() {
-            if (!submitReady) return;
+            if (!planWritable || !submitReady) return;
             const planResult = getActiveTrainingPlan();
             if (!planResult.valid) {
                 pendingPlan = null;
@@ -1552,7 +1636,7 @@
         }
 
         async function savePendingPlan() {
-            if (!pendingPlan) return;
+            if (!planWritable || !pendingPlan) return;
 
             let validation;
             try {
@@ -1578,11 +1662,30 @@
             setSyncStatus('Saving', '');
 
             try {
-                const planToSave = withTrainingPlanDebugTimestamp(pendingPlan);
-                await setDoc(getUserConfigDocRef('trainingPlan'), planToSave);
+                const planRef = getUserConfigDocRef('trainingPlan');
+                const candidatePlan = withTrainingPlanDebugTimestamp(pendingPlan);
+                const planToSave = await runTransaction(db, async (transaction) => {
+                    const currentSnapshot = await transaction.get(planRef);
+                    if (!currentSnapshot.exists()) {
+                        throw new PlanConflictError('The server training plan was deleted. Reload before saving.');
+                    }
+
+                    const remote = currentSnapshot.data();
+                    const nextRevision = getNextPlanRevision(remote);
+
+                    const savedPlan = {
+                        ...candidatePlan,
+                        revision: nextRevision,
+                        updatedAt: new Date().toISOString()
+                    };
+                    transaction.set(planRef, savedPlan);
+                    return savedPlan;
+                });
                 // Only refresh the local trainingPlan config cache after Firebase confirms
                 // the overwrite. Workout logs and workoutProgress are intentionally untouched.
                 writeCachedUserConfig('trainingPlan', planToSave);
+                loadedPlanRevision = planToSave.revision;
+                loadedPlanUpdatedAt = planToSave.updatedAt;
                 originalTrainingPlan = clone(planToSave);
                 editorDays = createEditorDays(originalTrainingPlan);
                 el.importJsonInput.value = JSON.stringify(originalTrainingPlan, null, 2);
@@ -1595,9 +1698,13 @@
             } catch (error) {
                 console.error('Failed to save training plan:', error);
                 setSyncStatus('Save failed', 'error');
+                if (error instanceof PlanConflictError) {
+                    setEditorWritable(false, 'Out of date');
+                    closeConfirmModal();
+                }
                 showToast(error.message || 'Failed to save training plan.', true);
             } finally {
-                el.confirmSaveBtn.disabled = false;
+                el.confirmSaveBtn.disabled = !planWritable;
                 el.confirmSaveBtn.textContent = 'Confirm Save';
             }
         }
@@ -1689,6 +1796,12 @@
                 return;
             }
 
+            if (getUserEmailKey(user) !== OWNER_EMAIL || !user.emailVerified) {
+                await signOut(auth);
+                window.location.href = 'index.html?unauthorized=1';
+                return;
+            }
+
             currentUser = user;
             if (!getUserEmailKey(user)) {
                 showLoadingError('Authenticated user is missing an email address.');
@@ -1703,18 +1816,26 @@
             });
 
             try {
-                const [loadedExercises, loadedTrainingPlan] = await Promise.all([
+                const [loadedExercises, trainingPlanResult] = await Promise.all([
                     window.WorkoutConfig.loadExercises('exercises.json'),
                     loadUserConfig('trainingPlan', 'training-plan.json')
                 ]);
 
                 exercisesData = loadedExercises || {};
                 exerciseRows = normalizeExerciseRows(exercisesData);
-                originalTrainingPlan = loadedTrainingPlan || {};
+                originalTrainingPlan = trainingPlanResult.data || {};
+                loadedPlanRevision = Number.isInteger(originalTrainingPlan.revision) ? originalTrainingPlan.revision : null;
+                loadedPlanUpdatedAt = originalTrainingPlan.updatedAt || null;
                 editorDays = createEditorDays(originalTrainingPlan);
+                planWritable = trainingPlanResult.writable;
                 setSavedPlanSnapshot();
                 renderAll();
-                setSyncStatus('Ready', 'synced');
+                if (planWritable) {
+                    setSyncStatus('Ready', 'synced');
+                } else {
+                    setEditorWritable(false, trainingPlanResult.reason || 'Read-only');
+                    showToast(trainingPlanResult.reason || 'Cached plan opened read-only.', true);
+                }
                 hideLoading();
             } catch (error) {
                 console.error('Failed to load editor data:', error);

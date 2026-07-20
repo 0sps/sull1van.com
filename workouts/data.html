@@ -1029,7 +1029,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, writeBatch, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, query, orderBy, limit, where, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         // CONFIGURATION
         const firebaseConfig = {
@@ -1091,7 +1091,7 @@
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'index.html';
-            } else if ((user.email || '').toLowerCase() !== ADMIN_EMAIL) {
+            } else if ((user.email || '').toLowerCase() !== ADMIN_EMAIL || !user.emailVerified) {
                 window.location.href = 'app.html';
             } else {
                 currentUser = user;
@@ -1350,6 +1350,8 @@
             editor.style.display = 'block';
             editor.value = JSON.stringify(log, null, 4);
             editor.dataset.originalId = id;
+            editor.dataset.originalRevision = Number.isInteger(log.revision) ? String(log.revision) : '';
+            editor.dataset.originalUpdatedAt = log.updatedAt || '';
 
             // Focus and scroll to top
             editor.scrollTop = 0;
@@ -1363,6 +1365,8 @@
             try {
                 const updatedData = JSON.parse(editor.value);
                 const originalId = editor.dataset.originalId;
+                const originalRevision = editor.dataset.originalRevision === '' ? null : Number(editor.dataset.originalRevision);
+                const originalUpdatedAt = editor.dataset.originalUpdatedAt || null;
 
                 if (!updatedData || typeof updatedData !== 'object' || Array.isArray(updatedData)) {
                     throw new Error("Root value must be a JSON object");
@@ -1381,6 +1385,7 @@
                 const report = runValidation(updatedData);
                 window._pendingSaveData = updatedData;
                 window._pendingOriginalId = originalId;
+                window._pendingBaseVersion = { revision: originalRevision, updatedAt: originalUpdatedAt };
 
                 if (report.error) {
                     showValidationModal(report.error);
@@ -1508,22 +1513,67 @@
             document.getElementById('validationModalOverlay').style.display = 'none';
         }
 
-        async function executeSave(data, originalId) {
+        class WorkoutEditorConflictError extends Error {
+            constructor(message = 'This workout changed after the editor loaded it.') {
+                super(message);
+                this.name = 'WorkoutEditorConflictError';
+            }
+        }
+
+        class WorkoutDestinationExistsError extends Error {
+            constructor() {
+                super('A workout already exists with that ID. Choose a different ID.');
+                this.name = 'WorkoutDestinationExistsError';
+            }
+        }
+
+        function assertEditorVersionMatches(remote, baseVersion) {
+            const remoteRevision = Number.isInteger(remote?.revision) ? remote.revision : null;
+            const baseRevision = Number.isInteger(baseVersion?.revision) ? baseVersion.revision : null;
+            if (baseRevision !== null) {
+                if (remoteRevision !== baseRevision) throw new WorkoutEditorConflictError();
+                return remoteRevision;
+            }
+            if (remoteRevision !== null || (remote?.updatedAt || null) !== (baseVersion?.updatedAt || null)) {
+                throw new WorkoutEditorConflictError();
+            }
+            return null;
+        }
+
+        async function executeSave(data, originalId, baseVersion) {
             showLoading(true, "Saving to Firebase...");
             try {
                 const nextId = data.id.toString();
                 const previousId = originalId.toString();
-                const dataToSave = { ...data, updatedAt: new Date().toISOString() };
+                const previousRef = getWorkoutDocRef(previousId);
+                const nextRef = getWorkoutDocRef(nextId);
+                const dataToSave = await runTransaction(db, async (transaction) => {
+                    const previousSnapshot = await transaction.get(previousRef);
+                    let nextSnapshot = null;
+                    if (nextId !== previousId) {
+                        nextSnapshot = await transaction.get(nextRef);
+                    }
+
+                    if (!previousSnapshot.exists()) {
+                        throw new WorkoutEditorConflictError('The source workout no longer exists. Reload before saving.');
+                    }
+                    const previousData = previousSnapshot.data();
+                    const previousRevision = assertEditorVersionMatches(previousData, baseVersion);
+                    if (nextSnapshot?.exists()) throw new WorkoutDestinationExistsError();
+
+                    const savedData = {
+                        ...data,
+                        revision: (previousRevision || 0) + 1,
+                        updatedAt: new Date().toISOString()
+                    };
+                    transaction.set(nextRef, savedData);
+                    if (nextId !== previousId) transaction.delete(previousRef);
+                    return savedData;
+                });
 
                 if (nextId !== previousId) {
-                    const batch = writeBatch(db);
-                    batch.set(getWorkoutDocRef(nextId), dataToSave);
-                    batch.delete(getWorkoutDocRef(previousId));
-                    await batch.commit();
                     selectedLogIds.delete(previousId);
                     activeLogId = nextId;
-                } else {
-                    await setDoc(getWorkoutDocRef(nextId), dataToSave);
                 }
 
                 // Update local state
@@ -1537,7 +1587,12 @@
                 document.getElementById('validationMsg').textContent = "";
             } catch (err) {
                 console.error(err);
-                showToast("Save failed", "error");
+                if (err instanceof WorkoutDestinationExistsError || err instanceof WorkoutEditorConflictError) {
+                    showToast(err.message, "error");
+                    document.getElementById('validationMsg').textContent = err.message;
+                } else {
+                    showToast("Save failed", "error");
+                }
             } finally {
                 showLoading(false);
             }
@@ -1552,6 +1607,7 @@
         let pendingActionType = null; // 'delete' or 'save'
         let pendingData = null;
         let pendingId = null;
+        let pendingBaseVersion = null;
 
         function showUndoBox(type, title) {
             pendingActionType = type;
@@ -1586,17 +1642,19 @@
         window.triggerSaveWithUndo = function () {
             const data = window._pendingSaveData;
             const originalId = window._pendingOriginalId;
+            const baseVersion = window._pendingBaseVersion;
             if (!data) return;
 
             hideSaveModal();
             pendingData = data;
             pendingId = originalId;
+            pendingBaseVersion = baseVersion;
 
             // Show Undo UI
             showUndoBox('save', 'SAVED!');
 
             pendingActionTimeout = setTimeout(async () => {
-                await executeSave(pendingData, pendingId);
+                await executeSave(pendingData, pendingId, pendingBaseVersion);
                 hideUndoBox();
             }, 2000);
         }
@@ -1608,6 +1666,7 @@
             selectLog(pendingId);
             pendingData = null;
             pendingId = null;
+            pendingBaseVersion = null;
         }
 
         // DELETE WITH UNDO

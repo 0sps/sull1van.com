@@ -71,7 +71,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -86,10 +86,12 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const OWNER_EMAIL = 'sspsful@gmail.com';
 
         let csvData = null;
         let firebaseData = null;
         let currentUser = null;
+        const WORKOUT_CSV_DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) ([+-])(\d{2})(\d{2})$/;
 
         function getUserEmailKey(user) {
             return (user?.email || '').trim().toLowerCase();
@@ -99,15 +101,34 @@
             return collection(db, 'users', getUserEmailKey(currentUser), 'workouts');
         }
 
+        function isValidWorkoutCsvDate(value) {
+            const match = WORKOUT_CSV_DATE_PATTERN.exec(String(value || ''));
+            if (!match) return false;
+            const [, year, month, day, hours, minutes, seconds, , offsetHours, offsetMinutes] = match;
+            const date = new Date(`${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`);
+            return !Number.isNaN(date.getTime()) &&
+                date.getUTCFullYear() === Number(year) &&
+                date.getUTCMonth() + 1 === Number(month) &&
+                date.getUTCDate() === Number(day) &&
+                date.getUTCHours() === Number(hours) &&
+                date.getUTCMinutes() === Number(minutes) &&
+                date.getUTCSeconds() === Number(seconds) &&
+                Number(offsetHours) <= 23 &&
+                Number(offsetMinutes) <= 59;
+        }
+
         function log(message, type = 'info') {
             const output = document.getElementById('output');
             const className = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : '';
-            output.innerHTML += `<span class="${className}">${message}</span>\n`;
+            const entry = document.createElement('span');
+            entry.className = className;
+            entry.textContent = String(message);
+            output.append(entry, document.createTextNode('\n'));
             output.scrollTop = output.scrollHeight;
         }
 
         function clearLog() {
-            document.getElementById('output').innerHTML = '';
+            document.getElementById('output').replaceChildren();
         }
 
         // Parse CSV file
@@ -121,7 +142,8 @@
                 const lines = text.split('\n');
                 const headers = lines[0].split(',');
 
-                csvData = {};
+                const parsedCsvData = Object.create(null);
+                const invalidDateRows = [];
                 for (let i = 1; i < lines.length; i++) {
                     if (!lines[i].trim()) continue;
 
@@ -130,14 +152,27 @@
                     const exercise = values[1]?.trim();
 
                     if (!date || !exercise) continue;
-
-                    if (!csvData[date]) {
-                        csvData[date] = new Set();
+                    if (!isValidWorkoutCsvDate(date)) {
+                        invalidDateRows.push(i + 1);
+                        continue;
                     }
-                    csvData[date].add(exercise);
+
+                    if (!parsedCsvData[date]) {
+                        parsedCsvData[date] = new Set();
+                    }
+                    parsedCsvData[date].add(exercise);
                 }
 
                 clearLog();
+                if (invalidDateRows.length > 0) {
+                    csvData = null;
+                    const preview = invalidDateRows.slice(0, 10).join(', ');
+                    const remainder = invalidDateRows.length > 10 ? ` and ${invalidDateRows.length - 10} more` : '';
+                    log(`❌ Invalid workout date format on CSV row${invalidDateRows.length === 1 ? '' : 's'} ${preview}${remainder}. Expected YYYY-MM-DD HH:mm:ss ±HHMM.`, 'error');
+                    document.getElementById('verifyBtn').disabled = true;
+                    return;
+                }
+                csvData = parsedCsvData;
                 log(`✅ Loaded CSV: ${Object.keys(csvData).length} workout dates, ${lines.length - 1} total sets`, 'success');
                 document.getElementById('verifyBtn').disabled = false;
             };
@@ -233,8 +268,15 @@
         };
 
         // Check auth
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
+                if (getUserEmailKey(user) !== OWNER_EMAIL || !user.emailVerified) {
+                    await signOut(auth);
+                    currentUser = null;
+                    log('❌ Access denied. This tool is restricted to the owner account.', 'error');
+                    document.getElementById('verifyBtn').disabled = true;
+                    return;
+                }
                 currentUser = user;
                 log(`✅ Authenticated as: ${user.email}\n`, 'success');
             } else {

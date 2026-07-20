@@ -17,6 +17,7 @@ var FEStudyApp = (() => {
     "b",
     "br",
     "circle",
+    "clippath",
     "code",
     "dd",
     "defs",
@@ -32,6 +33,7 @@ var FEStudyApp = (() => {
     "ol",
     "p",
     "path",
+    "pattern",
     "polygon",
     "polyline",
     "pre",
@@ -55,13 +57,16 @@ var FEStudyApp = (() => {
     "ul"
   ]);
   var SAFE_HTML_ATTRIBUTES = /* @__PURE__ */ new Set([
+    "alignment-baseline",
     "aria-hidden",
     "baseline-shift",
-    "class",
+    "clip-path",
     "cx",
     "cy",
     "d",
+    "dy",
     "fill",
+    "fill-opacity",
     "font-family",
     "font-size",
     "font-style",
@@ -75,6 +80,8 @@ var FEStudyApp = (() => {
     "markerwidth",
     "opacity",
     "orient",
+    "patterntransform",
+    "patternunits",
     "points",
     "r",
     "refx",
@@ -84,6 +91,8 @@ var FEStudyApp = (() => {
     "scope",
     "stroke",
     "stroke-dasharray",
+    "stroke-linecap",
+    "stroke-linejoin",
     "stroke-width",
     "style",
     "target",
@@ -101,13 +110,33 @@ var FEStudyApp = (() => {
     "y2"
   ]);
   var URL_ATTRIBUTES = /* @__PURE__ */ new Set(["href"]);
+  var SVG_REFERENCE_ATTRIBUTES = /* @__PURE__ */ new Set(["clip-path", "marker-end", "marker-start"]);
+  var SVG_PAINT_ATTRIBUTES = /* @__PURE__ */ new Set(["fill", "stroke"]);
+  var SAFE_STYLE_PROPERTIES = /* @__PURE__ */ new Set(["display", "height", "margin", "max-width", "width"]);
+  function isSafeInlineStyle(value) {
+    return String(value).split(";").every((declaration) => {
+      const trimmed = declaration.trim();
+      if (!trimmed) return true;
+      const separator = trimmed.indexOf(":");
+      if (separator < 1) return false;
+      const property = trimmed.slice(0, separator).trim().toLowerCase();
+      const propertyValue = trimmed.slice(separator + 1).trim();
+      return SAFE_STYLE_PROPERTIES.has(property) && /^[a-z0-9.%+\-\s]+$/i.test(propertyValue) && !/expression\s*\(|url\s*\(|@import|javascript:/i.test(propertyValue);
+    });
+  }
   function isSafeAttributeValue(name, value) {
     const normalized = String(value).trim().replace(/[\u0000-\u001F\u007F\s]+/g, "").toLowerCase();
     if (URL_ATTRIBUTES.has(name)) {
       return normalized === "" || normalized.startsWith("#") || normalized.startsWith("http://") || normalized.startsWith("https://");
     }
+    if (SVG_REFERENCE_ATTRIBUTES.has(name)) {
+      return normalized === "none" || /^url\(#[a-z0-9_.:-]+\)$/i.test(normalized);
+    }
+    if (SVG_PAINT_ATTRIBUTES.has(name) && normalized.includes("url(")) {
+      return /^url\(#[a-z0-9_.:-]+\)$/i.test(normalized);
+    }
     if (name === "style") {
-      return !/expression\s*\(|url\s*\(|@import|javascript:/i.test(value);
+      return isSafeInlineStyle(value);
     }
     return true;
   }

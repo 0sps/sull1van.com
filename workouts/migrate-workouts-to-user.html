@@ -146,7 +146,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDocs, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -162,6 +162,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
+        const OWNER_EMAIL = 'sspsful@gmail.com';
 
         const signInBtn = document.getElementById('signInBtn');
         const copyBtn = document.getElementById('copyBtn');
@@ -201,12 +202,20 @@
             };
         }
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 statusEl.textContent = 'Not signed in.';
                 copyBtn.disabled = true;
                 verifyBtn.disabled = true;
                 targetEmailInput.disabled = false;
+                return;
+            }
+
+            if (emailKey(user.email || '') !== OWNER_EMAIL || !user.emailVerified) {
+                await signOut(auth);
+                statusEl.textContent = 'Access denied. This tool is restricted to the owner account.';
+                copyBtn.disabled = true;
+                verifyBtn.disabled = true;
                 return;
             }
 

@@ -3475,6 +3475,11 @@
         // Check auth state
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                if (getUserEmailKey(user) !== ADMIN_NAV_EMAIL || !user.emailVerified) {
+                    await signOut(auth);
+                    window.location.href = 'index.html?unauthorized=1';
+                    return;
+                }
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userAvatar').src = user.photoURL || '';
                 window.currentUser = user;
@@ -4725,27 +4730,40 @@
                     return false;
                 }
                 const docRef = window.getWorkoutDocRef(log.id);
+                const baseRevision = Number.isInteger(log.revision) ? log.revision : null;
                 const baseUpdatedAt = log.updatedAt || null;
                 const newUpdatedAt = new Date().toISOString();
 
                 // Use a transaction so a stale tab/device can't silently clobber a newer
                 // remote copy (e.g. resurrect sets that were deleted elsewhere). If the
                 // remote doc was updated after the version we loaded, abort.
-                if (window.firebaseRunTransaction && window.firebaseDb) {
-                    await window.firebaseRunTransaction(window.firebaseDb, async (tx) => {
-                        const snap = await tx.get(docRef);
-                        if (snap.exists()) {
-                            const remote = snap.data();
-                            if (remote && remote.updatedAt && baseUpdatedAt && remote.updatedAt > baseUpdatedAt) {
-                                throw new StaleWriteError();
-                            }
-                        }
-                        tx.set(docRef, { ...log, updatedAt: newUpdatedAt });
-                    });
-                } else {
-                    await window.firebaseSetDoc(docRef, { ...log, updatedAt: newUpdatedAt });
+                if (!window.firebaseRunTransaction || !window.firebaseDb) {
+                    throw new Error('Transactional workout saving is unavailable. Reload and try again.');
                 }
+                let savedRevision = null;
+                await window.firebaseRunTransaction(window.firebaseDb, async (tx) => {
+                    const snap = await tx.get(docRef);
+                    const remote = snap.exists() ? snap.data() : null;
+                    const remoteRevision = Number.isInteger(remote?.revision) ? remote.revision : null;
+
+                    if (remote) {
+                        if (baseRevision !== null) {
+                            if (remoteRevision !== baseRevision) throw new StaleWriteError();
+                        } else if (remoteRevision !== null || (remote.updatedAt || null) !== baseUpdatedAt) {
+                            // A legacy record may be upgraded only while the exact unversioned
+                            // copy loaded by this client is still on the server.
+                            throw new StaleWriteError();
+                        }
+                    } else if (baseRevision !== null || baseUpdatedAt !== null) {
+                        // Do not resurrect a record deleted after this client loaded it.
+                        throw new StaleWriteError();
+                    }
+
+                    savedRevision = (remoteRevision || 0) + 1;
+                    tx.set(docRef, { ...log, revision: savedRevision, updatedAt: newUpdatedAt });
+                });
                 // Keep the in-memory copy's version in sync for any subsequent save.
+                log.revision = savedRevision;
                 log.updatedAt = newUpdatedAt;
             }, 'save');
         }

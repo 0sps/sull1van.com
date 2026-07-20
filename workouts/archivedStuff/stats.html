@@ -1146,7 +1146,7 @@
 
             <script type="module">
                 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-                import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+                import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
                 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
                 const firebaseConfig = {
@@ -1161,6 +1161,7 @@
                 const app = initializeApp(firebaseConfig);
                 const auth = getAuth(app);
                 const db = getFirestore(app);
+                const OWNER_EMAIL = 'sspsful@gmail.com';
 
                 let workoutLogs = [];
                 let filteredLogs = [];
@@ -1169,6 +1170,10 @@
                 let currentUser = null;
 
                 function kgToLbs(kg) { return kg * 2.20462; }
+
+                function clampPercentage(value) {
+                    return Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0;
+                }
 
                 function getUserEmailKey(user) {
                     return (user?.email || '').trim().toLowerCase();
@@ -1374,21 +1379,33 @@
                     } else {
                         ['deltaWorkouts', 'deltaVolume', 'deltaIntensity'].forEach(id => {
                             const el = document.getElementById(id);
-                            if (el) el.innerHTML = '';
+                            if (el) el.replaceChildren();
                         });
                     }
 
                     function updateDelta(id, current, prev) {
                         const el = document.getElementById(id);
                         if (!el) return;
+                        el.replaceChildren();
                         if (prev === 0) {
-                            el.innerHTML = '<span class="delta-neutral">NEW PERIOD</span>';
+                            const status = document.createElement('span');
+                            status.className = 'delta-neutral';
+                            status.textContent = 'NEW PERIOD';
+                            el.appendChild(status);
                             return;
                         }
                         const diff = ((current - prev) / prev) * 100;
                         const icon = diff >= 0 ? '▲' : '▼';
                         const cls = diff >= 0 ? 'delta-up' : 'delta-down';
-                        el.innerHTML = `<span class="${cls}">${icon} ${Math.abs(Math.round(diff))}%</span> <span style="opacity:0.4; font-size:0.7rem; margin-left:4px;">vs prev</span>`;
+                        const status = document.createElement('span');
+                        status.className = cls;
+                        status.textContent = `${icon} ${Math.abs(Math.round(diff))}%`;
+                        const comparison = document.createElement('span');
+                        comparison.style.opacity = '0.4';
+                        comparison.style.fontSize = '0.7rem';
+                        comparison.style.marginLeft = '4px';
+                        comparison.textContent = 'vs prev';
+                        el.append(status, document.createTextNode(' '), comparison);
                     }
 
                     // Streak calculation
@@ -1424,7 +1441,7 @@
                 }
 
                 function renderMuscleDistribution() {
-                    const muscleCounts = {};
+                    const muscleCounts = Object.create(null);
                     filteredLogs.forEach(log => {
                         log.exercises.forEach(ex => {
                             // Find exercise in metadata
@@ -1448,28 +1465,36 @@
                     const colors = ['#ff3d00', '#ff6d3d', '#ffbb00', '#ffea00', '#606065'];
 
                     let offset = 0;
-                    if (container) container.innerHTML = '';
-                    if (legend) legend.innerHTML = '';
+                    if (container) container.replaceChildren();
+                    if (legend) legend.replaceChildren();
 
                     sorted.forEach(([name, count], i) => {
-                        const percent = (count / total) * 100;
-                        const dash = (percent * 100) / 100;
+                        const percent = total > 0 ? clampPercentage((count / total) * 100) : 0;
+                        const dash = percent;
                         const color = colors[i] || colors[colors.length - 1];
 
                         if (container) {
-                            container.innerHTML += `
-                        <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" 
-                            stroke="${color}" stroke-dasharray="${dash} ${100 - dash}" stroke-dashoffset="${-offset}"></circle>
-                    `;
+                            const segment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                            segment.setAttribute('class', 'donut-segment');
+                            segment.setAttribute('cx', '21');
+                            segment.setAttribute('cy', '21');
+                            segment.setAttribute('r', '15.91549430918954');
+                            segment.setAttribute('stroke', color);
+                            segment.setAttribute('stroke-dasharray', `${dash} ${100 - dash}`);
+                            segment.setAttribute('stroke-dashoffset', String(-offset));
+                            container.appendChild(segment);
                         }
 
                         if (legend) {
-                            legend.innerHTML += `
-                        <div class="legend-item">
-                            <div class="legend-color" style="background: ${color}"></div>
-                            <div>${name} (${Math.round(percent)}%)</div>
-                        </div>
-                    `;
+                            const item = document.createElement('div');
+                            item.className = 'legend-item';
+                            const swatch = document.createElement('div');
+                            swatch.className = 'legend-color';
+                            swatch.style.backgroundColor = color;
+                            const label = document.createElement('div');
+                            label.textContent = `${String(name)} (${Math.round(percent)}%)`;
+                            item.append(swatch, label);
+                            legend.appendChild(item);
                         }
 
                         offset += dash;
@@ -1503,22 +1528,26 @@
                         data.push({ date, vol: Math.round(kgToLbs(vol)), name: dayLogs[0]?.workoutName || '' });
                     }
 
-                    const max = Math.max(...data.map(d => d.vol), 1);
-                    container.innerHTML = data.map(d => {
-                        const h = (d.vol / max) * 100;
-                        return `
-                    <div class="volume-bar" style="height: ${h}%" data-value="${d.date.getDate()}">
-                        <div class="tooltip">
-                            <strong>${d.vol.toLocaleString()} lbs</strong><br>
-                            ${d.name || 'Rest Day'}
-                        </div>
-                    </div>
-                `;
-                    }).join('');
+                    const max = Math.max(...data.map(d => Number.isFinite(d.vol) ? d.vol : 0), 1);
+                    container.replaceChildren(...data.map(d => {
+                        const volume = Number.isFinite(d.vol) ? d.vol : 0;
+                        const bar = document.createElement('div');
+                        bar.className = 'volume-bar';
+                        bar.style.height = `${clampPercentage((volume / max) * 100)}%`;
+                        bar.dataset.value = String(d.date.getDate());
+
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'tooltip';
+                        const value = document.createElement('strong');
+                        value.textContent = `${volume.toLocaleString()} lbs`;
+                        tooltip.append(value, document.createElement('br'), document.createTextNode(String(d.name || 'Rest Day')));
+                        bar.appendChild(tooltip);
+                        return bar;
+                    }));
                 }
 
                 function renderExerciseFrequency() {
-                    const counts = {};
+                    const counts = Object.create(null);
                     filteredLogs.forEach(log => {
                         log.exercises.forEach(ex => {
                             counts[ex.name] = (counts[ex.name] || 0) + ex.sets.length;
@@ -1530,24 +1559,33 @@
                     const container = document.getElementById('frequencyList');
                     if (!container) return;
 
-                    container.innerHTML = sorted.map(([name, count]) => `
-                <div class="frequency-item">
-                    <div class="frequency-name">${name}</div>
-                    <div class="frequency-bar-container">
-                        <div class="frequency-bar-fill" style="width: 0%" data-width="${(count / max) * 100}">
-                            ${count}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                    container.replaceChildren(...sorted.map(([name, count]) => {
+                        const item = document.createElement('div');
+                        item.className = 'frequency-item';
+                        const label = document.createElement('div');
+                        label.className = 'frequency-name';
+                        label.textContent = String(name);
+                        const barContainer = document.createElement('div');
+                        barContainer.className = 'frequency-bar-container';
+                        const bar = document.createElement('div');
+                        bar.className = 'frequency-bar-fill';
+                        bar.style.width = '0%';
+                        bar.dataset.width = String(clampPercentage((count / max) * 100));
+                        bar.textContent = String(count);
+                        barContainer.appendChild(bar);
+                        item.append(label, barContainer);
+                        return item;
+                    }));
 
                     setTimeout(() => {
-                        document.querySelectorAll('.frequency-bar-fill').forEach(b => b.style.width = b.dataset.width + '%');
+                        document.querySelectorAll('.frequency-bar-fill').forEach(b => {
+                            b.style.width = `${clampPercentage(Number(b.dataset.width))}%`;
+                        });
                     }, 100);
                 }
 
                 function renderPRs() {
-                    const prs = {};
+                    const prs = Object.create(null);
                     workoutLogs.forEach(log => { // PRs always from all time
                         log.exercises.forEach(ex => {
                             ex.sets.forEach(set => {
@@ -1565,20 +1603,25 @@
                     const sevenDaysAgo = new Date();
                     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-                    container.innerHTML = sorted.map(([name, pr], index) => {
+                    container.replaceChildren(...sorted.map(([name, pr], index) => {
                         const prDate = new Date(pr.date);
                         const isRecent = prDate >= sevenDaysAgo;
                         // For testing: force holographic on the first card
                         const cardClass = (isRecent || index === 0) ? 'pr-card holographic' : 'pr-card';
-
-                        return `
-                        <div class="${cardClass}">
-                            <div class="pr-exercise-name">${name}</div>
-                            <div class="pr-value">${Math.round(kgToLbs(pr.weight))} lbs × ${pr.reps}</div>
-                            <div class="pr-date">${prDate.toLocaleDateString()}</div>
-                        </div>
-                    `;
-                    }).join('');
+                        const card = document.createElement('div');
+                        card.className = cardClass;
+                        const exerciseName = document.createElement('div');
+                        exerciseName.className = 'pr-exercise-name';
+                        exerciseName.textContent = String(name);
+                        const value = document.createElement('div');
+                        value.className = 'pr-value';
+                        value.textContent = `${Math.round(kgToLbs(Number(pr.weight) || 0))} lbs × ${String(pr.reps ?? '')}`;
+                        const date = document.createElement('div');
+                        date.className = 'pr-date';
+                        date.textContent = Number.isNaN(prDate.getTime()) ? 'Unknown date' : prDate.toLocaleDateString();
+                        card.append(exerciseName, value, date);
+                        return card;
+                    }));
                 }
 
                 function createParticle(card) {
@@ -1600,12 +1643,22 @@
                     const names = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
                     const container = document.getElementById('weeklyGrid');
                     if (!container) return;
-                    container.innerHTML = names.map((n, i) => `
-                <div class="day-card" style="padding: 15px;">
-                    <div class="day-name" style="font-size: 0.9rem; margin-bottom: 5px;">${n}</div>
-                    <div class="day-count" style="font-size: 1.8rem;">${counts[i]}</div>
-                </div>
-            `).join('');
+                    container.replaceChildren(...names.map((name, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'day-card';
+                        card.style.padding = '15px';
+                        const dayName = document.createElement('div');
+                        dayName.className = 'day-name';
+                        dayName.style.fontSize = '0.9rem';
+                        dayName.style.marginBottom = '5px';
+                        dayName.textContent = name;
+                        const count = document.createElement('div');
+                        count.className = 'day-count';
+                        count.style.fontSize = '1.8rem';
+                        count.textContent = String(counts[index]);
+                        card.append(dayName, count);
+                        return card;
+                    }));
                 }
 
                 function renderHeatmap() {
@@ -1621,21 +1674,21 @@
                         data.push({ date: d, logs });
                     }
 
-                    container.innerHTML = data.map(day => {
-                        let cls = 'calendar-day';
-                        let emoji = '';
-                        if (day.logs.length > 0) {
-                            cls += ' has-workout';
-                            emoji = '💪';
-                        }
-                        return `
-                    <div class="${cls}" data-date="${day.date.toISOString()}">
-                        <div class="calendar-day-label">${day.date.toLocaleDateString('en-US', { weekday: 'short' })}</div>
-                        <div>${day.date.getDate()}</div>
-                        <div style="font-size: 1.2rem;">${emoji}</div>
-                    </div>
-                `;
-                    }).join('');
+                    container.replaceChildren(...data.map(day => {
+                        const cell = document.createElement('div');
+                        cell.className = `calendar-day${day.logs.length > 0 ? ' has-workout' : ''}`;
+                        cell.dataset.date = day.date.toISOString();
+                        const label = document.createElement('div');
+                        label.className = 'calendar-day-label';
+                        label.textContent = day.date.toLocaleDateString('en-US', { weekday: 'short' });
+                        const dayNumber = document.createElement('div');
+                        dayNumber.textContent = String(day.date.getDate());
+                        const emoji = document.createElement('div');
+                        emoji.style.fontSize = '1.2rem';
+                        emoji.textContent = day.logs.length > 0 ? '💪' : '';
+                        cell.append(label, dayNumber, emoji);
+                        return cell;
+                    }));
 
                     // Add Click Handlers
                     document.querySelectorAll('.calendar-day').forEach(el => {
@@ -1652,26 +1705,44 @@
                     if (!list) return;
 
                     if (logs.length === 0) {
-                        list.innerHTML = '<p style="color: var(--text-muted)">REST DAY</p>';
+                        const empty = document.createElement('p');
+                        empty.style.color = 'var(--text-muted)';
+                        empty.textContent = 'REST DAY';
+                        list.replaceChildren(empty);
                     } else {
-                        list.innerHTML = logs.map(log => `
-                    <div style="margin-bottom: 30px;">
-                        <h4 style="color: var(--accent-secondary); margin-bottom: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;">
-                            ${log.workoutName || 'WORKOUT'}
-                        </h4>
-                        ${log.exercises.map(ex => `
-                            <div class="log-entry-mini">
-                                <div class="ex-name">${ex.name}</div>
-                                ${ex.sets.map((s, idx) => `
-                                    <div class="set-row">
-                                        <span>SET ${idx + 1}</span>
-                                        <span>${Math.round(kgToLbs(s.weight))} lbs &times; ${s.reps}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `).join('')}
-                    </div>
-                `).join('');
+                        list.replaceChildren(...logs.map(log => {
+                            const workout = document.createElement('div');
+                            workout.style.marginBottom = '30px';
+                            const title = document.createElement('h4');
+                            title.style.color = 'var(--accent-secondary)';
+                            title.style.marginBottom = '15px';
+                            title.style.fontFamily = "'Bebas Neue', sans-serif";
+                            title.style.fontSize = '1.5rem';
+                            title.textContent = String(log.workoutName || 'WORKOUT');
+                            workout.appendChild(title);
+
+                            (Array.isArray(log.exercises) ? log.exercises : []).forEach(exercise => {
+                                const entry = document.createElement('div');
+                                entry.className = 'log-entry-mini';
+                                const exerciseName = document.createElement('div');
+                                exerciseName.className = 'ex-name';
+                                exerciseName.textContent = String(exercise.name || 'Unnamed exercise');
+                                entry.appendChild(exerciseName);
+
+                                (Array.isArray(exercise.sets) ? exercise.sets : []).forEach((set, index) => {
+                                    const row = document.createElement('div');
+                                    row.className = 'set-row';
+                                    const setNumber = document.createElement('span');
+                                    setNumber.textContent = `SET ${index + 1}`;
+                                    const setValue = document.createElement('span');
+                                    setValue.textContent = `${Math.round(kgToLbs(Number(set.weight) || 0))} lbs × ${String(set.reps ?? '')}`;
+                                    row.append(setNumber, setValue);
+                                    entry.appendChild(row);
+                                });
+                                workout.appendChild(entry);
+                            });
+                            return workout;
+                        }));
                     }
 
                     document.getElementById('detailsPanel').classList.add('open');
@@ -1681,7 +1752,7 @@
                     const container = document.getElementById('performanceInsights');
                     if (!container) return;
 
-                    const exerciseStats = {};
+                    const exerciseStats = Object.create(null);
                     filteredLogs.forEach(log => {
                         log.exercises.forEach(ex => {
                             if (!exerciseStats[ex.name]) {
@@ -1701,26 +1772,30 @@
                         .sort((a, b) => b[1].sets - a[1].sets)
                         .slice(0, 8);
 
-                    container.innerHTML = topExercises.map(([name, stats]) => {
+                    container.replaceChildren(...topExercises.map(([name, stats]) => {
                         const avgWeightValue = stats.totalReps > 0 ? (stats.totalWeight / stats.totalReps) : 0;
                         const avgWeight = Math.round(kgToLbs(avgWeightValue));
-                        return `
-                    <div class="pr-card" style="padding: 20px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
-                        <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;">
-                            ${name}
-                        </div>
-                        <div style="display: flex; align-items: baseline; gap: 8px;">
-                            <span style="font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--accent-primary);">
-                                ${avgWeight}
-                            </span>
-                            <span style="font-size: 0.9rem; color: var(--text-secondary);">Avg Lbs / Rep</span>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">
-                            Based on ${stats.sets} sets this period
-                        </div>
-                    </div>
-                `;
-                    }).join('');
+                        const card = document.createElement('div');
+                        card.className = 'pr-card';
+                        Object.assign(card.style, { padding: '20px', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'center' });
+                        const exerciseName = document.createElement('div');
+                        Object.assign(exerciseName.style, { fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px', letterSpacing: '1px' });
+                        exerciseName.textContent = String(name);
+                        const metric = document.createElement('div');
+                        Object.assign(metric.style, { display: 'flex', alignItems: 'baseline', gap: '8px' });
+                        const value = document.createElement('span');
+                        Object.assign(value.style, { fontFamily: "'Bebas Neue', sans-serif", fontSize: '2.2rem', color: 'var(--accent-primary)' });
+                        value.textContent = String(avgWeight);
+                        const label = document.createElement('span');
+                        Object.assign(label.style, { fontSize: '0.9rem', color: 'var(--text-secondary)' });
+                        label.textContent = 'Avg Lbs / Rep';
+                        metric.append(value, label);
+                        const basis = document.createElement('div');
+                        Object.assign(basis.style, { fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '5px' });
+                        basis.textContent = `Based on ${stats.sets} sets this period`;
+                        card.append(exerciseName, metric, basis);
+                        return card;
+                    }));
                 }
 
 
@@ -1755,6 +1830,10 @@
                 async function init() {
                     onAuthStateChanged(auth, async (user) => {
                         if (!user) return;
+                        if (getUserEmailKey(user) !== OWNER_EMAIL || !user.emailVerified) {
+                            await signOut(auth);
+                            return;
+                        }
                         currentUser = user;
                         await loadData();
 
