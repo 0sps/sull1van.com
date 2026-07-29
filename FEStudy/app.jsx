@@ -2676,7 +2676,27 @@ function QuizSessionView({
                   </div>
 
                     {question.type === "open" ? (
-                      <div className={`quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`}>
+                      <div
+                        className={`quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`}
+                        onClick={
+                          canRevealAnswer
+                            ? undefined
+                            : () => onUpdateResponse(question.id, { revealed: true })
+                        }
+                        onKeyDown={
+                          canRevealAnswer
+                            ? undefined
+                            : (event) => {
+                              if (event.key !== "Enter" && event.code !== "Space") return;
+                              event.preventDefault();
+                              event.stopPropagation();
+                              onUpdateResponse(question.id, { revealed: true });
+                            }
+                        }
+                        role={canRevealAnswer ? undefined : "button"}
+                        tabIndex={canRevealAnswer ? undefined : 0}
+                        aria-label={canRevealAnswer ? undefined : "Show answer"}
+                      >
                         <div className="card-row">
                           <div>
                             <div className="mini-label" style={{ color: answerLabelColor }}>
@@ -2697,13 +2717,7 @@ function QuizSessionView({
                         <div className={`answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}`}>
                           <SafeHtml className="quiz-answer-content answer-reveal-content" html={question.answer} />
                           {!canRevealAnswer ? (
-                            <button
-                              type="button"
-                              className="answer-reveal-button"
-                              onClick={() => onUpdateResponse(question.id, { revealed: true })}
-                            >
-                              Show answer
-                            </button>
+                            <span className="answer-reveal-prompt">Click to show answer</span>
                           ) : null}
                         </div>
                         {canRevealAnswer && question.url ? (

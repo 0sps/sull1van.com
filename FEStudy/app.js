@@ -1859,15 +1859,27 @@ var FEStudyApp = (() => {
         /* @__PURE__ */ React.createElement("div", { className: "choice-row" }, /* @__PURE__ */ React.createElement("strong", null, key), /* @__PURE__ */ React.createElement(SafeHtml, { as: "span", html: value }), statusIcon ? /* @__PURE__ */ React.createElement("span", { className: `choice-status-icon ${isCorrectChoice ? "is-correct" : "is-incorrect"}`, "aria-hidden": "true" }, statusIcon) : null),
         statusLabel ? /* @__PURE__ */ React.createElement("span", { className: "sr-only" }, statusLabel) : null
       );
-    }), renderMobileGradeActions()) : !canRevealAnswer ? /* @__PURE__ */ React.createElement("div", { className: "answer-panel answer-panel-intro" }, /* @__PURE__ */ React.createElement("strong", null, "Self-grade this one."), /* @__PURE__ */ React.createElement("p", { className: "muted" }, "Work it out first, then mark it right or wrong below. You can revisit and change the mark later.")) : null), question.type === "open" ? /* @__PURE__ */ React.createElement("div", { className: `quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}` }, /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "mini-label", style: { color: answerLabelColor } }, response?.wasCorrect == null ? "Ready to grade" : response.wasCorrect ? "Marked correct" : "Marked incorrect"), /* @__PURE__ */ React.createElement("strong", null, "Answer"))), priorSavedResult != null ? /* @__PURE__ */ React.createElement("div", { className: "quiz-prior-result" }, "Saved before this attempt: ", priorSavedResult ? "correct" : "incorrect", ".") : null, /* @__PURE__ */ React.createElement("div", { className: `answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}` }, /* @__PURE__ */ React.createElement(SafeHtml, { className: "quiz-answer-content answer-reveal-content", html: question.answer }), !canRevealAnswer ? /* @__PURE__ */ React.createElement(
-      "button",
+    }), renderMobileGradeActions()) : !canRevealAnswer ? /* @__PURE__ */ React.createElement("div", { className: "answer-panel answer-panel-intro" }, /* @__PURE__ */ React.createElement("strong", null, "Self-grade this one."), /* @__PURE__ */ React.createElement("p", { className: "muted" }, "Work it out first, then mark it right or wrong below. You can revisit and change the mark later.")) : null), question.type === "open" ? /* @__PURE__ */ React.createElement(
+      "div",
       {
-        type: "button",
-        className: "answer-reveal-button",
-        onClick: () => onUpdateResponse(question.id, { revealed: true })
+        className: `quiz-answer-dock ${canRevealAnswer ? "" : "is-clickable"}`,
+        onClick: canRevealAnswer ? void 0 : () => onUpdateResponse(question.id, { revealed: true }),
+        onKeyDown: canRevealAnswer ? void 0 : (event) => {
+          if (event.key !== "Enter" && event.code !== "Space") return;
+          event.preventDefault();
+          event.stopPropagation();
+          onUpdateResponse(question.id, { revealed: true });
+        },
+        role: canRevealAnswer ? void 0 : "button",
+        tabIndex: canRevealAnswer ? void 0 : 0,
+        "aria-label": canRevealAnswer ? void 0 : "Show answer"
       },
-      "Show answer"
-    ) : null), canRevealAnswer && question.url ? /* @__PURE__ */ React.createElement("a", { className: "button-ghost quiz-source-link", href: question.url, target: "_blank", rel: "noreferrer" }, "Open source explanation", /* @__PURE__ */ React.createElement("span", { className: "sr-only" }, " (opens in new tab)")) : null, renderMobileGradeActions()) : null))))), /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-layout" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer quiz-footer-sidebar", role: "toolbar", "aria-label": "Question navigation" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-nav" }, /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ React.createElement("div", { className: "card-row" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "mini-label", style: { color: answerLabelColor } }, response?.wasCorrect == null ? "Ready to grade" : response.wasCorrect ? "Marked correct" : "Marked incorrect"), /* @__PURE__ */ React.createElement("strong", null, "Answer"))),
+      priorSavedResult != null ? /* @__PURE__ */ React.createElement("div", { className: "quiz-prior-result" }, "Saved before this attempt: ", priorSavedResult ? "correct" : "incorrect", ".") : null,
+      /* @__PURE__ */ React.createElement("div", { className: `answer-reveal-shell ${canRevealAnswer ? "is-revealed" : ""}` }, /* @__PURE__ */ React.createElement(SafeHtml, { className: "quiz-answer-content answer-reveal-content", html: question.answer }), !canRevealAnswer ? /* @__PURE__ */ React.createElement("span", { className: "answer-reveal-prompt" }, "Click to show answer") : null),
+      canRevealAnswer && question.url ? /* @__PURE__ */ React.createElement("a", { className: "button-ghost quiz-source-link", href: question.url, target: "_blank", rel: "noreferrer" }, "Open source explanation", /* @__PURE__ */ React.createElement("span", { className: "sr-only" }, " (opens in new tab)")) : null,
+      renderMobileGradeActions()
+    ) : null))))), /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-layout" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer quiz-footer-sidebar", role: "toolbar", "aria-label": "Question navigation" }, /* @__PURE__ */ React.createElement("div", { className: "quiz-footer-nav" }, /* @__PURE__ */ React.createElement(
       "button",
       {
         className: `button-ghost quiz-nav-button ${navKeyActive === "left" ? "is-key-active" : ""}`,

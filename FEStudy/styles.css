@@ -1779,6 +1779,11 @@ select {
   cursor: pointer;
 }
 
+.quiz-answer-dock.is-clickable:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .quiz-answer-content {
   margin-top: 10px;
   line-height: 1.55;
@@ -1810,22 +1815,15 @@ select {
   background: rgba(255, 252, 247, 0.18);
 }
 
-.answer-reveal-button {
+.answer-reveal-prompt {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
   white-space: nowrap;
-  color: var(--strip-text);
+  color: #4f4b45;
   font-weight: 800;
-  letter-spacing: 0;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
-  cursor: pointer;
-  font: inherit;
 }
 
 .quiz-prior-result {
