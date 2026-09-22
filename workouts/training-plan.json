@@ -3,11 +3,11 @@
   "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
   "schedule": [
     "PUSH CHEST",
-    "PULL",
-    "LEGS QUADS",
+    "PULL WIDTH",
     "REST",
-    "PUSH DELTS",
-    "PULL THICKNESS",
+    "LEGS QUADS",
+    "PUSH CHEST DELTS",
+    "PULL ROWS",
     "LEGS HAMSTRINGS"
   ],
   "workouts": {
@@ -41,8 +41,8 @@
         }
       ]
     },
-    "PULL": {
-      "subtitle": "Pull",
+    "PULL WIDTH": {
+      "subtitle": "Pull (Width)",
       "exercises": [
         {
           "id": "ex041",
@@ -55,9 +55,9 @@
           "reps": "8-12"
         },
         {
-          "id": "ex046",
+          "id": "ex033",
           "sets": 3,
-          "reps": "15-20"
+          "reps": "12-20"
         },
         {
           "id": "ex010",
@@ -65,6 +65,10 @@
           "reps": "8-12"
         }
       ]
+    },
+    "REST": {
+      "subtitle": "Recovery or Light Activity",
+      "exercises": []
     },
     "LEGS QUADS": {
       "subtitle": "Legs (Quad Focus)",
@@ -85,38 +89,39 @@
           "reps": "12-20"
         },
         {
+          "id": "ex008",
+          "sets": 2,
+          "reps": "10-15"
+        },
+        {
           "id": "ex030",
           "sets": 4,
           "reps": "10-15"
         }
       ]
     },
-    "REST": {
-      "subtitle": "Recovery or Light Activity",
-      "exercises": []
-    },
-    "PUSH DELTS": {
-      "subtitle": "Push (Delt Focus)",
+    "PUSH CHEST DELTS": {
+      "subtitle": "Push (Chest + Side Delt Focus)",
       "exercises": [
-        {
-          "id": "ex005",
-          "sets": 4,
-          "reps": "6-10"
-        },
         {
           "id": "ex072",
           "sets": 3,
           "reps": "8-10"
         },
         {
-          "id": "ex123",
-          "sets": 3,
-          "reps": "12-15"
-        },
-        {
           "id": "ex026",
           "sets": 4,
           "reps": "12-20"
+        },
+        {
+          "id": "ex005",
+          "sets": 3,
+          "reps": "6-10"
+        },
+        {
+          "id": "ex123",
+          "sets": 3,
+          "reps": "12-15"
         },
         {
           "id": "ex019",
@@ -125,8 +130,8 @@
         }
       ]
     },
-    "PULL THICKNESS": {
-      "subtitle": "Pull (Thickness + Rear Delts)",
+    "PULL ROWS": {
+      "subtitle": "Pull (Rows + Rear Delts)",
       "exercises": [
         {
           "id": "ex138",
