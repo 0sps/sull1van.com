@@ -154,7 +154,7 @@ bodyMeasurements/{timestampId}
 
 User-owned configuration, such as `trainingPlan`, remains in Firestore with a local cache and bundled seed fallback.
 Automatic Training Plan sync compares `lastGeneratedAt` in `training-plan.json` with the same field in Firestore. Firestore wins when its timestamp is equal or newer. A newer bundled plan overwrites Firestore and refreshes the local config cache. Saving through the Training Plan editor updates Firestore's `lastGeneratedAt`.
-The app's manual Training Plan sync is the explicit reset path: it fetches `training-plan.json`, overwrites the user's Firestore `trainingPlan` document, and refreshes the local config cache.
+The manual Training Plan sync bypasses the local cache and uses the newer plan based on `lastGeneratedAt`. The separate Force Overwrite Firebase with Local action fetches `training-plan.json`, overwrites the user's Firestore `trainingPlan` document, and refreshes the local config cache.
 
 ```mermaid
 sequenceDiagram

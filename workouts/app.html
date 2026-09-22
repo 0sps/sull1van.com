@@ -3257,10 +3257,17 @@
             <div class="force-sync-options">
                 <div class="force-sync-option">
                     <div class="force-sync-copy">
-                        <div class="force-sync-title">Training Plan</div>
-                        <div class="force-sync-detail">Workout schedule, days, sets, and reps</div>
+                        <div class="force-sync-title">Force Manual Sync of Training Plan</div>
+                        <div class="force-sync-detail">Uses whichever plan has the newer lastGeneratedAt date</div>
                     </div>
                     <button class="btn btn-utility btn-small" data-force-sync="trainingPlan">SYNC</button>
+                </div>
+                <div class="force-sync-option">
+                    <div class="force-sync-copy">
+                        <div class="force-sync-title">Force Overwrite Firebase with Local</div>
+                        <div class="force-sync-detail">Replaces Firebase with the bundled training-plan.json</div>
+                    </div>
+                    <button class="btn btn-utility btn-small" data-force-overwrite="trainingPlan">OVERWRITE</button>
                 </div>
                 <div class="force-sync-option">
                     <div class="force-sync-copy">
@@ -4360,7 +4367,6 @@
             trainingPlan: {
                 label: 'training plan',
                 jsonPath: 'training-plan.json',
-                overwriteFirebaseFromBundle: true,
                 apply(data) {
                     trainingPlanData = data;
                     updateWorkoutDisplay(false);
@@ -4397,23 +4403,46 @@
                 }
                 if (statusEl) statusEl.textContent = `Refreshing ${target.label}...`;
 
-                // Training-plan manual sync is an explicit reset to the checked-in JSON.
-                // Other config targets keep their existing forced-refresh behavior.
-                let data;
-                if (target.overwriteFirebaseFromBundle) {
-                    assertUserConfigFirebaseReady();
-                    data = await fetchSeedConfig(target.jsonPath);
-                    await window.firebaseSetDoc(window.getUserConfigDocRef(configId), data);
-                    writeCachedUserConfig(configId, data);
-                } else {
-                    data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
-                }
+                // Bypass local cache and compare the bundled and Firebase timestamps.
+                const data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
                 target.apply(data);
 
                 if (statusEl) statusEl.textContent = `Synced ${target.label}. Cache refreshed for 7 days.`;
             } catch (error) {
                 console.error(`Failed to force sync ${configId}:`, error);
                 if (statusEl) statusEl.textContent = error.message || `Could not sync ${target.label}. Check connection and Firebase permissions.`;
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }
+            }
+        }
+
+        async function forceOverwriteFirebaseWithBundledConfig(configId, button = null) {
+            const target = CONFIG_SYNC_TARGETS[configId];
+            if (!target) return;
+
+            const statusEl = document.getElementById('forceSyncStatus');
+            const originalText = button?.textContent || '';
+
+            try {
+                if (button) {
+                    button.disabled = true;
+                    button.textContent = 'OVERWRITING...';
+                }
+                if (statusEl) statusEl.textContent = `Overwriting Firebase ${target.label}...`;
+
+                assertUserConfigFirebaseReady();
+                const data = await fetchSeedConfig(target.jsonPath);
+                await window.firebaseSetDoc(window.getUserConfigDocRef(configId), data);
+                writeCachedUserConfig(configId, data);
+                target.apply(data);
+
+                if (statusEl) statusEl.textContent = `Firebase ${target.label} overwritten with ${target.jsonPath}.`;
+            } catch (error) {
+                console.error(`Failed to overwrite Firebase ${configId}:`, error);
+                if (statusEl) statusEl.textContent = error.message || `Could not overwrite Firebase ${target.label}.`;
             } finally {
                 if (button) {
                     button.disabled = false;
@@ -5120,6 +5149,12 @@
                 const forceSyncBtn = e.target.closest('[data-force-sync]');
                 if (forceSyncBtn) {
                     await forceSyncUserConfig(forceSyncBtn.dataset.forceSync, forceSyncBtn);
+                    return;
+                }
+
+                const forceOverwriteBtn = e.target.closest('[data-force-overwrite]');
+                if (forceOverwriteBtn) {
+                    await forceOverwriteFirebaseWithBundledConfig(forceOverwriteBtn.dataset.forceOverwrite, forceOverwriteBtn);
                     return;
                 }
             });
