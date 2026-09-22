@@ -1,0 +1,139 @@
+{
+    "name": "Simple Hypertrophy Split",
+    "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
+    "schedule": [
+        "CHEST BACK ARMS",
+        "CHEST TRICEPS",
+        "QUADS GLUTES",
+        "REST",
+        "BACK BICEPS",
+        "SHOULDERS ARMS",
+        "HAMSTRINGS CALVES"
+    ],
+    "workouts": {
+        "CHEST BACK ARMS": {
+            "subtitle": "Chest + Back + Arms",
+            "exercises": [
+                {
+                    "id": "ex018",
+                    "sets": 3,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex280",
+                    "sets": 4,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex023",
+                    "sets": 3,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "CHEST TRICEPS": {
+            "subtitle": "Chest + Triceps",
+            "exercises": [
+                {
+                    "id": "ex001",
+                    "sets": 4,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex034",
+                    "sets": 3,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex021",
+                    "sets": 3,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "QUADS GLUTES": {
+            "subtitle": "Quads + Glutes",
+            "exercises": [
+                {
+                    "id": "ex006",
+                    "sets": 4,
+                    "reps": "6-10"
+                },
+                {
+                    "id": "ex054",
+                    "sets": 3,
+                    "reps": "10/leg"
+                },
+                {
+                    "id": "ex002",
+                    "sets": 3,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "REST": {
+            "subtitle": "Recovery or Light Activity",
+            "exercises": []
+        },
+        "BACK BICEPS": {
+            "subtitle": "Back + Biceps",
+            "exercises": [
+                {
+                    "id": "ex357",
+                    "sets": 4,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex041",
+                    "sets": 4,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex010",
+                    "sets": 3,
+                    "reps": "10-12"
+                }
+            ]
+        },
+        "SHOULDERS ARMS": {
+            "subtitle": "Shoulders + Arms",
+            "exercises": [
+                {
+                    "id": "ex004",
+                    "sets": 4,
+                    "reps": "12-15"
+                },
+                {
+                    "id": "ex014",
+                    "sets": 3,
+                    "reps": "10-12"
+                },
+                {
+                    "id": "ex019",
+                    "sets": 3,
+                    "reps": "10-15"
+                }
+            ]
+        },
+        "HAMSTRINGS CALVES": {
+            "subtitle": "Hamstrings + Calves",
+            "exercises": [
+                {
+                    "id": "ex025",
+                    "sets": 4,
+                    "reps": "8-10"
+                },
+                {
+                    "id": "ex008",
+                    "sets": 3,
+                    "reps": "10-15"
+                },
+                {
+                    "id": "ex007",
+                    "sets": 4,
+                    "reps": "10-15"
+                }
+            ]
+        }
+    }
+}
