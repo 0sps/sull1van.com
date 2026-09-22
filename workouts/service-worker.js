@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v14';
+const CACHE_NAME = 'seans-log-v15';
 // Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',
@@ -36,7 +36,11 @@ const APP_SHELL_PATHS = new Set([
 ]);
 const NETWORK_FIRST_STATIC_PATHS = new Set([
     '/workouts/exercises.json',
-    '/exercises.json'
+    '/exercises.json',
+    '/workouts/training-plan.json',
+    '/training-plan.json',
+    '/workouts/progression-plan.json',
+    '/progression-plan.json'
 ]);
 
 // Install Event - Cache Core Assets
@@ -75,13 +79,13 @@ self.addEventListener('message', (event) => {
     }
 });
 
-// Fetch Event - Network First for the app shell and canonical exercise catalog,
+// Fetch Event - Network First for the app shell and versioned configuration,
 // Cache First for the remaining static assets.
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // exercises.json is the catalog source of truth. Always try the deployed copy
-    // first, then fall back to the last service-worker-cached version when offline.
+    // Versioned configuration must see the deployed copy before comparing dates.
+    // Fall back to the last service-worker-cached version when offline.
     if (APP_SHELL_PATHS.has(url.pathname) || NETWORK_FIRST_STATIC_PATHS.has(url.pathname)) {
         event.respondWith(
             fetch(event.request)

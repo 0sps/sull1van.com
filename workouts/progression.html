@@ -2263,8 +2263,14 @@
             return response.json();
         }
 
-        function parseConfigUpdatedDate(data) {
-            const value = data?.lastUpdatedDate;
+        function getConfigVersionKey(configId, jsonPath) {
+            if (configId === 'trainingPlan' && jsonPath === 'training-plan.json') return 'lastGeneratedAt';
+            if (configId === 'progressionPlan' && jsonPath === 'progression-plan.json') return 'lastUpdatedDate';
+            return null;
+        }
+
+        function parseConfigUpdatedDate(data, versionKey) {
+            const value = versionKey ? data?.[versionKey] : null;
             if (typeof value !== 'string' || !value.trim()) return null;
             const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
                 ? `${value.trim()}T00:00:00Z`
@@ -2273,25 +2279,22 @@
             return Number.isFinite(time) ? time : null;
         }
 
-        function isProgressionPlanConfig(configId, jsonPath) {
-            return configId === 'progressionPlan' && jsonPath === 'progression-plan.json';
-        }
-
         function isVersionedSeedConfig(configId, jsonPath) {
-            return isProgressionPlanConfig(configId, jsonPath);
+            return getConfigVersionKey(configId, jsonPath) !== null;
         }
 
         async function loadVersionedSeedConfig(configId, jsonPath) {
+            const versionKey = getConfigVersionKey(configId, jsonPath);
             const cached = readCachedUserConfig(configId);
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
+            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data, versionKey);
             let localData = null;
             let localUpdatedAt = null;
 
             try {
                 localData = await fetchSeedConfig(jsonPath);
-                localUpdatedAt = parseConfigUpdatedDate(localData);
+                localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
                 if (localUpdatedAt === null) {
-                    throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+                    throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
                 }
             } catch (error) {
                 if (cached && cachedUpdatedAt !== null) {
@@ -2301,20 +2304,16 @@
                 throw error;
             }
 
-            if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                return cached.data;
-            }
-
             try {
                 const docRef = window.getUserConfigDocRef(configId);
                 const snapshot = await window.firebaseGetDoc(docRef);
 
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.data();
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
+                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
 
                     if (firebaseUpdatedAt === null) {
-                        console.warn(`Ignoring Firebase ${configId} config because it has no valid lastUpdatedDate. Syncing bundled ${jsonPath}.`);
+                        console.warn(`Ignoring Firebase ${configId} config because it has no valid ${versionKey}. Syncing bundled ${jsonPath}.`);
                         await window.firebaseSetDoc(docRef, localData);
                         writeCachedUserConfig(configId, localData);
                         return localData;
@@ -2330,7 +2329,7 @@
                 writeCachedUserConfig(configId, localData);
                 return localData;
             } catch (error) {
-                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
                     console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);
                     return cached.data;
                 }

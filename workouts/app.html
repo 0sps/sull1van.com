@@ -4231,8 +4231,14 @@
             return response.json();
         }
 
-        function parseConfigUpdatedDate(data) {
-            const value = data?.lastUpdatedDate;
+        function getConfigVersionKey(configId, jsonPath) {
+            if (configId === 'trainingPlan' && jsonPath === 'training-plan.json') return 'lastGeneratedAt';
+            if (configId === 'progressionPlan' && jsonPath === 'progression-plan.json') return 'lastUpdatedDate';
+            return null;
+        }
+
+        function parseConfigUpdatedDate(data, versionKey) {
+            const value = versionKey ? data?.[versionKey] : null;
             if (typeof value !== 'string' || !value.trim()) return null;
             const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
                 ? `${value.trim()}T00:00:00Z`
@@ -4241,18 +4247,8 @@
             return Number.isFinite(time) ? time : null;
         }
 
-        function isProgressionPlanConfig(configId, jsonPath) {
-            return configId === 'progressionPlan' && jsonPath === 'progression-plan.json';
-        }
-
         function isVersionedSeedConfig(configId, jsonPath) {
-            // Intentional source-of-truth split:
-            // - trainingPlan is user/Firebase-owned after first seed.
-            // - progressionPlan is bundled-version-owned when the checked-in
-            //   JSON has a newer lastUpdatedDate, so force sync may promote that bundle to
-            //   Firebase while personal training-plan edits stay Firebase-owned.
-            // - exercises.json is loaded directly through the shared static config loader.
-            return isProgressionPlanConfig(configId, jsonPath);
+            return getConfigVersionKey(configId, jsonPath) !== null;
         }
 
         function assertUserConfigFirebaseReady() {
@@ -4266,17 +4262,15 @@
 
         async function loadVersionedSeedConfig(configId, jsonPath, options = {}) {
             const forceRefresh = !!options.forceRefresh;
+            const versionKey = getConfigVersionKey(configId, jsonPath);
             const localData = await fetchSeedConfig(jsonPath);
-            const localUpdatedAt = parseConfigUpdatedDate(localData);
+            const localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
             if (localUpdatedAt === null) {
-                throw new Error(`${jsonPath} is missing a valid lastUpdatedDate.`);
+                throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
             }
 
             const cached = readCachedUserConfig(configId);
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data);
-            if (!forceRefresh && cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
-                return cached.data;
-            }
+            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data, versionKey);
 
             try {
                 assertUserConfigFirebaseReady();
@@ -4285,10 +4279,10 @@
 
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.data();
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData);
+                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
 
                     if (firebaseUpdatedAt === null) {
-                        console.warn(`Ignoring Firebase ${configId} config because it has no valid lastUpdatedDate. Syncing bundled ${jsonPath}.`);
+                        console.warn(`Ignoring Firebase ${configId} config because it has no valid ${versionKey}. Syncing bundled ${jsonPath}.`);
                         await window.firebaseSetDoc(docRef, localData);
                         writeCachedUserConfig(configId, localData);
                         return localData;
@@ -4305,7 +4299,7 @@
                 return localData;
             } catch (error) {
                 if (!forceRefresh) {
-                    if (cached && cachedUpdatedAt !== null && cachedUpdatedAt > localUpdatedAt) {
+                    if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
                         console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);
                         return cached.data;
                     }

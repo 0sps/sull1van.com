@@ -109,6 +109,7 @@ erDiagram
         string configId "trainingPlan | progressionPlan | activeSeason"
         object payload
         string lastUpdatedDate
+        string lastGeneratedAt
     }
 
     BODY_MEASUREMENTS {
@@ -149,9 +150,10 @@ bodyMeasurements/{timestampId}
 
 ## Config Loading Flow
 
-`exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first and falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.
+`exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first for the exercise catalog and versioned plan JSON files, then falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.
 
 User-owned configuration, such as `trainingPlan`, remains in Firestore with a local cache and bundled seed fallback.
+Automatic Training Plan sync compares `lastGeneratedAt` in `training-plan.json` with the same field in Firestore. Firestore wins when its timestamp is equal or newer. A newer bundled plan overwrites Firestore and refreshes the local config cache. Saving through the Training Plan editor updates Firestore's `lastGeneratedAt`.
 The app's manual Training Plan sync is the explicit reset path: it fetches `training-plan.json`, overwrites the user's Firestore `trainingPlan` document, and refreshes the local config cache.
 
 ```mermaid
@@ -194,7 +196,7 @@ Configuration files:
 | File | Purpose |
 | --- | --- |
 | `exercises.json` | Canonical exercise catalog keyed by exercise ids like `ex001`. Optional `1repmaxformula` expressions use `w` for weight and `r` for reps. Includes `lastUpdatedDate`; never synced to Firestore. |
-| `training-plan.json` | Seven-day schedule and workout definitions. The `schedule` array maps Sunday through Saturday. |
+| `training-plan.json` | Seven-day schedule and workout definitions. The `schedule` array maps Sunday through Saturday. `lastGeneratedAt` determines whether the bundled plan or Firestore plan is newer during automatic sync. |
 | `progression-plan.json` | Progression block metadata, target weights, baseline policy, and recommendation defaults. |
 
 ## Workout Logging Flow
