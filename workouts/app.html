@@ -4262,48 +4262,66 @@
             if (!window.currentUser?.email) {
                 throw new Error('Sign in before syncing Firebase config.');
             }
-            if (!window.getUserConfigDocRef || !window.firebaseGetDoc || !window.firebaseSetDoc) {
+            if (!window.getUserConfigDocRef || !window.firebaseDb || !window.firebaseGetDoc
+                || !window.firebaseSetDoc || !window.firebaseRunTransaction) {
                 throw new Error('Firebase config helpers are not ready yet.');
             }
+        }
+
+        function prepareBundledConfigWrite(configId, bundledData, currentData = null) {
+            if (configId !== 'trainingPlan') return bundledData;
+            const currentRevision = Number.isInteger(currentData?.revision) ? currentData.revision : 0;
+            return {
+                ...bundledData,
+                revision: currentRevision + 1,
+                updatedAt: new Date().toISOString()
+            };
         }
 
         async function loadVersionedSeedConfig(configId, jsonPath, options = {}) {
             const forceRefresh = !!options.forceRefresh;
             const versionKey = getConfigVersionKey(configId, jsonPath);
-            const localData = await fetchSeedConfig(jsonPath);
-            const localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
-            if (localUpdatedAt === null) {
-                throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
-            }
-
             const cached = readCachedUserConfig(configId);
             const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data, versionKey);
+            let localData;
+            let localUpdatedAt;
+
+            try {
+                localData = await fetchSeedConfig(jsonPath);
+                localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
+                if (localUpdatedAt === null) {
+                    throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
+                }
+            } catch (error) {
+                if (!forceRefresh && cached) {
+                    console.warn(`Using cached ${configId} config because bundled ${jsonPath} could not be loaded:`, error);
+                    return cached.data;
+                }
+                throw error;
+            }
 
             try {
                 assertUserConfigFirebaseReady();
                 const docRef = window.getUserConfigDocRef(configId);
-                const snapshot = await window.firebaseGetDoc(docRef);
-
-                if (snapshot.exists()) {
-                    const firebaseData = snapshot.data();
+                const data = await window.firebaseRunTransaction(window.firebaseDb, async (transaction) => {
+                    const snapshot = await transaction.get(docRef);
+                    const firebaseData = snapshot.exists() ? snapshot.data() : null;
                     const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
 
-                    if (firebaseUpdatedAt === null) {
-                        console.warn(`Ignoring Firebase ${configId} config because it has no valid ${versionKey}. Syncing bundled ${jsonPath}.`);
-                        await window.firebaseSetDoc(docRef, localData);
-                        writeCachedUserConfig(configId, localData);
-                        return localData;
-                    }
-
-                    if (firebaseUpdatedAt >= localUpdatedAt) {
-                        writeCachedUserConfig(configId, firebaseData);
+                    if (firebaseUpdatedAt !== null && firebaseUpdatedAt >= localUpdatedAt) {
                         return firebaseData;
                     }
-                }
 
-                await window.firebaseSetDoc(docRef, localData);
-                writeCachedUserConfig(configId, localData);
-                return localData;
+                    if (snapshot.exists() && firebaseUpdatedAt === null) {
+                        console.warn(`Replacing Firebase ${configId} config because it has no valid ${versionKey}.`);
+                    }
+
+                    const bundledWrite = prepareBundledConfigWrite(configId, localData, firebaseData);
+                    transaction.set(docRef, bundledWrite);
+                    return bundledWrite;
+                });
+                writeCachedUserConfig(configId, data);
+                return data;
             } catch (error) {
                 if (!forceRefresh) {
                     if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
@@ -4434,8 +4452,15 @@
                 if (statusEl) statusEl.textContent = `Overwriting Firebase ${target.label}...`;
 
                 assertUserConfigFirebaseReady();
-                const data = await fetchSeedConfig(target.jsonPath);
-                await window.firebaseSetDoc(window.getUserConfigDocRef(configId), data);
+                const bundledData = await fetchSeedConfig(target.jsonPath);
+                const docRef = window.getUserConfigDocRef(configId);
+                const data = await window.firebaseRunTransaction(window.firebaseDb, async (transaction) => {
+                    const snapshot = await transaction.get(docRef);
+                    const currentData = snapshot.exists() ? snapshot.data() : null;
+                    const bundledWrite = prepareBundledConfigWrite(configId, bundledData, currentData);
+                    transaction.set(docRef, bundledWrite);
+                    return bundledWrite;
+                });
                 writeCachedUserConfig(configId, data);
                 target.apply(data);
 

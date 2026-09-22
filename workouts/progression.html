@@ -1371,7 +1371,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, orderBy, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -1408,6 +1408,7 @@
         window.firebaseGetDoc = getDoc;
         window.firebaseGetDocs = getDocs;
         window.firebaseSetDoc = setDoc;
+        window.firebaseRunTransaction = runTransaction;
         window.firebaseQuery = query;
         window.firebaseWhere = where;
         window.firebaseOrderBy = orderBy;
@@ -2283,6 +2284,16 @@
             return getConfigVersionKey(configId, jsonPath) !== null;
         }
 
+        function prepareBundledConfigWrite(configId, bundledData, currentData = null) {
+            if (configId !== 'trainingPlan') return bundledData;
+            const currentRevision = Number.isInteger(currentData?.revision) ? currentData.revision : 0;
+            return {
+                ...bundledData,
+                revision: currentRevision + 1,
+                updatedAt: new Date().toISOString()
+            };
+        }
+
         async function loadVersionedSeedConfig(configId, jsonPath) {
             const versionKey = getConfigVersionKey(configId, jsonPath);
             const cached = readCachedUserConfig(configId);
@@ -2306,28 +2317,25 @@
 
             try {
                 const docRef = window.getUserConfigDocRef(configId);
-                const snapshot = await window.firebaseGetDoc(docRef);
-
-                if (snapshot.exists()) {
-                    const firebaseData = snapshot.data();
+                const data = await window.firebaseRunTransaction(window.firebaseDb, async (transaction) => {
+                    const snapshot = await transaction.get(docRef);
+                    const firebaseData = snapshot.exists() ? snapshot.data() : null;
                     const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
 
-                    if (firebaseUpdatedAt === null) {
-                        console.warn(`Ignoring Firebase ${configId} config because it has no valid ${versionKey}. Syncing bundled ${jsonPath}.`);
-                        await window.firebaseSetDoc(docRef, localData);
-                        writeCachedUserConfig(configId, localData);
-                        return localData;
-                    }
-
-                    if (firebaseUpdatedAt >= localUpdatedAt) {
-                        writeCachedUserConfig(configId, firebaseData);
+                    if (firebaseUpdatedAt !== null && firebaseUpdatedAt >= localUpdatedAt) {
                         return firebaseData;
                     }
-                }
 
-                await window.firebaseSetDoc(docRef, localData);
-                writeCachedUserConfig(configId, localData);
-                return localData;
+                    if (snapshot.exists() && firebaseUpdatedAt === null) {
+                        console.warn(`Replacing Firebase ${configId} config because it has no valid ${versionKey}.`);
+                    }
+
+                    const bundledWrite = prepareBundledConfigWrite(configId, localData, firebaseData);
+                    transaction.set(docRef, bundledWrite);
+                    return bundledWrite;
+                });
+                writeCachedUserConfig(configId, data);
+                return data;
             } catch (error) {
                 if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
                     console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);

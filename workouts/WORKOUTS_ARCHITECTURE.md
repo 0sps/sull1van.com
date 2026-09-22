@@ -153,7 +153,7 @@ bodyMeasurements/{timestampId}
 `exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first for the exercise catalog and versioned plan JSON files, then falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.
 
 User-owned configuration, such as `trainingPlan`, remains in Firestore with a local cache and bundled seed fallback.
-Automatic Training Plan sync compares `lastGeneratedAt` in `training-plan.json` with the same field in Firestore. Firestore wins when its timestamp is equal or newer. A newer bundled plan overwrites Firestore and refreshes the local config cache. Saving through the Training Plan editor updates Firestore's `lastGeneratedAt`.
+Automatic Training Plan sync compares `lastGeneratedAt` in `training-plan.json` with the same field in Firestore inside a transaction. Firestore wins when its timestamp is equal or newer. A newer bundled plan increments `revision`, refreshes `updatedAt`, overwrites Firestore, and refreshes the local config cache. The Training Plan editor performs the same comparison before enabling edits, and editor saves update Firestore's `lastGeneratedAt`.
 The manual Training Plan sync bypasses the local cache and uses the newer plan based on `lastGeneratedAt`. The separate Force Overwrite Firebase with Local action fetches `training-plan.json`, overwrites the user's Firestore `trainingPlan` document, and refreshes the local config cache.
 
 ```mermaid

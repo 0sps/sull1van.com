@@ -832,7 +832,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCGi3JKROngwpfXWqLIwRLrt1u3FEA7eNc",
@@ -963,37 +963,44 @@
             return response.json();
         }
 
+        function parseTrainingPlanGeneratedAt(data) {
+            const value = data?.[TRAINING_PLAN_DEBUG_TIMESTAMP_KEY];
+            if (typeof value !== 'string' || !value.trim()) return null;
+            const time = Date.parse(value.trim());
+            return Number.isFinite(time) ? time : null;
+        }
+
         async function loadUserConfig(configId, jsonPath) {
             const cached = readCachedUserConfig(configId);
 
             try {
                 const docRef = getUserConfigDocRef(configId);
-                const snapshot = await getDoc(docRef);
-
-                // Existing Firestore config is the source of truth. The bundled JSON is
-                // only a seed/fallback and is ignored once the doc exists.
-                if (snapshot.exists()) {
-                    const data = snapshot.data();
-                    writeCachedUserConfig(configId, data);
-                    return { data, writable: true, source: 'server' };
+                const seed = await fetchSeedConfig(jsonPath);
+                const seedGeneratedAt = parseTrainingPlanGeneratedAt(seed);
+                if (seedGeneratedAt === null) {
+                    throw new Error(`${jsonPath} is missing a valid ${TRAINING_PLAN_DEBUG_TIMESTAMP_KEY}.`);
                 }
 
-                // A successful read confirmed that no server plan exists. Recheck inside
-                // a transaction so a concurrently created plan is never overwritten.
-                const seed = await fetchSeedConfig(jsonPath);
-                const data = await runTransaction(db, async (transaction) => {
+                const result = await runTransaction(db, async (transaction) => {
                     const currentSnapshot = await transaction.get(docRef);
-                    if (currentSnapshot.exists()) return currentSnapshot.data();
+                    const currentData = currentSnapshot.exists() ? currentSnapshot.data() : null;
+                    const currentGeneratedAt = parseTrainingPlanGeneratedAt(currentData);
+
+                    if (currentGeneratedAt !== null && currentGeneratedAt >= seedGeneratedAt) {
+                        return { data: currentData, source: 'server' };
+                    }
+
+                    const currentRevision = Number.isInteger(currentData?.revision) ? currentData.revision : 0;
                     const seededPlan = {
                         ...seed,
-                        revision: 1,
+                        revision: currentRevision + 1,
                         updatedAt: new Date().toISOString()
                     };
                     transaction.set(docRef, seededPlan);
-                    return seededPlan;
+                    return { data: seededPlan, source: 'seed' };
                 });
-                writeCachedUserConfig(configId, data);
-                return { data, writable: true, source: 'seed' };
+                writeCachedUserConfig(configId, result.data);
+                return { ...result, writable: true };
             } catch (error) {
                 // A cache can be viewed during an outage, but it is never writable because
                 // the current server version could not be confirmed.
