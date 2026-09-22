@@ -152,6 +152,7 @@ bodyMeasurements/{timestampId}
 `exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first and falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.
 
 User-owned configuration, such as `trainingPlan`, remains in Firestore with a local cache and bundled seed fallback.
+The app's manual Training Plan sync is the explicit reset path: it fetches `training-plan.json`, overwrites the user's Firestore `trainingPlan` document, and refreshes the local config cache.
 
 ```mermaid
 sequenceDiagram

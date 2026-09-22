@@ -4366,6 +4366,7 @@
             trainingPlan: {
                 label: 'training plan',
                 jsonPath: 'training-plan.json',
+                overwriteFirebaseFromBundle: true,
                 apply(data) {
                     trainingPlanData = data;
                     updateWorkoutDisplay(false);
@@ -4402,9 +4403,17 @@
                 }
                 if (statusEl) statusEl.textContent = `Refreshing ${target.label}...`;
 
-                // Manual sync deliberately bypasses the 7-day cache and refreshes only this
-                // config doc. It does not clear workoutProgress or any saved workout logs.
-                const data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
+                // Training-plan manual sync is an explicit reset to the checked-in JSON.
+                // Other config targets keep their existing forced-refresh behavior.
+                let data;
+                if (target.overwriteFirebaseFromBundle) {
+                    assertUserConfigFirebaseReady();
+                    data = await fetchSeedConfig(target.jsonPath);
+                    await window.firebaseSetDoc(window.getUserConfigDocRef(configId), data);
+                    writeCachedUserConfig(configId, data);
+                } else {
+                    data = await loadUserConfig(configId, target.jsonPath, { forceRefresh: true });
+                }
                 target.apply(data);
 
                 if (statusEl) statusEl.textContent = `Synced ${target.label}. Cache refreshed for 7 days.`;
