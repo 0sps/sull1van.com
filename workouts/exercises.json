@@ -1634,10 +1634,10 @@
     "muscles": [],
     "category": "",
     "equipment": "",
-    "instructions": "Set an incline bench to 30 or 45 degrees. Lie face down on it with a dumbbell in each hand. Let your arms hang straight down. Pull the weights up by driving your elbows back and squeezing your shoulder blades together. Since your chest is supported, don't let your body swing or lift off the pad. It's all back.\n\nThis is a multiplier 1 lift: if you put 50 lb on either side, log 100 lb total.",
+    "instructions": "Set an incline bench to 30 or 45 degrees. Lie face down on it with a dumbbell in each hand. Let your arms hang straight down. Pull the weights up by driving your elbows back and squeezing your shoulder blades together. Since your chest is supported, don't let your body swing or lift off the pad. It's all back.\n\nThis is a multiplier 2 lift: if you have 50 lb in either hand/arm/side, log 50 lb total.",
     "notes": "",
     "exportName": "Incline Dumbbell Row",
-    "multiplier": 1,
+    "multiplier": 2,
     "1repmaxformula": "w*(1+(r/30))"
   },
   "ex139": {
