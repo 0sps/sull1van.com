@@ -28,7 +28,7 @@ flowchart LR
     end
 
     subgraph Browser["Browser runtime"]
-        SW["Service Worker<br/>cache seans-log-v13"]
+        SW["Service Worker<br/>cache seans-log-v16"]
         LS["localStorage<br/>config cache + in-progress workout"]
         Charts["Chart.js<br/>body metrics charts"]
     end
@@ -74,10 +74,10 @@ flowchart LR
 | `training-plan-editor.html` | UI for editing the user's training plan config. Saves only `trainingPlan`; does not touch workout logs or in-progress workout state. | `exercises.json`, `users/{email}/config/trainingPlan`, local config cache |
 | `body.html` | Body measurements dashboard, Chart.js visualization, and USAF/PFRA-style scoring tools. | Top-level `bodyMeasurements` collection filtered by `userId` |
 | `migrate-workouts-to-user.html` | One-off migration utility from legacy top-level `workouts` collection to per-user `users/{email}/workouts`. | top-level `workouts`, `users/{email}/workouts`, `users/{email}` |
-| `service-worker.js` | PWA shell cache. Network-first for app/editor shell and `exercises.json`, cache-first for other static assets. | Cache Storage `seans-log-v13` |
+| `service-worker.js` | PWA shell cache. Network-first for app/editor shell and `exercises.json`, cache-first for other static assets. | Cache Storage `seans-log-v16` |
 | `js/strength.js` | Shared formula classifier and estimated 1RM calculator. Treats `NONE` as rep-only, uses Epley for blank formulas, and caps estimate calculations at 12 reps. | Exercise metadata and working sets supplied by page callers; no direct Firestore calls |
 | `js/records.js` | Shared active-season PR evaluator and timeline. Uses estimated 1RM for formula-eligible exercises and max reps for `NONE` exercises. | Exercise metadata, active season start date, and in-memory season logs supplied by page callers; no direct Firestore calls |
-| `js/coach.js` | Shared browser module for progression/recommendation calculations and SVG chart snippets. | Inputs supplied by `app.html`; no direct Firestore calls |
+| `js/coach.js` | Shared working-set recommendation engine and season chart snippets. Uses complete attempts to recommend repeat, increase, or a lighter step. See `COACH.md` for the decision rules. | Active-season history and plan inputs supplied by `app.html` and `progression.html`; no direct Firestore calls |
 
 ## Firestore Shape
 
@@ -226,14 +226,14 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v13"]
+    Install["service-worker install"] --> Cache["Cache ASSETS_TO_CACHE in seans-log-v16"]
     Activate["service-worker activate"] --> Cleanup["Delete old caches"]
     Fetch["fetch event"] --> Shell{"app shell or<br/>exercises.json?"}
     Shell -->|yes| NetworkFirst["Network first; update cache; fallback to cache"]
     Shell -->|no| CacheFirst["Cache first; fallback to network"]
 ```
 
-`service-worker.js` special-cases `exercises.json` as network-first because it is the canonical catalog. Other bundled JSON files remain cache-first and are used as seeds or fallbacks for user-owned configuration.
+`service-worker.js` uses network-first loading for the app pages, canonical exercise catalog, bundled plans, and coach module, with cached copies as offline fallbacks. Other assets use cache-first loading. The coach module follows the pages so an updated UI can use its matching calculator.
 
 ## Security Model
 

@@ -1,0 +1,310 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.resolve(__dirname, '..');
+const window = {};
+const context = vm.createContext({ window });
+for (const file of ['strength.js', 'coach.js']) {
+    vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context);
+}
+const lbsToKg = lbs => lbs * 0.45359237;
+const displayWeight = kg => Math.round(kg / 0.45359237);
+const log = (date, reps = [8, 8, 8], lbs = 100, extra = {}) => ({
+    date, exercises: [{ id: 'lift', sets: reps.map(reps => ({ reps, weight: lbsToKg(lbs), ...extra })) }]
+});
+function setup(logs = [], planOverrides = {}, exercise = {}) {
+    const plan = {
+        progressionPlan_startDate: '2026-09-01', durationWeeks: 12,
+        exercises: { lift: { goalIncreaseKg: 15, progressionStepKg: lbsToKg(5), ...planOverrides } }
+    };
+    return window.WorkoutCoach.create({
+        getWorkoutLogs: () => logs, getProgressionPlan: () => plan,
+        getExerciseData: () => ({ name: 'Test lift', ...exercise }),
+        getNow: () => new Date('2026-09-29T12:00:00Z'),
+        lbsToKg, kgToLbs: kg => kg / 0.45359237, displayWeight,
+        formatWeightLbs: kg => `${displayWeight(kg)} lbs`, formatDate: date => new Date(date).toISOString().slice(0, 10),
+        getPRTimeline: () => [
+            { date: '2026-08-31' }, { date: '2026-09-28' }, { date: '2026-10-01' }, { date: null }
+        ]
+    });
+}
+const recommend = coach => coach.buildCoachRecommendation('lift', { reps: '6-10', sets: 4 });
+
+test('every scheduled exercise gets starting guidance without a progression entry', () => {
+    const coach = setup();
+    const result = coach.buildCoachRecommendation('new-lift', { reps: '12-20', sets: 3 });
+    assert.equal(result.action, 'baseline');
+    assert.equal(result.targetWeightKg, null);
+    assert.equal(result.requiredWorkingSets, 2);
+});
+test('history is sorted and restricted to valid active-season dates', () => {
+    const coach = setup([log('2026-08-20', [30], 400), log('2026-09-25'), log(null), log('invalid'), log('2026-10-01', [10, 10, 10], 300), log('2026-09-28', [7, 7, 7], 110)]);
+    const result = recommend(coach);
+    assert.equal(result.targetWeightDisplay, 110);
+    assert.equal(result.recentSession.log.date, '2026-09-28');
+    assert.equal(result.baselineSession.log.date, '2026-09-25');
+    assert.equal(result.recentSessions.length, 2);
+});
+test('other workouts never push the lift out of the history window', () => {
+    const unrelated = Array.from({ length: 30 }, () => ({ date: '2026-09-29', exercises: [] }));
+    const result = recommend(setup([...unrelated, log('2026-09-26', [10, 10, 10])]));
+    assert.equal(result.action, 'increase');
+    assert.equal(result.targetWeightDisplay, 105);
+});
+test('a strong single set cannot earn progression for unfinished work', () => {
+    const result = recommend(setup([log('2026-09-28', [12])]));
+    assert.equal(result.action, 'incomplete');
+    assert.equal(result.earnedIncrease, false);
+});
+test('one strong set cannot outweigh missed reps on other sets', () => {
+    const coach = setup([log('2026-09-28', [12, 5, 5])]);
+    const result = recommend(coach);
+    assert.equal(result.action, 'repeat');
+    assert.equal(result.targetWeightDisplay, 100);
+    const evaluation = coach.evaluateProgressionSets(log('2026-09-28', [12, 5, 5]).exercises[0].sets, result);
+    assert.equal(evaluation.progressEarned, false);
+    assert.equal(evaluation.planComplete, false);
+});
+test('all required sets at the top earn exactly one equipment step', () => {
+    const result = recommend(setup([log('2026-09-28', [10, 11, 10], 100)]));
+    assert.equal(result.action, 'increase');
+    assert.equal(result.targetWeightDisplay, 105);
+});
+test('the calendar never forces a heavier next workout', () => {
+    const result = recommend(setup([log('2026-09-02'), log('2026-09-28')], { goalIncreaseKg: 100 }));
+    assert.ok(result.plannedWeightTodayKg > result.targetWeightKg);
+    assert.equal(result.targetWeightDisplay, 100);
+});
+test('an older strong session does not override the latest attempt', () => {
+    const result = recommend(setup([log('2026-09-25', [12, 12, 12], 120), log('2026-09-28', [8, 8, 8], 100)]));
+    assert.equal(result.action, 'repeat');
+    assert.equal(result.targetWeightDisplay, 100);
+});
+test('warmups are excluded and removing a planned set cannot earn an increase', () => {
+    const coach = setup();
+    const target = recommend(coach);
+    target.targetWeightKg = lbsToKg(100);
+    const sets = [{ reps: 2, weight: lbsToKg(50), isWarmup: true }, ...log('2026-09-28', [10, 10, 10]).exercises[0].sets];
+    assert.equal(coach.evaluateProgressionSets(sets, target).progressEarned, true);
+    assert.equal(coach.evaluateProgressionSets(sets.slice(0, 3), target).progressEarned, false);
+});
+test('higher rep ranges earn progression without a max estimate', () => {
+    const coach = setup([log('2026-09-28', [20, 20, 20])]);
+    const result = coach.buildCoachRecommendation('lift', { reps: '12-20', sets: 4 });
+    assert.equal(result.action, 'increase');
+    assert.equal(result.bestEstimate, null);
+});
+test('explicit zero load works for bodyweight; missing load stays incomplete', () => {
+    const result = recommend(setup([log('2026-09-28', [10, 10, 10], 0)], { targetMode: 'bodyweight' }, { '1repmaxformula': 'NONE' }));
+    assert.equal(result.targetWeightKg, 0);
+    assert.equal(result.action, 'repeat');
+    assert.equal(result.baselineSession.representativeWeightKg, 0);
+    const coach = setup([log('2026-09-28', [10, 10, 10], 0, { weight: '' })], { targetMode: 'bodyweight' });
+    assert.equal(recommend(coach).action, 'baseline');
+    assert.equal(coach.evaluateProgressionSets([{ reps: 10, weight: '' }], { ...result, requiredWorkingSets: 1 }).planComplete, false);
+});
+test('malformed, blank, negative, and fractional entries cannot earn completion', () => {
+    const coach = setup([log('2026-09-28')]);
+    const target = recommend(coach);
+    for (const set of [{ reps: 10, weight: null }, { reps: 10, weight: -1 }, { reps: '10oops', weight: 50 }, { reps: 10.5, weight: 50 }]) {
+        assert.equal(coach.evaluateProgressionSets([set], { ...target, requiredWorkingSets: 1 }).progressEarned, false);
+    }
+});
+test('rep-only formulas still get load guidance from working sets', () => {
+    const result = recommend(setup([log('2026-09-28', [10, 10, 10])], {}, { '1repmaxformula': 'NONE' }));
+    assert.equal(result.action, 'increase');
+    assert.equal(result.bestEstimate, null);
+});
+test('unsupported and reversed rep ranges request plan setup', () => {
+    const coach = setup([log('2026-09-28')]);
+    for (const reps of ['30 seconds', 'AMRAP', '10-6', '0', '3x10']) {
+        assert.equal(coach.buildCoachRecommendation('lift', { reps, sets: 4 }).action, 'setup');
+    }
+});
+test('two complete missed attempts at the same load suggest one lighter step', () => {
+    const result = recommend(setup([log('2026-09-25', [6, 5, 5]), log('2026-09-28', [6, 5, 5])]));
+    assert.equal(result.action, 'reduce');
+    assert.equal(result.targetWeightDisplay, 95);
+});
+test('a single miss, different weights, or an incomplete session do not earn a reduction', () => {
+    for (const logs of [
+        [log('2026-09-28', [5, 5, 5])],
+        [log('2026-09-25', [5, 5, 5], 90), log('2026-09-28', [5, 5, 5])],
+        [log('2026-09-25', [5]), log('2026-09-28', [5, 5, 5])]
+    ]) assert.equal(recommend(setup(logs)).action, 'repeat');
+});
+test('a warmup-only latest attempt cannot fall through to an older earned increase', () => {
+    const result = recommend(setup([log('2026-09-25', [10, 10, 10]), log('2026-09-28', [10], 50, { isWarmup: true })]));
+    assert.equal(result.action, 'incomplete');
+    assert.equal(result.targetWeightDisplay, 100);
+});
+test('long gaps repeat the last weight even after a top-range session', () => {
+    const result = recommend(setup([log('2026-09-02', [10, 10, 10])]));
+    assert.equal(result.action, 'return');
+    assert.equal(result.targetWeightDisplay, 100);
+    assert.equal(result.confidence.label, 'Returning');
+});
+test('the representative weight includes failed lower-load working sets', () => {
+    const sets = [{ weight: 50, reps: 10 }, { weight: 40, reps: 3 }];
+    assert.equal(setup().getRepresentativeWeightKg(sets, { min: 6, max: 10 }), 40);
+});
+test('typing the displayed target completes the session despite unit rounding', () => {
+    const coach = setup([log('2026-09-28', [8, 8, 8], 110, { weight: 50 })]);
+    const target = recommend(coach);
+    const sets = Array.from({ length: 3 }, () => ({ weight: lbsToKg(target.targetWeightDisplay), reps: 8 }));
+    assert.equal(coach.evaluateProgressionSets(sets, target).planComplete, true);
+});
+test('season snapshot excludes records outside the season or in the future', () => {
+    const snapshot = setup([log('2026-08-31'), log('2026-09-28'), log('2026-10-01')]).getSeasonSnapshot();
+    assert.equal(snapshot.prCount, 1);
+    assert.equal(snapshot.timeline.length, 1);
+    assert.equal(snapshot.latestWorkout.date, '2026-09-28');
+});
+test('today focuses on actionable working-set advice and respects rest days', () => {
+    const coach = setup([log('2026-09-28', [10, 10, 10])]);
+    assert.equal(coach.getWorkoutAdvice([]).length, 0);
+    const advice = coach.getWorkoutAdvice([{ id: 'lift', reps: '6-10', sets: 4 }, { id: 'new', reps: '8-12', sets: 3 }]);
+    assert.equal(advice[0].action, 'baseline');
+    assert.equal(advice[1].targetWeightDisplay, 105);
+});
+test('a single chart point produces finite SVG coordinates', () => {
+    const coach = setup([log('2026-09-28')]);
+    const target = recommend(coach);
+    const chart = coach.buildTrainingPlanChart(target.recentSessions, target.baselineSession, 1, 5, target);
+    assert.ok(chart.includes('<svg'));
+    assert.ok(!/NaN|Infinity/.test(chart));
+});
+
+// Run the actual page renderers with a small DOM substitute, without launching a browser.
+const now = new Date('2026-09-29T12:00:00Z');
+class FixedDate extends Date {
+    constructor(...args) { super(...(args.length ? args : [now.getTime()])); }
+    static now() { return now.getTime(); }
+}
+function pageContext(page, names, bindings) {
+    const source = fs.readFileSync(path.join(root, page), 'utf8');
+    const elements = new Map();
+    const document = {
+        getElementById(id) {
+            if (!elements.has(id)) elements.set(id, { innerHTML: '', textContent: '', style: { setProperty() {} }, classList: { toggle() {} } });
+            return elements.get(id);
+        }
+    };
+    const sandbox = vm.createContext({ Date: FixedDate, document, elements, lbsToKg, kgToLbs: kg => kg / 0.45359237, displayWeight,
+        formatWeightLbs: kg => `${displayWeight(kg)} lbs`, DateFormats: { SHORT: {}, LONG: {} }, ...bindings });
+    for (const name of names) {
+        const match = source.match(new RegExp(`^        (?:async )?function ${name}\\([^]*?\\n        }`, 'm'));
+        assert.ok(match, `${name} exists in ${page}`);
+        vm.runInContext(match[0], sandbox);
+    }
+    return sandbox;
+}
+const prohibitedCopy = new RegExp(['sig' + 'nal', 'noi' + 'se'].join('|'), 'i');
+
+test('Coach modal renders actual evidence, live completion, and escaped exercise names', () => {
+    const coach = setup([log('2026-09-28')]);
+    const target = recommend(coach);
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target },
+        getExerciseForUI: () => ({ name: '<script>bad</script>' }),
+        escapeHtml: value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        formatDate: date => new Date(date).toISOString().slice(0, 10),
+        collectCurrentExerciseWorkingSets: () => log('2026-09-29', [10, 10, 10]).exercises[0].sets,
+        openModal: id => { assert.equal(id, 'trainingPlanModal'); }
+    });
+    sandbox.showTrainingPlanModal('key');
+    const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('3 working sets × 6-10 reps'));
+    assert.ok(html.includes('This workout: Ready to increase'));
+    assert.ok(html.includes('2026-09-28'));
+    assert.ok(html.includes('&lt;script&gt;'));
+    assert.ok(!html.includes('<script>bad'));
+    assert.ok(!prohibitedCopy.test(html));
+});
+test('Coach modal renders an honest starting state without invented weight or history', () => {
+    const coach = setup();
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: recommend(coach) },
+        getExerciseForUI: () => ({ name: 'Test lift' }), escapeHtml: String,
+        formatDate: String, collectCurrentExerciseWorkingSets: () => [], openModal() {}
+    });
+    sandbox.showTrainingPlanModal('key');
+    const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('Choose your starting weight'));
+    assert.ok(html.includes('No working sets'));
+    assert.ok(!html.includes('Season progress'));
+    assert.ok(!/undefined|NaN/.test(html));
+});
+test('dashboard uses the real weekly plan and the shared coach for every scheduled lift', () => {
+    const trainingPlanData = JSON.parse(fs.readFileSync(path.join(root, 'training-plan.json')));
+    const progressionPlanData = JSON.parse(fs.readFileSync(path.join(root, 'progression-plan.json')));
+    const exercisesData = JSON.parse(fs.readFileSync(path.join(root, 'exercises.json')));
+    const workoutLogs = [{ date: '2026-09-28', exercises: [{ id: 'ex138', sets: [
+        { reps: 12, weight: lbsToKg(100) }, { reps: 12, weight: lbsToKg(100) }
+    ] }] }];
+    const coach = window.WorkoutCoach.create({
+        getWorkoutLogs: () => workoutLogs, getProgressionPlan: () => progressionPlanData,
+        getExerciseData: id => exercisesData[id], getSeasonStartDate: () => '2026-09-01',
+        getNow: () => now, lbsToKg, kgToLbs: kg => kg / 0.45359237, displayWeight,
+        formatDate: String, getPRTimeline: () => []
+    });
+    const sandbox = pageContext('progression.html', [
+        'parseDateLocal', 'formatDate', 'getLocalDateKey', 'escapeHtml',
+        'getProgressionStartDate', 'getSeasonGoalDate', 'parseRepRange', 'getWorkingSets', 'getCoachConfig',
+        'calculateEstimatedMaxKg', 'getBestEstimatedMax', 'getGoalIncreaseKg', 'getWeeklyTargetIncreaseKg',
+        'getSeasonBaseline', 'getSeasonTargetWeightKg', 'getPlanStatus', 'getTrainingPlanEntries',
+        'getMostRecentLift', 'getDailyAverages', 'buildLiftRows', 'formatLiftWeight', 'getLiftName',
+        'getSharedSeasonSnapshot', 'getTodaysAdvice', 'renderSummary', 'renderCoachBrief', 'renderLiftTable',
+        'renderChartStats', 'buildChart'
+    ], { coach, trainingPlanData, progressionPlanData, exercisesData, workoutLogs, liftRows: [], chartMetric: 'load' });
+    sandbox.buildLiftRows();
+    const allIds = new Set(Object.values(trainingPlanData.workouts).flatMap(workout => workout.exercises.map(ex => ex.id)));
+    assert.equal(sandbox.liftRows.length, allIds.size);
+    const row = sandbox.liftRows.find(row => row.id === 'ex138');
+    assert.equal(row.dayName, 'PULL ROWS'); // Tuesday's next occurrence is Friday, with 4 total rows.
+    assert.equal(row.recommendation.requiredWorkingSets, 3);
+    assert.equal(row.recommendation.action, 'incomplete'); // Monday's two working sets cannot earn Friday's increase.
+    sandbox.renderSummary();
+    sandbox.renderLiftTable();
+    const html = sandbox.elements.get('liftTableBody').innerHTML;
+    assert.ok(html.includes('Finish the full session'));
+    assert.ok(!/undefined|NaN/.test(html));
+    assert.ok(!prohibitedCopy.test(html));
+    const chart = sandbox.buildChart(row);
+    assert.ok(chart.includes('<svg'));
+    assert.ok(!/NaN|Infinity/.test(chart));
+    sandbox.chartMetric = 'strength';
+    assert.ok(!/NaN|Infinity/.test(sandbox.buildChart(row)));
+    sandbox.renderChartStats(row);
+    assert.ok(!/undefined|NaN/.test(sandbox.elements.get('chartStats').innerHTML));
+});
+test('scheduled repeat days get coaching guidance instead of a recovery placeholder', () => {
+    const coach = setup([log('2026-09-28')]);
+    const sandbox = pageContext('app.html', ['updateStats'], {
+        coach, activeSeason: { name: 'Test season' }, DateFormats: { SHORT: {} },
+        getWorkoutData: () => ({ exercises: [{ exerciseId: 'lift', reps: '6-10', sets: 4 }] }),
+        formatDate: String
+    });
+    sandbox.updateStats();
+    assert.equal(sandbox.elements.get('coachFocusValue').textContent, 'Test lift');
+    assert.ok(sandbox.elements.get('coachFocusDetail').textContent.includes('Build reps'));
+});
+test('workout UI files exclude the explicitly prohibited vocabulary', () => {
+    for (const file of ['app.html', 'progression.html', 'js/coach.js']) {
+        assert.ok(!prohibitedCopy.test(fs.readFileSync(path.join(root, file), 'utf8')), file);
+    }
+});
+
+test('bodyweight rep completion never promises an automatic weight increase', () => {
+    const coach = setup([log('2026-09-28', [10, 10, 10], 0)], { targetMode: 'bodyweight' });
+    const target = recommend(coach);
+    const result = coach.evaluateProgressionSets(target.recentSession.workingSets, target);
+    assert.equal(result.planComplete, true);
+    assert.equal(result.rangeProgressEarned, true);
+    assert.equal(result.progressEarned, false);
+    assert.equal(result.statusLabel, 'Upper rep target complete');
+    const chart = coach.buildTrainingPlanChart(target.recentSessions, target.baselineSession, 0, 0, target);
+    assert.ok(!/NaN|Infinity/.test(chart));
+});

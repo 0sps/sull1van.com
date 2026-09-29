@@ -7,16 +7,18 @@
   "currentProgressPolicy": "Use only active-season logs. Pre-season performance is never used for comparisons, targets, or charts.",
   "targetPolicy": "Targets are relative to the season baseline. goalIncreaseKg is added to the first valid season performance over the block duration.",
   "noBaselineLabel": "No baseline data",
-  "targetHitRule": "Target is hit when all working sets use at least the target weight and reach at least the bottom of the planned rep range.",
-  "nextIncreaseRule": "Next increase is earned when all working sets use at least the target weight and reach the top of the planned rep range.",
+  "targetHitRule": "Complete the required working-set count at the recommended weight and at least the bottom of the rep range. Warmups do not count.",
+  "nextIncreaseRule": "One complete session with every working set at the top of the rep range earns one load step next time. Calendar targets and estimated maxes do not earn increases.",
   "recommendationDefaults": {
-    "method": "estimatedMax",
+    "method": "repRangeCompletion",
     "formula": "epley",
     "validRepMin": 1,
     "validRepMax": 12,
     "lookbackSessions": 2,
     "roundingMode": "floor",
-    "incrementLbs": 5
+    "incrementLbs": 5,
+    "returnAfterDays": 21,
+    "missedSessionsBeforeReduction": 2
   },
   "exercises": {
     "ex018": {

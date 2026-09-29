@@ -1615,23 +1615,9 @@
         }
 
         #trainingPlanModal .modal {
-            width: min(920px, calc(100vw - 24px));
+            width: min(720px, calc(100vw - 24px));
             max-width: calc(100vw - 24px);
             overflow-x: hidden;
-            background:
-                linear-gradient(145deg, rgba(226, 255, 249, 0.105), rgba(37, 90, 86, 0.045) 34%, rgba(6, 13, 15, 0.72) 100%),
-                radial-gradient(ellipse at 18% 4%, rgba(137, 255, 236, 0.16), transparent 44%),
-                radial-gradient(ellipse at 85% 18%, rgba(255, 255, 255, 0.07), transparent 38%),
-                rgba(8, 18, 20, 0.86);
-            border-color: rgba(190, 255, 244, 0.2);
-            backdrop-filter: blur(34px) saturate(1.32);
-            -webkit-backdrop-filter: blur(34px) saturate(1.32);
-            box-shadow:
-                0 30px 88px rgba(0, 0, 0, 0.58),
-                0 0 0 1px rgba(190, 255, 244, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 0 90px rgba(118, 255, 229, 0.045),
-                inset 0 -34px 70px rgba(0, 0, 0, 0.32);
         }
 
         .modal-title {
@@ -2126,711 +2112,31 @@
             background: #ff5d8f;
         }
 
-        .training-coach-shell {
-            --c-primary: #3fffd3;       /* Cool neon teal */
-            --c-primary-glow: rgba(63, 255, 211, 0.25);
-            --c-secondary: #00ff88;     /* Cyber green */
-            --c-warning: #ffdf75;       /* Muted gold */
-            --c-bg-card: rgba(8, 24, 26, 0.48);
-            --c-border: rgba(206, 255, 248, 0.16);
-            --c-text-primary: #ffffff;
-            --c-text-secondary: rgba(235, 246, 244, 0.82);
-            --c-text-muted: rgba(235, 246, 244, 0.58);
-            --c-glass: rgba(12, 31, 33, 0.44);
-            --c-shadow: rgba(0, 0, 0, 0.32);
-
-            display: grid;
-            gap: 20px;
-            position: relative;
-            isolation: isolate;
-            max-width: 100%;
-            min-width: 0;
-            overflow: hidden;
-            font-family: 'Space Mono', monospace;
-        }
-
-        /* Subtle grid pattern overlay */
-        .training-coach-shell::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            background:
-                linear-gradient(116deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 22%, transparent 48%),
-                linear-gradient(153deg, transparent 0%, rgba(115, 255, 232, 0.06) 42%, transparent 76%),
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0 1px, transparent 1px 24px);
-            opacity: 0.58;
-        }
-
-        .training-coach-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 3px solid var(--c-primary);
-            padding-left: 14px;
-            min-width: 0;
-        }
-
-        .training-coach-header-icon {
-            color: var(--c-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 0 6px var(--c-primary-glow));
-        }
-
-        .training-coach-kicker {
-            color: var(--c-primary);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 2px;
-        }
-
-        .training-coach-name {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
-            line-height: 0.95;
-            letter-spacing: 1.1px;
-            color: var(--text-primary);
-            overflow-wrap: anywhere;
-        }
-
-        .training-coach-section-label {
-            color: var(--c-primary);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-top: 10px;
-            margin-bottom: -5px;
-            text-shadow: 0 0 12px var(--c-primary-glow);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .training-coach-command {
-            display: grid;
-            grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
-            gap: 20px;
-            min-width: 0;
-        }
-
-        /* Glass Cards */
-        .coach-glass-card {
-            position: relative;
-            background: 
-                linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 38%, rgba(0, 0, 0, 0.2) 100%),
-                var(--c-bg-card);
-            border: 1px solid var(--c-border);
-            border-radius: 12px;
-            padding: 20px;
-            backdrop-filter: blur(28px) saturate(1.28);
-            -webkit-backdrop-filter: blur(28px) saturate(1.28);
-            box-shadow:
-                0 20px 42px var(--c-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 -20px 30px rgba(0, 0, 0, 0.15);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            overflow: hidden;
-        }
-
-        .coach-glass-card:hover {
-            border-color: rgba(63, 255, 211, 0.35);
-            box-shadow:
-                0 20px 42px var(--c-shadow),
-                0 0 20px rgba(63, 255, 211, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
-
-        .coach-glass-card.low-confidence {
-            border-color: rgba(255, 228, 139, 0.18);
-        }
-
-        .coach-glass-card.low-confidence:hover {
-            border-color: rgba(255, 228, 139, 0.35);
-            box-shadow:
-                0 20px 42px var(--c-shadow),
-                0 0 20px rgba(255, 218, 112, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
-
-        .coach-glass-card > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .coach-target-topline {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .training-plan-target-title {
-            color: var(--c-text-primary);
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .coach-confidence-badge {
-            border: 1px solid rgba(176, 255, 238, 0.3);
-            color: #b0ffee;
-            background: rgba(210, 255, 248, 0.05);
-            padding: 4px 8px;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            border-radius: 4px;
-        }
-
-        .coach-confidence-badge.low {
-            border-color: rgba(255, 228, 139, 0.3);
-            color: var(--c-warning);
-            background: rgba(255, 218, 112, 0.05);
-        }
-
-        /* Hero Target Dial */
-        .coach-dial-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(63, 255, 211, 0.04) 0%, transparent 70%), rgba(255, 255, 255, 0.01);
-            border: 2px solid rgba(63, 255, 211, 0.12);
-            box-shadow:
-                0 12px 28px rgba(0, 0, 0, 0.35),
-                inset 0 0 20px rgba(63, 255, 211, 0.04);
-            position: relative;
-            animation: coachDialPulse 6s ease-in-out infinite;
-        }
-
-        .coach-dial-glow {
-            position: absolute;
-            inset: -2px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, var(--c-primary) 0%, transparent 60%, var(--c-primary) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-            padding: 2px;
-            pointer-events: none;
-            opacity: 0.55;
-        }
-
-        .coach-glass-card.low-confidence .coach-dial-container {
-            border-color: rgba(255, 218, 112, 0.12);
-            background: radial-gradient(circle, rgba(255, 218, 112, 0.03) 0%, transparent 70%), rgba(255, 255, 255, 0.01);
-        }
-
-        .coach-glass-card.low-confidence .coach-dial-glow {
-            background: conic-gradient(from 0deg, var(--c-warning) 0%, transparent 60%, var(--c-warning) 100%);
-        }
-
-        .coach-dial-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .coach-dial-weight {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: clamp(3rem, 10vw, 4.2rem);
-            line-height: 0.85;
-            color: #ffffff;
-            text-shadow: 0 0 15px var(--c-primary-glow);
-        }
-
-        .coach-glass-card.low-confidence .coach-dial-weight {
-            text-shadow: 0 0 15px rgba(255, 218, 112, 0.15);
-        }
-
-        .coach-dial-unit {
-            font-size: 0.8rem;
-            font-weight: bold;
-            letter-spacing: 1.5px;
-            color: var(--c-primary);
-            margin-top: 2px;
-        }
-
-        .coach-glass-card.low-confidence .coach-dial-unit {
-            color: var(--c-warning);
-        }
-
-        .coach-command-reps {
-            color: var(--c-text-primary);
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
-            line-height: 0.95;
-            letter-spacing: 0.8px;
-            margin-top: 10px;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .training-plan-rule-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .training-plan-rule {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);
-        }
-
-        .training-plan-rule.progress {
-            border-color: rgba(63, 255, 211, 0.18);
-            background: rgba(63, 255, 211, 0.02);
-        }
-
-        .training-plan-rule-label {
-            color: var(--c-text-muted);
-            font-size: 0.58rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .training-plan-rule-value {
-            color: var(--c-text-primary);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .training-plan-rule.progress .training-plan-rule-value {
-            color: var(--c-primary);
-        }
-
-        .coach-low-confidence-note {
-            color: var(--c-warning);
-            font-size: 0.72rem;
-            line-height: 1.4;
-            margin-top: 12px;
-            border-top: 1px dashed rgba(255, 218, 112, 0.15);
-            padding-top: 10px;
-        }
-
-        /* Signal Quality & Pace Panel */
-        .training-coach-instrument-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .coach-instrument-gauge {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .coach-instrument-label {
-            color: var(--c-text-muted);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
-
-        .coach-signal-meter {
-            display: flex;
-            gap: 6px;
-            margin: 6px 0 2px 0;
-        }
-
-        .coach-signal-bar {
-            flex: 1;
-            height: 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .coach-signal-bar.active {
-            background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
-            box-shadow: 0 0 12px var(--c-primary-glow);
-            border-color: rgba(63, 255, 211, 0.35);
-        }
-
-        .coach-signal-bar.low.active {
-            background: linear-gradient(90deg, #ffbb00, #ff6d3d);
-            box-shadow: 0 0 12px rgba(255, 187, 0, 0.25);
-            border-color: rgba(255, 187, 0, 0.35);
-        }
-
-        .training-plan-pace-mini {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 8px;
-            font-size: 0.72rem;
-        }
-
-        .training-plan-pace-mini span {
-            color: var(--c-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .training-plan-pace-mini strong {
-            color: var(--c-text-primary);
-        }
-
-        .training-plan-pace-mini strong.text-success {
-            color: var(--c-secondary);
-            text-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
-        }
-
-        .training-plan-pace-mini strong.text-error {
-            color: var(--c-warning);
-            text-shadow: 0 0 8px rgba(255, 218, 112, 0.2);
-        }
-
-        /* Pace Card */
-        .training-plan-pace-label {
-            color: var(--c-text-muted);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 4px;
-        }
-
-        .training-plan-pace-value {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            line-height: 1;
-            letter-spacing: 0.8px;
-        }
-
-        .training-plan-pace-value.on-track,
-        .training-plan-pace-value.ahead {
-            color: var(--c-secondary);
-            text-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
-        }
-
-        .training-plan-pace-value.behind {
-            color: var(--c-warning);
-            text-shadow: 0 0 12px rgba(255, 218, 112, 0.25);
-        }
-
-        .training-plan-pace-detail {
-            font-size: 0.72rem;
-            color: var(--c-text-secondary);
-            margin: 6px 0 12px 0;
-            line-height: 1.35;
-        }
-
-        .training-plan-progress-track,
-        .training-plan-phase-rail {
-            height: 8px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 999px;
-            position: relative;
-            margin: 12px 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .training-plan-progress-fill,
-        .training-plan-phase-fill {
-            height: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
-            box-shadow: 0 0 10px var(--c-primary-glow);
-            width: 0%; /* Dynamic */
-        }
-
-        .training-plan-pace-meta {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .training-plan-pace-meta .training-plan-pace-mini {
-            border-top: none;
-            padding-top: 0;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 2px;
-        }
-
-        .training-plan-pace-meta .training-plan-pace-mini strong {
-            font-size: 0.95rem;
-            font-weight: bold;
-        }
-
-        /* Block Context Grid */
-        .training-coach-context-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-            gap: 20px;
-            align-items: stretch;
-            min-width: 0;
-        }
-
-        .training-plan-phase-panel {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .training-plan-panel-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .training-plan-panel-title {
-            color: var(--c-text-primary);
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .training-plan-panel-subtitle {
-            color: var(--c-text-muted);
-            font-size: 0.7rem;
-            margin-top: 4px;
-            line-height: 1.35;
-        }
-
-        .training-plan-phase-percent {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            color: var(--c-primary);
-            line-height: 0.95;
-            text-shadow: 0 0 10px var(--c-primary-glow);
-        }
-
-        .training-plan-phase-marker {
-            position: absolute;
-            top: -4px;
-            width: 14px;
-            height: 14px;
-            background: #ffffff;
-            border: 2px solid var(--c-primary);
-            border-radius: 50%;
-            box-shadow: 
-                0 0 8px var(--c-primary),
-                2px 0 6px rgba(0, 0, 0, 0.32);
-            transform: translateX(-50%);
-        }
-
-        .training-plan-phase-labels {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .training-plan-phase-labels > div {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .training-plan-phase-labels > div:nth-child(2) {
-            text-align: center;
-        }
-
-        .training-plan-phase-labels > div:nth-child(3) {
-            text-align: right;
-        }
-
-        .training-plan-phase-label {
-            color: var(--c-text-muted);
-            font-size: 0.58rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .training-plan-phase-number {
-            color: var(--c-text-primary);
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        /* SVG Line Chart styling overrides */
-        .training-coach-shell .training-plan-chart-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 16px;
-        }
-
-        .training-coach-shell .training-plan-section-title {
-            color: var(--c-text-muted);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 12px;
-        }
-
-        .training-coach-shell .training-plan-chart-grid {
-            stroke: rgba(255, 255, 255, 0.04);
-            stroke-width: 1;
-        }
-
-        .training-coach-shell .training-plan-chart-axis {
-            stroke: rgba(255, 255, 255, 0.12);
-            stroke-width: 1.5;
-        }
-
-        .training-coach-shell .training-plan-chart-plan {
-            stroke: var(--c-primary);
-            stroke-width: 2.5;
-            stroke-dasharray: 4 6;
-            filter: drop-shadow(0 0 2px rgba(63, 255, 211, 0.25));
-        }
-
-        .training-coach-shell .training-plan-chart-actual {
-            stroke: #ffffff;
-            stroke-width: 3;
-            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.2));
-        }
-
-        .training-coach-shell .training-plan-chart-dot {
-            stroke: var(--c-bg-card);
-            stroke-width: 2;
-            r: 5;
-            transition: r 0.15s ease;
-        }
-
-        .training-coach-shell .training-plan-chart-dot:hover {
-            r: 7;
-        }
-
-        .training-coach-shell .training-plan-chart-dot.on-track {
-            fill: var(--c-secondary);
-            filter: drop-shadow(0 0 4px var(--c-secondary));
-        }
-
-        .training-coach-shell .training-plan-chart-dot.behind {
-            fill: #ff5d8f;
-            filter: drop-shadow(0 0 4px #ff5d8f);
-        }
-
-        .training-coach-shell .training-plan-chart-label {
-            fill: var(--text-secondary);
-            font-size: 9px;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .training-coach-shell .training-plan-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 14px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            justify-content: center;
-        }
-
-        .training-coach-shell .training-plan-legend span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .training-coach-shell .training-plan-legend span::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .training-coach-shell .training-plan-legend .actual::before { background: #ffffff; }
-        .training-coach-shell .training-plan-legend .planned::before { background: var(--c-primary); }
-        .training-coach-shell .training-plan-legend .hit::before { background: var(--c-secondary); }
-        .training-coach-shell .training-plan-legend .behind::before { background: #ff5d8f; }
-
-        @keyframes coachDialPulse {
-            0%, 100% {
-                box-shadow: 
-                    0 12px 28px rgba(0, 0, 0, 0.35),
-                    inset 0 0 20px rgba(63, 255, 211, 0.04),
-                    0 0 15px rgba(63, 255, 211, 0.05);
-            }
-            50% {
-                box-shadow: 
-                    0 12px 32px rgba(0, 0, 0, 0.4),
-                    inset 0 0 24px rgba(63, 255, 211, 0.08),
-                    0 0 24px rgba(63, 255, 211, 0.15);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .coach-dial-container {
-                animation: none;
-            }
-            .training-coach-shell .training-plan-progress-fill,
-            .training-coach-shell .training-plan-phase-fill {
-                animation: none;
-            }
-        }
-
-        /* Responsive Layouts */
-        @media (max-width: 820px) {
-            .training-coach-command {
-                grid-template-columns: 1fr;
-            }
-            .training-coach-context-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        .training-coach-shell { display: grid; gap: 20px; min-width: 0; }
+        .coach-heading { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 2rem; line-height: 1.1; overflow-wrap: anywhere; }
+        .coach-caption { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.6; }
+        .coach-section { padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-secondary); min-width: 0; }
+        .coach-prescription { border-color: #35d9c8; background: rgba(0, 210, 180, 0.06); }
+        .coach-action { color: #7fffe8; font-size: 0.8rem; font-weight: bold; }
+        .coach-weight { font-family: 'Bebas Neue', Impact, sans-serif; font-size: clamp(2.4rem, 7vw, 3.8rem); line-height: 1.15; margin: 10px 0; }
+        .coach-reason { font-size: 0.85rem; line-height: 1.7; margin-top: 12px; overflow-wrap: anywhere; }
+        .coach-section-title { font-size: 0.85rem; margin: 0 0 12px; }
+        .coach-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+        .coach-rule-label { color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 6px; }
+        .coach-rule-value { font-size: 0.85rem; line-height: 1.5; }
+        .coach-evidence { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .coach-evidence th, .coach-evidence td { padding: 10px 6px; text-align: left; border-bottom: 1px solid var(--border); }
+        .coach-evidence th { color: var(--text-secondary); font-size: 0.7rem; font-weight: normal; }
+        .coach-history-row { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+        .coach-history-row strong { display: block; font-size: 0.75rem; margin-bottom: 6px; }
+        .coach-season-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0; }
+        .coach-season-facts dt { color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 6px; }
+        .coach-season-facts dd { font-size: 0.9rem; margin: 0; overflow-wrap: anywhere; }
+        .coach-method summary { cursor: pointer; font-size: 0.8rem; }
+        .coach-method p { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.7; margin-top: 12px; }
         @media (max-width: 480px) {
-            .training-plan-rule-row {
-                grid-template-columns: 1fr;
-            }
-            .training-plan-phase-labels {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .training-plan-phase-labels > div,
-            .training-plan-phase-labels > div:nth-child(2),
-            .training-plan-phase-labels > div:nth-child(3) {
-                text-align: left;
-            }
-            .training-plan-panel-top {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-            }
-            .coach-dial-container {
-                width: 150px;
-                height: 150px;
-            }
-            .coach-dial-weight {
-                font-size: 3.2rem;
-            }
+            .coach-section { padding: 16px; }
+            .coach-rules { grid-template-columns: 1fr; gap: 12px; }
         }
 
         .btn-history {
@@ -3131,9 +2437,9 @@
                         <div class="momentum-detail" id="weeklyActivityDetail">Log any workout to activate the streak.</div>
                     </div>
                     <div class="momentum-card opportunity">
-                        <div class="momentum-label">Today’s PR Opportunity</div>
-                        <div class="momentum-value" id="prOpportunityValue">SET THE BASELINE</div>
-                        <div class="momentum-detail" id="prOpportunityDetail">Your first season performance is a record.</div>
+                        <div class="momentum-label">Today’s Focus</div>
+                        <div class="momentum-value" id="coachFocusValue">SET THE BASELINE</div>
+                        <div class="momentum-detail" id="coachFocusDetail">Log the planned working sets to get started.</div>
                     </div>
                 </div>
                 <div class="momentum-footer">
@@ -3525,7 +2831,6 @@
         const CONFIG = {
             RECENT_LOGS_LIMIT: 5,
             FIREBASE_INIT_LIMIT: 60,
-            COACH_LOG_LOOKBACK: 14,
             LOCAL_STORAGE_TTL: 48 * 60 * 60 * 1000, // 48 hours
             HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
@@ -3712,14 +3017,6 @@
             return `${displayWeight(kgWeight)} lbs`;
         }
 
-        function roundWeightLbs(weightLbs, incrementLbs = 5, mode = 'floor') {
-            if (!Number.isFinite(weightLbs)) return null;
-            const increment = Number.isFinite(Number(incrementLbs)) && Number(incrementLbs) > 0 ? Number(incrementLbs) : 5;
-            if (mode === 'ceil') return Math.ceil(weightLbs / increment) * increment;
-            if (mode === 'nearest') return Math.round(weightLbs / increment) * increment;
-            return Math.floor(weightLbs / increment) * increment;
-        }
-
         function displayVolume(kgVolume, withCommas = false) {
             const lbs = Math.round(kgToLbs(kgVolume));
             return withCommas ? lbs.toLocaleString() : lbs;
@@ -3766,10 +3063,8 @@
             getExerciseData: exerciseId => getExercise(exerciseId),
             getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
             getPRTimeline: () => recordTracker?.getPRTimeline() || [],
-            coachLogLookback: CONFIG.COACH_LOG_LOOKBACK,
             lbsToKg,
             kgToLbs,
-            roundWeightLbs,
             displayWeight,
             formatWeightLbs,
             formatDate,
@@ -3811,7 +3106,7 @@
             exerciseEl.querySelectorAll('.set-input-group').forEach(group => {
                 const repsInput = group.querySelector('.set-input[data-type="reps"]');
                 const weightInput = group.querySelector('.set-input[data-type="weight"]');
-                const reps = parseInt(repsInput?.value, 10);
+                const reps = repsInput?.value?.trim() ? Number(repsInput.value) : NaN;
                 const weight = parseFloat(weightInput?.value);
 
                 // Ignore blank/incomplete rows while user is still entering data.
@@ -4097,7 +3392,7 @@
             }
 
             const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
-            const weightPlaceholder = targetWeight || (prevWeight ? `${prevWeight}` : 'WEIGHT');
+            const weightPlaceholder = isWarmup ? (prevWeight ? `${prevWeight}` : 'WEIGHT') : (targetWeight ?? (prevWeight ? `${prevWeight}` : 'WEIGHT'));
             const inputClass = hasProgressionTarget ? 'set-input progression-target-input' : 'set-input';
 
             return `
@@ -5352,7 +4647,7 @@
                 const exercise = getExerciseForUI(ex.exerciseId);
                 const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
                 const lastSessionSets = getLastSessionSets(ex.exerciseId);
-                const progressionTarget = coach.getProgressionTarget(ex.exerciseId, ex.reps);
+                const progressionTarget = coach.getProgressionTarget(ex.exerciseId, ex.reps, ex);
                 if (progressionTarget) {
                     activeProgressionTargets[exerciseKey] = progressionTarget;
                 }
@@ -5683,6 +4978,30 @@
             }
         }
 
+        function collectCurrentExerciseWorkingSets(key) {
+            const el = document.getElementById(`exercise-${key}`);
+            if (!el) return [];
+            const workingGroups = Array.from(el.querySelectorAll('.set-input-group')).filter(group => {
+                const warmupBtn = group.querySelector('.warmup-btn');
+                return !warmupBtn?.classList.contains('active');
+            });
+
+            return workingGroups.map(group => {
+                const repsInput = group.querySelector('.set-input[data-type="reps"]');
+                const weightInput = group.querySelector('.set-input[data-type="weight"]');
+                const reps = repsInput?.value?.trim() ? Number(repsInput.value) : NaN;
+                const parsedWeight = weightInput?.value?.trim() ? Number(weightInput.value) : NaN;
+                const weight = Number.isFinite(parsedWeight) ? parsedWeight : NaN;
+                const weightKg = weightUnit === 'lbs' ? lbsToKg(weight) : weight;
+
+                return {
+                    reps,
+                    weight: weightKg,
+                    isWarmup: false
+                };
+            });
+        }
+
         function checkExerciseCompletion(key) {
             const el = document.getElementById(`exercise-${key}`);
             if (!el) return;
@@ -5695,25 +5014,7 @@
                 return;
             }
 
-            const workingGroups = Array.from(el.querySelectorAll('.set-input-group')).filter(group => {
-                const warmupBtn = group.querySelector('.warmup-btn');
-                return !warmupBtn?.classList.contains('active');
-            });
-
-            const workingSets = workingGroups.map(group => {
-                const repsInput = group.querySelector('.set-input[data-type="reps"]');
-                const weightInput = group.querySelector('.set-input[data-type="weight"]');
-                const reps = parseInt(repsInput?.value, 10);
-                const parsedWeight = parseFloat(weightInput?.value);
-                const weight = Number.isFinite(parsedWeight) ? parsedWeight : 0;
-                const weightKg = weightUnit === 'lbs' ? lbsToKg(weight) : weight;
-
-                return {
-                    reps,
-                    weight: weightKg,
-                    isWarmup: false
-                };
-            });
+            const workingSets = collectCurrentExerciseWorkingSets(key);
             const evaluation = coach.evaluateProgressionSets(workingSets, target);
             const targetHit = evaluation.planComplete || evaluation.progressEarned;
 
@@ -6438,202 +5739,76 @@
             }
         }
 
-        async function showTrainingPlanModal(exerciseKey) {
+        function showTrainingPlanModal(exerciseKey) {
             const target = activeProgressionTargets[exerciseKey];
             if (!target) return;
-
             const exercise = getExerciseForUI(target.exerciseId);
-            const baseline = coach.getBaselineProgressionSession(target.exerciseId, target.repRange);
+            const baseline = target.baselineSession;
             const current = target.recentSession;
-            const allowZeroWeight = baseline?.representativeWeightKg === 0 || target.planExercise.targetMode === 'bodyweight';
-            const recentSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, allowZeroWeight);
-            const goalIncreaseKg = coach.getPlanGoalIncreaseKg(target.planExercise);
-            const weeklyTargetIncreaseKg = coach.getPlanWeeklyTargetIncreaseKg(target.planExercise);
-            const currentProgressKg = baseline && current
-                ? current.representativeWeightKg - baseline.representativeWeightKg
-                : 0;
-            const plannedProgressKg = coach.getPlannedProgressKgForDate(new Date(), weeklyTargetIncreaseKg, goalIncreaseKg);
-            const plannedWeightTodayKg = baseline
-                ? coach.getPlannedWeightKgForDate(baseline.representativeWeightKg, new Date(), weeklyTargetIncreaseKg, goalIncreaseKg)
-                : null;
-            const progressDeltaKg = currentProgressKg - plannedProgressKg;
-            const pace = coach.getPaceInfo(progressDeltaKg, weeklyTargetIncreaseKg);
-            const remainingKg = Math.max(goalIncreaseKg - currentProgressKg, 0);
-            const progressPercent = goalIncreaseKg > 0
-                ? Math.max(0, Math.min(100, Math.round((currentProgressKg / goalIncreaseKg) * 100)))
-                : 0;
-            const plannedPercent = goalIncreaseKg > 0
-                ? Math.max(0, Math.min(100, Math.round((plannedProgressKg / goalIncreaseKg) * 100)))
-                : 0;
-            const startDate = activeSeason?.startDate || 'season start';
-            const currentWeightLabel = current ? formatWeightLbs(current.representativeWeightKg) : 'No data';
-            const hasRecommendation = Number.isFinite(target.targetWeightKg);
-            const recommendationWeightLabel = hasRecommendation ? displayWeight(target.targetWeightKg) : '?';
-            const recommendationUnitLabel = hasRecommendation ? 'LBS' : '';
-            const chartHtml = coach.buildTrainingPlanChart(recentSessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target);
-            const plannedTodayLbsLabel = plannedWeightTodayKg ? formatWeightLbs(plannedWeightTodayKg) : 'No data';
-            const baselineLbsLabel = baseline ? formatWeightLbs(baseline.representativeWeightKg) : 'No data';
-            const targetPlanWeightKg = coach.getPlanTargetWeightKg(target.planExercise, baseline?.representativeWeightKg ?? null);
-            const goalLbsLabel = targetPlanWeightKg !== null ? formatWeightLbs(targetPlanWeightKg) : 'No goal';
-            const confidence = target.confidence || coach.getCoachConfidence(target.recentSessions?.length || 0);
-            const lowConfidenceNote = confidence.className === 'low'
-                ? `<div class="coach-low-confidence-note">${escapeHtml(confidence.detail)}. Use the block plan today if the recommendation is uncertain.</div>`
-                : '';
-            const confidenceLevel = confidence.className === 'low' ? 1 : 3;
-            const confidenceBars = [1, 2, 3].map(level => {
-                const activeClass = level <= confidenceLevel ? 'active' : '';
-                const lowClass = confidence.className === 'low' ? 'low' : '';
-                return `<span class="coach-signal-bar ${activeClass} ${lowClass}"></span>`;
-            }).join('');
-            const planNameLabel = escapeHtml(progressionPlanData?.progressionPlanName || 'Training Plan');
-            const exerciseNameLabel = escapeHtml((exercise?.name || target.exerciseId).toUpperCase());
-            const confidenceLabel = escapeHtml(confidence.label);
-            const confidenceClass = confidence.className === 'low' ? 'low' : 'high';
-            const paceClass = ['ahead', 'on-track', 'behind'].includes(pace.className) ? pace.className : '';
-            const estimatedMaxLabel = target.bestSignal
-                ? `${formatWeightLbs(target.bestSignal.estimatedMaxKg)}${target.bestSignal.usedFallback ? '**' : ''}`
-                : 'No signal';
-            const estimatedMaxDetail = target.bestSignal
-                ? `Projected from ${target.bestSignal.reps} reps at ${formatWeightLbs(target.bestSignal.weightKg)}.${target.bestSignal.usedFallback ? ' ** Not lift-validated.' : ''}`
-                : 'Log a weighted working set to calculate a projected 1RM.';
-
+            const weightLabel = kg => kg === 0 && target.coachConfig.allowZeroWeight ? 'Bodyweight' : formatWeightLbs(kg);
+            const prescription = Number.isFinite(target.targetWeightKg) ? weightLabel(target.targetWeightKg) : 'Choose your starting weight';
+            const sets = target.requiredWorkingSets;
+            const nextStep = weightLabel(target.stepKg);
+            const currentSets = current?.workingSets || [];
+            const evidence = currentSets.length ? `
+                <p class="coach-caption">${escapeHtml(formatDate(current.log.date, DateFormats.LONG))} · ${escapeHtml(target.confidence.detail)}</p>
+                <table class="coach-evidence">
+                    <thead><tr><th scope="col">Working set</th><th scope="col">Weight</th><th scope="col">Reps</th></tr></thead>
+                    <tbody>${currentSets.map((set, index) => {
+                        const weight = set.weight === null || set.weight === '' ? NaN : Number(set.weight);
+                        const reps = Number(set.reps);
+                        return `<tr><td>${index + 1}</td><td>${Number.isFinite(weight) ? escapeHtml(weightLabel(weight)) : 'Missing'}</td><td>${Number.isInteger(reps) && reps > 0 ? reps : 'Missing'}</td></tr>`;
+                    }).join('')}</tbody>
+                </table>` : '<p class="coach-caption">No working sets for this lift in the active season. Your first logged session gives the coach a starting point.</p>';
+            const earlierSessions = target.recentSessions.filter(session => session !== current).map(session => `
+                <div class="coach-history-row"><strong>${escapeHtml(formatDate(session.log.date, DateFormats.SHORT))}</strong>
+                    <span class="coach-caption">${escapeHtml(session.workingSets.map(set => `${Number.isFinite(Number(set.weight)) ? weightLabel(Number(set.weight)) : '?'} × ${set.reps || '?'} reps`).join(' · '))}</span>
+                </div>`).join('');
+            const goalKg = baseline && coach.getPlanGoalIncreaseKg(target.planExercise) > 0
+                ? coach.getPlanTargetWeightKg(target.planExercise, baseline.representativeWeightKg) : null;
+            const currentWeight = current?.representativeWeightKg;
+            const chartSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, target.coachConfig.allowZeroWeight);
+            const chart = baseline && goalKg !== null ? coach.buildTrainingPlanChart(chartSessions, baseline,
+                coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), coach.getPlanGoalIncreaseKg(target.planExercise), target) : '';
+            const liveSets = collectCurrentExerciseWorkingSets(exerciseKey);
+            const liveEvaluation = coach.evaluateProgressionSets(liveSets, target);
+            const liveStatus = liveEvaluation.loggedSets > 0 ? `
+                <p class="coach-reason"><strong>This workout: ${escapeHtml(liveEvaluation.statusLabel)}.</strong>
+                    ${liveEvaluation.loggedSets} valid working set${liveEvaluation.loggedSets === 1 ? '' : 's'} entered, ${sets} required.
+                    ${liveEvaluation.progressEarned ? 'This earns a weight increase for your next session.' : ''}</p>` : '';
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <div class="training-coach-shell">
-                    <div class="training-coach-header">
-                        <div class="training-coach-header-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <div>
-                            <div class="training-coach-kicker">${planNameLabel}</div>
-                            <div class="training-coach-name">${exerciseNameLabel}</div>
-                        </div>
-                    </div>
-
-                    <div class="training-coach-section-label">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                        <span>Coach Says</span>
-                    </div>
-                    
-                    <div class="training-coach-command">
-                        <div class="coach-glass-card ${confidence.className === 'low' ? 'low-confidence' : ''}">
-                            <div class="coach-target-topline">
-                                <div class="training-plan-target-title">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                                    <span>Today's Target</span>
-                                </div>
-                                <div class="coach-confidence-badge ${confidenceClass}">${confidenceLabel} Confidence</div>
-                            </div>
-                            
-                            <div class="coach-dial-container">
-                                <div class="coach-dial-glow"></div>
-                                <div class="coach-dial-content">
-                                    <span class="coach-dial-weight">${recommendationWeightLabel}</span>
-                                    <span class="coach-dial-unit">${recommendationUnitLabel}</span>
-                                </div>
-                            </div>
-                            
-                            <div class="coach-command-reps">${escapeHtml(target.repRange.label)} Reps</div>
-                            
-                            <div class="training-plan-rule-row">
-                                <div class="training-plan-rule">
-                                    <div class="training-plan-rule-label">Complete</div>
-                                    <div class="training-plan-rule-value">${escapeHtml(target.repRange.min)}+ reps</div>
-                                </div>
-                                <div class="training-plan-rule progress">
-                                    <div class="training-plan-rule-label">Progress</div>
-                                    <div class="training-plan-rule-value">${escapeHtml(target.repRange.max)} reps</div>
-                                </div>
-                            </div>
-                            ${lowConfidenceNote}
-                        </div>
-
-                        <div class="training-coach-instrument-stack">
-                            <div class="coach-glass-card coach-instrument-gauge">
-                                <div class="coach-instrument-label">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:middle;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                                    <span>Signal Quality</span>
-                                </div>
-                                <div class="coach-signal-meter" aria-label="${escapeAttr(confidence.label)} confidence">
-                                    ${confidenceBars}
-                                </div>
-                                <div class="training-plan-pace-mini">
-                                    <span>Confidence Rating</span>
-                                    <strong class="${confidence.className === 'low' ? 'text-error' : 'text-success'}">${confidenceLabel}</strong>
-                                </div>
-                            </div>
-
-                            <div class="coach-glass-card ${paceClass}">
-                                <div class="training-plan-pace-label">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:middle;"><path d="M22 12A10 10 0 0 0 2 12M12 2v4M20 20l-4-4M12 12l2-4"/></svg>
-                                    <span>Block Pace</span>
-                                </div>
-                                <div class="training-plan-pace-value ${paceClass}">${escapeHtml(pace.label)}</div>
-                                <div class="training-plan-pace-detail">${escapeHtml(pace.detail)}</div>
-                                <div class="training-plan-progress-track">
-                                    <div class="training-plan-progress-fill" style="width: ${progressPercent}%"></div>
-                                </div>
-                                <div class="training-plan-pace-meta">
-                                    <div class="training-plan-pace-mini">
-                                        <span>Plan Today</span>
-                                        <strong>${plannedTodayLbsLabel}</strong>
-                                    </div>
-                                    <div class="training-plan-pace-mini">
-                                        <span>Remaining</span>
-                                        <strong>${formatWeightLbs(remainingKg)}</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="training-coach-section-label">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
-                        <span>Block Context</span>
-                    </div>
-                    
-                    <div class="training-coach-context-grid">
-                        <div class="coach-glass-card training-plan-phase-panel">
-                            <div class="training-plan-panel-top">
-                                <div>
-                                    <div class="training-plan-panel-title">Block Progress Since ${escapeHtml(startDate)}</div>
-                                    <div class="training-plan-panel-subtitle">Current load vs baseline, goal, and today's plan line</div>
-                                </div>
-                                <div class="training-plan-phase-percent">${progressPercent}%</div>
-                            </div>
-                            <div class="training-plan-phase-rail">
-                                <div class="training-plan-phase-fill" style="width: ${progressPercent}%"></div>
-                                <div class="training-plan-phase-marker" style="left: ${plannedPercent}%"></div>
-                            </div>
-                            <div class="training-plan-phase-labels">
-                                <div>
-                                    <div class="training-plan-phase-label">Baseline</div>
-                                    <div class="training-plan-phase-number">${baselineLbsLabel}</div>
-                                </div>
-                                <div>
-                                    <div class="training-plan-phase-label">Current</div>
-                                    <div class="training-plan-phase-number">${currentWeightLabel}</div>
-                                </div>
-                                <div>
-                                    <div class="training-plan-phase-label">Goal</div>
-                                    <div class="training-plan-phase-number">${goalLbsLabel}</div>
-                                </div>
-                            </div>
-                            <div class="training-plan-pace-detail m-t-16">
-                                Projected 1RM: <strong>${escapeHtml(estimatedMaxLabel)}</strong><br>
-                                ${escapeHtml(estimatedMaxDetail)}
-                            </div>
-                        </div>
-
-                        <div class="training-plan-evidence-grid">
-                            <div class="training-plan-section">
-                                <div class="training-plan-section-title">Last 14 Days vs Plan</div>
-                                ${chartHtml}
-                            </div>
-                        </div>
-                    </div>
+                    <div><div class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</div>
+                        <p class="coach-caption">${escapeHtml(target.confidence.label)} · Active season only</p></div>
+                    <section class="coach-section coach-prescription">
+                        <div class="coach-action">${escapeHtml(target.actionLabel)}</div>
+                        <div class="coach-weight">${escapeHtml(target.action === 'setup' ? 'Set a rep range' : prescription)}</div>
+                        <div>${sets} working set${sets === 1 ? '' : 's'}${target.repRange.min ? ` × ${escapeHtml(target.repRange.label)} reps` : ''}</div>
+                        <p class="coach-reason">${escapeHtml(target.reason)}</p>
+                        ${target.repRange.min ? `<div class="coach-rules">
+                            <div><div class="coach-rule-label">Complete this session</div><div class="coach-rule-value">${escapeHtml(target.repRange.min)}+ reps on every working set at this weight.</div></div>
+                            <div><div class="coach-rule-label">Earn the next increase</div><div class="coach-rule-value">${escapeHtml(target.repRange.max)}+ reps on every working set.${target.targetWeightKg > 0 ? ` Then add ${escapeHtml(nextStep)} next session.` : ''}</div></div>
+                        </div>` : ''}
+                        ${liveStatus}
+                        <p class="coach-caption m-t-16">Warmups do not count. The first planned row starts as a warmup.</p>
+                    </section>
+                    <section class="coach-section"><h4 class="coach-section-title">What the coach used</h4>${evidence}${earlierSessions}</section>
+                    ${baseline ? `<section class="coach-section"><h4 class="coach-section-title">Season progress</h4>
+                        <dl class="coach-season-facts">
+                            <div><dt>Starting weight</dt><dd>${escapeHtml(weightLabel(baseline.representativeWeightKg))}</dd></div>
+                            <div><dt>Last working weight</dt><dd>${Number.isFinite(currentWeight) ? escapeHtml(weightLabel(currentWeight)) : 'No data'}</dd></div>
+                            <div><dt>Season goal</dt><dd>${goalKg !== null ? escapeHtml(weightLabel(goalKg)) : 'Not set'}</dd></div>
+                        </dl>
+                        <p class="coach-caption">${target.plannedWeightTodayKg !== null ? `The season plan line is ${escapeHtml(weightLabel(target.plannedWeightTodayKg))} today. ` : ''}The next workout weight follows completed sets. The season goal is a reference.</p>
+                        ${chart}
+                    </section>` : ''}
+                    <details class="coach-section coach-method"><summary>How this recommendation works</summary>
+                        <p>The coach checks this lift's logged working sets in the active season, newest first. It uses the lightest working weight in the latest usable attempt and keeps it until every required set reaches the top of the rep range.</p>
+                        <p>One complete attempt earns one increase. Two complete attempts below the rep minimum at the same weight suggest one step lighter. Incomplete attempts and gaps longer than ${escapeHtml(target.coachConfig.returnAfterDays)} days call for repeating the weight.</p>
+                        <p>Estimated maxes and personal records are tracked separately. They do not earn a weight increase. Choose the nearest available equipment setting when a suggested step does not match your weights.</p>
+                    </details>
                 </div>`;
-
             openModal('trainingPlanModal');
         }
 
@@ -6701,9 +5876,9 @@
                 ? `A workout was logged within the last seven days.`
                 : 'Log any workout to activate the streak.';
 
-            const opportunity = snapshot.prOpportunity;
-            document.getElementById('prOpportunityValue').textContent = opportunity?.name || 'RECOVERY DAY';
-            document.getElementById('prOpportunityDetail').textContent = opportunity?.detail || 'No lift is scheduled today.';
+            const opportunity = snapshot.workoutAdvice[0];
+            document.getElementById('coachFocusValue').textContent = opportunity?.name || 'RECOVERY DAY';
+            document.getElementById('coachFocusDetail').textContent = opportunity ? `${opportunity.actionLabel}. ${opportunity.reason}` : 'No lift is scheduled today.';
         }
         function renderPlanView() {
             const container = document.getElementById('planDays');
