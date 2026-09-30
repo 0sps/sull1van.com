@@ -41,8 +41,6 @@
 .btn-coach:hover { background: var(--bg-secondary); border-color: var(--coach); }
 .btn-coach.achieved { border-color: var(--success); color: var(--success); background: rgba(0, 255, 136, 0.06); }
 
-.exercise-coach-preview { border-left: 2px solid var(--coach-border); padding: 4px 0 4px 12px; margin: 12px 0 16px; font-size: 0.85rem; line-height: 1.6; }
-.exercise-coach-preview strong { display: block; color: var(--coach); font-weight: 400; }
 .exercise-coach-status { display: block; font-size: 0.8rem; line-height: 1.5; margin-top: 6px; color: var(--text-secondary); }
 .exercise-coach-status[data-status="increase"] { color: var(--success); }
 .coach-dialog-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); z-index: 1; }

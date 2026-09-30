@@ -3369,17 +3369,6 @@
                     ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${escapeAttr(key)}" data-exercise-key="${escapeAttr(key)}">Coach</button>` : ''}
                 </div>`;
 
-            const target = !isEdit && hasProgressionTarget ? activeProgressionTargets[key] : null;
-            const previewWeight = target && Number.isFinite(target.targetWeightKg)
-                ? (target.targetWeightKg === 0 && target.coachConfig.allowZeroWeight ? 'Bodyweight' : formatWeightLbs(target.targetWeightKg))
-                : 'Choose starting weight';
-            const coachPreview = target ? `
-                <div class="exercise-coach-preview">
-                    <strong>${escapeHtml(target.action === 'setup' ? 'Set a numeric rep range' : previewWeight)}</strong>
-                    ${target.repRange.min ? `${target.requiredWorkingSets} working sets × ${escapeHtml(target.repRange.label)} reps` : 'Update this lift in your training plan.'}
-                    <span id="coach-status-${escapeAttr(key)}" class="exercise-coach-status" role="status" aria-live="polite" hidden></span>
-                </div>` : '';
-
             const footerActions = isEdit ? `
                 <div class="button-row">
                     <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="edit" data-ex-idx="${exIdx}">− Remove Set</button>
@@ -3408,9 +3397,9 @@
                         </div>
                         ${headerActions}
                     </div>
-                    ${coachPreview}
                     <div class="sets-grid">${setsHtml}</div>
                     ${volumeIndicator}
+                    ${!isEdit && hasProgressionTarget ? `<span id="coach-status-${escapeAttr(key)}" class="exercise-coach-status" role="status" aria-live="polite" hidden></span>` : ''}
                     ${footerActions}
                     ${doneAction}
                 </div>`;
