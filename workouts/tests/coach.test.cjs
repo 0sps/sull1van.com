@@ -188,7 +188,7 @@ function pageContext(page, names, bindings) {
     const elements = new Map();
     const document = {
         getElementById(id) {
-            if (!elements.has(id)) elements.set(id, { innerHTML: '', textContent: '', style: { setProperty() {} }, classList: { toggle() {} } });
+            if (!elements.has(id)) elements.set(id, { innerHTML: '', textContent: '', dataset: {}, attributes: {}, setAttribute(name, value) { this.attributes[name] = value; }, style: { setProperty() {} }, classList: { toggle() {} } });
             return elements.get(id);
         }
     };
@@ -232,7 +232,7 @@ test('Coach modal renders an honest starting state without invented weight or hi
     });
     sandbox.showTrainingPlanModal('key');
     const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
-    assert.ok(html.includes('Choose your starting weight'));
+    assert.ok(html.includes('Choose a starting weight'));
     assert.ok(html.includes('No working sets'));
     assert.ok(!html.includes('Season progress'));
     assert.ok(!/undefined|NaN/.test(html));
@@ -307,4 +307,73 @@ test('bodyweight rep completion never promises an automatic weight increase', ()
     assert.equal(result.statusLabel, 'Upper rep target complete');
     const chart = coach.buildTrainingPlanChart(target.recentSessions, target.baselineSession, 0, 0, target);
     assert.ok(!/NaN|Infinity/.test(chart));
+});
+
+test('Coach opens at its named header without scrolling to a lower control', () => {
+    const focusCalls = [];
+    const title = { focus: options => focusCalls.push(options) };
+    const scrollContainer = { scrollTop: 300 };
+    const modal = {
+        classList: { add() {} }, setAttribute() {},
+        querySelector(selector) {
+            return selector === '[data-modal-initial-focus]' ? title : selector === '.modal' ? scrollContainer : null;
+        }
+    };
+    const source = fs.readFileSync(path.join(root, 'app.html'), 'utf8');
+    const match = source.match(/^        function openModal\([^]*?\n        }/m);
+    const sandbox = vm.createContext({
+        document: { activeElement: {}, getElementById: () => modal },
+        lastFocusedBeforeModal: null, FOCUSABLE_SELECTOR: 'button, summary'
+    });
+    vm.runInContext(match[0], sandbox);
+    sandbox.openModal('trainingPlanModal');
+    assert.equal(focusCalls.length, 1);
+    assert.equal(focusCalls[0].preventScroll, true);
+    assert.equal(scrollContainer.scrollTop, 0);
+});
+
+test('session completion and earned progression have distinct labels and button states', () => {
+    const coach = setup([log('2026-09-28')]);
+    const target = recommend(coach);
+    let liveSets = log('2026-09-29', [8, 8, 8]).exercises[0].sets;
+    const toggles = new Map();
+    const sandbox = pageContext('app.html', ['checkExerciseCompletion'], {
+        coach, activeProgressionTargets: { key: target },
+        collectCurrentExerciseWorkingSets: () => liveSets,
+        getExerciseForUI: () => ({ name: 'Test lift' })
+    });
+    const button = sandbox.document.getElementById('coach-btn-key');
+    button.classList.toggle = (name, value) => toggles.set(name, value);
+    sandbox.checkExerciseCompletion('key');
+    assert.equal(sandbox.elements.get('coach-status-key').textContent, 'Session target met');
+    assert.equal(toggles.get('achieved'), false);
+    liveSets = log('2026-09-29', [10, 10, 10]).exercises[0].sets;
+    sandbox.checkExerciseCompletion('key');
+    assert.equal(sandbox.elements.get('coach-status-key').textContent, 'Increase earned for next session');
+    assert.equal(toggles.get('achieved'), true);
+});
+
+test('calendar comparison does not label a valid repeated load as a failure', () => {
+    const coach = setup([log('2026-09-02'), log('2026-09-28')], { goalIncreaseKg: 100 });
+    const target = recommend(coach);
+    assert.equal(target.action, 'repeat');
+    const chart = coach.buildTrainingPlanChart(target.recentSessions, target.baselineSession, 10, 100, target);
+    assert.ok(chart.includes('Season reference'));
+    assert.ok(!/behind|Below plan|on-track|At\/above plan/.test(chart));
+});
+
+test('rep-range setup offers a real editor path and omits invented completion targets', () => {
+    const coach = setup([log('2026-09-28')]);
+    const target = coach.buildCoachRecommendation('lift', { reps: 'AMRAP', sets: 4 });
+    assert.equal(target.confidence.label, 'Setup needed');
+    assert.ok(!target.confidence.detail.includes('do not contain all required working sets'));
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target }, getExerciseForUI: () => ({ name: 'Test lift' }),
+        escapeHtml: String, formatDate: String, collectCurrentExerciseWorkingSets: () => [], openModal() {}
+    });
+    sandbox.showTrainingPlanModal('key');
+    const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('href="training-plan-editor.html"'));
+    assert.ok(!html.includes('Session and progression rules'));
+    assert.ok(!/undefined|NaN/.test(html));
 });

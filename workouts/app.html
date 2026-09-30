@@ -2112,33 +2112,6 @@
             background: #ff5d8f;
         }
 
-        .training-coach-shell { display: grid; gap: 20px; min-width: 0; }
-        .coach-heading { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 2rem; line-height: 1.1; overflow-wrap: anywhere; }
-        .coach-caption { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.6; }
-        .coach-section { padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-secondary); min-width: 0; }
-        .coach-prescription { border-color: #35d9c8; background: rgba(0, 210, 180, 0.06); }
-        .coach-action { color: #7fffe8; font-size: 0.8rem; font-weight: bold; }
-        .coach-weight { font-family: 'Bebas Neue', Impact, sans-serif; font-size: clamp(2.4rem, 7vw, 3.8rem); line-height: 1.15; margin: 10px 0; }
-        .coach-reason { font-size: 0.85rem; line-height: 1.7; margin-top: 12px; overflow-wrap: anywhere; }
-        .coach-section-title { font-size: 0.85rem; margin: 0 0 12px; }
-        .coach-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
-        .coach-rule-label { color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 6px; }
-        .coach-rule-value { font-size: 0.85rem; line-height: 1.5; }
-        .coach-evidence { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .coach-evidence th, .coach-evidence td { padding: 10px 6px; text-align: left; border-bottom: 1px solid var(--border); }
-        .coach-evidence th { color: var(--text-secondary); font-size: 0.7rem; font-weight: normal; }
-        .coach-history-row { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
-        .coach-history-row strong { display: block; font-size: 0.75rem; margin-bottom: 6px; }
-        .coach-season-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0; }
-        .coach-season-facts dt { color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 6px; }
-        .coach-season-facts dd { font-size: 0.9rem; margin: 0; overflow-wrap: anywhere; }
-        .coach-method summary { cursor: pointer; font-size: 0.8rem; }
-        .coach-method p { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.7; margin-top: 12px; }
-        @media (max-width: 480px) {
-            .coach-section { padding: 16px; }
-            .coach-rules { grid-template-columns: 1fr; gap: 12px; }
-        }
-
         .btn-history {
             padding: 4px 10px;
             font-size: 0.77rem;
@@ -2156,34 +2129,6 @@
         .btn-history:hover {
             background: rgba(255, 187, 0, 0.2);
             box-shadow: 0 0 10px rgba(255, 187, 0, 0.3);
-        }
-
-        .btn-coach {
-            padding: 4px 10px;
-            font-size: 0.77rem;
-            background: rgba(0, 210, 180, 0.1);
-            border: 1px solid #35d9c8;
-            color: #7fffe8;
-            font-family: 'Space Mono', monospace;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-            text-shadow: 0 0 8px rgba(53, 217, 200, 0.3);
-        }
-
-        .btn-coach:hover {
-            background: rgba(0, 210, 180, 0.18);
-            border-color: #7fffe8;
-            box-shadow: 0 0 12px rgba(53, 217, 200, 0.28), 0 0 20px rgba(0, 255, 136, 0.12);
-        }
-
-        .btn-coach.achieved {
-            border-color: var(--success);
-            color: var(--success);
-            background: rgba(0, 255, 136, 0.12);
-            box-shadow: 0 0 14px rgba(0, 255, 136, 0.22);
         }
 
         .history-set {
@@ -2366,6 +2311,7 @@
             font-size: 0.85rem;
         }
     </style>
+    <link rel="stylesheet" href="css/coach.css">
 </head>
 
 <body>
@@ -2548,13 +2494,13 @@
             </div>
         </div>
     </div>
-    <div class="modal-overlay" id="trainingPlanModal">
+    <div class="modal-overlay" id="trainingPlanModal" aria-labelledby="trainingPlanModalTitle">
         <div class="modal">
-            <h3 class="modal-title" id="trainingPlanModalTitle">TRAINING PLAN</h3>
-            <div id="trainingPlanModalContent"></div>
-            <div class="modal-actions"><button class="btn btn-secondary"
-                    onclick="closeModal('trainingPlanModal')">Close</button>
+            <div class="coach-dialog-header">
+                <h3 class="modal-title" id="trainingPlanModalTitle" tabindex="-1" data-modal-initial-focus>COACH</h3>
+                <button class="btn btn-secondary" onclick="closeModal('trainingPlanModal')" aria-label="Close coach">Close</button>
             </div>
+            <div id="trainingPlanModalContent"></div>
         </div>
     </div>
     <div class="modal-overlay" id="forceSyncModal">
@@ -2874,7 +2820,7 @@
         // ============================================================================
 
         // --- Modal Management ---
-        const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
         let lastFocusedBeforeModal = null;
 
         function openModal(modalId) {
@@ -2885,8 +2831,10 @@
             modal.setAttribute('role', 'dialog');
             modal.setAttribute('aria-modal', 'true');
             // Move focus into the dialog for keyboard/screen-reader users.
-            const focusable = modal.querySelector(FOCUSABLE_SELECTOR);
-            if (focusable) { try { focusable.focus(); } catch (e) { } }
+            const initialFocus = modal.querySelector('[data-modal-initial-focus]');
+            const focusable = initialFocus || modal.querySelector(FOCUSABLE_SELECTOR);
+            if (focusable) { try { focusable.focus({ preventScroll: !!initialFocus }); } catch (e) { } }
+            if (initialFocus) modal.querySelector('.modal').scrollTop = 0;
         }
 
         function closeModal(modalId) {
@@ -3421,6 +3369,17 @@
                     ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${escapeAttr(key)}" data-exercise-key="${escapeAttr(key)}">Coach</button>` : ''}
                 </div>`;
 
+            const target = !isEdit && hasProgressionTarget ? activeProgressionTargets[key] : null;
+            const previewWeight = target && Number.isFinite(target.targetWeightKg)
+                ? (target.targetWeightKg === 0 && target.coachConfig.allowZeroWeight ? 'Bodyweight' : formatWeightLbs(target.targetWeightKg))
+                : 'Choose starting weight';
+            const coachPreview = target ? `
+                <div class="exercise-coach-preview">
+                    <strong>${escapeHtml(target.action === 'setup' ? 'Set a numeric rep range' : previewWeight)}</strong>
+                    ${target.repRange.min ? `${target.requiredWorkingSets} working sets × ${escapeHtml(target.repRange.label)} reps` : 'Update this lift in your training plan.'}
+                    <span id="coach-status-${escapeAttr(key)}" class="exercise-coach-status" role="status" aria-live="polite" hidden></span>
+                </div>` : '';
+
             const footerActions = isEdit ? `
                 <div class="button-row">
                     <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="edit" data-ex-idx="${exIdx}">− Remove Set</button>
@@ -3449,6 +3408,7 @@
                         </div>
                         ${headerActions}
                     </div>
+                    ${coachPreview}
                     <div class="sets-grid">${setsHtml}</div>
                     ${volumeIndicator}
                     ${footerActions}
@@ -4497,7 +4457,7 @@
                 if (!focusables.length) return;
                 const first = focusables[0];
                 const last = focusables[focusables.length - 1];
-                if (e.shiftKey && document.activeElement === first) {
+                if (e.shiftKey && (document.activeElement === first || document.activeElement.hasAttribute('data-modal-initial-focus'))) {
                     e.preventDefault();
                     last.focus();
                 } else if (!e.shiftKey && document.activeElement === last) {
@@ -5019,7 +4979,19 @@
             const targetHit = evaluation.planComplete || evaluation.progressEarned;
 
             el.classList.toggle('completed', targetHit);
-            if (coachBtn) coachBtn.classList.toggle('achieved', targetHit);
+            if (coachBtn) {
+                coachBtn.classList.toggle('achieved', evaluation.progressEarned);
+                coachBtn.setAttribute('aria-label', `Coach for ${getExerciseForUI(target.exerciseId)?.name || target.exerciseId}`);
+            }
+            const status = document.getElementById(`coach-status-${key}`);
+            if (status) {
+                const label = evaluation.progressEarned ? 'Increase earned for next session'
+                    : evaluation.planComplete ? 'Session target met'
+                    : evaluation.loggedSets > 0 ? `${evaluation.loggedSets} of ${evaluation.requiredSets} valid working sets. ${evaluation.statusLabel}.` : '';
+                if (status.textContent !== label) status.textContent = label;
+                status.hidden = !label;
+                status.dataset.status = evaluation.progressEarned ? 'increase' : evaluation.planComplete ? 'complete' : 'incomplete';
+            }
         }
 
         function getExerciseSetsFromLog(log, exerciseId) {
@@ -5746,67 +5718,80 @@
             const baseline = target.baselineSession;
             const current = target.recentSession;
             const weightLabel = kg => kg === 0 && target.coachConfig.allowZeroWeight ? 'Bodyweight' : formatWeightLbs(kg);
-            const prescription = Number.isFinite(target.targetWeightKg) ? weightLabel(target.targetWeightKg) : 'Choose your starting weight';
+            const hasWeight = Number.isFinite(target.targetWeightKg);
+            const prescription = target.action === 'setup' ? 'Set a rep range'
+                : hasWeight ? weightLabel(target.targetWeightKg) : 'Choose a starting weight';
             const sets = target.requiredWorkingSets;
             const nextStep = weightLabel(target.stepKg);
             const currentSets = current?.workingSets || [];
             const evidence = currentSets.length ? `
-                <p class="coach-caption">${escapeHtml(formatDate(current.log.date, DateFormats.LONG))} · ${escapeHtml(target.confidence.detail)}</p>
                 <table class="coach-evidence">
-                    <thead><tr><th scope="col">Working set</th><th scope="col">Weight</th><th scope="col">Reps</th></tr></thead>
+                    <caption class="coach-caption">Working sets from ${escapeHtml(formatDate(current.log.date, DateFormats.LONG))}</caption>
+                    <thead><tr><th scope="col">Set</th><th scope="col">Weight</th><th scope="col">Reps</th></tr></thead>
                     <tbody>${currentSets.map((set, index) => {
                         const weight = set.weight === null || set.weight === '' ? NaN : Number(set.weight);
                         const reps = Number(set.reps);
-                        return `<tr><td>${index + 1}</td><td>${Number.isFinite(weight) ? escapeHtml(weightLabel(weight)) : 'Missing'}</td><td>${Number.isInteger(reps) && reps > 0 ? reps : 'Missing'}</td></tr>`;
+                        return `<tr><th scope="row">${index + 1}</th><td>${Number.isFinite(weight) ? escapeHtml(weightLabel(weight)) : 'Missing'}</td><td>${Number.isInteger(reps) && reps > 0 ? reps : 'Missing'}</td></tr>`;
                     }).join('')}</tbody>
                 </table>` : '<p class="coach-caption">No working sets for this lift in the active season. Your first logged session gives the coach a starting point.</p>';
             const earlierSessions = target.recentSessions.filter(session => session !== current).map(session => `
                 <div class="coach-history-row"><strong>${escapeHtml(formatDate(session.log.date, DateFormats.SHORT))}</strong>
-                    <span class="coach-caption">${escapeHtml(session.workingSets.map(set => `${Number.isFinite(Number(set.weight)) ? weightLabel(Number(set.weight)) : '?'} × ${set.reps || '?'} reps`).join(' · '))}</span>
+                    <span class="coach-caption">${escapeHtml(session.workingSets.map(set => `${set.weight !== null && set.weight !== '' && Number.isFinite(Number(set.weight)) ? weightLabel(Number(set.weight)) : 'Missing weight'} × ${set.reps || 'Missing'} reps`).join(' · '))}</span>
                 </div>`).join('');
+            const recentSummary = current
+                ? `Last attempt: ${formatDate(current.log.date, DateFormats.SHORT)} · ${currentSets.length} working set${currentSets.length === 1 ? '' : 's'} logged`
+                : 'No working sets logged this season.';
             const goalKg = baseline && coach.getPlanGoalIncreaseKg(target.planExercise) > 0
                 ? coach.getPlanTargetWeightKg(target.planExercise, baseline.representativeWeightKg) : null;
             const currentWeight = current?.representativeWeightKg;
             const chartSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, target.coachConfig.allowZeroWeight);
             const chart = baseline && goalKg !== null ? coach.buildTrainingPlanChart(chartSessions, baseline,
                 coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), coach.getPlanGoalIncreaseKg(target.planExercise), target) : '';
-            const liveSets = collectCurrentExerciseWorkingSets(exerciseKey);
-            const liveEvaluation = coach.evaluateProgressionSets(liveSets, target);
+            const liveEvaluation = coach.evaluateProgressionSets(collectCurrentExerciseWorkingSets(exerciseKey), target);
             const liveStatus = liveEvaluation.loggedSets > 0 ? `
-                <p class="coach-reason"><strong>This workout: ${escapeHtml(liveEvaluation.statusLabel)}.</strong>
-                    ${liveEvaluation.loggedSets} valid working set${liveEvaluation.loggedSets === 1 ? '' : 's'} entered, ${sets} required.
-                    ${liveEvaluation.progressEarned ? 'This earns a weight increase for your next session.' : ''}</p>` : '';
+                <div class="coach-live-status" data-status="${liveEvaluation.progressEarned ? 'increase' : 'complete'}">
+                    <strong>This workout: ${escapeHtml(liveEvaluation.progressEarned ? liveEvaluation.statusLabel : liveEvaluation.planComplete ? 'Session target met' : liveEvaluation.statusLabel)}.</strong>
+                    <span class="coach-caption">${liveEvaluation.loggedSets} valid working set${liveEvaluation.loggedSets === 1 ? '' : 's'} entered, ${sets} required.
+                    ${liveEvaluation.progressEarned ? 'Increase earned for your next session.' : ''}</span></div>` : '';
+            const startAction = target.action === 'setup'
+                ? '<a class="coach-primary-link" href="training-plan-editor.html">Edit rep range</a>'
+                : target.action === 'baseline' ? '<button class="coach-primary-link" onclick="closeModal(\'trainingPlanModal\')">Log starting sets</button>' : '';
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <div class="training-coach-shell">
-                    <div><div class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</div>
-                        <p class="coach-caption">${escapeHtml(target.confidence.label)} · Active season only</p></div>
-                    <section class="coach-section coach-prescription">
+                    <div><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4></div>
+                    <section class="coach-section coach-prescription" data-action="${escapeHtml(target.action)}" aria-label="Workout recommendation">
                         <div class="coach-action">${escapeHtml(target.actionLabel)}</div>
-                        <div class="coach-weight">${escapeHtml(target.action === 'setup' ? 'Set a rep range' : prescription)}</div>
-                        <div>${sets} working set${sets === 1 ? '' : 's'}${target.repRange.min ? ` × ${escapeHtml(target.repRange.label)} reps` : ''}</div>
+                        <div class="coach-weight${hasWeight ? '' : ' coach-instruction'}">${escapeHtml(prescription)}</div>
+                        ${target.repRange.min ? `<div class="coach-set-target">${sets} working set${sets === 1 ? '' : 's'} × ${escapeHtml(target.repRange.label)} reps</div>` : ''}
                         <p class="coach-reason">${escapeHtml(target.reason)}</p>
-                        ${target.repRange.min ? `<div class="coach-rules">
-                            <div><div class="coach-rule-label">Complete this session</div><div class="coach-rule-value">${escapeHtml(target.repRange.min)}+ reps on every working set at this weight.</div></div>
-                            <div><div class="coach-rule-label">Earn the next increase</div><div class="coach-rule-value">${escapeHtml(target.repRange.max)}+ reps on every working set.${target.targetWeightKg > 0 ? ` Then add ${escapeHtml(nextStep)} next session.` : ''}</div></div>
-                        </div>` : ''}
-                        ${liveStatus}
-                        <p class="coach-caption m-t-16">Warmups do not count. The first planned row starts as a warmup.</p>
+                        ${liveStatus}${startAction}
                     </section>
-                    <section class="coach-section"><h4 class="coach-section-title">What the coach used</h4>${evidence}${earlierSessions}</section>
-                    ${baseline ? `<section class="coach-section"><h4 class="coach-section-title">Season progress</h4>
+                    <div>
+                        <p class="coach-caption">${escapeHtml(recentSummary)}</p>
+                        ${current ? `<p class="coach-caption">${escapeHtml(target.confidence.detail)} Active season only.</p>
+                        <details class="coach-disclosure"><summary>View logged sets</summary>${evidence}${earlierSessions}</details>` : ''}
+                    </div>
+                    ${target.repRange.min ? `<details class="coach-disclosure"><summary>Session and progression rules</summary>
+                        <div class="coach-rules">
+                            <div><div class="coach-rule-label">Session target</div><div class="coach-rule-value">${sets} working set${sets === 1 ? '' : 's'} with ${escapeHtml(target.repRange.min)}+ reps on every set${hasWeight ? ' at this weight' : ''}.</div></div>
+                            <div><div class="coach-rule-label">${target.targetWeightKg > 0 ? 'Earn the next increase' : 'Build reps'}</div><div class="coach-rule-value">${escapeHtml(target.repRange.max)}+ reps on every working set.${target.targetWeightKg > 0 ? ` Then add ${escapeHtml(nextStep)} next session.` : target.targetWeightKg === 0 ? ' Added load needs a weighted progression plan.' : ' Log a full starting session first.'}</div></div>
+                        </div>
+                        <p>Warmups do not count. The first planned row starts as a warmup.</p>
+                    </details>` : ''}
+                    ${baseline ? `<details class="coach-disclosure"><summary>Season progress</summary>
                         <dl class="coach-season-facts">
                             <div><dt>Starting weight</dt><dd>${escapeHtml(weightLabel(baseline.representativeWeightKg))}</dd></div>
                             <div><dt>Last working weight</dt><dd>${Number.isFinite(currentWeight) ? escapeHtml(weightLabel(currentWeight)) : 'No data'}</dd></div>
                             <div><dt>Season goal</dt><dd>${goalKg !== null ? escapeHtml(weightLabel(goalKg)) : 'Not set'}</dd></div>
                         </dl>
-                        <p class="coach-caption">${target.plannedWeightTodayKg !== null ? `The season plan line is ${escapeHtml(weightLabel(target.plannedWeightTodayKg))} today. ` : ''}The next workout weight follows completed sets. The season goal is a reference.</p>
+                        <p>The season goal is a reference. Your next workout follows completed working sets.</p>
                         ${chart}
-                    </section>` : ''}
-                    <details class="coach-section coach-method"><summary>How this recommendation works</summary>
+                    </details>` : ''}
+                    <details class="coach-disclosure coach-method"><summary>How this recommendation works</summary>
                         <p>The coach checks this lift's logged working sets in the active season, newest first. It uses the lightest working weight in the latest usable attempt and keeps it until every required set reaches the top of the rep range.</p>
                         <p>One complete attempt earns one increase. Two complete attempts below the rep minimum at the same weight suggest one step lighter. Incomplete attempts and gaps longer than ${escapeHtml(target.coachConfig.returnAfterDays)} days call for repeating the weight.</p>
-                        <p>Estimated maxes and personal records are tracked separately. They do not earn a weight increase. Choose the nearest available equipment setting when a suggested step does not match your weights.</p>
+                        <p>Estimated maxes and personal records do not earn a weight increase. Choose the nearest available equipment setting when a suggested step does not match your weights. Recovery, pain, and effort are not measured here.</p>
                     </details>
                 </div>`;
             openModal('trainingPlanModal');

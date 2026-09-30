@@ -52,7 +52,9 @@ A recommended increase uses the lift's positive `progressionStepKg`. If that is 
 
 `evaluateProgressionSets()` is shared by the logger's completion styling and the Coach panel's current-workout readout. Completion requires every entered working row to be valid, at least the planned working-set count, and every set at or above the recommended weight and lower rep bound. Earning an increase additionally requires every set to reach the upper rep bound. Estimated strength cannot bypass either condition.
 
-The Coach panel displays the action, load, required sets, rep range, explanation, and the logged set table. It also shows other recent attempts, a current-workout result when sets have been entered, and a collapsed explanation of the rules. Season baseline/current/goal context follows those details.
+The logger shows the recommended load, working sets, and rep range directly on each lift. Session completion and an earned increase have separate text labels; only an earned increase turns the Coach button green. The Coach dialog leads with the prescription and one reason, with a current-workout result when sets have been entered. Logged sets, progression rules, season context, and method details are expandable. Its named header receives initial focus without scrolling, and Close remains visible while scrolling. On mobile the dialog uses the full viewport. Both pages share coaching tokens and components in `css/coach.css`.
+
+The progression page puts today’s full prescription first, followed by expandable other lifts and season context. Rep-range setup links to the plan editor. Calendar comparisons use neutral chart styling and do not label logged weights as successful or failed against the season reference.
 
 History labels describe what is available: no history, first session, recent history, incomplete history, or returning after a gap. They are not probabilities or claims about recovery. The calculator has no effort, sleep, pain, or fatigue measurements to evaluate.
 
@@ -66,7 +68,7 @@ Today's focus prioritizes starting sessions, lighter-step suggestions, returning
 
 ## Loading and verification
 
-`service-worker.js` uses cache `seans-log-v16`. The coach module is network-first alongside the app pages and plans so the UI can receive its matching calculator after an update. Offline use falls back to the cached copy.
+`service-worker.js` uses cache `seans-log-v17`. The coach module and shared coaching stylesheet are network-first alongside the app pages and plans so the UI can receive its matching calculator after an update. Offline use falls back to the cached copy.
 
 Run the regression checks with the existing Node runtime:
 
@@ -74,4 +76,4 @@ Run the regression checks with the existing Node runtime:
 node --test workouts/tests/coach.test.cjs
 ```
 
-The suite tests decision rules, season boundaries, missing/invalid entries, warmups, required set counts, higher rep ranges, bodyweight work, stale history, unit rounding, and the actual page-rendering functions using a small DOM substitute. It also exercises the bundled weekly plan and checks the prohibited UI vocabulary. This does not replace visual browser testing. No browser was launched for this change.
+The suite tests decision rules, season boundaries, missing/invalid entries, warmups, required set counts, higher rep ranges, bodyweight work, stale history, unit rounding, and the actual page-rendering functions using a small DOM substitute. It also exercises the bundled weekly plan and checks the prohibited UI vocabulary. Desktop and mobile UI checks use an isolated preview built from production markup, styles, and rendering functions with sample history. Signed-in Firebase persistence is outside that preview.

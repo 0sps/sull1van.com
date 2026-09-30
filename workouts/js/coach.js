@@ -381,6 +381,9 @@
                 action = 'setup';
                 targetWeightKg = null;
                 reason = 'Set a numeric rep range in the training plan before using load recommendations.';
+                confidence.label = 'Setup needed';
+                confidence.className = 'low';
+                confidence.detail = 'A numeric rep range is needed to evaluate logged sets.';
             } else if (lastWeightKg === null) {
                 action = 'baseline';
                 reason = `Choose a weight you can use for ${requiredWorkingSets} working set${requiredWorkingSets === 1 ? '' : 's'} of ${repRange.label} reps, then log every set.`;
@@ -459,18 +462,11 @@
                     weeklyTargetIncreaseKg,
                     goalIncreaseKg
                 );
-                const sessionTarget = target && plannedWeightKg !== null
-                    ? { ...target, targetWeightKg: plannedWeightKg }
-                    : null;
-                const evaluation = sessionTarget
-                    ? evaluateProgressionSets(session.workingSets, sessionTarget)
-                    : null;
 
                 return {
                     date: sessionDate,
                     actualKg: session.representativeWeightKg,
-                    plannedKg: plannedWeightKg,
-                    hitPlan: evaluation ? evaluation.planComplete || evaluation.progressEarned : plannedWeightKg === null || session.representativeWeightKg >= plannedWeightKg - 0.01
+                    plannedKg: plannedWeightKg
                 };
             });
 
@@ -485,7 +481,7 @@
             const yMax = maxValue + yPadding;
             const width = 640;
             const height = 230;
-            const margin = { top: 18, right: 22, bottom: 34, left: 44 };
+            const margin = { top: 24, right: 22, bottom: 42, left: 144 };
             const plotWidth = width - margin.left - margin.right;
             const plotHeight = height - margin.top - margin.bottom;
             const firstDate = points[0].date.getTime();
@@ -507,22 +503,24 @@
                     <text class="training-plan-chart-label" x="8" y="${Number(y) + 4}">${displayWeight(tick)} lb</text>`;
             }).join('');
 
-            const pointHtml = points.map(point => {
+            const pointHtml = points.map((point, index) => {
                 const x = xForDate(point.date).toFixed(1);
                 const y = yForKg(point.actualKg).toFixed(1);
                 const plannedY = yForKg(point.plannedKg).toFixed(1);
-                const statusClass = point.hitPlan ? 'on-track' : 'behind';
                 const label = formatDate(point.date.toISOString(), dateFormats.SHORT);
+                const dateLabel = index === 0 || (index === points.length - 1 && point.date.getTime() !== firstDate)
+                    ? `<text class="training-plan-chart-label" x="${x}" y="${height - 10}" text-anchor="${index === 0 ? 'start' : 'end'}">${label}</text>`
+                    : '';
 
                 return `
                     <line x1="${x}" y1="${y}" x2="${x}" y2="${plannedY}" stroke="rgba(255,255,255,0.14)" stroke-width="1"></line>
-                    <circle class="training-plan-chart-dot ${statusClass}" cx="${x}" cy="${y}" r="6"></circle>
-                    <text class="training-plan-chart-label" x="${x}" y="${height - 10}" text-anchor="middle">${label}</text>`;
+                    <circle class="training-plan-chart-dot" cx="${x}" cy="${y}" r="6"><title>${label}: ${displayWeight(point.actualKg)} lb logged</title></circle>
+                    ${dateLabel}`;
             }).join('');
 
             return `
                 <div class="training-plan-chart-card">
-                    <svg class="training-plan-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Weight lifted over the last two weeks against planned target">
+                    <svg class="training-plan-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Logged working weight and season reference over the last two weeks">
                         ${gridHtml}
                         <line class="training-plan-chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"></line>
                         <path class="training-plan-chart-plan" d="${plannedPath}"></path>
@@ -530,10 +528,8 @@
                         ${pointHtml}
                     </svg>
                     <div class="training-plan-legend">
-                        <span class="actual">Actual</span>
-                        <span class="planned">Plan line</span>
-                        <span class="hit">At/above plan</span>
-                        <span class="behind">Below plan</span>
+                        <span class="actual">Logged weight</span>
+                        <span class="planned">Season reference</span>
                     </div>
                 </div>`;
         }
