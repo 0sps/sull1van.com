@@ -5745,9 +5745,13 @@
                 ? coach.getPlanTargetWeightKg(target.planExercise, baseline.representativeWeightKg) : null;
             const currentWeight = current?.representativeWeightKg;
             const chartSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, target.coachConfig.allowZeroWeight);
-            const chart = baseline && goalKg !== null ? coach.buildTrainingPlanChart(chartSessions, baseline,
-                coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), coach.getPlanGoalIncreaseKg(target.planExercise), target) : '';
-            const liveEvaluation = coach.evaluateProgressionSets(collectCurrentExerciseWorkingSets(exerciseKey), target);
+            const chartBaseline = baseline || chartSessions[chartSessions.length - 1];
+            const chart = chartBaseline && chartSessions.some(session => session.representativeWeightKg > 0) ? coach.buildTrainingPlanChart(chartSessions, chartBaseline,
+                coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), goalKg !== null ? coach.getPlanGoalIncreaseKg(target.planExercise) : 0, target) : '';
+            const liveSets = collectCurrentExerciseWorkingSets(exerciseKey);
+            const liveEvaluation = coach.evaluateProgressionSets(liveSets, target);
+            const hasLiveSets = coach.getWorkingSets(liveSets).length > 0;
+            const setChart = coach.buildCoachSetChart(hasLiveSets ? liveSets : currentSets, target);
             const liveStatus = liveEvaluation.loggedSets > 0 ? `
                 <div class="coach-live-status" data-status="${liveEvaluation.progressEarned ? 'increase' : 'complete'}">
                     <strong>This workout: ${escapeHtml(liveEvaluation.progressEarned ? liveEvaluation.statusLabel : liveEvaluation.planComplete ? 'Session target met' : liveEvaluation.statusLabel)}.</strong>
@@ -5767,6 +5771,17 @@
                         <p class="coach-reason">${escapeHtml(target.reason)}</p>
                         ${liveStatus}${startAction}
                     </section>
+                    ${setChart ? `<section class="coach-section" aria-label="Working set performance">
+                        <h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5>
+                        <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
+                        ${setChart}
+                    </section>` : ''}
+                    ${chart ? `<section class="coach-section" aria-label="Recent working weight trend">
+                        <h5 class="coach-section-title">Working weight trend</h5>
+                        <p class="coach-caption">Last 14 days · lightest valid working weight per session · lb</p>
+                        ${chart}
+                        <p class="coach-chart-note">The weight axis is zoomed to show changes.${goalKg !== null ? ' The dashed season reference gives context; completed sets determine your next weight.' : ''}</p>
+                    </section>` : ''}
                     <div>
                         <p class="coach-caption">${escapeHtml(recentSummary)}</p>
                         ${current ? `<p class="coach-caption">${escapeHtml(target.confidence.detail)} Active season only.</p>
@@ -5786,7 +5801,6 @@
                             <div><dt>Season goal</dt><dd>${goalKg !== null ? escapeHtml(weightLabel(goalKg)) : 'Not set'}</dd></div>
                         </dl>
                         <p>The season goal is a reference. Your next workout follows completed working sets.</p>
-                        ${chart}
                     </details>` : ''}
                     <details class="coach-disclosure coach-method"><summary>How this recommendation works</summary>
                         <p>The coach checks this lift's logged working sets in the active season, newest first. It uses the lightest working weight in the latest usable attempt and keeps it until every required set reaches the top of the rep range.</p>

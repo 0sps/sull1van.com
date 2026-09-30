@@ -37,10 +37,10 @@
 .coach-live-status[data-status="increase"] strong { color: var(--success); }
 .coach-primary-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 16px; margin-top: 16px; font-size: 0.85rem; font-family: 'Space Mono', monospace; cursor: pointer; color: var(--coach); background: var(--bg-secondary); border: 1px solid var(--coach-border); text-align: center; }
 .coach-primary-link:hover { border-color: var(--coach); background: var(--bg-tertiary); }
-.btn-coach { min-height: 44px; padding: 8px 10px; font-size: 0.8rem; background: var(--coach-soft); border: 1px solid var(--coach-border); color: var(--coach); font-family: 'Space Mono', monospace; cursor: pointer; transition: color 0.2s, background-color 0.2s, border-color 0.2s; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
+.btn-coach { padding: 4px 10px; font-size: 0.77rem; background: var(--coach-soft); border: 1px solid var(--coach-border); color: var(--coach); font-family: 'Space Mono', monospace; cursor: pointer; transition: color 0.2s, background-color 0.2s, border-color 0.2s; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
 .btn-coach:hover { background: var(--bg-secondary); border-color: var(--coach); }
 .btn-coach.achieved { border-color: var(--success); color: var(--success); background: rgba(0, 255, 136, 0.06); }
-.btn-history { min-height: 44px; }
+
 .exercise-coach-preview { border-left: 2px solid var(--coach-border); padding: 4px 0 4px 12px; margin: 12px 0 16px; font-size: 0.85rem; line-height: 1.6; }
 .exercise-coach-preview strong { display: block; color: var(--coach); font-weight: 400; }
 .exercise-coach-status { display: block; font-size: 0.8rem; line-height: 1.5; margin-top: 6px; color: var(--text-secondary); }
@@ -77,3 +77,37 @@
 
 .exercise-coach-status[hidden], #coachNextWeight[hidden], #coachOtherLifts[hidden] { display: none; }
 .training-plan-chart-dot { fill: var(--text-primary); }
+
+/* Keep prose readable while retaining the logger's display type and numeric styling. */
+#trainingPlanModal {
+    --coach-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+#trainingPlanModal :is(.coach-reason, .coach-caption, .coach-rule-label, .coach-rule-value,
+    .coach-disclosure p, .coach-disclosure summary, .coach-season-facts dt,
+    .coach-set-note, .coach-chart-note, .training-plan-chart-empty, .training-plan-legend) {
+    font-family: var(--coach-body-font);
+}
+#trainingPlanModal .coach-reason { font-size: 1rem; line-height: 1.65; }
+#trainingPlanModal .coach-disclosure p { font-size: 0.95rem; }
+#trainingPlanModal .coach-caption { font-size: 0.95rem; }
+#trainingPlanModal .coach-section { background: var(--bg-secondary); }
+#trainingPlanModal .coach-prescription { background: var(--coach-soft); }
+.coach-set-chart { display: grid; gap: 12px; margin: 18px 0; }
+.coach-set-row { display: grid; grid-template-columns: 46px minmax(0, 1fr) 82px; column-gap: 12px; row-gap: 4px; align-items: center; font-size: 0.8rem; }
+.coach-set-result { text-align: right; }
+.coach-set-load { grid-column: 2; }
+.coach-set-status { grid-column: 3; text-align: right; }
+.coach-rep-track { position: relative; height: 12px; background: var(--bg-tertiary); }
+.coach-rep-fill { display: block; height: 100%; width: var(--rep-fill); background: var(--coach); }
+.coach-set-row[data-state="below"] .coach-rep-fill { background: var(--warning); }
+.coach-set-row[data-state="missing"] .coach-rep-track { border: 1px dashed var(--text-secondary); }
+.coach-rep-marker { position: absolute; left: var(--rep-marker); top: -3px; bottom: -3px; border-left: 2px solid var(--text-primary); }
+.coach-set-note, .coach-chart-note { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+#trainingPlanModal .training-plan-chart-card { padding: 0; border: 0; background: transparent; margin-top: 16px; }
+#trainingPlanModal .training-plan-chart-actual { stroke: var(--coach); }
+#trainingPlanModal .training-plan-chart-dot { fill: var(--coach); }
+#trainingPlanModal .training-plan-legend .actual::before { background: var(--coach); }
+#trainingPlanModal .training-plan-chart-label { font-family: var(--coach-body-font); }
+@media (max-width: 600px) {
+    .coach-set-row { grid-template-columns: 42px minmax(0, 1fr) 74px; column-gap: 8px; font-size: 0.75rem; }
+}

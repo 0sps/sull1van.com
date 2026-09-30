@@ -377,3 +377,37 @@ test('rep-range setup offers a real editor path and omits invented completion ta
     assert.ok(!html.includes('Session and progression rules'));
     assert.ok(!/undefined|NaN/.test(html));
 });
+
+
+test('set chart keeps missing required sets visible and excludes warmups', () => {
+    const coach = setup();
+    const target = recommend(coach);
+    const html = coach.buildCoachSetChart([
+        { weight: lbsToKg(50), reps: 20, isWarmup: true },
+        { weight: lbsToKg(100), reps: 12 },
+        { weight: '', reps: 10 }
+    ], target);
+    assert.equal((html.match(/class="coach-set-row"/g) || []).length, 3);
+    assert.equal((html.match(/data-state="missing"/g) || []).length, 2);
+    assert.ok(html.includes('--rep-fill: 100%'));
+    assert.ok(html.includes('--rep-marker: 83.333'));
+    assert.ok(!/NaN|Infinity|20 reps/.test(html));
+});
+test('bodyweight and starting set charts describe the correct next action', () => {
+    const coach = setup();
+    const target = recommend(coach);
+    assert.ok(coach.buildCoachSetChart([], target).includes('establish your working weight'));
+    const bodyweight = recommend(setup([log('2026-09-28', [10, 10, 10], 0)], { targetMode: 'bodyweight' }));
+    const html = coach.buildCoachSetChart(log('2026-09-28', [10, 10, 10], 0).exercises[0].sets, bodyweight);
+    assert.ok(html.includes('Build reps'));
+    assert.ok(!html.includes('earn the next step'));
+});
+test('weight trend works without a configured season goal', () => {
+    const coach = setup([log('2026-09-28')], { goalIncreaseKg: 0 });
+    const target = recommend(coach);
+    const html = coach.buildTrainingPlanChart(target.recentSessions, target.baselineSession, 0, 0, target);
+    assert.ok(html.includes('<svg'));
+    assert.ok(!html.includes('Season reference'));
+    assert.ok(!html.includes('class="training-plan-chart-plan"'));
+    assert.ok(!/NaN|Infinity/.test(html));
+});

@@ -444,6 +444,28 @@
                 .filter(session => new Date(session.log.date).getTime() >= cutoff && session.representativeWeightKg !== null);
         }
 
+        function buildCoachSetChart(workingSets, target) {
+            const required = Math.max(1, target.requiredWorkingSets || 1);
+            const sets = getWorkingSets(workingSets).map(normalizeSet);
+            const repMax = target.repRange.max;
+            if (!repMax) return '';
+            const scale = Math.max(repMax, ...sets.map(set => Number.isInteger(set.reps) && set.reps > 0 ? set.reps : 0));
+            const rows = Array.from({ length: Math.max(required, sets.length) }, (_, index) => {
+                const set = sets[index];
+                const valid = set && isValidWorkingSet(set, target.coachConfig.allowZeroWeight);
+                const state = !valid ? 'missing' : set.reps < target.repRange.min ? 'below' : set.reps >= repMax ? 'top' : 'range';
+                const status = { missing: 'Missing', below: 'Below range', top: 'Top reached', range: 'In range' }[state];
+                return `<div class="coach-set-row" data-state="${state}" aria-label="Set ${index + 1}: ${valid ? `${set.reps} reps, ${displayWeight(set.weight)} lb, ${status}` : 'Missing valid working set'}">
+                    <span>Set ${index + 1}</span>
+                    <div class="coach-rep-track" aria-hidden="true"><span class="coach-rep-fill" style="--rep-fill: ${valid ? set.reps / scale * 100 : 0}%"></span><span class="coach-rep-marker" style="--rep-marker: ${repMax / scale * 100}%"></span></div>
+                    <span class="coach-set-result">${valid ? `${set.reps} reps` : 'Missing'}</span>
+                    <span class="coach-set-note coach-set-load">${valid ? `${displayWeight(set.weight)} lb` : 'Log this set'}</span>
+                    <span class="coach-set-note coach-set-status">${status}</span>
+                </div>`;
+            }).join('');
+            return `<div class="coach-set-chart">${rows}</div><p class="coach-set-note">Bars show reps from zero. The marker is ${repMax} reps, the top of your ${target.repRange.label} range. ${target.targetWeightKg > 0 ? 'Reach it on every required set at the working weight to earn the next step.' : target.targetWeightKg === 0 ? 'Build reps on every required set. Added load needs a weighted progression plan.' : 'Log a complete starting session to establish your working weight.'}</p>`;
+        }
+
         function buildTrainingPlanChart(sessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target = null) {
             if (!sessions || sessions.length === 0 || !baseline) {
                 return '<div class="training-plan-chart-empty">No progression logs in the last 14 days.</div>';
@@ -470,7 +492,8 @@
                 };
             });
 
-            const values = points.flatMap(point => [point.actualKg, point.plannedKg]).filter(Number.isFinite);
+            const showReference = goalIncreaseKg > 0;
+            const values = points.flatMap(point => showReference ? [point.actualKg, point.plannedKg] : [point.actualKg]).filter(Number.isFinite);
             if (values.length === 0) {
                 return '<div class="training-plan-chart-empty">No chartable progression weights in the last 14 days.</div>';
             }
@@ -513,23 +536,23 @@
                     : '';
 
                 return `
-                    <line x1="${x}" y1="${y}" x2="${x}" y2="${plannedY}" stroke="rgba(255,255,255,0.14)" stroke-width="1"></line>
+                    ${showReference ? `<line x1="${x}" y1="${y}" x2="${x}" y2="${plannedY}" stroke="rgba(255,255,255,0.14)" stroke-width="1"></line>` : ''}
                     <circle class="training-plan-chart-dot" cx="${x}" cy="${y}" r="6"><title>${label}: ${displayWeight(point.actualKg)} lb logged</title></circle>
                     ${dateLabel}`;
             }).join('');
 
             return `
                 <div class="training-plan-chart-card">
-                    <svg class="training-plan-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Logged working weight and season reference over the last two weeks">
+                    <svg class="training-plan-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Logged working weight${showReference ? ' and season reference' : ''} over the last two weeks">
                         ${gridHtml}
                         <line class="training-plan-chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"></line>
-                        <path class="training-plan-chart-plan" d="${plannedPath}"></path>
+                        ${showReference ? `<path class="training-plan-chart-plan" d="${plannedPath}"></path>` : ''}
                         <path class="training-plan-chart-actual" d="${actualPath}"></path>
                         ${pointHtml}
                     </svg>
                     <div class="training-plan-legend">
                         <span class="actual">Logged weight</span>
-                        <span class="planned">Season reference</span>
+                        ${showReference ? '<span class="planned">Season reference</span>' : ''}
                     </div>
                 </div>`;
         }
@@ -558,7 +581,8 @@
             getRecentProgressionSessions,
             getPlannedProgressKgForDate,
             getPlannedWeightKgForDate,
-            buildTrainingPlanChart
+            buildTrainingPlanChart,
+            buildCoachSetChart
         };
     }
 
