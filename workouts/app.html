@@ -5765,7 +5765,7 @@
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <div class="training-coach-shell">
-                    <div class="coach-lift-heading"><span class="coach-kicker">Your lift, your next step</span><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4><span class="coach-caption">${escapeHtml(target.confidence.detail)}</span></div>
+                    <div class="coach-lift-heading"><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4><span class="coach-caption">${escapeHtml(target.confidence.detail)}</span></div>
                     <section class="coach-section coach-prescription" data-action="${escapeHtml(target.action)}" aria-label="Workout recommendation">
                         <div class="coach-action"><span class="coach-action-symbol" aria-hidden="true">${target.action === 'increase' ? '↗' : target.action === 'reduce' ? '↘' : '→'}</span>${escapeHtml(target.actionLabel)}</div>
                         <span class="coach-kicker coach-weight-label">${hasWeight ? 'Your working weight' : 'Start here'}</span>
@@ -5775,7 +5775,7 @@
                         ${liveStatus}${startAction}
                     </section>
                     ${setChart ? `<section class="coach-section coach-performance" aria-label="Working set performance">
-                        <div class="coach-performance-heading"><div><span class="coach-kicker">Rep by rep</span><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>At top reps</span></div></div>
+                        <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>At top reps</span></div></div>
                         <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
                         <div class="coach-rep-legend"><span><i></i> Reps logged</span><span>Marker: ${escapeHtml(target.repRange.max)} reps</span></div>
                         ${setChart}
