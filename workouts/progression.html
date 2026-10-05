@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sean's Log">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -1049,6 +1049,7 @@
         }
     </style>
     <link rel="stylesheet" href="css/coach.css">
+    <link rel="stylesheet" href="css/progression.css">
 </head>
 
 <body>
@@ -1087,6 +1088,7 @@
         </nav>
 
         <main>
+            <div class="coach-page-heading"><div><div class="eyebrow">Training intelligence</div><h2>Your coach.</h2></div><a class="season-jump" href="#seasonOverview">Explore your season <span aria-hidden="true">↗</span></a></div>
             <section class="coach-brief" aria-labelledby="coachBriefHeading">
                 <div class="coach-brief-head">
                     <h2 class="coach-brief-title" id="coachBriefHeading">What To Do Next</h2>
@@ -1106,99 +1108,59 @@
                     <ul class="coach-lift-list" id="coachOtherLiftsList"></ul>
                 </details>
             </section>
-            <details class="coach-disclosure season-overview">
-                <summary>Season overview</summary>
+            <section class="season-overview" id="seasonOverview" aria-labelledby="seasonHeading">
+                <div class="season-heading"><div><div class="eyebrow" id="planName">Current season</div><h2 id="seasonHeading">The bigger picture.</h2></div><p id="planSummary">Every session adds up. Here’s your season so far.</p></div>
+                <div class="season-dashboard">
+                    <div class="season-journey">
+                        <div class="journey-top"><span class="mini-label">Your season, in motion</span><span id="daysLeftValue">Checking activity</span></div>
+                        <div class="journey-week"><div class="timeline-week" id="weekValue">Week --</div><span id="timelinePercent">Day --</span></div>
+                        <div class="season-dates"><span><span class="date-caption">Started</span><strong id="startDateValue">--</strong></span><svg viewBox="0 0 200 32" aria-hidden="true"><path d="M0 16H190M180 6l10 10-10 10"/></svg><span><span class="date-caption">Today</span><strong id="endDateValue">--</strong></span></div>
+                        <div class="season-totals"><div><strong id="trackedLiftCount">0</strong><span>Workouts logged</span></div><div><strong id="liftsLeftCount">0</strong><span>Season PRs</span></div></div>
+                        <div class="activity-heading"><span>Workout rhythm</span><span>Last 28 days</span></div>
+                        <div class="season-activity" id="seasonActivity" role="list" aria-label="Workout activity over the last 28 days"></div>
+                        <div class="activity-legend"><span><i></i> Workout logged</span><span>Each square is a day</span></div>
+                    </div>
+                    <div class="season-lifts">
+                        <div class="mini-label">Where your lifts stand</div>
+                        <div class="lift-health-visual"><div class="lift-health-ring" id="liftHealthRing" role="img" aria-label="Loading lift status"><div><strong id="seasonLiftTotal">0</strong><span>tracked lifts</span></div></div><div class="lift-health-key" id="liftHealthKey"></div></div>
+                        <p class="coach-message" id="coachMessage">Loading season readout...</p>
+                        <div class="timeline-stats" id="timelineStats"></div>
+                    </div>
+                </div>
                 <div class="coach-context-grid">
-                    <div>
-                        <div class="coach-context-label">Lift progress</div>
-                        <div class="coach-context-main" id="coachReadout"></div>
-                        <p class="coach-caption" id="coachReadoutDetail"></p>
-                    </div>
-                    <div>
-                        <div class="coach-context-label">Recent activity</div>
-                        <div class="coach-context-main" id="coachWeekTarget"></div>
-                        <p class="coach-caption" id="coachWeekDetail"></p>
-                    </div>
-                </div>
-
-            <section class="page-hero">
-                <div class="hero-card">
-                    <div class="eyebrow" id="planName">Current Season</div>
-                    <h2>Season Progression</h2>
-                    <p class="subcopy" id="planSummary">Working sets, records, and goals from your active season.</p>
-                    <div class="hero-stats">
-                        <div class="mini-stat date-range-stat">
-                            <div class="mini-label">Season Window</div>
-                            <div class="date-range-row">
-                                <div class="date-node">
-                                    <div class="date-value" id="startDateValue">--</div>
-                                    <div class="date-caption">Season Start</div>
-                                </div>
-                                <svg class="date-arc" viewBox="0 0 160 74" aria-hidden="true" preserveAspectRatio="none">
-                                    <defs>
-                                        <linearGradient id="dateArcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#ff3d00"></stop>
-                                            <stop offset="52%" stop-color="#ffbb00"></stop>
-                                            <stop offset="100%" stop-color="#00ff88"></stop>
-                                        </linearGradient>
-                                    </defs>
-                                    <path d="M10 58 C42 8, 118 8, 150 58"></path>
-                                </svg>
-                                <div class="date-node end">
-                                    <div class="date-value" id="endDateValue">--</div>
-                                    <div class="date-caption">Today</div>
-                                </div>
-                            </div>
-                            <div class="date-range-metrics">
-                                <div class="date-metric">
-                                    <div class="mini-label">Season Workouts</div>
-                                    <div class="mini-value" id="trackedLiftCount">0</div>
-                                    <div class="mini-note">Workouts since season start</div>
-                                </div>
-                                <div class="date-metric">
-                                    <div class="mini-label">Season PRs</div>
-                                    <div class="mini-value" id="liftsLeftCount">0</div>
-                                    <div class="mini-note">Weight and rep records</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel timeline-card">
-                    <div class="timeline-top">
-                        <div>
-                            <div class="eyebrow">Season Timeline</div>
-                            <div class="timeline-week" id="weekValue">Week --</div>
-                        </div>
-                        <div class="mini-note" id="daysLeftValue">Checking recent activity</div>
-                    </div>
-                    <div>
-                        <div class="timeline-track">
-                            <div class="timeline-fill" id="timelineFill" style="width: 0%"></div>
-                        </div>
-                        <div class="timeline-labels">
-                            <span id="timelineStart">Start</span>
-                            <span id="timelinePercent">0%</span>
-                            <span id="timelineEnd">Finish</span>
-                        </div>
-                    </div>
-                    <div class="coach-message" id="coachMessage">Loading season readout...</div>
-                    <div class="plan-health" id="planHealth" aria-label="Season lift health">
-                        <div class="plan-health-segment good"></div>
-                        <div class="plan-health-segment bad"></div>
-                        <div class="plan-health-segment warn"></div>
-                    </div>
-                    <div class="plan-health-labels">
-                        <span>Build reps / add weight</span>
-                        <span>Try lighter</span>
-                        <span>Check history</span>
-                    </div>
-                    <div class="timeline-stats" id="timelineStats"></div>
+                    <div><span class="context-icon" aria-hidden="true">↗</span><div><div class="coach-context-label">Lift progress</div><div class="coach-context-main" id="coachReadout"></div><p class="coach-caption" id="coachReadoutDetail"></p></div></div>
+                    <div><span class="context-icon" aria-hidden="true">◷</span><div><div class="coach-context-label">Recent activity</div><div class="coach-context-main" id="coachWeekTarget"></div><p class="coach-caption" id="coachWeekDetail"></p></div></div>
                 </div>
             </section>
 
-            </details>
-
+            <section class="panel collapsible-panel">
+                <button class="collapsible-trigger" type="button" aria-expanded="true" aria-controls="liftProgressContent" onclick="toggleCollapsibleSection('liftProgressContent', 'liftProgressIcon')">
+                    <span class="collapse-title-group">
+                        <span class="section-title">Lift Progress Chart</span>
+                        <span class="collapse-preview" id="liftProgressPreview">Compare logged strength or load with the season reference</span>
+                    </span>
+                    <span class="collapse-icon" id="liftProgressIcon">−</span>
+                </button>
+                <div class="collapsible-content" id="liftProgressContent">
+                    <div class="chart-layout">
+                        <div>
+                            <select class="select-box" id="liftSelect"></select>
+                            <div class="chart-toggle" role="group" aria-label="Chart metric">
+                                <button class="chart-toggle-btn active" type="button" data-chart-metric="strength">Strength Estimate</button>
+                                <button class="chart-toggle-btn" type="button" data-chart-metric="load">Load</button>
+                            </div>
+                            <div class="chart-side-list" id="chartStats"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div id="chartContainer"></div>
+                            <div class="legend">
+                                <span class="actual">Logged performance</span>
+                                <span class="plan">Season reference</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="panel collapsible-panel">
                 <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="trackedLiftsContent" onclick="toggleTrackedLifts()">
                     <span class="collapse-title-group">
@@ -1228,34 +1190,6 @@
                 </div>
             </section>
 
-            <section class="panel collapsible-panel">
-                <button class="collapsible-trigger" type="button" aria-expanded="false" aria-controls="liftProgressContent" onclick="toggleCollapsibleSection('liftProgressContent', 'liftProgressIcon')">
-                    <span class="collapse-title-group">
-                        <span class="section-title">Lift Progress Chart</span>
-                        <span class="collapse-preview" id="liftProgressPreview">Compare logged strength or load with the season reference</span>
-                    </span>
-                    <span class="collapse-icon" id="liftProgressIcon">+</span>
-                </button>
-                <div class="collapsible-content" id="liftProgressContent" hidden>
-                    <div class="chart-layout">
-                        <div>
-                            <select class="select-box" id="liftSelect"></select>
-                            <div class="chart-toggle" role="group" aria-label="Chart metric">
-                                <button class="chart-toggle-btn active" type="button" data-chart-metric="strength">Strength Estimate</button>
-                                <button class="chart-toggle-btn" type="button" data-chart-metric="load">Load</button>
-                            </div>
-                            <div class="chart-side-list" id="chartStats"></div>
-                        </div>
-                        <div class="chart-card">
-                            <div id="chartContainer"></div>
-                            <div class="legend">
-                                <span class="actual">Logged performance</span>
-                                <span class="plan">Season reference</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </main>
     </div>
 
@@ -1703,8 +1637,6 @@
             const elapsedDays = Math.max(0, Math.floor((startOfLocalDay(now) - startOfLocalDay(start)) / dayMs));
             const seasonDay = elapsedDays + 1;
             const week = snapshot.week;
-            const dayInWeek = (elapsedDays % 7) + 1;
-            const weekPercent = Math.round((dayInWeek / 7) * 100);
             const seasonRecords = recordTracker?.getPRTimeline() || [];
             const seasonRecordCount = seasonRecords.reduce((sum, event) => sum + event.records.length, 0);
             const latestWorkout = snapshot.latestWorkout;
@@ -1722,10 +1654,26 @@
                 : activeRecently
                     ? `Active · ${daysSinceWorkout === 0 ? 'workout today' : `${daysSinceWorkout}d since workout`}`
                     : `Inactive · ${daysSinceWorkout}d since workout`;
-            document.getElementById('timelineFill').style.width = `${weekPercent}%`;
-            document.getElementById('timelineStart').textContent = formatDate(start, DateFormats.SHORT);
-            document.getElementById('timelineEnd').textContent = 'Today';
-            document.getElementById('timelinePercent').textContent = `Day ${seasonDay} · Week ${week}`;
+            document.getElementById('timelinePercent').textContent = `Day ${seasonDay}`;
+            renderSeasonActivity(start, now);
+        }
+
+        function renderSeasonActivity(start, now) {
+            const loggedDays = new Map();
+            workoutLogs.forEach(log => {
+                const date = new Date(log.date);
+                if (!Number.isFinite(date.getTime())) return;
+                const key = getLocalDateKey(date);
+                loggedDays.set(key, (loggedDays.get(key) || 0) + 1);
+            });
+            document.getElementById('seasonActivity').innerHTML = Array.from({ length: 28 }, (_, index) => {
+                const date = startOfLocalDay(now);
+                date.setDate(date.getDate() - 27 + index);
+                const count = loggedDays.get(getLocalDateKey(date)) || 0;
+                const beforeSeason = date < startOfLocalDay(start);
+                const label = `${formatDate(date, DateFormats.SHORT)}: ${beforeSeason ? 'before season' : count ? `${count} workout${count === 1 ? '' : 's'}` : 'no workout logged'}`;
+                return `<span class="activity-day${count ? ' logged' : ''}${beforeSeason ? ' before-season' : ''}${index === 27 ? ' today' : ''}" role="listitem" tabindex="0" aria-label="${escapeHtml(label)}" data-tooltip="${escapeHtml(label)}"></span>`;
+            }).join('');
         }
 
         function getTodaysAdvice() {
@@ -1742,10 +1690,23 @@
             const review = liftRows.length - ready - building - reduce;
             const snapshot = getSharedSeasonSnapshot();
             const latestRecord = snapshot.latestPR;
-            const health = document.getElementById('planHealth');
-            health.style.setProperty('--good-share', `${Math.max(ready + building, 0.35)}fr`);
-            health.style.setProperty('--bad-share', `${Math.max(reduce, 0.35)}fr`);
-            health.style.setProperty('--warn-share', `${Math.max(review, 0.35)}fr`);
+            const groups = [
+                { label: 'Ready to add weight', count: ready, color: '#a3ead5' },
+                { label: 'Building reps', count: building, color: '#68a99a' },
+                { label: 'Try a lighter step', count: reduce, color: '#f3b398' },
+                { label: 'Check history / setup', count: review, color: '#daca9b' }
+            ];
+            let edge = 0;
+            const segments = groups.filter(group => group.count > 0).map(group => {
+                const start = edge;
+                edge += group.count / Math.max(liftRows.length, 1) * 100;
+                return `${group.color} ${start}% ${edge}%`;
+            });
+            const ring = document.getElementById('liftHealthRing');
+            ring.style.background = segments.length ? `conic-gradient(${segments.join(',')})` : 'var(--border)';
+            ring.setAttribute('aria-label', groups.map(group => `${group.count} ${group.label.toLowerCase()}`).join(', '));
+            document.getElementById('seasonLiftTotal').textContent = liftRows.length;
+            document.getElementById('liftHealthKey').innerHTML = groups.map(group => `<div><i style="background:${group.color}"></i><span>${group.label}</span><strong>${group.count}</strong></div>`).join('');
             let message = `${ready} lift${ready === 1 ? '' : 's'} ready for a weight increase. ${building} building reps at the current weight.`;
             if (noData === liftRows.length) message = 'Log the first working sets for your scheduled lifts to get started.';
             if (reduce) message += ` ${reduce} lift${reduce === 1 ? '' : 's'} could use one lighter step after repeated missed reps.`;
@@ -1808,7 +1769,7 @@
 
             trigger.setAttribute('aria-expanded', String(!isExpanded));
             content.hidden = isExpanded;
-            icon.textContent = isExpanded ? '+' : '-';
+            icon.textContent = isExpanded ? '+' : '−';
         }
 
         function toggleTrackedLifts() {

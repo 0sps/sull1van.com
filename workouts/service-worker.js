@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v19';
+const CACHE_NAME = 'seans-log-v20';
 // Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',
@@ -12,6 +12,7 @@ const ASSETS_TO_CACHE = [
     './js/strength.js',
     './js/coach.js',
     './css/coach.css',
+    './css/progression.css',
     './js/records.js',
     './exercises.json',
     './training-plan.json',
@@ -19,7 +20,8 @@ const ASSETS_TO_CACHE = [
     './manifest.json',
     './apple-touch-icon.png',
     './maskable-icon.png',
-    'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap',
+    'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap'
 ];
 const APP_SHELL_PATHS = new Set([
     '/workouts/index.html',
@@ -45,7 +47,9 @@ const NETWORK_FIRST_STATIC_PATHS = new Set([
     '/workouts/js/coach.js',
     '/js/coach.js',
     '/workouts/css/coach.css',
-    '/css/coach.css'
+    '/css/coach.css',
+    '/workouts/css/progression.css',
+    '/css/progression.css'
 ]);
 
 // Install Event - Cache Core Assets
