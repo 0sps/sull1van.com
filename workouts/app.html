@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sean's Log">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
@@ -2312,6 +2312,7 @@
         }
     </style>
     <link rel="stylesheet" href="css/coach.css">
+    <link rel="stylesheet" href="css/coach-modal.css">
 </head>
 
 <body>
@@ -5746,24 +5747,43 @@
                     <strong>This workout: ${escapeHtml(liveEvaluation.progressEarned ? liveEvaluation.statusLabel : liveEvaluation.planComplete ? 'Session target met' : liveEvaluation.statusLabel)}.</strong>
                     <span class="coach-caption">${liveEvaluation.loggedSets} valid working set${liveEvaluation.loggedSets === 1 ? '' : 's'} entered, ${sets} required.
                     ${liveEvaluation.progressEarned ? 'Increase earned for your next session.' : ''}</span></div>` : '';
+            const shownSets = coach.getWorkingSets(hasLiveSets ? liveSets : currentSets);
+            const shownWeight = hasLiveSets ? target.targetWeightKg : currentWeight;
+            const topSets = shownSets.slice(0, sets).filter(set => {
+                const weight = set.weight === null || String(set.weight).trim() === '' ? NaN : Number(set.weight);
+                const reps = Number(set.reps);
+                return Number.isFinite(weight) && (weight > 0 || target.coachConfig.allowZeroWeight && weight === 0) &&
+                    Number.isInteger(reps) && reps >= target.repRange.max && Number.isFinite(shownWeight) && weight + 0.01 >= shownWeight;
+            }).length;
+            const canAddLoad = target.targetWeightKg > 0 && target.stepKg > 0;
+            const nextWeight = canAddLoad ? weightLabel(target.targetWeightKg + target.stepKg) : null;
+            const loadGain = baseline && Number.isFinite(currentWeight) ? currentWeight - baseline.representativeWeightKg : null;
+            const loadGainLabel = Number.isFinite(loadGain) ? `${loadGain > 0 ? '+' : loadGain < 0 ? '−' : ''}${displayWeight(Math.abs(loadGain))} lbs` : null;
             const startAction = target.action === 'setup'
                 ? '<a class="coach-primary-link" href="training-plan-editor.html">Edit rep range</a>'
                 : target.action === 'baseline' ? '<button class="coach-primary-link" onclick="closeModal(\'trainingPlanModal\')">Log starting sets</button>' : '';
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <div class="training-coach-shell">
-                    <div><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4></div>
+                    <div class="coach-lift-heading"><span class="coach-kicker">Your lift, your next step</span><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4><span class="coach-caption">${escapeHtml(target.confidence.detail)}</span></div>
                     <section class="coach-section coach-prescription" data-action="${escapeHtml(target.action)}" aria-label="Workout recommendation">
-                        <div class="coach-action">${escapeHtml(target.actionLabel)}</div>
+                        <div class="coach-action"><span class="coach-action-symbol" aria-hidden="true">${target.action === 'increase' ? '↗' : target.action === 'reduce' ? '↘' : '→'}</span>${escapeHtml(target.actionLabel)}</div>
+                        <span class="coach-kicker coach-weight-label">${hasWeight ? 'Your working weight' : 'Start here'}</span>
                         <div class="coach-weight${hasWeight ? '' : ' coach-instruction'}">${escapeHtml(prescription)}</div>
-                        ${target.repRange.min ? `<div class="coach-set-target">${sets} working set${sets === 1 ? '' : 's'} × ${escapeHtml(target.repRange.label)} reps</div>` : ''}
+                        ${target.repRange.min ? `<div class="coach-target-tiles" role="group" aria-label="${sets} working set${sets === 1 ? '' : 's'} × ${escapeHtml(target.repRange.label)} reps"><div><strong>${sets}</strong><span>Working sets</span></div><div><strong>${escapeHtml(target.repRange.label)}</strong><span>Reps per set</span></div></div>` : ''}
                         <p class="coach-reason">${escapeHtml(target.reason)}</p>
                         ${liveStatus}${startAction}
                     </section>
-                    ${setChart ? `<section class="coach-section" aria-label="Working set performance">
-                        <h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5>
+                    ${setChart ? `<section class="coach-section coach-performance" aria-label="Working set performance">
+                        <div class="coach-performance-heading"><div><span class="coach-kicker">Rep by rep</span><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>At top reps</span></div></div>
                         <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
+                        <div class="coach-rep-legend"><span><i></i> Reps logged</span><span>Marker: ${escapeHtml(target.repRange.max)} reps</span></div>
                         ${setChart}
+                        <div class="coach-next-step"><span class="coach-kicker">${canAddLoad ? 'The path to your next increase' : 'Your session milestones'}</span><div class="coach-step-rail">
+                            <div><span class="coach-step-dot" aria-hidden="true">1</span><strong>${hasWeight ? escapeHtml(prescription) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>
+                            <div><span class="coach-step-dot" aria-hidden="true">2</span><strong>${target.repRange.max}+ reps</strong><span>On every working set</span></div>
+                            <div><span class="coach-step-dot" aria-hidden="true">${canAddLoad ? '↗' : '✓'}</span><strong>${nextWeight ? escapeHtml(nextWeight) : hasWeight ? 'Build reps' : 'Baseline set'}</strong><span>${canAddLoad ? 'Next session, once earned' : hasWeight ? 'Keep the full rep range' : 'Then follow your coach'}</span></div>
+                        </div></div>
                     </section>` : ''}
                     ${chart ? `<section class="coach-section" aria-label="Recent working weight trend">
                         <h5 class="coach-section-title">Working weight trend</h5>
@@ -5783,14 +5803,16 @@
                         </div>
                         <p>Warmups do not count. The first planned row starts as a warmup.</p>
                     </details>` : ''}
-                    ${baseline ? `<details class="coach-disclosure"><summary>Season progress</summary>
+                    ${baseline ? `<section class="coach-section coach-season-card" aria-label="Season working weight progress">
+                        <div class="coach-season-heading"><div><span class="coach-kicker">The bigger picture</span><h5 class="coach-section-title">Season progress</h5></div>${loadGainLabel ? `<div class="coach-load-gain"><strong>${escapeHtml(loadGainLabel)}</strong><span>Working weight change</span></div>` : ''}</div>
                         <dl class="coach-season-facts">
                             <div><dt>Starting weight</dt><dd>${escapeHtml(weightLabel(baseline.representativeWeightKg))}</dd></div>
                             <div><dt>Last working weight</dt><dd>${Number.isFinite(currentWeight) ? escapeHtml(weightLabel(currentWeight)) : 'No data'}</dd></div>
                             <div><dt>Season goal</dt><dd>${goalKg !== null ? escapeHtml(weightLabel(goalKg)) : 'Not set'}</dd></div>
                         </dl>
-                        <p>The season goal is a reference. Your next workout follows completed working sets.</p>
-                    </details>` : ''}
+                        <p class="coach-caption">The season goal is a reference. Your next workout follows completed working sets.</p>
+                        <a class="coach-season-link" href="progression.html">Explore your season <span aria-hidden="true">↗</span></a>
+                    </section>` : ''}
                     <details class="coach-disclosure coach-method"><summary>How this recommendation works</summary>
                         <p>The coach checks this lift's logged working sets in the active season, newest first. It uses the lightest working weight in the latest usable attempt and keeps it until every required set reaches the top of the rep range.</p>
                         <p>One complete attempt earns one increase. Two complete attempts below the rep minimum at the same weight suggest one step lighter. Incomplete attempts and gaps longer than ${escapeHtml(target.coachConfig.returnAfterDays)} days call for repeating the weight.</p>

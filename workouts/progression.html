@@ -1071,7 +1071,7 @@
                     <span id="userEmail"></span>
                 </div>
                 <div class="sync-status" id="syncStatus">
-                    <span id="syncIcon">✓</span>
+                    <span id="syncIcon" aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
                     <span id="syncText">Synced</span>
                 </div>
                 <button class="btn" onclick="logout()">LOGOUT</button>
@@ -1088,7 +1088,7 @@
         </nav>
 
         <main>
-            <div class="coach-page-heading"><div><div class="eyebrow">Training intelligence</div><h2>Your coach.</h2></div><a class="season-jump" href="#seasonOverview">Explore your season <span aria-hidden="true">↗</span></a></div>
+            <div class="coach-page-heading"><div><div class="eyebrow">Training intelligence</div><h2>Your coach.</h2></div><a class="season-jump" href="#seasonOverview">Explore your season <span aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
             <section class="coach-brief" aria-labelledby="coachBriefHeading">
                 <div class="coach-brief-head">
                     <h2 class="coach-brief-title" id="coachBriefHeading">What To Do Next</h2>
@@ -1128,8 +1128,8 @@
                     </div>
                 </div>
                 <div class="coach-context-grid">
-                    <div><span class="context-icon" aria-hidden="true">↗</span><div><div class="coach-context-label">Lift progress</div><div class="coach-context-main" id="coachReadout"></div><p class="coach-caption" id="coachReadoutDetail"></p></div></div>
-                    <div><span class="context-icon" aria-hidden="true">◷</span><div><div class="coach-context-label">Recent activity</div><div class="coach-context-main" id="coachWeekTarget"></div><p class="coach-caption" id="coachWeekDetail"></p></div></div>
+                    <div><span class="context-icon" aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19h16M5 15l5-5 4 3 5-8M14 5h5v5"/></svg></span><div><div class="coach-context-label">Lift progress</div><div class="coach-context-main" id="coachReadout"></div><p class="coach-caption" id="coachReadoutDetail"></p></div></div>
+                    <div><span class="context-icon" aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><div class="coach-context-label">Recent activity</div><div class="coach-context-main" id="coachWeekTarget"></div><p class="coach-caption" id="coachWeekDetail"></p></div></div>
                 </div>
             </section>
 
@@ -1139,7 +1139,7 @@
                         <span class="section-title">Lift Progress Chart</span>
                         <span class="collapse-preview" id="liftProgressPreview">Compare logged strength or load with the season reference</span>
                     </span>
-                    <span class="collapse-icon" id="liftProgressIcon">−</span>
+                    <span class="collapse-icon" id="liftProgressIcon" aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg></span>
                 </button>
                 <div class="collapsible-content" id="liftProgressContent">
                     <div class="chart-layout">
@@ -1167,7 +1167,7 @@
                         <span class="section-title">Tracked Lifts</span>
                         <span class="collapse-preview" id="trackedLiftsPreview">Season lifts, records, and relative targets</span>
                     </span>
-                    <span class="collapse-icon" id="trackedLiftsIcon">+</span>
+                    <span class="collapse-icon" id="trackedLiftsIcon" aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14"/></svg></span>
                 </button>
                 <div class="collapsible-content" id="trackedLiftsContent" hidden>
                     <div class="table-wrap">
@@ -1354,12 +1354,23 @@
             }[ch]));
         }
 
+        function progressionIcon(name) {
+            const icons = {
+                check: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
+                error: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg>',
+                sync: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M18 17a7 7 0 0 1-12 1l-2-3"/></svg>',
+                plus: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14"/></svg>',
+                minus: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>'
+            };
+            return icons[name] || '';
+        }
+
         function setSyncStatus(state) {
             const el = document.getElementById('syncStatus');
             const icon = document.getElementById('syncIcon');
             const text = document.getElementById('syncText');
             el.classList.toggle('error', state === 'error');
-            icon.textContent = state === 'error' ? '!' : '✓';
+            icon.innerHTML = progressionIcon(state === 'error' ? 'error' : state === 'syncing' ? 'sync' : 'check');
             text.textContent = state === 'error' ? 'Error' : state === 'syncing' ? 'Syncing' : 'Synced';
         }
 
@@ -1769,7 +1780,7 @@
 
             trigger.setAttribute('aria-expanded', String(!isExpanded));
             content.hidden = isExpanded;
-            icon.textContent = isExpanded ? '+' : '−';
+            icon.innerHTML = progressionIcon(isExpanded ? 'plus' : 'minus');
         }
 
         function toggleTrackedLifts() {

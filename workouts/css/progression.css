@@ -190,3 +190,11 @@ th { font-size: .65rem; color: var(--text-secondary); }
     .season-journey, .season-lifts { padding: 18px; }
     .chart-label { font-size: 40px; }
 }
+
+/* Consistent line icons, independent of platform emoji fonts. */
+.progression-icon { display: block; width: 18px; height: 18px; flex-shrink: 0; }
+.sync-status { display: inline-flex; align-items: center; gap: 6px; }
+#syncIcon .progression-icon { width: 14px; height: 14px; }
+.season-jump { display: inline-flex; align-items: center; }
+.context-icon .progression-icon { width: 20px; height: 20px; }
+.collapse-icon { display: inline-flex; align-items: center; justify-content: center; }

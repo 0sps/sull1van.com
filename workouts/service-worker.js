@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v20';
+const CACHE_NAME = 'seans-log-v22';
 // Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',
@@ -13,6 +13,7 @@ const ASSETS_TO_CACHE = [
     './js/coach.js',
     './css/coach.css',
     './css/progression.css',
+    './css/coach-modal.css',
     './js/records.js',
     './exercises.json',
     './training-plan.json',
@@ -49,7 +50,9 @@ const NETWORK_FIRST_STATIC_PATHS = new Set([
     '/workouts/css/coach.css',
     '/css/coach.css',
     '/workouts/css/progression.css',
-    '/css/progression.css'
+    '/css/progression.css',
+    '/workouts/css/coach-modal.css',
+    '/css/coach-modal.css'
 ]);
 
 // Install Event - Cache Core Assets
