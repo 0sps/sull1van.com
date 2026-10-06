@@ -106,7 +106,7 @@ h2 { font-size: clamp(3rem, 6vw, 5rem); letter-spacing: .5px; }
 .coach-context-label { font-size: .875rem; color: var(--text-muted); margin-bottom: 3px; }
 .coach-context-main { font-size: .9rem; font-weight: 600; }
 .coach-context-grid .coach-caption { font-size: .875rem; line-height: 1.6; margin-top: 3px; }
-.collapsible-panel { border-radius: 12px; background: var(--bg-secondary); border-color: var(--border); margin-top: 20px; }
+.collapsible-panel { border-radius: 12px; background: var(--bg-secondary); border-color: var(--border); margin-top: 20px; overflow: visible; }
 .collapsible-trigger { padding: 22px 28px; }
 .collapsible-trigger .section-title { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 600; letter-spacing: 0; }
 .collapse-preview { font-size: .875rem; }
