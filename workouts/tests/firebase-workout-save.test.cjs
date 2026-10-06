@@ -49,6 +49,7 @@ function firebaseMock(remote, options = {}) {
                 store.set(docPath(options.retryRemote.id), clone(options.retryRemote));
                 continue;
             }
+            if (options.beforeCommit) await options.beforeCommit();
             if (options.failure) throw Object.assign(new Error(options.failure), { code: options.failure });
             for (const write of staged) {
                 if (write.type === 'set') store.set(write.ref, write.data);
@@ -65,6 +66,7 @@ function firebaseMock(remote, options = {}) {
 function editorHarness(editor, remote = original, options = {}) {
     const firebase = firebaseMock(remote, options);
     const notifications = [];
+    const successCallbacks = [];
     const elements = new Map();
     const inputValue = '2026-10-04T14:05:09';
     const edited = clone(options.loaded || original);
@@ -84,7 +86,10 @@ function editorHarness(editor, remote = original, options = {}) {
         showToast: (message, type) => notifications.push({ message, type }),
         showLoading() {}, invalidateStatsCache() {}, renderRecentLogs() {}, updateStats() {},
         renderFullHistory() {}, refreshUI() {}, renderLogList() {}, selectLog() {},
-        showButtonSuccess: (button, message) => notifications.push({ message }), closeEditModal() {},
+        showButtonSuccess: (button, message, duration, afterRestore) => {
+            notifications.push({ message });
+            if (afterRestore) successCallbacks.push(afterRestore);
+        }, closeEditModal() {},
         compareLogIds: (a, b) => String(a) === String(b),
         validateAndCleanWorkout: exercises => ({ cleanedExercises: exercises, hasZeroReps: false }),
         editingLogData: edited, isSaving: false,
@@ -117,10 +122,10 @@ function editorHarness(editor, remote = original, options = {}) {
         vm.runInContext([
             section(html, '        window.updateWorkoutDate =', "        document.getElementById('jsonEditor').addEventListener('input'"),
             section(html, '        window.saveCurrentLog =', '        function showSaveModal('),
-            section(html, '        class WorkoutEditorConflictError', '        // SHARED UNDO SYSTEM')
+            section(html, '        class WorkoutEditorConflictError', '        let pendingAction = null;')
         ].join('\n'), context);
     }
-    return { ...firebase, context, notifications, elements, inputValue, async save() {
+    return { ...firebase, context, notifications, successCallbacks, elements, inputValue, async save() {
         if (editor === 'main') return context.saveEditedWorkout();
         await context.window.saveCurrentLog();
         if (context.window._pendingSaveData) {
@@ -248,4 +253,70 @@ test('data: changing the date control preserves raw JSON edits and original conf
     assert.equal(saved.exercises[0].sets[0].reps, 10);
     assert.equal(saved.revision, 5);
     assert.equal(WorkoutDate.toInputValue(saved.date), harness.inputValue);
+});
+
+function deferred() {
+    let resolve;
+    const promise = new Promise(done => { resolve = done; });
+    return { promise, resolve };
+}
+
+for (const action of ['discard', 'open another workout', 'change working reps', 'change date']) {
+    test(`main: ${action} during saving preserves the committed snapshot and the current draft`, async () => {
+        const entered = deferred(), release = deferred();
+        const h = editorHarness('main', original, { beforeCommit: async () => { entered.resolve(); await release.promise; } });
+        const saving = h.save();
+        await entered.promise;
+        const draft = h.context.editingLogData;
+        if (action === 'discard') h.context.editingLogData = null;
+        if (action === 'open another workout') h.context.editingLogData = { id: 'another', exercises: [] };
+        if (action === 'change working reps') draft.exercises[0].sets[0].reps = 12;
+        if (action === 'change date') h.elements.get('editWorkoutDate').value = '2026-10-03T14:05:09';
+        release.resolve();
+        await saving;
+        const saved = h.store.get(docPath(original.id));
+        assert.equal(saved.exercises[0].sets[0].reps, 8);
+        assert.equal(WorkoutDate.toInputValue(saved.date), h.inputValue);
+        assert.deepEqual(clone(h.context.workoutLogs[0]), saved);
+        assert.ok(!h.notifications.some(item => item.title === 'ERROR'));
+        assert.equal(h.successCallbacks.length, 0);
+        if (action === 'discard') assert.equal(h.context.editingLogData, null);
+        if (action === 'open another workout') assert.equal(h.context.editingLogData.id, 'another');
+        if (action === 'change working reps') {
+            assert.equal(draft.exercises[0].sets[0].reps, 12);
+            assert.equal(draft.revision, 5);
+        }
+        if (action === 'change date') assert.equal(h.elements.get('editWorkoutDate').value, '2026-10-03T14:05:09');
+    });
+}
+
+test('main: saved-button callback cannot close a new or newly edited draft', async () => {
+    for (const action of ['new session', 'changed reps', 'changed date', 'unchanged']) {
+        const h = editorHarness('main');
+        let closed = false;
+        h.context.closeEditModal = () => { closed = true; };
+        await h.save();
+        assert.equal(h.successCallbacks.length, 1);
+        if (action === 'new session') h.context.editingLogData = { id: 'another' };
+        if (action === 'changed reps') h.context.editingLogData.exercises[0].sets[0].reps = 12;
+        if (action === 'changed date') h.elements.get('editWorkoutDate').value = '2026-10-03T14:05:09';
+        h.successCallbacks[0]();
+        assert.equal(closed, action === 'unchanged');
+    }
+});
+
+test('data: a completed save preserves the selection and unsaved editor contents of another workout', async () => {
+    const entered = deferred(), release = deferred();
+    const h = editorHarness('data', original, { beforeCommit: async () => { entered.resolve(); await release.promise; } });
+    const saving = h.save();
+    await entered.promise;
+    h.context.activeLogId = 'another';
+    h.elements.get('jsonEditor').value = 'unsaved draft of another workout';
+    h.context.selectLog = () => { throw new Error('Save completion must keep the current selection'); };
+    release.resolve();
+    await saving;
+    assert.equal(h.context.activeLogId, 'another');
+    assert.equal(h.elements.get('jsonEditor').value, 'unsaved draft of another workout');
+    assert.equal(h.store.get(docPath(original.id)).revision, 5);
+    assert.ok(h.notifications.some(item => item.message === 'Log saved successfully'));
 });

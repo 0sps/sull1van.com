@@ -5251,21 +5251,28 @@
             await finalizeEditedWorkoutSave();
         }
         async function finalizeEditedWorkoutSave() {
-            if (isSaving) return;
+            if (isSaving || !editingLogData) return;
+            const editSession = editingLogData;
+            const savedLog = JSON.parse(JSON.stringify(editSession));
             isSaving = true;
             const saveBtn = document.getElementById('saveEditsBtn');
             if (saveBtn) saveBtn.disabled = true;
             try {
                 // Save to Firebase - Use the original log ID and data structure
-                const success = await saveToFirebase(editingLogData, { requireExisting: true });
+                const success = await saveToFirebase(savedLog, { requireExisting: true });
 
                 if (success) {
                     // Update local workoutLogs
-                    const index = workoutLogs.findIndex(l => compareLogIds(l.id, editingLogData.id));
+                    const index = workoutLogs.findIndex(l => compareLogIds(l.id, savedLog.id));
                     if (index !== -1) {
-                        workoutLogs[index] = JSON.parse(JSON.stringify(editingLogData));
+                        workoutLogs[index] = JSON.parse(JSON.stringify(savedLog));
                     }
-                    upsertRecordHistoryLog(editingLogData);
+                    upsertRecordHistoryLog(savedLog);
+                    // Keep any newer draft edits, while advancing its loaded server version.
+                    if (editingLogData === editSession) {
+                        editSession.revision = savedLog.revision;
+                        editSession.updatedAt = savedLog.updatedAt;
+                    }
                     invalidateStatsCache();
                     // Refresh UI
                     renderRecentLogs();
@@ -5275,11 +5282,17 @@
                     }
                     // Success animation for save button
                     const btn = document.getElementById('saveEditsBtn');
-                    if (btn) {
-                        showButtonSuccess(btn, 'EDITS SAVED!', 2000, closeEditModal);
+                    const savedFingerprint = JSON.stringify(savedLog);
+                    const isUnchangedDraft = () => editingLogData === editSession
+                        && JSON.stringify(editSession) === savedFingerprint
+                        && document.getElementById('editWorkoutDate').value === WorkoutDate.toInputValue(savedLog.date);
+                    if (btn && isUnchangedDraft()) {
+                        showButtonSuccess(btn, 'EDITS SAVED!', 2000, () => {
+                            if (isUnchangedDraft()) closeEditModal();
+                        });
                     } else {
                         showNotification('SUCCESS', '✏️ Workout updated and synced!');
-                        closeEditModal();
+                        if (isUnchangedDraft()) closeEditModal();
                     }
                 } else {
                     if (saveBtn) saveBtn.disabled = false;

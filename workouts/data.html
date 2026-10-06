@@ -1023,7 +1023,7 @@
 
     <!-- Undo Box (Shared for Delete and Save) -->
     <div id="undoBox" class="undo-box">
-        <span id="undoTitle" class="undo-text">DELETED!</span>
+        <span id="undoTitle" class="undo-text">ACTION QUEUED</span>
         <span class="undo-link" id="undoActionLink" onclick="handleUndoClick()">Undo</span>
         <div class="loading-bar-container">
             <div id="undoLoadingBar" class="loading-bar"></div>
@@ -1607,9 +1607,10 @@
                     return savedData;
                 });
 
+                const wasActive = activeLogId?.toString() === previousId;
                 if (nextId !== previousId) {
                     selectedLogIds.delete(previousId);
-                    activeLogId = nextId;
+                    if (wasActive) activeLogId = nextId;
                 }
 
                 // Update local state
@@ -1619,14 +1620,16 @@
                 currentLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 renderLogList(currentLogs);
-                selectLog(nextId);
+                if (wasActive) selectLog(nextId);
                 showToast("Log saved successfully");
-                document.getElementById('validationMsg').textContent = "";
+                if (wasActive) document.getElementById('validationMsg').textContent = "";
             } catch (err) {
                 console.error(err);
                 if (err instanceof WorkoutDestinationExistsError || err instanceof WorkoutEditorConflictError) {
                     showToast(err.message, "error");
-                    document.getElementById('validationMsg').textContent = err.message;
+                    if (activeLogId?.toString() === originalId.toString()) {
+                        document.getElementById('validationMsg').textContent = err.message;
+                    }
                 } else {
                     showToast("Save failed", "error");
                 }
@@ -1635,123 +1638,106 @@
             }
         }
 
-        // SHARED UNDO SYSTEM
-        let pendingActionTimeout = null;
-        let pendingActionType = null; // 'delete' or 'save'
-        let pendingData = null;
-        let pendingId = null;
-        let pendingBaseVersion = null;
+        // One isolated action owns its undo timer and Firebase payload until completion.
+        let pendingAction = null;
 
-        function showUndoBox(type, title) {
-            pendingActionType = type;
+        function canQueueAction() {
+            if (!pendingAction) return true;
+            showToast('Finish or undo the pending action first', 'error');
+            return false;
+        }
+
+        function queueAction(action, commit) {
+            pendingAction = action;
+            action.phase = 'waiting';
             const undoBox = document.getElementById('undoBox');
             const loadingBar = document.getElementById('undoLoadingBar');
-            const titleEl = document.getElementById('undoTitle');
-
-            titleEl.textContent = title;
+            document.getElementById('undoTitle').textContent = action.type === 'save' ? 'SAVE QUEUED' : 'DELETE QUEUED';
             undoBox.style.display = 'flex';
-
             loadingBar.style.animation = 'none';
             void loadingBar.offsetWidth;
             loadingBar.style.animation = 'loadingBarAnim 2s linear forwards';
+            action.timer = setTimeout(async () => {
+                action.phase = 'committing';
+                hideUndoBox();
+                try {
+                    await commit();
+                } finally {
+                    if (pendingAction === action) pendingAction = null;
+                }
+            }, 2000);
         }
 
         window.handleUndoClick = function () {
-            if (pendingActionTimeout) {
-                clearTimeout(pendingActionTimeout);
-                pendingActionTimeout = null;
+            const action = pendingAction;
+            if (!action || action.phase !== 'waiting') return;
+            clearTimeout(action.timer);
+            pendingAction = null;
+            hideUndoBox();
+            action.undo();
+        };
 
-                if (pendingActionType === 'delete') {
-                    undoDeletion();
-                } else if (pendingActionType === 'save') {
-                    undoSave();
-                }
-
-                hideUndoBox();
-            }
-        }
-
-        // SAVE WITH UNDO
         window.triggerSaveWithUndo = function () {
-            const data = window._pendingSaveData;
+            if (!window._pendingSaveData || !canQueueAction()) return;
+            const data = JSON.parse(JSON.stringify(window._pendingSaveData));
             const originalId = window._pendingOriginalId;
-            const baseVersion = window._pendingBaseVersion;
-            if (!data) return;
-
+            const baseVersion = { ...window._pendingBaseVersion };
             hideSaveModal();
-            pendingData = data;
-            pendingId = originalId;
-            pendingBaseVersion = baseVersion;
+            queueAction({ type: 'save', undo() {
+                if (activeLogId?.toString() === originalId.toString()) selectLog(originalId);
+                showToast('Save undone!');
+            } }, () => executeSave(data, originalId, baseVersion));
+        };
 
-            // Show Undo UI
-            showUndoBox('save', 'SAVED!');
-
-            pendingActionTimeout = setTimeout(async () => {
-                await executeSave(pendingData, pendingId, pendingBaseVersion);
-                hideUndoBox();
-            }, 2000);
-        }
-
-        function undoSave() {
-            showToast("Save undone!");
-            // Data is still in the editor, we just didn't push to Firebase
-            // So we just re-select the log to ensure local state is synced
-            selectLog(pendingId);
-            pendingData = null;
-            pendingId = null;
-            pendingBaseVersion = null;
-        }
-
-        // DELETE WITH UNDO
-        window.triggerDeleteWithUndo = function () {
-            if (!activeLogId) return;
-            pendingId = activeLogId;
-
-            document.getElementById('deleteModalOverlay').style.display = 'none';
-
-            // Hide selection in UI immediately
-            const originalLogs = [...currentLogs];
-            currentLogs = currentLogs.filter(l => l.id.toString() !== pendingId.toString());
+        function restoreDeletedLog(log) {
+            if (!currentLogs.some(entry => entry.id.toString() === log.id.toString())) currentLogs.push(log);
+            currentLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
             renderLogList(currentLogs);
+            if (!activeLogId) selectLog(log.id);
+        }
 
-            // Clear editor
-            document.getElementById('jsonEditor').value = "";
-            document.getElementById('editorTitle').textContent = "Select a Log";
+        function clearLogEditor() {
+            activeLogId = null;
+            document.getElementById('jsonEditor').value = '';
+            document.getElementById('editorTitle').textContent = 'Select a Log';
             document.getElementById('editorActions').style.display = 'none';
             document.getElementById('workoutDateEditor').style.display = 'none';
+        }
 
-            showUndoBox('delete', 'DELETED!');
-            window._tempLogsBeforeDelete = originalLogs;
-
-            pendingActionTimeout = setTimeout(async () => {
+        window.triggerDeleteWithUndo = function () {
+            if (!activeLogId || !canQueueAction()) return;
+            const id = activeLogId;
+            const source = currentLogs.find(log => log.id.toString() === id.toString());
+            if (!source) return;
+            const deletedLog = JSON.parse(JSON.stringify(source));
+            document.getElementById('deleteModalOverlay').style.display = 'none';
+            currentLogs = currentLogs.filter(log => log.id.toString() !== id.toString());
+            clearLogEditor();
+            renderLogList(currentLogs);
+            queueAction({ type: 'delete', undo() {
+                restoreDeletedLog(deletedLog);
+                showToast('Deletion undone!');
+            } }, async () => {
                 try {
-                    await deleteDoc(getWorkoutDocRef(pendingId));
-                    showToast("Log permanently deleted");
-                } catch (err) {
-                    console.error(err);
-                    showToast("Final deletion failed", "error");
-                    currentLogs = window._tempLogsBeforeDelete;
+                    showLoading(true, 'Deleting from Firebase...');
+                    await deleteDoc(getWorkoutDocRef(id));
+                    currentLogs = currentLogs.filter(log => log.id.toString() !== id.toString());
+                    if (activeLogId?.toString() === id.toString()) clearLogEditor();
+                    selectedLogIds.delete(id.toString());
                     renderLogList(currentLogs);
+                    showToast('Log permanently deleted');
+                } catch (error) {
+                    console.error(error);
+                    restoreDeletedLog(deletedLog);
+                    showToast('Deletion failed', 'error');
+                } finally {
+                    showLoading(false);
                 }
-                hideUndoBox();
-            }, 2000);
-        }
-
-        function undoDeletion() {
-            if (window._tempLogsBeforeDelete) {
-                currentLogs = window._tempLogsBeforeDelete;
-                renderLogList(currentLogs);
-                selectLog(pendingId);
-            }
-            showToast("Deletion undone!");
-        }
+            });
+        };
 
         function hideUndoBox() {
             document.getElementById('undoBox').style.display = 'none';
-            pendingActionType = null;
-            pendingActionTimeout = null;
-            const btn = document.querySelector('.btn-danger');
-            if (btn) btn.textContent = 'Delete';
         }
 
         window.deleteCurrentLog = function () {
