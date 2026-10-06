@@ -243,14 +243,9 @@
             background: linear-gradient(90deg, var(--accent-primary), rgba(255, 187, 0, 0.72), transparent);
         }
 
-        .hero-card .eyebrow {
-            color: var(--accent-secondary);
-        }
-
         .coach-brief { margin-bottom: 24px; }
         .coach-brief-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
         .coach-brief-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; line-height: 1.15; }
-        .coach-brief-status { color: var(--text-secondary); font-size: 0.85rem; }
         .coach-brief .coach-heading { margin-top: 8px; }
         .coach-context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0 24px; }
         .coach-context-label { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 6px; }
@@ -264,15 +259,6 @@
         @media (max-width: 640px) {
             .coach-context-grid, .coach-lift-list { grid-template-columns: 1fr; }
             .coach-brief-head { display: block; }
-            .coach-brief-status { display: block; margin-top: 8px; }
-        }
-
-        .eyebrow {
-            color: var(--warning);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 0.75rem;
-            margin-bottom: 8px;
         }
 
         h2 {
@@ -429,10 +415,6 @@
 
         .timeline-card::before {
             background: linear-gradient(90deg, rgba(0, 255, 136, 0.92), rgba(63, 255, 211, 0.75), rgba(255, 93, 143, 0.55), transparent);
-        }
-
-        .timeline-card .eyebrow {
-            color: var(--coach);
         }
 
         .timeline-top {
@@ -987,11 +969,6 @@
                 display: block;
             }
 
-            .coach-brief-status {
-                display: inline-block;
-                margin-top: 10px;
-            }
-
             .table-wrap {
                 overflow-x: visible;
             }
@@ -1088,14 +1065,12 @@
         </nav>
 
         <main>
-            <div class="coach-page-heading"><div><div class="eyebrow">Training intelligence</div><h2>Your coach.</h2></div><a class="season-jump" href="#seasonOverview">Explore your season <span aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
+            <div class="coach-page-heading"><div><h2>COACH</h2></div><a class="season-jump" href="#seasonOverview">Explore your season <span aria-hidden="true"><svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
             <section class="coach-brief" aria-labelledby="coachBriefHeading">
                 <div class="coach-brief-head">
                     <h2 class="coach-brief-title" id="coachBriefHeading">What To Do Next</h2>
-                    <span class="coach-brief-status" id="coachBriefStatus">Reading workout</span>
                 </div>
                 <div class="coach-section coach-prescription" id="coachPrescription">
-                    <div class="coach-action" id="coachNextAction">Checking completed working sets</div>
                     <h3 class="coach-heading" id="coachFocusLift">Your next workout</h3>
                     <div class="coach-weight" id="coachNextWeight"></div>
                     <div class="coach-set-target" id="coachNextSets"></div>
@@ -1109,7 +1084,7 @@
                 </details>
             </section>
             <section class="season-overview" id="seasonOverview" aria-labelledby="seasonHeading">
-                <div class="season-heading"><div><div class="eyebrow" id="planName">Current season</div><h2 id="seasonHeading">The bigger picture.</h2></div><p id="planSummary">Every session adds up. Here’s your season so far.</p></div>
+                <div class="season-heading"><div><h2 id="seasonHeading">YOUR PROGRESS</h2></div><p id="planSummary">Every session adds up. Here’s your season so far.</p></div>
                 <div class="season-dashboard">
                     <div class="season-journey">
                         <div class="journey-top"><span class="mini-label">Your season, in motion</span><span id="daysLeftValue">Checking activity</span></div>
@@ -1654,7 +1629,6 @@
             const activeRecently = snapshot.activeRecently;
             const daysSinceWorkout = snapshot.daysSinceWorkout;
 
-            document.getElementById('planName').textContent = activeSeason?.name || 'Current Season';
             document.getElementById('startDateValue').textContent = formatRangeDate(start);
             document.getElementById('endDateValue').textContent = formatRangeDate(now);
             document.getElementById('trackedLiftCount').textContent = workoutLogs.length;
@@ -1739,11 +1713,9 @@
             const focus = advice[0];
             const snapshot = getSharedSeasonSnapshot();
             const latestWorkout = snapshot.latestWorkout;
-            document.getElementById('coachBriefStatus').textContent = advice.length ? 'Today’s workout' : 'Rest day';
             document.getElementById('coachReadout').textContent = `${ready} ready to add weight. ${building} building reps.`;
             document.getElementById('coachReadoutDetail').textContent = `${reduce} suggested lighter steps. ${noData} lifts need a starting session or rep range.`;
             document.getElementById('coachPrescription').dataset.action = focus?.action || 'rest';
-            document.getElementById('coachNextAction').textContent = focus?.actionLabel || 'Recovery day';
             document.getElementById('coachFocusLift').textContent = focus?.name || 'No lifts scheduled today';
             const hasWeight = focus && Number.isFinite(focus.targetWeightKg);
             const weight = document.getElementById('coachNextWeight');

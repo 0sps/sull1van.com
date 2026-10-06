@@ -5765,7 +5765,7 @@
             document.getElementById('trainingPlanModalTitle').textContent = 'COACH';
             document.getElementById('trainingPlanModalContent').innerHTML = `
                 <div class="training-coach-shell">
-                    <div class="coach-lift-heading"><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4><span class="coach-caption">${escapeHtml(target.confidence.detail)}</span></div>
+                    <div class="coach-lift-heading"><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4>${target.recentSessions.length ? `<span class="coach-caption">${escapeHtml(target.confidence.detail)}</span>` : ''}</div>
                     <section class="coach-section coach-prescription" data-action="${escapeHtml(target.action)}" aria-label="Workout recommendation">
                         <div class="coach-action"><span class="coach-action-symbol" aria-hidden="true">${target.action === 'increase' ? '↗' : target.action === 'reduce' ? '↘' : '→'}</span>${escapeHtml(target.actionLabel)}</div>
                         <span class="coach-kicker coach-weight-label">${hasWeight ? 'Your working weight' : 'Start here'}</span>
