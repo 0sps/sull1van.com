@@ -203,6 +203,54 @@ function pageContext(page, names, bindings) {
 }
 const prohibitedCopy = new RegExp(['sig' + 'nal', 'noi' + 'se'].join('|'), 'i');
 
+test('STATS dropdowns show real coach weight changes and the matching last working set', () => {
+    const increase = recommend(setup([log('2026-09-28', [10, 10, 10], 100)]));
+    const largerIncrease = recommend(setup([log('2026-09-28', [10, 10, 10], 150)], { progressionStepKg: lbsToKg(10) }));
+    const reduce = recommend(setup([
+        log('2026-09-28', [5, 5, 5], 225), log('2026-09-25', [5, 5, 5], 225)
+    ], { progressionStepKg: lbsToKg(10) }));
+    assert.equal(increase.action, 'increase');
+    assert.equal(reduce.action, 'reduce');
+    // A heavier warmup must never replace the working weight or reps shown.
+    reduce.recentSession.workingSets.push({ weight: lbsToKg(300), reps: 1, isWarmup: true });
+    const repeat = recommend(setup([log('2026-09-28', [8, 8, 8], 100)]));
+    const liftRows = [
+        { id: 'a', exercise: { name: 'Press <heavy>' }, planExercise: {}, recommendation: increase },
+        { id: 'b', exercise: { name: 'Row' }, planExercise: {}, recommendation: largerIncrease },
+        { id: 'c', exercise: { name: 'Squat' }, planExercise: {}, recommendation: reduce },
+        { id: 'd', exercise: { name: 'Repeat lift' }, planExercise: {}, recommendation: repeat }
+    ];
+    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml'], { liftRows });
+    sandbox.renderLiftActions();
+    const html = sandbox.elements.get('liftActions').innerHTML;
+    assert.ok(html.includes('Ready to add weight: 2'));
+    assert.ok(html.includes('Try a lighter weight: 1'));
+    assert.ok(html.includes('Press &lt;heavy&gt;'));
+    assert.ok(html.includes('Last: 100 lbs'));
+    assert.ok(html.includes('Last: 225 lbs × 5'));
+    assert.ok(html.includes('+5 lbs'));
+    assert.ok(html.includes('+10 lbs'));
+    assert.ok(html.includes('-10 lbs'));
+    assert.ok(!html.includes('Repeat lift'));
+    assert.ok(!html.includes('300 lbs'));
+    assert.equal((html.match(/<details /g) || []).length, 2);
+});
+
+test('STATS action dropdowns disappear when no matching recommendations remain', () => {
+    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml'], {
+        liftRows: [{ id: 'a', exercise: { name: 'Press' }, planExercise: {}, recommendation: recommend(setup([log('2026-09-28', [10, 10, 10])])) }]
+    });
+    sandbox.renderLiftActions();
+    assert.ok(sandbox.elements.get('liftActions').innerHTML.includes('Ready to add weight: 1'));
+    assert.ok(!sandbox.elements.get('liftActions').innerHTML.includes('Try a lighter weight'));
+    sandbox.liftRows[0].recommendation = recommend(setup([log('2026-09-28', [8, 8, 8])]));
+    sandbox.renderLiftActions();
+    assert.equal(sandbox.elements.get('liftActions').innerHTML, '');
+    sandbox.liftRows = [];
+    sandbox.renderLiftActions();
+    assert.equal(sandbox.elements.get('liftActions').innerHTML, '');
+});
+
 test('Coach modal renders actual evidence, live completion, and escaped exercise names', () => {
     const coach = setup([log('2026-09-28')]);
     const target = recommend(coach);
@@ -256,7 +304,7 @@ test('dashboard uses the real weekly plan and the shared coach for every schedul
         'calculateEstimatedMaxKg', 'getBestEstimatedMax', 'getGoalIncreaseKg', 'getWeeklyTargetIncreaseKg',
         'getSeasonBaseline', 'getSeasonTargetWeightKg', 'getPlanStatus', 'getTrainingPlanEntries',
         'getMostRecentLift', 'getDailyAverages', 'buildLiftRows', 'formatLiftWeight', 'getLiftName',
-        'getSharedSeasonSnapshot', 'getTodaysAdvice', 'renderSummary', 'renderCoachBrief', 'renderLiftTable',
+        'getSharedSeasonSnapshot', 'getTodaysAdvice', 'renderSummary', 'renderLiftActions', 'renderCoachBrief', 'renderLiftTable',
         'renderChartStats', 'buildChart', 'progressionIcon'
     ], { coach, trainingPlanData, progressionPlanData, exercisesData, workoutLogs, liftRows: [], chartMetric: 'load' });
     sandbox.buildLiftRows();

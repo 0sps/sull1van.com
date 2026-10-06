@@ -1048,6 +1048,7 @@
                     <div class="season-lifts">
                         <h3 class="stats-heading">STATS</h3>
                         <div class="lift-health-visual"><div class="lift-health-ring" id="liftHealthRing" role="img" aria-label="Loading lift status"><div><strong id="seasonLiftTotal">0</strong><span>tracked lifts</span></div></div><div class="lift-health-key" id="liftHealthKey"></div></div>
+                        <div class="lift-actions" id="liftActions"></div>
                         <p class="coach-message" id="coachMessage">Loading season readout...</p>
                         <div class="timeline-stats" id="timelineStats"></div>
                     </div>
@@ -1631,6 +1632,30 @@
             return coach.getWorkoutAdvice(trainingPlanData.workouts?.[key]?.exercises || []);
         }
 
+        function renderLiftActions() {
+            const groups = [
+                { action: 'increase', label: 'Ready to add weight' },
+                { action: 'reduce', label: 'Try a lighter weight' }
+            ];
+            document.getElementById('liftActions').innerHTML = groups.map(group => {
+                const rows = liftRows.filter(row => row.recommendation.action === group.action);
+                if (!rows.length) return '';
+                const lifts = rows.map(row => {
+                    const recommendation = row.recommendation;
+                    const session = recommendation.recentSession;
+                    const lastWeightKg = session.representativeWeightKg;
+                    const changeLbs = displayWeight(recommendation.targetWeightKg) - displayWeight(lastWeightKg);
+                    const lastReps = session.workingSets
+                        .filter(set => Math.abs(Number(set.weight) - lastWeightKg) < 0.01)
+                        .reduce((max, set) => Math.max(max, Number(set.reps) || 0), 0);
+                    const lastWeight = formatLiftWeight(lastWeightKg, row.planExercise);
+                    const last = group.action === 'reduce' && lastReps > 0 ? `${lastWeight} × ${lastReps}` : lastWeight;
+                    return `<li><div><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-last">Last: ${escapeHtml(last)}</span></div><span class="lift-action-change">${changeLbs > 0 ? '+' : ''}${escapeHtml(changeLbs)} lbs<span>next time</span></span></li>`;
+                }).join('');
+                return `<details class="lift-action-group action-${group.action}"><summary>${group.label}: ${rows.length}</summary><ul>${lifts}</ul></details>`;
+            }).join('');
+        }
+
         function renderSummary() {
             const count = action => liftRows.filter(row => row.recommendation.action === action).length;
             const ready = count('increase');
@@ -1657,6 +1682,7 @@
             ring.setAttribute('aria-label', groups.map(group => `${group.count} ${group.label.toLowerCase()}`).join(', '));
             document.getElementById('seasonLiftTotal').textContent = liftRows.length;
             document.getElementById('liftHealthKey').innerHTML = groups.map(group => `<div><i style="background:${group.color}"></i><span>${group.label}</span><strong>${group.count}</strong></div>`).join('');
+            renderLiftActions();
             let message = `${ready} lift${ready === 1 ? '' : 's'} ready for a weight increase. ${building} building reps at the current weight.`;
             if (noData === liftRows.length) message = 'Log the first working sets for your scheduled lifts to get started.';
             if (reduce) message += ` ${reduce} lift${reduce === 1 ? '' : 's'} could use one lighter step after repeated missed reps.`;
