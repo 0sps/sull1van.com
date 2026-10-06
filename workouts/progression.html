@@ -201,15 +201,6 @@
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .page-hero {
-            display: grid;
-            grid-template-columns: minmax(320px, 0.78fr) minmax(420px, 1.22fr);
-            gap: 18px;
-            align-items: stretch;
-            margin-bottom: 18px;
-        }
-
-        .hero-card,
         .panel {
             background: rgba(17, 17, 19, 0.94);
             border: 1px solid var(--border);
@@ -217,19 +208,6 @@
             position: relative;
         }
 
-        .hero-card {
-            background:
-                radial-gradient(circle at 10% 0%, rgba(255, 61, 0, 0.14), transparent 38%),
-                radial-gradient(circle at 94% 18%, rgba(255, 187, 0, 0.08), transparent 32%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)),
-                var(--bg-secondary);
-            border-color: rgba(255, 109, 61, 0.24);
-            border-left: 3px solid var(--accent-primary);
-            box-shadow: inset 0 0 42px rgba(255, 61, 0, 0.025);
-        }
-
-        .hero-card::before,
-        .timeline-card::before,
         .coach-brief::before,
         .collapsible-panel::before {
             content: '';
@@ -237,10 +215,6 @@
             inset: 0 0 auto;
             height: 2px;
             pointer-events: none;
-        }
-
-        .hero-card::before {
-            background: linear-gradient(90deg, var(--accent-primary), rgba(255, 187, 0, 0.72), transparent);
         }
 
         .coach-brief { margin-bottom: 24px; }
@@ -265,113 +239,12 @@
             letter-spacing: 2px;
         }
 
-        .subcopy {
-            color: var(--text-secondary);
-            line-height: 1.55;
-            margin-top: 12px;
-            max-width: 780px;
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-top: 22px;
-        }
-
-        .mini-stat {
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            min-height: 92px;
-        }
-
-        .date-range-stat {
-            position: relative;
-            min-height: 196px;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 50% 18%, rgba(255, 187, 0, 0.13), transparent 42%),
-                radial-gradient(ellipse at 15% 0%, rgba(255, 61, 0, 0.08), transparent 38%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-            border-color: rgba(255, 109, 61, 0.26);
-            box-shadow:
-                inset 0 0 34px rgba(255, 109, 61, 0.025),
-                0 0 24px rgba(255, 61, 0, 0.04);
-        }
-
-        .date-range-row {
-            position: relative;
-            display: grid;
-            grid-template-columns: minmax(84px, max-content) minmax(64px, 1fr) minmax(84px, max-content);
-            align-items: center;
-            gap: 12px;
-            margin-top: 14px;
-            min-height: 84px;
-        }
-
-        .date-node {
-            position: relative;
-            z-index: 1;
-        }
-
-        .date-node.end {
-            text-align: right;
-        }
-
-        .date-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: var(--type-heading);
-            line-height: 0.92;
-            letter-spacing: 1.5px;
-            color: #fff4ce;
-            text-shadow:
-                0 0 14px rgba(255, 187, 0, 0.35),
-                0 0 26px rgba(255, 109, 61, 0.22);
-        }
-
         .date-caption {
             color: var(--text-muted);
             font-size: var(--type-meta);
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-top: 8px;
-        }
-
-        .date-arc {
-            align-self: center;
-            width: 100%;
-            min-width: 58px;
-            max-width: 128px;
-            justify-self: center;
-            filter:
-                drop-shadow(0 0 10px rgba(255, 187, 0, 0.44))
-                drop-shadow(0 0 18px rgba(255, 109, 61, 0.2));
-        }
-
-        .date-arc path {
-            fill: none;
-            stroke: url(#dateArcGradient);
-            stroke-width: 5;
-            stroke-linecap: round;
-        }
-
-        .date-range-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .date-metric {
-            background: rgba(0, 0, 0, 0.22);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            padding: 10px;
-        }
-
-        .date-metric .mini-value {
-            color: #ffd7a0;
-            text-shadow: 0 0 16px rgba(255, 109, 61, 0.24);
         }
 
         .mini-label {
@@ -394,64 +267,12 @@
             margin-top: 4px;
         }
 
-        .timeline-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 78% 0%, rgba(0, 255, 136, 0.13), transparent 40%),
-                radial-gradient(ellipse at 12% 92%, rgba(255, 93, 143, 0.08), transparent 38%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.012)),
-                var(--bg-secondary);
-            border-color: rgba(63, 255, 211, 0.2);
-            box-shadow:
-                inset 0 0 50px rgba(63, 255, 211, 0.025),
-                0 0 28px rgba(0, 255, 136, 0.035);
-        }
-
-        .timeline-card::before {
-            background: linear-gradient(90deg, rgba(0, 255, 136, 0.92), rgba(63, 255, 211, 0.75), rgba(255, 93, 143, 0.55), transparent);
-        }
-
-        .timeline-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
         .timeline-week {
             font-family: 'Bebas Neue', sans-serif;
             font-size: var(--type-heading);
             line-height: 1;
             color: #b0ffee;
             text-shadow: 0 0 20px rgba(0, 255, 136, 0.24);
-        }
-
-        .timeline-track {
-            position: relative;
-            height: 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .timeline-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff88, #3fffd3, #b0ffee);
-            box-shadow:
-                0 0 22px rgba(0, 255, 136, 0.24),
-                0 0 34px rgba(63, 255, 211, 0.08);
-        }
-
-        .timeline-labels {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            font-size: var(--type-meta);
         }
 
         .coach-message {
@@ -464,61 +285,6 @@
             font-size: var(--type-body);
             line-height: 1.35;
             box-shadow: inset 0 0 24px rgba(0, 255, 136, 0.025);
-        }
-
-        .plan-health {
-            display: grid;
-            grid-template-columns: var(--good-share, 1fr) var(--bad-share, 1fr) var(--warn-share, 1fr);
-            gap: 4px;
-            height: 12px;
-            margin-top: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 2px;
-        }
-
-        .plan-health-segment {
-            min-width: 4px;
-        }
-
-        .plan-health-segment.good {
-            background: linear-gradient(90deg, rgba(0, 255, 136, 0.65), rgba(102, 255, 185, 0.95));
-            box-shadow: 0 0 14px rgba(0, 255, 136, 0.3);
-        }
-
-        .plan-health-segment.bad {
-            background: linear-gradient(90deg, rgba(255, 93, 143, 0.72), rgba(255, 132, 174, 0.98));
-            box-shadow: 0 0 14px rgba(255, 93, 143, 0.3);
-        }
-
-        .plan-health-segment.warn {
-            background: linear-gradient(90deg, rgba(255, 187, 0, 0.68), rgba(255, 220, 112, 0.98));
-            box-shadow: 0 0 14px rgba(255, 187, 0, 0.28);
-        }
-
-        .plan-health-labels {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
-            margin-top: 8px;
-            color: var(--text-muted);
-            font-size: var(--type-meta);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .plan-health-labels span:nth-child(1) {
-            color: rgba(102, 255, 185, 0.86);
-        }
-
-        .plan-health-labels span:nth-child(2) {
-            color: rgba(255, 132, 174, 0.9);
-            text-align: center;
-        }
-
-        .plan-health-labels span:nth-child(3) {
-            color: rgba(255, 220, 112, 0.9);
-            text-align: right;
         }
 
         .timeline-stats {
@@ -552,25 +318,6 @@
         .timeline-stat.warn .mini-value {
             color: var(--warning);
             text-shadow: 0 0 16px rgba(255, 187, 0, 0.24);
-        }
-
-        .timeline-stat-line {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.14);
-            margin: 12px 0 10px;
-        }
-
-        .timeline-stat.good .timeline-stat-line {
-            background: rgba(0, 255, 136, 0.36);
-        }
-
-        .timeline-stat.bad .timeline-stat-line {
-            background: rgba(255, 93, 143, 0.4);
-        }
-
-        .timeline-stat.warn .timeline-stat-line {
-            background: rgba(255, 187, 0, 0.38);
         }
 
         .section-title {
@@ -737,8 +484,6 @@
             gap: 16px;
         }
 
-
-
         .chart-side-list {
             display: grid;
             gap: 10px;
@@ -833,18 +578,30 @@
             text-align: center;
         }
 
-        .timeline-card, .hero-card, .collapsible-panel, .chart-card,
-        .side-stat, .mini-stat, .date-metric {
+        .collapsible-panel,
+        .chart-card,
+        .side-stat {
             border-radius: 0;
             border-color: var(--border);
             background: var(--bg-secondary);
             box-shadow: none;
         }
-        .hero-card::before, .timeline-card::before, .collapsible-panel::before { display: none; }
-        .mini-label, .mini-note, .date-caption, .timeline-labels, .collapse-preview, .chart-label, .legend, .lift-meta { color: var(--text-secondary); }
+        .collapsible-panel::before { display: none; }
+        .mini-label,
+        .mini-note,
+        .date-caption,
+        .collapse-preview,
+        .chart-label,
+        .legend,
+        .lift-meta { color: var(--text-secondary); }
         .mini-label, .date-caption { font-size: var(--type-meta); }
-        .mini-note, .collapse-preview, .timeline-labels, .legend, .lift-meta { font-size: var(--type-meta); line-height: 1.6; }
-        .timeline-week, .date-value, .mini-value, .num-strong { text-shadow: none; }
+        .mini-note,
+        .collapse-preview,
+        .legend,
+        .lift-meta { font-size: var(--type-meta); line-height: 1.6; }
+        .timeline-week,
+        .mini-value,
+        .num-strong { text-shadow: none; }
         .coach-message { background: var(--coach-soft); box-shadow: none; font-family: 'Space Mono', monospace; color: var(--text-primary); line-height: 1.6; }
         .chart-plan { stroke: var(--text-secondary); }
         .chart-point { fill: var(--text-primary); filter: none; }
@@ -852,17 +609,11 @@
         .legend .plan::before { background: var(--text-secondary); }
         .btn:focus-visible, .collapsible-trigger:focus-visible { outline: 2px solid var(--coach); outline-offset: 4px; }
 
-        .timeline-track,
-        .plan-health,
         .status-pill {
             border-radius: 999px;
         }
 
-        .timeline-fill,
-        .plan-health-segment,
-
         @media (max-width: 1020px) {
-            .page-hero,
             .chart-layout {
                 grid-template-columns: 1fr;
             }
@@ -880,30 +631,6 @@
 
             h2 {
                 font-size: var(--type-heading);
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .date-range-row {
-                grid-template-columns: minmax(64px, max-content) minmax(54px, 1fr) minmax(64px, max-content);
-                gap: 8px;
-                min-height: 70px;
-            }
-
-            .date-node.end {
-                text-align: right;
-            }
-
-            .date-value {
-                font-size: var(--type-heading);
-            }
-
-            .date-arc {
-                height: 38px;
-                min-width: 44px;
-                max-width: 96px;
             }
 
             .timeline-stats {
@@ -1296,8 +1023,6 @@
                 down: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 9 7 7 7-7M12 4v12"/></svg>',
                 equal: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 9h14M5 15h14"/></svg>',
                 clock: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-                award: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="5"/><path d="m8 12-1 9 5-3 5 3-1-9"/></svg>',
-                weight: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 6h8l4 15H4L8 6Z"/><path d="M9 6V4a3 3 0 0 1 6 0v2"/></svg>'
             };
             return icons[name] || '';
         }
@@ -1411,9 +1136,7 @@
             const advice = row.recommendation;
             return {
                 label: advice.actionLabel,
-                className: advice.action === 'reduce' ? 'bad' : ['increase', 'repeat'].includes(advice.action) ? 'good' : 'warn',
-                deltaKg: null,
-                mode: 'load'
+                className: advice.action === 'reduce' ? 'bad' : ['increase', 'repeat'].includes(advice.action) ? 'good' : 'warn'
             };
         }
 
@@ -1481,14 +1204,11 @@
                         const reps = Number(set.reps);
                         if (!Number.isInteger(reps) || reps <= 0 || !Number.isFinite(weight) || weight < 0 || (weight === 0 && planExercise?.targetMode !== 'bodyweight')) continue;
 
-                        const row = byDay.get(dayKey) || { date: dayKey, weightTotal: 0, repTotal: 0, setCount: 0 };
+                        const row = byDay.get(dayKey) || { date: dayKey, weightTotal: 0, setCount: 0 };
                         row.weightTotal += weight;
-                        row.repTotal += reps;
                         row.setCount += 1;
                         const estimatedMaxKg = reps <= 12 ? calculateEstimatedMaxKg(weight, reps, coachConfig.formula, exerciseId) : null;
                         if (Number.isFinite(estimatedMaxKg)) {
-                            row.estimatedMaxTotal = (row.estimatedMaxTotal || 0) + estimatedMaxKg;
-                            row.estimatedMaxCount = (row.estimatedMaxCount || 0) + 1;
                             row.bestEstimatedMaxKg = Math.max(row.bestEstimatedMaxKg || 0, estimatedMaxKg);
                         }
                         byDay.set(dayKey, row);
@@ -1499,8 +1219,6 @@
             return [...byDay.values()].map(row => ({
                 date: row.date,
                 avgWeightKg: row.weightTotal / row.setCount,
-                avgReps: row.repTotal / row.setCount,
-                avgEstimatedMaxKg: row.estimatedMaxCount ? row.estimatedMaxTotal / row.estimatedMaxCount : null,
                 bestEstimatedMaxKg: row.bestEstimatedMaxKg || null,
                 setCount: row.setCount
             }));
@@ -1515,13 +1233,9 @@
                 const targetTodayKg = recommendation.targetWeightKg;
                 const latest = getMostRecentLift(entry.id);
                 const coachConfig = getCoachConfig(entry.planExercise);
-                const estimateSessions = recommendation.recentSessions;
                 const bestEstimate = recommendation.bestEstimate;
                 const baselineEstimate = baselineSession
                     ? getBestEstimatedMax([{ date: baselineSession.date, sets: baselineSession.workingSets }], coachConfig, entry.id)
-                    : null;
-                const targetEstimateKg = entry.repRange.max <= 12
-                    ? calculateEstimatedMaxKg(targetTodayKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
                     : null;
                 const goalEstimateKg = entry.repRange.max <= 12
                     ? calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
@@ -1541,10 +1255,8 @@
                     goalKg,
                     goalEstimateKg,
                     targetTodayKg,
-                    targetEstimateKg,
                     latest,
                     coachConfig,
-                    estimateSessions,
                     bestEstimate,
                     seasonStrengthGainKg,
                     seasonStrengthGainPercent,
@@ -1689,9 +1401,9 @@
             if (latestRecord) message += ` Latest PR: ${latestRecord.exerciseName} on ${formatDate(latestRecord.date, DateFormats.SHORT)}.`;
             document.getElementById('coachMessage').textContent = message;
             document.getElementById('timelineStats').innerHTML = `
-                <div class="timeline-stat good"><div class="mini-value">${snapshot.prCount}</div><div class="timeline-stat-line"></div><div class="mini-label">PRs · Last 14 Days</div></div>
-                <div class="timeline-stat warn"><div class="mini-value">${ready}</div><div class="timeline-stat-line"></div><div class="mini-label">Ready to Add Weight</div></div>
-                <div class="timeline-stat ${snapshot.activeRecently ? 'good' : 'bad'}"><div class="mini-value">${snapshot.activeRecently ? 'ON' : 'OFF'}</div><div class="timeline-stat-line"></div><div class="mini-label">Rolling 7 Days</div></div>`;
+                <div class="timeline-stat good"><div class="mini-value">${snapshot.prCount}</div><div class="mini-label">PRs · Last 14 Days</div></div>
+                <div class="timeline-stat warn"><div class="mini-value">${ready}</div><div class="mini-label">Ready to Add Weight</div></div>
+                <div class="timeline-stat ${snapshot.activeRecently ? 'good' : 'bad'}"><div class="mini-value">${snapshot.activeRecently ? 'ON' : 'OFF'}</div><div class="mini-label">Rolling 7 Days</div></div>`;
             document.getElementById('trackedLiftsPreview').textContent = `${liftRows.length} lifts · ${ready} ready to increase · ${building} building reps`;
             document.getElementById('liftProgressPreview').textContent = noData === liftRows.length
                 ? 'Charts appear after your first working sets'

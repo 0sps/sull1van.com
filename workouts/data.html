@@ -1540,11 +1540,6 @@
             return { error, checks };
         }
 
-        function getValidationError(data) {
-            // Deprecated in favor of runValidation
-            return runValidation(data).error;
-        }
-
         function showValidationModal(errorMsg) {
             document.getElementById('validationErrorDetail').textContent = errorMsg;
             document.getElementById('validationModalOverlay').style.display = 'flex';
@@ -1638,10 +1633,6 @@
             } finally {
                 showLoading(false);
             }
-        }
-
-        window.proceedWithSave = async function () {
-            // This function is effectively replaced by proceedWithSaveAnyway and triggerSaveWithUndo
         }
 
         // SHARED UNDO SYSTEM

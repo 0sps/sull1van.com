@@ -254,17 +254,7 @@
             return events.sort((a, b) => new Date(b.date) - new Date(a.date));
         }
 
-        function getRecentPRs(limitCount = 5) {
-            return getPRTimeline().slice(0, Math.max(0, limitCount));
-        }
-
-        function getPRCountSince(date) {
-            const cutoff = parseDate(date);
-            if (!cutoff) return 0;
-            return getPRTimeline().filter(event => parseDate(event.date) >= cutoff).length;
-        }
-
-        return { evaluateExercise, getSeasonLogs, getPRTimeline, getRecentPRs, getPRCountSince };
+        return { evaluateExercise, getSeasonLogs, getPRTimeline };
     }
 
     window.WorkoutRecords = { create: createRecordTracker };

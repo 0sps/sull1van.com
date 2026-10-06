@@ -128,7 +128,6 @@ h2 { font-size: var(--type-heading); letter-spacing: .5px; }
 .coach-message { font-family: inherit; font-size: var(--type-body); color: var(--text-secondary); line-height: 1.65; background: none; border: 0; padding: 0; margin-top: 0; }
 .timeline-stats { border-top: 1px solid var(--border); padding-top: 20px; gap: 16px; margin-top: 20px; }
 .timeline-stat .mini-value { font-size: var(--type-heading); text-shadow: none; }
-.timeline-stat-line { display: none; }
 .timeline-stat .mini-label { font-size: var(--type-meta); letter-spacing: .2px; margin-top: 8px; line-height: 1.5; }
 .coach-context-grid { gap: 28px; margin: 22px 0 0; }
 .coach-context-grid > div { display: flex; align-items: flex-start; gap: 14px; }

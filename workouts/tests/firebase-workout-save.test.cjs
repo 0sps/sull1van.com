@@ -117,7 +117,7 @@ function editorHarness(editor, remote = original, options = {}) {
         vm.runInContext([
             section(html, '        window.updateWorkoutDate =', "        document.getElementById('jsonEditor').addEventListener('input'"),
             section(html, '        window.saveCurrentLog =', '        function showSaveModal('),
-            section(html, '        class WorkoutEditorConflictError', '        window.proceedWithSave =')
+            section(html, '        class WorkoutEditorConflictError', '        // SHARED UNDO SYSTEM')
         ].join('\n'), context);
     }
     return { ...firebase, context, notifications, elements, inputValue, async save() {
