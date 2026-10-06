@@ -257,7 +257,7 @@ test('dashboard uses the real weekly plan and the shared coach for every schedul
         'getSeasonBaseline', 'getSeasonTargetWeightKg', 'getPlanStatus', 'getTrainingPlanEntries',
         'getMostRecentLift', 'getDailyAverages', 'buildLiftRows', 'formatLiftWeight', 'getLiftName',
         'getSharedSeasonSnapshot', 'getTodaysAdvice', 'renderSummary', 'renderCoachBrief', 'renderLiftTable',
-        'renderChartStats', 'buildChart'
+        'renderChartStats', 'buildChart', 'progressionIcon'
     ], { coach, trainingPlanData, progressionPlanData, exercisesData, workoutLogs, liftRows: [], chartMetric: 'load' });
     sandbox.buildLiftRows();
     const allIds = new Set(Object.values(trainingPlanData.workouts).flatMap(workout => workout.exercises.map(ex => ex.id)));
@@ -278,7 +278,14 @@ test('dashboard uses the real weekly plan and the shared coach for every schedul
     sandbox.chartMetric = 'strength';
     assert.ok(!/NaN|Infinity/.test(sandbox.buildChart(row)));
     sandbox.renderChartStats(row);
-    assert.ok(!/undefined|NaN/.test(sandbox.elements.get('chartStats').innerHTML));
+    const statsHtml = sandbox.elements.get('chartStats').innerHTML;
+    assert.ok(!/undefined|NaN/.test(statsHtml));
+    assert.ok(statsHtml.includes('1RM'));
+    assert.ok(statsHtml.includes('Best Set'));
+    assert.ok(!statsHtml.includes('Strength Estimate'));
+    assert.ok(!statsHtml.includes('Latest Max Set'));
+    assert.ok(!statsHtml.includes('Best Daily'));
+    assert.ok(!statsHtml.includes('reps ·'));
 });
 test('scheduled repeat days get coaching guidance instead of a recovery placeholder', () => {
     const coach = setup([log('2026-09-28')]);
