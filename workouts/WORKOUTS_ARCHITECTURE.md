@@ -149,6 +149,8 @@ bodyMeasurements/{timestampId}
 
 `workouts/{workoutId}` is legacy read-only source data for migration. `bodyMeasurements/{timestampId}` is currently top-level and keyed by `userId`, not nested under `users/{email}`.
 
+Workout `date` is a UTC ISO 8601 string containing the year, month, day, hours, minutes, seconds, and milliseconds (for example, `2026-10-06T19:05:09.678Z`). New workouts use the time they are saved. Both the main workout edit modal and Data Explorer provide local date/time controls with seconds, using `js/workout-date.js` to convert back to UTC and preserve existing milliseconds. Date edits retain the document ID and use the existing revision-checked save transactions; `updatedAt` records when the edit was saved. Recent logs are reordered after date edits, and main-app season history excludes workouts moved before the season start.
+
 ## Config Loading Flow
 
 `exercises.json` is the sole source of truth for the global exercise catalog. Every page loads it through `js/config.js`. The service worker checks the network first for the exercise catalog and versioned plan JSON files, then falls back to its cached copy when offline. Exercise data is never read from or written to Firestore.

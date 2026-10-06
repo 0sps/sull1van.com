@@ -2550,6 +2550,10 @@
         <div class="modal modal-sm">
             <h3 class="modal-title" id="editModalTitle">EDIT WORKOUT</h3>
             <p id="editModalSubtitle" class="text-muted-xs m-b-20"></p>
+            <label for="editWorkoutDate" class="set-label">Workout date and time</label>
+            <input type="datetime-local" step="1" required class="library-search" id="editWorkoutDate"
+                aria-describedby="editWorkoutDateHelp">
+            <p id="editWorkoutDateHelp" class="text-muted-xs m-b-20">Your local time, including seconds.</p>
             <div id="editExerciseList" class="m-b-24"></div>
             <div class="modal-actions sticky-bottom-actions">
                 <button class="btn btn-primary btn-flex-2" id="saveEditsBtn" onclick="saveEditedWorkout()">SAVE
@@ -2761,6 +2765,7 @@
         }
     </script>
     <script src="js/config.js"></script>
+    <script src="js/workout-date.js"></script>
     <script src="js/strength.js"></script>
     <script src="js/coach.js"></script>
     <script src="js/records.js"></script>
@@ -4024,7 +4029,7 @@
             constructor() { super('STALE_WRITE'); this.name = 'StaleWriteError'; this.isStaleWrite = true; }
         }
 
-        async function saveToFirebase(log) {
+        async function saveToFirebase(log, { requireExisting = false } = {}) {
             return withFirebaseErrorHandling(async () => {
                 const user = window.currentUser;
                 if (!user) {
@@ -4047,6 +4052,8 @@
                     const snap = await tx.get(docRef);
                     const remote = snap.exists() ? snap.data() : null;
                     const remoteRevision = Number.isInteger(remote?.revision) ? remote.revision : null;
+
+                    if (requireExisting && !remote) throw new StaleWriteError();
 
                     if (remote) {
                         if (baseRevision !== null) {
@@ -4089,10 +4096,17 @@
         }
 
         function upsertRecordHistoryLog(log) {
+            workoutLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
             const recordIndex = recordHistoryLogs.findIndex(l => compareLogIds(l.id, log.id));
+            const seasonStart = activeSeason?.startDate ? new Date(`${activeSeason.startDate}T00:00:00`) : null;
+            if (!seasonStart || new Date(log.date) < seasonStart) {
+                if (recordIndex !== -1) recordHistoryLogs.splice(recordIndex, 1);
+                return;
+            }
             const copy = JSON.parse(JSON.stringify(log));
             if (recordIndex !== -1) recordHistoryLogs[recordIndex] = copy;
             else recordHistoryLogs.unshift(copy);
+            recordHistoryLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
         }
 
         function removeRecordHistoryLog(logId) {
@@ -5290,6 +5304,7 @@
             document.getElementById('editModalTitle').textContent = `EDIT ${log.workoutName.toUpperCase()}`;
             const date = new Date(log.date);
             document.getElementById('editModalSubtitle').textContent = formatDateFull(date);
+            document.getElementById('editWorkoutDate').value = WorkoutDate.toInputValue(log.date);
             renderEditExercises();
             // Show the modal
             openModal('editModal');
@@ -5375,7 +5390,15 @@
             renderEditExercises();
         }
         async function saveEditedWorkout() {
-            if (!editingLogData) return;
+            if (!editingLogData || isSaving) return;
+            const dateInput = document.getElementById('editWorkoutDate');
+            if (!dateInput.reportValidity()) return;
+            try {
+                editingLogData.date = WorkoutDate.fromInputValue(dateInput.value, editingLogData.date);
+            } catch (error) {
+                showNotification('INVALID DATE', error.message);
+                return;
+            }
             const { cleanedExercises, hasZeroReps } = validateAndCleanWorkout(editingLogData.exercises);
             if (cleanedExercises.length === 0) {
                 showNotification('MISSING DATA', 'Enter reps for at least one set, or delete the workout instead.');
@@ -5396,7 +5419,7 @@
             if (saveBtn) saveBtn.disabled = true;
             try {
                 // Save to Firebase - Use the original log ID and data structure
-                const success = await saveToFirebase(editingLogData);
+                const success = await saveToFirebase(editingLogData, { requireExisting: true });
 
                 if (success) {
                     // Update local workoutLogs
