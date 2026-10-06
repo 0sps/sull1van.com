@@ -81,6 +81,11 @@ h2 { font-size: var(--type-heading); letter-spacing: .5px; }
 .activity-heading { display: flex; justify-content: space-between; font-size: var(--type-body); margin: 28px 0 10px; }
 .activity-heading span:first-child { font-weight: 700; }
 .season-activity { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; }
+.activity-cell { position: relative; min-width: 0; align-self: start; }
+.activity-cell.month-boundary { padding-bottom: 24px; }
+.activity-cell.month-boundary::before { content: ''; position: absolute; top: -2px; bottom: 24px; left: -3px; width: 2px; background: #345b49; pointer-events: none; }
+.activity-month { position: absolute; left: -3px; bottom: 0; font-size: var(--type-meta); font-weight: 700; line-height: 20px; color: #345b49; white-space: nowrap; }
+.activity-cell:nth-child(14n) .activity-month { left: auto; right: 0; }
 .activity-day { position: relative; display: grid; place-items: center; aspect-ratio: 1; color: #18382b; border-radius: 3px; background: #a6cbb8; }
 .activity-day.logged { background: #265f47; color: #f2f4ec; }
 .month-start { font-size: var(--type-meta); font-weight: 800; line-height: 1; }
@@ -88,8 +93,8 @@ h2 { font-size: var(--type-heading); letter-spacing: .5px; }
 .activity-day.today { outline: 2px solid #18382b; outline-offset: 2px; }
 .activity-day:focus-visible { outline: 2px solid #18382b; outline-offset: 2px; }
 .activity-day:hover::after, .activity-day:focus::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 180px; z-index: 3; background: #18382b; color: #f2f4ec; padding: 7px 9px; border-radius: 4px; font-size: var(--type-meta); pointer-events: none; }
-.activity-day:nth-child(14n + 1)::after { left: 0; transform: none; }
-.activity-day:nth-child(14n)::after { left: auto; right: 0; transform: none; }
+.activity-cell:nth-child(14n + 1) .activity-day::after { left: 0; transform: none; }
+.activity-cell:nth-child(14n) .activity-day::after { left: auto; right: 0; transform: none; }
 .activity-legend { display: flex; justify-content: space-between; gap: 12px; font-size: var(--type-meta); margin-top: 12px; color: #345b49; }
 .activity-legend i { display: inline-block; width: 7px; height: 7px; background: #265f47; margin-right: 4px; border-radius: 2px; }
 .season-lifts { min-width: 0; padding: 28px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; }
@@ -124,7 +129,22 @@ h2 { font-size: var(--type-heading); letter-spacing: .5px; }
 td { font-size: var(--type-body); }
 .num-strong { font-size: var(--type-subheading); }
 td:last-child .lift-meta { font-size: var(--type-body); }
-.side-stat { background: transparent; border: 0; border-bottom: 1px solid var(--border); padding: 14px 0; }
+.chart-layout { grid-template-columns: minmax(0, 1fr); }
+.chart-side-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.lift-prescription { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding: 0 0 8px; font-size: var(--type-body); }
+.side-stat { min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-tertiary); }
+.stat-heading { display: flex; align-items: center; gap: 10px; min-height: 40px; margin-bottom: 12px; }
+.stat-heading .mini-label { font-size: var(--type-meta); font-weight: 600; line-height: 1.5; text-transform: none; letter-spacing: 0; }
+.stat-icon { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border-radius: 6px; background: var(--coach-soft); color: var(--coach); }
+.stat-icon .progression-icon { width: 20px; height: 20px; }
+.side-stat .num-strong { font-size: var(--type-heading); line-height: 1.15; overflow-wrap: anywhere; }
+.side-stat .mini-note { margin-top: 8px; line-height: 1.6; }
+.season-change { border-color: var(--change-color, var(--border)); }
+.change-positive { --change-color: #a3ead5; }
+.change-negative { --change-color: #ff9690; }
+.change-unchanged { --change-color: #e4cd82; }
+.season-change .num-strong, .season-change .stat-icon { color: var(--change-color, var(--text-secondary)); }
+.stat-footnote { grid-column: 1 / -1; }
 .lift-picker { position: relative; margin-bottom: 28px; }
 .lift-picker-input { display: block; width: 100%; min-height: 72px; padding: 12px 40px 12px 0; border: 0; border-bottom: 5px solid var(--coach-border); border-radius: 0; background: transparent; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: var(--type-heading); font-weight: 700; line-height: 1.25; appearance: none; }
 .lift-picker-input::placeholder { color: var(--text-muted); }
@@ -153,12 +173,16 @@ th { font-size: var(--type-body); color: var(--text-secondary); }
     .lift-health-ring { width: 130px; height: 130px; padding: 10px; }
 }
 @media (max-width: 800px) {
+    .chart-side-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .season-change { grid-column: 1 / -1; }
     .season-dashboard { grid-template-columns: 1fr; }
     .lift-health-visual { grid-template-columns: 168px 1fr; }
     .lift-health-ring { width: 168px; height: 168px; padding: 14px; }
     .coach-lift-list { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
+    .side-stat { padding: 12px; }
+    .stat-heading { align-items: flex-start; gap: 8px; }
     .container { padding: 16px 16px 40px; }
     header { gap: 12px; }
     .header-right { gap: 8px; }
@@ -207,6 +231,7 @@ th { font-size: var(--type-body); color: var(--text-secondary); }
 
 @media (max-width: 400px) {
     .season-activity { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-    .activity-day:nth-child(7n + 1)::after { left: 0; right: auto; transform: none; }
-    .activity-day:nth-child(7n)::after { left: auto; right: 0; transform: none; }
+    .activity-cell:nth-child(7n + 1) .activity-day::after { left: 0; right: auto; transform: none; }
+    .activity-cell:nth-child(7n) .activity-day::after { left: auto; right: 0; transform: none; }
+    .activity-cell:nth-child(7n) .activity-month { left: auto; right: 0; }
 }

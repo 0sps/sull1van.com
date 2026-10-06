@@ -1039,7 +1039,7 @@
                     <div class="season-journey">
                         <div class="journey-top"><span id="daysLeftValue">Checking activity</span></div>
                         <div class="journey-week"><div class="timeline-week" id="weekValue">Week --</div><span id="timelinePercent">Day --</span></div>
-                        <div class="season-dates"><span><span class="date-caption">Started</span><strong id="startDateValue">--</strong></span><svg viewBox="0 0 200 32" aria-hidden="true"><path d="M0 16H190M180 6l10 10-10 10"/></svg><span><span class="date-caption">Today</span><strong id="endDateValue">--</strong></span></div>
+                        <div class="season-dates"><span><span class="date-caption">START</span><strong id="startDateValue">--</strong></span><svg viewBox="0 0 200 32" aria-hidden="true"><path d="M0 16H190M180 6l10 10-10 10"/></svg><span><span class="date-caption">Today</span><strong id="endDateValue">--</strong></span></div>
                         <div class="season-totals"><div><strong id="trackedLiftCount">0</strong><span>Workouts logged</span></div><div><strong id="liftsLeftCount">0</strong><span>Season PRs</span></div></div>
                         <div class="activity-heading"><span>Last 28 days</span></div>
                         <div class="season-activity" id="seasonActivity" role="list" aria-label="Workout activity over the last 28 days"></div>
@@ -1213,6 +1213,7 @@
         let liftRows = [];
         let selectedExerciseId = null;
         let initStarted = false;
+        const MONTH_CODES = Object.freeze(['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']);
         const CONFIG_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // Refresh Firebase config weekly.
 
         const recordTracker = window.WorkoutRecords?.create
@@ -1287,7 +1288,15 @@
                 error: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg>',
                 sync: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M18 17a7 7 0 0 1-12 1l-2-3"/></svg>',
                 plus: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14"/></svg>',
-                minus: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>'
+                minus: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>',
+                dumbbell: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 8v8M3 9v6M18 8v8M21 9v6M6 12h12M3 12h3M18 12h3"/></svg>',
+                strength: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19h16M5 15l5-5 4 3 5-8M14 5h5v5"/></svg>',
+                up: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 15 7-7 7 7M12 8v12"/></svg>',
+                down: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 9 7 7 7-7M12 4v12"/></svg>',
+                equal: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 9h14M5 15h14"/></svg>',
+                clock: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+                award: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="5"/><path d="m8 12-1 9 5-3 5 3-1-9"/></svg>',
+                weight: '<svg class="progression-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 6h8l4 15H4L8 6Z"/><path d="M9 6V4a3 3 0 0 1 6 0v2"/></svg>'
             };
             return icons[name] || '';
         }
@@ -1610,7 +1619,10 @@
                 const monthStart = date.getDate() === 1;
                 const beforeSeason = date < startOfLocalDay(start);
                 const label = `${formatDate(date, DateFormats.SHORT)}: ${beforeSeason ? 'before season' : count ? `${count} workout${count === 1 ? '' : 's'}` : 'no workout logged'}`;
-                return `<span class="activity-day${count ? ' logged' : ''}${beforeSeason ? ' before-season' : ''}${index === 27 ? ' today' : ''}" role="listitem" tabindex="0" aria-label="${escapeHtml(label)}" data-tooltip="${escapeHtml(label)}">${monthStart ? '<strong class="month-start" aria-hidden="true">1</strong>' : ''}</span>`;
+                return `<div class="activity-cell${monthStart ? ' month-boundary' : ''}" role="listitem">
+                    <span class="activity-day${count ? ' logged' : ''}${beforeSeason ? ' before-season' : ''}${index === 27 ? ' today' : ''}" tabindex="0" aria-label="${escapeHtml(label)}" data-tooltip="${escapeHtml(label)}">${monthStart ? '<strong class="month-start" aria-hidden="true">1</strong>' : ''}</span>
+                    ${monthStart ? `<span class="activity-month" aria-hidden="true">${MONTH_CODES[date.getMonth()]}</span>` : ''}
+                </div>`;
             }).join('');
         }
 
@@ -1845,42 +1857,37 @@
             const avgReps = chartRows.length
                 ? chartRows.reduce((sum, point) => sum + point.avgReps, 0) / chartRows.length
                 : 0;
-            const strengthGainLbs = Number.isFinite(row.seasonStrengthGainKg) ? Math.round(kgToLbs(row.seasonStrengthGainKg)) : null;
+            const strengthGainLbs = Number.isFinite(row.seasonStrengthGainKg) ? Math.round(kgToLbs(row.seasonStrengthGainKg) * 10) / 10 : null;
             const strengthGainPercent = Number.isFinite(row.seasonStrengthGainPercent) ? Math.round(row.seasonStrengthGainPercent * 10) / 10 : null;
-            const strengthGainValue = strengthGainLbs === null
-                ? 'No estimate'
-                : `${strengthGainLbs > 0 ? '+' : ''}${strengthGainLbs} lbs · ${strengthGainPercent > 0 ? '+' : ''}${strengthGainPercent}%`;
-
-            document.getElementById('chartStats').innerHTML = `
-                <div class="side-stat">
-                    <div class="mini-note">${escapeHtml(row.sets)} sets · ${escapeHtml(row.reps)} reps</div>
-                </div>
-                <div class="side-stat">
-                    <div class="mini-label">Strength Estimate</div>
-                    <div class="num-strong">${row.bestEstimate ? `${escapeHtml(formatLiftWeight(row.bestEstimate.estimatedMaxKg, row.planExercise))}${row.bestEstimate.usedFallback ? '**' : ''}` : 'No estimate'}</div>
-                    <div class="mini-note">${row.bestEstimate ? escapeHtml(`${row.bestEstimate.reps} reps · ${row.confidence.label}`) : escapeHtml(row.confidence.detail)}</div>
-                </div>
-                ${row.bestEstimate?.usedFallback ? '<div class="mini-note">** Not lift-validated. General Epley estimate.</div>' : ''}
-                <div class="side-stat">
-                    <div class="mini-label">Strength Since Season Start</div>
-                    <div class="num-strong">${escapeHtml(strengthGainValue)}</div>
-                    <div class="mini-note">First season session is the baseline.</div>
-                </div>
-                <div class="side-stat">
-                    <div class="mini-label">Latest Max Set</div>
-                    <div class="num-strong">${latest ? escapeHtml(`${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}`) : 'No data'}</div>
-                    <div class="mini-note">${latest ? escapeHtml(formatDate(latest.date, DateFormats.LONG)) : 'No post-start log'}</div>
-                </div>
-                <div class="side-stat">
-                    <div class="mini-label">Best Daily Strength Estimate</div>
-                    <div class="num-strong">${bestEstimatePoint ? escapeHtml(formatLiftWeight(bestEstimatePoint.bestEstimatedMaxKg, row.planExercise)) : 'No estimate'}</div>
-                    <div class="mini-note">${bestEstimatePoint ? escapeHtml(formatDate(bestEstimatePoint.date, DateFormats.LONG)) : 'Requires working sets of 1-12 reps.'}</div>
-                </div>
-                <div class="side-stat">
-                    <div class="mini-label">Best Daily Working Weight</div>
-                    <div class="num-strong">${best ? escapeHtml(formatLiftWeight(best.avgWeightKg, row.planExercise)) : 'No data'}</div>
-                    <div class="mini-note">${best ? escapeHtml(`${formatDate(best.date, DateFormats.LONG)} · ${Math.round(avgReps * 10) / 10 || '--'} avg reps`) : 'No chartable sets'}</div>
+            const strengthChange = strengthGainLbs === null ? 'unknown' : strengthGainLbs > 0 ? 'positive' : strengthGainLbs < 0 ? 'negative' : 'unchanged';
+            const signed = value => `${value >= 0 ? '+' : ''}${value}`;
+            const strengthGainValue = strengthGainLbs === null ? 'No estimate'
+                : `${signed(strengthGainLbs)} lbs${strengthGainPercent === null ? '' : ` · ${signed(strengthGainPercent)}%`}`;
+            const changeLabel = { positive: 'Increased', negative: 'Decreased', unchanged: 'Unchanged', unknown: 'Log a baseline to compare' }[strengthChange];
+            const changeIcon = { positive: 'up', negative: 'down', unchanged: 'equal', unknown: 'strength' }[strengthChange];
+            const stat = ({ icon, title, value, detail, className = '' }) => `
+                <div class="side-stat ${className}">
+                    <div class="stat-heading"><span class="stat-icon">${progressionIcon(icon)}</span><div class="mini-label">${escapeHtml(title)}</div></div>
+                    <div class="num-strong">${escapeHtml(value)}</div>
+                    <div class="mini-note">${escapeHtml(detail)}</div>
                 </div>`;
+            document.getElementById('chartStats').innerHTML = `
+                <div class="lift-prescription"><span class="stat-icon">${progressionIcon('dumbbell')}</span><span><strong>${escapeHtml(row.sets)} sets</strong> · ${escapeHtml(row.reps)} reps</span></div>
+                ${stat({ icon: 'strength', title: 'Strength Estimate',
+                    value: row.bestEstimate ? `${formatLiftWeight(row.bestEstimate.estimatedMaxKg, row.planExercise)}${row.bestEstimate.usedFallback ? '**' : ''}` : 'No estimate',
+                    detail: row.bestEstimate ? `${row.bestEstimate.reps} reps · ${row.confidence.label}` : row.confidence.detail })}
+                ${stat({ icon: 'clock', title: 'Latest Max Set',
+                    value: latest ? `${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}` : 'No data',
+                    detail: latest ? formatDate(latest.date, DateFormats.LONG) : 'No post-start log' })}
+                ${stat({ icon: changeIcon, title: 'Strength Since Season Start', value: strengthGainValue,
+                    detail: `${changeLabel}. First season session is the baseline.`, className: `season-change change-${strengthChange}` })}
+                ${stat({ icon: 'award', title: 'Best Daily Strength Estimate',
+                    value: bestEstimatePoint ? formatLiftWeight(bestEstimatePoint.bestEstimatedMaxKg, row.planExercise) : 'No estimate',
+                    detail: bestEstimatePoint ? formatDate(bestEstimatePoint.date, DateFormats.LONG) : 'Requires working sets of 1-12 reps.' })}
+                ${stat({ icon: 'weight', title: 'Best Daily Working Weight',
+                    value: best ? formatLiftWeight(best.avgWeightKg, row.planExercise) : 'No data',
+                    detail: best ? `${formatDate(best.date, DateFormats.LONG)} · ${Math.round(avgReps * 10) / 10 || '--'} avg reps` : 'No chartable sets' })}
+                ${row.bestEstimate?.usedFallback ? '<div class="stat-footnote mini-note">** Not lift-validated. General Epley estimate.</div>' : ''}`;
         }
 
         function renderSelectedChart() {
