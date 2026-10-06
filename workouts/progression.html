@@ -11,6 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sean's Log">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -31,25 +32,6 @@
             --border: #2a2a2d;
             --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
             --gradient-coach: linear-gradient(135deg, #00ff88 0%, #3fffd3 56%, #b0ffee 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Space Mono', monospace;
-            font-size: 16px;
         }
 
         .bg-pattern {
@@ -74,40 +56,6 @@
             gap: 14px;
         }
 
-        .loading-spinner {
-            width: 46px;
-            height: 46px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0 36px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 28px;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
         .logo h1 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: var(--type-display);
@@ -118,26 +66,12 @@
             background-clip: text;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
         .user-info {
             display: flex;
             align-items: center;
             gap: 10px;
             color: var(--text-muted);
             font-size: var(--type-meta);
-        }
-
-        .user-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-primary);
         }
 
         .sync-status {
@@ -187,18 +121,6 @@
             font-size: var(--type-meta);
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .nav-tab:hover {
-            border-color: var(--accent-primary);
-            color: var(--text-primary);
-        }
-
-        .nav-tab.active {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-            color: #fff;
-            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         .panel {
@@ -709,7 +631,7 @@
     <link rel="stylesheet" href="css/progression.css">
 </head>
 
-<body>
+<body data-workouts-page="progression">
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p class="loading-text">Loading progression...</p>
@@ -929,6 +851,7 @@
     </script>
 
     <script src="js/config.js"></script>
+    <script src="js/config-loader.js"></script>
     <script src="js/strength.js"></script>
     <script src="js/coach.js"></script>
     <script src="js/records.js"></script>
@@ -1771,125 +1694,14 @@
             return response.json();
         }
 
-        function getConfigVersionKey(configId, jsonPath) {
-            if (configId === 'trainingPlan' && jsonPath === 'training-plan.json') return 'lastGeneratedAt';
-            if (configId === 'progressionPlan' && jsonPath === 'progression-plan.json') return 'lastUpdatedDate';
-            return null;
-        }
-
-        function parseConfigUpdatedDate(data, versionKey) {
-            const value = versionKey ? data?.[versionKey] : null;
-            if (typeof value !== 'string' || !value.trim()) return null;
-            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
-                ? `${value.trim()}T00:00:00Z`
-                : value.trim();
-            const time = Date.parse(normalized);
-            return Number.isFinite(time) ? time : null;
-        }
-
-        function isVersionedSeedConfig(configId, jsonPath) {
-            return getConfigVersionKey(configId, jsonPath) !== null;
-        }
-
-        function prepareBundledConfigWrite(configId, bundledData, currentData = null) {
-            if (configId !== 'trainingPlan') return bundledData;
-            const currentRevision = Number.isInteger(currentData?.revision) ? currentData.revision : 0;
-            return {
-                ...bundledData,
-                revision: currentRevision + 1,
-                updatedAt: new Date().toISOString()
-            };
-        }
-
-        async function loadVersionedSeedConfig(configId, jsonPath) {
-            const versionKey = getConfigVersionKey(configId, jsonPath);
-            const cached = readCachedUserConfig(configId);
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data, versionKey);
-            let localData = null;
-            let localUpdatedAt = null;
-
-            try {
-                localData = await fetchSeedConfig(jsonPath);
-                localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
-                if (localUpdatedAt === null) {
-                    throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
-                }
-            } catch (error) {
-                if (cached && cachedUpdatedAt !== null) {
-                    console.warn(`Using cached ${configId} config because bundled ${jsonPath} could not be loaded:`, error);
-                    return cached.data;
-                }
-                throw error;
-            }
-
-            try {
-                const docRef = window.getUserConfigDocRef(configId);
-                const data = await window.firebaseRunTransaction(window.firebaseDb, async (transaction) => {
-                    const snapshot = await transaction.get(docRef);
-                    const firebaseData = snapshot.exists() ? snapshot.data() : null;
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
-
-                    if (firebaseUpdatedAt !== null && firebaseUpdatedAt >= localUpdatedAt) {
-                        return firebaseData;
-                    }
-
-                    if (snapshot.exists() && firebaseUpdatedAt === null) {
-                        console.warn(`Replacing Firebase ${configId} config because it has no valid ${versionKey}.`);
-                    }
-
-                    const bundledWrite = prepareBundledConfigWrite(configId, localData, firebaseData);
-                    transaction.set(docRef, bundledWrite);
-                    return bundledWrite;
-                });
-                writeCachedUserConfig(configId, data);
-                return data;
-            } catch (error) {
-                if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
-                    console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);
-                    return cached.data;
-                }
-                console.warn(`Using bundled ${jsonPath} because Firebase refresh failed:`, error);
-                return localData;
-            }
-        }
-
-        async function loadUserConfig(configId, jsonPath) {
-            if (isVersionedSeedConfig(configId, jsonPath)) {
-                return loadVersionedSeedConfig(configId, jsonPath);
-            }
-
-            const cached = readCachedUserConfig(configId);
-            if (cached?.isFresh) return cached.data;
-
-            try {
-                const docRef = window.getUserConfigDocRef(configId);
-                const snapshot = await window.firebaseGetDoc(docRef);
-
-                // If the Firestore doc exists, use it as-is and do not compare or repair
-                // from bundled JSON. The user-owned config doc is the source of truth.
-                if (snapshot.exists()) {
-                    const data = snapshot.data();
-                    writeCachedUserConfig(configId, data);
-                    return data;
-                }
-
-                // First load for this user/config: seed the Firestore doc from bundled JSON,
-                // then cache it locally for the same 7-day behavior as normal Firebase reads.
-                const data = await fetchSeedConfig(jsonPath);
-                await window.firebaseSetDoc(docRef, data);
-                writeCachedUserConfig(configId, data);
-                return data;
-            } catch (error) {
-                // Stale config is acceptable as an offline fallback after the 7-day window.
-                if (cached) {
-                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
-                    return cached.data;
-                }
-                // No cache yet and Firebase failed: use bundled JSON to keep the page usable,
-                // but do not write a fresh app cache because Firestore was not confirmed.
-                console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
-                return fetchSeedConfig(jsonPath);
-            }
+        const configLoader = window.WorkoutConfigLoader.create({
+            readCache: readCachedUserConfig, writeCache: writeCachedUserConfig, fetchSeed: fetchSeedConfig,
+            getRef: configId => window.getUserConfigDocRef(configId),
+            getDoc: ref => window.firebaseGetDoc(ref), setDoc: (ref, data) => window.firebaseSetDoc(ref, data),
+            runTransaction: operation => window.firebaseRunTransaction(window.firebaseDb, operation)
+        });
+        function loadUserConfig(configId, jsonPath) {
+            return configLoader.load(configId, jsonPath);
         }
 
         function normalizeActiveSeason(data) {

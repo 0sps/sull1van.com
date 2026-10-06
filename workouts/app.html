@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-title" content="Sean's Log">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -27,17 +28,6 @@
             --warning: #ffbb00;
             --border: #2a2a2d;
             --gradient-fire: linear-gradient(135deg, #ff3d00 0%, #ff6d3d 50%, #ffbb00 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
         }
 
         body {
@@ -84,16 +74,6 @@
             gap: 12px;
         }
 
-        .logo h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            letter-spacing: 4px;
-            background: var(--gradient-fire);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .header-right {
             display: flex;
             align-items: center;
@@ -107,13 +87,6 @@
             gap: 10px;
             font-size: 0.875rem;
             color: var(--text-muted);
-        }
-
-        .user-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-primary);
         }
 
         .sync-status {
@@ -177,11 +150,6 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .nav-tab:hover {
-            border-color: var(--accent-primary);
-            color: var(--text-primary);
         }
 
         .nav-tab.active {
@@ -1600,10 +1568,6 @@
             align-items: center;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
-
         .modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -2299,12 +2263,6 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
         .loading-text {
             margin-top: 20px;
             color: var(--text-muted);
@@ -2315,7 +2273,7 @@
     <link rel="stylesheet" href="css/coach-modal.css">
 </head>
 
-<body>
+<body data-workouts-page="app">
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p class="loading-text">Loading your workouts...</p>
@@ -2765,6 +2723,7 @@
         }
     </script>
     <script src="js/config.js"></script>
+    <script src="js/config-loader.js"></script>
     <script src="js/workout-date.js"></script>
     <script src="js/strength.js"></script>
     <script src="js/coach.js"></script>
@@ -3488,26 +3447,6 @@
             return response.json();
         }
 
-        function getConfigVersionKey(configId, jsonPath) {
-            if (configId === 'trainingPlan' && jsonPath === 'training-plan.json') return 'lastGeneratedAt';
-            if (configId === 'progressionPlan' && jsonPath === 'progression-plan.json') return 'lastUpdatedDate';
-            return null;
-        }
-
-        function parseConfigUpdatedDate(data, versionKey) {
-            const value = versionKey ? data?.[versionKey] : null;
-            if (typeof value !== 'string' || !value.trim()) return null;
-            const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value.trim())
-                ? `${value.trim()}T00:00:00Z`
-                : value.trim();
-            const time = Date.parse(normalized);
-            return Number.isFinite(time) ? time : null;
-        }
-
-        function isVersionedSeedConfig(configId, jsonPath) {
-            return getConfigVersionKey(configId, jsonPath) !== null;
-        }
-
         function assertUserConfigFirebaseReady() {
             if (!window.currentUser?.email) {
                 throw new Error('Sign in before syncing Firebase config.');
@@ -3518,117 +3457,16 @@
             }
         }
 
-        function prepareBundledConfigWrite(configId, bundledData, currentData = null) {
-            if (configId !== 'trainingPlan') return bundledData;
-            const currentRevision = Number.isInteger(currentData?.revision) ? currentData.revision : 0;
-            return {
-                ...bundledData,
-                revision: currentRevision + 1,
-                updatedAt: new Date().toISOString()
-            };
-        }
-
-        async function loadVersionedSeedConfig(configId, jsonPath, options = {}) {
-            const forceRefresh = !!options.forceRefresh;
-            const versionKey = getConfigVersionKey(configId, jsonPath);
-            const cached = readCachedUserConfig(configId);
-            const cachedUpdatedAt = parseConfigUpdatedDate(cached?.data, versionKey);
-            let localData;
-            let localUpdatedAt;
-
-            try {
-                localData = await fetchSeedConfig(jsonPath);
-                localUpdatedAt = parseConfigUpdatedDate(localData, versionKey);
-                if (localUpdatedAt === null) {
-                    throw new Error(`${jsonPath} is missing a valid ${versionKey}.`);
-                }
-            } catch (error) {
-                if (!forceRefresh && cached) {
-                    console.warn(`Using cached ${configId} config because bundled ${jsonPath} could not be loaded:`, error);
-                    return cached.data;
-                }
-                throw error;
-            }
-
-            try {
-                assertUserConfigFirebaseReady();
-                const docRef = window.getUserConfigDocRef(configId);
-                const data = await window.firebaseRunTransaction(window.firebaseDb, async (transaction) => {
-                    const snapshot = await transaction.get(docRef);
-                    const firebaseData = snapshot.exists() ? snapshot.data() : null;
-                    const firebaseUpdatedAt = parseConfigUpdatedDate(firebaseData, versionKey);
-
-                    if (firebaseUpdatedAt !== null && firebaseUpdatedAt >= localUpdatedAt) {
-                        return firebaseData;
-                    }
-
-                    if (snapshot.exists() && firebaseUpdatedAt === null) {
-                        console.warn(`Replacing Firebase ${configId} config because it has no valid ${versionKey}.`);
-                    }
-
-                    const bundledWrite = prepareBundledConfigWrite(configId, localData, firebaseData);
-                    transaction.set(docRef, bundledWrite);
-                    return bundledWrite;
-                });
-                writeCachedUserConfig(configId, data);
-                return data;
-            } catch (error) {
-                if (!forceRefresh) {
-                    if (cached && cachedUpdatedAt !== null && cachedUpdatedAt >= localUpdatedAt) {
-                        console.warn(`Using cached ${configId} config because Firebase refresh failed:`, error);
-                        return cached.data;
-                    }
-                    console.warn(`Using bundled ${jsonPath} because Firebase refresh failed:`, error);
-                    return localData;
-                }
-                throw error;
-            }
-        }
-
-        async function loadUserConfig(configId, jsonPath, options = {}) {
-            if (isVersionedSeedConfig(configId, jsonPath)) {
-                return loadVersionedSeedConfig(configId, jsonPath, options);
-            }
-
-            const forceRefresh = !!options.forceRefresh;
-            const cached = readCachedUserConfig(configId);
-            if (!forceRefresh && cached?.isFresh) return cached.data;
-
-            try {
-                assertUserConfigFirebaseReady();
-                const docRef = window.getUserConfigDocRef(configId);
-                const snapshot = await window.firebaseGetDoc(docRef);
-
-                // Existence is the migration boundary: if the user's Firestore doc exists,
-                // it is the source of truth, even if the bundled JSON has changed later.
-                if (snapshot.exists()) {
-                    const data = snapshot.data();
-                    writeCachedUserConfig(configId, data);
-                    return data;
-                }
-
-                // First boot for this user/config: seed Firestore from the bundled JSON once,
-                // then cache that same payload so subsequent loads ignore the JSON file.
-                const data = await fetchSeedConfig(jsonPath);
-                await window.firebaseSetDoc(docRef, data);
-                writeCachedUserConfig(configId, data);
-                return data;
-            } catch (error) {
-                // A stale config cache is still useful offline. Weekly refresh is preferred,
-                // but not strict enough to make the app unusable on day 8 without network.
-                if (cached && !forceRefresh) {
-                    console.warn(`Using stale cached config for ${configId} because refresh failed:`, error);
-                    return cached.data;
-                }
-                if (!forceRefresh) {
-                    // Last-resort app boot fallback when Firebase is unavailable and no config
-                    // cache exists yet. Do not write this as fresh cache because it was not
-                    // confirmed against the user's Firestore config.
-                    console.warn(`Using bundled seed config for ${configId} because Firebase refresh failed:`, error);
-                    return fetchSeedConfig(jsonPath);
-                }
-                throw error;
-            }
+        const configLoader = window.WorkoutConfigLoader.create({
+            readCache: readCachedUserConfig, writeCache: writeCachedUserConfig, fetchSeed: fetchSeedConfig,
+            getRef: configId => window.getUserConfigDocRef(configId),
+            getDoc: ref => window.firebaseGetDoc(ref), setDoc: (ref, data) => window.firebaseSetDoc(ref, data),
+            runTransaction: operation => window.firebaseRunTransaction(window.firebaseDb, operation),
+            assertReady: assertUserConfigFirebaseReady, allowUnversionedCacheOnSeedFailure: true
+        });
+        const prepareBundledConfigWrite = window.WorkoutConfigLoader.prepareBundledConfigWrite;
+        function loadUserConfig(configId, jsonPath, options = {}) {
+            return configLoader.load(configId, jsonPath, options);
         }
 
         const CONFIG_SYNC_TARGETS = {

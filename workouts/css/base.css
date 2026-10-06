@@ -1,0 +1,92 @@
+/* Shared declarations. Page scopes add zero specificity so local overrides retain priority. */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body:where([data-workouts-page="progression"], [data-workouts-page="editor"]) {
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+}
+
+:where([data-workouts-page="progression"], [data-workouts-page="editor"]) .loading-spinner {
+    width: 46px;
+    height: 46px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+:where([data-workouts-page="progression"], [data-workouts-page="editor"]) .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+:where([data-workouts-page="progression"], [data-workouts-page="editor"]) header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+:where([data-workouts-page="progression"], [data-workouts-page="editor"]) .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.nav-tab:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+:where([data-workouts-page="progression"], [data-workouts-page="editor"]) .nav-tab.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+:where([data-workouts-page="app"], [data-workouts-page="editor"]) .logo h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 4px;
+    background: var(--gradient-fire);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+:where([data-workouts-page="app"], [data-workouts-page="progression"]) .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-primary);
+}
+
+:where([data-workouts-page="app"], [data-workouts-page="editor"]) .modal-overlay.active {
+    display: flex;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
