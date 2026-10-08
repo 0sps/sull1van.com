@@ -457,7 +457,7 @@ test('set chart distinguishes the standard and progression thresholds', () => {
     assert.equal((html.match(/coach-rep-marker-progress/g) || []).length, 3);
     assert.ok(html.includes('--rep-marker: 80%'));
     assert.ok(html.includes('--rep-marker: 100%'));
-    assert.ok(html.includes('checkbox marks 8 reps'));
+    assert.ok(html.includes('check marks 8 reps'));
     assert.ok(html.includes('diamond marks 10 reps'));
     assert.ok(html.includes('Set 01'));
     const fixedRange = { ...target, repRange: { min: 10, max: 10, label: '10' } };
