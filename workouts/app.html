@@ -5642,16 +5642,15 @@
                     <div class="coach-lift-heading"><h4 class="coach-heading">${escapeHtml(exercise?.name || target.exerciseId)}</h4>${target.recentSessions.length ? `<span class="coach-caption">${escapeHtml(target.confidence.detail)}</span>` : ''}</div>
                     <section class="coach-section coach-prescription" data-action="${escapeHtml(target.action)}" aria-label="Workout recommendation">
                         <div class="coach-action"><span class="coach-action-symbol" aria-hidden="true">${target.action === 'increase' ? '↗' : target.action === 'reduce' ? '↘' : '→'}</span>${escapeHtml(target.actionLabel)}</div>
-                        <span class="coach-kicker coach-weight-label">${hasWeight ? 'Your working weight' : 'Start here'}</span>
                         <div class="coach-weight${hasWeight ? '' : ' coach-instruction'}">${escapeHtml(prescription)}</div>
                         ${target.repRange.min ? `<div class="coach-target-tiles" role="group" aria-label="${sets} working set${sets === 1 ? '' : 's'} × ${escapeHtml(target.repRange.label)} reps"><div><strong>${sets}</strong><span>Working sets</span></div><div><strong>${escapeHtml(target.repRange.label)}</strong><span>Reps per set</span></div></div>` : ''}
-                        <p class="coach-reason">${escapeHtml(target.reason)}</p>
+                        ${target.reason === `Keep the same weight and build toward ${target.repRange.max} reps on every working set.` ? '' : `<p class="coach-reason">${escapeHtml(target.reason)}</p>`}
                         ${liveStatus}${startAction}
                     </section>
                     ${setChart ? `<section class="coach-section coach-performance" aria-label="Working set performance">
                         <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>At top reps</span></div></div>
                         <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
-                        <div class="coach-rep-legend"><span><i></i> Reps logged</span><span>Marker: ${escapeHtml(target.repRange.max)} reps</span></div>
+                        <div class="coach-rep-legend"><span class="coach-rep-key coach-rep-key-standard">${escapeHtml(target.repRange.min)} reps · Standard</span><span class="coach-rep-key coach-rep-key-progress">${escapeHtml(target.repRange.max)} reps · Progress</span></div>
                         ${setChart}
                         <div class="coach-next-step"><span class="coach-kicker">${canAddLoad ? 'The path to your next increase' : 'Your session milestones'}</span><div class="coach-step-rail">
                             <div><span class="coach-step-dot" aria-hidden="true">1</span><strong>${hasWeight ? escapeHtml(prescription) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>

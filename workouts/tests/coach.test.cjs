@@ -220,7 +220,7 @@ test('STATS dropdowns show real coach weight changes and the matching last worki
         { id: 'c', exercise: { name: 'Squat' }, planExercise: {}, recommendation: reduce },
         { id: 'd', exercise: { name: 'Repeat lift' }, planExercise: {}, recommendation: repeat }
     ];
-    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml'], { liftRows });
+    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml', 'progressionIcon'], { liftRows });
     sandbox.renderLiftActions();
     const html = sandbox.elements.get('liftActions').innerHTML;
     assert.ok(html.includes('Ready to add weight: 2'));
@@ -237,7 +237,7 @@ test('STATS dropdowns show real coach weight changes and the matching last worki
 });
 
 test('STATS action dropdowns disappear when no matching recommendations remain', () => {
-    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml'], {
+    const sandbox = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml', 'progressionIcon'], {
         liftRows: [{ id: 'a', exercise: { name: 'Press' }, planExercise: {}, recommendation: recommend(setup([log('2026-09-28', [10, 10, 10])])) }]
     });
     sandbox.renderLiftActions();
@@ -447,6 +447,21 @@ test('set chart keeps missing required sets visible and excludes warmups', () =>
     assert.ok(html.includes('--rep-fill: 100%'));
     assert.ok(html.includes('--rep-marker: 83.333'));
     assert.ok(!/NaN|Infinity|20 reps/.test(html));
+});
+test('set chart distinguishes the standard and progression thresholds', () => {
+    const coach = setup();
+    const target = coach.buildCoachRecommendation('lift', { reps: '8-10', sets: 3 });
+    const html = coach.buildCoachSetChart([7, 8, 10].map(reps => ({ reps, weight: lbsToKg(100) })), target);
+    assert.deepEqual([...html.matchAll(/data-state="([^"]+)"/g)].map(match => match[1]), ['below', 'range', 'top']);
+    assert.equal((html.match(/coach-rep-marker-standard/g) || []).length, 3);
+    assert.equal((html.match(/coach-rep-marker-progress/g) || []).length, 3);
+    assert.ok(html.includes('--rep-marker: 80%'));
+    assert.ok(html.includes('--rep-marker: 100%'));
+    assert.ok(html.includes('checkbox marks 8 reps'));
+    assert.ok(html.includes('diamond marks 10 reps'));
+    assert.ok(html.includes('Set 01'));
+    const fixedRange = { ...target, repRange: { min: 10, max: 10, label: '10' } };
+    assert.ok(coach.buildCoachSetChart([], fixedRange).includes('data-overlap="true"'));
 });
 test('bodyweight and starting set charts describe the correct next action', () => {
     const coach = setup();

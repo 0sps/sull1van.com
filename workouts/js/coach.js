@@ -447,6 +447,7 @@
         function buildCoachSetChart(workingSets, target) {
             const required = Math.max(1, target.requiredWorkingSets || 1);
             const sets = getWorkingSets(workingSets).map(normalizeSet);
+            const repMin = target.repRange.min;
             const repMax = target.repRange.max;
             if (!repMax) return '';
             const scale = Math.max(repMax, ...sets.map(set => Number.isInteger(set.reps) && set.reps > 0 ? set.reps : 0));
@@ -456,14 +457,14 @@
                 const state = !valid ? 'missing' : set.reps < target.repRange.min ? 'below' : set.reps >= repMax ? 'top' : 'range';
                 const status = { missing: 'Missing', below: 'Below range', top: 'Top reached', range: 'In range' }[state];
                 return `<div class="coach-set-row" data-state="${state}" aria-label="Set ${index + 1}: ${valid ? `${set.reps} reps, ${displayWeight(set.weight)} lb, ${status}` : 'Missing valid working set'}">
-                    <span>Set ${index + 1}</span>
-                    <div class="coach-rep-track" aria-hidden="true"><span class="coach-rep-fill" style="--rep-fill: ${valid ? set.reps / scale * 100 : 0}%"></span><span class="coach-rep-marker" style="--rep-marker: ${repMax / scale * 100}%"></span></div>
+                    <span class="coach-set-label">Set ${String(index + 1).padStart(2, '0')}</span>
+                    <div class="coach-rep-track" data-overlap="${repMin === repMax}" aria-hidden="true"><span class="coach-rep-fill" style="--rep-fill: ${valid ? set.reps / scale * 100 : 0}%"></span><span class="coach-rep-marker coach-rep-marker-standard" style="--rep-marker: ${repMin / scale * 100}%"><span class="coach-rep-marker-symbol">✓</span></span><span class="coach-rep-marker coach-rep-marker-progress" style="--rep-marker: ${repMax / scale * 100}%"><span class="coach-rep-marker-symbol"></span></span></div>
                     <span class="coach-set-result">${valid ? `${set.reps} reps` : 'Missing'}</span>
                     <span class="coach-set-note coach-set-load">${valid ? `${displayWeight(set.weight)} lb` : 'Log this set'}</span>
                     <span class="coach-set-note coach-set-status">${status}</span>
                 </div>`;
             }).join('');
-            return `<div class="coach-set-chart">${rows}</div><p class="coach-set-note">Bars show reps from zero. The marker is ${repMax} reps, the top of your ${target.repRange.label} range. ${target.targetWeightKg > 0 ? 'Reach it on every required set at the working weight to earn the next step.' : target.targetWeightKg === 0 ? 'Build reps on every required set. Added load needs a weighted progression plan.' : 'Log a complete starting session to establish your working weight.'}</p>`;
+            return `<div class="coach-set-chart">${rows}</div><p class="coach-set-note">Bars show reps from zero. The checkbox marks ${repMin} reps, your standard. The diamond marks ${repMax} reps, your progression target. ${target.targetWeightKg > 0 ? 'Reach it on every required set at the working weight to earn the next step.' : target.targetWeightKg === 0 ? 'Build reps on every required set. Added load needs a weighted progression plan.' : 'Log a complete starting session to establish your working weight.'}</p>`;
         }
 
         function buildTrainingPlanChart(sessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target = null) {
