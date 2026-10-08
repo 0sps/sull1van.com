@@ -29,16 +29,15 @@ header { padding: 4px 0 20px; margin-bottom: 20px; }
 .btn, .nav-tab, .coach-primary-link { font-family: 'DM Sans', sans-serif; }
 .btn, .sync-status { border-radius: 6px; font-size: var(--type-body); }
 .nav-tabs { gap: 8px; margin-bottom: 36px; }
-.nav-tab { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 44px; border: 1px solid var(--coach-border); background: var(--bg-secondary); color: var(--text-primary); font-size: var(--type-body); font-weight: 600; padding: 10px 14px; text-transform: none; text-decoration: none; letter-spacing: 0; border-radius: 8px; }
+.nav-tab { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 44px; border: 1px solid var(--coach-border); background: var(--bg-secondary); color: var(--text-primary); font-size: var(--type-body); font-weight: 600; padding: 8px 14px; text-transform: none; text-decoration: none; letter-spacing: 0; border-radius: 8px; }
 .nav-tab.active { color: var(--bg-primary); background: var(--coach); border-color: var(--coach); box-shadow: none; font-weight: 700; }
 .nav-tab:hover { background: var(--bg-tertiary); border-color: var(--coach); }
 .nav-tab:focus-visible { outline: 2px solid var(--coach); outline-offset: 3px; }
 .nav-tab.active:hover { background: #c3f4e5; }
-.coach-page-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 28px; }
+.coach-page-heading { margin-bottom: 28px; }
+.coach-page-heading h1 { margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: var(--type-display); font-weight: 400; line-height: 1.1; letter-spacing: 1px; }
+.coach-page-subtitle { margin: 6px 0 0; color: var(--text-secondary); font-size: var(--type-body); }
 h2 { font-size: var(--type-heading); letter-spacing: .5px; }
-.season-jump { font-size: var(--type-body); color: var(--text-secondary); padding: 8px 0; }
-.season-jump span { color: var(--coach); margin-left: 12px; }
-.season-jump:hover { color: var(--coach); }
 .coach-brief { margin-bottom: 48px; }
 .coach-prescription { position: relative; display: grid; grid-template-columns: 1fr auto; column-gap: 36px; padding: 28px 32px; border: 1px solid var(--coach-border); border-radius: 12px; background: var(--coach-soft); }
 .coach-prescription::after { content: ''; position: absolute; right: 0; top: 0; width: 150px; height: 100%; background: repeating-linear-gradient(-55deg, transparent, transparent 18px, #a3ead509 18px, #a3ead509 19px); pointer-events: none; border-radius: inherit; }
@@ -207,9 +206,8 @@ th { font-size: var(--type-body); color: var(--text-secondary); }
     .user-info { max-width: 180px; }
     #userEmail { overflow: hidden; text-overflow: ellipsis; }
     .nav-tabs { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 28px; padding: 0 16px 8px; }
-    .nav-tab { white-space: nowrap; padding: 10px 12px; }
-    .coach-page-heading { align-items: center; margin-bottom: 24px; }
-    .season-jump { max-width: 110px; }
+    .nav-tab { white-space: nowrap; padding: 8px 12px; }
+    .coach-page-heading { margin-bottom: 24px; }
     .coach-prescription { padding: 22px; grid-template-columns: 1fr; gap: 0; }
     .coach-weight { grid-column: 1; grid-row: auto; text-align: left; font-size: var(--type-display); margin: 12px 0 4px; }
     .coach-primary-link { grid-column: 1; grid-row: auto; justify-self: start; min-width: 150px; margin-top: 20px; }
@@ -243,7 +241,6 @@ th { font-size: var(--type-body); color: var(--text-secondary); }
 .progression-icon { display: block; width: 18px; height: 18px; flex-shrink: 0; }
 .sync-status { display: inline-flex; align-items: center; gap: 6px; }
 #syncIcon .progression-icon { width: 14px; height: 14px; }
-.season-jump { display: inline-flex; align-items: center; }
 .context-icon .progression-icon { width: 20px; height: 20px; }
 .collapse-icon { display: inline-flex; align-items: center; justify-content: center; }
 
