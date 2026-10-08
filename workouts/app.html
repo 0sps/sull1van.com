@@ -5629,8 +5629,12 @@
                 return Number.isFinite(weight) && (weight > 0 || target.coachConfig.allowZeroWeight && weight === 0) &&
                     Number.isInteger(reps) && reps >= target.repRange.max && Number.isFinite(shownWeight) && weight + 0.01 >= shownWeight;
             }).length;
+            const milestoneEvaluation = coach.evaluateProgressionSets(shownSets, { ...target, targetWeightKg: shownWeight });
+            const standardComplete = milestoneEvaluation.planComplete;
+            const progressionComplete = milestoneEvaluation.rangeProgressEarned;
+            const milestoneWeight = Number.isFinite(shownWeight) ? weightLabel(shownWeight) : prescription;
             const canAddLoad = target.targetWeightKg > 0 && target.stepKg > 0;
-            const nextWeight = canAddLoad ? weightLabel(target.targetWeightKg + target.stepKg) : null;
+            const nextWeight = canAddLoad ? weightLabel((Number.isFinite(shownWeight) ? shownWeight : target.targetWeightKg) + target.stepKg) : null;
             const loadGain = baseline && Number.isFinite(currentWeight) ? currentWeight - baseline.representativeWeightKg : null;
             const loadGainLabel = Number.isFinite(loadGain) ? `${loadGain > 0 ? '+' : loadGain < 0 ? '−' : ''}${displayWeight(Math.abs(loadGain))} lbs` : null;
             const startAction = target.action === 'setup'
@@ -5648,14 +5652,14 @@
                         ${liveStatus}${startAction}
                     </section>
                     ${setChart ? `<section class="coach-section coach-performance" aria-label="Working set performance">
-                        <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>At top reps</span></div></div>
+                        <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter" data-complete="${topSets === sets}"><div class="coach-completion-ring" style="--completion:${topSets / sets * 100}%" role="img" aria-label="${topSets} of ${sets} required sets reached the top of the rep range at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${topSets}<small>/${sets}</small></span></div><span>${topSets === sets ? 'All sets at top' : 'At top reps'}</span></div></div>
                         <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
                         <div class="coach-rep-legend"><span class="coach-rep-key coach-rep-key-standard">${escapeHtml(target.repRange.min)} reps · Standard</span><span class="coach-rep-key coach-rep-key-progress">${escapeHtml(target.repRange.max)} reps · Progress</span></div>
                         ${setChart}
                         <div class="coach-next-step"><span class="coach-kicker">${canAddLoad ? 'The path to your next increase' : 'Your session milestones'}</span><div class="coach-step-rail">
-                            <div><span class="coach-step-dot" aria-hidden="true">1</span><strong>${hasWeight ? escapeHtml(prescription) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>
-                            <div><span class="coach-step-dot" aria-hidden="true">2</span><strong>${target.repRange.max}+ reps</strong><span>On every working set</span></div>
-                            <div><span class="coach-step-dot" aria-hidden="true">${canAddLoad ? '↗' : '✓'}</span><strong>${nextWeight ? escapeHtml(nextWeight) : hasWeight ? 'Build reps' : 'Baseline set'}</strong><span>${canAddLoad ? 'Next session, once earned' : hasWeight ? 'Keep the full rep range' : 'Then follow your coach'}</span></div>
+                            <div data-step="1" data-state="${standardComplete ? 'complete' : 'active'}" aria-label="Working sets: ${standardComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${standardComplete ? '' : '1'}</span><strong>${hasWeight ? escapeHtml(milestoneWeight) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>
+                            <div data-step="2" data-state="${progressionComplete ? 'complete' : standardComplete ? 'active' : 'pending'}" aria-label="Progression reps: ${progressionComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${progressionComplete ? '' : '2'}</span><strong>${target.repRange.max}+ reps</strong><span>On every working set</span></div>
+                            <div data-step="3" data-state="${progressionComplete ? canAddLoad ? 'active' : 'complete' : 'pending'}" ${progressionComplete && canAddLoad ? 'aria-current="step"' : ''}><span class="coach-step-dot" aria-hidden="true">${progressionComplete && !canAddLoad ? '' : '3'}</span><strong>${nextWeight ? escapeHtml(nextWeight) : hasWeight ? 'Build reps' : 'Baseline set'}</strong><span>${canAddLoad ? progressionComplete ? 'Next session' : 'Next session, once earned' : hasWeight ? 'Keep the full rep range' : 'Then follow your coach'}</span></div>
                         </div></div>
                     </section>` : ''}
                     ${chart ? `<section class="coach-section" aria-label="Recent working weight trend">

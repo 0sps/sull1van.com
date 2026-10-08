@@ -266,10 +266,40 @@ test('Coach modal renders actual evidence, live completion, and escaped exercise
     const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
     assert.ok(html.includes('3 working sets × 6-10 reps'));
     assert.ok(html.includes('This workout: Ready to increase'));
+    assert.ok(html.includes('data-complete="true"'));
+    assert.ok(html.includes('All sets at top'));
+    assert.ok(html.includes('data-step="1" data-state="complete"'));
+    assert.ok(html.includes('data-step="2" data-state="complete"'));
+    assert.ok(html.includes('data-step="3" data-state="active"'));
+    assert.ok(html.includes('aria-current="step"'));
     assert.ok(html.includes('2026-09-28'));
     assert.ok(html.includes('&lt;script&gt;'));
     assert.ok(!html.includes('<script>bad'));
     assert.ok(!prohibitedCopy.test(html));
+    sandbox.collectCurrentExerciseWorkingSets = () => log('2026-09-29', [10, 8, 8]).exercises[0].sets;
+    sandbox.showTrainingPlanModal('key');
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-complete="false"'));
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-step="1" data-state="complete"'));
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-step="2" data-state="active"'));
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-step="3" data-state="pending"'));
+    sandbox.collectCurrentExerciseWorkingSets = () => log('2026-09-29', [10, 10, 10], 90).exercises[0].sets;
+    sandbox.showTrainingPlanModal('key');
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-step="1" data-state="active"'));
+    assert.ok(sandbox.elements.get('trainingPlanModalContent').innerHTML.includes('data-step="2" data-state="pending"'));
+});
+test('completed historical milestones show the earned next weight without adding a second step', () => {
+    const coach = setup([log('2026-09-28', [10, 10, 10], 100)]);
+    const target = recommend(coach);
+    assert.equal(target.action, 'increase');
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target }, getExerciseForUI: () => ({ name: 'Test lift' }),
+        escapeHtml: String, formatDate: String, collectCurrentExerciseWorkingSets: () => [], openModal() {}
+    });
+    sandbox.showTrainingPlanModal('key');
+    const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('data-step="2" data-state="complete"'));
+    assert.match(html, /data-step="3" data-state="active"[\s\S]*?<strong>105 lbs<\/strong>/);
+    assert.ok(!html.includes('110 lbs'));
 });
 test('Coach modal renders an honest starting state without invented weight or history', () => {
     const coach = setup();
@@ -457,19 +487,30 @@ test('set chart distinguishes the standard and progression thresholds', () => {
     assert.equal((html.match(/coach-rep-marker-progress/g) || []).length, 3);
     assert.ok(html.includes('--rep-marker: 80%'));
     assert.ok(html.includes('--rep-marker: 100%'));
-    assert.ok(html.includes('check marks 8 reps'));
-    assert.ok(html.includes('diamond marks 10 reps'));
+    assert.ok(html.includes('coach-rep-marker-label">8 reps'));
+    assert.ok(html.includes('coach-rep-marker-label">10 reps'));
+    assert.ok(!html.includes('Bars show reps'));
+    assert.equal((html.match(/class="coach-set-status coach-achievement"/g) || []).length, 3);
+    assert.ok(!html.includes('>In range</span>'));
+    assert.ok(!html.includes('>Top reached</span>'));
     assert.ok(html.includes('Set 01'));
     const fixedRange = { ...target, repRange: { min: 10, max: 10, label: '10' } };
     assert.ok(coach.buildCoachSetChart([], fixedRange).includes('data-overlap="true"'));
+    const higherTarget = coach.buildCoachRecommendation('lift', { reps: '12-15', sets: 3 });
+    const higherChart = coach.buildCoachSetChart([], higherTarget);
+    assert.ok(higherChart.includes('coach-rep-marker-label">12 reps'));
+    assert.ok(higherChart.includes('coach-rep-marker-label">15 reps'));
+    const overriddenCoach = setup([], { recommendation: { repRange: '12-15' } });
+    const overriddenTarget = overriddenCoach.buildCoachRecommendation('lift', { reps: '8-10', sets: 3 });
+    assert.ok(overriddenCoach.buildCoachSetChart([], overriddenTarget).includes('coach-rep-marker-label">15 reps'));
 });
-test('bodyweight and starting set charts describe the correct next action', () => {
+test('bodyweight and starting set charts retain states without explanatory prose', () => {
     const coach = setup();
     const target = recommend(coach);
-    assert.ok(coach.buildCoachSetChart([], target).includes('establish your working weight'));
+    assert.ok(coach.buildCoachSetChart([], target).includes('data-state="missing"'));
     const bodyweight = recommend(setup([log('2026-09-28', [10, 10, 10], 0)], { targetMode: 'bodyweight' }));
     const html = coach.buildCoachSetChart(log('2026-09-28', [10, 10, 10], 0).exercises[0].sets, bodyweight);
-    assert.ok(html.includes('Build reps'));
+    assert.ok(html.includes('data-state="top"'));
     assert.ok(!html.includes('earn the next step'));
 });
 test('weight trend works without a configured season goal', () => {

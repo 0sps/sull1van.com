@@ -12,6 +12,8 @@
     --coach-border: #5b9c87;
     --success: #a3ead5;
     --warning: #daca9b;
+    --coach-check-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22m2%2012%204-4%205%205%209-10%204%204-13%2014z%22%2F%3E%3C%2Fsvg%3E");
+    --coach-gem-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12l4%206-10%2013L2%209zM2%209h20M6%203l6%206%206-6M6%203%205%209l7%2013%207-13-1-6%22%2F%3E%3C%2Fsvg%3E");
     --coach-body-font: 'DM Sans', sans-serif;
     --type-meta: .875rem;
     --type-body: 1rem;
@@ -57,6 +59,12 @@
 #trainingPlanModal .coach-completion-ring { flex: 0 0 auto; width: 64px; height: 64px; padding: 5px; border-radius: 50%; background: conic-gradient(var(--coach) var(--completion), var(--border) 0); }
 #trainingPlanModal .coach-completion-ring > span { height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-secondary); font-size: var(--type-subheading); font-weight: 700; }
 #trainingPlanModal .coach-completion-ring small { font-size: var(--type-meta); font-weight: 400; color: var(--text-secondary); }
+#trainingPlanModal .coach-completion-meter[data-complete="true"] .coach-completion-ring { position: relative; background: linear-gradient(120deg, #b87920, #f4c45b 25%, #fff0b4 40%, #d8a137 55%, #ffdf85 75%, #b87920); background-size: 220% 220%; animation: coach-gold-sheen 4s ease-in-out infinite; }
+#trainingPlanModal .coach-completion-meter[data-complete="true"] .coach-completion-ring::after { content: ''; position: absolute; top: -3px; right: 1px; width: 15px; height: 15px; background: #fff0b4; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+#trainingPlanModal .coach-completion-meter[data-complete="true"] :is(.coach-completion-ring > span, .coach-completion-ring small),
+#trainingPlanModal .coach-completion-meter[data-complete="true"] > span { color: #ffdf85; }
+@keyframes coach-gold-sheen { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@media (prefers-reduced-motion: reduce) { #trainingPlanModal .coach-completion-meter[data-complete="true"] .coach-completion-ring { animation: none; } }
 #trainingPlanModal .coach-caption { font-size: var(--type-meta); line-height: 1.6; }
 #trainingPlanModal .coach-rep-legend { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--text-secondary); font-size: var(--type-meta); margin-top: 18px; }
 #trainingPlanModal .coach-rep-legend i { display: inline-block; height: 6px; width: 6px; border-radius: 50%; background: var(--coach); margin-right: 5px; }
@@ -65,24 +73,29 @@
 #trainingPlanModal .coach-set-label { grid-column: 1 / -1; margin-bottom: 18px; color: var(--text-secondary); font-family: var(--coach-body-font); font-size: var(--type-meta); line-height: 1.5; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
 #trainingPlanModal .coach-set-load { grid-column: 1; }
 #trainingPlanModal .coach-set-status { grid-column: 2; }
-#trainingPlanModal .coach-rep-track { height: 14px; border-radius: 0; }
+#trainingPlanModal .coach-rep-track { height: 14px; border-radius: 0; margin-bottom: 32px; }
+#trainingPlanModal .coach-rep-track[data-close-markers="true"] { margin-bottom: 54px; }
 #trainingPlanModal .coach-rep-fill { border-radius: 0; background: #68a99a; }
 #trainingPlanModal .coach-set-row[data-state="range"] .coach-rep-fill { background: var(--coach); }
-#trainingPlanModal .coach-set-row[data-state="top"] .coach-rep-fill { background: linear-gradient(110deg, #fff 0%, #edf9f4 24%, #fff 45%, #f2effc 68%, #ecf7fc 84%, #fff 100%); }
+#trainingPlanModal .coach-set-row[data-state="top"] .coach-rep-fill { background: linear-gradient(110deg, #fafffd 0%, #acebd6 24%, #fafffd 43%, #cfb8f0 65%, #a8dff2 84%, #fafffd 100%); }
 #trainingPlanModal .coach-rep-marker { width: 4px; border: 0; top: -3px; bottom: -3px; transform: translateX(-50%); }
 #trainingPlanModal .coach-rep-marker-standard { background: var(--coach); color: var(--coach); }
 #trainingPlanModal .coach-rep-marker-progress { background: #f7f9f7; color: #f7f9f7; }
 #trainingPlanModal .coach-rep-marker-symbol { position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); width: 18px; height: 18px; }
+#trainingPlanModal .coach-rep-marker-label { position: absolute; top: calc(100% + 7px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--coach-body-font); font-size: var(--type-meta); line-height: 1.5; font-weight: 600; }
+#trainingPlanModal .coach-rep-marker-progress .coach-rep-marker-label { transform: translateX(-100%); }
+#trainingPlanModal .coach-rep-track[data-overlap="true"] .coach-rep-marker-standard .coach-rep-marker-label { transform: translateX(-100%); }
+#trainingPlanModal .coach-rep-track[data-close-markers="true"] .coach-rep-marker-progress .coach-rep-marker-label { top: calc(100% + 28px); }
 #trainingPlanModal .coach-rep-track[data-overlap="true"] .coach-rep-marker-standard .coach-rep-marker-symbol { margin-left: -11px; }
 #trainingPlanModal .coach-rep-track[data-overlap="true"] .coach-rep-marker-progress .coach-rep-marker-symbol { margin-left: 11px; }
 #trainingPlanModal .coach-rep-key { display: inline-flex; align-items: center; gap: 7px; }
-#trainingPlanModal .coach-rep-key-standard { --rep-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22m2%2012%204-4%205%205%209-10%204%204-13%2014z%22%2F%3E%3C%2Fsvg%3E"); --rep-icon-color: var(--coach); }
-#trainingPlanModal .coach-rep-key-progress { --rep-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12l4%206-10%2013L2%209zM2%209h20M6%203l6%206%206-6M6%203%205%209l7%2013%207-13-1-6%22%2F%3E%3C%2Fsvg%3E"); --rep-icon-color: #f7f9f7; }
-#trainingPlanModal .coach-rep-marker-standard { --rep-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22m2%2012%204-4%205%205%209-10%204%204-13%2014z%22%2F%3E%3C%2Fsvg%3E"); --rep-icon-color: var(--coach); }
-#trainingPlanModal .coach-rep-marker-progress { --rep-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12l4%206-10%2013L2%209zM2%209h20M6%203l6%206%206-6M6%203%205%209l7%2013%207-13-1-6%22%2F%3E%3C%2Fsvg%3E"); --rep-icon-color: #f7f9f7; }
+#trainingPlanModal .coach-rep-key-standard { --rep-icon: var(--coach-check-icon); --rep-icon-color: var(--coach); }
+#trainingPlanModal .coach-rep-key-progress { --rep-icon: var(--coach-gem-icon); --rep-icon-color: #f7f9f7; }
+#trainingPlanModal .coach-rep-marker-standard { --rep-icon: var(--coach-check-icon); --rep-icon-color: var(--coach); }
+#trainingPlanModal .coach-rep-marker-progress { --rep-icon: var(--coach-gem-icon); --rep-icon-color: #f7f9f7; }
 #trainingPlanModal .coach-rep-marker-symbol::before,
 #trainingPlanModal .coach-rep-key::before { content: ''; display: block; flex-shrink: 0; width: 18px; height: 18px; background: var(--rep-icon-color); -webkit-mask: var(--rep-icon) center / contain no-repeat; mask: var(--rep-icon) center / contain no-repeat; }
-#trainingPlanModal .coach-set-result { font-weight: 700; font-size: var(--type-body); }
+#trainingPlanModal .coach-set-result { align-self: start; margin-top: -5px; line-height: 1.5; font-weight: 700; font-size: var(--type-body); }
 #trainingPlanModal .coach-set-load, #trainingPlanModal .coach-set-status { font-size: var(--type-meta); line-height: 1.5; margin-top: 4px; }
 #trainingPlanModal .coach-set-row[data-state="top"] .coach-set-status { color: var(--coach); }
 #trainingPlanModal .coach-set-note { font-size: var(--type-meta); line-height: 1.7; }
@@ -128,6 +141,23 @@
 #trainingPlanModal .training-plan-chart-label { font-size: var(--type-body); }
 #trainingPlanModal .coach-step-rail strong { overflow-wrap: anywhere; }
 #trainingPlanModal .coach-lift-heading .coach-heading { font-weight: 400; }
+
+/* Per-set achievements use vector icons, with no platform emoji. */
+#trainingPlanModal .coach-achievement { position: relative; justify-self: end; width: 28px; height: 28px; margin: 0; --achievement-fill: var(--coach); --achievement-icon: var(--coach-check-icon); }
+#trainingPlanModal .coach-achievement::before { content: ''; display: block; width: 100%; height: 100%; background: var(--achievement-fill); -webkit-mask: var(--achievement-icon) center / contain no-repeat; mask: var(--achievement-icon) center / contain no-repeat; opacity: .22; }
+#trainingPlanModal .coach-set-row:is([data-state="range"], [data-state="top"]) .coach-achievement::before { opacity: 1; }
+#trainingPlanModal .coach-set-row[data-state="range"] .coach-achievement { --achievement-fill: #62dca9; }
+#trainingPlanModal .coach-set-row[data-state="top"] .coach-achievement { --achievement-icon: var(--coach-gem-icon); --achievement-fill: linear-gradient(115deg, #fff, #acebd6 25%, #e2c0fc 50%, #a8dff2 75%, #fff); }
+#trainingPlanModal .coach-set-row:is([data-state="range"], [data-state="top"]) .coach-achievement::after { content: ''; position: absolute; width: 28px; height: 14px; left: 0; top: -11px; background: var(--achievement-fill); -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2012%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M12%201v4M3%204l3%203M21%204l-3%203%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2012%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M12%201v4M3%204l3%203M21%204l-3%203%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
+#trainingPlanModal .coach-step-rail > div[data-state="pending"] { opacity: .45; }
+#trainingPlanModal .coach-step-rail > div[data-state="complete"] strong { color: #62dca9; }
+#trainingPlanModal .coach-step-rail > div[data-state="complete"] .coach-step-dot { background: #62dca9; border-color: #62dca9; color: #101615; }
+#trainingPlanModal .coach-step-rail > div[data-state="complete"] .coach-step-dot::before { content: ''; width: 18px; height: 18px; background: currentColor; -webkit-mask: var(--coach-check-icon) center / contain no-repeat; mask: var(--coach-check-icon) center / contain no-repeat; }
+#trainingPlanModal .coach-step-rail > div[data-state="active"] .coach-step-dot { background: var(--coach-soft); border: 2px solid var(--coach); color: var(--coach); }
+#trainingPlanModal .coach-step-rail > div[data-state="active"] strong { color: var(--coach); font-weight: 700; }
+#trainingPlanModal .coach-step-rail > div[data-step="3"][data-state="active"] strong { color: #ffdf85; }
+#trainingPlanModal .coach-step-rail > div[data-step="3"][data-state="active"] .coach-step-dot { background: #ffdf85; border-color: #ffdf85; color: #18382b; }
+
 @media (max-width: 600px) {
     #trainingPlanModal .modal { width: 100%; max-width: 100%; border: 0; border-radius: 0; }
     #trainingPlanModal .coach-dialog-header { padding: 12px 20px; }
