@@ -297,12 +297,23 @@
             const requiredSets = Math.max(1, Number(target?.requiredWorkingSets) || 1);
             const allowZeroWeight = target?.coachConfig?.allowZeroWeight || target?.planExercise?.targetMode === 'bodyweight';
             const validSets = sets.filter(set => isValidWorkingSet(set, allowZeroWeight));
-            const complete = sets.length >= requiredSets && validSets.length === sets.length;
             const hasTarget = Number.isFinite(target?.targetWeightKg) && target?.repRange?.min > 0;
-            const meets = min => complete && hasTarget && sets.every(set =>
-                set.reps >= min && set.weight + 0.01 >= target.targetWeightKg);
-            const planComplete = meets(target?.repRange?.min);
-            const rangeProgressEarned = meets(target?.repRange?.max);
+            let growthSets = 0;
+            let growthRun = 0;
+            for (const set of sets) {
+                const qualifies = hasTarget && target.repRange.max > 0 &&
+                    isValidWorkingSet(set, allowZeroWeight) && set.reps >= target.repRange.max &&
+                    set.weight + 0.01 >= target.targetWeightKg;
+                growthRun = qualifies ? growthRun + 1 : 0;
+                growthSets = Math.max(growthSets, growthRun);
+            }
+            const rangeProgressEarned = growthSets >= requiredSets;
+            const complete = validSets.length >= requiredSets;
+            // Session completion uses the minimum prescription independently of growth sets.
+            // Optional extra sets cannot undo the required work already completed.
+            const satisfactorySets = hasTarget ? validSets.filter(set =>
+                set.reps >= target.repRange.min && set.weight + 0.01 >= target.targetWeightKg).length : 0;
+            const planComplete = satisfactorySets >= requiredSets;
             const progressEarned = rangeProgressEarned && target.targetWeightKg > 0;
             return {
                 planComplete,
@@ -311,6 +322,8 @@
                 progressEarned,
                 complete,
                 requiredSets,
+                growthSets,
+                satisfactorySets,
                 loggedSets: validSets.length,
                 statusClass: planComplete ? 'on-track' : 'behind',
                 statusLabel: !complete ? 'Finish working sets' : progressEarned ? 'Ready to increase'
@@ -365,7 +378,7 @@
             const lastWeightKg = usable?.representativeWeightKg ?? null;
             let targetWeightKg = lastWeightKg;
             let action = 'repeat';
-            let reason = `Keep the same weight and build toward ${repRange.max} reps on every working set.`;
+            let reason = `Keep the same weight and build toward ${requiredWorkingSets} consecutive growth sets of ${repRange.max}+ reps.`;
             const evaluationTarget = { exerciseId, repRange, targetWeightKg: lastWeightKg, requiredWorkingSets, coachConfig, planExercise };
             const lastEvaluation = current ? evaluateProgressionSets(current.workingSets, evaluationTarget) : null;
             const missedSessions = Math.max(2, Math.floor(Number(coachConfig.missedSessionsBeforeReduction) || 2));
@@ -399,7 +412,7 @@
             } else if (lastEvaluation.rangeProgressEarned && lastWeightKg > 0) {
                 action = 'increase';
                 targetWeightKg = Math.round((lastWeightKg + stepKg) * 1000000) / 1000000;
-                reason = `Every working set reached ${repRange.max} reps at the last working weight. Add one step and start again at ${repRange.min} reps.`;
+                reason = `${lastEvaluation.growthSets} consecutive growth sets reached ${repRange.max} reps at the last working weight. Add one step and start again at ${repRange.min} reps.`;
             } else if (repeatedMiss && lastWeightKg > stepKg) {
                 action = 'reduce';
                 targetWeightKg = Math.round((lastWeightKg - stepKg) * 1000000) / 1000000;
@@ -407,7 +420,7 @@
             } else if (!lastEvaluation.planComplete) {
                 reason = `At least one working set fell below ${repRange.min} reps or used a lighter weight. Repeat the weight and aim for ${repRange.min}+ reps on every set.`;
             } else if (lastWeightKg === 0 && lastEvaluation.rangeProgressEarned) {
-                reason = `Every working set reached ${repRange.max} reps. Repeat with controlled reps; added load needs a weighted progression plan.`;
+                reason = `${lastEvaluation.growthSets} consecutive growth sets reached ${repRange.max} reps. Repeat with controlled reps; added load needs a weighted progression plan.`;
             }
             // Match the whole-pound input shown by both pages so typing the target completes it.
             if (Number.isFinite(targetWeightKg) && targetWeightKg > 0) {

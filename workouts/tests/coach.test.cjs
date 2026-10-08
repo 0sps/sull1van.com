@@ -267,7 +267,7 @@ test('Coach modal renders actual evidence, live completion, and escaped exercise
     assert.ok(html.includes('3 working sets × 6-10 reps'));
     assert.ok(html.includes('This workout: Ready to increase'));
     assert.ok(html.includes('data-complete="true"'));
-    assert.ok(html.includes('Target complete'));
+    assert.ok(html.includes('Growth sets complete'));
     assert.ok(html.includes('data-step="1" data-state="complete"'));
     assert.ok(html.includes('data-step="2" data-state="complete"'));
     assert.ok(html.includes('data-step="3" data-state="active"'));
@@ -329,6 +329,55 @@ test('Coach modal counts extra qualifying sets and renders them as additional ca
     assert.ok(withEmptyExtra.includes('data-step="2" data-state="complete"'));
     assert.ok(withEmptyExtra.includes('data-complete="true"'));
     assert.ok(withEmptyExtra.includes('Ready to log'));
+});
+test('growth sets use the longest consecutive run at the coach rep and weight targets', () => {
+    const coach = setup([log('2026-09-28', [8, 8], 160)]);
+    const target = coach.buildCoachRecommendation('lift', { reps: '8-10', sets: 3 });
+    const cases = [
+        { reps: [8, 10, 10, 8], weights: [160, 160, 160, 160], growth: 2 },
+        { reps: [10, 10, 10, 8], weights: [160, 160, 160, 160], growth: 3 },
+        { reps: [10, 8, 10, 8], weights: [160, 160, 160, 160], growth: 1 },
+        { reps: [10, 8, 10, 8], weights: [150, 150, 160, 160], growth: 1 },
+        { reps: [8, 8, 8, 8], weights: [150, 150, 160, 160], growth: 0 },
+        { reps: [10, 10, 10], weights: [160, 150, 160], growth: 1 },
+        { reps: [10, '', 10], weights: [160, 160, 160], growth: 1 },
+        { reps: [10, 10, 10], weights: [160, 165, 160], growth: 3 }
+    ];
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target }, getExerciseForUI: () => ({ name: 'Test lift' }),
+        escapeHtml: String, formatDate: String, openModal() {}
+    });
+    for (const { reps, weights, growth } of cases) {
+        const sets = reps.map((reps, index) => ({ reps, weight: lbsToKg(weights[index]) }));
+        const evaluation = coach.evaluateProgressionSets(sets, target);
+        assert.equal(evaluation.growthSets, growth);
+        assert.equal(evaluation.rangeProgressEarned, growth >= 2);
+        assert.equal(evaluation.progressEarned, growth >= 2);
+        sandbox.collectCurrentExerciseWorkingSets = () => sets;
+        sandbox.showTrainingPlanModal('key');
+        const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+        assert.ok(html.includes(`<span>${growth}<small>/2</small>`));
+        assert.ok(html.includes(`data-complete="${growth >= 2}"`));
+        assert.ok(html.includes(growth === 1 ? 'Growth set</span>' : 'Growth sets'));
+        assert.ok(!html.includes('At top reps'));
+        assert.ok(html.includes(`data-step="2" data-state="${growth >= 2 ? 'complete' : evaluation.planComplete ? 'active' : 'pending'}"`));
+    }
+    const higherTarget = { ...target, repRange: { min: 12, max: 15, label: '12-15' } };
+    assert.equal(coach.evaluateProgressionSets([12, 15, 16, 12].map(reps => ({ reps, weight: lbsToKg(160) })), higherTarget).growthSets, 2);
+    assert.equal(coach.evaluateProgressionSets([
+        { reps: 20, weight: lbsToKg(160), isWarmup: true },
+        { reps: 10, weight: lbsToKg(160) }
+    ], target).growthSets, 1);
+});
+test('consecutive growth sets later in a logged session earn the next recommendation', () => {
+    const coach = setup([log('2026-09-28', [8, 10, 10, 8], 160)]);
+    const target = coach.buildCoachRecommendation('lift', { reps: '8-10', sets: 3 });
+    assert.equal(target.action, 'increase');
+    assert.equal(target.targetWeightDisplay, 165);
+    assert.ok(target.reason.includes('2 consecutive growth sets'));
+    const split = setup([log('2026-09-28', [10, 8, 10, 8], 160)]).buildCoachRecommendation('lift', { reps: '8-10', sets: 3 });
+    assert.equal(split.action, 'repeat');
+    assert.equal(split.targetWeightDisplay, 160);
 });
 test('Coach modal renders an honest starting state without invented weight or history', () => {
     const coach = setup();
@@ -465,6 +514,55 @@ test('session completion and earned progression have distinct labels and button 
     sandbox.checkExerciseCompletion('key');
     assert.equal(sandbox.elements.get('coach-status-key').textContent, 'Increase earned for next session');
     assert.equal(toggles.get('achieved'), true);
+});
+test('the workout entry turns green at the minimum prescription independently of growth sets', () => {
+    const coach = setup();
+    const target = {
+        ...coach.buildCoachRecommendation('lift', { reps: '8-12', sets: 5 }),
+        targetWeightKg: lbsToKg(160)
+    };
+    assert.equal(target.requiredWorkingSets, 4);
+    let liveSets = [];
+    const sandbox = pageContext('app.html', ['checkExerciseCompletion'], {
+        coach, activeProgressionTargets: { key: target },
+        collectCurrentExerciseWorkingSets: () => liveSets,
+        getExerciseForUI: () => ({ name: 'Test lift' })
+    });
+    const entryStates = new Map();
+    const coachStates = new Map();
+    sandbox.document.getElementById('exercise-key').classList.toggle = (name, value) => entryStates.set(name, value);
+    sandbox.document.getElementById('coach-btn-key').classList.toggle = (name, value) => coachStates.set(name, value);
+    for (const reps of [[8, 8, 8, 8], [10, 10, 8, 8], [12, 12, 8, 8]]) {
+        liveSets = reps.map(reps => ({ reps, weight: lbsToKg(160) }));
+        sandbox.checkExerciseCompletion('key');
+        const evaluation = coach.evaluateProgressionSets(liveSets, target);
+        assert.equal(evaluation.planComplete, true);
+        assert.equal(evaluation.satisfactorySets, 4);
+        assert.equal(evaluation.growthSets, reps[0] === 12 ? 2 : 0);
+        assert.equal(entryStates.get('completed'), true);
+        assert.equal(coachStates.get('achieved'), false);
+        assert.equal(sandbox.elements.get('coach-status-key').textContent, 'Session target met');
+    }
+    // Extra unfinished or below-target sets cannot revoke completed prescribed work.
+    liveSets = [...[8, 8, 8, 8].map(reps => ({ reps, weight: lbsToKg(160) })),
+        { reps: 5, weight: lbsToKg(150) }, { reps: NaN, weight: NaN }];
+    sandbox.checkExerciseCompletion('key');
+    assert.equal(entryStates.get('completed'), true);
+    for (const sets of [
+        [8, 8, 8].map(reps => ({ reps, weight: lbsToKg(160) })),
+        [8, 8, 8, 7].map(reps => ({ reps, weight: lbsToKg(160) })),
+        [160, 160, 160, 150].map(weight => ({ reps: 8, weight: lbsToKg(weight) })),
+        [...[8, 8, 8].map(reps => ({ reps, weight: lbsToKg(160) })), { reps: 8, weight: lbsToKg(160), isWarmup: true }]
+    ]) {
+        liveSets = sets;
+        sandbox.checkExerciseCompletion('key');
+        assert.equal(entryStates.get('completed'), false);
+        assert.equal(coachStates.get('achieved'), false);
+    }
+    liveSets = [12, 12, 12, 12].map(reps => ({ reps, weight: lbsToKg(160) }));
+    sandbox.checkExerciseCompletion('key');
+    assert.equal(entryStates.get('completed'), true);
+    assert.equal(coachStates.get('achieved'), true);
 });
 
 test('calendar comparison does not label a valid repeated load as a failure', () => {
