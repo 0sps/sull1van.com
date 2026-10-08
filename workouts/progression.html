@@ -1269,8 +1269,8 @@
 
         function renderLiftActions() {
             const groups = [
-                { action: 'increase', label: 'Ready to add weight' },
-                { action: 'reduce', label: 'Try a lighter weight' }
+                { action: 'increase', label: 'Ready to add weight', icon: 'up' },
+                { action: 'reduce', label: 'Try a lighter weight', icon: 'down' }
             ];
             document.getElementById('liftActions').innerHTML = groups.map(group => {
                 const rows = liftRows.filter(row => row.recommendation.action === group.action);
@@ -1285,7 +1285,7 @@
                         .reduce((max, set) => Math.max(max, Number(set.reps) || 0), 0);
                     const lastWeight = formatLiftWeight(lastWeightKg, row.planExercise);
                     const last = group.action === 'reduce' && lastReps > 0 ? `${lastWeight} × ${lastReps}` : lastWeight;
-                    return `<li><div><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-last">Last: ${escapeHtml(last)}</span></div><span class="lift-action-change">${changeLbs > 0 ? '+' : ''}${escapeHtml(changeLbs)} lbs<span>next time</span></span></li>`;
+                    return `<li><span class="context-icon lift-action-icon" aria-hidden="true">${progressionIcon(group.icon)}</span><div class="lift-action-content"><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-change">${changeLbs > 0 ? '+' : ''}${escapeHtml(changeLbs)} lbs <span>next time</span></span><span class="lift-action-last">Last: ${escapeHtml(last)}</span></div></li>`;
                 }).join('');
                 return `<details class="lift-action-group action-${group.action}"><summary>${group.label}: ${rows.length}</summary><ul>${lifts}</ul></details>`;
             }).join('');
