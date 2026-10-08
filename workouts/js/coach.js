@@ -450,15 +450,18 @@
             const repMin = target.repRange.min;
             const repMax = target.repRange.max;
             if (!repMax) return '';
-            const scale = Math.max(repMax, ...sets.map(set => Number.isInteger(set.reps) && set.reps > 0 ? set.reps : 0));
+            const scale = Math.max(repMax, ...sets.slice(0, required).map(set => Number.isInteger(set.reps) && set.reps > 0 ? set.reps : 0));
             const rows = Array.from({ length: Math.max(required, sets.length) }, (_, index) => {
                 const set = sets[index];
                 const valid = set && isValidWorkingSet(set, target.coachConfig.allowZeroWeight);
                 const state = !valid ? 'missing' : set.reps < target.repRange.min ? 'below' : set.reps >= repMax ? 'top' : 'range';
+                if (index >= required) {
+                    return `<div class="coach-additional-set" data-set="${index + 1}"><span class="coach-set-label">Set ${String(index + 1).padStart(2, '0')}</span><strong>Additional set added</strong><span class="coach-caption">${valid ? `${displayWeight(set.weight)} lb × ${set.reps} reps` : 'Ready to log'}</span></div>`;
+                }
                 const status = { missing: 'Missing', below: 'Below range', top: 'Top reached', range: 'In range' }[state];
                 return `<div class="coach-set-row" data-state="${state}" aria-label="Set ${index + 1}: ${valid ? `${set.reps} reps, ${displayWeight(set.weight)} lb, ${status}` : 'Missing valid working set'}">
                     <span class="coach-set-label">Set ${String(index + 1).padStart(2, '0')}</span>
-                    <div class="coach-rep-track" data-close-markers="${(repMax - repMin) / scale < 0.3}" data-overlap="${repMin === repMax}" aria-hidden="true"><span class="coach-rep-fill" style="--rep-fill: ${valid ? set.reps / scale * 100 : 0}%"></span><span class="coach-rep-marker coach-rep-marker-standard" style="--rep-marker: ${repMin / scale * 100}%"><span class="coach-rep-marker-symbol"></span><span class="coach-rep-marker-label">${repMin} reps</span></span><span class="coach-rep-marker coach-rep-marker-progress" style="--rep-marker: ${repMax / scale * 100}%"><span class="coach-rep-marker-symbol"></span>${repMin === repMax ? '' : `<span class="coach-rep-marker-label">${repMax} reps</span>`}</span></div>
+                    <div class="coach-rep-track" data-close-markers="${(repMax - repMin) / scale < 0.3}" data-overlap="${repMin === repMax}" aria-hidden="true"><span class="coach-rep-fill" style="--rep-fill: ${valid ? set.reps / scale * 100 : 0}%"></span><span class="coach-rep-marker coach-rep-marker-standard" style="--rep-marker: ${repMin / scale * 100}%"><span class="coach-rep-marker-symbol"></span><span class="coach-rep-marker-label">${repMin}<span>reps</span></span></span><span class="coach-rep-marker coach-rep-marker-progress" style="--rep-marker: ${repMax / scale * 100}%"><span class="coach-rep-marker-symbol"></span>${repMin === repMax ? '' : `<span class="coach-rep-marker-label">${repMax}<span>reps</span></span>`}</span></div>
                     <span class="coach-set-result">${valid ? `${set.reps} reps` : 'Missing'}</span>
                     <span class="coach-set-note coach-set-load">${valid ? `${displayWeight(set.weight)} lb` : 'Log this set'}</span>
                     <span class="coach-set-status coach-achievement" role="img" aria-label="${status}"></span>
