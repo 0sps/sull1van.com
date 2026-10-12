@@ -1,79 +1,53 @@
 # Workout coach
 
-The coach is a deterministic calculator in `js/coach.js`. It runs in the browser and explains the next workout using saved working sets. It has no model API or background service. The workout logger and progression dashboard use the same calculator.
+The deterministic calculator in `js/coach.js` is shared by the workout logger and progression dashboard. It uses active-season working sets and the same strength calculator as the PR modal.
 
-## What changed
+## Strength-based targets
 
-The previous calculator could convert the best estimated max from two sessions into a recommended load. It also allowed a single set's estimated strength to earn progression when the rest of the session missed the rep range. Its history helpers mixed season filtering with a limit of 14 workout documents, which could exclude a lift just because other workouts were more recent. The recommendation and progression dashboard used different targets and different definitions of success.
+For each lift, the coach estimates a one-rep max for every valid non-warmup set and takes the highest estimate across the supplied active-season history. It calls `WorkoutStrength.getBestEstimatedOneRepMax()`, the same selector used by `records.js`. The strongest estimate can come from a lighter set with more reps, rather than the heaviest logged load.
 
-The new recommendation starts with the latest attempt for the specific lift. A session must include the required working sets before it can earn an increase. Estimated maxes remain available for charts and records, while increases follow the actual working sets. Season goals provide context below the workout prescription.
+The coach converts that maximum into a load for the upper end of the scheduled rep range using `WorkoutStrength.calculateWeightForEstimatedMax()`. Both directions use the exercise's configured formula, with the same Epley fallback as PRs. Both directions use actual reps, including 15- and 20-rep sets and targets. The inverse calculation also uses the fallback if a configured formula is invalid.
 
-## Inputs and history
+The target rounds up to the logger's whole-pound precision, so rounding cannot prescribe a load below the historical strength reference. Equipment increments do not add an arbitrary step to strength-derived targets. Choose an available equipment setting when logging a calculated load.
 
-- `app.html` supplies its complete loaded active-season record history, not just the home screen's recent list. The existing history loader reads additional season documents when the initial 60-workout window does not cover the season.
-- `progression.html` supplies the season logs it queries from Firestore.
-- Both supply exercise metadata, the active season start, progression configuration, and unit/date formatters.
-- The module independently validates dates, removes pre-season and future workouts, and sorts newest first. It finds the lift throughout the supplied history rather than truncating the overall workout list.
-- All matching exercise entries within a workout contribute working sets. Rows marked as warmups are excluded.
-- Missing weights remain missing. Explicit zero weight is accepted only for a progression entry configured with `targetMode: "bodyweight"`. Positive whole-number reps are required. Decimal reps and malformed strings are invalid.
-- A warmup-only or partly entered latest attempt stays in the history. It cannot be skipped to recover an older earned increase.
+Example: working sets of 130, 145, 160, and 175 lb for eight reps yield a maximum Epley estimate of 221.67 lb from 175 × 8. The equivalent ten-rep load is 166.25 lb, displayed as 167 lb. Three sets of 130 × 10 do not earn progression against that reference.
 
-## Set counts and rep ranges
+An easier recent workout, ramp set, or back-off set cannot lower the season maximum. Recent history still determines confidence, but the confidence window does not restrict the strength reference.
 
-The logger currently creates the training plan's number of rows and marks the first row as a warmup. The default required working-set count is therefore `max(1, sets - 1)`. A caller can supply `workingSets` explicitly to override that convention. Adding rows does not reduce the requirement. All entered working rows must meet the rep/weight rule, including extra rows. Removing rows cannot earn an increase below the planned count.
+## Completion and progression
 
-Numeric ranges such as `6-10` and `12-20`, or a fixed rep target such as `8`, are supported. Timed entries, AMRAP, reversed ranges, and other text request plan setup instead of guessing a load.
+The logger marks the first planned row as a warmup. Required working sets default to `max(1, sets - 1)`; callers can override this with `workingSets`. Removing rows cannot reduce the requirement. Optional extra rows cannot undo completed work.
 
-When a lift appears multiple times in the week, the dashboard chooses its next scheduled occurrence, starting with today. Its set count and rep range then agree with the next workout. Today’s focus uses today's actual exercise entries, including their individual set counts.
+The session prescription is met when the required number of valid working sets reach the recommended load and the lower rep bound. Strength progression is separate: finish the required working-set count and exceed the best season estimated max with a working set. Sets may use different weights and reps, and they do not need to form a consecutive run at the same load. A single new strength mark in an unfinished session does not earn a completed-session increase.
 
-## Decision order
+Live evaluation compares entered sets with the frozen historical reference supplied when the target was built. The next target is recalculated from the new best estimate. Historical evaluation compares the newest attempt with prior season attempts, so a saved PR is shown without adding another equipment step.
 
-The latest usable working weight is the lightest valid working-set load in the newest attempt containing a valid load. A failed lower-load set contributes to that weight. If the newest attempt has no usable load, earlier usable history supplies a repeat weight while the newest attempt remains visible as incomplete.
+The Coach modal shows the source set and estimate, working-set completion, and estimated-strength progression. The progression dashboard uses the same calculated prescription. Session load references and season charts use the equivalent upper-rep load from each session's best estimate for strength-based lifts.
 
-| Condition | Next workout | Explanation |
-| --- | --- | --- |
-| Unsupported rep prescription | Set a numeric range | No invented load |
-| No valid working weight in the season | Choose a starting weight | Log all required working sets to establish history |
-| Latest attempt more than 21 days ago | Repeat the last working weight | Rebuild the rep range before increasing |
-| Latest attempt lacks required valid working sets | Repeat the working weight | Finish a full session before increasing |
-| Every working set reaches the top of the range at the working weight | Add one configured step | Start the next workout at the bottom of the range |
-| Two complete recent attempts at the same load each miss the minimum on at least one set | Suggest one lighter step | Rebuild the rep range at the lighter load |
-| Any other usable session | Repeat the working weight | Build reps within the range |
+## History and exceptional cases
 
-A reduction requires matching loads on every working set in both attempts. Mixed heavier/back-off sets, incomplete attempts, a single missed attempt, and old attempts cannot earn a reduction. A weight at or below one configured step repeats rather than producing a zero or negative recommendation.
+- Only valid dates within the active season and no later than now are used. History is sorted newest first and searched by lift rather than limited to a count of unrelated workouts.
+- All matching lift entries within a workout contribute working sets. Warmups are excluded.
+- Weights must be finite and positive, and reps must be positive integers. Missing, malformed, negative, and fractional entries cannot set a target or earn completion.
+- A warmup-only or incomplete latest attempt stays visible. The season maximum still supplies the weight, and the action asks for a full session.
+- A gap longer than `returnAfterDays` (21 by default) is labeled as returning. It does not erase the historical strength reference.
+- Numeric ranges and fixed rep counts are supported. Timed entries, AMRAP, reversed ranges, and other text request rep-range setup.
+- With no usable history, the coach asks for starting working sets instead of inventing a weight.
 
-For explicit bodyweight sessions, the coach can check rep completion at zero external load. Reaching the upper range does not invent added resistance. The recommendation explains that weighted progression needs a corresponding plan.
+Lifts configured with `1repmaxformula: "NONE"` and bodyweight plans retain rep-based guidance. Their latest lightest valid working load is repeated until the required consecutive sets reach the upper rep target. A positive-load increase adds one configured equipment step. Two complete recent misses at the same load may suggest a lighter step. Explicit zero bodyweight can earn rep completion but does not invent added resistance.
 
-A recommended increase uses the lift's positive `progressionStepKg`. If that is absent, it uses `incrementLbs` (5 pounds by default). Targets are rounded to the whole-pound value shown by the logger and converted back to kilograms for evaluation. This keeps the displayed target and the completion check consistent. The user can choose the nearest available equipment setting.
-
-`returnAfterDays` defaults to 21 and `missedSessionsBeforeReduction` defaults to 2. Exercise-specific `recommendation` values override plan defaults, which override module defaults. Older stored plans remain compatible; a legacy estimated-max method setting no longer changes how increases are earned.
-
-## Completion during a workout
-
-`evaluateProgressionSets()` is shared by the logger's completion styling and the Coach panel's current-workout readout. Completion requires every entered working row to be valid, at least the planned working-set count, and every set at or above the recommended weight and lower rep bound. Earning an increase additionally requires every set to reach the upper rep bound. Estimated strength cannot bypass either condition.
-
-The logger shows the recommended load, working sets, and rep range directly on each lift. Session completion and an earned increase have separate text labels; only an earned increase turns the Coach button green. The Coach dialog leads with the prescription and one reason, with a current-workout result when sets have been entered. Logged sets, progression rules, season context, and method details are expandable. Its named header receives initial focus without scrolling, and Close remains visible while scrolling. On mobile the dialog uses the full viewport. Both pages share coaching tokens and components in `css/coach.css`.
-
-The progression page puts today’s full prescription first, followed by expandable other lifts and season context. Rep-range setup links to the plan editor. Calendar comparisons use neutral chart styling and do not label logged weights as successful or failed against the season reference.
-
-History labels describe what is available: no history, first session, recent history, incomplete history, or returning after a gap. They are not probabilities or claims about recovery. The calculator has no effort, sleep, pain, or fatigue measurements to evaluate.
-
-## Goals, estimates, and records
-
-The season baseline is the first chronologically valid session containing valid working rows. Calendar progress still interpolates from that baseline toward a configured goal across the block duration. It appears as a reference line and never forces the next workout weight above completed performance. Lifts without a configured increase show no season goal.
-
-The coach's strength summaries and dashboard charts use actual sets from 1 through 12 reps. Higher-rep work remains fully eligible for rep-based progression and can be viewed in the Load chart. Formula handling and PR evaluation remain in `strength.js` and `records.js` respectively. A PR does not independently earn a weight increase.
-
-Today's focus prioritizes starting sessions, lighter-step suggestions, returning lifts, unfinished attempts, earned increases, and then ordinary rep building. A rest day displays recovery guidance without choosing an unscheduled lift.
+Legacy recommendation method names do not override the shared PR formula for strength-based lifts. Calendar goals remain references and do not force a heavier prescription.
 
 ## Loading and verification
 
-`service-worker.js` uses cache `seans-log-v17`. The coach module and shared coaching stylesheet are network-first alongside the app pages and plans so the UI can receive its matching calculator after an update. Offline use falls back to the cached copy.
+Both pages supply their full loaded season history, exercise metadata, season start, plan, and unit/date helpers. The app reads additional season documents when its initial workout window does not cover the season.
 
-Run the regression checks with the existing Node runtime:
+`service-worker.js` uses cache `seans-log-v31`. App pages, the coach module, shared styles, and plans use network-first loading with cached offline fallback.
+
+Run the existing Node tests without launching a browser:
 
 ```sh
-node --test workouts/tests/coach.test.cjs
+node --test workouts/tests/*.test.cjs
 ```
 
-The suite tests decision rules, season boundaries, missing/invalid entries, warmups, required set counts, higher rep ranges, bodyweight work, stale history, unit rounding, and the actual page-rendering functions using a small DOM substitute. It also exercises the bundled weekly plan and checks the prohibited UI vocabulary. Desktop and mobile UI checks use an isolated preview built from production markup, styles, and rendering functions with sample history. Signed-in Firebase persistence is outside that preview.
+Coach coverage includes ascending loads, strongest-estimate selection, PR formula parity, custom and invalid formulas, actual higher-rep calculations, historical reference retention, invalid inputs, incomplete sessions, live and saved progression, page rendering, and the rep-only/bodyweight fallback. Signed-in persistence and visual browser testing are separate checks.

@@ -2,7 +2,6 @@
     'use strict';
 
     const FALLBACK_FORMULA = 'w*(1+(r/30))';
-    const MAX_ESTIMATE_REPS = 12;
     const MAX_FORMULA_LENGTH = 160;
 
     function tokenize(formula) {
@@ -155,7 +154,7 @@
     function getCalculationReps(reps) {
         const repCount = Number(reps);
         if (!Number.isFinite(repCount) || repCount <= 0) return null;
-        return Math.min(repCount, MAX_ESTIMATE_REPS);
+        return repCount;
     }
 
     function estimateNamed(weight, reps, method = 'epley') {
@@ -234,19 +233,19 @@
         const profile = getExerciseStrengthProfile(exercise);
         if (profile.mode === 'repsOnly' || !Number.isFinite(target) || target <= 0 || repCount === null) return null;
 
-        const formula = profile.formula;
+        const estimateAtWeight = weight => estimateOneRepMax(exercise, weight, reps)?.estimatedMaxKg;
         let low = 0.0001;
         let high = Math.max(target * 2, 1);
-        let highEstimate = evaluateFormula(formula, high, repCount);
+        let highEstimate = estimateAtWeight(high);
         for (let attempt = 0; attempt < 10 && (!Number.isFinite(highEstimate) || highEstimate < target); attempt += 1) {
             high *= 2;
-            highEstimate = evaluateFormula(formula, high, repCount);
+            highEstimate = estimateAtWeight(high);
         }
         if (!Number.isFinite(highEstimate) || highEstimate < target) return null;
 
         for (let iteration = 0; iteration < 60; iteration += 1) {
             const midpoint = (low + high) / 2;
-            const estimate = evaluateFormula(formula, midpoint, repCount);
+            const estimate = estimateAtWeight(midpoint);
             if (!Number.isFinite(estimate)) return null;
             if (estimate < target) low = midpoint;
             else high = midpoint;
@@ -257,7 +256,6 @@
 
     window.WorkoutStrength = Object.freeze({
         FALLBACK_FORMULA,
-        MAX_ESTIMATE_REPS,
         evaluateFormula,
         getCalculationReps,
         getExerciseStrengthProfile,

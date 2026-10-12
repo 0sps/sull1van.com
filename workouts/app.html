@@ -5622,14 +5622,20 @@
                     <span class="coach-caption">${liveEvaluation.loggedSets} valid working set${liveEvaluation.loggedSets === 1 ? '' : 's'} entered, ${sets} required.
                     ${liveEvaluation.progressEarned ? 'Increase earned for your next session.' : ''}</span></div>` : '';
             const shownSets = coach.getWorkingSets(hasLiveSets ? liveSets : currentSets);
-            const shownWeight = hasLiveSets ? target.targetWeightKg : currentWeight;
-            const milestoneEvaluation = coach.evaluateProgressionSets(shownSets, { ...target, targetWeightKg: shownWeight });
+            const shownWeight = target.usesEstimatedMax || hasLiveSets ? target.targetWeightKg : currentWeight;
+            const milestoneEvaluation = target.usesEstimatedMax && !hasLiveSets
+                ? target.lastEvaluation : coach.evaluateProgressionSets(shownSets, { ...target, targetWeightKg: shownWeight });
             const growthSets = milestoneEvaluation.growthSets;
-            const standardComplete = milestoneEvaluation.planComplete;
-            const progressionComplete = milestoneEvaluation.rangeProgressEarned;
+            const meterSets = target.usesEstimatedMax ? milestoneEvaluation.loggedSets : growthSets;
+            const standardComplete = target.usesEstimatedMax ? milestoneEvaluation.complete : milestoneEvaluation.planComplete;
+            const progressionComplete = target.usesEstimatedMax ? milestoneEvaluation.progressEarned : milestoneEvaluation.rangeProgressEarned;
             const milestoneWeight = Number.isFinite(shownWeight) ? weightLabel(shownWeight) : prescription;
             const canAddLoad = target.targetWeightKg > 0 && target.stepKg > 0;
-            const nextWeight = canAddLoad ? weightLabel((Number.isFinite(shownWeight) ? shownWeight : target.targetWeightKg) + target.stepKg) : null;
+            const nextEstimateWeight = target.usesEstimatedMax && milestoneEvaluation.bestEstimate
+                ? coach.getEstimatedTargetWeightKg(Math.max(target.referenceEstimatedMaxKg, milestoneEvaluation.bestEstimate.estimatedMaxKg), target.repRange.max, target.exerciseId) : null;
+            const nextWeight = target.usesEstimatedMax
+                ? weightLabel(nextEstimateWeight ?? target.targetWeightKg)
+                : canAddLoad ? weightLabel((Number.isFinite(shownWeight) ? shownWeight : target.targetWeightKg) + target.stepKg) : null;
             const loadGain = baseline && Number.isFinite(currentWeight) ? currentWeight - baseline.representativeWeightKg : null;
             const loadGainLabel = Number.isFinite(loadGain) ? `${loadGain > 0 ? '+' : loadGain < 0 ? '−' : ''}${displayWeight(Math.abs(loadGain))} lbs` : null;
             const startAction = target.action === 'setup'
@@ -5647,18 +5653,18 @@
                         ${liveStatus}${startAction}
                     </section>
                     ${setChart ? `<section class="coach-section coach-performance" aria-label="Working set performance">
-                        <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter" data-complete="${progressionComplete}"><div class="coach-completion-ring" style="--completion:${Math.min(growthSets / sets, 1) * 100}%" role="img" aria-label="${growthSets} of ${sets} consecutive growth sets at the ${hasLiveSets ? 'recommended' : 'last working'} weight"><span>${growthSets}<small>/${sets}</small></span></div><span>Growth ${growthSets === 1 ? 'set' : 'sets'}${progressionComplete ? ' complete' : ''}</span></div></div>
+                        <div class="coach-performance-heading"><div><h5 class="coach-section-title">${hasLiveSets ? 'This workout' : current ? 'Last workout' : 'Your set targets'}</h5></div><div class="coach-completion-meter" data-complete="${progressionComplete}"><div class="coach-completion-ring" style="--completion:${Math.min(meterSets / sets, 1) * 100}%" role="img" aria-label="${meterSets} of ${sets} ${target.usesEstimatedMax ? 'working sets' : 'consecutive growth sets'}"><span>${meterSets}<small>/${sets}</small></span></div><span>${target.usesEstimatedMax ? progressionComplete ? 'Estimated max improved' : 'Working sets logged' : `Growth ${growthSets === 1 ? 'set' : 'sets'}${progressionComplete ? ' complete' : ''}`}</span></div></div>
                         <p class="coach-caption">${hasLiveSets ? 'Working sets entered so far.' : escapeHtml(recentSummary)}</p>
                         ${setChart}
                         <div class="coach-next-step"><span class="coach-kicker">${canAddLoad ? 'The path to your next increase' : 'Your session milestones'}</span><div class="coach-step-rail">
-                            <div data-step="1" data-state="${standardComplete ? 'complete' : 'active'}" aria-label="Working sets: ${standardComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${standardComplete ? '' : '1'}</span><strong>${hasWeight ? escapeHtml(milestoneWeight) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>
-                            <div data-step="2" data-state="${progressionComplete ? 'complete' : standardComplete ? 'active' : 'pending'}" aria-label="Progression reps: ${progressionComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${progressionComplete ? '' : '2'}</span><strong>${target.repRange.max}+ reps</strong><span>On ${sets} consecutive growth sets</span></div>
+                            <div data-step="1" data-state="${standardComplete ? 'complete' : 'active'}" aria-label="Working sets: ${standardComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${standardComplete ? '' : '1'}</span><strong>${target.usesEstimatedMax ? 'Working sets' : hasWeight ? escapeHtml(milestoneWeight) : 'Find your weight'}</strong><span>${sets} full working sets</span></div>
+                            <div data-step="2" data-state="${progressionComplete ? 'complete' : standardComplete ? 'active' : 'pending'}" aria-label="Progression reps: ${progressionComplete ? 'complete' : 'in progress'}"><span class="coach-step-dot" aria-hidden="true">${progressionComplete ? '' : '2'}</span><strong>${target.usesEstimatedMax ? 'Beat your estimated max' : `${target.repRange.max}+ reps`}</strong><span>${target.usesEstimatedMax ? 'Across your working sets' : `On ${sets} consecutive growth sets`}</span></div>
                             <div data-step="3" data-state="${progressionComplete ? canAddLoad ? 'active' : 'complete' : 'pending'}" ${progressionComplete && canAddLoad ? 'aria-current="step"' : ''}><span class="coach-step-dot" aria-hidden="true">${progressionComplete && !canAddLoad ? '' : '3'}</span><strong>${nextWeight ? escapeHtml(nextWeight) : hasWeight ? 'Build reps' : 'Baseline set'}</strong><span>${canAddLoad ? progressionComplete ? 'Next session' : 'Next session, once earned' : hasWeight ? 'Keep the full rep range' : 'Then follow your coach'}</span></div>
                         </div></div>
                     </section>` : ''}
                     ${chart ? `<section class="coach-section" aria-label="Recent working weight trend">
                         <h5 class="coach-section-title">Working weight trend</h5>
-                        <p class="coach-caption">Last 14 days · lightest valid working weight per session · lb</p>
+                        <p class="coach-caption">Last 14 days · ${target.usesEstimatedMax ? 'weight for the upper rep target from each session’s best estimated max' : 'lightest valid working weight per session'} · lb</p>
                         ${chart}
                         <p class="coach-chart-note">The weight axis is zoomed to show changes.${goalKg !== null ? ' The dashed season reference gives context; completed sets determine your next weight.' : ''}</p>
                     </section>` : ''}
@@ -5670,7 +5676,7 @@
                     ${target.repRange.min ? `<details class="coach-disclosure"><summary>Session and progression rules</summary>
                         <div class="coach-rules">
                             <div><div class="coach-rule-label">Session target</div><div class="coach-rule-value">${sets} working set${sets === 1 ? '' : 's'} with ${escapeHtml(target.repRange.min)}+ reps on every set${hasWeight ? ' at this weight' : ''}.</div></div>
-                            <div><div class="coach-rule-label">${target.targetWeightKg > 0 ? 'Earn the next increase' : 'Build reps'}</div><div class="coach-rule-value">${escapeHtml(target.repRange.max)}+ reps on every working set.${target.targetWeightKg > 0 ? ` Then add ${escapeHtml(nextStep)} next session.` : target.targetWeightKg === 0 ? ' Added load needs a weighted progression plan.' : ' Log a full starting session first.'}</div></div>
+                            <div><div class="coach-rule-label">${target.targetWeightKg > 0 ? 'Earn the next increase' : 'Build reps'}</div><div class="coach-rule-value">${target.usesEstimatedMax ? `Finish ${sets} working sets and exceed your best season estimated max. The strongest set counts even when weights vary.` : `${escapeHtml(target.repRange.max)}+ reps on every working set.`}${!target.usesEstimatedMax && target.targetWeightKg > 0 ? ` Then add ${escapeHtml(nextStep)} next session.` : target.usesEstimatedMax ? ' The next weight is recalculated from your new estimated max.' : target.targetWeightKg === 0 ? ' Added load needs a weighted progression plan.' : ' Log a full starting session first.'}</div></div>
                         </div>
                         <p>Warmups do not count. The first planned row starts as a warmup.</p>
                     </details>` : ''}
@@ -5685,9 +5691,9 @@
                         <a class="coach-season-link" href="progression.html">Explore your season <span aria-hidden="true">↗</span></a>
                     </section>` : ''}
                     <details class="coach-disclosure coach-method"><summary>How this recommendation works</summary>
-                        <p>The coach checks this lift's logged working sets in the active season, newest first. It uses the lightest working weight in the latest usable attempt and keeps it until every required set reaches the top of the rep range.</p>
-                        <p>One complete attempt earns one increase. Two complete attempts below the rep minimum at the same weight suggest one step lighter. Incomplete attempts and gaps longer than ${escapeHtml(target.coachConfig.returnAfterDays)} days call for repeating the weight.</p>
-                        <p>Estimated maxes and personal records do not earn a weight increase. Choose the nearest available equipment setting when a suggested step does not match your weights. Recovery, pain, and effort are not measured here.</p>
+                        <p>The coach uses the highest estimated one-rep max across this lift's working sets in the active season, with the same formula and actual reps as the PR modal. It converts that estimate to a weight for the upper end of your rep range and rounds up to a whole pound.</p>
+                        <p>A full session with a working set above your best season estimated max earns progression. Different weights and reps across sets are supported. Lifts without strength estimates use rep-range completion instead.</p>
+                        <p>Choose an available equipment setting for the calculated weight. Warmups and invalid entries are excluded. Estimates use the actual rep count and each lift’s configured formula, just like PRs.</p>
                     </details>
                 </div>`;
             openModal('trainingPlanModal');

@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const window = {};
 const context = vm.createContext({ window });
-for (const file of ['strength.js', 'coach.js']) {
+for (const file of ['strength.js', 'coach.js', 'records.js']) {
     vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context);
 }
 const lbsToKg = lbs => lbs * 0.45359237;
@@ -14,6 +14,7 @@ const displayWeight = kg => Math.round(kg / 0.45359237);
 const log = (date, reps = [8, 8, 8], lbs = 100, extra = {}) => ({
     date, exercises: [{ id: 'lift', sets: reps.map(reps => ({ reps, weight: lbsToKg(lbs), ...extra })) }]
 });
+// Existing rep-range tests cover the fallback for lifts explicitly configured without a strength estimate.
 function setup(logs = [], planOverrides = {}, exercise = {}) {
     const plan = {
         progressionPlan_startDate: '2026-09-01', durationWeeks: 12,
@@ -21,7 +22,7 @@ function setup(logs = [], planOverrides = {}, exercise = {}) {
     };
     return window.WorkoutCoach.create({
         getWorkoutLogs: () => logs, getProgressionPlan: () => plan,
-        getExerciseData: () => ({ name: 'Test lift', ...exercise }),
+        getExerciseData: () => ({ name: 'Test lift', '1repmaxformula': 'NONE', ...exercise }),
         getNow: () => new Date('2026-09-29T12:00:00Z'),
         lbsToKg, kgToLbs: kg => kg / 0.45359237, displayWeight,
         formatWeightLbs: kg => `${displayWeight(kg)} lbs`, formatDate: date => new Date(date).toISOString().slice(0, 10),
@@ -648,4 +649,197 @@ test('weight trend works without a configured season goal', () => {
     assert.ok(!html.includes('Season reference'));
     assert.ok(!html.includes('class="training-plan-chart-plan"'));
     assert.ok(!/NaN|Infinity/.test(html));
+});
+
+// Strength-based coaching uses the actual PR calculator, including per-lift formulas.
+const epleyExercise = { '1repmaxformula': 'w*(1+(r/30))' };
+function strengthCoach(logs, exercise = epleyExercise) {
+    return setup(logs, {}, { '1repmaxformula': '', ...exercise });
+}
+function rampLog(date = '2026-09-28', weights = [130, 145, 160, 175], reps = [8, 8, 8, 8]) {
+    return { date, exercises: [{ id: 'lift', sets: [
+        { weight: lbsToKg(115), reps: 8, isWarmup: true },
+        ...weights.map((weight, index) => ({ weight: lbsToKg(weight), reps: reps[index] }))
+    ] }] };
+}
+test('ascending pulldown sets use the PR max estimate to calculate the ten-rep weight', () => {
+    const history = rampLog();
+    const coach = strengthCoach([history]);
+    const target = recommend(coach);
+    const pr = window.WorkoutStrength.getBestEstimatedOneRepMax(epleyExercise, history.exercises[0].sets);
+    const tracker = window.WorkoutRecords.create({
+        getWorkoutLogs: () => [history], getSeasonStartDate: () => '2026-09-01', getExerciseData: () => epleyExercise
+    });
+    const record = tracker.evaluateExercise('lift', history.exercises[0].sets);
+    assert.equal(target.bestEstimate.estimatedMaxKg, record.previousBest.estimatedMaxKg);
+    assert.equal(target.bestEstimate.estimatedMaxKg, pr.estimatedMaxKg);
+    assert.equal(displayWeight(pr.weightKg), 175);
+    assert.ok(Math.abs(pr.estimatedMaxKg / lbsToKg(1) - 221.6666667) < 0.000001);
+    assert.equal(target.targetWeightDisplay, 167);
+    assert.equal(target.requiredWorkingSets, 3);
+    assert.equal(target.usesEstimatedMax, true);
+    const lighter = coach.evaluateProgressionSets(log('2026-09-29', [10, 10, 10], 130).exercises[0].sets, target);
+    assert.equal(lighter.progressEarned, false);
+    assert.equal(lighter.planComplete, false);
+    assert.equal(lighter.growthSets, 0);
+    const matched = coach.evaluateProgressionSets(history.exercises[0].sets, target);
+    assert.equal(matched.strengthProgressEarned, false);
+    const improved = coach.evaluateProgressionSets(rampLog('2026-09-29', [145, 160, 180], [8, 8, 8]).exercises[0].sets, target);
+    assert.equal(improved.strengthProgressEarned, true);
+    assert.equal(improved.progressEarned, true);
+    assert.equal(improved.rangeProgressEarned, false);
+    assert.equal(coach.getEstimatedTargetWeightKg(improved.bestEstimate.estimatedMaxKg, 10, 'lift') / lbsToKg(1), 171);
+    assert.equal(coach.evaluateProgressionSets([{ weight: lbsToKg(180), reps: 8 }], target).progressEarned, false);
+});
+test('maximum estimated strength can come from a lighter, higher-rep set', () => {
+    const target = recommend(strengthCoach([rampLog('2026-09-28', [180, 175, 145], [3, 10, 8])]));
+    assert.equal(displayWeight(target.bestEstimate.weightKg), 175);
+    assert.equal(target.bestEstimate.reps, 10);
+    assert.equal(target.targetWeightDisplay, 175);
+});
+test('an easier latest workout does not erase the best season strength reference', () => {
+    const coach = strengthCoach([rampLog('2026-09-05'), log('2026-09-28', [10, 10, 10], 130)]);
+    const target = recommend(coach);
+    assert.equal(target.targetWeightDisplay, 167);
+    assert.equal(displayWeight(target.bestEstimate.weightKg), 175);
+    assert.equal(target.recentSessions.length, 1);
+    assert.equal(target.action, 'repeat');
+    assert.equal(coach.evaluateProgressionSets(log('2026-09-29', [10, 10, 10], 130).exercises[0].sets, target).progressEarned, false);
+});
+test('warmups, invalid entries, other lifts, future and pre-season records cannot set the target', () => {
+    const history = rampLog();
+    history.exercises[0].sets.push({ weight: lbsToKg(900), reps: 10, isWarmup: true },
+        { weight: lbsToKg(900), reps: 8.5 }, { weight: '', reps: 10 }, { weight: lbsToKg(900), reps: '10oops' });
+    history.exercises.push({ id: 'other', sets: [{ weight: lbsToKg(900), reps: 10 }] });
+    const target = recommend(strengthCoach([history, log('2026-08-28', [10, 10, 10], 900), log('2026-10-01', [10, 10, 10], 900)]));
+    assert.equal(target.targetWeightDisplay, 167);
+});
+test('coach and PR estimates share custom formulas, fallback formulas and actual high reps', () => {
+    for (const exercise of [epleyExercise, { '1repmaxformula': 'w*36/(37-r)' }, { '1repmaxformula': 'invalid' }, {}]) {
+        const history = rampLog('2026-09-28', [130, 145, 160], [8, 10, 20]);
+        const target = recommend(strengthCoach([history], exercise));
+        const pr = window.WorkoutStrength.getBestEstimatedOneRepMax(exercise, history.exercises[0].sets);
+        assert.equal(target.bestEstimate.estimatedMaxKg, pr.estimatedMaxKg);
+        assert.equal(target.bestEstimate.calculationReps, 20);
+        assert.equal(target.bestEstimate.repsCapped, false);
+        const inverse = window.WorkoutStrength.calculateWeightForEstimatedMax(exercise, pr.estimatedMaxKg, 10);
+        assert.ok(Math.abs(window.WorkoutStrength.estimateOneRepMax(exercise, inverse, 10).estimatedMaxKg - pr.estimatedMaxKg) < 0.000001);
+        assert.equal(target.targetWeightDisplay, Math.ceil(inverse / lbsToKg(1) - 0.000001));
+    }
+});
+test('a new max recalculates the recommendation without adding an arbitrary equipment step', () => {
+    const target = recommend(strengthCoach([rampLog('2026-09-25'), rampLog('2026-09-28', [145, 160, 180], [8, 8, 8])]));
+    assert.equal(target.action, 'increase');
+    assert.equal(target.targetWeightDisplay, 171);
+    assert.equal(target.earnedIncrease, true);
+});
+test('incomplete attempts and long breaks retain the season strength reference', () => {
+    const incomplete = recommend(strengthCoach([rampLog('2026-09-25'), log('2026-09-28', [8], 100)]));
+    assert.equal(incomplete.action, 'incomplete');
+    assert.equal(incomplete.targetWeightDisplay, 167);
+    const returning = recommend(strengthCoach([rampLog('2026-09-02')]));
+    assert.equal(returning.action, 'return');
+    assert.equal(returning.targetWeightDisplay, 167);
+});
+test('strength coach modal shows estimated progression and recalculates the next weight', () => {
+    const coach = strengthCoach([rampLog()]);
+    const target = recommend(coach);
+    const sandbox = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target }, getExerciseForUI: () => ({ name: 'Pulldown' }),
+        escapeHtml: String, formatDate: String, openModal() {},
+        collectCurrentExerciseWorkingSets: () => rampLog('2026-09-29', [145, 160, 180], [8, 8, 8]).exercises[0].sets
+    });
+    sandbox.showTrainingPlanModal('key');
+    const html = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('167 lbs'));
+    assert.ok(html.includes('171 lbs'));
+    assert.ok(html.includes('This workout: Ready to increase'));
+    assert.ok(html.includes('Estimated max improved'));
+    assert.ok(html.includes('Beat your estimated max'));
+    assert.ok(html.includes('data-step="2" data-state="complete"'));
+    assert.ok(!html.includes('Estimated maxes and personal records do not earn'));
+    sandbox.collectCurrentExerciseWorkingSets = () => log('2026-09-29', [10, 10, 10], 130).exercises[0].sets;
+    sandbox.showTrainingPlanModal('key');
+    const lighter = sandbox.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(!lighter.includes('Ready to increase'));
+    assert.ok(!lighter.includes('Growth sets complete'));
+    assert.ok(lighter.includes('data-complete="false"'));
+});
+test('saved strength progression shows its calculated next weight in both pages', () => {
+    const coach = strengthCoach([rampLog('2026-09-25'), rampLog('2026-09-28', [145, 160, 180], [8, 8, 8])]);
+    const target = recommend(coach);
+    assert.equal(target.lastEvaluation.strengthProgressEarned, true);
+    const modal = pageContext('app.html', ['showTrainingPlanModal'], {
+        coach, activeProgressionTargets: { key: target }, getExerciseForUI: () => ({ name: 'Pulldown' }),
+        escapeHtml: String, formatDate: String, openModal() {}, collectCurrentExerciseWorkingSets: () => []
+    });
+    modal.showTrainingPlanModal('key');
+    const html = modal.elements.get('trainingPlanModalContent').innerHTML;
+    assert.ok(html.includes('171 lbs'));
+    assert.ok(html.includes('Estimated max improved'));
+    assert.ok(html.includes('data-step="1" data-state="complete"'));
+    assert.ok(html.includes('data-step="2" data-state="complete"'));
+    const stats = pageContext('progression.html', ['renderLiftActions', 'formatLiftWeight', 'getLiftName', 'escapeHtml', 'progressionIcon'], {
+        liftRows: [{ id: 'lift', exercise: { name: 'Pulldown' }, planExercise: {}, recommendation: target }]
+    });
+    stats.renderLiftActions();
+    const actions = stats.elements.get('liftActions').innerHTML;
+    assert.ok(actions.includes('171 lbs × 10 reps'));
+    assert.ok(actions.includes('Best estimated max: 228 lbs'));
+    assert.ok(!actions.includes('0 lbs <span>next time'));
+});
+test('15 and 20 reps remain distinct PRs and produce the correct twenty-rep coach target', () => {
+    const history = log('2026-09-28', [15, 15, 15], 100);
+    const coach = strengthCoach([history]);
+    const target = coach.buildCoachRecommendation('lift', { reps: '12-20', sets: 4 });
+    const tracker = window.WorkoutRecords.create({
+        getWorkoutLogs: () => [history], getSeasonStartDate: () => '2026-09-01', getExerciseData: () => epleyExercise
+    });
+    const current = log('2026-09-29', [20, 20, 20], 100).exercises[0].sets;
+    const record = tracker.evaluateExercise('lift', current);
+    assert.equal(target.bestEstimate.calculationReps, 15);
+    assert.ok(Math.abs(target.bestEstimate.estimatedMaxKg / lbsToKg(1) - 150) < 0.000001);
+    assert.equal(target.targetWeightDisplay, 90);
+    assert.equal(record.current.calculationReps, 20);
+    assert.ok(Math.abs(record.current.estimatedMaxKg / lbsToKg(1) - 166.6666667) < 0.000001);
+    assert.equal(record.isPR, true);
+    assert.equal(coach.evaluateProgressionSets(current, target).strengthProgressEarned, true);
+    const matched = coach.evaluateProgressionSets(log('2026-09-29', [20, 20, 20], 90).exercises[0].sets, target);
+    assert.equal(matched.rangeProgressEarned, true);
+    assert.equal(matched.strengthProgressEarned, false);
+    assert.equal(matched.progressEarned, false);
+});
+test('twenty-rep targets invert each lift formula rather than a hardcoded Epley formula', () => {
+    const exercise = { '1repmaxformula': 'w*36/(37-r)' };
+    const coach = strengthCoach([log('2026-09-28', [15, 15, 15], 100)], exercise);
+    const target = coach.buildCoachRecommendation('lift', { reps: '12-20', sets: 4 });
+    assert.ok(Math.abs(target.bestEstimate.estimatedMaxKg / lbsToKg(1) - 100 * 36 / 22) < 0.000001);
+    assert.equal(target.bestEstimate.formula, exercise['1repmaxformula']);
+    assert.equal(target.targetWeightDisplay, 78); // 100 * (37 - 20) / (37 - 15), rounded up.
+    for (const reps of [15, 20]) {
+        const estimate = window.WorkoutStrength.estimateOneRepMax(exercise, lbsToKg(100), reps);
+        const inverse = window.WorkoutStrength.calculateWeightForEstimatedMax(exercise, estimate.estimatedMaxKg, reps);
+        assert.equal(estimate.calculationReps, reps);
+        assert.ok(Math.abs(inverse - lbsToKg(100)) < 0.000001);
+    }
+});
+test('bundled exercise formulas are honored identically by the coach and PR tracker', () => {
+    const exerciseData = JSON.parse(fs.readFileSync(path.join(root, 'exercises.json')));
+    for (const exercise of Object.values(exerciseData).filter(ex => ex && typeof ex === 'object')) {
+        const history = log('2026-09-28', [15, 20, 8], 100);
+        const coach = strengthCoach([history], exercise);
+        const target = coach.buildCoachRecommendation('lift', { reps: '12-20', sets: 4 });
+        const tracker = window.WorkoutRecords.create({
+            getWorkoutLogs: () => [history], getSeasonStartDate: () => '2026-09-01', getExerciseData: () => exercise
+        });
+        const record = tracker.evaluateExercise('lift', history.exercises[0].sets);
+        if (exercise['1repmaxformula']?.trim().toUpperCase() === 'NONE') {
+            assert.equal(target.bestEstimate, null);
+            assert.equal(record.current.mode, 'repsOnly');
+        } else {
+            assert.equal(target.bestEstimate.estimatedMaxKg, record.current.estimatedMaxKg);
+            assert.equal(target.bestEstimate.formula, record.current.formula);
+            assert.equal(target.bestEstimate.calculationReps, record.current.calculationReps);
+        }
+    }
 });

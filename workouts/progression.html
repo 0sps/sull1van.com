@@ -1133,7 +1133,7 @@
                         const row = byDay.get(dayKey) || { date: dayKey, weightTotal: 0, setCount: 0 };
                         row.weightTotal += weight;
                         row.setCount += 1;
-                        const estimatedMaxKg = reps <= 12 ? calculateEstimatedMaxKg(weight, reps, coachConfig.formula, exerciseId) : null;
+                        const estimatedMaxKg = calculateEstimatedMaxKg(weight, reps, coachConfig.formula, exerciseId);
                         if (Number.isFinite(estimatedMaxKg)) {
                             row.bestEstimatedMaxKg = Math.max(row.bestEstimatedMaxKg || 0, estimatedMaxKg);
                         }
@@ -1163,9 +1163,7 @@
                 const baselineEstimate = baselineSession
                     ? getBestEstimatedMax([{ date: baselineSession.date, sets: baselineSession.workingSets }], coachConfig, entry.id)
                     : null;
-                const goalEstimateKg = entry.repRange.max <= 12
-                    ? calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id)
-                    : null;
+                const goalEstimateKg = calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id);
                 const baselineEstimateKg = baselineEstimate?.estimatedMaxKg ?? null;
                 const seasonStrengthGainKg = bestEstimate && Number.isFinite(baselineEstimateKg)
                     ? bestEstimate.estimatedMaxKg - baselineEstimateKg
@@ -1281,6 +1279,11 @@
                 const lifts = rows.map(row => {
                     const recommendation = row.recommendation;
                     const session = recommendation.recentSession;
+                    if (recommendation.usesEstimatedMax) {
+                        const weight = formatLiftWeight(recommendation.targetWeightKg, row.planExercise);
+                        const estimate = formatLiftWeight(recommendation.bestEstimate.estimatedMaxKg, row.planExercise);
+                        return `<li><span class="context-icon lift-action-icon" aria-hidden="true">${progressionIcon(group.icon)}</span><div class="lift-action-content"><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-change">${escapeHtml(weight)} × ${escapeHtml(recommendation.repRange.max)} reps <span>next target</span></span><span class="lift-action-last">Best estimated max: ${escapeHtml(estimate)}</span></div></li>`;
+                    }
                     const lastWeightKg = session.representativeWeightKg;
                     const changeLbs = displayWeight(recommendation.targetWeightKg) - displayWeight(lastWeightKg);
                     const lastReps = session.workingSets
@@ -1568,7 +1571,7 @@
             document.getElementById('chartContainer').innerHTML = `
                 <section class="metric-chart" aria-labelledby="strengthChartHeading">
                     <h3 id="strengthChartHeading">Estimated strength</h3>
-                    <p>Estimated weight for one rep, based on working sets of 1-12 reps.</p>
+                    <p>Best estimated weight for one rep from working sets, using each lift’s formula and actual reps, matching PRs.</p>
                     ${buildChart(row, 'strength')}
                 </section>
                 <section class="metric-chart" aria-labelledby="loadChartHeading">
@@ -1586,7 +1589,7 @@
                 }))
                 .filter(point => Number.isFinite(point.chartKg));
             if (points.length === 0) {
-                return `<div class="empty">${metric === 'strength' ? 'No strength estimates yet. Log working sets of 1-12 reps.' : 'No working weight logged for this lift yet.'}</div>`;
+                return `<div class="empty">${metric === 'strength' ? 'No strength estimates yet. Log weighted working sets.' : 'No working weight logged for this lift yet.'}</div>`;
             }
 
             const start = getProgressionStartDate();
