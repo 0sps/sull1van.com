@@ -1025,6 +1025,26 @@
             z-index: 10;
         }
 
+        .edit-exercise-picker summary {
+            width: 100%;
+        }
+
+        .edit-exercise-options {
+            display: grid;
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .edit-exercise-option {
+            text-align: left;
+            white-space: normal;
+        }
+
+        #exerciseModal .modal-actions {
+            flex-wrap: wrap;
+        }
+
         .modal-sm {
             max-width: 480px !important;
             width: 95% !important;
@@ -2440,6 +2460,9 @@
                 <button class="btn btn-primary btn-small btn-warning-outline"
                     onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId)">
                     Edit</button>
+                <button class="btn btn-secondary btn-small" id="addExerciseToLogBtn"
+                    onclick="loadWorkoutForEditing(document.getElementById('exerciseModal').dataset.logId, true)">
+                    + Add exercise</button>
                 <button class="btn btn-secondary" onclick="closeModal('exerciseModal')">Close</button>
             </div>
         </div>
@@ -2512,6 +2535,14 @@
             <input type="datetime-local" step="1" required class="library-search" id="editWorkoutDate"
                 aria-describedby="editWorkoutDateHelp">
             <p id="editWorkoutDateHelp" class="text-muted-xs m-b-20">Your local time, including seconds.</p>
+            <details id="editAddExercisePanel" class="edit-exercise-picker m-b-20">
+                <summary class="btn btn-secondary">+ ADD EXERCISE</summary>
+                <label for="editExerciseSearch" class="set-label m-t-20">Search the exercise library</label>
+                <input type="search" class="library-search" id="editExerciseSearch"
+                    placeholder="Search name, muscle, or category" oninput="renderEditExercisePicker()">
+                <div id="editExerciseOptions" class="edit-exercise-options" aria-label="Exercises to add"></div>
+            </details>
+            <p id="editExercisePickerStatus" class="text-muted-xs" role="status" aria-live="polite"></p>
             <div id="editExerciseList" class="m-b-24"></div>
             <div class="modal-actions sticky-bottom-actions">
                 <button class="btn btn-primary btn-flex-2" id="saveEditsBtn" onclick="saveEditedWorkout()">SAVE
@@ -5133,7 +5164,7 @@
             container.innerHTML = recent.map(log => generateLogEntryHTML(log)).join('');
         }
         function exportSingleLog(id) { const log = findSeasonLog(id); if (log) exportSingleWorkout(log); }
-        function loadWorkoutForEditing(logId) {
+        function loadWorkoutForEditing(logId, addExercise = false) {
             const log = findSeasonLog(logId);
             if (!log) return;
             // Store a deep copy to avoid direct mutation until saved
@@ -5143,11 +5174,14 @@
             const date = new Date(log.date);
             document.getElementById('editModalSubtitle').textContent = formatDateFull(date);
             document.getElementById('editWorkoutDate').value = WorkoutDate.toInputValue(log.date);
+            document.getElementById('editExerciseSearch').value = '';
+            document.getElementById('editAddExercisePanel').open = addExercise;
+            document.getElementById('editExercisePickerStatus').textContent = '';
             renderEditExercises();
-            // Show the modal
-            openModal('editModal');
-            // Close the view detail modal
+            // Close the viewer first so focus is moved into the editor last.
             closeModal('exerciseModal');
+            openModal('editModal');
+            if (addExercise) document.getElementById('editExerciseSearch').focus();
         }
         function renderEditExercises() {
             const container = document.getElementById('editExerciseList');
@@ -5169,6 +5203,40 @@
 
                 return generateExerciseHTML(exercise, ex, null, setsHtml, { isEdit: true, exIdx: exIdx });
             }).join('');
+            renderEditExercisePicker();
+        }
+        function renderEditExercisePicker() {
+            const container = document.getElementById('editExerciseOptions');
+            if (!editingLogData) {
+                container.innerHTML = '';
+                return;
+            }
+            const query = document.getElementById('editExerciseSearch').value.trim().toLowerCase();
+            const addedIds = new Set(editingLogData.exercises.map(ex => ex.id || ex.exerciseId));
+            const matches = getExerciseEntries().filter(([id, exercise]) => {
+                const searchText = [exercise.name, exercise.category, ...(exercise.muscles || [])].join(' ').toLowerCase();
+                return !addedIds.has(id) && searchText.includes(query);
+            }).sort((a, b) => String(a[1].name).localeCompare(String(b[1].name)));
+            container.innerHTML = matches.length ? matches.map(([id, exercise]) => `
+                <button type="button" class="btn btn-secondary edit-exercise-option"
+                    onclick="addExerciseToEdit('${escapeInlineJsString(id)}')">+ ${escapeHtml(exercise.name)}</button>
+            `).join('') : '<p class="text-muted-xs">No matching exercises available to add.</p>';
+        }
+        function addExerciseToEdit(id) {
+            if (!editingLogData) return;
+            const entry = getExerciseEntries().find(([exerciseId]) => exerciseId === id);
+            if (!entry || editingLogData.exercises.some(ex => (ex.id || ex.exerciseId) === id)) return;
+            const exercise = entry[1];
+            editingLogData.exercises.push({
+                id, name: exercise.name,
+                sets: [{ weight: 0, reps: 0, isWarmup: false, note: '' }]
+            });
+            document.getElementById('editExerciseSearch').value = '';
+            document.getElementById('editAddExercisePanel').open = false;
+            renderEditExercises();
+            document.getElementById('editExercisePickerStatus').textContent = `${exercise.name} added. Enter its sets and save edits.`;
+            const exIdx = editingLogData.exercises.length - 1;
+            document.getElementById('editExerciseList').querySelector(`[data-ex-idx="${exIdx}"][data-type="reps"]`)?.focus();
         }
         function addEditSet(exIdx) {
             if (!editingLogData) return;
@@ -5312,6 +5380,10 @@
             editingLogData = null;
             closeModal('editModal');
             document.getElementById('editExerciseList').innerHTML = '';
+            document.getElementById('editExerciseOptions').innerHTML = '';
+            document.getElementById('editExerciseSearch').value = '';
+            document.getElementById('editExercisePickerStatus').textContent = '';
+            document.getElementById('editAddExercisePanel').open = false;
         }
         // Delete Set Feature
         let selectedSetForDeletion = null;
@@ -5564,6 +5636,7 @@
             modal.dataset.logId = id;
             const editBtn = modal.querySelector('.btn-primary');
             if (editBtn) editBtn.style.display = '';
+            document.getElementById('addExerciseToLogBtn').style.display = '';
             openModal('exerciseModal');
         }
         function showInstructions(exerciseId) {
@@ -5833,6 +5906,7 @@
             modal.dataset.logId = '';
             const editBtn = modal.querySelector('.btn-primary');
             if (editBtn) editBtn.style.display = 'none';
+            document.getElementById('addExerciseToLogBtn').style.display = 'none';
             openModal('exerciseModal');
         }
         function switchWorkout() {

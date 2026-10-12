@@ -42,7 +42,7 @@ Legacy recommendation method names do not override the shared PR formula for str
 
 Both pages supply their full loaded season history, exercise metadata, season start, plan, and unit/date helpers. The app reads additional season documents when its initial workout window does not cover the season.
 
-`service-worker.js` uses cache `seans-log-v31`. App pages, the coach module, shared styles, and plans use network-first loading with cached offline fallback.
+`service-worker.js` uses cache `seans-log-v32`. App pages, the coach module, shared styles, and plans use network-first loading with cached offline fallback.
 
 Run the existing Node tests without launching a browser:
 
