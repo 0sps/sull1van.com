@@ -9,8 +9,8 @@
     <title>Labs | Sean's Log</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
     <style>
         :root {
             --font-heading: 'Outfit', sans-serif;
@@ -2521,12 +2521,19 @@
             animation-play-state: paused !important;
         }
 
+        /* The sun is offscreen at night, so its rays need no animation work. */
+        :root.time-night .sun-rays, :root.night-mode .sun-rays {
+            animation-play-state: paused;
+        }
+
         /* ── REDUCED MOTION ── */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+                transition-delay: 0s !important;
+                scroll-behavior: auto !important;
             }
         }
     </style>
@@ -2948,7 +2955,11 @@
             // tiles, or grid's .expanded detail leaking back into the list).
             if (wasGrid !== isGrid) {
                 // Close any open grid popover when switching views
-                if (wasGrid && typeof closeGridPopover === 'function') closeGridPopover();
+                if (wasGrid && document.getElementById('gridPopoverOverlay')?.classList.contains('visible')) closeGridPopover();
+                if (isGrid && isDesktop() && currentChart) {
+                    currentChart.destroy();
+                    currentChart = null;
+                }
 
                 document.querySelectorAll('.test-card').forEach(el => {
                     if (isGrid) {
@@ -2975,6 +2986,13 @@
             if (tabList && tabGrid) {
                 tabGrid.classList.toggle('active', isGrid);
                 tabList.classList.toggle('active', !isGrid);
+            }
+
+            // A grid popover and the split pane share one chart instance.
+            // Rebuild the pane after leaving grid view instead of showing its old canvas.
+            if (wasGrid && !isGrid && isDesktop()) {
+                const selected = allTests.find(test => test.name === document.getElementById('detailTitle')?.textContent);
+                if (selected) openTest(selected.name);
             }
         };
 
@@ -3043,6 +3061,9 @@
         let anomalyLensActive = false;
         let currentChart = null;
         let sparklineCharts = {};   // id -> Chart instance (for cleanup)
+        let sparklineObserver = null;
+        let gridPopoverFrame = null;
+        let gridPopoverChartTimer = null;
         let testCardNodes = {};     // id -> Card DOM node (for reuse)
         let _dataLoaded = false;
         let _loadingInProgress = false;
@@ -4282,6 +4303,7 @@
                 console.log(`[DEBUG] loadData(): Loading encrypted vault data...`);
                 const vaultData = await loadVaultData();
                 console.log(`[DEBUG] loadData(): Vault data loaded successfully. Number of tests: ${vaultData?.tests?.length}`);
+                if (document.getElementById('gridPopoverOverlay')?.classList.contains('visible')) closeGridPopover();
                 allTests = buildUiTestsFromVault(vaultData.tests);
                 testCardNodes = {};
                 destroySparklineCharts();
@@ -4293,12 +4315,16 @@
                 applyFilters();
                 deferUnitResolution();
 
-                if (isDesktop() && !currentTestName) {
-                    setTimeout(() => {
-                        const firstMulti = allTests.find(t => t.numericPts && t.numericPts.length > 1);
-                        if (firstMulti) openTest(firstMulti.name);
-                        else if (allTests.length > 0) openTest(allTests[0].name);
-                    }, 150);
+                const isGrid = document.querySelector('.layout')?.classList.contains('is-grid-view');
+                const selected = allTests.find(test => test.name === currentTestName);
+                if (selected && (!isDesktop() || !isGrid)) {
+                    openTest(selected.name);
+                } else if (isDesktop() && !isGrid && !selected) {
+                    const firstMulti = allTests.find(t => t.numericPts && t.numericPts.length > 1);
+                    if (firstMulti) openTest(firstMulti.name);
+                    else if (allTests.length > 0) openTest(allTests[0].name);
+                } else if (!selected && !isDesktop()) {
+                    closeMobileDetail();
                 }
             } catch (e) {
                 console.error(e);
@@ -4437,10 +4463,11 @@
 
         function applyFilters() {
             const term = document.getElementById('testSearch').value.toLowerCase();
+            const asOfDate = anomalyLensActive ? getCommandAsOfDate() : null;
             filteredTests = allTests.filter(t => {
                 const catOk = isAllCategoriesSelected() || selectedCategories.has(t.category);
                 const termOk = !term || t.name.toLowerCase().includes(term);
-                const anomalyOk = !anomalyLensActive || isTestAnomalousAsOf(t);
+                const anomalyOk = !anomalyLensActive || isTestAnomalousAsOf(t, asOfDate);
                 return catOk && termOk && anomalyOk;
             });
             renderList();
@@ -4512,8 +4539,8 @@
             return { label: point.rawResult || 'Recorded', colorClass: 'c-text', isAnomaly: false };
         }
 
-        function isTestAnomalousAsOf(test) {
-            const point = getCommandPointForTest(test);
+        function isTestAnomalousAsOf(test, asOfDate = getCommandAsOfDate()) {
+            const point = getCommandPointForTest(test, asOfDate);
             return getCommandStatusForPoint(test, point).isAnomaly;
         }
 
@@ -4531,6 +4558,7 @@
             const input = document.getElementById('commandInput');
             const term = (input?.value || '').trim().toLowerCase();
             const asOfDate = getCommandAsOfDate();
+            const timelineLabel = getCommandTimelineLabel();
             return allTests
                 .map(test => {
                     const point = getCommandPointForTest(test, asOfDate);
@@ -4539,7 +4567,7 @@
                         test,
                         point,
                         status,
-                        timeline: point?.date ? `${getCommandTimelineLabel()} · ${fmtDate(point.date)}` : getCommandTimelineLabel(),
+                        timeline: point?.date ? `${timelineLabel} · ${fmtDate(point.date)}` : timelineLabel,
                         value: getCommandValueForPoint(test, point),
                     };
                 })
@@ -4615,6 +4643,7 @@
         }
 
         function focusCommandInput() {
+            if (!commandPaletteOpen || commandMode !== 'main') return;
             const input = document.getElementById('commandInput');
             if (!input) return;
             input.focus({ preventScroll: true });
@@ -4625,6 +4654,7 @@
         }
 
         function openCommandPalette() {
+            if (commandPaletteOpen) return;
             commandPaletteOpen = true;
             commandMode = 'main';
             commandSelectedIndex = 0;
@@ -4696,6 +4726,16 @@
         }
 
         document.addEventListener('keydown', event => {
+            if (event.defaultPrevented || event.isComposing) return;
+            if (document.getElementById('confirmOverlay')?.classList.contains('visible')) {
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    dismissConfirm();
+                }
+                return;
+            }
+            if (document.getElementById('reportOverlay')?.classList.contains('visible')) return;
+
             const isCommandShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
             if (isCommandShortcut) {
                 event.preventDefault();
@@ -4707,15 +4747,15 @@
                 return;
             }
 
-            if (event.key === 'Escape' && document.getElementById('gridPopover')?.classList.contains('visible')) {
-                event.preventDefault();
-                closeGridPopover();
-                return;
-            }
-
             if (event.key === 'Escape' && document.getElementById('sourcePlatterOverlay')?.classList.contains('visible')) {
                 event.preventDefault();
                 closeSourcePlatter();
+                return;
+            }
+
+            if (event.key === 'Escape' && document.getElementById('gridPopover')?.classList.contains('visible')) {
+                event.preventDefault();
+                closeGridPopover();
                 return;
             }
 
@@ -4729,6 +4769,9 @@
             }
 
             if (commandMode === 'add') return;
+            // Native buttons keep their own Enter/arrow behavior. Only the
+            // search field uses these keys to navigate command results.
+            if (event.target?.id !== 'commandInput') return;
 
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 const rows = getCommandRows();
@@ -4751,13 +4794,6 @@
 
         function renderList() {
             const panel = document.getElementById('panelList');
-
-            // Only destroy active chart in Grid View to avoid blanking out the main detail chart in split-pane Desktop view
-            const isGrid = document.querySelector('.layout')?.classList.contains('is-grid-view');
-            if (isGrid && currentChart) {
-                try { currentChart.destroy(); } catch (_) {}
-                currentChart = null;
-            }
 
             // Reused card nodes are detached and reattached below. Recreate sparklines
             // after the active canvas elements are back in the document.
@@ -4810,15 +4846,38 @@
             // Append the fragment containing the reused/new elements
             panel.appendChild(fragment);
 
-            // Draw sparklines
+            // Only allocate charts for cards in or near the scroll viewport.
+            // One observer replaces a Chart instance and event listeners per offscreen card.
+            if (typeof IntersectionObserver !== 'undefined') {
+                const testsByName = new Map(filteredTests.map(test => [test.name, test]));
+                const observer = new IntersectionObserver(entries => {
+                    if (sparklineObserver !== observer) return;
+                    entries.forEach(entry => {
+                        const test = testsByName.get(entry.target.dataset.testname);
+                        if (!test || !entry.target.isConnected) return;
+                        const id = getTestDomId(test.name);
+                        if (entry.isIntersecting) {
+                            if (!sparklineCharts[id]) drawSparkline(test);
+                        } else if (sparklineCharts[id]) {
+                            sparklineCharts[id].destroy();
+                            delete sparklineCharts[id];
+                        }
+                    });
+                }, { root: panel, rootMargin: '160px 0px' });
+                sparklineObserver = observer;
+            }
             filteredTests.forEach(t => {
                 if (t.type !== 'qualitative' && t.numericPts.length > 1) {
-                    drawSparkline(t);
+                    const card = testCardNodes[`test-btn-${getTestDomId(t.name)}`];
+                    if (sparklineObserver) sparklineObserver.observe(card);
+                    else drawSparkline(t);
                 }
             });
         }
 
         function destroySparklineCharts() {
+            sparklineObserver?.disconnect();
+            sparklineObserver = null;
             Object.keys(sparklineCharts).forEach(id => {
                 try { sparklineCharts[id].destroy(); } catch (_) {}
                 delete sparklineCharts[id];
@@ -4920,7 +4979,7 @@
             const sparkReferencePlugin = {
                 id: `sparkReference_${id}`,
                 beforeDatasetsDraw(chart) {
-                    const reference = chart.$referenceRange;
+                    const reference = chart.$referenceRange ?? parsed;
                     if (!reference || !chart.scales.y) return;
                     const { ctx: chartCtx, chartArea, scales } = chart;
                     let bandTop = chartArea.top;
@@ -4991,6 +5050,8 @@
                     options: {
                         animation: false,
                         responsive: false,
+                        events: [],
+                        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
                         plugins: { legend: { display: false }, tooltip: { enabled: false } },
                         scales: { x: { display: false }, y: { display: false, min: yDomain.min, max: yDomain.max } },
                     },
@@ -5202,6 +5263,8 @@
             } else {
                 // Mobile: swap panels
                 const layout = document.querySelector('.layout');
+                const wasInDetail = layout.classList.contains('in-detail');
+                currentTestName = name;
                 layout.classList.add('in-detail');
                 layout.scrollTop = 0;
 
@@ -5215,7 +5278,7 @@
                 dc.style.display = 'flex';
                 dc.style.flexDirection = 'column';
 
-                history.pushState({ labsView: 'detail' }, '');
+                if (!wasInDetail) history.pushState({ labsView: 'detail' }, '');
             }
 
             // Header
@@ -5227,9 +5290,8 @@
 
             // Dynamic body
             const dyn = document.getElementById('detailDynamic');
-            dyn.innerHTML = '';
-
             if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
+            dyn.innerHTML = '';
 
             if (t.type === 'qualitative') {
                 renderSTDTimeline(t, dyn);
@@ -5371,7 +5433,11 @@
         }
 
         function renderTrendChart(t, container) {
-            const canvasId = 'trendChart_' + getTestDomId(t.name);
+            if (typeof Chart === 'undefined') {
+                container.insertAdjacentHTML('beforeend', '<div class="empty-state">Trend chart unavailable. Your readings are listed below.</div>');
+                return;
+            }
+            const canvasId = 'trendChart_' + (container.id || 'detail') + '_' + getTestDomId(t.name);
             container.insertAdjacentHTML('beforeend', `
       <div class="detail-divider">Trend over time</div>
       <div class="chart-section">
@@ -5406,7 +5472,9 @@
                 : lastStatus ? themeCache['--red']
                 : themeCache['--accent'];
 
-            const ctx = document.getElementById(canvasId);
+            // A closed grid popover can still contain a canvas for this test.
+            // Resolve within the target pane so a hidden canvas cannot win.
+            const ctx = container.querySelector(`#${canvasId}`);
             if (!ctx) return;
 
             const datasets = [{
@@ -5511,6 +5579,9 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: false,
+                    resizeDelay: 100,
+                    devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
                     interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: { display: false },
@@ -5803,7 +5874,15 @@
         }
 
         // ── GRID POPOVER ─────────────────────────────────────────────
+        function cancelGridPopoverWork() {
+            if (gridPopoverFrame !== null) cancelAnimationFrame(gridPopoverFrame);
+            if (gridPopoverChartTimer !== null) clearTimeout(gridPopoverChartTimer);
+            gridPopoverFrame = null;
+            gridPopoverChartTimer = null;
+        }
+
         function openGridPopover(t, anchorEl) {
+            cancelGridPopoverWork();
             // Clean up previous chart
             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
 
@@ -5877,12 +5956,16 @@
 
             // Show
             overlay.classList.add('visible');
-            requestAnimationFrame(() => { popover.classList.add('visible'); });
+            gridPopoverFrame = requestAnimationFrame(() => {
+                gridPopoverFrame = null;
+                popover.classList.add('visible');
+            });
 
             // Render chart after the popover is visible so canvas has dimensions
             const _name = t.name;
-            setTimeout(() => {
-                if (currentTestName !== _name) return;
+            gridPopoverChartTimer = setTimeout(() => {
+                gridPopoverChartTimer = null;
+                if (currentTestName !== _name || !popover.classList.contains('visible')) return;
                 try {
                     if (t.type !== 'qualitative' && t.numericPts.length > 1) {
                         renderTrendChart(t, content);
@@ -5892,6 +5975,7 @@
         }
 
         function closeGridPopover() {
+            cancelGridPopoverWork();
             const overlay = document.getElementById('gridPopoverOverlay');
             const popover = document.getElementById('gridPopover');
             if (popover) popover.classList.remove('visible');
@@ -5904,6 +5988,10 @@
         // ── NAVIGATION ───────────────────────────────────────────────
         function goBack() {
             if (isDesktop()) return; // no back on desktop
+            closeMobileDetail();
+        }
+
+        function closeMobileDetail() {
             const layout = document.querySelector('.layout');
             layout.classList.remove('in-detail');
             layout.scrollTop = 0;
@@ -5928,19 +6016,16 @@
             _prevIsDesktop = nowDesktop;
 
             const layout = document.querySelector('.layout');
-            if (nowDesktop && layout?.classList.contains('in-detail')) {
-                // Was stuck in mobile detail — restore desktop layout
-                layout.classList.remove('in-detail');
-                document.getElementById('panelList')?.classList.add('visible');
-                document.getElementById('globalTopBar').style.display = '';
-                document.getElementById('globalSearchArea').style.display = '';
-                document.getElementById('globalPusher').style.display = '';
-
-                // Re-open the same test in desktop split-pane if possible
-                if (currentTestName) {
-                    const t = allTests.find(x => x.name === currentTestName);
-                    if (t) openTest(t.name);
-                }
+            const selectedName = currentTestName;
+            const wasInDetail = layout?.classList.contains('in-detail');
+            closeGridPopover();
+            // Reset mobile-only visibility in both directions. A desktop detail
+            // pane must not appear below the list after shrinking the window.
+            closeMobileDetail();
+            if (nowDesktop && wasInDetail && selectedName) {
+                openTest(selectedName);
+            } else if (nowDesktop && !layout?.classList.contains('is-grid-view') && selectedName) {
+                openTest(selectedName);
             }
         });
 
@@ -6411,6 +6496,7 @@
         }
 
         // ── SUCCESS TOAST ─────────────────────────────────────────────
+        let successToastTimer = null;
         function showSuccessToast(message) {
             const toast = document.getElementById('successToast');
             // Update only the text node — setting textContent would wipe the SVG icon.
@@ -6421,7 +6507,8 @@
                 textNode.textContent = ' ' + (message || 'Saved!');
             }
             toast.classList.add('visible');
-            setTimeout(() => toast.classList.remove('visible'), 3000);
+            clearTimeout(successToastTimer);
+            successToastTimer = setTimeout(() => toast.classList.remove('visible'), 3000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -6472,16 +6559,7 @@
                 }
                 const layout = document.querySelector('.layout');
                 if (!isDesktop() && layout?.classList.contains('in-detail')) {
-                    // Re-use goBack logic without the isDesktop guard
-                    layout.classList.remove('in-detail');
-                    layout.scrollTop = 0;
-                    document.getElementById('panelDetail').classList.remove('visible');
-                    document.getElementById('panelList').classList.add('visible');
-                    document.getElementById('globalTopBar').style.display = '';
-                    document.getElementById('globalSearchArea').style.display = '';
-                    document.getElementById('globalPusher').style.display = '';
-                    if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
-                    currentTestName = null;
+                    closeMobileDetail();
                 }
             });
         });
