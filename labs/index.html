@@ -307,27 +307,16 @@
             to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* WebKit's top-edge detection suppresses the iOS 27 web-app blur
-           when a fixed element taller than 10px has an opaque background.
-           Clip to empty text to keep the element visually transparent.
-           https://qiita.com/na-trium-144/items/0add98a80ca2391e3f17 */
-        .ios-top-edge {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 11px;
-            z-index: 2147483647;
-            pointer-events: none;
-            background-color: var(--ios-bg);
-            -webkit-background-clip: text;
-            background-clip: text;
+        /* Keep phone content below iOS's top-edge blur. */
+        :root { --phone-header-offset: 0px; }
+        @media (max-width: 899px) {
+            :root { --phone-header-offset: 6px; }
         }
 
         /* ── FLOATING HEADER ── */
         .top-bar {
             position: fixed;
-            top: calc(10px + env(safe-area-inset-top));
+            top: calc(10px + env(safe-area-inset-top) + var(--phone-header-offset));
             left: calc(14px + env(safe-area-inset-left));
             right: calc(14px + env(safe-area-inset-right));
             height: 64px;
@@ -518,7 +507,7 @@
             opacity: 0; pointer-events: none;
             transition: opacity 0.18s ease;
             display: flex; align-items: flex-start; justify-content: center;
-            padding: calc(92px + env(safe-area-inset-top)) 16px 24px;
+            padding: calc(92px + env(safe-area-inset-top) + var(--phone-header-offset)) 16px 24px;
         }
         .command-overlay.visible { opacity: 1; pointer-events: auto; }
         .command-palette {
@@ -780,7 +769,7 @@
             display: flex; flex-direction: column;
             flex: 1; min-height: 0; position: relative;
             overflow-y: auto; -webkit-overflow-scrolling: touch;
-            padding-top: calc(84px + env(safe-area-inset-top));
+            padding-top: calc(84px + env(safe-area-inset-top) + var(--phone-header-offset));
         }
         .layout.in-detail { padding-top: 0; }
 
@@ -2557,7 +2546,6 @@
 </head>
 
 <body>
-    <div class="ios-top-edge" aria-hidden="true"></div>
     <!-- Background atmosphere -->
     <div class="nebula"></div>
     <div class="vignette"></div>
