@@ -9,6 +9,19 @@
     let _pdfReportSelectedTests = new Set();
     let _pdfReportSelectedIndex = 0;
 
+    window._labsResetPdfState = function () {
+        _pdfReportSelectedTests.clear();
+        _pdfReportSelectedIndex = 0;
+        _pdfReportInProgress = false;
+        document.getElementById('reportOverlay')?.classList.remove('visible');
+        for (const id of ['reportSelectedList', 'reportResults']) {
+            const element = document.getElementById(id);
+            if (element) element.textContent = '';
+        }
+        const input = document.getElementById('reportSearchInput');
+        if (input) input.value = '';
+    };
+
     // ── PUBLIC API EXPOSED TO GLOBAL SCOPE ─────────────────────────────
     window.openPdfReportPrompt = function () {
         if (!allTests || !allTests.length) {
@@ -24,16 +37,24 @@
 
         _pdfReportSelectedTests = new Set();
         _pdfReportSelectedIndex = 0;
+        const wasOpen = document.getElementById('reportOverlay')?.classList.contains('visible');
         const input = document.getElementById('reportSearchInput');
         if (input) input.value = '';
 
         renderPdfReportPicker();
         document.getElementById('reportOverlay')?.classList.add('visible');
-        requestAnimationFrame(() => input?.focus({ preventScroll: true }));
+        if (!wasOpen && typeof pushLabsViewHistory === 'function') pushLabsViewHistory('report');
+        const session = window._labsSessionGeneration || 0;
+        requestAnimationFrame(() => {
+            if ((window._labsSessionGeneration || 0) === session && document.getElementById('reportOverlay')?.classList.contains('visible')) {
+                input?.focus({ preventScroll: true });
+            }
+        });
     };
 
     window.closePdfReportPrompt = function () {
         document.getElementById('reportOverlay')?.classList.remove('visible');
+        if (typeof releaseLabsViewHistory === 'function') releaseLabsViewHistory('report');
     };
 
     window.togglePdfReportTest = function (name) {
@@ -48,7 +69,12 @@
         if (input) input.value = '';
         _pdfReportSelectedIndex = 0;
         renderPdfReportPicker();
-        requestAnimationFrame(() => input?.focus({ preventScroll: true }));
+        const session = window._labsSessionGeneration || 0;
+        requestAnimationFrame(() => {
+            if ((window._labsSessionGeneration || 0) === session && document.getElementById('reportOverlay')?.classList.contains('visible')) {
+                input?.focus({ preventScroll: true });
+            }
+        });
     };
 
     window.removePdfReportTest = function (name) {
@@ -144,7 +170,7 @@
         const rows = getPdfReportRows();
         const selectedList = document.getElementById('reportSelectedList');
         const results = document.getElementById('reportResults');
-        const generateBtn = document.querySelector('.report-btn-primary');
+        const generateBtn = document.querySelector('#reportOverlay .report-btn-primary');
         _pdfReportSelectedIndex = Math.min(_pdfReportSelectedIndex, Math.max(rows.length - 1, 0));
 
         if (selectedList) {
@@ -196,23 +222,20 @@
             const points = [...(test.points || [])]
                 .filter(point => point && point.date)
                 .filter(point => {
-                    const key = `${point.date}_${point.rawResult}_${point.lab}_${point.sourceFile}`;
+                    const key = point.testResultId
+                        ? `id:${String(point.testResultId).toLowerCase()}`
+                        : `legacy:${JSON.stringify([point.date, point.rawResult, point.lab, point.sourceFile])}`;
                     if (seen.has(key)) return false;
                     seen.add(key);
                     return true;
                 })
                 .sort((a, b) => parseISODate(a.date) - parseISODate(b.date));
             const numericPts = points.filter(point => point.isNumeric && point.numVal !== null);
-            const qualPts = points.filter(point => !point.isNumeric);
-            const type = (numericPts.length === 0 && qualPts.length > 0)
-                ? 'qualitative'
-                : (numericPts.length > 0 && qualPts.length === 0 ? 'numeric' : 'mixed');
             const displayUnit = getDisplayUnitText(test) || findBestUnitText({ ...test, points });
             return {
                 ...test,
                 points,
                 numericPts,
-                type,
                 displayUnit,
                 unitStatus: displayUnit ? 'resolved' : 'absent',
             };
@@ -233,7 +256,7 @@
     }
 
     function getReportLatestPoint(test) {
-        const pts = test.type === 'qualitative' ? test.points : (test.numericPts.length ? test.numericPts : test.points);
+        const pts = test.points || [];
         return pts[pts.length - 1] || null;
     }
 
@@ -352,7 +375,7 @@
             const unit = getDisplayUnitText(test) || findBestUnitText(test);
             const latest = getReportLatestPoint(test);
             const statusText = getReportStatusText(test, latest);
-            const history = [...(test.type === 'qualitative' ? test.points : (test.numericPts.length ? test.numericPts : test.points))]
+            const history = [...(test.points || [])]
                 .reverse()
                 .map(point => `
                     <tr>
@@ -395,19 +418,15 @@
     @page { size: letter; margin: 0.38in; }
     * { box-sizing: border-box; }
     :root {
-        --ink: #f8fbff;
         --paper: #f6f8fb;
         --text: #0d1628;
         --muted: #65758c;
         --line: #dfe6ef;
-        --panel: #ffffff;
-        --panel-soft: #f8fbff;
         --navy: #07111f;
         --blue: #177ddc;
         --teal: #17a398;
         --green: #12805c;
         --red: #c24137;
-        --amber: #b7791f;
     }
     body {
         margin: 0;

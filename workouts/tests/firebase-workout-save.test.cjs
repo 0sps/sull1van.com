@@ -320,3 +320,36 @@ test('data: a completed save preserves the selection and unsaved editor contents
     assert.equal(h.store.get(docPath(original.id)).revision, 5);
     assert.ok(h.notifications.some(item => item.message === 'Log saved successfully'));
 });
+
+for (const editor of ['main', 'data']) {
+    test(`${editor}: future date input cannot save or mutate the loaded workout`, async () => {
+        const h = editorHarness(editor);
+        const future = new Date(Date.now() + 86400000).toISOString();
+        h.elements.get(editor === 'main' ? 'editWorkoutDate' : 'editorWorkoutDate').value = WorkoutDate.toInputValue(future);
+        await h.save();
+        assert.equal(h.calls.commits, 0);
+        assert.equal(h.calls.reads.length, 0);
+        assert.deepEqual(h.store.get(docPath(original.id)), original);
+    });
+
+    test(`${editor}: save boundary rejects a future date when UI validation is bypassed`, async () => {
+        const h = editorHarness(editor);
+        const futureLog = { ...clone(original), date: new Date(Date.now() + 86400000).toISOString() };
+        if (editor === 'main') assert.equal(await h.context.saveToFirebase(futureLog), false);
+        else await h.context.executeSave(futureLog, original.id, { revision: original.revision, updatedAt: original.updatedAt });
+        assert.equal(h.calls.commits, 0);
+        assert.equal(h.calls.reads.length, 0);
+        assert.deepEqual(h.store.get(docPath(original.id)), original);
+    });
+}
+
+test('data: future date entered through raw JSON is rejected before confirmation', async () => {
+    const h = editorHarness('data');
+    const futureLog = { ...clone(original), date: new Date(Date.now() + 86400000).toISOString() };
+    h.elements.get('jsonEditor').value = JSON.stringify(futureLog);
+    h.elements.get('editorWorkoutDate').value = WorkoutDate.toInputValue(futureLog.date);
+    await h.context.window.saveCurrentLog();
+    assert.equal(h.context.window._pendingSaveData, undefined);
+    assert.match(h.elements.get('validationMsg').textContent, /cannot be in the future/);
+    assert.equal(h.calls.commits, 0);
+});

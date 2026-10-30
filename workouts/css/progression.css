@@ -134,7 +134,6 @@ h2 { font-size: var(--type-heading); letter-spacing: .5px; }
 .coach-context-grid { gap: 28px; margin: 22px 0 0; }
 .coach-context-grid > div { display: flex; align-items: flex-start; gap: 14px; }
 .context-icon { display: grid; place-items: center; color: var(--coach); background: var(--bg-tertiary); width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; font-size: var(--type-subheading); }
-.coach-context-label { font-size: var(--type-body); color: var(--text-muted); margin-bottom: 3px; }
 .coach-context-main { font-size: var(--type-body); font-weight: 600; }
 .coach-context-grid .coach-caption { font-size: var(--type-meta); line-height: 1.6; margin-top: 3px; }
 .collapsible-panel { border-radius: 12px; background: var(--bg-secondary); border-color: var(--border); margin-top: 20px; overflow: visible; }

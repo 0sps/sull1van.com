@@ -144,13 +144,6 @@
         };
     }
 
-    function getExerciseFormula(exercise) {
-        const profile = getExerciseStrengthProfile(exercise);
-        return profile.mode === 'estimated1rm' && profile.formulaSource === 'custom'
-            ? profile.formula
-            : null;
-    }
-
     function getCalculationReps(reps) {
         const repCount = Number(reps);
         if (!Number.isFinite(repCount) || repCount <= 0) return null;
@@ -192,8 +185,7 @@
                 formula: configuredFormula,
                 formulaSource: 'custom',
                 actualReps,
-                calculationReps,
-                repsCapped: actualReps > calculationReps
+                calculationReps
             };
         }
 
@@ -207,8 +199,7 @@
             formulaSource: 'epleyFallback',
             invalidConfiguredFormula: !!configuredFormula,
             actualReps,
-            calculationReps,
-            repsCapped: actualReps > calculationReps
+            calculationReps
         };
     }
 
@@ -259,7 +250,6 @@
         evaluateFormula,
         getCalculationReps,
         getExerciseStrengthProfile,
-        getExerciseFormula,
         estimateNamed,
         estimateOneRepMax,
         getBestEstimatedOneRepMax,

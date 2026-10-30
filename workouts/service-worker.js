@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'seans-log-';
-const CACHE_NAME = 'seans-log-v32';
+const CACHE_NAME = 'seans-log-v34';
 // Keep the service worker focused on the app shell and static configuration.
 const ASSETS_TO_CACHE = [
     './index.html',
@@ -56,6 +56,10 @@ const NETWORK_FIRST_STATIC_PATHS = new Set([
     '/progression-plan.json',
     '/workouts/js/coach.js',
     '/js/coach.js',
+    '/workouts/js/strength.js',
+    '/js/strength.js',
+    '/workouts/js/records.js',
+    '/js/records.js',
     '/workouts/css/coach.css',
     '/css/coach.css',
     '/workouts/css/progression.css',

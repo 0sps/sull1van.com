@@ -106,3 +106,16 @@ test('main workout editor saves the selected date without changing identity or l
     assert.equal(new Date(log.date).getMilliseconds(), 678);
     assert.deepEqual(log.exercises, [{ id: 'lift', sets: [{ reps: 8, weight: 50 }] }]);
 });
+
+test('save-date validation rejects future instants, including one millisecond ahead', () => {
+    const dates = require(helperPath);
+    const now = Date.parse('2026-10-30T15:00:00.500Z');
+    assert.equal(dates.assertNotFuture('2026-10-30T15:00:00.500Z', now), '2026-10-30T15:00:00.500Z');
+    assert.equal(dates.assertNotFuture('2026-10-29T15:00:00Z', now), '2026-10-29T15:00:00.000Z');
+    for (const date of ['2026-10-30T15:00:00.501Z', '2026-11-01T00:00:00Z']) {
+        assert.throws(() => dates.assertNotFuture(date, now), /cannot be in the future/);
+    }
+    for (const date of [undefined, null, '', 'invalid', 0]) {
+        assert.throws(() => dates.assertNotFuture(date, now), /valid workout date/);
+    }
+});

@@ -565,17 +565,6 @@
             text-transform: uppercase;
         }
 
-        .btn-fire {
-            background: var(--gradient-fire);
-            color: white;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-
-        .btn-fire:hover {
-            box-shadow: 0 8px 25px var(--accent-glow);
-            filter: brightness(1.1);
-        }
-
         .btn-danger {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -1361,6 +1350,7 @@
             editor.dataset.originalRevision = Number.isInteger(log.revision) ? String(log.revision) : '';
             editor.dataset.originalUpdatedAt = log.updatedAt || '';
             document.getElementById('workoutDateEditor').style.display = 'block';
+            document.getElementById('editorWorkoutDate').max = WorkoutDate.toInputValue(new Date().toISOString());
             document.getElementById('editorWorkoutDate').value = WorkoutDate.toInputValue(log.date);
 
             // Focus and scroll to top
@@ -1371,10 +1361,11 @@
         window.updateWorkoutDate = function () {
             const editor = document.getElementById('jsonEditor');
             const input = document.getElementById('editorWorkoutDate');
+            input.max = WorkoutDate.toInputValue(new Date().toISOString());
             if (!input.reportValidity()) return;
             try {
                 const data = JSON.parse(editor.value);
-                data.date = WorkoutDate.fromInputValue(input.value, data.date);
+                data.date = WorkoutDate.assertNotFuture(WorkoutDate.fromInputValue(input.value, data.date));
                 editor.value = JSON.stringify(data, null, 4);
                 document.getElementById('validationMsg').textContent = '';
             } catch (error) {
@@ -1397,6 +1388,7 @@
             const validationMsg = document.getElementById('validationMsg');
 
             try {
+                document.getElementById('editorWorkoutDate').max = WorkoutDate.toInputValue(new Date().toISOString());
                 if (!document.getElementById('editorWorkoutDate').reportValidity()) return;
                 const updatedData = JSON.parse(editor.value);
                 // Keep chronological Firestore string queries consistent for JSON edits too.
@@ -1404,7 +1396,7 @@
                     throw new Error('Enter a valid workout date and time.');
                 }
                 updatedData.date = new Date(updatedData.date).toISOString();
-                updatedData.date = WorkoutDate.fromInputValue(document.getElementById('editorWorkoutDate').value, updatedData.date);
+                updatedData.date = WorkoutDate.assertNotFuture(WorkoutDate.fromInputValue(document.getElementById('editorWorkoutDate').value, updatedData.date));
                 const originalId = editor.dataset.originalId;
                 const originalRevision = editor.dataset.originalRevision === '' ? null : Number(editor.dataset.originalRevision);
                 const originalUpdatedAt = editor.dataset.originalUpdatedAt || null;
@@ -1579,6 +1571,7 @@
         async function executeSave(data, originalId, baseVersion) {
             showLoading(true, "Saving to Firebase...");
             try {
+                data = { ...data, date: WorkoutDate.assertNotFuture(data.date) };
                 const nextId = data.id.toString();
                 const previousId = originalId.toString();
                 const previousRef = getWorkoutDocRef(previousId);
@@ -1625,7 +1618,7 @@
                 if (wasActive) document.getElementById('validationMsg').textContent = "";
             } catch (err) {
                 console.error(err);
-                if (err instanceof WorkoutDestinationExistsError || err instanceof WorkoutEditorConflictError) {
+                if (err instanceof WorkoutDestinationExistsError || err instanceof WorkoutEditorConflictError || err.code === 'invalid-workout-date') {
                     showToast(err.message, "error");
                     if (activeLogId?.toString() === originalId.toString()) {
                         document.getElementById('validationMsg').textContent = err.message;
@@ -1754,6 +1747,7 @@
             const log = currentLogs.find(l => l.id.toString() === activeLogId.toString());
             if (log) {
                 document.getElementById('jsonEditor').value = JSON.stringify(log, null, 4);
+                document.getElementById('editorWorkoutDate').max = WorkoutDate.toInputValue(new Date().toISOString());
                 document.getElementById('editorWorkoutDate').value = WorkoutDate.toInputValue(log.date);
                 document.getElementById('validationMsg').textContent = "";
                 showToast("Changes discarded");

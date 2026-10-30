@@ -34,15 +34,15 @@ The Coach modal shows the source set and estimate, working-set completion, and e
 - Numeric ranges and fixed rep counts are supported. Timed entries, AMRAP, reversed ranges, and other text request rep-range setup.
 - With no usable history, the coach asks for starting working sets instead of inventing a weight.
 
-Lifts configured with `1repmaxformula: "NONE"` and bodyweight plans retain rep-based guidance. Their latest lightest valid working load is repeated until the required consecutive sets reach the upper rep target. A positive-load increase adds one configured equipment step. Two complete recent misses at the same load may suggest a lighter step. Explicit zero bodyweight can earn rep completion but does not invent added resistance.
+Bodyweight exercises and lifts configured with `1repmaxformula: "NONE"` are excluded from Coach recommendations and the progression dashboard. Eligibility also respects `equipment: "Bodyweight"` and `targetMode: "bodyweight"`. These exercises remain available for logging, history, and rep records in the logger.
 
-Legacy recommendation method names do not override the shared PR formula for strength-based lifts. Calendar goals remain references and do not force a heavier prescription.
+The shared exercise formula determines strength-based targets. Calendar goals remain chart references and do not force a heavier prescription.
 
 ## Loading and verification
 
-Both pages supply their full loaded season history, exercise metadata, season start, plan, and unit/date helpers. The app reads additional season documents when its initial workout window does not cover the season.
+Both pages supply their full loaded season history, exercise metadata, season start, plan, and unit/date helpers. The app reads additional season documents when its initial workout window does not cover the season. A failed initial or continuation read blocks workout initialization and offers Retry so incomplete history cannot produce coach recommendations or PRs. Workout saves reject future timestamps, and the PR tracker excludes any future-dated historical records.
 
-`service-worker.js` uses cache `seans-log-v32`. App pages, the coach module, shared styles, and plans use network-first loading with cached offline fallback.
+`service-worker.js` uses cache `seans-log-v34`. App pages, the coach, strength, and records modules, shared styles, and plans use network-first loading with cached offline fallback.
 
 Run the existing Node tests without launching a browser:
 
@@ -50,4 +50,4 @@ Run the existing Node tests without launching a browser:
 node --test workouts/tests/*.test.cjs
 ```
 
-Coach coverage includes ascending loads, strongest-estimate selection, PR formula parity, custom and invalid formulas, actual higher-rep calculations, historical reference retention, invalid inputs, incomplete sessions, live and saved progression, page rendering, and the rep-only/bodyweight fallback. Signed-in persistence and visual browser testing are separate checks.
+Coach coverage includes ascending loads, strongest-estimate selection, PR formula parity, custom and invalid formulas, actual higher-rep calculations, historical reference retention, invalid inputs, incomplete sessions, live and saved progression, page rendering, and bodyweight and rep-only exclusion. Signed-in persistence and visual browser testing are separate checks.

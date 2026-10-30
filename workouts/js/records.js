@@ -7,6 +7,7 @@
         const getWorkoutLogs = options.getWorkoutLogs || (() => []);
         const getSeasonStartDate = options.getSeasonStartDate || (() => null);
         const getExerciseData = options.getExerciseData || (() => null);
+        const getNow = options.getNow || (() => new Date());
 
         function parseDate(value) {
             const date = new Date(value);
@@ -15,10 +16,11 @@
 
         function getSeasonLogs() {
             const start = parseDate(getSeasonStartDate());
-            if (!start) return [];
+            const now = parseDate(getNow());
+            if (!start || !now) return [];
             return getWorkoutLogs().filter(log => {
                 const logDate = parseDate(log?.date);
-                return logDate && logDate >= start;
+                return logDate && logDate >= start && logDate <= now;
             });
         }
 
@@ -70,7 +72,6 @@
                 weightKg: estimate.weightKg,
                 reps: estimate.reps,
                 calculationReps: estimate.calculationReps,
-                repsCapped: estimate.repsCapped,
                 validated: estimate.validated,
                 usedFallback: estimate.usedFallback,
                 invalidConfiguredFormula: estimate.invalidConfiguredFormula,
@@ -140,7 +141,6 @@
                 weightKg: current.weightKg,
                 reps: current.reps,
                 calculationReps: current.calculationReps,
-                repsCapped: current.repsCapped,
                 validated: current.validated,
                 usedFallback: current.usedFallback,
                 formulaSource: current.formulaSource
@@ -163,8 +163,6 @@
                     current: null,
                     previousBest: null,
                     seasonBaseline: null,
-                    weightPR: false,
-                    repPR: false,
                     records: []
                 };
             }
@@ -182,8 +180,6 @@
                 current,
                 previousBest,
                 seasonBaseline,
-                weightPR: false,
-                repPR: current.mode === 'repsOnly' && comparison.isPR,
                 records
             };
         }
@@ -236,8 +232,6 @@
                             current: result.current,
                             previousBest: result.previousBest,
                             seasonBaseline: result.seasonBaseline,
-                            weightPR: result.weightPR,
-                            repPR: result.repPR,
                             records: result.records
                         });
                     }

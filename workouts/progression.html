@@ -142,7 +142,6 @@
         .coach-brief { margin-bottom: 24px; }
         .coach-brief .coach-heading { margin-top: 8px; }
         .coach-context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0 24px; }
-        .coach-context-label { color: var(--text-secondary); font-size: var(--type-meta); margin-bottom: 6px; }
         .coach-context-main { font-size: var(--type-body); line-height: 1.6; }
         .coach-lift-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; list-style: none; margin-top: 12px; }
         .coach-lift-list li { border-left: 2px solid var(--border); padding-left: 14px; }
@@ -888,11 +887,9 @@
             getWorkoutLogs: () => workoutLogs,
             getExerciseData: exerciseId => exercisesData[exerciseId] || null,
             getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
-            getPRTimeline: () => recordTracker?.getPRTimeline() || [],
+            getPRTimeline: () => (recordTracker?.getPRTimeline() || []).filter(event => coach.isExerciseEligible(event.exerciseId)),
             lbsToKg,
-            kgToLbs,
             displayWeight,
-            formatWeightLbs: kg => `${displayWeight(kg)} lbs`,
             formatDate,
             dateFormats: DateFormats
         });
@@ -1024,8 +1021,8 @@
             return coach.calculateEstimatedMaxKg(Number(weightKg), Number(reps), formula, exerciseId);
         }
 
-        function getBestEstimatedMax(sessions, coachConfig, exerciseId = null) {
-            const best = coach.getBestEstimatedMax(sessions, coachConfig, exerciseId);
+        function getBestEstimatedMax(sessions, exerciseId = null) {
+            const best = coach.getBestEstimatedMax(sessions, exerciseId);
             return best ? { ...best, date: best.date || best.session?.date || best.session?.log?.date } : null;
         }
 
@@ -1076,7 +1073,7 @@
             nextDays.forEach(dayName => {
                 const workout = trainingPlanData.workouts?.[dayName];
                 (workout?.exercises || []).forEach(ex => {
-                    if (seen.has(ex.id)) return;
+                    if (seen.has(ex.id) || !coach.isExerciseEligible(ex.id)) return;
                     const planExercise = progressionPlanData.exercises?.[ex.id] || {};
                     seen.add(ex.id);
                     entries.push({
@@ -1161,7 +1158,7 @@
                 const coachConfig = getCoachConfig(entry.planExercise);
                 const bestEstimate = recommendation.bestEstimate;
                 const baselineEstimate = baselineSession
-                    ? getBestEstimatedMax([{ date: baselineSession.date, sets: baselineSession.workingSets }], coachConfig, entry.id)
+                    ? getBestEstimatedMax([{ date: baselineSession.date, sets: baselineSession.workingSets }], entry.id)
                     : null;
                 const goalEstimateKg = calculateEstimatedMaxKg(goalKg, entry.repRange.max || entry.repRange.min || 1, coachConfig.formula, entry.id);
                 const baselineEstimateKg = baselineEstimate?.estimatedMaxKg ?? null;
@@ -1193,8 +1190,7 @@
             });
         }
 
-        function formatLiftWeight(kg, planExercise = null) {
-            if (planExercise?.targetMode === 'bodyweight' && kg === 0) return 'Bodyweight';
+        function formatLiftWeight(kg) {
             if (!Number.isFinite(kg)) return 'No baseline';
             return `${displayWeight(kg)} lbs`;
         }
@@ -1221,7 +1217,7 @@
             const elapsedDays = Math.max(0, Math.floor((startOfLocalDay(now) - startOfLocalDay(start)) / dayMs));
             const seasonDay = elapsedDays + 1;
             const week = snapshot.week;
-            const seasonRecords = recordTracker?.getPRTimeline() || [];
+            const seasonRecords = (recordTracker?.getPRTimeline() || []).filter(event => coach.isExerciseEligible(event.exerciseId));
             const seasonRecordCount = seasonRecords.reduce((sum, event) => sum + event.records.length, 0);
             const latestWorkout = snapshot.latestWorkout;
             const activeRecently = snapshot.activeRecently;
@@ -1280,8 +1276,8 @@
                     const recommendation = row.recommendation;
                     const session = recommendation.recentSession;
                     if (recommendation.usesEstimatedMax) {
-                        const weight = formatLiftWeight(recommendation.targetWeightKg, row.planExercise);
-                        const estimate = formatLiftWeight(recommendation.bestEstimate.estimatedMaxKg, row.planExercise);
+                        const weight = formatLiftWeight(recommendation.targetWeightKg);
+                        const estimate = formatLiftWeight(recommendation.bestEstimate.estimatedMaxKg);
                         return `<li><span class="context-icon lift-action-icon" aria-hidden="true">${progressionIcon(group.icon)}</span><div class="lift-action-content"><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-change">${escapeHtml(weight)} × ${escapeHtml(recommendation.repRange.max)} reps <span>next target</span></span><span class="lift-action-last">Best estimated max: ${escapeHtml(estimate)}</span></div></li>`;
                     }
                     const lastWeightKg = session.representativeWeightKg;
@@ -1289,7 +1285,7 @@
                     const lastReps = session.workingSets
                         .filter(set => Math.abs(Number(set.weight) - lastWeightKg) < 0.01)
                         .reduce((max, set) => Math.max(max, Number(set.reps) || 0), 0);
-                    const lastWeight = formatLiftWeight(lastWeightKg, row.planExercise);
+                    const lastWeight = formatLiftWeight(lastWeightKg);
                     const last = group.action === 'reduce' && lastReps > 0 ? `${lastWeight} × ${lastReps}` : lastWeight;
                     return `<li><span class="context-icon lift-action-icon" aria-hidden="true">${progressionIcon(group.icon)}</span><div class="lift-action-content"><strong>${escapeHtml(getLiftName(row))}</strong><span class="lift-action-change">${changeLbs > 0 ? '+' : ''}${escapeHtml(changeLbs)} lbs <span>next time</span></span><span class="lift-action-last">Last: ${escapeHtml(last)}</span></div></li>`;
                 }).join('');
@@ -1352,7 +1348,7 @@
             const hasWeight = focus && Number.isFinite(focus.targetWeightKg);
             const weight = document.getElementById('coachNextWeight');
             weight.textContent = focus ? focus.action === 'setup' ? 'Set a rep range'
-                : hasWeight ? formatLiftWeight(focus.targetWeightKg, focus.planExercise) : 'Choose a starting weight' : '';
+                : hasWeight ? formatLiftWeight(focus.targetWeightKg) : 'Choose a starting weight' : '';
             weight.classList.toggle('coach-instruction', !hasWeight);
             weight.hidden = !focus;
             document.getElementById('coachNextSets').textContent = focus?.repRange.min
@@ -1368,7 +1364,7 @@
             document.getElementById('coachOtherLiftsList').innerHTML = otherLifts.map(lift => `
                 <li><strong>${escapeHtml(lift.name)}</strong>
                     <span>${escapeHtml(lift.actionLabel)}</span>
-                    <span>${Number.isFinite(lift.targetWeightKg) ? escapeHtml(formatLiftWeight(lift.targetWeightKg, lift.planExercise)) : lift.action === 'setup' ? 'Set a rep range' : 'Choose a starting weight'}${lift.repRange.min ? ` · ${lift.requiredWorkingSets} working sets × ${escapeHtml(lift.repRange.label)} reps` : ''}</span>
+                    <span>${Number.isFinite(lift.targetWeightKg) ? escapeHtml(formatLiftWeight(lift.targetWeightKg)) : lift.action === 'setup' ? 'Set a rep range' : 'Choose a starting weight'}${lift.repRange.min ? ` · ${lift.requiredWorkingSets} working sets × ${escapeHtml(lift.repRange.label)} reps` : ''}</span>
                 </li>`).join('');
             document.getElementById('coachWeekTarget').textContent = snapshot.activeRecently ? 'Workout logged this week.' : 'No workout in the last seven days.';
             document.getElementById('coachWeekDetail').textContent = latestWorkout
@@ -1394,9 +1390,9 @@
         function renderLiftTable() {
             document.getElementById('liftTableBody').innerHTML = liftRows.map(row => {
                 const latest = row.latest
-                    ? `<span class="num-strong">${escapeHtml(formatLiftWeight(row.latest.maxWeightKg, row.planExercise))} × ${escapeHtml(row.latest.reps)}</span><div class="lift-meta">${escapeHtml(formatDate(row.latest.date, DateFormats.SHORT))}</div>`
+                    ? `<span class="num-strong">${escapeHtml(formatLiftWeight(row.latest.maxWeightKg))} × ${escapeHtml(row.latest.reps)}</span><div class="lift-meta">${escapeHtml(formatDate(row.latest.date, DateFormats.SHORT))}</div>`
                     : '<span class="status-pill warn">No Data</span>';
-                const target = `<span class="num-strong target-glow">${Number.isFinite(row.targetTodayKg) ? escapeHtml(formatLiftWeight(row.targetTodayKg, row.planExercise)) : 'Choose starting weight'} × ${escapeHtml(row.repRange.label)}</span><div class="lift-meta">${escapeHtml(row.recommendation.requiredWorkingSets)} working sets</div>`;
+                const target = `<span class="num-strong target-glow">${Number.isFinite(row.targetTodayKg) ? escapeHtml(formatLiftWeight(row.targetTodayKg)) : 'Choose starting weight'} × ${escapeHtml(row.repRange.label)}</span><div class="lift-meta">${escapeHtml(row.recommendation.requiredWorkingSets)} working sets</div>`;
                 const status = `<span class="status-pill ${escapeHtml(row.status.className)}">${escapeHtml(row.status.label)}</span>`;
                 const confidence = `<span class="status-pill ${escapeHtml(row.confidence.className)}">${escapeHtml(row.confidence.label)}</span><div class="lift-meta">${escapeHtml(row.confidence.detail)}</div>`;
                 const strengthGainLbs = Number.isFinite(row.seasonStrengthGainKg) ? Math.round(kgToLbs(row.seasonStrengthGainKg)) : null;
@@ -1405,7 +1401,7 @@
                     ? `<div class="lift-meta">Season strength ${strengthGainLbs > 0 ? '+' : ''}${escapeHtml(strengthGainLbs)} lbs · ${strengthGainPercent > 0 ? '+' : ''}${escapeHtml(strengthGainPercent)}%</div>`
                     : '';
                 const strengthMeta = row.bestEstimate
-                    ? `<div class="lift-meta">Estimate ${escapeHtml(formatLiftWeight(row.bestEstimate.estimatedMaxKg, row.planExercise))}${row.bestEstimate.usedFallback ? '**' : ''} est. max</div>${strengthGainMeta}`
+                    ? `<div class="lift-meta">Estimate ${escapeHtml(formatLiftWeight(row.bestEstimate.estimatedMaxKg))}${row.bestEstimate.usedFallback ? '**' : ''} est. max</div>${strengthGainMeta}`
                     : '';
 
                 return `
@@ -1415,11 +1411,11 @@
                             <div class="lift-meta">${escapeHtml(row.dayName)} · ${escapeHtml(row.sets)} sets · ${escapeHtml(row.reps)} reps</div>
                             <div class="lift-meta">${row.baselineSession ? `Season baseline · ${escapeHtml(formatDate(row.baselineSession.date, DateFormats.SHORT))}` : 'First clean season session sets the baseline'}</div>
                         </td>
-                        <td data-label="Baseline"><span class="num-strong">${escapeHtml(formatLiftWeight(row.baselineKg, row.planExercise))}</span></td>
+                        <td data-label="Baseline"><span class="num-strong">${escapeHtml(formatLiftWeight(row.baselineKg))}</span></td>
                         <td data-label="Most Recent">${latest}${strengthMeta}</td>
                         <td data-label="Next Workout">${target}</td>
                         <td data-label="History">${confidence}</td>
-                        <td data-label="Season Goal"><span class="num-strong">${row.goalKg !== null ? escapeHtml(formatLiftWeight(row.goalKg, row.planExercise)) : 'Not set'}</span></td>
+                        <td data-label="Season Goal"><span class="num-strong">${row.goalKg !== null ? escapeHtml(formatLiftWeight(row.goalKg)) : 'Not set'}</span></td>
                         <td data-label="Status">${status}<div class="lift-meta">${escapeHtml(row.recommendation.reason)}</div></td>
                     </tr>`;
             }).join('');
@@ -1555,9 +1551,9 @@
             document.getElementById('chartStats').innerHTML = `
                 <div class="lift-prescription"><span class="stat-icon">${progressionIcon('dumbbell')}</span><span><strong>${escapeHtml(row.sets)} sets</strong> · ${escapeHtml(row.reps)} reps</span></div>
                 ${stat({ icon: 'strength', title: '1RM',
-                    value: row.bestEstimate ? `${formatLiftWeight(row.bestEstimate.estimatedMaxKg, row.planExercise)}${row.bestEstimate.usedFallback ? '**' : ''}` : 'No estimate' })}
+                    value: row.bestEstimate ? `${formatLiftWeight(row.bestEstimate.estimatedMaxKg)}${row.bestEstimate.usedFallback ? '**' : ''}` : 'No estimate' })}
                 ${stat({ icon: 'clock', title: 'Best Set',
-                    value: latest ? `${formatLiftWeight(latest.maxWeightKg, row.planExercise)} × ${latest.reps}` : 'No data',
+                    value: latest ? `${formatLiftWeight(latest.maxWeightKg)} × ${latest.reps}` : 'No data',
                     detail: latest ? formatDate(latest.date, DateFormats.LONG) : 'No post-start log' })}
                 ${stat({ icon: changeIcon, title: 'Strength Since Season Start', value: strengthGainValue,
                     detail: `${changeLabel}. First season session is the baseline.`, className: `season-change change-${strengthChange}` })}

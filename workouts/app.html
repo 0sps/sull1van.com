@@ -587,10 +587,6 @@
             /* Match row border radius if applicable */
         }
 
-        .delete-overlay.deleted-state {
-            background: rgba(0, 255, 136, 0.9) !important;
-        }
-
         .delete-set-btn,
         .cancel-set-btn {
             padding: 10px 24px;
@@ -890,10 +886,6 @@
             font-size: 0.82rem;
         }
 
-        .text-center {
-            text-align: center;
-        }
-
         .cursor-pointer {
             cursor: pointer;
         }
@@ -914,10 +906,6 @@
 
         .m-t-12 {
             margin-top: 12px;
-        }
-
-        .m-t-neg-12 {
-            margin-top: -12px;
         }
 
         .italic {
@@ -1321,18 +1309,7 @@
             font-family: 'Space Mono', monospace;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
         @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
             /* Make set inputs more compact on mobile */
             .set-input {
                 font-size: 1.8rem;
@@ -1361,30 +1338,6 @@
                 padding: 10px 8px;
                 font-size: 0.8rem;
             }
-        }
-
-        .stat-card {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            padding: 20px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            background: var(--gradient-fire);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
         }
 
         .momentum-shell {
@@ -1825,191 +1778,6 @@
             #prRecapModal .modal { padding: 24px 18px; }
             .pr-recap-card { padding: 17px 15px; }
             .pr-recap-summary { align-items: flex-start; }
-        }
-
-        .training-plan-target-title {
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.4px;
-            margin-bottom: 8px;
-        }
-
-        .training-plan-pace-label {
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 8px;
-        }
-
-        .training-plan-pace-value {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 2rem;
-            letter-spacing: 1px;
-        }
-
-        .training-plan-pace-value.on-track,
-        .training-plan-pace-value.ahead,
-        .training-plan-chart-dot.on-track {
-            color: var(--success);
-            fill: var(--success);
-            text-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
-        }
-
-        .training-plan-pace-value.behind,
-        .training-plan-chart-dot.behind {
-            color: #ff5d8f;
-            fill: #ff5d8f;
-            text-shadow: 0 0 16px rgba(255, 74, 116, 0.5);
-        }
-
-        .training-plan-pace-detail {
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            line-height: 1.4;
-            margin-top: 6px;
-        }
-
-        .training-plan-progress-track {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            height: 10px;
-            margin-top: 12px;
-            overflow: hidden;
-        }
-
-        .training-plan-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff4f8f, #ff9cbd, #00ff88);
-            box-shadow: 0 0 16px rgba(255, 115, 166, 0.38);
-        }
-
-        .training-plan-phase-panel {
-            background:
-                linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-                rgba(0, 0, 0, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .training-plan-panel-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .training-plan-panel-title {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 1.35rem;
-            letter-spacing: 1px;
-            color: var(--text-primary);
-        }
-
-        .training-plan-panel-subtitle {
-            color: var(--text-muted);
-            font-size: 0.78rem;
-            margin-top: 3px;
-        }
-
-        .training-plan-phase-percent {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 2rem;
-            line-height: 1;
-            color: #ffe0a3;
-            text-shadow: 0 0 14px rgba(255, 187, 88, 0.38);
-            white-space: nowrap;
-        }
-
-        .training-plan-phase-rail {
-            position: relative;
-            height: 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .training-plan-phase-fill {
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 149, 42, 0.85), rgba(255, 224, 163, 0.95), rgba(0, 255, 136, 0.9));
-            box-shadow: 0 0 20px rgba(255, 187, 88, 0.24);
-        }
-
-        .training-plan-phase-marker {
-            position: absolute;
-            top: -5px;
-            width: 2px;
-            height: 28px;
-            background: #fff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
-        }
-
-        .training-plan-phase-marker::after {
-            content: 'PLAN';
-            position: absolute;
-            top: -17px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            font-size: 0.55rem;
-            letter-spacing: 0.8px;
-        }
-
-        .training-plan-phase-labels {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .training-plan-phase-label {
-            color: var(--text-muted);
-            font-size: 0.66rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .training-plan-phase-number {
-            font-family: 'Bebas Neue', Impact, sans-serif;
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            letter-spacing: 0.6px;
-            margin-top: 2px;
-        }
-
-        .training-plan-phase-labels > div:nth-child(2) {
-            text-align: center;
-        }
-
-        .training-plan-phase-labels > div:nth-child(3) {
-            text-align: right;
-        }
-
-        .text-success {
-            color: var(--success);
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.32);
-        }
-
-        .text-error {
-            color: #ff5d8f;
-            text-shadow: 0 0 10px rgba(255, 74, 116, 0.38);
-        }
-
-        .training-plan-section {
-            border-top: 1px solid var(--border);
-            padding-top: 14px;
-            margin-top: 14px;
-        }
-
-        .training-plan-section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            color: var(--accent-secondary);
-            margin-bottom: 8px;
         }
 
         .training-plan-chart-card {
@@ -2702,7 +2470,6 @@
         }
         // Make Firebase functions available globally
         window.firebaseDb = db;
-        window.firebaseCollection = collection;
         window.firebaseDoc = doc;
         window.firebaseGetDoc = getDoc;
         window.firebaseGetDocs = getDocs;
@@ -2774,7 +2541,6 @@
             RECENT_LOGS_LIMIT: 5,
             FIREBASE_INIT_LIMIT: 60,
             LOCAL_STORAGE_TTL: 48 * 60 * 60 * 1000, // 48 hours
-            HISTORY_LIMIT_DAYS: 365,
             MAX_RECENT_SETS: 40,
             SET_DELETION_LOG_SLICE: 15,
             CONFIG_CACHE_TTL: 7 * 24 * 60 * 60 * 1000 // Exercises/plans refresh from Firebase weekly.
@@ -2797,8 +2563,6 @@
         let editingLogData = null; // Store full log data when editing
         let activeFilter = null;
         let weightUnit = 'lbs'; // Default weight unit for display and input
-        let cachedStats = null;
-        let cachedStatsVersion = 0;
         let pendingWorkoutData = null;
         let manualLogData = {}; // Store data for manual log inputs
         let activeSeason = null;
@@ -3008,9 +2772,7 @@
             getSeasonStartDate: () => activeSeason?.startDate ? `${activeSeason.startDate}T00:00:00` : null,
             getPRTimeline: () => recordTracker?.getPRTimeline() || [],
             lbsToKg,
-            kgToLbs,
             displayWeight,
-            formatWeightLbs,
             formatDate,
             dateFormats: DateFormats
         });
@@ -3166,7 +2928,6 @@
 
         // --- Core Helpers ---
         function invalidateStatsCache() {
-            cachedStatsVersion++;
             invalidateLogCache(); // Also clear log calculation cache
         }
 
@@ -3191,8 +2952,7 @@
                     muscles: [],
                     category: 'Missing',
                     equipment: '',
-                    instructions: 'This exercise is referenced by a log or plan but is missing from the exercise library.',
-                    notes: ''
+                    instructions: 'This exercise is referenced by a log or plan but is missing from the exercise library.'
                 };
             }
             return {
@@ -3201,8 +2961,7 @@
                 muscles: data.muscles || [],
                 category: data.category || '',
                 equipment: data.equipment || '',
-                instructions: data.instructions || '',
-                notes: data.notes || ''
+                instructions: data.instructions || ''
             };
         }
 
@@ -3267,13 +3026,8 @@
             }, 0);
         }
 
-        function invalidateLogCache(logId = null) {
-            if (logId) {
-                logCalculationCache.delete(`sets_${logId}`);
-                logCalculationCache.delete(`volume_${logId}`);
-            } else {
-                logCalculationCache.clear();
-            }
+        function invalidateLogCache() {
+            logCalculationCache.clear();
         }
 
         // --- Render Batching ---
@@ -3354,14 +3108,14 @@
         /**
          * Generates HTML for an exercise card.
          */
-        function generateExerciseHTML(exercise, workoutEx, key, setsHtml, options = {}) {
+        function generateExerciseHTML(exercise, key, setsHtml, options = {}) {
             const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false, isDone = false, isPR = false } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
             const headerActions = isEdit ? '' : `
                 <div class="exercise-meta-col">
-                    <button class="btn-history" data-exercise-name="${escapeAttr(exercise.name)}">History</button>
+                    <button class="btn-history" data-exercise-id="${escapeAttr(exercise.id)}">History</button>
                     ${hasProgressionTarget ? `<button class="btn-coach" id="coach-btn-${escapeAttr(key)}" data-exercise-key="${escapeAttr(key)}">Coach</button>` : ''}
                 </div>`;
 
@@ -3745,12 +3499,10 @@
                 name: workoutName,
                 subtitle: workout.subtitle || '',
                 exercises: (workout.exercises || []).map(ex => {
-                    const exercise = getExercise(ex.id);
                     return {
                         exerciseId: ex.id,
                         sets: ex.sets || 3,
-                        reps: ex.reps || '8-12',
-                        notes: exercise ? exercise.notes : ''
+                        reps: ex.reps || '8-12'
                     };
                 })
             };
@@ -3905,6 +3657,7 @@
                     updateSyncStatus('error');
                     return false;
                 }
+                WorkoutDate.assertNotFuture(log.date);
                 const docRef = window.getWorkoutDocRef(log.id);
                 const baseRevision = Number.isInteger(log.revision) ? log.revision : null;
                 const baseUpdatedAt = log.updatedAt || null;
@@ -4237,8 +3990,8 @@
                 // History button
                 const historyBtn = e.target.closest('.btn-history');
                 if (historyBtn) {
-                    const exerciseName = historyBtn.dataset.exerciseName;
-                    if (exerciseName) showExerciseHistory(exerciseName);
+                    const exerciseId = historyBtn.dataset.exerciseId;
+                    if (exerciseId) showExerciseHistory(exerciseId);
                     return;
                 }
 
@@ -4414,8 +4167,11 @@
                 // Load the existing recent window first, then reuse those same documents
                 // for PR history. An additional query happens only if the season extends
                 // beyond that window, and it starts after the oldest document already read.
-                await loadFromFirebase();
-                await loadRecordHistoryFromFirebase();
+                if (!await loadFromFirebase()) throw new Error('Could not load workout history.');
+                const historyLoaded = await loadRecordHistoryFromFirebase();
+                if (activeSeasonStatus === 'loaded' && !historyLoaded) {
+                    throw new Error('Could not load complete season history.');
+                }
 
                 loadingOverlay.style.display = 'none';
                 updateCurrentDate();
@@ -4438,7 +4194,8 @@
                 }
             } catch (error) {
                 console.error('App initialization failed:', error);
-                loadingOverlay.innerHTML = '<div class="loading-text">Could not load workouts. Refresh to try again.</div>';
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.innerHTML = '<div class="loading-text">Could not load workouts. Check your connection and retry.</div><button class="btn btn-primary" id="retryWorkoutLoadBtn" type="button" onclick="window.location.reload()">RETRY</button>';
             }
         }
         function updateCurrentDate() {
@@ -4511,7 +4268,7 @@
                     });
                 }).join('');
 
-                return generateExerciseHTML(exercise, ex, exerciseKey, setsHtml, {
+                return generateExerciseHTML(exercise, exerciseKey, setsHtml, {
                     isEdit: false,
                     volumeLbs,
                     hasProgressionTarget: !!progressionTarget,
@@ -4712,13 +4469,10 @@
                     ? formatWeightLbs(result.previousBest.estimatedMaxKg)
                     : 'None';
                 const sourceSet = `${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}`;
-                const capNote = current.repsCapped
-                    ? ` Formula calculation capped at ${current.calculationReps} reps.`
-                    : '';
                 const fallbackNote = current.usedFallback
                     ? ' Epley estimate is not lift-validated.'
                     : '';
-                note.textContent = `Projected from ${sourceSet}.${capNote}${fallbackNote}`;
+                note.textContent = `Projected from ${sourceSet}.${fallbackNote}`;
             }
 
             clearPrToastTimer();
@@ -5014,7 +4768,7 @@
                     summaryDetail = 'Highest reps completed in one working set.';
                 } else {
                     summaryValue = `${formatWeightLbs(current.estimatedMaxKg)}${current.usedFallback ? '**' : ''}`;
-                    summaryDetail = `Projected from ${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}${current.repsCapped ? `, calculation capped at ${current.calculationReps} reps` : ''}.`;
+                    summaryDetail = `Projected from ${current.reps} rep${current.reps === 1 ? '' : 's'} at ${formatWeightLbs(current.weightKg)}.`;
                 }
 
                 const priorPoint = item.series.length > 1 ? item.series[item.series.length - 2] : null;
@@ -5173,6 +4927,7 @@
             document.getElementById('editModalTitle').textContent = `EDIT ${log.workoutName.toUpperCase()}`;
             const date = new Date(log.date);
             document.getElementById('editModalSubtitle').textContent = formatDateFull(date);
+            document.getElementById('editWorkoutDate').max = WorkoutDate.toInputValue(new Date().toISOString());
             document.getElementById('editWorkoutDate').value = WorkoutDate.toInputValue(log.date);
             document.getElementById('editExerciseSearch').value = '';
             document.getElementById('editAddExercisePanel').open = addExercise;
@@ -5201,7 +4956,7 @@
                     });
                 }).join('');
 
-                return generateExerciseHTML(exercise, ex, null, setsHtml, { isEdit: true, exIdx: exIdx });
+                return generateExerciseHTML(exercise, null, setsHtml, { isEdit: true, exIdx: exIdx });
             }).join('');
             renderEditExercisePicker();
         }
@@ -5298,9 +5053,10 @@
         async function saveEditedWorkout() {
             if (!editingLogData || isSaving) return;
             const dateInput = document.getElementById('editWorkoutDate');
+            dateInput.max = WorkoutDate.toInputValue(new Date().toISOString());
             if (!dateInput.reportValidity()) return;
             try {
-                editingLogData.date = WorkoutDate.fromInputValue(dateInput.value, editingLogData.date);
+                editingLogData.date = WorkoutDate.assertNotFuture(WorkoutDate.fromInputValue(dateInput.value, editingLogData.date));
             } catch (error) {
                 showNotification('INVALID DATE', error.message);
                 return;
@@ -5511,6 +5267,7 @@
             container.innerHTML = html;
         }
         function selectSetForDeletion(idx) {
+            if (isDeletingSet) return;
             const sets = flattenRecentSets();
             const clickedSet = sets[idx];
             // If clicking the same row, deselect it
@@ -5545,9 +5302,10 @@
                 executeDeleteSet(idx);
             }
         }
+        let isDeletingSet = false;
         async function executeDeleteSet(idx) {
-            if (!selectedSetForDeletion) return;
-            const overlay = document.getElementById(`overlay_${idx}`);
+            if (isDeletingSet || !selectedSetForDeletion) return;
+            isDeletingSet = true;
             const { workoutId, exerciseIndex, setIndex, isEmptyWorkout } = selectedSetForDeletion;
             try {
                 const sourceWorkout = findSeasonLog(workoutId);
@@ -5582,12 +5340,9 @@
                     removeRecordHistoryLog(workoutId);
                     if (recentIndex !== -1) workoutLogs.splice(recentIndex, 1);
                 }
-                // Persisted successfully — only now paint the green "Deleted!" confirmation.
-                if (overlay) {
-                    overlay.classList.add('deleted-state');
-                    overlay.innerHTML = '<span class="exercise-name" style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">DELETED!</span>';
-                    await new Promise(r => setTimeout(r, 500)); // brief visual confirmation
-                }
+                // Rebuild row indices immediately after the persisted list changes.
+                selectedSetForDeletion = null;
+                renderDeleteSetList();
                 invalidateStatsCache();
                 // Refresh UI
                 renderRecentLogs();
@@ -5595,12 +5350,13 @@
                 if (document.getElementById('historyTab').style.display === 'block') {
                     renderFullHistory();
                 }
-                selectedSetForDeletion = null;
             } catch (error) {
                 console.error('FAILED TO DELETE SET:', error);
                 // Nothing was changed and the row was never altered — leave the selection
                 // intact so the user can retry.
                 showNotification('ERROR', '❌ Error deleting set. Please try again.');
+            } finally {
+                isDeletingSet = false;
             }
         }
         function viewLogDetail(id) {
@@ -5684,7 +5440,7 @@
             const chartSessions = coach.getRecentProgressionSessions(target.exerciseId, target.repRange, 14, target.coachConfig.allowZeroWeight);
             const chartBaseline = baseline || chartSessions[chartSessions.length - 1];
             const chart = chartBaseline && chartSessions.some(session => session.representativeWeightKg > 0) ? coach.buildTrainingPlanChart(chartSessions, chartBaseline,
-                coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), goalKg !== null ? coach.getPlanGoalIncreaseKg(target.planExercise) : 0, target) : '';
+                coach.getPlanWeeklyTargetIncreaseKg(target.planExercise), goalKg !== null ? coach.getPlanGoalIncreaseKg(target.planExercise) : 0) : '';
             const liveSets = collectCurrentExerciseWorkingSets(exerciseKey);
             const liveEvaluation = coach.evaluateProgressionSets(liveSets, target);
             const hasLiveSets = coach.getWorkingSets(liveSets).length > 0;
@@ -5772,17 +5528,15 @@
             openModal('trainingPlanModal');
         }
 
-        function showExerciseHistory(exerciseName) {
+        function showExerciseHistory(exerciseId) {
+            const exerciseName = getExerciseForUI(exerciseId).name;
             // Search through all workout logs to find the most recent occurrence of this exercise
             let mostRecentExercise = null;
             let mostRecentDate = null;
             // Season logs are sorted newest-first, so the first match is most recent.
             for (const log of getSeasonWorkoutLogs()) {
                 const exercise = log.exercises.find(ex => {
-                    const nameMatch = ex.name.toLowerCase() === exerciseName.toLowerCase() ||
-                        ex.name.toLowerCase().includes(exerciseName.toLowerCase()) ||
-                        exerciseName.toLowerCase().includes(ex.name.toLowerCase());
-                    return nameMatch && ex.sets && ex.sets.length > 0;
+                    return ex.id === exerciseId && ex.sets && ex.sets.length > 0;
                 });
                 if (exercise) {
                     mostRecentExercise = exercise;

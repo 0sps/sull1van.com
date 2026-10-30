@@ -91,7 +91,6 @@
         .section-title::before { content: ''; width: 4px; height: 20px; background: var(--accent-primary); }
 
         /* Form inputs */
-        .form-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
         .form-group label {
             font-size: 0.75rem; color: var(--text-muted);
@@ -115,22 +114,6 @@
             -webkit-appearance: none;
             margin: 0;
         }
-
-        /* Toggle buttons */
-        .toggle-row {
-            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
-        }
-        .toggle-btn {
-            padding: 10px 20px; background: var(--bg-tertiary); border: 1px solid var(--border);
-            color: var(--text-secondary); font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
-            letter-spacing: 1px; cursor: pointer; transition: all 0.2s ease;
-        }
-        .toggle-btn.active {
-            background: rgba(255,61,0,0.15); border-color: var(--accent-primary);
-            color: var(--text-primary);
-        }
-        .toggle-btn:hover { border-color: var(--accent-secondary); color: var(--text-primary); }
-        .input-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
 
         /* Buttons */
         .calc-btn {
@@ -183,9 +166,6 @@
         }
         .measurement-group input:focus { outline: none; border-color: var(--accent-primary); }
         .measurement-group input::placeholder { color: var(--text-muted); }
-        .measurement-group .unit-hint {
-            font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;
-        }
         .height-display {
             font-size: 0.82rem; color: var(--accent-secondary);
             margin-top: 4px; min-height: 1.2em;
@@ -324,64 +304,6 @@
         .success-toast.active .toast-progress { animation: toastProgress 3s linear forwards; }
         @keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
 
-        /* PFRA Results (existing) */
-        .results-panel {
-            display: none; background: var(--bg-secondary); border: 1px solid var(--border);
-            padding: 32px; margin-top: 24px;
-        }
-        .results-panel.visible { display: block; }
-        .score-hero { text-align: center; margin-bottom: 32px; }
-        .score-number {
-            font-family: 'Bebas Neue', sans-serif; font-size: 5rem; line-height: 1;
-            background: var(--gradient-fire); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .score-number.success-score { background: var(--success); -webkit-background-clip: text; background-clip: text; }
-        .score-number.fail-score { background: #ff3d5a; -webkit-background-clip: text; background-clip: text; }
-        .score-rating {
-            font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px;
-            margin-top: 8px;
-        }
-        .score-rating.excellent { color: var(--success); }
-        .score-rating.satisfactory { color: var(--warning); }
-        .score-rating.unsatisfactory { color: #ff3d5a; }
-        .score-subtext { font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; }
-        .breakdown-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px; margin-top: 24px;
-        }
-        .breakdown-card {
-            background: var(--bg-tertiary); border: 1px solid var(--border); padding: 16px;
-        }
-        .breakdown-label {
-            font-size: 0.75rem; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
-        }
-        .breakdown-pts {
-            font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
-            color: var(--accent-secondary);
-        }
-        .breakdown-max { font-size: 0.8rem; color: var(--text-muted); }
-        .breakdown-card.fail-card { border-color: #ff3d5a; background: rgba(255,61,90,0.05); }
-        .breakdown-card.fail-card .breakdown-pts { color: #ff3d5a; }
-        .breakdown-card.pass-card { border-color: rgba(0,255,136,0.3); }
-        .breakdown-card.pass-card .breakdown-pts { color: var(--success); }
-        .hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-        .whtr-display {
-            font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
-            color: var(--accent-secondary); margin-top: 8px;
-        }
-        .risk-tag {
-            display: inline-block; padding: 2px 10px; font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 1px; margin-top: 6px;
-        }
-        .risk-low { background: rgba(0,255,136,0.1); color: var(--success); border: 1px solid rgba(0,255,136,0.3); }
-        .risk-moderate { background: rgba(255,187,0,0.1); color: var(--warning); border: 1px solid rgba(255,187,0,0.3); }
-        .risk-high { background: rgba(255,61,90,0.1); color: #ff3d5a; border: 1px solid rgba(255,61,90,0.3); }
-        .fail-notice {
-            background: rgba(255,61,90,0.1); border: 1px solid rgba(255,61,90,0.3);
-            padding: 12px 16px; margin-top: 16px; font-size: 0.85rem; color: #ff3d5a;
-        }
         .pfra-shell {
             display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.8fr);
             gap: 18px; align-items: start;
@@ -424,7 +346,6 @@
             color: var(--text-primary); letter-spacing: 1px; line-height: 1;
         }
         .pfra-stat span { display: block; color: var(--text-muted); font-size: 0.64rem; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
-        .compact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
         .profile-strip {
             display: grid; grid-template-columns: 120px minmax(130px, 160px) 1fr;
             gap: 10px; align-items: end; margin-bottom: 12px;
@@ -562,8 +483,6 @@
             .profile-note { grid-column: 1 / -1; }
         }
         @media (max-width: 600px) {
-            .breakdown-grid { grid-template-columns: 1fr 1fr; }
-            .score-number { font-size: 3.5rem; }
             .container { padding: 16px; }
             .section-card, .pfra-hero { padding: 14px; }
             .body-dashboard { grid-template-columns: 1fr; }
@@ -571,7 +490,7 @@
             .body-summary .btn-load { width: 100%; }
             .modal-overlay { align-items: flex-end; padding: 0; }
             .modal-panel { max-height: 92vh; border-left: none; border-right: none; border-bottom: none; }
-            .compact-grid, .score-range-summary { grid-template-columns: 1fr; }
+            .score-range-summary { grid-template-columns: 1fr; }
             .range-bar { grid-template-columns: 46px 1fr; }
             .range-bar > span:last-child { grid-column: 2; }
             .page-title { font-size: 1.65rem; }
@@ -839,13 +758,11 @@
     window.firebaseQuery = query;
     window.firebaseOrderBy = orderBy;
     window.firebaseWhere = where;
-    window.firebaseSignOut = signOut;
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             if ((user.email || '').toLowerCase() === 'sspsful@gmail.com' && user.emailVerified) {
                 window.currentUser = user;
-                window.firebaseReady = true;
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('loginBtn').style.display = 'none';
             } else {
@@ -870,10 +787,6 @@
         }
     }
 
-    window.logout = async function () {
-        await signOut(auth);
-        window.location.href = 'index.html';
-    }
 </script>
 
 <!-- ============================================================ -->
@@ -936,6 +849,21 @@ function getDisplayUnit(type) {
 // UNIT TOGGLE
 // ============================================================================
 function setUnits(units) {
+    if (!['imperial', 'metric'].includes(units)) return;
+    if (units !== currentUnits) {
+        // Closed measurement modals retain their draft. Keep the physical values
+        // when changing display units, including every optional measurement.
+        for (const [key, metric] of Object.entries(METRICS)) {
+            const input = document.getElementById(`m${key[0].toUpperCase()}${key.slice(1)}`);
+            if (!input || input.value.trim() === '') continue;
+            const value = Number(input.value);
+            if (!Number.isFinite(value)) continue;
+            const storageValue = convertToStorageUnits(value, metric.type);
+            const converted = units === 'imperial' ? storageValue
+                : metric.type === 'weight' ? lbsToKg(storageValue) : inToCm(storageValue);
+            input.value = String(Number(converted.toFixed(10)));
+        }
+    }
     currentUnits = units;
     document.getElementById('unitImperial').classList.toggle('active', units === 'imperial');
     document.getElementById('unitMetric').classList.toggle('active', units === 'metric');
@@ -1683,13 +1611,6 @@ function formatTime(totalSeconds) {
     return `${mins}:${String(secs).padStart(2, '0')}`;
 }
 
-function formatExplorerValue(eventKey, value) {
-    const event = PFRA_EVENTS[eventKey];
-    if (event.unit === 'time') return formatTime(value);
-    if (event.type === 'whtr') return value === Infinity ? '> 0.59' : `≤ ${value.toFixed(2)}`;
-    return `${value} ${event.unit}`;
-}
-
 function profileForScoring() {
     const age = parseInt(document.getElementById('age').value) || 25;
     const gender = document.getElementById('gender').value || 'M';
@@ -1819,7 +1740,7 @@ function scoreSection(eventKey, value, ageGroup, genderIdx, gender) {
     const event = PFRA_EVENTS[eventKey];
     if (event.type === 'whtr') {
         const pts = lookupWHtR(value);
-        return { points: pts, max: event.max, pass: pts >= event.pass, threshold: `${(value * 100).toFixed(1)}%`, risk: getWHtRRisk(value) };
+        return { points: pts, max: event.max, pass: pts >= event.pass, threshold: `${(value * 100).toFixed(1)}%` };
     }
     if (event.type === 'walk') {
         const maxTime = WALK_MAX[gender][ageGroup];
@@ -1896,53 +1817,6 @@ function renderScoreExplorer() {
 window.renderScoreExplorer = renderScoreExplorer;
 
 // ============================================================================
-// UI State
-// ============================================================================
-let pushType = 'std';
-let abType = 'situp';
-let cardioType = 'run';
-
-function selectPushType(t) {
-    pushType = t;
-    document.getElementById('pushTypeStd').classList.toggle('active', t === 'std');
-    document.getElementById('pushTypeHR').classList.toggle('active', t === 'hr');
-}
-
-function selectAbType(t) {
-    abType = t;
-    document.getElementById('abTypeSitup').classList.toggle('active', t === 'situp');
-    document.getElementById('abTypeCLRC').classList.toggle('active', t === 'clrc');
-    document.getElementById('abTypePlank').classList.toggle('active', t === 'plank');
-    const isPlank = t === 'plank';
-    document.getElementById('abRepsRow').style.display = isPlank ? 'none' : 'flex';
-    document.getElementById('abTimeRow').style.display = isPlank ? 'flex' : 'none';
-    document.getElementById('abInputLabel').textContent = t === 'situp' ? 'Reps Completed (1 min)' : 'Reps Completed (1 min)';
-}
-
-function selectCardioType(t) {
-    cardioType = t;
-    document.getElementById('cardioType2mile').classList.toggle('active', t === 'run');
-    document.getElementById('cardioTypeHAMR').classList.toggle('active', t === 'hamr');
-    document.getElementById('cardioTypeWalk').classList.toggle('active', t === 'walk');
-    const isHAMR = t === 'hamr';
-    const isWalk = t === 'walk';
-    document.getElementById('cardioTimeRow').style.display = isHAMR ? 'none' : 'flex';
-    document.getElementById('cardioShuttlesRow').style.display = isHAMR ? 'flex' : 'none';
-    const hint = document.getElementById('cardioHint');
-    if (isWalk) {
-        document.getElementById('cardioMins').placeholder = 'e.g. 16';
-        document.getElementById('cardioSecs').placeholder = 'e.g. 00';
-        hint.textContent = 'Alternate cardio: must complete within the max time for your age/gender. No points awarded — pass/fail only.';
-    } else if (isHAMR) {
-        hint.textContent = 'Minimum: 35 pts required to pass this component.';
-    } else {
-        document.getElementById('cardioMins').placeholder = 'e.g. 14';
-        document.getElementById('cardioSecs').placeholder = 'e.g. 30';
-        hint.textContent = 'Minimum: 35 pts required to pass this component.';
-    }
-}
-
-// ============================================================================
 // Lookup helpers
 // ============================================================================
 
@@ -1967,188 +1841,6 @@ function lookupWHtR(ratio) {
         if (ratio <= row.max) return row.pts;
     }
     return 0;
-}
-
-function getWHtRRisk(ratio) {
-    if (ratio <= 0.54) return { label: 'Low Risk', cls: 'risk-low' };
-    if (ratio <= 0.57) return { label: 'Moderate Risk', cls: 'risk-moderate' };
-    return { label: 'High Risk', cls: 'risk-high' };
-}
-
-// ============================================================================
-// Main Calculate
-// ============================================================================
-
-function calculate() {
-    const age = parseInt(document.getElementById('age').value) || 25;
-    const gender = document.getElementById('gender').value || 'M';
-    const heightIn = parseFloat(document.getElementById('heightIn').value);
-    const waistIn = parseFloat(document.getElementById('waistIn').value);
-
-    // Validation
-    if (!age || !gender) { alert('Please enter your age and gender.'); return; }
-    if (!heightIn || !waistIn) { alert('Please enter height and waist circumference.'); return; }
-
-    const ageGroup = getAgeGroup(age);
-    const gIdx = gender === 'M' ? 0 : 1;
-
-    // --- WHtR ---
-    const whtr = waistIn / heightIn;
-    const whtrPts = lookupWHtR(whtr);
-    const whtrRisk = getWHtRRisk(whtr);
-
-    // --- Push ---
-    const pushReps = parseInt(document.getElementById('pushReps').value) || 0;
-    const pushTable = pushType === 'std' ? PUSHUP_TABLE : HR_PUSHUP_TABLE;
-    const pushPts = lookupHigher(pushTable, pushReps, ageGroup, gIdx);
-    const pushLabel = pushType === 'std' ? 'Push-Up' : 'HR Push-Up';
-
-    // --- Ab ---
-    let abPts = 0;
-    let abLabel = '';
-    if (abType === 'situp') {
-        const reps = parseInt(document.getElementById('abReps').value) || 0;
-        abPts = lookupHigher(SITUP_TABLE, reps, ageGroup, gIdx);
-        abLabel = 'Sit-Up';
-    } else if (abType === 'clrc') {
-        const reps = parseInt(document.getElementById('abReps').value) || 0;
-        abPts = lookupHigher(CLRC_TABLE, reps, ageGroup, gIdx);
-        abLabel = 'Cross-Leg Rev Crunch';
-    } else {
-        const mins = parseInt(document.getElementById('abMins').value) || 0;
-        const secs = parseInt(document.getElementById('abSecs').value) || 0;
-        const totalSecs = mins * 60 + secs;
-        abPts = lookupHigher(PLANK_TABLE, totalSecs, ageGroup, gIdx);
-        abLabel = 'Forearm Plank';
-    }
-
-    // --- Cardio ---
-    let cardioPts = 0;
-    let cardioLabel = '';
-    let cardioWalkPass = null;
-    let cardioWalkMax = null;
-
-    if (cardioType === 'run') {
-        const mins = parseInt(document.getElementById('cardioMins').value) || 0;
-        const secs = parseInt(document.getElementById('cardioSecs').value) || 0;
-        const totalSecs = mins * 60 + secs;
-        cardioPts = lookupLower(RUN_TABLE, totalSecs, ageGroup, gIdx);
-        cardioLabel = '2-Mile Run';
-    } else if (cardioType === 'hamr') {
-        const shuttles = parseInt(document.getElementById('cardioShuttles').value) || 0;
-        cardioPts = lookupHigher(HAMR_TABLE, shuttles, ageGroup, gIdx);
-        cardioLabel = '20m HAMR';
-    } else {
-        // 2km walk — pass/fail
-        const mins = parseInt(document.getElementById('cardioMins').value) || 0;
-        const secs = parseInt(document.getElementById('cardioSecs').value) || 0;
-        const totalSecs = mins * 60 + secs;
-        cardioWalkMax = WALK_MAX[gender][ageGroup];
-        cardioWalkPass = totalSecs <= cardioWalkMax;
-        cardioPts = 0; // no points for walk
-        cardioLabel = '2km Walk (Alt)';
-    }
-
-    // --- Composite ---
-    const composite = whtrPts + pushPts + abPts + (cardioType !== 'walk' ? cardioPts : 0);
-
-    // Failure checks
-    const whtrFail = whtrPts < 2.5;
-    const pushFail = pushPts < 2.5;
-    const abFail = abPts < 2.5;
-    const cardioFail = cardioType !== 'walk' ? cardioPts < 35 : !cardioWalkPass;
-    const compositeFail = composite < 75;
-
-    const isFail = whtrFail || pushFail || abFail || cardioFail || compositeFail;
-
-    let rating, ratingCls;
-    if (isFail) {
-        rating = 'UNSATISFACTORY'; ratingCls = 'unsatisfactory';
-    } else if (composite >= 90) {
-        rating = 'EXCELLENT'; ratingCls = 'excellent';
-    } else {
-        rating = 'SATISFACTORY'; ratingCls = 'satisfactory';
-    }
-
-    // --- Render ---
-    const panel = document.getElementById('resultsPanel');
-    panel.classList.add('visible');
-
-    const scoreEl = document.getElementById('scoreFinal');
-    scoreEl.textContent = cardioType === 'walk' ? (whtrPts + pushPts + abPts).toFixed(1) : composite.toFixed(1);
-    scoreEl.className = 'score-number ' + (isFail ? 'fail-score' : (composite >= 90 ? 'success-score' : ''));
-
-    document.getElementById('scoreRating').textContent = rating;
-    document.getElementById('scoreRating').className = 'score-rating ' + ratingCls;
-    document.getElementById('scoreSubtext').textContent =
-        cardioType === 'walk'
-            ? 'Score shown excludes cardio (walk is pass/fail only). Composite requires cardio event for full scoring.'
-            : `Composite: ${composite.toFixed(1)} / 100 pts`;
-
-    // Breakdown cards
-    const grid = document.getElementById('breakdownGrid');
-    grid.innerHTML = '';
-
-    function card(label, pts, maxPts, fail, extra = '') {
-        const cls = fail ? 'fail-card' : (pts >= maxPts * 0.9 ? 'pass-card' : '');
-        return `<div class="breakdown-card ${cls}">
-            <div class="breakdown-label">${label}</div>
-            <div class="breakdown-pts">${pts.toFixed(1)}</div>
-            <div class="breakdown-max">/ ${maxPts} pts${extra ? '<br><span style="color:var(--text-muted);font-size:0.72rem;">' + extra + '</span>' : ''}</div>
-            ${fail ? '<div style="color:#ff3d5a;font-size:0.72rem;margin-top:4px;">⚠ COMPONENT FAIL</div>' : ''}
-        </div>`;
-    }
-
-    const whtrStr = (whtr * 100).toFixed(1) + '% — ' + whtrRisk.label;
-    grid.innerHTML += card('WHtR', whtrPts, 20, whtrFail, whtrStr);
-    grid.innerHTML += card(pushLabel, pushPts, 15, pushFail, pushReps + ' reps');
-
-    if (abType === 'plank') {
-        const m = parseInt(document.getElementById('abMins').value) || 0;
-        const s = parseInt(document.getElementById('abSecs').value) || 0;
-        grid.innerHTML += card(abLabel, abPts, 15, abFail, `${m}:${String(s).padStart(2,'0')}`);
-    } else {
-        const reps = parseInt(document.getElementById('abReps').value) || 0;
-        grid.innerHTML += card(abLabel, abPts, 15, abFail, reps + ' reps');
-    }
-
-    if (cardioType === 'walk') {
-        const m = parseInt(document.getElementById('cardioMins').value) || 0;
-        const s = parseInt(document.getElementById('cardioSecs').value) || 0;
-        const maxM = Math.floor(cardioWalkMax / 60);
-        const maxS = cardioWalkMax % 60;
-        const walkExtra = `Your time: ${m}:${String(s).padStart(2,'0')} | Max: ${maxM}:${String(maxS).padStart(2,'0')}`;
-        grid.innerHTML += `<div class="breakdown-card ${cardioWalkPass ? 'pass-card' : 'fail-card'}">
-            <div class="breakdown-label">${cardioLabel}</div>
-            <div class="breakdown-pts" style="color:${cardioWalkPass ? 'var(--success)' : '#ff3d5a'}">${cardioWalkPass ? 'PASS' : 'FAIL'}</div>
-            <div class="breakdown-max">Pass/Fail only<br><span style="color:var(--text-muted);font-size:0.72rem;">${walkExtra}</span></div>
-        </div>`;
-    } else if (cardioType === 'run') {
-        const m = parseInt(document.getElementById('cardioMins').value) || 0;
-        const s = parseInt(document.getElementById('cardioSecs').value) || 0;
-        grid.innerHTML += card(cardioLabel, cardioPts, 50, cardioFail, `${m}:${String(s).padStart(2,'0')}`);
-    } else {
-        const shuttles = parseInt(document.getElementById('cardioShuttles').value) || 0;
-        grid.innerHTML += card(cardioLabel, cardioPts, 50, cardioFail, shuttles + ' shuttles');
-    }
-
-    // Fail notices
-    const notices = [];
-    if (whtrFail) notices.push('WHtR must score ≥ 2.5 pts (waist-to-height ratio too high).');
-    if (pushFail) notices.push(`${pushLabel} must score ≥ 2.5 pts (minimum reps not met).`);
-    if (abFail) notices.push(`${abLabel} must score ≥ 2.5 pts (minimum not met).`);
-    if (cardioFail && cardioType !== 'walk') notices.push(`${cardioLabel} must score ≥ 35 pts (minimum not met).`);
-    if (cardioFail && cardioType === 'walk') notices.push('2km Walk completed over the maximum time for your age/gender.');
-    if (compositeFail) notices.push('Composite score must be ≥ 75 pts to pass.');
-
-    const noticeEl = document.getElementById('failNotice');
-    if (notices.length) {
-        noticeEl.innerHTML = `<div class="fail-notice"><strong>FAILURE REASONS:</strong><ul style="margin-top:8px;padding-left:16px;">${notices.map(n => `<li>${n}</li>`).join('')}</ul></div>`;
-    } else {
-        noticeEl.innerHTML = '';
-    }
-
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

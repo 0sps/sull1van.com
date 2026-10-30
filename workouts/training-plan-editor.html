@@ -1321,6 +1321,33 @@
             return /^ex\d+$/.test(id) && entry && typeof entry === 'object';
         }
 
+        function normalizeImportedTrainingPlan(plan) {
+            const normalized = { ...plan };
+            if (Array.isArray(plan.schedule)) {
+                normalized.schedule = plan.schedule.map(name => typeof name === 'string' ? name.trim() : name);
+            }
+            if (plan.workouts && typeof plan.workouts === 'object' && !Array.isArray(plan.workouts)) {
+                const workouts = new Map();
+                for (const [originalName, workout] of Object.entries(plan.workouts)) {
+                    const name = originalName.trim();
+                    if (workouts.has(name)) {
+                        throw new Error(`Workout names collide after trimming whitespace: "${name}".`);
+                    }
+                    const normalizedWorkout = workout && typeof workout === 'object' && !Array.isArray(workout)
+                        ? { ...workout } : workout;
+                    if (Array.isArray(normalizedWorkout?.exercises)) {
+                        normalizedWorkout.exercises = normalizedWorkout.exercises.map(exercise =>
+                            exercise && typeof exercise === 'object' && !Array.isArray(exercise)
+                                ? { ...exercise, id: typeof exercise.id === 'string' ? exercise.id.trim() : exercise.id }
+                                : exercise);
+                    }
+                    workouts.set(name, normalizedWorkout);
+                }
+                normalized.workouts = Object.fromEntries(workouts);
+            }
+            return normalized;
+        }
+
         function parseImportedTrainingPlan() {
             const raw = el.importJsonInput.value.trim();
             if (!raw) {
@@ -1332,7 +1359,7 @@
                 if (!plan || typeof plan !== 'object' || Array.isArray(plan)) {
                     return { valid: false, error: 'Imported JSON must be one training plan object.' };
                 }
-                return { valid: true, plan };
+                return { valid: true, plan: normalizeImportedTrainingPlan(plan) };
             } catch (error) {
                 return { valid: false, error: `Imported JSON is not valid: ${error.message}` };
             }
@@ -1351,6 +1378,7 @@
 
             if (!Array.isArray(plan.schedule) || plan.schedule.length !== 7) {
                 errors.push('Schedule must contain exactly 7 entries.');
+                return { valid: false, errors };
             }
 
             if (!plan.workouts || typeof plan.workouts !== 'object' || Array.isArray(plan.workouts)) {
@@ -1368,6 +1396,9 @@
             );
             (plan.schedule || []).forEach((workoutName, dayIndex) => {
                 const trimmedName = String(workoutName || '').trim();
+                if (typeof workoutName !== 'string' || workoutName !== trimmedName) {
+                    errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} needs a workout name without surrounding whitespace.`);
+                }
                 if (!trimmedName) {
                     errors.push(`${DAYS[dayIndex] || `Day ${dayIndex + 1}`} needs a workout name.`);
                     return;
@@ -1381,6 +1412,9 @@
             });
 
             Object.entries(workouts).forEach(([workoutName, workout]) => {
+                if (!workoutName.trim() || workoutName !== workoutName.trim()) {
+                    errors.push('Workout names must be nonempty and have no surrounding whitespace.');
+                }
                 if (!scheduledWorkouts.has(String(workoutName || '').trim())) {
                     errors.push(`Workout "${workoutName}" is not referenced by the 7-day schedule.`);
                 }
@@ -1399,6 +1433,7 @@
                     return;
                 }
 
+                const exerciseIds = new Set();
                 workout.exercises.forEach((exercise, index) => {
                     const label = `${workoutName} exercise ${index + 1}`;
                     const id = String(exercise?.id || '').trim();
@@ -1406,6 +1441,9 @@
                     const reps = String(exercise?.reps || '').trim();
 
                     if (!id) errors.push(`${label} needs an exercise id.`);
+                    if (id && exerciseIds.has(id)) errors.push(`${label} repeats exercise id "${id}" in the same workout.`);
+                    if (id && (typeof exercise.id !== 'string' || exercise.id !== id)) errors.push(`${label} needs an exercise id without surrounding whitespace.`);
+                    if (id) exerciseIds.add(id);
                     if (id && !isExerciseCatalogEntry(id, exerciseCatalog)) errors.push(`${label} uses exercise id "${id}", which does not exist in exercises.json.`);
                     if (!Number.isInteger(sets) || sets <= 0) errors.push(`${label} needs positive integer sets.`);
                     if (Number.isInteger(sets) && sets > 99) errors.push(`${label} sets is too high (max 99).`);
@@ -1504,6 +1542,10 @@
 
         function addExerciseToSelectedDay(id) {
             if (!isValidDayIndex(selectedDayIndex) || !exercisesData[id]) return;
+            if (editorDays[selectedDayIndex].exercises.some(exercise => String(exercise.id || '').trim() === id)) {
+                showToast('That exercise is already in this workout.', true);
+                return;
+            }
             markPlanDirty();
             editorDays[selectedDayIndex].exercises.push({ id, sets: 3, reps: '10-12' });
             syncMatchingWorkoutDays(selectedDayIndex);

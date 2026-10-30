@@ -10,10 +10,8 @@
   "targetHitRule": "Complete the required working-set count at the recommended weight and at least the bottom of the rep range. Warmups do not count.",
   "nextIncreaseRule": "Finish the required working sets and exceed the best active-season estimated one-rep max to earn progression. Calculate the next weight from that max at the upper rep target, using the PR formula. Lifts without strength estimates use rep-range completion.",
   "recommendationDefaults": {
-    "method": "estimated1rm",
     "formula": "epley",
     "lookbackSessions": 2,
-    "roundingMode": "floor",
     "incrementLbs": 5,
     "returnAfterDays": 21,
     "missedSessionsBeforeReduction": 2

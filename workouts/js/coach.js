@@ -3,10 +3,8 @@
 
     const DEFAULT_CONFIG = {
         recommendation: {
-            method: 'estimated1rm',
             formula: 'epley',
             lookbackSessions: 2,
-            roundingMode: 'floor',
             incrementLbs: 5,
             returnAfterDays: 21,
             missedSessionsBeforeReduction: 2
@@ -26,14 +24,20 @@
         const getNow = options.getNow || (() => new Date());
         const getPRTimeline = options.getPRTimeline || (() => []);
         const lbsToKg = options.lbsToKg;
-        const kgToLbs = options.kgToLbs;
         const displayWeight = options.displayWeight;
-        const formatWeightLbs = options.formatWeightLbs;
         const formatDate = options.formatDate;
         const dateFormats = options.dateFormats || {};
 
         function getPlan() {
             return getProgressionPlan() || null;
+        }
+
+        function isExerciseEligible(exerciseId) {
+            if (!exerciseId) return false;
+            const exercise = getExerciseData(exerciseId);
+            if (getPlan()?.exercises?.[exerciseId]?.targetMode === 'bodyweight') return false;
+            if (/body\s*weight/i.test(String(exercise?.equipment || ''))) return false;
+            return window.WorkoutStrength?.getExerciseStrengthProfile(exercise).mode !== 'repsOnly';
         }
 
         function getLogs() {
@@ -157,7 +161,7 @@
                 Number.isInteger(set.reps) && set.reps > 0;
         }
 
-        function getRepresentativeWeightKg(workingSets, repRange = null, allowZeroWeight = false) {
+        function getRepresentativeWeightKg(workingSets, allowZeroWeight = false) {
             const sets = getWorkingSets(workingSets).map(normalizeSet)
                 .filter(set => isValidWorkingSet(set, allowZeroWeight));
             return sets.length ? Math.min(...sets.map(set => set.weight)) : null;
@@ -202,10 +206,10 @@
                 const exerciseLogs = getLogExercises(log).filter(ex => (ex.id || ex.exerciseId) === exerciseId);
                 if (!exerciseLogs.length) continue;
                 const workingSets = exerciseLogs.flatMap(ex => getWorkingSets(ex.sets));
-                const bestEstimate = allowZeroWeight ? null : getBestEstimatedMax([{ workingSets }], getCoachConfig(getPlan()?.exercises?.[exerciseId]), exerciseId);
+                const bestEstimate = allowZeroWeight ? null : getBestEstimatedMax([{ workingSets }], exerciseId);
                 const representativeWeightKg = bestEstimate && repRange?.max > 0
                     ? getEstimatedTargetWeightKg(bestEstimate.estimatedMaxKg, repRange.max, exerciseId)
-                    : getRepresentativeWeightKg(workingSets, repRange, allowZeroWeight);
+                    : getRepresentativeWeightKg(workingSets, allowZeroWeight);
                 // Keep partly filled sessions so an incomplete attempt cannot be skipped to earn a jump.
                 sessions.push({ log, exerciseLog: exerciseLogs[0], workingSets, representativeWeightKg, bestEstimate });
                 if (sessions.length >= limitCount) break;
@@ -222,7 +226,7 @@
             };
         }
 
-        function getBestEstimatedMax(sessions, coachConfig, exerciseId = null) {
+        function getBestEstimatedMax(sessions, exerciseId = null) {
             if (!sessions || sessions.length === 0) return null;
 
             let bestEstimate = null;
@@ -315,7 +319,7 @@
             const satisfactorySets = hasTarget ? validSets.filter(set =>
                 set.reps >= target.repRange.min && set.weight + 0.01 >= target.targetWeightKg).length : 0;
             const planComplete = satisfactorySets >= requiredSets;
-            const bestEstimate = target ? getBestEstimatedMax([{ workingSets }], target.coachConfig || getCoachConfig(target.planExercise), target.exerciseId) : null;
+            const bestEstimate = target ? getBestEstimatedMax([{ workingSets }], target.exerciseId) : null;
             const strengthProgressEarned = complete && bestEstimate && Number.isFinite(target?.referenceEstimatedMaxKg)
                 ? bestEstimate.estimatedMaxKg > target.referenceEstimatedMaxKg + 0.0005 : false;
             const progressEarned = target?.usesEstimatedMax
@@ -356,7 +360,7 @@
         }
 
         function buildCoachRecommendation(exerciseId, workoutExercise = {}) {
-            if (!exerciseId) return null;
+            if (!isExerciseEligible(exerciseId)) return null;
             const planExercise = getPlan()?.exercises?.[exerciseId] || {};
             const coachConfig = getCoachConfig(planExercise);
             const repRange = parseRepRange(coachConfig.repRange || workoutExercise.reps);
@@ -424,16 +428,14 @@
                 reason = `${missedSessions} complete sessions at the same weight fell below ${repRange.min} reps on at least one set. Try one step lighter and rebuild the range.`;
             } else if (!lastEvaluation.planComplete) {
                 reason = `At least one working set fell below ${repRange.min} reps or used a lighter weight. Repeat the weight and aim for ${repRange.min}+ reps on every set.`;
-            } else if (lastWeightKg === 0 && lastEvaluation.rangeProgressEarned) {
-                reason = `${lastEvaluation.growthSets} consecutive growth sets reached ${repRange.max} reps. Repeat with controlled reps; added load needs a weighted progression plan.`;
             }
-            const bestEstimate = getBestEstimatedMax(sessions, coachConfig, exerciseId);
+            const bestEstimate = getBestEstimatedMax(sessions, exerciseId);
             const usesEstimatedMax = !!bestEstimate && !coachConfig.allowZeroWeight && repRange.max > 0;
             if (usesEstimatedMax) {
                 // Project the season's strongest set to the upper rep target. Never let a
                 // lighter ramp or back-off set replace the strength reference.
                 targetWeightKg = getEstimatedTargetWeightKg(bestEstimate.estimatedMaxKg, repRange.max, exerciseId);
-                const priorBest = getBestEstimatedMax(sessions.slice(1), coachConfig, exerciseId);
+                const priorBest = getBestEstimatedMax(sessions.slice(1), exerciseId);
                 lastEvaluation = evaluateProgressionSets(current.workingSets, {
                     ...evaluationTarget, targetWeightKg, usesEstimatedMax: true,
                     referenceEstimatedMaxKg: priorBest?.estimatedMaxKg ?? bestEstimate.estimatedMaxKg
@@ -449,9 +451,6 @@
             if (Number.isFinite(targetWeightKg) && targetWeightKg > 0) {
                 targetWeightKg = lbsToKg(Math.max(1, displayWeight(targetWeightKg)));
             }
-            const goalIncreaseKg = getPlanGoalIncreaseKg(planExercise);
-            const plannedWeightTodayKg = baselineSession && goalIncreaseKg > 0
-                ? getPlannedWeightKgForDate(baselineSession.representativeWeightKg, now, getPlanWeeklyTargetIncreaseKg(planExercise), goalIncreaseKg) : null;
             const labels = { baseline: 'Establish a baseline', setup: 'Set the rep range', increase: 'Add one step', reduce: 'Try one step lighter', return: 'Ease back in', incomplete: 'Finish the full session', repeat: 'Build reps at this weight' };
             return {
                 exerciseId, repRange, requiredWorkingSets, targetWeightKg,
@@ -460,7 +459,7 @@
                 bestEstimate, usesEstimatedMax,
                 referenceEstimatedMaxKg: usesEstimatedMax ? bestEstimate.estimatedMaxKg : null,
                 baselineSession, confidence, action, actionLabel: usesEstimatedMax && action === 'increase' ? 'New strength target' : usesEstimatedMax && action === 'repeat' ? 'Build estimated strength' : labels[action], reason,
-                earnedIncrease: action === 'increase', plannedWeightTodayKg, stepKg, daysSinceLift,
+                stepKg,
                 lastEvaluation, coachConfig, planExercise
             };
         }
@@ -507,7 +506,7 @@
             return `<div class="coach-set-chart">${rows}</div>`;
         }
 
-        function buildTrainingPlanChart(sessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg, target = null) {
+        function buildTrainingPlanChart(sessions, baseline, weeklyTargetIncreaseKg, goalIncreaseKg) {
             if (!sessions || sessions.length === 0 || !baseline) {
                 return '<div class="training-plan-chart-empty">No progression logs in the last 14 days.</div>';
             }
@@ -599,6 +598,7 @@
         }
 
         return {
+            isExerciseEligible,
             parseRepRange,
             getCoachConfig,
             calculateEstimatedMaxKg,

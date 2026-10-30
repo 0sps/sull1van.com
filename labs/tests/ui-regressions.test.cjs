@@ -29,15 +29,17 @@ class Element {
         this.childNodes = [{ nodeType: 3, textContent: 'Saved!' }];
         this.isConnected = true;
         this.focusCount = 0;
+        this.children = [];
     }
     focus() { this.focusCount++; }
     select() {}
     setSelectionRange() {}
     querySelectorAll() { return []; }
     querySelector() { return null; }
-    appendChild() {}
+    appendChild(child) { this.children.push(child); }
     insertAdjacentHTML() {}
     setAttribute() {}
+    addEventListener() {}
     scrollIntoView() {}
 }
 
@@ -51,11 +53,30 @@ function setup(width = 1280) {
     const timers = new Map();
     const frames = new Map();
     const observers = [];
+    const history = {
+        entries: [], stack: [null], index: 0, pending: [],
+        get state() { return this.stack[this.index]; },
+        pushState(state) {
+            this.entries.push(state);
+            this.stack.splice(++this.index);
+            this.stack.push(state);
+        },
+        replaceState(state) { this.stack[this.index] = state; },
+        back() {
+            this.pending.push(() => {
+                if (!this.index) return;
+                this.index--;
+                (listeners.popstate || []).forEach(fn => fn({state: this.state}));
+            });
+        },
+        flushBack() { while (this.pending.length) this.pending.shift()(); },
+    };
     let id = 0;
     const context = vm.createContext({
-        console, Event, Node: { TEXT_NODE: 3 }, navigator: {},
+        console, Event, Node: { TEXT_NODE: 3 }, navigator: {}, CSS: {escape: value => value},
         innerWidth: width, innerHeight: 800, devicePixelRatio: 3,
-        history: { entries: [], pushState(state) { this.entries.push(state); } },
+        history,
+        localStorage: {getItem() { return null; }, setItem() {}},
         document: {
             documentElement: new Element(), body: new Element(),
             getElementById: el,
@@ -70,7 +91,7 @@ function setup(width = 1280) {
         requestAnimationFrame: fn => { frames.set(++id, fn); return id; },
         cancelAnimationFrame: id => frames.delete(id),
         IntersectionObserver: class {
-            constructor(callback) { this.callback = callback; this.nodes = []; observers.push(this); }
+            constructor(callback, options) { this.callback = callback; this.options = options; this.nodes = []; observers.push(this); }
             observe(node) { this.nodes.push(node); }
             disconnect() { this.disconnected = true; }
         },
@@ -90,6 +111,16 @@ function setup(width = 1280) {
         return event;
     };
     return { el, run, listeners, frames, timers, observers, context, key, flush };
+}
+
+function installNavigation(s) {
+    s.run('setSkyState = renderLoadingSkeletons = loadData = updateDetailHeaderScrim = renderCommandPalette = () => {};');
+    s.listeners.DOMContentLoaded[0]();
+}
+
+function browserBack(s) {
+    s.context.history.back();
+    s.context.history.flushBack();
 }
 
 test('mobile selection survives repeated opens without duplicate detail history', () => {
@@ -254,6 +285,134 @@ test('refreshing data rebuilds the selected detail using the new readings', asyn
     await s.run('loadData(true)');
     assert.equal(s.run('refreshedValue'), 42);
     assert.equal(s.context.history.entries.length, 0);
+});
+
+test('Back from a directly opened dirty add form preserves edits until Discard is chosen', () => {
+    const s = setup(390);
+    installNavigation(s);
+    s.run('openAddSheet()');
+    s.el('addSourceFile').value = 'unsaved-results.pdf';
+    assert.equal(s.context.history.index, 1);
+    browserBack(s);
+    assert.equal(s.run('commandPaletteOpen'), true);
+    assert.equal(s.run('commandMode'), 'add');
+    assert.equal(s.el('confirmOverlay').classList.contains('visible'), true);
+    assert.equal(s.el('addSourceFile').value, 'unsaved-results.pdf');
+    assert.equal(s.context.history.index, 1);
+
+    s.run('dismissConfirm()');
+    browserBack(s);
+    s.el('confirmActions').children.at(-1).onclick();
+    s.context.history.flushBack();
+    assert.equal(s.run('commandPaletteOpen'), false);
+    assert.equal(s.context.history.index, 0);
+});
+
+test('Back and repeated Add cannot close or reset a save already in progress', () => {
+    const s = setup(390);
+    installNavigation(s);
+    s.run('openAddSheet()');
+    s.el('addSourceFile').value = 'saving-results.pdf';
+    s.run('_manualSaveInProgress = true; openAddSheet(); closeCommandPalette();');
+    browserBack(s);
+    assert.equal(s.run('commandPaletteOpen'), true);
+    assert.equal(s.el('addSourceFile').value, 'saving-results.pdf');
+    assert.equal(s.context.history.index, 1);
+    assert.equal(s.el('confirmOverlay').classList.contains('visible'), false);
+});
+
+test('source details consume Back before the mobile detail underneath', () => {
+    const s = setup(390);
+    installNavigation(s);
+    s.run("openTest('A'); openSourcePlatter('sample.pdf');");
+    assert.equal(s.context.history.index, 2);
+    browserBack(s);
+    assert.equal(s.el('sourcePlatterOverlay').classList.contains('visible'), false);
+    assert.equal(s.el('layout').classList.contains('in-detail'), true);
+    assert.equal(s.run('currentTestName'), 'A');
+    browserBack(s);
+    assert.equal(s.el('layout').classList.contains('in-detail'), false);
+    assert.equal(s.context.history.index, 0);
+});
+
+test('selecting a command result consumes palette history before pushing mobile detail', () => {
+    const s = setup(390);
+    installNavigation(s);
+    s.run("applyFilters = () => {}; openCommandPalette(); openCommandResult('B');");
+    // Result opening can run before the browser's asynchronous back traversal.
+    s.flush(s.timers);
+    assert.equal(s.run('currentTestName'), 'B');
+    s.context.history.flushBack();
+    assert.equal(s.context.history.index, 1);
+    assert.equal(s.context.history.state.labsView, 'detail');
+    browserBack(s);
+    assert.equal(s.el('layout').classList.contains('in-detail'), false);
+    assert.equal(s.run('commandPaletteOpen'), false);
+    assert.equal(s.context.history.index, 0);
+});
+
+test('programmatic mobile back and repeated palette dismissals leave no stale history guards', () => {
+    const s = setup(390);
+    installNavigation(s);
+    s.run("openTest('A'); goBack(); openCommandPalette(); closeCommandPalette(); openCommandPalette(); closeCommandPalette();");
+    s.context.history.flushBack();
+    assert.equal(s.context.history.index, 0);
+    assert.equal(s.run('commandPaletteOpen'), false);
+    assert.equal(s.el('layout').classList.contains('in-detail'), false);
+});
+
+test('sparkline observation uses the mobile scroller and rebinds when becoming desktop', () => {
+    const s = setup(390);
+    s.context.card = s.el('A');
+    s.el('A').dataset.testname = 'A';
+    s.run("filteredTests = [allTests[0]]; testCardNodes['test-btn-A_0'] = card; _dataLoaded = true; renderList();");
+    const mobileObserver = s.observers[0];
+    assert.equal(mobileObserver.options.root, s.el('layout'));
+    s.run('innerWidth = 1200');
+    s.listeners.resize[0]();
+    assert.equal(mobileObserver.disconnected, true);
+    assert.equal(s.observers.at(-1).options.root, s.el('panelList'));
+});
+
+test('cards and grid KPIs escape raw results, ranges, names and fallback date text', () => {
+    const s = setup();
+    s.run(`const attack = '<img src=x onerror="globalThis.injected=true">';
+           const tainted = { name: attack, type: 'qualitative', range: attack, unitStatus: 'absent',
+               points: [{ date: attack, rawResult: attack, rawRange: attack, isNumeric: false, numVal: null }], numericPts: [] };
+           allTests = [tainted];`);
+    for (const expression of ['renderTestCard(tainted)', 'getKPIHtml(tainted)']) {
+        const markup = s.run(expression);
+        assert.equal(markup.includes('<img'), false, expression);
+        assert.equal(markup.includes('&lt;img'), true, expression);
+    }
+});
+
+test('mixed cards present the latest qualitative result while retaining the numeric history', () => {
+    const s = setup();
+    s.run(`const mixed = buildUiTestsFromVault([{name:'GLUCOSE', points:[
+        {date:'2026-01-01',rawResult:'98',isNumeric:true},
+        {date:'2026-02-01',rawResult:'107',isNumeric:true},
+        {date:'2026-03-01',rawResult:'Pending',isNumeric:false}
+    ]}])[0]; allTests = [mixed];`);
+    const markup = s.run('renderTestCard(mixed)');
+    assert.match(markup, /latest-chip[^>]*>Pending<\/div>/);
+    assert.match(markup, /3 readings/);
+    assert.match(markup, /id="spark-/);
+    assert.doesNotMatch(markup, /latest-chip[^>]*>107<\/div>/);
+});
+
+test('name suggestions safely select names containing apostrophes and markup', () => {
+    const s = setup();
+    const name = `SJOGREN'S <img src=x onerror="globalThis.injected=true">`;
+    s.context.suggestionName = name;
+    s.run('renderNameSuggestions(1, [suggestionName])');
+    const markup = s.el('add-suggestions-1').innerHTML;
+    assert.equal(markup.includes('<img'), false);
+    const handler = markup.match(/onclick="([^"]+)"/)[1];
+    s.context.suggestionButton = {dataset: {testName: name}};
+    s.run(`(function () { ${handler} }).call(suggestionButton)`);
+    assert.equal(s.el('add-test-name-1').value, name.toUpperCase());
+    assert.equal(s.context.injected, undefined);
 });
 
 test('every script parses, including the Firebase module and PDF exporter', () => {

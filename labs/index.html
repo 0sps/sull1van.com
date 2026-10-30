@@ -37,14 +37,11 @@
             --bg: #000814;
             --text: #ffffff;
             --muted: rgba(255, 255, 255, 0.5);
-            --faint: rgba(255, 255, 255, 0.2);
             --tooltip-bg: rgba(14, 16, 26, 0.97);
             --card-border: rgba(255, 255, 255, 0.1);
             --chart-grid: rgba(255, 255, 255, 0.06);
-            --surface: rgba(28, 28, 34, 0.65);
 
             /* Glass system */
-            --glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
             --glass-border: 1px solid rgba(255,255,255,0.1);
             --glass-border-top: 1.5px solid rgba(255,255,255,0.22);
             --glass-shadow: 0 8px 32px -8px rgba(0,0,0,0.55);
@@ -79,11 +76,9 @@
             --bg: #58aeea;
             --text: #ffffff;
             --muted: rgba(255, 255, 255, 0.72);
-            --faint: rgba(255, 255, 255, 0.36);
             --tooltip-bg: rgba(20, 105, 185, 0.96);
             --card-border: rgba(255, 255, 255, 0.24);
             --chart-grid: rgba(255, 255, 255, 0.22);
-            --surface: rgba(42, 138, 219, 0.48);
             --gauge-bg: rgba(37, 119, 197, 0.9);
         }
 
@@ -368,8 +363,7 @@
             border-left-color: rgba(255, 255, 255, 0.24);
         }
 
-        :root.time-day .test-card.active-card,
-        :root.time-day .layout.is-grid-view #panelList .test-card.expanded {
+        :root.time-day .test-card.active-card {
             background: linear-gradient(160deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.24) 100%);
             border-color: rgba(255, 255, 255, 0.5);
             border-right-color: rgba(255, 255, 255, 0.5);
@@ -810,10 +804,6 @@
         .action-sheet::-webkit-scrollbar { display: none; }
         .action-sheet.visible { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
-        .sheet-handle {
-            display: none;
-        }
-
         .sheet-title {
             font-family: var(--font-heading); font-size: 11px; font-weight: 700;
             color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;
@@ -885,26 +875,7 @@
             box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset, 0 4px 20px rgba(10,132,255,0.12);
         }
 
-        /* Grid expand container (legacy inline — kept for non-desktop) */
-        .grid-detail-container {
-            width: 100%; display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.35s cubic-bezier(0.2,0.8,0.2,1);
-        }
-        .test-card.expanded .grid-detail-container { grid-template-rows: 1fr; }
-        .grid-detail-inner {
-            overflow: hidden; display: flex; flex-direction: column; min-height: 0;
-        }
         .grid-kpi-row { margin-top: 0; padding-top: 14px; border-top: none; }
-        .grid-expand-header {
-            display: flex; align-items: center; justify-content: flex-end;
-            padding: 10px 0 2px; margin-top: 10px;
-            border-top: 0.5px solid var(--ios-separator);
-        }
-        .test-card.expanded:hover {
-            background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
-        }
-
         /* ── GRID POPOVER ── */
         .grid-popover-overlay {
             position: fixed; inset: 0;
@@ -1500,14 +1471,14 @@
         }
         .layout.is-grid-view #panelList .section-label { grid-column: 1 / -1; font-size: 10px; padding-top: 16px; padding-left: 0; }
         /* Collapsed grid tile */
-        .layout.is-grid-view #panelList .test-card:not(.expanded) {
+        .layout.is-grid-view #panelList .test-card {
             border-radius: 20px; padding: 18px; min-height: 100px; gap: 0;
         }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-inner { flex-direction: column; align-items: stretch; gap: 14px; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-left  { flex: none; width: 100%; gap: 2px; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-name  { font-size: 13px; font-weight: 700; color: var(--text-secondary); white-space: normal; overflow: visible; text-overflow: clip; text-transform: uppercase; letter-spacing: 0.5px; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-meta  { display: none; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-right {
+        .layout.is-grid-view #panelList .test-card .test-card-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+        .layout.is-grid-view #panelList .test-card .test-card-left  { flex: none; width: 100%; gap: 2px; }
+        .layout.is-grid-view #panelList .test-card .test-card-name  { font-size: 13px; font-weight: 700; color: var(--text-secondary); white-space: normal; overflow: visible; text-overflow: clip; text-transform: uppercase; letter-spacing: 0.5px; }
+        .layout.is-grid-view #panelList .test-card .test-card-meta  { display: none; }
+        .layout.is-grid-view #panelList .test-card .test-card-right {
             width: 100%;
             flex-direction: row;
             align-items: stretch;
@@ -1515,51 +1486,24 @@
             gap: 0;
             flex-shrink: 0;
         }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-stack {
+        .layout.is-grid-view #panelList .test-card .latest-stack {
             width: 100%;
             align-items: flex-start;
             gap: 6px;
         }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip-wrap {
+        .layout.is-grid-view #panelList .test-card .latest-chip-wrap {
             width: 100%;
             justify-content: flex-start;
             flex-wrap: wrap;
         }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip     { font-size: 26px; font-weight: 700; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .latest-chip-unit { font-size: 24px; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap  { width: 100%; height: 32px; flex-shrink: 0; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .sparkline-wrap canvas { width: 100% !important; height: 100% !important; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .status-badge    { font-size: 11px; padding: 5px 12px; }
+        .layout.is-grid-view #panelList .test-card .latest-chip     { font-size: 26px; font-weight: 700; }
+        .layout.is-grid-view #panelList .test-card .latest-chip-unit { font-size: 24px; }
+        .layout.is-grid-view #panelList .test-card .sparkline-wrap  { width: 100%; height: 32px; flex-shrink: 0; }
+        .layout.is-grid-view #panelList .test-card .sparkline-wrap canvas { width: 100% !important; height: 100% !important; }
+        .layout.is-grid-view #panelList .test-card .status-badge    { font-size: 11px; padding: 5px 12px; }
         .layout.is-grid-view #panelList .test-card .chevron { display: none; }
-        .layout.is-grid-view #panelList .test-card:not(.expanded) .test-card-unit-row { margin-top: 14px; }
+        .layout.is-grid-view #panelList .test-card .test-card-unit-row { margin-top: 14px; }
         .layout.is-grid-view #panelList .skeleton-list { display: contents; }
-
-        /* Expanded grid card */
-        .layout.is-grid-view #panelList .test-card.expanded {
-            cursor: default; border-radius: 20px; padding: 18px;
-            background: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(10,132,255,0.04) 100%);
-            border-color: rgba(10,132,255,0.38);
-            box-shadow: 0 0 0 1px rgba(10,132,255,0.15) inset;
-        }
-        .layout.is-grid-view .grid-detail-inner .kpi-row   { grid-template-columns: repeat(3,1fr); padding: 10px 0 8px; gap: 6px; }
-        .layout.is-grid-view .grid-detail-inner .kpi-box   { padding: 10px 8px; border-radius: 12px; }
-        .layout.is-grid-view .grid-detail-inner .kpi-label { font-size: 9px; }
-        .layout.is-grid-view .grid-detail-inner .kpi-val   { font-size: 17px; }
-        .layout.is-grid-view .grid-detail-inner .kpi-sub   { font-size: 10px; }
-        .layout.is-grid-view .grid-detail-inner .range-bar-section,
-        .layout.is-grid-view .grid-detail-inner .std-timeline,
-        .layout.is-grid-view .grid-detail-inner .history-section,
-        .layout.is-grid-view .grid-detail-inner .chart-section,
-        .layout.is-grid-view .grid-detail-inner .detail-divider { padding-left: 0; padding-right: 0; }
-        .layout.is-grid-view .grid-detail-inner .range-bar-card,
-        .layout.is-grid-view .grid-detail-inner .std-timeline-card,
-        .layout.is-grid-view .grid-detail-inner .chart-card { padding: 12px 14px; }
-        .layout.is-grid-view .grid-detail-inner .chart-inner { height: 180px !important; }
-        .layout.is-grid-view .grid-detail-inner .history-section { padding-bottom: 6px; }
-        .layout.is-grid-view .grid-detail-inner .history-header span:nth-child(1),
-        .layout.is-grid-view .grid-detail-inner .hist-date { width: 68px; }
-        .layout.is-grid-view .grid-detail-inner .hist-val   { font-size: 15px; }
-        .layout.is-grid-view .grid-detail-inner .hist-delta { font-size: 10px; }
 
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
@@ -2095,8 +2039,6 @@
         .import-mode-copy { display: block; margin-top: 5px; color: var(--text-secondary); font-family: var(--font-body); font-size: 10.5px; line-height: 1.4; }
         .import-section { margin-top: 14px; }
         .import-section-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 7px; }
-        .import-section-title { font-family: var(--font-heading); font-size: 13px; font-weight: 760; color: var(--text-primary); }
-        .import-select-action { border: none; background: transparent; color: var(--ios-blue); font-size: 11px; font-weight: 750; cursor: pointer; padding: 3px; }
         .import-list { display: grid; gap: 6px; max-height: 190px; overflow-y: auto; }
         .import-row { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 10px; align-items: start; padding: 10px 11px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.035); }
         .import-row input { margin-top: 2px; accent-color: var(--ios-blue); }
@@ -2560,7 +2502,6 @@
     <!-- Action Sheet Overlay -->
     <div class="action-sheet-overlay" id="actionSheetOverlay" onclick="toggleActionSheet(false)"></div>
     <div class="action-sheet" id="actionSheet">
-        <div class="sheet-handle"></div>
         <div class="sheet-title">More Actions</div>
         <div class="sheet-action" onclick="toggleActionSheet(false); if(typeof openPdfReportPrompt==='function'){openPdfReportPrompt();}else{showSuccessToast('PDF export is still loading…');}">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2956,9 +2897,7 @@
             const wasGrid = layout.classList.contains('is-grid-view');
             layout.classList.toggle('is-grid-view', isGrid);
 
-            // Clean up per-view card state so cards don't carry stale classes
-            // across views (list's .active-card highlight leaking into grid
-            // tiles, or grid's .expanded detail leaking back into the list).
+            // Clear the list selection highlight when switching to grid view.
             if (wasGrid !== isGrid) {
                 // Close any open grid popover when switching views
                 if (wasGrid && document.getElementById('gridPopoverOverlay')?.classList.contains('visible')) closeGridPopover();
@@ -2967,16 +2906,9 @@
                     currentChart = null;
                 }
 
-                document.querySelectorAll('.test-card').forEach(el => {
-                    if (isGrid) {
-                        el.classList.remove('active-card');
-                    } else if (el.classList.contains('expanded') || el.hasAttribute('data-grid-open')) {
-                        el.classList.remove('expanded');
-                        el.removeAttribute('data-grid-open');
-                        if (el._removeTimer) { clearTimeout(el._removeTimer); el._removeTimer = null; }
-                        el.querySelector('.grid-detail-container')?.remove();
-                    }
-                });
+                if (isGrid) {
+                    document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
+                }
             }
             document.getElementById('grid-icon')?.style.setProperty('display', isGrid ? 'none' : 'block');
             document.getElementById('list-icon')?.style.setProperty('display', isGrid ? 'block' : 'none');
@@ -3073,7 +3005,6 @@
         let testCardNodes = {};     // id -> Card DOM node (for reuse)
         let _dataLoaded = false;
         let _loadingInProgress = false;
-        let _vaultDataCache = null;
         let _exportInProgress = false;
         let _workbookImportInProgress = false;
         let _workbookImportState = null;
@@ -3289,6 +3220,8 @@
         const HEALTH_WORKBOOK_HEADERS = [
             'Date', 'TestName', 'IsNumeric?', 'Result', 'NormalRange', 'Units', 'SourceFilename', 'Test ID'
         ];
+        const VAULT_BACKUP_SHEET = 'Vault Backup';
+        const VAULT_BACKUP_FORMAT = 'sull1van-labs-vault-backup';
         const UUID_V4_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         const IMPORT_COMPARE_FIELDS = [
             ['date', 'Date'],
@@ -3343,6 +3276,28 @@
                 reader.onload = event => {
                     try {
                         const workbook = XLSX.read(event.target.result, { type: 'array' });
+                        if (workbook.Sheets[VAULT_BACKUP_SHEET]) {
+                            const backup = XLSX.utils.sheet_to_json(workbook.Sheets[VAULT_BACKUP_SHEET], {
+                                header: 1, defval: '', raw: true, blankrows: false,
+                            });
+                            if (JSON.stringify(backup[0]) !== JSON.stringify(['Format', 'Version', 'Chunk', 'JSON']) || backup.length < 2) {
+                                throw new Error('The vault backup sheet is invalid.');
+                            }
+                            const chunks = backup.slice(1);
+                            if (chunks.some((row, index) => row[0] !== VAULT_BACKUP_FORMAT || Number(row[1]) !== 1 || Number(row[2]) !== index || typeof row[3] !== 'string')) {
+                                throw new Error('The vault backup is incomplete or uses an unsupported format.');
+                            }
+                            const restoreVault = JSON.parse(chunks.map(row => row[3]).join(''));
+                            if (!restoreVault || typeof restoreVault !== 'object' || !Array.isArray(restoreVault.tests) ||
+                                restoreVault.tests.some(test => !test || typeof test.name !== 'string' || !test.name.trim() ||
+                                    !Array.isArray(test.points) || test.points.some(point => !point || typeof point !== 'object' || Array.isArray(point)))) {
+                                throw new Error('The vault backup contains invalid tests or readings.');
+                            }
+                            const rows = flattenVaultEntries(restoreVault).map(vaultEntryAsWorkbookRow);
+                            Object.defineProperty(rows, 'restoreVault', { value: restoreVault });
+                            resolve(rows);
+                            return;
+                        }
                         const sheet = workbook.Sheets['Blood Tests'];
                         if (!sheet) throw new Error('Workbook is missing the required “Blood Tests” sheet.');
                         const matrix = XLSX.utils.sheet_to_json(sheet, {
@@ -3366,12 +3321,12 @@
                             if (!cells.some(cell => importText(cell) !== '')) return;
                             const excelRow = rowIndex + 2;
                             const date = normalizeImportDate(cells[0]);
-                            const testName = importText(cells[1]);
+                            const testName = normalizeTestName(cells[1]);
                             const isNumeric = parseImportBoolean(cells[2]);
                             const rawResult = importText(cells[3]);
                             const rawRange = importText(cells[4]);
                             const unit = importText(cells[5]);
-                            const sourceFile = importText(cells[6]);
+                            const sourceFile = normalizeSourceFile(cells[6]);
                             const testResultId = importText(cells[7]).toLowerCase();
 
                             if (!date) errors.push(`Row ${excelRow}: Date must be a valid YYYY/MM/DD or YYYY-MM-DD date.`);
@@ -3385,7 +3340,7 @@
                                 seenIds.set(testResultId, excelRow);
                             }
 
-                            rows.push({ date, testName, isNumeric, rawResult, rawRange, unit, sourceFile, testResultId, excelRow });
+                            rows.push({ date, testName, isNumeric, rawResult, rawRange, unit, sourceFile, testResultId });
                         });
 
                         if (!rows.length) errors.push('The workbook contains no data rows.');
@@ -3412,7 +3367,11 @@
                 (Array.isArray(test?.points) ? test.points : []).forEach(point => {
                     entries.push({
                         testName: importText(test?.name),
-                        point: { ...point },
+                        point: {
+                            ...point,
+                            isNumeric: typeof point.isNumeric === 'boolean' ? point.isNumeric
+                                : test.type === 'numeric' || (test.type !== 'qualitative' && cleanNumber(point.rawResult !== undefined ? point.rawResult : point.value) !== null),
+                        },
                         testMeta: meta,
                         fromWorkbook: false,
                     });
@@ -3423,13 +3382,10 @@
 
         function vaultEntryAsWorkbookRow(entry) {
             const point = entry.point || {};
-            const inferredNumeric = typeof point.isNumeric === 'boolean'
-                ? point.isNumeric
-                : entry.testMeta?.type === 'numeric' || cleanNumber(point.rawResult) !== null;
             return {
                 date: normalizeImportDate(point.date),
-                testName: importText(entry.testName),
-                isNumeric: inferredNumeric,
+                testName: normalizeTestName(entry.testName),
+                isNumeric: point.isNumeric,
                 rawResult: importText(point.rawResult !== undefined ? point.rawResult : point.value),
                 rawRange: importText(point.rawRange !== undefined ? point.rawRange : point.range),
                 unit: importText(point.unit),
@@ -3439,7 +3395,7 @@
         }
 
         function workbookRowAsPoint(row, existingPoint = {}) {
-            return {
+            const point = {
                 ...existingPoint,
                 date: row.date,
                 rawResult: row.rawResult,
@@ -3449,6 +3405,12 @@
                 isNumeric: row.isNumeric,
                 testResultId: row.testResultId,
             };
+            if (!row.sourceFile) {
+                delete point.filename;
+                delete point.fileName;
+                delete point.source_filename;
+            }
+            return point;
         }
 
         function compareImportRows(excelRow, cloudRow) {
@@ -3489,7 +3451,7 @@
                 }
                 const cloudRow = vaultEntryAsWorkbookRow(entry);
                 const diffs = compareImportRows(row, cloudRow);
-                if (diffs.length) changed.push({ row, cloudRow, diffs });
+                if (diffs.length) changed.push({ row, diffs });
                 else exact.push(row);
             });
 
@@ -3499,7 +3461,7 @@
                 if (!id || !workbookIds.has(id)) cloudOnly.push(entry);
             });
 
-            return { entries, exact, changed, added, cloudOnly, duplicateCloudIds, cloudRowsWithoutIds };
+            return { exact, changed, added, cloudOnly, duplicateCloudIds, cloudRowsWithoutIds };
         }
 
         function latestNonBlank(points, key) {
@@ -3539,8 +3501,8 @@
                     ...group.meta,
                     name: group.name,
                     type,
-                    unit: latestNonBlank(points, 'unit'),
-                    range: latestNonBlank(points, 'rawRange'),
+                    unit: latestNonBlank(points, 'unit') || group.meta.unit || null,
+                    range: latestNonBlank(points, 'rawRange') || group.meta.range || null,
                     points,
                 };
             }).sort((a, b) => a.name.localeCompare(b.name));
@@ -3604,13 +3566,14 @@
         }
 
         function selectWorkbookImportMode(mode) {
-            if (!_workbookImportState || !['add', 'sync', 'replace'].includes(mode)) return;
+            if (_workbookImportInProgress || !_workbookImportState || !['add', 'sync', 'replace'].includes(mode)) return;
+            if (_workbookImportState.restoreVault && mode !== 'replace') return;
             _workbookImportState.mode = mode;
             renderWorkbookImportPreview();
         }
 
         function toggleWorkbookImportItem(kind, id, checked) {
-            if (!_workbookImportState) return;
+            if (_workbookImportInProgress || !_workbookImportState) return;
             const target = kind === 'new' ? _workbookImportState.selectedNewIds : _workbookImportState.selectedChangedIds;
             if (checked) target.add(id);
             else target.delete(id);
@@ -3618,7 +3581,7 @@
         }
 
         function toggleAllWorkbookImportItems(kind, checked) {
-            if (!_workbookImportState) return;
+            if (_workbookImportInProgress || !_workbookImportState) return;
             const source = kind === 'new'
                 ? _workbookImportState.reconciliation.added.map(row => row.testResultId)
                 : _workbookImportState.reconciliation.changed.map(item => item.row.testResultId);
@@ -3639,12 +3602,12 @@
             const state = _workbookImportState;
             const button = document.getElementById('workbookImportApply');
             if (!state || !button) return;
-            let count = state.workbookRows.length;
+            let count = state.restoreVault ? state.restoreVault.tests.reduce((total, test) => total + test.points.length, 0) : state.workbookRows.length;
             if (state.mode === 'add') count = state.selectedNewIds.size;
             if (state.mode === 'sync') count = state.selectedNewIds.size + state.selectedChangedIds.size;
             const replacementConfirmed = state.mode !== 'replace' || document.getElementById('workbookReplaceConfirm')?.value === 'REPLACE';
             const mergeBlocked = state.mode !== 'replace' && state.reconciliation.duplicateCloudIds.size > 0;
-            button.disabled = _workbookImportInProgress || !count || !replacementConfirmed || mergeBlocked;
+            button.disabled = _workbookImportInProgress || (!count && !state.restoreVault) || !replacementConfirmed || mergeBlocked;
             button.textContent = state.mode === 'replace'
                 ? `Replace with ${count} Excel records`
                 : state.mode === 'add'
@@ -3681,6 +3644,7 @@
 
             body.innerHTML = `
                 <div class="import-file-name">${escStr(state.fileName)}</div>
+                ${state.restoreVault ? '<p>This is a full vault backup. Restore replaces the vault with its complete saved data, including IDs and provenance. The Results, Tests, and Blood Tests sheets are reference tables; this restore uses the Vault Backup sheet.</p>' : ''}
                 <div class="import-summary-grid">
                     <div class="import-stat"><span class="import-stat-value">${state.workbookRows.length}</span><span class="import-stat-label">Excel records</span></div>
                     <div class="import-stat"><span class="import-stat-value">${r.exact.length}</span><span class="import-stat-label">Exact matches</span></div>
@@ -3690,8 +3654,8 @@
                 <p>${r.cloudOnly.length} cloud record${r.cloudOnly.length === 1 ? '' : 's'} are not represented in this workbook.</p>
                 ${duplicateWarning}${legacyWarning}
                 <div class="import-modes">
-                    <button type="button" class="import-mode ${mode === 'add' ? 'selected' : ''}" onclick="selectWorkbookImportMode('add')"><span class="import-mode-name">Add new only</span><span class="import-mode-copy">Add selected new Test IDs. Existing records are untouched.</span></button>
-                    <button type="button" class="import-mode ${mode === 'sync' ? 'selected' : ''}" onclick="selectWorkbookImportMode('sync')"><span class="import-mode-name">Sync selected</span><span class="import-mode-copy">Excel overwrites selected changed matches and adds selected new records.</span></button>
+                    <button type="button" ${state.restoreVault ? 'disabled' : ''} class="import-mode ${mode === 'add' ? 'selected' : ''}" onclick="selectWorkbookImportMode('add')"><span class="import-mode-name">Add new only</span><span class="import-mode-copy">Add selected new Test IDs. Existing records are untouched.</span></button>
+                    <button type="button" ${state.restoreVault ? 'disabled' : ''} class="import-mode ${mode === 'sync' ? 'selected' : ''}" onclick="selectWorkbookImportMode('sync')"><span class="import-mode-name">Sync selected</span><span class="import-mode-copy">Excel overwrites selected changed matches and adds selected new records.</span></button>
                     <button type="button" class="import-mode danger ${mode === 'replace' ? 'selected' : ''}" onclick="selectWorkbookImportMode('replace')"><span class="import-mode-name">Replace everything</span><span class="import-mode-copy">One encrypted overwrite. Cloud-only records are removed.</span></button>
                 </div>
                 ${selectionSections}${replaceConfirmation}
@@ -3706,6 +3670,7 @@
         function openWorkbookImportPreview() {
             const overlay = document.getElementById('workbookImportOverlay');
             if (!overlay) return;
+            if (!overlay.classList.contains('visible')) pushLabsViewHistory('import');
             overlay.classList.add('visible');
             overlay.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
@@ -3721,6 +3686,7 @@
             document.body.style.overflow = '';
             _workbookImportState = null;
             resetWorkbookImportInput();
+            releaseLabsViewHistory('import');
         }
 
         function selectedWorkbookRows() {
@@ -3749,35 +3715,43 @@
         async function applyWorkbookImport() {
             const state = _workbookImportState;
             if (!state || _workbookImportInProgress) return;
-            const rows = selectedWorkbookRows();
-            if (!rows.length) return;
-            if (state.mode === 'replace' && document.getElementById('workbookReplaceConfirm')?.value !== 'REPLACE') return;
-            if (state.mode !== 'replace' && state.reconciliation.duplicateCloudIds.size) return;
+            const mode = state.mode;
+            const rows = selectedWorkbookRows().map(row => ({ ...row }));
+            const restoreVault = state.restoreVault ? JSON.parse(JSON.stringify(state.restoreVault)) : null;
+            const cloudSnapshotJson = state.cloudSnapshotJson;
+            if (!rows.length && !restoreVault) return;
+            if (mode === 'replace' && document.getElementById('workbookReplaceConfirm')?.value !== 'REPLACE') return;
+            if (mode !== 'replace' && (restoreVault || state.reconciliation.duplicateCloudIds.size)) return;
+            const session = captureVaultSession();
 
             _workbookImportInProgress = true;
             setWorkbookImportError('');
             updateWorkbookImportApplyState();
             try {
-                const latestVault = await loadVaultData();
-                if (JSON.stringify(latestVault) !== state.cloudSnapshotJson) {
-                    throw new Error('The cloud vault changed after this preview was created. Close this window and import the workbook again.');
-                }
-                const replaceEverything = state.mode === 'replace';
-                const nextVault = applyWorkbookRowsToVault(latestVault, rows, replaceEverything);
-                await persistVaultData(nextVault);
-                const verifiedVault = await loadVaultData();
-                verifyImportedRows(verifiedVault, rows, replaceEverything);
+                const replaceEverything = mode === 'replace';
+                await updateVaultData(latestVault => {
+                    if (JSON.stringify(latestVault) !== cloudSnapshotJson) {
+                        throw new Error('The cloud vault changed after this preview was created. Close this window and import the workbook again.');
+                    }
+                    const nextVault = restoreVault || applyWorkbookRowsToVault(latestVault, rows, replaceEverything);
+                    if (!restoreVault) verifyImportedRows(nextVault, rows, replaceEverything);
+                    return nextVault;
+                }, session);
+                assertVaultSession(session);
                 _dataLoaded = false;
                 _workbookImportInProgress = false;
                 closeWorkbookImportPreview();
                 await loadData(true);
+                assertVaultSession(session);
                 showSuccessToast(replaceEverything ? `Replaced vault with ${rows.length} Excel records` : `Imported ${rows.length} Excel record${rows.length === 1 ? '' : 's'}`);
             } catch (error) {
                 console.error('Workbook import failed:', error);
-                setWorkbookImportError(error.message || 'The workbook could not be saved.');
+                if (isVaultSessionCurrent(session)) setWorkbookImportError(error.message || 'The workbook could not be saved.');
             } finally {
-                _workbookImportInProgress = false;
-                updateWorkbookImportApplyState();
+                if (isVaultSessionCurrent(session)) {
+                    _workbookImportInProgress = false;
+                    updateWorkbookImportApplyState();
+                }
             }
         }
 
@@ -3789,18 +3763,22 @@
             }
 
             _workbookImportInProgress = true;
+            const session = captureVaultSession();
             try {
                 if (!window._labsUser) throw new Error('You must be signed in to import a workbook.');
                 if (!window._labsKey) throw new Error('Unlock your vault before importing a workbook.');
                 if (typeof XLSX === 'undefined') throw new Error('The spreadsheet import library did not load.');
                 const workbookRows = await parseHealthWorkbook(file);
+                assertVaultSession(session);
                 const vaultData = await loadVaultData();
+                assertVaultSession(session);
                 const reconciliation = buildWorkbookReconciliation(vaultData, workbookRows);
                 _workbookImportState = {
                     fileName: file.name,
                     workbookRows,
                     reconciliation,
-                    mode: 'sync',
+                    mode: workbookRows.restoreVault ? 'replace' : 'sync',
+                    restoreVault: workbookRows.restoreVault || null,
                     selectedNewIds: new Set(reconciliation.added.map(row => row.testResultId)),
                     selectedChangedIds: new Set(reconciliation.changed.map(item => item.row.testResultId)),
                     cloudSnapshotJson: JSON.stringify(vaultData),
@@ -3809,6 +3787,7 @@
                 openWorkbookImportPreview();
             } catch (error) {
                 console.error('Workbook import failed:', error);
+                if (!isVaultSessionCurrent(session)) return;
                 showConfirm({
                     icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
@@ -3817,22 +3796,23 @@
                     primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                 });
             } finally {
-                _workbookImportInProgress = false;
-                resetWorkbookImportInput();
+                if (isVaultSessionCurrent(session)) {
+                    _workbookImportInProgress = false;
+                    resetWorkbookImportInput();
+                    updateWorkbookImportApplyState();
+                }
             }
         }
 
         // Qualitative result normalization
-        const QUAL_NEGATIVE = ['nonreactive', 'negative', 'notdetected', 'nondetected', 'undetected', 'absent'];
-        const QUAL_POSITIVE = ['reactive', 'positive', 'detected', 'present'];
 
         function qualStatus(result) {
             if (!result) return 'unknown';
-            // Strip spaces and hyphens so "Non-Reactive" becomes "nonreactive"
-            const r = String(result).toLowerCase().replace(/[\s-]/g, '');
-            // Always check negative strictly first. "nonreactive" contains "reactive".
-            if (QUAL_NEGATIVE.some(k => r.includes(k))) return 'clear';
-            if (QUAL_POSITIVE.some(k => r.includes(k))) return 'reactive';
+            const r = String(result).toLowerCase().replace(/[‐‑‒–—−]/g, '-');
+            // Match complete terms, including negation, before positive terms.
+            if (/\b(?:not|non)[\s-]*(?:positive|negative)\b/.test(r)) return 'unknown';
+            if (/\b(?:non[\s-]*reactive|negative|(?:not|non)[\s-]*(?:detected|reactive|present)|undetected|absent)\b/.test(r)) return 'clear';
+            if (/\b(?:reactive|positive|detected|present)\b/.test(r)) return 'reactive';
             return 'unknown';
         }
 
@@ -3893,30 +3873,39 @@
 
         function cleanNumber(str) {
             if (str === null || str === undefined) return null;
-            const s = String(str).replace(/[<>^=\s]/g, '').replace(/[^0-9.\-]/g, '');
-            const n = parseFloat(s);
-            return isNaN(n) ? null : n;
+            const text = String(str).trim();
+            const plain = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
+            const grouped = /^[+-]?\d{1,3}(?:,\d{3})+(?:\.\d*)?(?:e[+-]?\d+)?$/i;
+            if (!plain.test(text) && !grouped.test(text)) return null;
+            const n = Number(text.replace(/,/g, ''));
+            return Number.isFinite(n) ? n : null;
         }
 
         function parseRange(rangeStr) {
             if (!rangeStr || typeof rangeStr !== 'string') return null;
-            const r = rangeStr.replace(/[^0-9.\-<>=\s].*$/, '').trim();
-            // "min-max" - careful with negative numbers
-            const dash = r.match(/^(-?[0-9.]+)\s*-\s*([0-9.]+)$/); // allow negative min (e.g. "-0.5-2.0")
-            if (dash) return { min: parseFloat(dash[1]), max: parseFloat(dash[2]) };
-            // "<X" or "<=X"
-            const lt = r.match(/^<=?\s*([0-9.]+)$/);
-            if (lt) return { max: parseFloat(lt[1]) };
-            // ">X" or ">=X"
-            const gt = r.match(/^>=?\s*([0-9.]+)$/);
-            if (gt) return { min: parseFloat(gt[1]) };
+            const r = rangeStr.trim().replace(/[−–—]/g, '-').replace(/≤/g, '<=').replace(/≥/g, '>=');
+            const number = '[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?';
+            const suffix = '(?:\\s*[a-zA-Zµμ%/].*)?$';
+            const dash = r.match(new RegExp(`^(${number})\\s*-\\s*(${number})${suffix}`));
+            if (dash) {
+                const min = cleanNumber(dash[1]), max = cleanNumber(dash[2]);
+                return min !== null && max !== null && min <= max ? { min, max } : null;
+            }
+            const bound = r.match(new RegExp(`^(<=?|>=?)\\s*(${number})${suffix}`));
+            if (bound) {
+                const value = cleanNumber(bound[2]);
+                if (value === null) return null;
+                return bound[1][0] === '<'
+                    ? { max: value, maxInclusive: bound[1] === '<=' }
+                    : { min: value, minInclusive: bound[1] === '>=' };
+            }
             return null;
         }
 
         function isInRange(val, parsed) {
             if (!parsed) return null;
-            if (parsed.min !== undefined && val < parsed.min) return 'low';
-            if (parsed.max !== undefined && val > parsed.max) return 'high';
+            if (parsed.min !== undefined && (val < parsed.min || (parsed.minInclusive === false && val === parsed.min))) return 'low';
+            if (parsed.max !== undefined && (val > parsed.max || (parsed.maxInclusive === false && val === parsed.max))) return 'high';
             return 'normal';
         }
 
@@ -3929,8 +3918,8 @@
         function getReferenceText(parsed) {
             if (!parsed) return 'Reference unavailable';
             if (parsed.min !== undefined && parsed.max !== undefined) return `Reference: ${formatVal(parsed.min)} to ${formatVal(parsed.max)}`;
-            if (parsed.min !== undefined) return `Reference: >= ${formatVal(parsed.min)}`;
-            if (parsed.max !== undefined) return `Reference: <= ${formatVal(parsed.max)}`;
+            if (parsed.min !== undefined) return `Reference: ${parsed.minInclusive === false ? '>' : '>='} ${formatVal(parsed.min)}`;
+            if (parsed.max !== undefined) return `Reference: ${parsed.maxInclusive === false ? '<' : '<='} ${formatVal(parsed.max)}`;
             return 'Reference unavailable';
         }
 
@@ -3954,7 +3943,7 @@
         }
 
         // ── DIAGNOSTICS & STATE ──────────────────────────────────────
-        window._labsBoot = { phase: 'init', error: null, authReady: false, dbReady: false };
+        window._labsBoot = { phase: 'init', error: null };
         function updateBoot(step, data = {}) {
             Object.assign(window._labsBoot, { phase: step, ...data });
             console.log(`[BOOT] ${step}`, data);
@@ -3968,10 +3957,8 @@
                     'checking_vault_status': 'Checking your secure vault…',
                     'prompting_vault_password': 'Waiting for vault unlock…',
                     'waiting_for_vault': 'Waiting for vault unlock…',
-                    'migrating_legacy_data': 'Migrating your vault data…',
                     'fetching_data': 'Fetching your labs…',
                     'vault_error': 'Vault error (check password)',
-                    'auth_redirect_start': 'Opening Google sign-in…'
                 };
                 if (statusMap[step]) {
                     loadingEl.innerHTML = `<div class="spinner"></div>${statusMap[step]}`;
@@ -4019,9 +4006,9 @@
             });
         }
 
-        function getVaultDocRef() {
-            const { doc } = window._labsFirestore;
-            return doc(window._labsDb, 'vault', 'main');
+        function getVaultDocRef(session = captureVaultSession()) {
+            const { doc } = session.firestore;
+            return doc(session.db, 'vault', 'main');
         }
 
         function buildUiTestsFromVault(rawTests) {
@@ -4034,9 +4021,9 @@
                 const points = rawPoints.map(p => {
                     const rawResult = p.rawResult !== undefined ? p.rawResult : p.value;
                     const numVal    = cleanNumber(rawResult);
-                    const isNumeric = typeof p.isNumeric === 'boolean'
+                    const isNumeric = numVal !== null && (typeof p.isNumeric === 'boolean'
                         ? p.isNumeric
-                        : rawTest.type === 'numeric' || (rawTest.type !== 'qualitative' && numVal !== null);
+                        : rawTest.type !== 'qualitative');
                     return {
                         date: p.date,
                         rawResult,
@@ -4058,8 +4045,8 @@
                 const sortedPoints = points.filter(p => {
                     // UUIDs are authoritative, allowing same-test, same-day records to coexist.
                     const key = p.testResultId
-                        ? `id:${p.testResultId}`
-                        : `legacy:${p.date}_${p.rawResult}_${p.lab}_${p.sourceFile}`;
+                        ? `id:${String(p.testResultId).toLowerCase()}`
+                        : `legacy:${JSON.stringify([p.date, p.rawResult, p.lab, p.sourceFile])}`;
                     if (seen.has(key)) return false;
                     seen.add(key);
                     return true;
@@ -4091,55 +4078,86 @@
             }).filter(Boolean);
         }
 
-        async function persistVaultData(vaultData) {
-            if (!window._labsKey) {
-                if (window._labsDb && window._labsAcquireKey) {
-                    updateBoot('waiting_for_vault');
-                    window._labsKey = await window._labsAcquireKey(window._labsDb);
-                    updateBoot('vault_unlocked');
-                } else {
-                    throw new Error('Vault is locked. Encryption key is missing.');
-                }
+        function captureVaultSession() {
+            return {
+                db: window._labsDb,
+                firestore: window._labsFirestore,
+                key: window._labsKey,
+                uid: window._labsUser?.uid,
+                generation: window._labsSessionGeneration,
+            };
+        }
+
+        function isVaultSessionCurrent(session) {
+            return session.db === window._labsDb && session.key === window._labsKey &&
+                session.uid === window._labsUser?.uid && session.generation === window._labsSessionGeneration;
+        }
+
+        function assertVaultSession(session) {
+            if (!isVaultSessionCurrent(session)) throw new Error('Your sign-in session changed. Please try again.');
+        }
+
+        async function getUnlockedVaultSession() {
+            const session = captureVaultSession();
+            if (!session.key) {
+                if (!session.db || !window._labsAcquireKey) throw new Error('Vault is locked. Encryption key is missing.');
+                updateBoot('waiting_for_vault');
+                const key = await window._labsAcquireKey(session.db);
+                assertVaultSession(session);
+                window._labsKey = key;
+                updateBoot('vault_unlocked');
+                return captureVaultSession();
             }
-            const { setDoc } = window._labsFirestore;
-            const vaultRef = getVaultDocRef();
-            const { encryptedPayload, iv } = await window._labsEncryptValue(window._labsKey, vaultData);
-            await setDoc(vaultRef, {
-                schemaVersion: Number(vaultData?.schemaVersion) || 2,
-                encryptedPayload,
-                iv,
-                updatedAt: new Date().toISOString(),
+            return session;
+        }
+
+        async function decryptVaultSnapshot(vaultSnap, session) {
+            assertVaultSession(session);
+            if (!vaultSnap.exists()) throw new Error('Encrypted vault data was not found. Please verify that vault/main exists in Firestore.');
+            const data = vaultSnap.data() || {};
+            if (data.encryptedPayload && data.iv) {
+                const vaultData = await window._labsDecryptValue(session.key, data.encryptedPayload, data.iv);
+                assertVaultSession(session);
+                return vaultData;
+            }
+            return { ...data, schemaVersion: Number(data.schemaVersion) || 1, tests: Array.isArray(data.tests) ? data.tests : [] };
+        }
+
+        async function updateVaultData(transform, session = null) {
+            session = session || await getUnlockedVaultSession();
+            assertVaultSession(session);
+            if (!session.key) throw new Error('Unlock your vault before saving data.');
+            const { runTransaction } = session.firestore;
+            const vaultRef = getVaultDocRef(session);
+            const savedVault = await runTransaction(session.db, async transaction => {
+                assertVaultSession(session);
+                const snapshot = await transaction.get(vaultRef);
+                const latestVault = await decryptVaultSnapshot(snapshot, session);
+                const nextVault = await transform(latestVault);
+                assertVaultSession(session);
+                const { encryptedPayload, iv } = await window._labsEncryptValue(session.key, nextVault);
+                assertVaultSession(session);
+                transaction.set(vaultRef, {
+                    schemaVersion: Number(nextVault?.schemaVersion) || 2,
+                    encryptedPayload,
+                    iv,
+                    updatedAt: new Date().toISOString(),
+                });
+                return nextVault;
             });
-            _vaultDataCache = vaultData;
+            assertVaultSession(session);
+            return savedVault;
         }
 
         async function loadVaultData() {
-            if (!window._labsKey) {
-                if (window._labsDb && window._labsAcquireKey) {
-                    updateBoot('waiting_for_vault');
-                    window._labsKey = await window._labsAcquireKey(window._labsDb);
-                    updateBoot('vault_unlocked');
-                } else {
-                    throw new Error('Vault is locked. Encryption key is missing.');
-                }
-            }
-            const { getDoc } = window._labsFirestore;
-            const vaultRef = getVaultDocRef();
+            const session = await getUnlockedVaultSession();
+            assertVaultSession(session);
+            const { getDoc } = session.firestore;
+            const vaultRef = getVaultDocRef(session);
             const vaultSnap = await getDoc(vaultRef);
-
-            if (vaultSnap.exists()) {
-                const data = vaultSnap.data() || {};
-                if (data.encryptedPayload && data.iv) {
-                    const vaultData = await window._labsDecryptValue(window._labsKey, data.encryptedPayload, data.iv);
-                    _vaultDataCache = vaultData;
-                    return vaultData;
-                }
-                const fallback = { schemaVersion: Number(data.schemaVersion) || 1, tests: Array.isArray(data.tests) ? data.tests : [] };
-                _vaultDataCache = fallback;
-                return fallback;
-            }
-
-            throw new Error('Encrypted vault data was not found. Please verify that vault/main exists in Firestore.');
+            const vaultData = await decryptVaultSnapshot(vaultSnap, session);
+            assertVaultSession(session);
+            return vaultData;
         }
 
         function buildExportRows(uiTests) {
@@ -4208,6 +4226,7 @@
         async function exportHealthData() {
             if (_exportInProgress) return;
             _exportInProgress = true;
+            const session = captureVaultSession();
 
             try {
                 if (typeof XLSX === 'undefined') {
@@ -4220,11 +4239,9 @@
                     throw new Error('Unlock your vault before exporting your health data.');
                 }
 
-                const vaultData = _vaultDataCache || await loadVaultData();
+                const vaultData = await loadVaultData();
+                assertVaultSession(session);
                 const uiTests = buildUiTestsFromVault(Array.isArray(vaultData?.tests) ? vaultData.tests : []);
-                if (uiTests.length === 0) {
-                    throw new Error('No health data is available to export yet.');
-                }
 
                 const { resultRows, testRows } = buildExportRows(uiTests);
                 const workbook = XLSX.utils.book_new();
@@ -4237,10 +4254,31 @@
                 applyWorksheetLayout(testsSheet, [28, 16, 14, 10, 18, 14, 12, 12]);
                 XLSX.utils.book_append_sheet(workbook, testsSheet, 'Tests');
 
+                const importRows = flattenVaultEntries(vaultData).map(vaultEntryAsWorkbookRow);
+                const importSheet = XLSX.utils.aoa_to_sheet([HEALTH_WORKBOOK_HEADERS, ...importRows.map(row => [
+                    row.date, row.testName, row.isNumeric ? 1 : 0, row.rawResult, row.rawRange, row.unit, row.sourceFile, row.testResultId,
+                ])]);
+                applyWorksheetLayout(importSheet, [12, 28, 12, 18, 18, 12, 28, 40]);
+                XLSX.utils.book_append_sheet(workbook, importSheet, 'Blood Tests');
+
+                // Preserve the complete decrypted object, including legacy records and provenance.
+                // Excel cells have a 32,767-character limit, so split JSON across indexed rows.
+                const backupJson = JSON.stringify(vaultData);
+                const backupRows = [['Format', 'Version', 'Chunk', 'JSON']];
+                for (let offset = 0; offset < backupJson.length;) {
+                    let end = Math.min(offset + 30000, backupJson.length);
+                    const lastCodeUnit = backupJson.charCodeAt(end - 1);
+                    if (lastCodeUnit >= 0xD800 && lastCodeUnit <= 0xDBFF) end -= 1;
+                    backupRows.push([VAULT_BACKUP_FORMAT, 1, backupRows.length - 1, backupJson.slice(offset, end)]);
+                    offset = end;
+                }
+                XLSX.utils.book_append_sheet(workbook, XLSX.utils.aoa_to_sheet(backupRows), VAULT_BACKUP_SHEET);
+
                 XLSX.writeFile(workbook, buildExportFilename());
                 showSuccessToast('Exported health data');
             } catch (e) {
                 console.error('Export failed:', e);
+                if (!isVaultSessionCurrent(session)) return;
                 showConfirm({
                     icon: CONFIRM_ICONS.error,
                     iconColor: 'var(--red)',
@@ -4249,16 +4287,13 @@
                     primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                 });
             } finally {
-                _exportInProgress = false;
+                if (isVaultSessionCurrent(session)) _exportInProgress = false;
             }
         }
 
         // ── LOAD DATA (Firestore) ─────────────────────────────────────
         async function loadData(forceRefresh = false) {
             console.log(`[DEBUG] loadData() invoked. forceRefresh=${forceRefresh}, _dataLoaded=${_dataLoaded}, _loadingInProgress=${_loadingInProgress}`);
-            // If called via event listener, the first arg is an Event object.
-            // We only want a force refresh if explicitly passed boolean true.
-            if (forceRefresh instanceof Event) forceRefresh = false;
 
             if (_dataLoaded && !forceRefresh) {
                 console.log(`[DEBUG] loadData(): Data already loaded and no force refresh requested. Returning.`);
@@ -4271,6 +4306,10 @@
                 console.log('loadData: Load already in progress, skipping.', { queuedForceRefresh: _queuedForceRefresh });
                 return;
             }
+            const sessionGeneration = window._labsSessionGeneration || 0;
+            const sessionUid = window._labsUser?.uid || null;
+            const isCurrentSession = () => (window._labsSessionGeneration || 0) === sessionGeneration
+                && (window._labsUser?.uid || null) === sessionUid;
             _loadingInProgress = true;
             _queuedForceRefresh = false;
             _unitHydrationToken += 1;
@@ -4285,6 +4324,8 @@
                     console.error(`[DEBUG] loadData() readiness wait failed:`, timeoutErr);
                     throw new Error("System is taking too long to connect to the cloud. Please check your internet or retry.");
                 }
+
+                if (!isCurrentSession()) return;
 
                 updateBoot('ready_for_auth_check', { user: window._labsUser?.email });
                 console.log(`[DEBUG] loadData() readiness check completed. db=${!!window._labsDb}, user=${window._labsUser?.email}, key=${!!window._labsKey}`);
@@ -4308,6 +4349,7 @@
                 updateBoot('fetching_data');
                 console.log(`[DEBUG] loadData(): Loading encrypted vault data...`);
                 const vaultData = await loadVaultData();
+                if (!isCurrentSession()) return;
                 console.log(`[DEBUG] loadData(): Vault data loaded successfully. Number of tests: ${vaultData?.tests?.length}`);
                 if (document.getElementById('gridPopoverOverlay')?.classList.contains('visible')) closeGridPopover();
                 allTests = buildUiTestsFromVault(vaultData.tests);
@@ -4333,6 +4375,7 @@
                     closeMobileDetail();
                 }
             } catch (e) {
+                if (!isCurrentSession()) return;
                 console.error(e);
                 const errEl = document.getElementById('panelList');
                 if (errEl) {
@@ -4397,19 +4440,6 @@
                 selectedCategories.add(cat);
             }
             syncCategoryChips();
-            applyFilters();
-        }
-
-        function setCategoryByName(cat, exclusive = true) {
-            const chip = document.querySelector(`#chipRow .chip[data-cat="${CSS.escape(cat)}"]`);
-            if (cat === 'All') {
-                selectedCategories.clear();
-            } else if (exclusive) {
-                selectedCategories = new Set([cat]);
-            } else {
-                selectedCategories.add(cat);
-            }
-            if (chip || cat === 'All') syncCategoryChips();
             applyFilters();
         }
 
@@ -4516,33 +4546,28 @@
         }
 
         function getCommandPointForTest(test, asOfDate = getCommandAsOfDate()) {
-            const source = test.type === 'qualitative'
-                ? (test.points || [])
-                : ((test.numericPts && test.numericPts.length) ? test.numericPts : (test.points || []));
+            const source = test.points?.length ? test.points : (test.numericPts || []);
             const dated = source.filter(point => point?.date && (!asOfDate || parseISODate(point.date) <= parseISODate(asOfDate)));
             return dated.length ? dated[dated.length - 1] : null;
         }
 
         function getCommandStatusForPoint(test, point) {
             if (!point) return { label: 'No data', colorClass: 'c-text', isAnomaly: false };
-            if (test.type === 'qualitative') {
+            if (!point.isNumeric || point.numVal === null) {
                 const status = qualStatus(point.rawResult);
                 return {
-                    label: qualBadge(status),
+                    label: status === 'unknown' ? (point.rawResult || 'Recorded') : qualBadge(status),
                     colorClass: qualColorClass(status),
                     isAnomaly: status === 'reactive',
                 };
             }
-            if (point.isNumeric && point.numVal !== null) {
-                const parsed = parseRange(point.rawRange || test.range);
-                const rangeStatus = parsed ? isInRange(point.numVal, parsed) : null;
-                return {
-                    label: rangeStatus ? rangeStatus : 'Recorded',
-                    colorClass: rangeStatus === 'normal' ? 'c-green' : (rangeStatus === 'high' || rangeStatus === 'low') ? 'c-red' : 'c-text',
-                    isAnomaly: rangeStatus === 'high' || rangeStatus === 'low',
-                };
-            }
-            return { label: point.rawResult || 'Recorded', colorClass: 'c-text', isAnomaly: false };
+            const parsed = parseRange(point.rawRange || test.range);
+            const rangeStatus = parsed ? isInRange(point.numVal, parsed) : null;
+            return {
+                label: rangeStatus ? rangeStatus : 'Recorded',
+                colorClass: rangeStatus === 'normal' ? 'c-green' : (rangeStatus === 'high' || rangeStatus === 'low') ? 'c-red' : 'c-text',
+                isAnomaly: rangeStatus === 'high' || rangeStatus === 'low',
+            };
         }
 
         function isTestAnomalousAsOf(test, asOfDate = getCommandAsOfDate()) {
@@ -4552,12 +4577,12 @@
 
         function getCommandValueForPoint(test, point) {
             if (!point) return '—';
-            if (test.type === 'qualitative') return qualBadge(qualStatus(point.rawResult));
             if (point.isNumeric && point.numVal !== null) {
                 const unit = getDisplayUnitText(test);
                 return `${formatVal(point.numVal)}${unit ? ` ${unit}` : ''}`;
             }
-            return point.rawResult || '—';
+            const status = qualStatus(point.rawResult);
+            return status === 'unknown' ? (point.rawResult || '—') : qualBadge(status);
         }
 
         function getCommandRows() {
@@ -4618,10 +4643,10 @@
             if (actions) {
                 const isGrid = document.querySelector('.layout')?.classList.contains('is-grid-view');
                 actions.innerHTML = `
-                    ${renderCommandAction('openAddSheetFromCommand()', 'M12 5v14M5 12h14', 'Add Result')}
+                    ${renderCommandAction('openAddSheet()', 'M12 5v14M5 12h14', 'Add Result')}
                     ${renderCommandAction('exportFromCommand()', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4|M7 10l5 5 5-5|M12 15V3', 'Export')}
                     ${renderCommandAction('switchSkyFromCommand()', 'M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42', 'Switch Sky')}
-                    ${renderCommandAction('toggleAnomalyLensFromCommand()', 'M3 12h4l3 8 4-16 3 8h4', anomalyLensActive ? 'All Biomarkers' : 'Anomalies')}
+                    ${renderCommandAction('toggleAnomalyLensControl()', 'M3 12h4l3 8 4-16 3 8h4', anomalyLensActive ? 'All Biomarkers' : 'Anomalies')}
                     ${renderCommandAction('toggleLayoutFromCommand()', isGrid ? 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' : 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', isGrid ? 'List View' : 'Grid View')}
                 `;
             }
@@ -4659,6 +4684,57 @@
             } catch (_) {}
         }
 
+        // Programmatic dismissals consume their own history entry. Queue later
+        // opens until that asynchronous traversal finishes, so selecting a
+        // command result cannot leave a stale palette entry behind it.
+        let _labsHistoryBackPending = false;
+        let _labsHandlingPopstate = false;
+        const _labsHistoryActions = [];
+
+        function runLabsHistoryAction(action) {
+            if (_labsHistoryBackPending) _labsHistoryActions.push(action);
+            else action();
+        }
+
+        function pushLabsViewHistory(view) {
+            runLabsHistoryAction(() => history.pushState({ labsView: view }, ''));
+        }
+
+        function releaseLabsViewHistory(view) {
+            if (_labsHandlingPopstate) return;
+            runLabsHistoryAction(() => {
+                if (history.state?.labsView !== view) return;
+                _labsHistoryBackPending = true;
+                history.back();
+            });
+        }
+
+        function finishLabsHistoryBack() {
+            _labsHistoryBackPending = false;
+            while (!_labsHistoryBackPending && _labsHistoryActions.length) {
+                _labsHistoryActions.shift()();
+            }
+        }
+
+        function resetLabsHistory() {
+            _labsHistoryActions.length = 0;
+            // An already requested traversal still emits popstate. Keep its
+            // pending flag so that event cannot dismiss a later sign-in view.
+            if (history.state?.labsView) history.replaceState(null, '');
+        }
+
+        function getActiveLabsHistoryView() {
+            const visible = id => document.getElementById(id)?.classList.contains('visible');
+            if (visible('workbookImportOverlay')) return 'import';
+            if (visible('sourcePlatterOverlay')) return 'source';
+            if (visible('reportOverlay')) return 'report';
+            if (commandPaletteOpen) return 'command';
+            if (visible('gridPopoverOverlay')) return 'grid';
+            if (visible('actionSheet')) return 'actions';
+            if (!isDesktop() && document.querySelector('.layout')?.classList.contains('in-detail')) return 'detail';
+            return null;
+        }
+
         function openCommandPalette() {
             if (commandPaletteOpen) return;
             commandPaletteOpen = true;
@@ -4673,16 +4749,18 @@
             focusCommandInput();
             requestAnimationFrame(focusCommandInput);
             setTimeout(focusCommandInput, 60);
-            history.pushState({ labsView: 'command' }, '');
+            pushLabsViewHistory('command');
         }
 
         function closeCommandPalette() {
+            if (_manualSaveInProgress) return;
             commandPaletteOpen = false;
             commandMode = 'main';
             document.getElementById('commandPalette')?.classList.remove('add-mode');
             document.getElementById('commandOverlay')?.classList.remove('visible');
             document.getElementById('mobileCommandFab')?.classList.remove('active');
             closeAllNameSuggestions();
+            releaseLabsViewHistory('command');
         }
 
         function handleCommandOverlayClick(event) {
@@ -4694,15 +4772,11 @@
         function openCommandResult(name) {
             closeCommandPalette();
             clearSearch();
-            setCategoryByName('All');
+            setCategory('All');
             if (anomalyLensActive) {
                 setAnomalyLens(false);
             }
             setTimeout(() => openTest(name), 0);
-        }
-
-        function openAddSheetFromCommand() {
-            openAddSheet();
         }
 
         function exportFromCommand() {
@@ -4713,10 +4787,6 @@
         function switchSkyFromCommand() {
             window.toggleTheme();
             renderCommandPalette();
-        }
-
-        function toggleAnomalyLensFromCommand() {
-            setAnomalyLens(!anomalyLensActive);
         }
 
         function toggleLayoutFromCommand() {
@@ -4869,7 +4939,7 @@
                             delete sparklineCharts[id];
                         }
                     });
-                }, { root: panel, rootMargin: '160px 0px' });
+                }, { root: isDesktop() ? panel : document.querySelector('.layout'), rootMargin: '160px 0px' });
                 sparklineObserver = observer;
             }
             filteredTests.forEach(t => {
@@ -4913,8 +4983,8 @@
               </div>
             </div>
             <div class="test-card-right">
-              <span class="status-badge ${badgeClass}">${badgeText}</span>
-              <span style="font-family:var(--font-body);font-size:0.62rem;color:var(--muted)">${fmtDate(last.date)}</span>
+              <span class="status-badge ${badgeClass}">${escStr(status === 'unknown' ? (last.rawResult ?? badgeText) : badgeText)}</span>
+              <span style="font-family:var(--font-body);font-size:0.62rem;color:var(--muted)">${escStr(fmtDate(last.date))}</span>
             </div>
             <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" fill="none">
               <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -4924,16 +4994,17 @@
       </div>`;
             }
 
-            // Numeric
-            const latestNumPt = [...t.numericPts].reverse()[0];
-            const latestVal = latestNumPt ? latestNumPt.numVal : null;
-            const rangeStr = latestNumPt?.rawRange || t.range;
+            // A mixed test's current reading may be qualitative. Keep older
+            // numeric readings in its sparkline without presenting them as latest.
+            const latestVal = last.isNumeric && last.numVal !== null ? last.numVal : null;
+            const rangeStr = last.rawRange || t.range;
             const parsed = parseRange(rangeStr);
             const status = latestVal !== null ? isInRange(latestVal, parsed) : null;
 
             let valColor = 'c-text';
             if (status === 'low' || status === 'high') valColor = 'c-red';
             else if (status === 'normal') valColor = 'c-green';
+            else if (latestVal === null) valColor = qualColorClass(qualStatus(last.rawResult));
 
             const displayVal = latestVal !== null ? formatVal(latestVal) : (last.rawResult ?? '—');
 
@@ -4943,14 +5014,14 @@
           <div class="test-card-left">
             <div class="test-card-name">${escStr(t.name)}</div>
             <div class="test-card-meta">
-              <span>${t.numericPts.length} ${t.numericPts.length === 1 ? 'reading' : 'readings'}</span>
-              ${rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)) ? `<span>${rangeStr}</span>` : ''} 
+              <span>${t.points.length} ${t.points.length === 1 ? 'reading' : 'readings'}</span>
+              ${rangeStr && typeof rangeStr === 'string' && isNaN(Number(rangeStr)) ? `<span>${escStr(rangeStr)}</span>` : ''}
             </div>
           </div>
           <div class="test-card-right" style="gap:2px;">
             <div class="latest-stack">
               <div class="latest-chip-wrap">
-                <div class="latest-chip ${valColor}">${displayVal}</div>
+                <div class="latest-chip ${valColor}">${escStr(displayVal)}</div>
                 ${getInlineLatestUnitHtml(t)}
               </div>
               ${t.numericPts.length > 1 ? `<div class="sparkline-wrap"><canvas id="spark-${id}" width="64" height="28" style="display:block;"></canvas></div>` : ''}
@@ -5092,12 +5163,14 @@
             const sheet = document.getElementById('actionSheet');
             const overlay = document.getElementById('actionSheetOverlay');
             if (show) {
+                if (!sheet.classList.contains('visible')) pushLabsViewHistory('actions');
                 positionActionSheet(anchorEl);
                 sheet.classList.add('visible');
                 overlay.classList.add('visible');
             } else {
                 sheet.classList.remove('visible');
                 overlay.classList.remove('visible');
+                releaseLabsViewHistory('actions');
             }
         }
 
@@ -5115,7 +5188,8 @@
         // (getKPIHtml) and the DOM mutator (renderKPIs) consume this object
         // so logic changes only need to be made in one place.
         function calcTestStats(t) {
-            if (t.type === 'qualitative') {
+            const latestPoint = t.points?.[t.points.length - 1];
+            if (t.type === 'qualitative' || (latestPoint && (!latestPoint.isNumeric || latestPoint.numVal === null))) {
                 const last = t.points[t.points.length - 1];
                 const status = qualStatus(last.rawResult);
                 // Recognised STD-style result (clear / reactive) keeps badge semantics.
@@ -5189,7 +5263,6 @@
                 latestDate: fmtDate(latest.date),
                 latestUnitHtml: getLatestUnitSublineHtml(t),
                 rangeText,
-                unit: getDisplayUnitText(t),
                 trendVal,
                 trendColorClass,
                 trendSub,
@@ -5206,8 +5279,8 @@
             if (s.type === 'qualitative') {
                 return `
                 <div class="kpi-row grid-kpi-row">
-                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestLabel}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
-                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${escStr(s.latestLabel)}</div><div class="kpi-sub" style="margin-top:2px;">${escStr(s.latestDate)}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                    <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${escStr(s.rangeText)}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                     <div class="kpi-box"><div class="kpi-label">Tests</div><div class="kpi-val c-text">${s.totalCount}</div><div class="kpi-sub" style="margin-top:2px;">Total records</div></div>
                 </div>`;
             }
@@ -5222,13 +5295,13 @@
             }
 
             const trendHtml = s.trendArrowVal
-                ? `<div class="kpi-val ${s.trendVal === '=' ? 'c-text' : s.trendColorClass}">${s.trendVal === '=' ? 'No change' : s.trendArrowVal}</div><div class="kpi-sub" style="margin-top:2px;">vs ${s.prevDate}</div>`
+                ? `<div class="kpi-val ${s.trendVal === '=' ? 'c-text' : s.trendColorClass}">${escStr(s.trendVal === '=' ? 'No change' : s.trendArrowVal)}</div><div class="kpi-sub" style="margin-top:2px;">vs ${escStr(s.prevDate)}</div>`
                 : `<div class="kpi-val c-text">—</div><div class="kpi-sub" style="margin-top:2px;">Insufficient data</div>`;
 
             return `
             <div class="kpi-row grid-kpi-row">
-                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${s.latestVal}</div><div class="kpi-sub" style="margin-top:2px;">${s.latestDate}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
-                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${s.rangeText}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
+                <div class="kpi-box"><div class="kpi-label">Latest</div><div class="kpi-val ${s.latestColorClass}">${escStr(s.latestVal)}</div><div class="kpi-sub" style="margin-top:2px;">${escStr(s.latestDate)}</div><div class="kpi-sub" data-grid-kpi-unit-for="${getTestDomId(t.name)}" style="margin-top:2px;min-height:16px;">${s.latestUnitHtml}</div></div>
+                <div class="kpi-box"><div class="kpi-label">Target Range</div><div class="kpi-val c-text" style="font-size:0.95rem;">${escStr(s.rangeText)}</div><div class="kpi-sub" style="margin-top:2px;">Ref. interval</div></div>
                 <div class="kpi-box"><div class="kpi-label">Trend</div>${trendHtml}</div>
             </div>`;
         }
@@ -5284,7 +5357,7 @@
                 dc.style.display = 'flex';
                 dc.style.flexDirection = 'column';
 
-                if (!wasInDetail) history.pushState({ labsView: 'detail' }, '');
+                if (!wasInDetail) pushLabsViewHistory('detail');
             }
 
             // Header
@@ -5655,7 +5728,7 @@
                         : p.rawResult;
                 return `
         <div class="std-row">
-          <div class="std-date">${fmtDate(p.date)}</div>
+          <div class="std-date">${escStr(fmtDate(p.date))}</div>
           <div class="std-bar ${barClass}">
             <div class="std-dot"></div>${escStr(label)}
           </div>
@@ -5795,12 +5868,14 @@
             recordsEl.innerHTML = records.length
                 ? records.map(record => renderSourceRecord(record, selectedTestResultId)).join('')
                 : '<div class="report-empty">No cached records found for this source.</div>';
+            if (!overlay.classList.contains('visible')) pushLabsViewHistory('source');
             overlay.classList.add('visible');
             requestAnimationFrame(() => positionSourcePlatter(anchorEl));
         }
 
         function closeSourcePlatter() {
             document.getElementById('sourcePlatterOverlay')?.classList.remove('visible');
+            releaseLabsViewHistory('source');
         }
 
         function renderHistoryTable(t, container) {
@@ -5822,7 +5897,7 @@
                 if (!isNum(p)) {
                     return `
         <div class="history-row">
-          <div class="hist-date">${fmtDate(p.date)}</div>
+          <div class="hist-date">${escStr(fmtDate(p.date))}</div>
           <div class="hist-val c-text">${escStr(p.rawResult ?? '—')}${unitHtml}</div>
           ${sourceMoreButtonHtml(p)}
         </div>`;
@@ -5859,7 +5934,7 @@
 
                 return `
         <div class="history-row">
-          <div class="hist-date">${fmtDate(p.date)}</div>
+          <div class="hist-date">${escStr(fmtDate(p.date))}</div>
           <div class="hist-val ${valColor}">${formatVal(p.numVal)}${unitHtml}</div>
           ${deltaHtml}
           ${sourceMoreButtonHtml(p)}
@@ -5961,6 +6036,7 @@
             }
 
             // Show
+            if (!overlay.classList.contains('visible')) pushLabsViewHistory('grid');
             overlay.classList.add('visible');
             gridPopoverFrame = requestAnimationFrame(() => {
                 gridPopoverFrame = null;
@@ -5989,6 +6065,7 @@
             if (currentChart) { try { currentChart.destroy(); } catch (_) {} currentChart = null; }
             document.querySelectorAll('.test-card').forEach(el => el.classList.remove('active-card'));
             currentTestName = null;
+            releaseLabsViewHistory('grid');
         }
 
         // ── NAVIGATION ───────────────────────────────────────────────
@@ -6009,6 +6086,7 @@
             document.getElementById('globalPusher').style.display = '';
             if (currentChart) { try { currentChart.destroy(); } catch (_) { } currentChart = null; }
             currentTestName = null;
+            releaseLabsViewHistory('detail');
         }
 
         // ── RESIZE RECONCILIATION ────────────────────────────────────
@@ -6024,6 +6102,7 @@
             const layout = document.querySelector('.layout');
             const selectedName = currentTestName;
             const wasInDetail = layout?.classList.contains('in-detail');
+            closeSourcePlatter();
             closeGridPopover();
             // Reset mobile-only visibility in both directions. A desktop detail
             // pane must not appear below the list after shrinking the window.
@@ -6033,6 +6112,7 @@
             } else if (nowDesktop && !layout?.classList.contains('is-grid-view') && selectedName) {
                 openTest(selectedName);
             }
+            if (_dataLoaded) renderList();
         });
 
         // ── UTILS ─────────────────────────────────────────────────────
@@ -6151,7 +6231,7 @@
             }
 
             suggestionBox.innerHTML = matches.map(name => `
-                <button type="button" class="add-name-suggestion" onclick="selectTestNameSuggestion(${rowId}, '${escStr(name)}')">${name}</button>
+                <button type="button" class="add-name-suggestion" data-test-name="${escStr(name)}" onclick="selectTestNameSuggestion(${rowId}, this.dataset.testName)">${escStr(name)}</button>
             `).join('');
             suggestionBox.classList.add('visible');
         }
@@ -6223,6 +6303,8 @@
         }
 
         function openAddSheet() {
+            if (_manualSaveInProgress || (commandPaletteOpen && commandMode === 'add')) return;
+            if (!commandPaletteOpen) pushLabsViewHistory('command');
             commandPaletteOpen = true;
             commandMode = 'add';
             const overlay = document.getElementById('commandOverlay');
@@ -6253,7 +6335,9 @@
             addResultRow();
 
             requestAnimationFrame(() => {
-                document.getElementById('addSourceFile')?.focus({ preventScroll: true });
+                if (commandPaletteOpen && commandMode === 'add') {
+                    document.getElementById('addSourceFile')?.focus({ preventScroll: true });
+                }
             });
         }
 
@@ -6280,6 +6364,7 @@
         }
 
         function tryCloseAddSheet() {
+            if (_manualSaveInProgress) return;
             if (addSheetHasData()) {
                 showConfirm({
                     icon: CONFIRM_ICONS.warning,
@@ -6295,6 +6380,7 @@
         }
 
         function tryDismissAddSheet() {
+            if (_manualSaveInProgress) return;
             if (addSheetHasData()) {
                 showConfirm({
                     icon: CONFIRM_ICONS.warning,
@@ -6335,7 +6421,9 @@
         }
 
         // ── SAVE RESULTS ──────────────────────────────────────────────
+        let _manualSaveInProgress = false;
         async function handleSaveResults() {
+            if (_manualSaveInProgress) return;
             const dateVal = document.getElementById('addResultDate').value;
             const sourceInput = document.getElementById('addSourceFile');
             const sourceFile = normalizeSourceFile(sourceInput ? sourceInput.value : '');
@@ -6418,6 +6506,9 @@
         }
 
         async function executeFirebaseSave(dateVal, sourceFile, entries) {
+            if (_manualSaveInProgress) return;
+            _manualSaveInProgress = true;
+            const session = captureVaultSession();
             const saveBtn = document.getElementById('addSaveBtn');
             saveBtn.disabled = true;
             saveBtn.textContent = 'Saving…';
@@ -6430,11 +6521,9 @@
                     throw new Error('You must be signed in to save data.');
                 }
 
-                const vaultData = _vaultDataCache || await loadVaultData();
-                const tests = Array.isArray(vaultData.tests) ? [...vaultData.tests] : [];
-
-                for (const entry of entries) {
-                    const newPoint = {
+                const additions = entries.map(entry => ({
+                    name: normalizeTestName(entry.name),
+                    point: {
                         date: dateVal,
                         rawResult: entry.value,
                         rawRange: null,
@@ -6443,39 +6532,29 @@
                         lab: 'manual_entry',
                         sourceFile,
                         testResultId: crypto.randomUUID(),
-                    };
-
-                    const existingIndex = tests.findIndex(test => test && normalizeTestName(test.name) === entry.name);
-
-                    if (existingIndex >= 0) {
-                        const existing = tests[existingIndex];
-                        const currentPts = Array.isArray(existing.points) ? [...existing.points] : [];
-                        currentPts.push(newPoint);
-                        tests[existingIndex] = {
-                            ...existing,
-                            name: entry.name,
-                            points: currentPts
-                        };
-                    } else {
-                        const inferredType = cleanNumber(entry.value) !== null ? 'numeric' : 'qualitative';
-                        tests.push({
-                            name: entry.name,
-                            unit: null,
-                            range: null,
-                            type: inferredType,
-                            points: [newPoint],
-                        });
                     }
-                }
-
-                const nextVaultData = {
-                    ...vaultData,
-                    schemaVersion: 2,
-                    tests,
-                };
-                await persistVaultData(nextVaultData);
+                }));
+                await updateVaultData(vaultData => {
+                    const tests = Array.isArray(vaultData.tests) ? [...vaultData.tests] : [];
+                    for (const { name, point } of additions) {
+                        const existingIndex = tests.findIndex(test => test && normalizeTestName(test.name) === name);
+                        if (existingIndex >= 0) {
+                            const existing = tests[existingIndex];
+                            tests[existingIndex] = {
+                                ...existing,
+                                name,
+                                points: [...(Array.isArray(existing.points) ? existing.points : []), point],
+                            };
+                        } else {
+                            tests.push({ name, unit: null, range: null, type: point.isNumeric ? 'numeric' : 'qualitative', points: [point] });
+                        }
+                    }
+                    return { ...vaultData, schemaVersion: 2, tests };
+                }, session);
+                assertVaultSession(session);
 
                 // Success — close palette, invalidate cache, reload data, show toast
+                _manualSaveInProgress = false;
                 closeCommandPalette();
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save Results';
@@ -6488,6 +6567,7 @@
 
             } catch (e) {
                 console.error('Save failed:', e);
+                if (!isVaultSessionCurrent(session)) return;
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save Results';
 
@@ -6498,6 +6578,8 @@
                     body: e.message || 'Something went wrong. Please try again.',
                     primary: { label: 'OK', className: 'confirm-btn-primary', action: dismissConfirm },
                 });
+            } finally {
+                if (isVaultSessionCurrent(session)) _manualSaveInProgress = false;
             }
         }
 
@@ -6545,32 +6627,42 @@
 
             // ── BROWSER BACK BUTTON ──────────────────────────────────
             window.addEventListener('popstate', () => {
-                // Close overlays first, then detail view
-                if (document.getElementById('workbookImportOverlay')?.classList.contains('visible')) {
-                    closeWorkbookImportPreview();
+                if (_labsHistoryBackPending) {
+                    finishLabsHistoryBack();
                     return;
                 }
-                if (document.getElementById('gridPopover')?.classList.contains('visible')) {
-                    closeGridPopover();
-                    return;
-                }
-                if (commandPaletteOpen) {
-                    closeCommandPalette();
-                    return;
-                }
-                const actionSheet = document.getElementById('actionSheet');
-                if (actionSheet?.classList.contains('visible')) {
-                    toggleActionSheet(false);
-                    return;
-                }
-                const layout = document.querySelector('.layout');
-                if (!isDesktop() && layout?.classList.contains('in-detail')) {
-                    closeMobileDetail();
+                _labsHandlingPopstate = true;
+                try {
+                    const view = getActiveLabsHistoryView();
+                    // A Back press has already consumed the guard. Restore it
+                    // while asking whether to discard, or while a save runs.
+                    if (document.getElementById('confirmOverlay')?.classList.contains('visible')) {
+                        if (view) pushLabsViewHistory(view);
+                        dismissConfirm();
+                    } else if (view === 'import') {
+                        if (_workbookImportInProgress) pushLabsViewHistory(view);
+                        else closeWorkbookImportPreview();
+                    } else if (view === 'source') {
+                        closeSourcePlatter();
+                    } else if (view === 'report') {
+                        closePdfReportPrompt();
+                    } else if (view === 'command') {
+                        if (_manualSaveInProgress || (commandMode === 'add' && addSheetHasData())) {
+                            pushLabsViewHistory(view);
+                            if (!_manualSaveInProgress) tryDismissAddSheet();
+                        } else closeCommandPalette();
+                    } else if (view === 'grid') {
+                        closeGridPopover();
+                    } else if (view === 'actions') {
+                        toggleActionSheet(false);
+                    } else if (view === 'detail') {
+                        closeMobileDetail();
+                    }
+                } finally {
+                    _labsHandlingPopstate = false;
                 }
             });
         });
-        // Re-triggered after Google sign-in (dispatched by the Firebase module below)
-        document.addEventListener('labs:reload', loadData);
     </script>
 
     <!-- ═══ FIREBASE INIT (Firestore for Labs) ═══ -->
@@ -6587,9 +6679,24 @@
         const _CACHE_EXPIRY   = 'health_enc_key_expiry';
         const _CACHE_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
         const _KC_SENTINEL    = 'health-enc-v1-ok';
+        window._labsSessionGeneration = 0;
+        let _cancelVaultPrompt = null;
+
+        function _assertVaultSession(generation) {
+            if (generation !== window._labsSessionGeneration) {
+                const error = new Error('The signed-in session changed. Please try again.');
+                error.code = 'labs/session-changed';
+                throw error;
+            }
+        }
 
         function _bufToB64(buf) {
-            return btoa(String.fromCharCode(...new Uint8Array(buf)));
+            const bytes = new Uint8Array(buf);
+            const chunks = [];
+            for (let start = 0; start < bytes.length; start += 0x8000) {
+                chunks.push(String.fromCharCode(...bytes.subarray(start, start + 0x8000)));
+            }
+            return btoa(chunks.join(''));
         }
         function _b64ToBuf(b64) {
             const bin = atob(b64);
@@ -6635,9 +6742,10 @@
             try { return await decryptValue(key, enc, iv) === _KC_SENTINEL; } catch { return false; }
         }
 
-        async function cacheKey(key) {
+        async function cacheKey(key, generation = window._labsSessionGeneration) {
             try {
                 const raw = await crypto.subtle.exportKey('raw', key);
+                _assertVaultSession(generation);
                 localStorage.setItem(_CACHE_KEY, _bufToB64(raw));
                 localStorage.setItem(_CACHE_EXPIRY, String(Date.now() + _CACHE_DURATION));
             } catch (e) { console.warn('Key cache failed:', e); }
@@ -6667,6 +6775,7 @@
 
         // ─── Vault modal helpers ───────────────────────────────────────────────────
         function _setupVaultModal({ isFirstRun }) {
+            const generation = window._labsSessionGeneration;
             const $ = id => document.getElementById(id);
             $('vaultTitle').textContent    = isFirstRun ? 'Secure Your Health Data'  : 'Enter Vault Password';
             $('vaultSubtitle').textContent = isFirstRun
@@ -6685,6 +6794,7 @@
             updateBoot('prompting_vault_password', { mode: isFirstRun ? 'create' : 'unlock' });
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
+                    if (generation !== window._labsSessionGeneration) return;
                     try { $('vaultPassword').focus({ preventScroll: true }); }
                     catch { $('vaultPassword').focus(); }
                 });
@@ -6694,9 +6804,23 @@
         // Returns a Promise that resolves with the entered password once client-side
         // validation passes and the user clicks submit. The modal stays open on failure.
         function _waitVaultSubmit(isFirstRun) {
-            return new Promise(resolve => {
+            return new Promise((resolve, reject) => {
                 const $ = id => document.getElementById(id);
+                const generation = window._labsSessionGeneration;
+                function cleanup() {
+                    $('vaultSubmit').onclick = null;
+                    $('vaultPassword').onkeydown = null;
+                    $('vaultConfirm').onkeydown = null;
+                    _cancelVaultPrompt = null;
+                }
+                _cancelVaultPrompt = () => {
+                    cleanup();
+                    const error = new Error('The signed-in session changed.');
+                    error.code = 'labs/session-changed';
+                    reject(error);
+                };
                 function attempt() {
+                    if (generation !== window._labsSessionGeneration) return;
                     const pw   = $('vaultPassword').value;
                     const conf = $('vaultConfirm').value;
                     $('vaultError').classList.remove('visible');
@@ -6722,9 +6846,7 @@
                     }
                     $('vaultSubmit').disabled    = true;
                     $('vaultSubmit').textContent = isFirstRun ? 'Creating\u2026' : 'Verifying\u2026';
-                    $('vaultSubmit').onclick     = null;
-                    $('vaultPassword').onkeydown = null;
-                    $('vaultConfirm').onkeydown  = null;
+                    cleanup();
                     resolve(pw);
                 }
                 $('vaultSubmit').onclick     = attempt;
@@ -6744,10 +6866,79 @@
             $('vaultPassword').focus();
         }
 
-        function _hideVaultOverlay() {
-            const overlay = document.getElementById('vaultOverlay');
-            if (overlay) overlay.classList.remove('visible');
-        }
+        window._labsResetSessionState = function ({ clearCachedKey = false } = {}) {
+            if (typeof resetLabsHistory === 'function') resetLabsHistory();
+            if (_cancelVaultPrompt) _cancelVaultPrompt();
+            window._labsUser = null;
+            window._labsKey = null;
+            allTests = [];
+            filteredTests = [];
+            selectedCategories.clear();
+            currentTestName = null;
+            testCardNodes = {};
+            _dataLoaded = false;
+            _queuedForceRefresh = false;
+            _unitHydrationToken += 1;
+            _workbookImportState = null;
+            _workbookImportInProgress = false;
+            _exportInProgress = false;
+            if (typeof _manualSaveInProgress !== 'undefined') _manualSaveInProgress = false;
+            commandPaletteOpen = false;
+            commandMode = 'main';
+            commandSelectedIndex = 0;
+            anomalyLensActive = false;
+            syncAnomalyLensControls();
+            clearTimeout(searchDebounceTimeout);
+            searchDebounceTimeout = null;
+            clearTimeout(successToastTimer);
+            successToastTimer = null;
+            cancelGridPopoverWork();
+            destroySparklineCharts();
+            if (currentChart) {
+                try { currentChart.destroy(); } catch (_) {}
+                currentChart = null;
+            }
+            const byId = id => document.getElementById(id);
+            for (const id of ['vaultOverlay', 'commandOverlay', 'gridPopoverOverlay', 'gridPopover',
+                'sourcePlatterOverlay', 'workbookImportOverlay', 'confirmOverlay', 'reportOverlay',
+                'actionSheet', 'actionSheetOverlay', 'successToast', 'searchClearBtn']) {
+                byId(id)?.classList.remove('visible');
+            }
+            byId('workbookImportOverlay')?.setAttribute('aria-hidden', 'true');
+            byId('commandPalette')?.classList.remove('add-mode');
+            byId('mobileCommandFab')?.classList.remove('active');
+            byId('panelDetail')?.classList.remove('visible', 'has-scrolled-detail');
+            byId('panelList')?.classList.add('visible');
+            document.querySelector('.layout')?.classList.remove('in-detail');
+            for (const id of ['globalTopBar', 'globalSearchArea', 'globalPusher']) {
+                const element = byId(id);
+                if (element) element.style.display = '';
+            }
+            if (byId('detailContent')) byId('detailContent').style.display = 'none';
+            if (byId('desktopEmpty')) byId('desktopEmpty').style.display = '';
+            for (const id of ['panelList', 'detailTitle', 'detailUnit', 'detailDynamic', 'kpiLatest', 'kpiLatestDate',
+                'kpiLatestUnit', 'kpiRange', 'kpiTrend', 'kpiTrendSub', 'commandResults', 'commandCategories',
+                'gridPopoverTitle', 'gridPopoverUnit', 'gridPopoverContent', 'sourcePlatterTitle',
+                'sourcePlatterSubtitle', 'sourcePlatterRecords', 'workbookImportBody', 'confirmTitle',
+                'confirmBody', 'confirmActions', 'addRowsContainer', 'addSourceFileSuggestions',
+                'reportSelectedList', 'reportResults', 'chipRow']) {
+                const element = byId(id);
+                if (element) element.textContent = '';
+            }
+            for (const id of ['testSearch', 'commandInput', 'reportSearchInput', 'addSourceFile',
+                'addResultDate', 'vaultPassword', 'vaultConfirm', 'workbookImportFileInput']) {
+                const element = byId(id);
+                if (element) element.value = '';
+            }
+            document.body.style.overflow = '';
+            if (window._labsResetPdfState) window._labsResetPdfState();
+            if (clearCachedKey) {
+                try {
+                    localStorage.removeItem(_CACHE_KEY);
+                    localStorage.removeItem(_CACHE_EXPIRY);
+                } catch (_) {}
+            }
+        };
 
         function _escapeHtml(value) {
             return String(value ?? '')
@@ -6794,17 +6985,19 @@
 
         // ─── Key acquisition flow ──────────────────────────────────────────────────
         async function acquireKey(db) {
+            const generation = window._labsSessionGeneration;
             console.log(`[MODULE] acquireKey invoked.`);
             // 1. Try 30-day cached key first
             console.log(`[MODULE] acquireKey: Checking for cached key...`);
             const cached = await loadCachedKey();
+            _assertVaultSession(generation);
             if (cached) {
                 console.log(`[MODULE] acquireKey: Found valid cached key. Returning cached key.`);
                 return cached;
             }
             console.log(`[MODULE] acquireKey: No valid cached key found. Checking Firestore vault meta state...`);
 
-            const { getDoc, setDoc, doc } = Firestore;
+            const { getDoc, doc } = Firestore;
             const metaRef  = doc(db, 'meta', 'encryption');
             updateBoot('checking_vault_status');
             
@@ -6816,6 +7009,7 @@
                         reject(new Error('Timed out while checking your vault. Please retry on a stable connection.'));
                     }, 12000))
                 ]);
+                _assertVaultSession(generation);
                 console.log(`[MODULE] acquireKey: metaSnap exists=${metaSnap.exists()}`);
 
                 if (!metaSnap.exists()) {
@@ -6823,15 +7017,32 @@
                     console.log(`[MODULE] acquireKey: First run. Prompting user to create vault password...`);
                     _setupVaultModal({ isFirstRun: true });
                     const password = await _waitVaultSubmit(true);
+                    _assertVaultSession(generation);
                     console.log(`[MODULE] acquireKey: Password received. Salt and key derivation starting...`);
                     document.getElementById('vaultOverlay').classList.remove('visible');
 
                     const saltB64 = generateSalt();
                     const key     = await deriveKeyForCache(password, saltB64);
                     const { encryptedPayload: encryptedKeyCheck, iv: keyCheckIv } = await createKeyCheck(key);
+                    const emptyVault = await encryptValue(key, { schemaVersion: 2, tests: [] });
+                    _assertVaultSession(generation);
                     console.log(`[MODULE] acquireKey: Key generated. Writing credentials to doc...`);
-                    await setDoc(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
-                    await cacheKey(key);
+                    const vaultRef = doc(db, 'vault', 'main');
+                    await Firestore.runTransaction(db, async transaction => {
+                        const currentMeta = await transaction.get(metaRef);
+                        const currentVault = await transaction.get(vaultRef);
+                        _assertVaultSession(generation);
+                        if (currentMeta.exists()) {
+                            throw new Error('The vault was created in another window. Reload this page to unlock it.');
+                        }
+                        if (currentVault.exists()) {
+                            throw new Error('Vault data already exists without its encryption settings. Restore those settings before creating a vault.');
+                        }
+                        transaction.set(metaRef, { passwordSalt: saltB64, encryptedKeyCheck, keyCheckIv });
+                        transaction.set(vaultRef, { schemaVersion: 2, ...emptyVault, updatedAt: new Date().toISOString() });
+                    });
+                    _assertVaultSession(generation);
+                    await cacheKey(key, generation);
                     console.log(`[MODULE] acquireKey: Vault created and key cached successfully.`);
 
                     return key;
@@ -6844,12 +7055,15 @@
 
                     while (true) {
                         const password  = await _waitVaultSubmit(false);
+                        _assertVaultSession(generation);
                         console.log(`[MODULE] acquireKey: Password entered. Deriving candidate key...`);
                         const candidate = await deriveKeyForCache(password, passwordSalt);
                         const ok        = await verifyKey(candidate, encryptedKeyCheck, keyCheckIv);
+                        _assertVaultSession(generation);
                         console.log(`[MODULE] acquireKey: Key verification result: ok=${ok}`);
                         if (ok) {
-                            await cacheKey(candidate);
+                            await cacheKey(candidate, generation);
+                            _assertVaultSession(generation);
                             document.getElementById('vaultOverlay').classList.remove('visible');
                             console.log(`[MODULE] acquireKey: Vault successfully unlocked!`);
                             return candidate;
@@ -6927,6 +7141,11 @@
 
             console.log(`[MODULE] Setting up onAuthStateChanged...`);
             onAuthStateChanged(auth, async user => {
+                const previousUser = window._labsUser;
+                const generation = ++window._labsSessionGeneration;
+                if (!user || !previousUser || previousUser.uid !== user.uid) {
+                    window._labsResetSessionState({ clearCachedKey: !!previousUser });
+                }
                 console.log(`[MODULE] onAuthStateChanged fired. User info:`, user ? { email: user.email, uid: user.uid } : null);
                 window._labsAuthReady = true;
 
@@ -6952,17 +7171,20 @@
                         try {
                             console.log(`[MODULE] Authorized user sspsful@gmail.com detected. Starting acquireKey...`);
                             const key = await acquireKey(db);
+                            if (generation !== window._labsSessionGeneration || window._labsUser?.uid !== user.uid) return;
                             console.log(`[MODULE] acquireKey finished. Vault unlocked.`);
                             updateBoot('vault_unlocked');
                             window._labsKey = key;
                             loadData(true);
                         } catch (err) {
+                            if (generation !== window._labsSessionGeneration) return;
                             updateBoot('vault_error', { msg: err.message });
                             console.error('[MODULE] Key acquisition failed:', err);
                             const errEl = document.getElementById('panelList');
                             if (errEl) errEl.innerHTML = `<div style="color:var(--ios-red);padding:20px;text-align:center;">⚠ Vault Error: ${_escapeHtml(err.message)}</div>`;
                         }
                     } else {
+                        window._labsResetSessionState({ clearCachedKey: true });
                         console.warn(`[MODULE] Unauthorized user email: ${user.email}. Restricting access...`);
                         updateBoot('auth_unauthorized');
                         _renderGoogleAuthRequired({
@@ -6975,10 +7197,7 @@
                 } else {
                     console.log(`[MODULE] onAuthStateChanged: No user session active.`);
                     updateBoot('auth_no_user');
-                    window._labsUser = null;
-                    window._labsKey = null;
-                    _vaultDataCache = null;
-                    _hideVaultOverlay();
+                    if (previousUser) window._labsHasAttemptedAutoLogin = true;
                     if (!_renderAuthEnvironmentIssue()) {
                         console.log(`[MODULE] Rendering Google sign-in required interface...`);
                         _renderGoogleAuthRequired();
@@ -6994,6 +7213,7 @@
                 }
             });
             window._labsLogin = async function () {
+                const generation = window._labsSessionGeneration;
                 try {
                     const authEnvironmentIssue = _getAuthEnvironmentIssue();
                     if (authEnvironmentIssue) {
@@ -7015,6 +7235,7 @@
                     console.log(`[MODULE] _labsLogin: signInWithPopup resolved successfully.`);
                     // onAuthStateChanged will handle the rest
                 } catch (err) {
+                    if (generation !== window._labsSessionGeneration) return;
                     console.error('[MODULE] _labsLogin failed:', err);
                     const code = err?.code || '';
                     let message = 'Google sign-in failed.';

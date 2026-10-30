@@ -25,7 +25,22 @@
         return date.toISOString();
     }
 
-    const api = { toInputValue, fromInputValue };
+    function assertNotFuture(isoDate, now = Date.now()) {
+        const date = new Date(isoDate);
+        const timestamp = date.getTime();
+        const currentTimestamp = new Date(now).getTime();
+        const valid = typeof isoDate === 'string' && isoDate.trim() !== '' && Number.isFinite(timestamp);
+        if (!valid || !Number.isFinite(currentTimestamp) || timestamp > currentTimestamp) {
+            const error = new Error(valid
+                ? 'Workout dates cannot be in the future.'
+                : 'Enter a valid workout date and time.');
+            error.code = 'invalid-workout-date';
+            throw error;
+        }
+        return date.toISOString();
+    }
+
+    const api = { toInputValue, fromInputValue, assertNotFuture };
     root.WorkoutDate = api;
     if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

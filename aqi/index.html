@@ -148,7 +148,7 @@
 
     /* ---- Hero ---- */
     .hero-section { padding-top: 4px; }
-    .aqi-card { padding: 18px 18px 20px; border-radius: 20px; color: #fff; background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
+    .aqi-card { padding: 18px 18px 20px; border-radius: 20px; color: var(--aqi-ink, #000); background: var(--accent); box-shadow: 0 10px 32px var(--accent-glow); transition: background-color .4s, box-shadow .4s; }
     .place-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .place { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 13px; font-weight: 600; }
     .place-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
@@ -170,6 +170,11 @@
     .aqi-scale { position: relative; height: 8px; margin-top: 16px; border-radius: 999px; background: var(--scale-gradient); box-shadow: inset 0 0 0 999px rgba(255, 255, 255, .22); }
     .aqi-scale-marker { position: absolute; top: 50%; left: 0; width: 16px; height: 16px; border: 2.5px solid #fff; border-radius: 50%; box-shadow: 0 1px 6px rgba(0, 0, 0, .35); transform: translate(-50%, -50%); transition: left .8s ease; }
     .aqi-scale-caps { display: flex; justify-content: space-between; margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+
+    .aqi-card .updated, .aqi-card .aqi-scale-caps { opacity: 1; }
+    .aqi-card .chip { background: transparent; border: 1px solid currentColor; }
+    .aqi-card .pin-current { color: inherit; background: transparent; border-color: currentColor; }
+    .aqi-card .pin-current:hover { background: transparent; }
 
     /* ---- Guidance ---- */
     .health-section p { margin: 0; color: #3a4454; font-size: 14px; line-height: 1.55; text-wrap: pretty; }
@@ -336,7 +341,7 @@
     const AIR_QUALITY_URL = "https://airquality.googleapis.com/v1/currentConditions:lookup?key=" + API_KEY;
     const FALLBACK_LOCATION = { latitude: 40.6782, longitude: -73.9442 };
     const PIN_STORAGE_KEY = "aire-pinned-places-v1";
-    const AQI_CALC_VERSION = 2;
+    const AQI_CALC_VERSION = 3;
     const $ = (id) => document.getElementById(id);
 
     // The selected location drives the main card and marker. Pinned locations are a
@@ -348,6 +353,8 @@
     let mapsReady = false;
     let placeSearch;
     let selectionId = 0;
+    let intentId = 0;
+    let refreshingPins = false;
     let pinnedPlaces = loadPinnedPlaces();
     const pinnedMarkers = new Map();
 
@@ -373,6 +380,13 @@
       so2: { decimals: 0, ranges: [[0, 35, 0, 50], [36, 75, 51, 100], [76, 185, 101, 150], [186, 304, 151, 200], [305, 604, 201, 300], [605, 1004, 301, 500]] }
     };
 
+    function readableText(color) {
+      const rgb = color.startsWith("#") ? color.slice(1).match(/../g).map((part) => parseInt(part, 16)) : color.match(/[\d.]+/g).slice(0, 3).map(Number);
+      const linear = rgb.map((value) => { const c = value / 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+      const luminance = linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+      return (luminance + 0.05) / 0.05 >= 1.05 / (luminance + 0.05) ? "#000" : "#fff";
+    }
+
     function categoryFor(aqi) {
       if (aqi <= 50) return { label: "Good", color: "#3aa76d", tip: "The air is clear and clean. A great moment to open the windows, go for a run, or simply breathe deeply." };
       if (aqi <= 100) return { label: "Moderate", color: "#d9a62e", tip: "Air quality is acceptable. Unusually sensitive people should consider reducing prolonged outdoor exertion." };
@@ -382,13 +396,13 @@
       return { label: "Hazardous", color: "#7e3a4e", tip: "Emergency conditions. Stay indoors, seal windows, and wear a certified respirator if you must go outside." };
     }
 
-    function interpolateAqi(value, ranges) {
+    function interpolateAqi(value, ranges, saturate = true) {
       const matches = ranges.flatMap(([low, high, indexLow, indexHigh]) => {
         if (value < low || value > high) return [];
         return [Math.round(((indexHigh - indexLow) / (high - low)) * (value - low) + indexLow)];
       });
       if (matches.length) return Math.max(...matches);
-      return value > ranges[ranges.length - 1][1] ? 500 : null;
+      return saturate && value > ranges[ranges.length - 1][1] ? 500 : null;
     }
 
     function liveUsAqi(pollutants = []) {
@@ -399,7 +413,7 @@
         const converted = config.convert ? config.convert(concentration.value, concentration.units) : concentration.value;
         const factor = 10 ** config.decimals;
         const truncated = Math.floor(Math.max(0, converted) * factor) / factor;
-        const candidates = [interpolateAqi(truncated, config.ranges)];
+        const candidates = [interpolateAqi(truncated, config.ranges, !config.alternateRanges)];
         if (config.alternateRanges) candidates.push(interpolateAqi(truncated, config.alternateRanges));
         const aqi = Math.max(...candidates.filter(Number.isFinite));
         return Number.isFinite(aqi) ? [{ code: pollutant.code, aqi }] : [];
@@ -416,9 +430,15 @@
       const live = data?.regionCode === "us" ? liveUsAqi(data.pollutants) : null;
       if (!live && !googleIndex) throw new Error("No AQI data was returned for this location.");
       const aqi = live?.aqi ?? googleIndex.aqi;
-      const category = categoryFor(aqi);
+      const usScale = Boolean(live) || googleIndex?.code === "usa_epa";
+      const color = googleIndex?.color;
+      const category = usScale ? categoryFor(aqi) : {
+        label: googleIndex.category || "Air quality index",
+        color: color ? `rgb(${Math.round((color.red || 0) * 255)}, ${Math.round((color.green || 0) * 255)}, ${Math.round((color.blue || 0) * 255)})` : "#68707c",
+        tip: data.healthRecommendations?.generalPopulation || "Consult local air quality guidance for this index."
+      };
       const index = live ? { ...googleIndex, aqi, category: category.label + " air quality", dominantPollutant: live.code, estimated: true } : googleIndex;
-      return { aqi, label: category.label, color: category.color, index, category, estimated: Boolean(live) };
+      return { aqi, label: category.label, color: category.color, index, category, estimated: Boolean(live), usScale };
     }
 
     function locationId(location) {
@@ -434,7 +454,7 @@
       try {
         const stored = JSON.parse(localStorage.getItem(PIN_STORAGE_KEY) || "[]");
         if (!Array.isArray(stored)) return [];
-        return stored.filter((place) => Number.isFinite(place.latitude) && Number.isFinite(place.longitude)).slice(0, 20);
+        return stored.filter((place) => place && Number.isFinite(place.latitude) && Number.isFinite(place.longitude));
       } catch (_) {
         return [];
       }
@@ -512,10 +532,13 @@
     }
 
     function renderAirQuality(data) {
-      const { index, category, estimated } = aqiSummary(data);
+      const { index, category, estimated, usScale } = aqiSummary(data);
       currentAirQualityData = data;
       document.documentElement.style.setProperty("--accent", category.color);
-      document.documentElement.style.setProperty("--accent-glow", category.color + "55");
+      document.documentElement.style.setProperty("--accent-glow", `color-mix(in srgb, ${category.color} 33%, transparent)`);
+      document.documentElement.style.setProperty("--aqi-ink", readableText(category.color));
+      document.querySelector(".aqi-scale").style.display = usScale ? "" : "none";
+      document.querySelector(".aqi-scale-caps").style.display = usScale ? "" : "none";
       $("aqiScore").textContent = index.aqi;
       $("aqiStatus").textContent = category.label;
       $("aqiMethod").textContent = estimated ? "Live AQI · est." : index.displayName || "AQI";
@@ -578,7 +601,7 @@
           title: place.name + (Number.isFinite(place.aqi) ? " · AQI " + place.aqi : ""),
           zIndex: 40,
           icon: { path: google.maps.SymbolPath.CIRCLE, scale: 19, fillColor: place.color || "#68707c", fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 3 },
-          label: { text: Number.isFinite(place.aqi) ? String(place.aqi) : "•", color: "#ffffff", fontFamily: "Albert Sans, sans-serif", fontSize: "11px", fontWeight: "700" }
+          label: { text: Number.isFinite(place.aqi) ? String(place.aqi) : "•", color: readableText(place.color || "#68707c"), fontFamily: "Albert Sans, sans-serif", fontSize: "11px", fontWeight: "700" }
         });
         pinMarker.addListener("click", () => {
           setPinnedOpen(false);
@@ -596,7 +619,7 @@
       $("pinCount").textContent = pinnedPlaces.length ? String(pinnedPlaces.length) : "";
       $("pinsSubtitle").textContent = pinnedPlaces.length ? pinnedPlaces.length + (pinnedPlaces.length === 1 ? " place on your watchlist" : " places on your watchlist") : "Your saved air quality watchlist";
       $("showAllPins").disabled = pinnedPlaces.length === 0;
-      $("refreshPins").disabled = pinnedPlaces.length === 0;
+      $("refreshPins").disabled = refreshingPins || pinnedPlaces.length === 0;
 
       if (!pinnedPlaces.length) {
         list.innerHTML = '<div class="pins-empty"><div class="pins-empty-mark"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.8L6 21z"/></svg></div><strong>No pinned places yet</strong><span>Choose a point on the map, then bookmark it from the AQI card.</span></div>';
@@ -621,6 +644,7 @@
           const badge = document.createElement("span");
           badge.className = "pinned-aqi";
           badge.style.background = place.color || "#68707c";
+          badge.style.color = readableText(place.color || "#68707c");
           badge.innerHTML = '<strong></strong><small>AQI</small>';
           badge.querySelector("strong").textContent = Number.isFinite(place.aqi) ? place.aqi : "··";
           select.append(copy, badge);
@@ -675,24 +699,28 @@
     }
 
     async function refreshPinnedPlaces(force = true) {
-      if (!pinnedPlaces.length) return;
-      // Automatic refreshes honor a ten-minute client cache. Manual refreshes bypass
-      // the cache so the user can always request a current reading.
-      const targets = force ? pinnedPlaces : pinnedPlaces.filter((place) => place.aqiVersion !== AQI_CALC_VERSION || !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
+      if (refreshingPins || !pinnedPlaces.length) return;
+      const targets = force ? [...pinnedPlaces] : pinnedPlaces.filter((place) => place.aqiVersion !== AQI_CALC_VERSION || !place.checkedAt || Date.now() - place.checkedAt > 10 * 60 * 1000);
       if (!targets.length) return;
+      refreshingPins = true;
       const button = $("refreshPins");
       button.disabled = true;
       button.textContent = "Updating";
-      await Promise.allSettled(targets.map(async (place) => {
-        const data = await fetchAirQuality({ latitude: place.latitude, longitude: place.longitude }, false);
+      const results = await Promise.allSettled(targets.map(async (place) => {
+        const selectedAtStart = selectionId;
+        const data = await fetchAirQuality({ latitude: place.latitude, longitude: place.longitude });
         const summary = aqiSummary(data);
-        const current = pinnedPlaces.find((item) => item.id === place.id);
-        if (current) Object.assign(current, { aqi: summary.aqi, status: summary.label, color: summary.color, dateTime: data.dateTime, checkedAt: Date.now(), aqiVersion: AQI_CALC_VERSION });
+        const current = pinnedPlaces.find((item) => item === place);
+        if (!current || Date.parse(data.dateTime) < Date.parse(current.dateTime)) return;
+        Object.assign(current, { aqi: summary.aqi, status: summary.label, color: summary.color, dateTime: data.dateTime, checkedAt: Date.now(), aqiVersion: AQI_CALC_VERSION });
+        if (selectedAtStart === selectionId && locationId(currentLocation) === place.id && currentAirQualityData && !(Date.parse(data.dateTime) < Date.parse(currentAirQualityData.dateTime))) renderAirQuality(data);
       }));
+      refreshingPins = false;
       savePinnedPlaces();
       renderPinnedPlaces();
+      const failed = results.filter((result) => result.status === "rejected").length;
+      $("pinsSubtitle").textContent = failed ? `${failed} place${failed === 1 ? "" : "s"} could not update. Previous readings retained.` : $("pinsSubtitle").textContent;
       button.textContent = "Refresh";
-      button.disabled = pinnedPlaces.length === 0;
     }
 
     function showAllPinnedPlaces() {
@@ -791,10 +819,12 @@
         placeSearch.description = "Search Google Maps for an address or place";
         $("placeSearchHost").appendChild(placeSearch);
         placeSearch.addEventListener("gmp-select", async (event) => {
+          const searchId = ++intentId;
           showSearchMessage("");
           const place = event.placePrediction.toPlace();
           try {
             await place.fetchFields({ fields: ["displayName", "formattedAddress", "location", "viewport"] });
+            if (searchId !== intentId) return;
             if (!place.location) throw new Error("That result does not have a mappable location.");
             const location = { latitude: place.location.lat(), longitude: place.location.lng() };
             const label = place.formattedAddress || place.displayName || "Selected location";
@@ -805,7 +835,14 @@
             setSearchOpen(false);
             await useLocation(location, false, label);
           } catch (error) {
+            if (searchId !== intentId) return;
             showSearchMessage(error.message || "We could not load that location.");
+            if (!currentAirQualityData) {
+              $("aqiStatus").textContent = "Location search failed";
+              $("updated").textContent = "error";
+              $("refreshButton").disabled = false;
+              document.body.classList.remove("loading");
+            }
           }
         });
         placeSearch.addEventListener("gmp-error", () => showSearchMessage("Google Maps search is unavailable. Confirm that Places API (New) is enabled for this key."));
@@ -830,6 +867,7 @@
       map = new google.maps.Map($("map"), {
         center: { lat: currentLocation.latitude, lng: currentLocation.longitude },
         zoom: 11,
+        maxZoom: 16,
         disableDefaultUI: true,
         zoomControl: finePointer,
         gestureHandling: "greedy",
@@ -841,6 +879,7 @@
         getTileUrl: (coord, zoom) => {
           // Google tiles wrap horizontally but not vertically. Normalizing X keeps
           // the heatmap continuous when the map crosses the international date line.
+          if (zoom > 16) return null;
           const count = 2 ** zoom;
           if (coord.y < 0 || coord.y >= count) return null;
           const x = ((coord.x % count) + count) % count;
@@ -859,11 +898,27 @@
       refreshPinnedPlaces(false);
     };
 
+    function clearReading() {
+      $("aqiScore").textContent = "··";
+      $("aqiStatus").textContent = "Loading";
+      $("dominantPollutant").textContent = "—";
+      $("aqiMethod").textContent = "AQI";
+      $("scaleMarker").style.left = "0%";
+      $("pollutants").innerHTML = '<span class="pollutants-empty">Waiting for a reading…</span>';
+      $("healthText").textContent = "Waiting for current air quality data.";
+      $("sourceNote").textContent = "Google Maps Air Quality API";
+      $("sourceNote").title = "";
+      document.documentElement.style.setProperty("--accent", "#68707c");
+      document.documentElement.style.setProperty("--aqi-ink", readableText("#68707c"));
+    }
+
     async function useLocation(location, fallback = false, preferredLabel = "") {
       // Each selection gets a monotonically increasing token. Only the latest token
       // may update the UI, preventing slow network responses from winning a race.
+      ++intentId;
       const requestId = ++selectionId;
       currentLocation = location;
+      clearReading();
       $("locationName").textContent = fallback ? "Brooklyn, NY (default)" : preferredLabel || "Resolving location…";
       $("updated").textContent = "loading";
       document.body.classList.add("loading");
@@ -888,6 +943,9 @@
     }
 
     function requestLocation() {
+      const geolocationId = ++intentId;
+      ++selectionId;
+      clearReading();
       document.body.classList.add("loading");
       $("refreshButton").disabled = true;
       $("pinCurrent").disabled = true;
@@ -896,8 +954,8 @@
       $("updated").textContent = "locating";
       if (!navigator.geolocation) return useLocation(FALLBACK_LOCATION, true);
       navigator.geolocation.getCurrentPosition(
-        ({ coords }) => useLocation({ latitude: coords.latitude, longitude: coords.longitude }),
-        () => useLocation(FALLBACK_LOCATION, true),
+        ({ coords }) => { if (geolocationId === intentId) useLocation({ latitude: coords.latitude, longitude: coords.longitude }); },
+        () => { if (geolocationId === intentId) useLocation(FALLBACK_LOCATION, true); },
         { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
       );
     }
@@ -919,6 +977,7 @@
       let startTouchY = 0;
       let startSheetY = 0;
       let dragging = false;
+      let draggingGrabber = false;
       let lastY = 0;
       let lastTime = 0;
       let velocity = 0;
@@ -945,6 +1004,7 @@
 
       function onTouchStart(event) {
         if (!isMobileLayout()) return;
+        draggingGrabber = grabberZone.contains(event.target);
         startTouchY = lastY = event.touches[0].clientY;
         startSheetY = currentY;
         lastTime = event.timeStamp;
@@ -959,7 +1019,7 @@
         const expanded = startSheetY <= expandedY + 1;
         if (!dragging) {
           // While expanded, let the inner content scroll unless pulling down from the very top.
-          if (expanded && !(delta > 0 && sheetContent.scrollTop <= 0)) return;
+          if (!draggingGrabber && expanded && !(delta > 0 && sheetContent.scrollTop <= 0)) return;
           if (Math.abs(delta) < 4) return;
           dragging = true;
         }

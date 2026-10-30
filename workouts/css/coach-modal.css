@@ -66,8 +66,6 @@
 @keyframes coach-gold-sheen { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @media (prefers-reduced-motion: reduce) { #trainingPlanModal .coach-completion-meter[data-complete="true"] .coach-completion-ring { animation: none; } }
 #trainingPlanModal .coach-caption { font-size: var(--type-meta); line-height: 1.6; }
-#trainingPlanModal .coach-rep-legend { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--text-secondary); font-size: var(--type-meta); margin-top: 18px; }
-#trainingPlanModal .coach-rep-legend i { display: inline-block; height: 6px; width: 6px; border-radius: 50%; background: var(--coach); margin-right: 5px; }
 #trainingPlanModal .coach-set-chart { gap: 14px; margin: 14px 0 18px; }
 #trainingPlanModal .coach-set-row { grid-template-columns: minmax(0,1fr) 88px; gap: 6px 12px; padding: 14px; border: 1px solid var(--border); background: #131c18; border-radius: 0; font-size: var(--type-meta); }
 #trainingPlanModal .coach-set-label { grid-column: 1 / -1; margin-bottom: 18px; color: var(--text-secondary); font-family: var(--coach-body-font); font-size: var(--type-meta); line-height: 1.5; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
@@ -90,13 +88,9 @@
 #trainingPlanModal .coach-additional-set strong { font-family: var(--coach-body-font); font-size: var(--type-body); font-weight: 600; }
 #trainingPlanModal .coach-rep-track[data-overlap="true"] .coach-rep-marker-standard .coach-rep-marker-symbol { margin-left: -11px; }
 #trainingPlanModal .coach-rep-track[data-overlap="true"] .coach-rep-marker-progress .coach-rep-marker-symbol { margin-left: 11px; }
-#trainingPlanModal .coach-rep-key { display: inline-flex; align-items: center; gap: 7px; }
-#trainingPlanModal .coach-rep-key-standard { --rep-icon: var(--coach-check-icon); --rep-icon-color: var(--coach); }
-#trainingPlanModal .coach-rep-key-progress { --rep-icon: var(--coach-gem-icon); --rep-icon-color: #f7f9f7; }
 #trainingPlanModal .coach-rep-marker-standard { --rep-icon: var(--coach-check-icon); --rep-icon-color: var(--coach); }
 #trainingPlanModal .coach-rep-marker-progress { --rep-icon: var(--coach-gem-icon); --rep-icon-color: #f7f9f7; }
-#trainingPlanModal .coach-rep-marker-symbol::before,
-#trainingPlanModal .coach-rep-key::before { content: ''; display: block; flex-shrink: 0; width: 18px; height: 18px; background: var(--rep-icon-color); -webkit-mask: var(--rep-icon) center / contain no-repeat; mask: var(--rep-icon) center / contain no-repeat; }
+#trainingPlanModal .coach-rep-marker-symbol::before { content: ''; display: block; flex-shrink: 0; width: 18px; height: 18px; background: var(--rep-icon-color); -webkit-mask: var(--rep-icon) center / contain no-repeat; mask: var(--rep-icon) center / contain no-repeat; }
 #trainingPlanModal .coach-set-result { align-self: start; margin-top: -5px; line-height: 1.5; font-weight: 700; font-size: var(--type-body); }
 #trainingPlanModal .coach-set-load, #trainingPlanModal .coach-set-status { font-size: var(--type-meta); line-height: 1.5; margin-top: 4px; }
 #trainingPlanModal .coach-set-row[data-state="top"] .coach-set-status { color: var(--coach); }
@@ -127,7 +121,7 @@
 #trainingPlanModal .coach-evidence { font-family: var(--coach-body-font); }
 /* Progression's shared type hierarchy: metadata, body, subheading, heading, display. */
 #trainingPlanModal :is(.coach-kicker, .coach-action, .coach-target-tiles span,
-    .coach-set-row, .coach-rep-legend, .coach-completion-meter,
+    .coach-set-row, .coach-completion-meter,
     .coach-step-dot, .coach-season-facts dt, .coach-load-gain span,
     .training-plan-legend) { font-family: var(--coach-body-font); }
 #trainingPlanModal :is(.coach-action, .coach-target-tiles span, .coach-season-facts dt) {
