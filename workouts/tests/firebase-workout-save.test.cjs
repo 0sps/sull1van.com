@@ -353,3 +353,79 @@ test('data: future date entered through raw JSON is rejected before confirmation
     assert.match(h.elements.get('validationMsg').textContent, /cannot be in the future/);
     assert.equal(h.calls.commits, 0);
 });
+
+
+function setDeletionHarness(loaded, remote = loaded, options = {}) {
+    const h = editorHarness('main', remote, { ...options, loaded });
+    const c = h.context;
+    c.isDeletingSet = false;
+    c.selectedSetForDeletion = { workoutId: loaded.id, exerciseIndex: 0, setIndex: 0,
+        isEmptyWorkout: loaded.exercises.length === 0 };
+    c.findSeasonLog = () => c.workoutLogs[0];
+    c.renderDeleteSetList = () => {};
+    const html = source('app.html');
+    vm.runInContext([
+        section(html, '        function removeRecordHistoryLog(', '        function updateSyncStatus('),
+        section(html, '        async function executeDeleteSet(', '        function viewLogDetail(')
+    ].join('\n'), c);
+    return h;
+}
+
+for (const legacy of [false, true]) {
+    const loaded = clone(original);
+    if (legacy) { delete loaded.revision; delete loaded.updatedAt; }
+    const label = legacy ? 'legacy' : 'versioned';
+    test(`set deletion: ${label} last-set deletion preserves newer remote sets`, async () => {
+        const newer = clone(loaded);
+        newer.exercises[0].sets.push({ reps: 12, weight: 60 });
+        if (legacy) newer.updatedAt = '2026-10-07T12:00:00Z';
+        else newer.revision++;
+        const h = setDeletionHarness(loaded, newer);
+        await h.context.executeDeleteSet(0);
+        assert.deepEqual(h.store.get(docPath(loaded.id)), newer);
+        assert.deepEqual(clone(h.context.workoutLogs), [loaded]);
+        assert.deepEqual(clone(h.context.recordHistoryLogs), [loaded]);
+        assert.ok(h.context.selectedSetForDeletion);
+        assert.equal(h.calls.commits, 0);
+    });
+    test(`set deletion: ${label} unchanged last-set deletion succeeds`, async () => {
+        const h = setDeletionHarness(loaded);
+        await h.context.executeDeleteSet(0);
+        assert.equal(h.store.size, 0);
+        assert.equal(h.context.workoutLogs.length, 0);
+        assert.equal(h.context.recordHistoryLogs.length, 0);
+        assert.equal(h.context.selectedSetForDeletion, null);
+    });
+    test(`set deletion: ${label} deleted workout stays deleted when removing a remaining set`, async () => {
+        const twoSets = clone(loaded);
+        twoSets.exercises[0].sets.push({ reps: 10, weight: 55 });
+        const h = setDeletionHarness(twoSets, null);
+        await h.context.executeDeleteSet(0);
+        assert.equal(h.store.size, 0);
+        assert.deepEqual(clone(h.context.workoutLogs), [twoSets]);
+        assert.deepEqual(clone(h.context.recordHistoryLogs), [twoSets]);
+        assert.ok(h.context.selectedSetForDeletion);
+        assert.equal(h.calls.commits, 0);
+    });
+    test(`set deletion: ${label} removing one of two sets persists remaining set`, async () => {
+        const twoSets = clone(loaded);
+        twoSets.exercises[0].sets.push({ reps: 10, weight: 55 });
+        const h = setDeletionHarness(twoSets);
+        await h.context.executeDeleteSet(0);
+        const saved = h.store.get(docPath(loaded.id));
+        assert.deepEqual(saved.exercises[0].sets, [twoSets.exercises[0].sets[1]]);
+        assert.equal(saved.revision, (loaded.revision || 0) + 1);
+        assert.deepEqual(clone(h.context.workoutLogs[0]), saved);
+    });
+}
+
+test('set deletion: a concurrent change on transaction retry prevents whole-workout deletion', async () => {
+    const newer = clone(original);
+    newer.revision++;
+    newer.exercises[0].sets.push({ reps: 12, weight: 60 });
+    const h = setDeletionHarness(original, original, { retryRemote: newer });
+    await h.context.executeDeleteSet(0);
+    assert.deepEqual(h.store.get(docPath(original.id)), newer);
+    assert.equal(h.calls.commits, 0);
+    assert.equal(h.calls.writes.length, 0);
+});

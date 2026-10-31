@@ -3736,15 +3736,29 @@
             if (recordIndex !== -1) recordHistoryLogs.splice(recordIndex, 1);
         }
 
-        async function deleteFromFirebase(logId) {
+        async function deleteFromFirebase(log) {
             return withFirebaseErrorHandling(async () => {
                 const user = window.currentUser;
                 if (!user) {
                     updateSyncStatus('error');
                     return false;
                 }
-                const docRef = window.getWorkoutDocRef(logId);
-                await window.firebaseDeleteDoc(docRef);
+                const docRef = window.getWorkoutDocRef(log.id);
+                const baseRevision = Number.isInteger(log.revision) ? log.revision : null;
+                const baseUpdatedAt = log.updatedAt || null;
+                // Deleting the last set must check the same loaded version as an edit.
+                await window.firebaseRunTransaction(window.firebaseDb, async (tx) => {
+                    const snap = await tx.get(docRef);
+                    if (!snap.exists()) throw new StaleWriteError();
+                    const remote = snap.data();
+                    const remoteRevision = Number.isInteger(remote.revision) ? remote.revision : null;
+                    if (baseRevision !== null) {
+                        if (remoteRevision !== baseRevision) throw new StaleWriteError();
+                    } else if (remoteRevision !== null || (remote.updatedAt || null) !== baseUpdatedAt) {
+                        throw new StaleWriteError();
+                    }
+                    tx.delete(docRef);
+                });
             }, 'delete');
         }
 
@@ -5315,7 +5329,7 @@
                 }
                 let remainingWorkout = null;
                 if (isEmptyWorkout) {
-                    const deleted = await deleteFromFirebase(workoutId);
+                    const deleted = await deleteFromFirebase(sourceWorkout);
                     if (!deleted) throw new Error('Firebase delete failed.');
                 } else {
                     const workout = JSON.parse(JSON.stringify(sourceWorkout));
@@ -5324,10 +5338,10 @@
                         workout.exercises.splice(exerciseIndex, 1);
                     }
                     if (workout.exercises.length === 0) {
-                        const deleted = await deleteFromFirebase(workoutId);
+                        const deleted = await deleteFromFirebase(sourceWorkout);
                         if (!deleted) throw new Error('Firebase delete failed.');
                     } else {
-                        const saved = await saveToFirebase(workout);
+                        const saved = await saveToFirebase(workout, { requireExisting: true });
                         if (!saved) throw new Error('Firebase save failed.');
                         remainingWorkout = workout;
                     }
