@@ -335,7 +335,7 @@ test('Coach modal renders an honest starting state without invented weight or hi
     assert.ok(!html.includes('Season progress'));
     assert.ok(!/undefined|NaN/.test(html));
 });
-test('dashboard uses the real weekly plan and the shared coach for every scheduled lift', () => {
+test('dashboard uses the real weekly plan and the shared coach for every eligible scheduled lift', () => {
     const trainingPlanData = JSON.parse(fs.readFileSync(path.join(root, 'training-plan.json')));
     const progressionPlanData = JSON.parse(fs.readFileSync(path.join(root, 'progression-plan.json')));
     const exercisesData = JSON.parse(fs.readFileSync(path.join(root, 'exercises.json')));
@@ -358,8 +358,9 @@ test('dashboard uses the real weekly plan and the shared coach for every schedul
         'renderChartStats', 'buildChart', 'progressionIcon'
     ], { coach, trainingPlanData, progressionPlanData, exercisesData, workoutLogs, liftRows: [], chartMetric: 'load' });
     sandbox.buildLiftRows();
-    const allIds = new Set(Object.values(trainingPlanData.workouts).flatMap(workout => workout.exercises.map(ex => ex.id)));
-    assert.equal(sandbox.liftRows.length, allIds.size);
+    const scheduledIds = Object.values(trainingPlanData.workouts).flatMap(workout => workout.exercises.map(ex => ex.id));
+    const eligibleIds = [...new Set(scheduledIds.filter(id => coach.isExerciseEligible(id)))];
+    assert.deepEqual(Array.from(sandbox.liftRows, row => row.id).sort(), eligibleIds.sort());
     const row = sandbox.liftRows.find(row => row.id === 'ex138');
     assert.equal(row.dayName, 'PULL ROWS'); // Tuesday's next occurrence is Friday, with 4 total rows.
     assert.equal(row.recommendation.requiredWorkingSets, 3);

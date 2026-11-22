@@ -1,6 +1,6 @@
 {
-  "lastGeneratedAt": "2026-09-22T09:42:49-05:00",
-  "name": "Push Pull Legs Hypertrophy Split",
+  "lastGeneratedAt": "2026-11-22T14:05:03-05:00",
+  "name": "Push Pull Legs Light Block",
   "_READ_THIS_BEFORE_EDITING": "The 'schedule' array below MUST have exactly 7 items that map to [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday] in that order. Index 0 = Sunday, Index 6 = Saturday. Use 'REST' for rest days.",
   "schedule": [
     "PUSH CHEST",
@@ -16,38 +16,33 @@
       "subtitle": "Push (Chest Focus)",
       "exercises": [
         {
-          "id": "ex001",
-          "sets": 4,
-          "reps": "6-10"
-        },
-        {
           "id": "ex034",
           "sets": 3,
           "reps": "8-12"
         },
         {
-          "id": "ex123",
+          "id": "ex018",
           "sets": 2,
           "reps": "12-15"
         },
         {
           "id": "ex004",
-          "sets": 4,
+          "sets": 2,
           "reps": "12-20"
         },
         {
-          "id": "ex021",
-          "sets": 3,
+          "id": "ex019",
+          "sets": 2,
           "reps": "10-15"
         }
       ]
     },
     "PULL WIDTH": {
-      "subtitle": "Pull (Width)",
+      "subtitle": "Pull (Width) + Abs",
       "exercises": [
         {
           "id": "ex041",
-          "sets": 4,
+          "sets": 3,
           "reps": "6-10"
         },
         {
@@ -57,36 +52,31 @@
         },
         {
           "id": "ex033",
-          "sets": 3,
+          "sets": 2,
           "reps": "12-20"
         },
         {
           "id": "ex010",
-          "sets": 3,
+          "sets": 2,
           "reps": "8-12"
+        },
+        {
+          "id": "ex282",
+          "sets": 2,
+          "reps": "6-8 per side"
         }
       ]
     },
     "REST": {
-      "subtitle": "Recovery or Light Activity",
+      "subtitle": "Recovery or Easy Walking",
       "exercises": []
     },
     "LEGS QUADS": {
-      "subtitle": "Legs (Quad Focus)",
+      "subtitle": "Light Quads, Hamstrings + Calves",
       "exercises": [
         {
-          "id": "ex006",
-          "sets": 4,
-          "reps": "5-8"
-        },
-        {
-          "id": "ex013",
-          "sets": 3,
-          "reps": "8-12"
-        },
-        {
           "id": "ex002",
-          "sets": 3,
+          "sets": 2,
           "reps": "12-20"
         },
         {
@@ -96,13 +86,13 @@
         },
         {
           "id": "ex030",
-          "sets": 4,
+          "sets": 2,
           "reps": "10-15"
         }
       ]
     },
     "PUSH CHEST DELTS": {
-      "subtitle": "Push (Chest + Side Delt Focus)",
+      "subtitle": "Push (Chest + Side Delts) + Abs",
       "exercises": [
         {
           "id": "ex072",
@@ -111,23 +101,23 @@
         },
         {
           "id": "ex026",
-          "sets": 4,
+          "sets": 3,
           "reps": "12-20"
         },
         {
-          "id": "ex005",
-          "sets": 3,
-          "reps": "6-10"
-        },
-        {
-          "id": "ex123",
-          "sets": 3,
+          "id": "ex018",
+          "sets": 2,
           "reps": "12-15"
         },
         {
           "id": "ex019",
-          "sets": 3,
+          "sets": 2,
           "reps": "10-15"
+        },
+        {
+          "id": "ex282",
+          "sets": 2,
+          "reps": "6-8 per side"
         }
       ]
     },
@@ -146,53 +136,28 @@
         },
         {
           "id": "ex033",
-          "sets": 3,
+          "sets": 2,
           "reps": "12-20"
         },
         {
-          "id": "ex046",
-          "sets": 2,
-          "reps": "15-20"
-        },
-        {
           "id": "ex014",
-          "sets": 3,
-          "reps": "10-12"
-        },
-        {
-          "id": "ex023",
           "sets": 2,
           "reps": "10-12"
         }
       ]
     },
     "LEGS HAMSTRINGS": {
-      "subtitle": "Legs (Hamstring Focus + Quad Touch)",
+      "subtitle": "Light Hamstrings + Calves",
       "exercises": [
         {
-          "id": "ex025",
-          "sets": 4,
-          "reps": "6-10"
-        },
-        {
-          "id": "ex013",
-          "sets": 3,
-          "reps": "10-12"
-        },
-        {
           "id": "ex036",
-          "sets": 3,
+          "sets": 2,
           "reps": "10-15"
         },
         {
-          "id": "ex117",
-          "sets": 4,
-          "reps": "8-12"
-        },
-        {
-          "id": "ex026",
+          "id": "ex030",
           "sets": 2,
-          "reps": "12-15"
+          "reps": "10-15"
         }
       ]
     }
