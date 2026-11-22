@@ -2367,7 +2367,7 @@
     "muscles": [],
     "category": "",
     "equipment": "",
-    "instructions": "\n\nThis is a multiplier 1 lift: if you put 50 lb on either side, log 100 lb total.",
+    "instructions": "Sit beside a low cable and support your forearm with your palm up and wrist just past the edge. Curl the handle up by bending only your wrist, then lower it slowly. Use light resistance through a comfortable range and repeat on both sides.\n\nThis is a multiplier 1 lift: if you put 50 lb on either side, log 100 lb total.",
     "notes": "",
     "exportName": "Cable Wrist Curl",
     "multiplier": 1,
@@ -2524,7 +2524,7 @@
     "muscles": [],
     "category": "",
     "equipment": "",
-    "instructions": "\n\nThis is a multiplier 1 lift: if you put 50 lb on either side, log 100 lb total.",
+    "instructions": "Set a light cable at elbow height. Hold the handle with your outside hand and keep that elbow bent at about 90 degrees and close to your ribs. Rotate your forearm outward without twisting your torso, then return slowly. Repeat on both sides.\n\nThis is a multiplier 1 lift: if you put 50 lb on either side, log 100 lb total.",
     "notes": "",
     "exportName": "Cable Shoulder External Rotation",
     "multiplier": 1,
@@ -3232,7 +3232,7 @@
     "muscles": [],
     "category": "",
     "equipment": "",
-    "instructions": "",
+    "instructions": "Lie on your back with your knees above your hips. Lower one bent leg for a light heel tap, then bring it back and alternate. Keep breathing and use only the range where your torso stays comfortable and steady.",
     "notes": "",
     "exportName": "Dead Bug",
     "multiplier": 1,
@@ -4160,5 +4160,27 @@
     "exportName": "Seated Dumbbell Wrist Extension",
     "multiplier": 1,
     "1repmaxformula": ""
+  },
+  "ex367": {
+    "name": "Dumbbell Serratus Punch",
+    "muscles": ["Serratus Anterior"],
+    "category": "Shoulders",
+    "equipment": "Dumbbells",
+    "instructions": "Lie on a flat bench with light dumbbells above your shoulders and palms facing each other. Keep your elbows nearly straight and reach the weights a little higher by lifting your shoulder blades. Lower the shoulder blades slowly. Keep your torso still and log the weight of one dumbbell.",
+    "notes": "Direct shoulder blade reach. Use a light load you can control.",
+    "exportName": "Dumbbell Serratus Punch",
+    "multiplier": 2,
+    "1repmaxformula": ""
+  },
+  "ex368": {
+    "name": "Seated Band Ankle Dorsiflexion",
+    "muscles": ["Tibialis Anterior"],
+    "category": "Lower Leg",
+    "equipment": "Resistance Band",
+    "instructions": "Sit with your heel supported and loop a light band over the top of your foot. Anchor the band in front of you so it pulls your toes away. Pull your toes toward your shin, then return slowly. Keep the heel still and repeat on both sides.",
+    "notes": "Log reps. Use a band you can control through a comfortable range.",
+    "exportName": "Seated Band Ankle Dorsiflexion",
+    "multiplier": 1,
+    "1repmaxformula": "NONE"
   }
 }

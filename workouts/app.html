@@ -1481,6 +1481,51 @@
             transform: rotate(180deg);
         }
 
+        .extra-credit {
+            margin-top: 24px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+        }
+
+        .extra-credit > summary {
+            padding: 14px 16px;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .extra-credit > summary:hover {
+            background: var(--bg-tertiary);
+            border-radius: inherit;
+        }
+
+        .extra-credit-optional {
+            margin-inline-start: 8px;
+            color: var(--text-secondary);
+            font-size: 0.8em;
+            font-weight: 400;
+        }
+
+        .extra-credit-content {
+            padding: 0 16px 16px;
+        }
+
+        .extra-credit-pick {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .extra-credit-pick > span { min-width: 0; }
+        .extra-credit-pick small { display: block; }
+        .extra-credit-pick button { flex-shrink: 0; }
+        .extra-credit-library { margin-top: 12px; }
+        .extra-credit-library summary { cursor: pointer; }
+        #extraCreditSearch { margin: 8px 0; }
+
         .complete-workout-section {
             margin-top: 24px;
             padding-top: 24px;
@@ -2154,6 +2199,19 @@
                             <button class="btn btn-secondary btn-small" onclick="switchWorkout()">Switch Day</button>
                         </div>
                         <div id="exerciseList"></div>
+                        <details id="extraCredit" class="extra-credit" hidden>
+                            <summary id="extraCreditSummary">Extra credit<span class="extra-credit-optional">Optional</span></summary>
+                            <div class="extra-credit-content">
+                                <p class="text-muted-xs">Pick an extra if you feel like it. Logged sets save with your workout.</p>
+                                <div id="extraCreditExercises"></div>
+                                <div id="extraCreditPicks"></div>
+                                <details id="extraCreditLibrary" class="extra-credit-library">
+                                    <summary>Browse exercises</summary>
+                                    <input type="search" class="library-search" id="extraCreditSearch" aria-label="Search extra credit exercises" placeholder="Search the exercise library">
+                                    <div id="extraCreditOptions" class="edit-exercise-options"></div>
+                                </details>
+                            </div>
+                        </details>
                         <div class="complete-workout-section">
                             <button class="btn btn-primary" id="completeWorkoutBtn" onclick="completeWorkout()">COMPLETE
                                 WORKOUT</button>
@@ -2559,6 +2617,15 @@
         let oldestLoadedWorkoutSnapshot = null;
         let currentWorkoutDay = 0; // Index 0-6
         let currentExerciseData = {};
+        let extraCreditExerciseIds = [];
+        const EXTRA_CREDIT_PICKS = {
+            ex367: { purpose: 'Serratus · 12–20 reps', reps: '12–20' },
+            ex218: { purpose: 'Rotator cuff · 12–20 reps per side', reps: '12–20' },
+            ex366: { purpose: 'Wrist extensors · 12–20 reps per side', reps: '12–20' },
+            ex204: { purpose: 'Wrist flexors · 12–20 reps per side', reps: '12–20' },
+            ex368: { purpose: 'Front of shin · 12–20 reps per side', reps: '12–20' },
+            ex282: { purpose: 'Heel taps for trunk control · 5–8 reps per side', reps: '5–8' }
+        };
         let currentSetCounts = {}; // Track number of sets per exercise !
         let editingLogData = null; // Store full log data when editing
         let activeFilter = null;
@@ -3073,7 +3140,7 @@
          * @param {Object} options - { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, prevReps, prevWeight, targetReps, targetWeight, hasProgressionTarget }
          */
         function generateSetHTML(options) {
-            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, prevReps, prevWeight, targetReps, targetWeight, hasProgressionTarget } = options;
+            const { key, setIdx, reps, weight, isWarmup, isEdit, exIdx, isManual, isOptional, prevReps, prevWeight, targetReps, targetWeight, hasProgressionTarget } = options;
             const displayWeightValue = isEdit && weight > 0 ? displayWeight(weight) : weight;
             let mode = 'workout';
             if (isEdit) mode = 'edit';
@@ -3086,7 +3153,7 @@
             } else if (isManual) {
                 commonAttrs = `data-mode="manual" data-exercise="${escapeAttr(key)}" data-set="${setIdx}"`;
             } else {
-                commonAttrs = `data-mode="workout" data-exercise="${escapeAttr(key)}" data-set="${setIdx}"`;
+                commonAttrs = `data-mode="workout" data-exercise="${escapeAttr(key)}" data-set="${setIdx}"${isOptional ? ' data-optional="true"' : ''}`;
             }
 
             const repsPlaceholder = targetReps || (prevReps ? `${prevReps}` : 'REPS');
@@ -3109,7 +3176,7 @@
          * Generates HTML for an exercise card.
          */
         function generateExerciseHTML(exercise, key, setsHtml, options = {}) {
-            const { isEdit, exIdx, volumeLbs = 0, hasProgressionTarget = false, isDone = false, isPR = false } = options;
+            const { isEdit, exIdx, isOptional, volumeLbs = 0, hasProgressionTarget = false, isDone = false, isPR = false } = options;
             const numSets = (setsHtml.match(/set-input-group/g) || []).length;
             const mode = isEdit ? 'edit' : 'workout';
 
@@ -3128,12 +3195,13 @@
                 <div class="button-row">
                     <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
                     <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}">+ Add Set</button>
+                    ${isOptional ? `<button type="button" class="btn btn-secondary btn-small" data-extra-credit-remove="${escapeAttr(exercise.id)}">Remove Exercise</button>` : ''}
                 </div>`;
 
             const volumeIndicator = isEdit ? '' : `
                 <div class="exercise-volume" id="exercise-volume-${escapeAttr(key)}">VOLUME: ${formatLiftVolumeLbs(volumeLbs)} lbs</div>`;
 
-            const doneAction = isEdit ? '' : `
+            const doneAction = isEdit || isOptional ? '' : `
                 <button class="btn btn-exercise-done ${isDone ? 'is-edit' : ''}" data-action="toggle-exercise-done" data-exercise-key="${escapeAttr(key)}" data-exercise-id="${escapeAttr(exercise.id)}">${isDone ? 'EDIT' : 'DONE'}</button>`;
 
             return `
@@ -3809,6 +3877,7 @@
                     workoutDay: currentWorkoutDay, // kept inside for safety
                     exerciseData: currentExerciseData,
                     setCounts: currentSetCounts,
+                    extraCreditExerciseIds,
                     completedExercises: completedExerciseState,
                     prResults: exercisePrResults,
                     timestamp: Date.now()
@@ -3839,6 +3908,7 @@
                     allProgress[legacyData.workoutDay] = {
                         exerciseData: legacyData.exerciseData,
                         setCounts: legacyData.setCounts,
+                        extraCreditExerciseIds: legacyData.extraCreditExerciseIds,
                         completedExercises: legacyData.completedExercises || {},
                         prResults: legacyData.prResults || {},
                         timestamp: legacyData.timestamp
@@ -3869,6 +3939,7 @@
                 if (currentData) {
                     currentExerciseData = currentData.exerciseData || {};
                     currentSetCounts = currentData.setCounts || {};
+                    extraCreditExerciseIds = Array.isArray(currentData.extraCreditExerciseIds) ? currentData.extraCreditExerciseIds : [];
                     completedExerciseState = currentData.completedExercises || {};
                     exercisePrResults = currentData.prResults || {};
                     return true;
@@ -3964,6 +4035,14 @@
                 if (doneButton) {
                     e.preventDefault();
                     toggleExerciseDone(doneButton.dataset.exerciseKey, doneButton.dataset.exerciseId);
+                    return;
+                }
+
+                const extraCreditButton = e.target.closest('[data-extra-credit-add], [data-extra-credit-remove]');
+                if (extraCreditButton) {
+                    const { extraCreditAdd, extraCreditRemove } = extraCreditButton.dataset;
+                    if (extraCreditAdd) addExtraCreditExercise(extraCreditAdd);
+                    else removeExtraCreditExercise(extraCreditRemove);
                     return;
                 }
 
@@ -4153,6 +4232,10 @@
                 }
             });
 
+            const extraCreditSearch = document.getElementById('extraCreditSearch');
+            extraCreditSearch.addEventListener('input', renderExtraCreditLibrary);
+            document.getElementById('extraCreditLibrary').addEventListener('toggle', renderExtraCreditLibrary);
+
             // Library search input
             const librarySearch = document.getElementById('librarySearch');
             if (librarySearch) {
@@ -4227,6 +4310,7 @@
                 currentSetCounts = {};
                 completedExerciseState = {};
                 exercisePrResults = {};
+                resetExtraCredit();
             }
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
@@ -4244,56 +4328,130 @@
 
             if (isRest) {
                 container.innerHTML = `<div class="rest-day-message"><div class="rest-day-icon">🧘</div><h2 class="rest-day-title">REST & RECOVER</h2><p class="rest-day-subtitle">Complete rest or light activity. Your muscles grow during recovery!</p></div>`;
+                renderExtraCredit(workout);
                 return;
             }
 
-            container.innerHTML = workout.exercises.map((ex) => {
-                const exercise = getExerciseForUI(ex.exerciseId);
-                const exerciseKey = `${currentWorkoutDay}_${ex.exerciseId}`;
-                const lastSessionSets = getLastSessionSets(ex.exerciseId);
-                const progressionTarget = coach.getProgressionTarget(ex.exerciseId, ex.reps, ex);
-                if (progressionTarget) {
-                    activeProgressionTargets[exerciseKey] = progressionTarget;
-                }
-
-                // Initialize set count from workout plan if not already set
-                if (!currentSetCounts[exerciseKey]) {
-                    currentSetCounts[exerciseKey] = ex.sets;
-                }
-
-                const numSets = currentSetCounts[exerciseKey];
-                const volumeLbs = calculateExerciseVolumeLbs(exerciseKey, numSets);
-                const setsHtml = Array.from({ length: numSets }, (_, i) => {
-                    const savedData = currentExerciseData[exerciseKey]?.[i] || {};
-                    const prevSet = (lastSessionSets && lastSessionSets[i]) ? lastSessionSets[i] : null;
-
-                    return generateSetHTML({
-                        key: exerciseKey,
-                        setIdx: i,
-                        reps: savedData.reps,
-                        weight: savedData.weight,
-                        isWarmup: savedData.isWarmup !== undefined ? savedData.isWarmup : (i === 0),
-                        isEdit: false,
-                        prevReps: prevSet ? prevSet.reps : null,
-                        prevWeight: (prevSet && prevSet.weight > 0) ? displayWeight(prevSet.weight) : null,
-                        targetReps: progressionTarget ? progressionTarget.repRange.label : null,
-                        targetWeight: progressionTarget ? progressionTarget.targetWeightDisplay : null,
-                        hasProgressionTarget: !!progressionTarget
-                    });
-                }).join('');
-
-                return generateExerciseHTML(exercise, exerciseKey, setsHtml, {
-                    isEdit: false,
-                    volumeLbs,
-                    hasProgressionTarget: !!progressionTarget,
-                    isDone: !!completedExerciseState[exerciseKey],
-                    isPR: !!exercisePrResults[exerciseKey]?.isPR
-                });
-            }).join('');
-
+            container.innerHTML = workout.exercises.map(ex => renderWorkoutExercise(ex)).join('');
+            renderExtraCredit(workout);
             Object.keys(activeProgressionTargets).forEach(checkExerciseCompletion);
             Object.keys(completedExerciseState).forEach(applyExerciseDoneVisualState);
         }
+
+        function renderWorkoutExercise(ex, isOptional = false) {
+            const exercise = getExerciseForUI(ex.exerciseId);
+            const exerciseKey = `${isOptional ? 'bonus_' : ''}${currentWorkoutDay}_${ex.exerciseId}`;
+            const lastSessionSets = getLastSessionSets(ex.exerciseId);
+            const progressionTarget = isOptional ? null : coach.getProgressionTarget(ex.exerciseId, ex.reps, ex);
+            if (progressionTarget) {
+                activeProgressionTargets[exerciseKey] = progressionTarget;
+            }
+
+            // Initialize set count from workout plan if not already set
+            if (!currentSetCounts[exerciseKey]) {
+                currentSetCounts[exerciseKey] = ex.sets;
+            }
+
+            const numSets = currentSetCounts[exerciseKey];
+            const volumeLbs = calculateExerciseVolumeLbs(exerciseKey, numSets);
+            const setsHtml = Array.from({ length: numSets }, (_, i) => {
+                const savedData = currentExerciseData[exerciseKey]?.[i] || {};
+                const prevSet = (lastSessionSets && lastSessionSets[i]) ? lastSessionSets[i] : null;
+
+                return generateSetHTML({
+                    key: exerciseKey,
+                    setIdx: i,
+                    reps: savedData.reps,
+                    weight: savedData.weight,
+                    isWarmup: savedData.isWarmup !== undefined ? savedData.isWarmup : (!isOptional && i === 0),
+                    isEdit: false,
+                    isOptional,
+                    prevReps: prevSet ? prevSet.reps : null,
+                    prevWeight: (prevSet && prevSet.weight > 0) ? displayWeight(prevSet.weight) : null,
+                    targetReps: progressionTarget?.repRange.label ?? (isOptional ? ex.reps : null),
+                    targetWeight: progressionTarget ? progressionTarget.targetWeightDisplay : null,
+                    hasProgressionTarget: !!progressionTarget
+                });
+            }).join('');
+
+            return generateExerciseHTML(exercise, exerciseKey, setsHtml, {
+                isEdit: false,
+                isOptional,
+                volumeLbs,
+                hasProgressionTarget: !!progressionTarget,
+                isDone: !!completedExerciseState[exerciseKey],
+                isPR: !!exercisePrResults[exerciseKey]?.isPR
+            });
+        }
+
+        function getExtraCreditExercises(workout) {
+            if (!workout.exercises.length) return [];
+            const plannedIds = new Set(workout.exercises.map(ex => ex.exerciseId));
+            return [...new Set(extraCreditExerciseIds)]
+                .filter(id => getExercise(id)?.name && !plannedIds.has(id))
+                .map(exerciseId => ({ exerciseId, sets: 2, reps: EXTRA_CREDIT_PICKS[exerciseId]?.reps, isOptional: true }));
+        }
+
+        function resetExtraCredit() {
+            extraCreditExerciseIds = [];
+            document.getElementById('extraCredit').open = false;
+            document.getElementById('extraCreditLibrary').open = false;
+            document.getElementById('extraCreditSearch').value = '';
+        }
+
+        function renderExtraCredit(workout = getWorkoutData(currentWorkoutDay)) {
+            const panel = document.getElementById('extraCredit');
+            panel.hidden = !workout.exercises.length;
+            if (panel.hidden) return;
+
+            document.getElementById('extraCreditExercises').innerHTML = getExtraCreditExercises(workout)
+                .map(ex => renderWorkoutExercise(ex, true)).join('');
+            const unavailableIds = new Set([...workout.exercises.map(ex => ex.exerciseId), ...extraCreditExerciseIds]);
+            const picks = Object.entries(EXTRA_CREDIT_PICKS).filter(([id]) => getExercise(id)?.name && !unavailableIds.has(id));
+            document.getElementById('extraCreditPicks').innerHTML = picks.map(([id, pick]) => `
+                <div class="extra-credit-pick">
+                    <span>${escapeHtml(getExercise(id).name)}<small class="text-muted-xs">${escapeHtml(pick.purpose)}</small></span>
+                    <button type="button" class="btn btn-secondary btn-small" data-extra-credit-add="${id}"
+                        aria-label="Add ${escapeAttr(getExercise(id).name)}">Add</button>
+                </div>`).join('');
+            renderExtraCreditLibrary();
+        }
+
+        function renderExtraCreditLibrary() {
+            if (!document.getElementById('extraCreditLibrary').open) return;
+            const query = document.getElementById('extraCreditSearch').value.trim().toLowerCase();
+            const workout = getWorkoutData(currentWorkoutDay);
+            const unavailableIds = new Set([...workout.exercises.map(ex => ex.exerciseId), ...extraCreditExerciseIds]);
+            const matches = getExerciseEntries().filter(([id, exercise]) => {
+                const searchText = [exercise.name, exercise.category, ...(exercise.muscles || [])].join(' ').toLowerCase();
+                return !unavailableIds.has(id) && searchText.includes(query);
+            }).sort((a, b) => String(a[1].name).localeCompare(String(b[1].name)));
+            document.getElementById('extraCreditOptions').innerHTML = matches.length ? matches.map(([id, exercise]) => `
+                <button type="button" class="btn btn-secondary edit-exercise-option" data-extra-credit-add="${escapeAttr(id)}">+ ${escapeHtml(exercise.name)}</button>
+            `).join('') : '<p class="text-muted-xs">No matching exercises available to add.</p>';
+        }
+
+        function addExtraCreditExercise(id) {
+            const workout = getWorkoutData(currentWorkoutDay);
+            if (isSaving || !workout.exercises.length || !getExercise(id)?.name ||
+                extraCreditExerciseIds.includes(id) || workout.exercises.some(ex => ex.exerciseId === id)) return;
+            extraCreditExerciseIds.push(id);
+            renderExtraCredit(workout);
+            saveWorkoutProgress();
+            document.getElementById(`exercise-bonus_${currentWorkoutDay}_${id}`)?.querySelector('[data-type="reps"]')?.focus();
+        }
+
+        function removeExtraCreditExercise(id) {
+            if (isSaving || !getExtraCreditExercises(getWorkoutData(currentWorkoutDay)).some(ex => ex.exerciseId === id)) return;
+            extraCreditExerciseIds = extraCreditExerciseIds.filter(exerciseId => exerciseId !== id);
+            const key = `bonus_${currentWorkoutDay}_${id}`;
+            delete currentExerciseData[key];
+            delete currentSetCounts[key];
+            saveWorkoutProgress();
+            renderExtraCredit();
+            document.getElementById('extraCreditSummary').focus();
+        }
+
         function updateExerciseData(input) {
             const mode = input.dataset.mode;
             const key = input.dataset.exercise, idx = parseInt(input.dataset.set), type = input.dataset.type;
@@ -4315,7 +4473,7 @@
 
             // Initialize structures
             if (!currentExerciseData[key]) currentExerciseData[key] = {};
-            if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = { isWarmup: idx === 0 };
+            if (!currentExerciseData[key][idx]) currentExerciseData[key][idx] = { isWarmup: idx === 0 && input.dataset.optional !== 'true' };
 
             // Save sanitized value
             currentExerciseData[key][idx][type] = validation.sanitizedValue;
@@ -4825,17 +4983,17 @@
             if (workout.exercises.length === 0) { showNotification('REST DAY', 'Today is a rest day!'); return null; }
 
             let hasEmptySets = false;
-            const logExercises = workout.exercises.map(ex => {
+            const logExercises = [...workout.exercises, ...getExtraCreditExercises(workout)].map(ex => {
                 const exercise = getExerciseForUI(ex.exerciseId);
-                const key = `${currentWorkoutDay}_${ex.exerciseId}`;
-                const numSets = currentSetCounts[key] || 3;
+                const key = `${ex.isOptional ? 'bonus_' : ''}${currentWorkoutDay}_${ex.exerciseId}`;
+                const numSets = currentSetCounts[key] || (ex.isOptional ? ex.sets : 3);
 
                 const sets = Array.from({ length: numSets }, (_, i) => {
                     const setData = currentExerciseData[key]?.[i] || {};
                     const reps = parseInt(setData.reps) || 0;
                     const weight = parseFloat(setData.weight) || 0;
 
-                    if (reps === 0) hasEmptySets = true;
+                    if (reps === 0 && !ex.isOptional) hasEmptySets = true;
 
                     let finalWeight = weight;
                     if (weightUnit === 'lbs' && finalWeight > 0) finalWeight = lbsToKg(finalWeight);
@@ -4843,7 +5001,7 @@
                     return {
                         weight: finalWeight,
                         reps: reps,
-                        isWarmup: setData.isWarmup !== undefined ? setData.isWarmup : (i === 0),
+                        isWarmup: setData.isWarmup ?? (!ex.isOptional && i === 0),
                         note: ''
                     };
                 });
@@ -4883,6 +5041,7 @@
                     currentSetCounts = {};
                     completedExerciseState = {};
                     exercisePrResults = {};
+                    resetExtraCredit();
                     clearWorkoutProgress();
                     refreshUI(['exercises', 'logs', 'stats']);
                     if (shouldExport) exportSingleWorkout(log);
@@ -5694,12 +5853,14 @@
             openModal('switchModal');
         }
         function selectWorkoutDay(day) {
+            if (isSaving) return;
             currentWorkoutDay = day;
             // Clear in-memory state for the new day
             currentExerciseData = {};
             currentSetCounts = {};
             completedExerciseState = {};
             exercisePrResults = {};
+            resetExtraCredit();
             // Update header labels (badge, name, meta)
             const workout = getWorkoutData(currentWorkoutDay);
             const isRest = workout.exercises.length === 0;
@@ -5726,6 +5887,7 @@
                 tab.addEventListener('click', () => {
                     const tabName = tab.dataset.tab;
                     if (tabName === 'workout') {
+                        if (isSaving) return;
                         const todaysDay = new Date().getDay();
                         const workoutTab = document.getElementById('workoutTab');
                         const isWorkoutTabVisible = workoutTab.style.display !== 'none';
