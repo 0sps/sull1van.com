@@ -4147,5 +4147,18 @@
     "exportName": "Leg Press Calf Raise",
     "multiplier": 1,
     "1repmaxformula": "w*(1+(r/30))"
+  },
+  "ex366": {
+    "name": "Seated Dumbbell Wrist Extension",
+    "muscles": [
+      "Wrist Extensors"
+    ],
+    "category": "Forearms",
+    "equipment": "Dumbbells",
+    "instructions": "Sit and support your forearm on a bench or table, palm down and wrist just over the edge. Lift the back of your hand while keeping your forearm on the pad, then lower slowly. Use a light dumbbell and a comfortable range. Repeat on both sides and log the weight of one dumbbell.",
+    "notes": "Light direct wrist extensor work. Keep your torso and forearm still.",
+    "exportName": "Seated Dumbbell Wrist Extension",
+    "multiplier": 1,
+    "1repmaxformula": ""
   }
 }

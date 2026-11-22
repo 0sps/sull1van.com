@@ -339,8 +339,8 @@ test('dashboard uses the real weekly plan and the shared coach for every eligibl
     const trainingPlanData = JSON.parse(fs.readFileSync(path.join(root, 'training-plan.json')));
     const progressionPlanData = JSON.parse(fs.readFileSync(path.join(root, 'progression-plan.json')));
     const exercisesData = JSON.parse(fs.readFileSync(path.join(root, 'exercises.json')));
-    const workoutLogs = [{ date: '2026-09-28', exercises: [{ id: 'ex138', sets: [
-        { reps: 12, weight: lbsToKg(100) }, { reps: 12, weight: lbsToKg(100) }
+    const workoutLogs = [{ date: '2026-09-28', exercises: [{ id: 'ex009', sets: [
+        { reps: 12, weight: lbsToKg(100) }
     ] }] }];
     const coach = window.WorkoutCoach.create({
         getWorkoutLogs: () => workoutLogs, getProgressionPlan: () => progressionPlanData,
@@ -361,10 +361,10 @@ test('dashboard uses the real weekly plan and the shared coach for every eligibl
     const scheduledIds = Object.values(trainingPlanData.workouts).flatMap(workout => workout.exercises.map(ex => ex.id));
     const eligibleIds = [...new Set(scheduledIds.filter(id => coach.isExerciseEligible(id)))];
     assert.deepEqual(Array.from(sandbox.liftRows, row => row.id).sort(), eligibleIds.sort());
-    const row = sandbox.liftRows.find(row => row.id === 'ex138');
-    assert.equal(row.dayName, 'PULL ROWS'); // Tuesday's next occurrence is Friday, with 4 total rows.
-    assert.equal(row.recommendation.requiredWorkingSets, 3);
-    assert.equal(row.recommendation.action, 'incomplete'); // Monday's two working sets cannot earn Friday's increase.
+    const row = sandbox.liftRows.find(row => row.id === 'ex009');
+    assert.equal(row.dayName, 'PUSH CHEST DELTS'); // The next cable crunch session is Thursday, with 3 total rows.
+    assert.equal(row.recommendation.requiredWorkingSets, 2);
+    assert.equal(row.recommendation.action, 'incomplete'); // Monday's one working set cannot earn Thursday's increase.
     sandbox.renderSummary();
     sandbox.renderLiftTable();
     const html = sandbox.elements.get('liftTableBody').innerHTML;
