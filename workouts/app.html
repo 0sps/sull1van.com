@@ -1483,21 +1483,21 @@
 
         .extra-credit {
             margin-top: 24px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: var(--bg-secondary);
         }
 
         .extra-credit > summary {
-            padding: 14px 16px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
             cursor: pointer;
             color: var(--text-primary);
-            font-weight: 600;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
         }
 
         .extra-credit > summary:hover {
-            background: var(--bg-tertiary);
-            border-radius: inherit;
+            border-color: var(--accent-primary);
         }
 
         .extra-credit-optional {
@@ -1508,7 +1508,7 @@
         }
 
         .extra-credit-content {
-            padding: 0 16px 16px;
+            padding-top: 16px;
         }
 
         .extra-credit-pick {
@@ -1516,15 +1516,34 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 8px 0;
+            margin-bottom: 8px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
         }
 
         .extra-credit-pick > span { min-width: 0; }
         .extra-credit-pick small { display: block; }
         .extra-credit-pick button { flex-shrink: 0; }
         .extra-credit-library { margin-top: 12px; }
-        .extra-credit-library summary { cursor: pointer; }
-        #extraCreditSearch { margin: 8px 0; }
+        .extra-credit-library summary {
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        #extraCreditSearch {
+            margin: 8px 0;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .extra-credit-remove {
+            width: 100%;
+            margin-top: 8px;
+        }
 
         .complete-workout-section {
             margin-top: 24px;
@@ -2202,7 +2221,6 @@
                         <details id="extraCredit" class="extra-credit" hidden>
                             <summary id="extraCreditSummary">Extra credit<span class="extra-credit-optional">Optional</span></summary>
                             <div class="extra-credit-content">
-                                <p class="text-muted-xs">Pick an extra if you feel like it. Logged sets save with your workout.</p>
                                 <div id="extraCreditExercises"></div>
                                 <div id="extraCreditPicks"></div>
                                 <details id="extraCreditLibrary" class="extra-credit-library">
@@ -3195,7 +3213,6 @@
                 <div class="button-row">
                     <button class="btn btn-secondary btn-small btn-remove-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}" ${numSets <= 1 ? 'disabled' : ''}>− Remove Set</button>
                     <button class="btn btn-secondary btn-small btn-add-set-style" data-mode="workout" data-exercise-key="${escapeAttr(key)}">+ Add Set</button>
-                    ${isOptional ? `<button type="button" class="btn btn-secondary btn-small" data-extra-credit-remove="${escapeAttr(exercise.id)}">Remove Exercise</button>` : ''}
                 </div>`;
 
             const volumeIndicator = isEdit ? '' : `
@@ -3219,6 +3236,7 @@
                     ${volumeIndicator}
                     ${!isEdit && hasProgressionTarget ? `<span id="coach-status-${escapeAttr(key)}" class="exercise-coach-status" role="status" aria-live="polite" hidden></span>` : ''}
                     ${footerActions}
+                    ${isOptional ? `<button type="button" class="btn btn-secondary btn-small extra-credit-remove" data-extra-credit-remove="${escapeAttr(exercise.id)}">Remove Exercise</button>` : ''}
                     ${doneAction}
                 </div>`;
         }
@@ -4410,7 +4428,7 @@
             const picks = Object.entries(EXTRA_CREDIT_PICKS).filter(([id]) => getExercise(id)?.name && !unavailableIds.has(id));
             document.getElementById('extraCreditPicks').innerHTML = picks.map(([id, pick]) => `
                 <div class="extra-credit-pick">
-                    <span>${escapeHtml(getExercise(id).name)}<small class="text-muted-xs">${escapeHtml(pick.purpose)}</small></span>
+                    <span><span class="exercise-name">${escapeHtml(getExercise(id).name)}</span><small class="text-muted-xs">${escapeHtml(pick.purpose)}</small></span>
                     <button type="button" class="btn btn-secondary btn-small" data-extra-credit-add="${id}"
                         aria-label="Add ${escapeAttr(getExercise(id).name)}">Add</button>
                 </div>`).join('');
